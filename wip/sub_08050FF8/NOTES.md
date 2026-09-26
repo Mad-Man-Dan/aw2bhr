@@ -474,3 +474,9 @@ live here and not in source.
  *
  * Toolchain axis not re-swept (W81-E: 155 drafts x 7 profiles, zero exit-0
  * flips). `best so far: 21.5%` remains the wave-37 fossil; ignore it. */
+
+## Header-level volatile ruled out (orchestrator, after wave 92)
+
+Declaring `extern volatile u16 gUnknown_0300453C;` in include/unknown-globals.h
+makes agbcc crash (`toplev.c:1074: Internal compiler error`) on the promoted
+src/decomp/c_08052CA4.c. Keep the file-local `SIDE` macro in this draft.
