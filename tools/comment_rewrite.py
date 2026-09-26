@@ -12,10 +12,17 @@ per comment. This moves the comments out to JSON and back instead:
     python tools/comment_rewrite.py apply include/unknown-globals.h blocks.json
 
 `extract` lists every comment that starts inside the line range, with the
-code lines around it for context. `apply` refuses to run if the file changed
-since extraction, replaces only the comment text, and removes lines that a
-deleted comment leaves empty. Run `python tools/comment_check.py <file>`
-afterwards; it proves the code is unchanged.
+code lines around it for context. Several files can go in one JSON; each
+file's blocks are then under "files":
+
+    python tools/comment_rewrite.py extract src/decomp/c_0800A000.c \\
+        src/decomp/c_0800A0F0.c --out blocks.json
+    python tools/comment_rewrite.py apply blocks.json
+
+`apply` refuses to run if any file changed since extraction, replaces only
+the comment text, and removes lines that a deleted comment leaves empty. Run
+`python tools/comment_check.py <file>...` afterwards; it proves the code is
+unchanged.
 """
 import bisect
 import hashlib
@@ -60,7 +67,11 @@ def read(path):
     return raw, raw.decode("utf-8")
 
 
-def extract(path, lines, out):
+def _abs(path):
+    return path if os.path.isabs(path) else os.path.join(awlib.REPO, path)
+
+
+def extract_doc(path, lines):
     raw, text = read(path)
     lo, hi = lines
     starts = [0]
@@ -80,28 +91,46 @@ def extract(path, lines, out):
         blocks.append({"id": len(blocks), "line": ln, "start": start, "end": end,
                        "before": before, "old": text[start:end].replace("\r\n", "\n"),
                        "after": after})
-    doc = {"file": path.replace("\\", "/"), "sha1": hashlib.sha1(raw).hexdigest(),
-           "lines": "%d-%d" % (lo, hi), "blocks": blocks}
+    rel = os.path.relpath(path, awlib.REPO).replace("\\", "/")
+    return {"file": rel, "sha1": hashlib.sha1(raw).hexdigest(),
+            "lines": "%d-%d" % (lo, hi), "blocks": blocks}
+
+
+def extract(paths, lines, out):
+    docs = [extract_doc(p, lines) for p in paths]
+    doc = docs[0] if len(docs) == 1 else {"files": docs}
     with open(out, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(doc, fh, indent=1, ensure_ascii=False)
-    print("extracted %d comment(s) from %s lines %d-%d -> %s"
-          % (len(blocks), path, lo, hi, out))
+    print("extracted %d comment(s) from %d file(s) -> %s"
+          % (sum(len(d["blocks"]) for d in docs), len(docs), out))
     return 0
 
 
 def apply(path, blocks_path):
-    raw, text = read(path)
     doc = json.load(open(blocks_path, encoding="utf-8"))
-    if doc["sha1"] != hashlib.sha1(raw).hexdigest():
-        print("REFUSED: %s changed since extraction; extract again" % path)
-        return 2
+    docs = doc["files"] if "files" in doc else [dict(doc, file=path or doc["file"])]
+    # Check every file before writing any, so a refusal leaves nothing half done.
+    for d in docs:
+        raw, _ = read(_abs(d["file"]))
+        if d["sha1"] != hashlib.sha1(raw).hexdigest():
+            print("REFUSED: %s changed since extraction; extract again" % d["file"])
+            return 2
+    for d in docs:
+        rc = apply_doc(_abs(d["file"]), d)
+        if rc:
+            return rc
+    return 0
+
+
+def apply_doc(path, doc):
+    raw, text = read(path)
     changed = deleted = 0
     for b in sorted(doc["blocks"], key=lambda b: -b["start"]):
         if "new" not in b:
             continue
         s, e = b["start"], b["end"]
         if text[s:e].replace("\r\n", "\n") != b["old"]:
-            print("REFUSED: block %d no longer matches its text" % b["id"])
+            print("REFUSED: %s block %d no longer matches its text" % (path, b["id"]))
             return 2
         # Some headers mix CRLF and LF lines, so take the ending of the line
         # the comment ends on, not one style for the whole file.
@@ -122,24 +151,28 @@ def apply(path, blocks_path):
     with open(path, "wb") as fh:
         fh.write(text.encode("utf-8"))
     print("applied to %s: %d rewritten, %d deleted, %d kept"
-          % (path, changed, deleted, len(doc["blocks"]) - changed - deleted))
+          % (os.path.relpath(path, awlib.REPO).replace("\\", "/"), changed, deleted,
+             len(doc["blocks"]) - changed - deleted))
     return 0
 
 
 def main(argv):
     if len(argv) >= 3 and argv[1] == "extract":
-        path, lines, out = argv[2], (1, 10 ** 9), "blocks.json"
-        if "--lines" in argv:
-            a, b = argv[argv.index("--lines") + 1].split("-")
+        args, lines, out = argv[2:], (1, 10 ** 9), "blocks.json"
+        if "--lines" in args:
+            k = args.index("--lines")
+            a, b = args[k + 1].split("-")
             lines = (int(a), int(b))
-        if "--out" in argv:
-            out = argv[argv.index("--out") + 1]
-        return extract(os.path.join(awlib.REPO, path) if not os.path.isabs(path) else path,
-                       lines, out)
+            args = args[:k] + args[k + 2:]
+        if "--out" in args:
+            k = args.index("--out")
+            out = args[k + 1]
+            args = args[:k] + args[k + 2:]
+        return extract([_abs(p) for p in args], lines, out)
     if len(argv) == 4 and argv[1] == "apply":
-        path = argv[2]
-        return apply(os.path.join(awlib.REPO, path) if not os.path.isabs(path) else path,
-                     argv[3])
+        return apply(_abs(argv[2]), argv[3])
+    if len(argv) == 3 and argv[1] == "apply":
+        return apply(None, argv[2])
     print(__doc__)
     return 1
 
