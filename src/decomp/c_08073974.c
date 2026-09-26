@@ -7,14 +7,6 @@
  * sub_08073974 @ 0x08073974
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08073974.
- * sub_08073974 @ 0x08073974
- */
-
-
 /* sub_080736F4's two-plane twin: the same 0..0x9F row guard and the same
  * clamp, but the address is `base + 4 * y + 2 * c`, i.e. a halfword table with
  * TWO entries per row and `c` selecting which. `lsls #1; adds; lsls #1; adds`

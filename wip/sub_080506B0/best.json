@@ -1,1 +1,1 @@
-{"candidate_bytes": 684, "exact_size": false, "percent": 38.68, "size_delta": 4, "target_bytes": 680}
+{"candidate_bytes": 684, "exact_size": false, "percent": 38.45, "scored_over": "max(candidate, target)", "size_delta": 4, "target_bytes": 680}

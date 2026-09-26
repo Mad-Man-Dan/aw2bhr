@@ -7,14 +7,6 @@
  * sub_08038C98 @ 0x08038C98
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08038C98.
- * sub_08038C98 @ 0x08038C98
- */
-
-
 /* Opens the move-range display for the unit gUnknown_030040D8 points at: loads
  * the cursor palette and tiles, seeds the fuel budget with the smaller of the
  * unit's remaining fuel (unk06_0) and its movement allowance, then pushes the

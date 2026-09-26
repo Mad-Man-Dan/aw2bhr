@@ -7,28 +7,6 @@
  * sub_0803BAFC @ 0x0803BAFC, sub_0803BB14 @ 0x0803BB14, sub_0803BB2C @ 0x0803BB2C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BAFC.
- * sub_0803BAFC @ 0x0803BAFC
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BB14.
- * sub_0803BB14 @ 0x0803BB14
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BB2C.
- * sub_0803BB2C @ 0x0803BB2C
- */
-
-
 /* F081 -- `sub_0803BB74` returns 1 or 2 and this asks whether it is 2.
  *
  * It is NOT `return sub_0803BB74() == 2;`. That spelling is a byte shorter: agbcc

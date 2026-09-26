@@ -7,13 +7,6 @@
  * sub_0801E27C @ 0x0801E27C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0801E27C.
- * sub_0801E27C @ 0x0801E27C
- */
-
 /* Wave 56, W56-H. The value parameters of these four were retyped `u16` ->
  * `s16`. Their only caller is sub_0801D390, which reads each argument with
  * `ldrsh` off the script stream or narrows a computed one with

@@ -7,13 +7,6 @@
  * sub_08052CA4 @ 0x08052CA4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08052CA4.
- * sub_08052CA4 @ 0x08052CA4
- */
-
 #include "hardware.h"
 
 /* sub_08052154's sibling and the widest member of the src/decomp/c_08051DE0.c

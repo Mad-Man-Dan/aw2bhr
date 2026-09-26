@@ -7,13 +7,6 @@
  * sub_080546BC @ 0x080546BC
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080546BC.
- * sub_080546BC @ 0x080546BC
- */
-
 void sub_080546BC(void)
 {
     gUnknown_03004504.bit0 = 0;

@@ -7,13 +7,6 @@
  * sub_0800553C @ 0x0800553C, sub_08005548 @ 0x08005548, sub_08005554 @ 0x08005554
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x0800553C.
- * sub_0800553C @ 0x0800553C
- */
-
 /* Family F058 (data/families.json): `push {lr}; movs r0,#K; bl sub_08005474;
  * pop {r1}; bx r1` -- 12 bytes, three members, and `varies` has exactly one
  * entry: the immediate. One decision covers all three.
@@ -24,13 +17,6 @@
  * the `bl`, because agbcc re-narrows on the callee's declaration.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x08005548.
- * sub_08005548 @ 0x08005548
- */
-
 /* Family F058 (data/families.json): `push {lr}; movs r0,#K; bl sub_08005474;
  * pop {r1}; bx r1` -- 12 bytes, three members, and `varies` has exactly one
  * entry: the immediate. One decision covers all three.
@@ -39,13 +25,6 @@
  * is not void and the `return` is real. That in turn pins sub_08005474's own
  * return at `int`: a narrow return would re-narrow here with `lsl; lsr` after
  * the `bl`, because agbcc re-narrows on the callee's declaration.
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x08005554.
- * sub_08005554 @ 0x08005554
  */
 
 /* Family F058 (data/families.json): `push {lr}; movs r0,#K; bl sub_08005474;

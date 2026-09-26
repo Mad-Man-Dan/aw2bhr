@@ -7,14 +7,6 @@
  * sub_0803AF78 @ 0x0803AF78, sub_0803AF84 @ 0x0803AF84, sub_0803AF90 @ 0x0803AF90
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803AF90.
- * sub_0803AF90 @ 0x0803AF90
- */
-
-
 /* Family F001 forwarder, 12 bytes:
  *     push {lr}
  *     bl   <callee>

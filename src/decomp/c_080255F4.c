@@ -8,13 +8,6 @@
  * sub_080255F4 @ 0x080255F4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080255F4.
- * sub_080255F4 @ 0x080255F4
- */
-
 #include "hardware.h"
 
 /* "Is the unit at (ax, ay) boxed in?" -- returns 1 unless the unit is a live,

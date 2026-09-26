@@ -7,14 +7,6 @@
  * sub_0805CA24 @ 0x0805CA24
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0805CA24.
- * sub_0805CA24 @ 0x0805CA24
- */
-
-
 /* `movs r0, #0x5c; muls r0, r1, r0` is the 0x5c stride of struct UnitType
  * -- agbcc does not strength-reduce it -- so this is `g[type]`, the unit-type
  * record for whatever gUnknown_030040D8 currently points at.

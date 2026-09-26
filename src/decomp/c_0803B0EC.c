@@ -7,13 +7,6 @@
  * sub_0803B0EC @ 0x0803B0EC, sub_0803B118 @ 0x0803B118
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B0EC.
- * sub_0803B0EC @ 0x0803B0EC
- */
-
 #include "hardware.h"
 
 /* A per-frame hook: run sub_080116E8, then on L (0x200 in gpKeySt->held, the

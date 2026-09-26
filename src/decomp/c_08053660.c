@@ -7,14 +7,6 @@
  * sub_08053660 @ 0x08053660
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08053660.
- * sub_08053660 @ 0x08053660
- */
-
-
 /* F086 -- `push {lr}; lsls #0x10; lsrs #0x10; bl` and nothing else.
  *
  * The narrowing is PROMOTE_MODE on a declared-narrow parameter: agbcc

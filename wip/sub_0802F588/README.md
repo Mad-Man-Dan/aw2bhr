@@ -2,7 +2,7 @@
 
 0x0802F588, 280 bytes, THUMB, parked.
 
-Best score so far: 55.4%, +4 bytes (best.c).
+Best score so far: 54.6%, +4 bytes (best.c).
 
 ## What it does
 

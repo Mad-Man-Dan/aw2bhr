@@ -7,13 +7,6 @@
  * sub_08035FA8 @ 0x08035FA8
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08035FA8.
- * sub_08035FA8 @ 0x08035FA8
- */
-
 #include "proc.h"
 /* Third reader of the gUnknown_0849CD88 row keyed by the proc's unk36, after
  * sub_08035F68 and sub_08035E90. Dispatches on the row's unk1e sentinel:

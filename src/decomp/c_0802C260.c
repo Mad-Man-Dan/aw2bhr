@@ -7,35 +7,6 @@
  * sub_0802C260 @ 0x0802C260, sub_0802C270 @ 0x0802C270, sub_0802C280 @ 0x0802C280, sub_0802C290 @ 0x0802C290
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802C260.
- * sub_0802C260 @ 0x0802C260
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802C270.
- * sub_0802C270 @ 0x0802C270
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802C280.
- * sub_0802C280 @ 0x0802C280
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802C290.
- * sub_0802C290 @ 0x0802C290
- */
-
-
 /* Registers a function with the 16-slot gUnknown_03002FA0 list. sub_08011AAC
  * takes its entry as `void *` (that is how src/decomp/c_08011AAC.c defines it),
  * so a function address has to be cast -- exactly the note carried on the

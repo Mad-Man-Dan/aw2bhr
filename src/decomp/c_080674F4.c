@@ -7,13 +7,6 @@
  * sub_080674F4 @ 0x080674F4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080674F4.
- * sub_080674F4 @ 0x080674F4
- */
-
 /* Returns a full word, not the `s16` this was first promoted as. The callee
  * body cannot tell you: `gUnknown_08580E64` is `const s16 []`, so the `ldrsh`
  * sign-extends into the whole register and `s16`, `int` and `u32` returns are

@@ -7,13 +7,6 @@
  * sub_0803F990 @ 0x0803F990
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803F990.
- * sub_0803F990 @ 0x0803F990
- */
-
 #include "map.h"
 static inline u8 flags(int f) { return f; }
 void sub_0803F990(void) {

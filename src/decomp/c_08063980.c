@@ -7,13 +7,6 @@
  * sub_08063980 @ 0x08063980
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08063980.
- * sub_08063980 @ 0x08063980
- */
-
 #include "hardware.h"
 
 /* Sets the VCOUNT compare value in REG_DISPSTAT bits 8-15, leaving bits 0-7

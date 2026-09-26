@@ -32,16 +32,22 @@ def main():
     src = a.src or os.path.join("work", a.name, a.name + ".c")
     out = a.out or os.path.join(awlib.REPO, "work", a.name, "rtl")
     os.makedirs(out, exist_ok=True)
+    # Remove the previous run's files first, so a failed compile cannot leave
+    # them behind to be read as this draft's dumps.
+    for name in os.listdir(out):
+        if name.startswith("dump.") or name in ("in.i", "out.s"):
+            os.remove(os.path.join(out, name))
     f = agbenv.flags(a.name)
     od = shlex.quote(agbenv.wsl_path(out))
-    script = ('set -e\n{cpp} {cppflags} {src} | iconv -f UTF-8 -t CP932 > {od}/in.i\n'
+    script = ('set -eo pipefail\n'
+              '{cpp} {cppflags} {src} | iconv -f UTF-8 -t CP932 > {od}/in.i\n'
               '{cc1} {cflags} {extra} -dumpbase {od}/dump {od}/in.i -o {od}/out.s\n'
               ).format(od=od, cpp=f["CPP"], cppflags=f["CPPFLAGS"],
                        src=shlex.quote(src.replace("\\", "/")), cc1=f["CC1"],
                        cflags=f["CFLAGS"], extra=a.flags)
-    p = agbenv.run(script)
-    if getattr(p, "returncode", 0):
-        sys.stderr.write(getattr(p, "stderr", "") or "")
+    rc, _, err = agbenv.run(script)
+    if rc != 0:
+        sys.stderr.write(err or "rtldump: the compile failed (exit %d)\n" % rc)
         return 1
     for name in sorted(os.listdir(out)):
         print(os.path.join(out, name))

@@ -7,13 +7,6 @@
  * sub_080452C0 @ 0x080452C0
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080452C0.
- * sub_080452C0 @ 0x080452C0
- */
-
 #include "proc.h"
 /* Only +0x2c, +0x3c and +0x40 are touched here; the rest of the proc is
  * whatever struct Proc already describes. The `adds r0, #0x2c` before the

@@ -7,13 +7,6 @@
  * sub_0801F114 @ 0x0801F114
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0801F114.
- * sub_0801F114 @ 0x0801F114
- */
-
 void sub_0801F114(void)
 {
     s32 i;

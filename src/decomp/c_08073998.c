@@ -7,14 +7,6 @@
  * sub_08073998 @ 0x08073998
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08073998.
- * sub_08073998 @ 0x08073998
- */
-
-
 /* Walks one edge of a polygon down the scanline table, handing each row to
  * sub_08073974.  The endpoints are sorted by y first, the slope is a 16.16
  * fixed-point `dx/dy` -- a real signed `/`, which is where __divsi3 comes from

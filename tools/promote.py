@@ -38,11 +38,16 @@ import subprocess
 import sys
 
 import awlib
+from comment_check import strip_c
 
 WORK = os.path.join(awlib.REPO, "work")
 DECOMP_DIR = os.path.join(awlib.REPO, "src", "decomp")
 PROMOTED = os.path.join(awlib.DATA_DIR, "promoted.json")
 INCLUDE_LINE = '#include "global.h"\n'
+# The comment merge() writes at the top of every promoted file. A draft that
+# was copied back from src/ (sync_work.py) carries it too, and merge() must
+# drop that copy or each sync -> promote cycle adds another one.
+BANNER = re.compile(r'/\* Promoted from assembly;.*?\*/[ \t]*(?:\r?\n)*', re.S)
 
 
 def load_index():
@@ -138,6 +143,12 @@ def refresh_promoted(names, index, existing):
 
     A refresh re-verifies the whole unit before rewriting, so a drifted draft
     cannot smuggle in unverified code.
+
+    Only a CODE difference counts (comment_check.strip_c: comments removed,
+    whitespace collapsed). Comments in src/decomp/ are edited in place and
+    copied to the drafts by sync_work.py, and about 700 files have had their
+    layout tidied by hand since promotion; a text comparison would rewrite
+    all of them in merge()'s layout.
     """
     by_fn = {n: e for e in existing for n in e["functions"]}
     done, refreshed = set(), []
@@ -147,6 +158,18 @@ def refresh_promoted(names, index, existing):
             continue
         done.add(entry["file"])
         run = entry["functions"]
+        # Only generated files are rebuilt from drafts. promoted.json also
+        # lists hand-written files (src/main.c, src/proc.c, ...); merge() would
+        # rewrite those in its own layout, adding a banner and moving includes.
+        if not entry["file"].startswith("src/decomp/"):
+            print("  %s is hand-written, so it is not rebuilt from drafts; "
+                  "edit it directly" % entry["file"])
+            continue
+        missing = [f for f in run if f not in index]
+        if missing:
+            print("  skipped %s: promoted.json lists %s, which is not in "
+                  "data/functions.json" % (entry["file"], ", ".join(missing)))
+            continue
         if any(not os.path.exists(os.path.join(WORK, f, f + ".c")) for f in run):
             continue
         text, err = merge(run, index)
@@ -154,10 +177,10 @@ def refresh_promoted(names, index, existing):
             continue
         path = os.path.join(awlib.REPO, entry["file"].replace("/", os.sep))
         try:
-            current = open(path, encoding="utf-8").read()
+            current = open(path, encoding="utf-8", newline="").read()
         except OSError:
             current = None
-        if current == text:
+        if current is not None and strip_c(current) == strip_c(text):
             continue
         ok, tail, _ = verify_unit(run[0])
         if not ok:
@@ -167,6 +190,13 @@ def refresh_promoted(names, index, existing):
             for ln in tail:
                 print("      %s" % ln)
             continue
+        # merge() writes LF; about 90 files in src/decomp/ have CRLF lines.
+        # Keep each unchanged line's ending so the diff shows the real change.
+        if current is not None:
+            import fix_eol
+            fixed, _ = fix_eol.churn(current.encode("utf-8"), text.encode("utf-8"))
+            if fixed is not None:
+                text = fixed.decode("utf-8")
         awlib.write_text(path, text)
         refreshed.append(entry["file"])
         print("  refreshed %s from its draft(s) -- unit re-verified"
@@ -397,6 +427,7 @@ def merge(run, index):
         if head is None:
             return None, "could not locate the definition of %s in %s" % (
                 name, os.path.relpath(path, awlib.REPO))
+        head = BANNER.sub("", "".join(head)).splitlines(keepends=True)
         for chunk in decl_chunks(head):
             key = chunk_key(chunk)
             for t in defined_types(chunk):
@@ -437,8 +468,10 @@ def merge(run, index):
               " * stay that way -- the linker places this file's .text as one\n"
               " * contiguous block at %s.\n"
               " * %s\n */\n\n" % (index[run[0]]["addr_hex"], addrs))
-    return header + "".join(decls) + ("\n" if decls else "") + \
-        "\n".join(bodies), None
+    # New files are written LF. Some drafts mix in CRLF lines, which would
+    # make the new file mixed too.
+    text = header + "".join(decls) + ("\n" if decls else "") + "\n".join(bodies)
+    return text.replace("\r\n", "\n"), None
 
 
 def contiguous_runs(names, index):

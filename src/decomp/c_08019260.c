@@ -11,13 +11,6 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08019260.
- * WM_ConfirmExit_WHILE_08019261 @ 0x08019260
- */
-
 /* `bool8` and not the `int` this was promoted with. Every one of the twenty
  * `bl WM_ConfirmExit_WHILE_08019261` sites in asm/ narrows the result to eight bits, and two of
  * them (`lsls #0x18; lsrs r4,#0x18` and `lsrs r1,#0x18`) KEEP the value rather

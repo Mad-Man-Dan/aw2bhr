@@ -56,9 +56,9 @@ import promote
 
 PROMOTED = os.path.join(awlib.DATA_DIR, "promoted.json")
 
-# The generated banner names every function in the file, which is wrong on a
-# single-function draft and confusing to read there.
-BANNER = re.compile(r'/\* Promoted from assembly;.*?\*/\n+', re.S)
+# The generated banner is dropped from every draft. promote.merge() writes a
+# fresh one, so a copy kept here would end up in src/ twice.
+BANNER = promote.BANNER
 
 
 def _is_definition(lines, i):
@@ -149,7 +149,7 @@ def split_unit(text, fns):
         starts[fn] = promote.doc_comment_start(lines, hit)
 
     order = sorted(starts, key=lambda f: starts[f])
-    head = BANNER.sub("", "".join(lines[:starts[order[0]]]), count=1)
+    head = BANNER.sub("", "".join(lines[:starts[order[0]]]))
     bodies = {}
     for k, fn in enumerate(order):
         end = starts[order[k + 1]] if k + 1 < len(order) else len(lines)
@@ -175,7 +175,7 @@ def main(argv):
 
         text = open(src, encoding="utf-8", newline="").read()
         if len(fns) == 1:
-            drafts = {fns[0]: text}
+            drafts = {fns[0]: BANNER.sub("", text)}
         else:
             head, bodies = split_unit(text, fns)
             if head is None:

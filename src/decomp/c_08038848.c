@@ -8,13 +8,6 @@
  * sub_08038848 @ 0x08038848
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08038848.
- * sub_08038848 @ 0x08038848
- */
-
 /* Pushes one (x, y) step onto the gUnknown_0849D5F8 move stack and records the
  * fuel left after it: unk20/unk2c are the parallel coordinate tables the
  * wave-32 split of that struct predicted, unk38 is the running cost, and the

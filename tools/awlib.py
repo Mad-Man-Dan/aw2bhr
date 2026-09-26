@@ -46,6 +46,19 @@ def read_lines(path):
     return raw.decode("utf-8", errors="surrogateescape").splitlines(keepends=True)
 
 
+def byte_score(tgt_fn, cand, size):
+    """(differing bytes, common length, percent identical) of a candidate's
+    .text against the target function's `size` bytes. The score is taken over
+    the LONGER of the two: bytes past the end of the shorter one count as
+    differences, so a draft that compiles too long cannot reach 100%."""
+    cand_fn = cand[:size]
+    common = min(len(tgt_fn), len(cand_fn))
+    total = max(size, len(cand))
+    n_diff = sum(1 for a, b in zip(tgt_fn, cand_fn) if a != b) + (total - common)
+    pct = (total - n_diff) / total * 100 if total else 0.0
+    return n_diff, common, pct
+
+
 def write_text(path, text):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "wb") as fh:

@@ -7,13 +7,6 @@
  * sub_08039DA0 @ 0x08039DA0
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08039DA0.
- * sub_08039DA0 @ 0x08039DA0
- */
-
 #include "proc.h"
 /* The same three fields sub_08039BB4 writes when it starts this proc, read
  * back and re-issued with the y bumped by 0xC0. +0x29 and +0x2a each need a

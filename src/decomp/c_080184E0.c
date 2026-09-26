@@ -7,13 +7,6 @@
  * sub_080184E0 @ 0x080184E0
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080184E0.
- * sub_080184E0 @ 0x080184E0
- */
-
 /* Wave 32, W32-A: retyped from a file-local duplicate of the slot struct
  * (`struct Unk80184D8`, filler[8] + a callback word) to the shared
  * `struct Unk0200C528`. sub_080184EC installs THIS function into a slot's +8

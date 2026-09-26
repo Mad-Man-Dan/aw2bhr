@@ -7,14 +7,6 @@
  * sub_0803BAF8 @ 0x0803BAF8
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BAF8.
- * sub_0803BAF8 @ 0x0803BAF8
- */
-
-
 /* `movs r0, #1; bx lr` -- a leaf that returns a constant 1 and reads nothing.
  * Exactly 4 bytes with no padding. The return type is not recoverable: `bool8`,
  * `int`, `u8` and `u16` all emit the same `movs r0, #1` for a returned literal,

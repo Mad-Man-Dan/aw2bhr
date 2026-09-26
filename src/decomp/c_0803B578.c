@@ -7,13 +7,6 @@
  * sub_0803B578 @ 0x0803B578, sub_0803B588 @ 0x0803B588, sub_0803B5A4 @ 0x0803B5A4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B578.
- * sub_0803B578 @ 0x0803B578
- */
-
 #include "proc.h"
 /* A proc callback with no `bl` callers anywhere in asm/ -- it is reached only
  * through a ProcCmd table -- so the parameter is the proc pointer every such
@@ -39,12 +32,6 @@ struct UnkB578Proc
     /* 0x29 */ STRUCT_PAD(0x29, 0x64);
     /* 0x64 */ s16 unk64;
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B588.
- * sub_0803B588 @ 0x0803B588
- */
 
 /* Fade the BGM out over `a` frames and start the ProcScr_FadeSound proc to run
  * the fade down, parking the speed in the proc's +0x64 slot scaled by 16. It

@@ -7,13 +7,6 @@
  * sub_08015568 @ 0x08015568
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x08015568.
- * sub_08015568 @ 0x08015568
- */
-
 /* Family F066 (data/families.json): `push {lr}; lsls r0,r0,#0x10;
  * asrs r0,r0,#0x10; bl S; pop {r0}; bx r0` -- 16 bytes, three members, and
  * `varies` has exactly one entry, the callee. `lsls`+`asrs` is a value-kept

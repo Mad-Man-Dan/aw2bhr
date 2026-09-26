@@ -7,13 +7,6 @@
  * sub_0806C06C @ 0x0806C06C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0806C06C.
- * sub_0806C06C @ 0x0806C06C
- */
-
 struct Unk0806C06C /* >= 0x38 */
 {
     /* 0x00 */ u8 filler_00[0x30];

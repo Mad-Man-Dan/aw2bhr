@@ -7,14 +7,6 @@
  * sub_0802D158 @ 0x0802D158
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802D158.
- * sub_0802D158 @ 0x0802D158
- */
-
-
 /* Family F005 (data/families.json): 19 sixteen-byte wrappers shaped
  * `push {lr}; bl S; bl S; pop {r0}; bx r0` -- two calls, nothing between
  * them, `pop {r0}` so void.

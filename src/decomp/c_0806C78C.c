@@ -8,12 +8,6 @@
  */
 
 #include "proc.h"
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x0806C78C.
- * sub_0806C78C @ 0x0806C78C
- */
 
 /* Family F056 (data/families.json): `push {lr}; bl A; movs r0,#K; bl B;
  * pop {r0}; bx r0` -- 16 bytes, three members, and the three agree on nothing

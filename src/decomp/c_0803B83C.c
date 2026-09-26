@@ -11,13 +11,6 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B83C.
- * BattleMaps_0803B83D @ 0x0803B83C
- */
-
 #include "proc.h"
 
 /* Two statements: stop the gUnknown_0849B048 blob through sub_0801537C, then

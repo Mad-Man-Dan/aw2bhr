@@ -11,13 +11,6 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08087C94.
- * CoDesignC1_08087C95 @ 0x08087C94
- */
-
 #include "proc.h"
 #include "hardware.h"
 struct Unk87C94Proc

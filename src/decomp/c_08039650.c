@@ -7,13 +7,6 @@
  * sub_08039650 @ 0x08039650
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08039650.
- * sub_08039650 @ 0x08039650
- */
-
 #include "proc.h"
 struct Unk39650Proc
 {

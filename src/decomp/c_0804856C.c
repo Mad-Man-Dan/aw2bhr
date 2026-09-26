@@ -7,14 +7,6 @@
  * sub_0804856C @ 0x0804856C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0804856C.
- * sub_0804856C @ 0x0804856C
- */
-
-
 /* Family F003 (data/families.json): 34 twelve-byte forwarders shaped
  * `push {lr}; movs r0,#K; bl S; pop {r0}; bx r0`, i.e. one call with one
  * literal argument and nothing else. `pop {r0}; bx r0` fixes this as void.

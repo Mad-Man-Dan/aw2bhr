@@ -17,6 +17,8 @@ What it does, in SKILL.md section-1 order:
   5. re-tests every data/parked.json entry BY EXIT CODE, and prints a draft
      that does not COMPILE as COMPILE-FAIL with its first error, never as an
      ordinary `still-fails` (wave 90: 46 of 101 drafts after PR #3's renames)
+  5b. lists parked drafts that read a compiler-made pool word instead of
+     naming the global it points at (tools/lc_screen.py --drafts)
   6. prints the current draft-residual queue (including unmeasured drafts)
   7. reminds you to inspect overlap_screen.py's full locality/shape report too
 
@@ -303,6 +305,12 @@ def main():
         print("skipped (--skip-parked)")
     else:
         retest_parked([n for n in parked if n not in stale])
+
+    # 5b. Drafts that read a compiler-made pool word instead of naming the
+    # global it points at. Renaming moved 4 of 4 such drafts in wave 91.
+    sect("pool-word spellings in parked drafts (fix these first)")
+    r = run(["tools/lc_screen.py", "--drafts"])
+    print((r.stdout + r.stderr).rstrip())
 
     # 6. The residual kind is now the primary queue. Run it here so a plain
     # preflight cannot accidentally omit unmeasured drafts or loop candidates.

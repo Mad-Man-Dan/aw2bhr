@@ -7,13 +7,6 @@
  * sub_08035E90 @ 0x08035E90
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08035E90.
- * sub_08035E90 @ 0x08035E90
- */
-
 #include "proc.h"
 /* Fires the help line for the proc's current mode (unk36, the same
  * gUnknown_0849CD88 row index sub_08035F68 and sub_08035FA8 use).

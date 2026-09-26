@@ -7,13 +7,6 @@
  * sub_08017A58 @ 0x08017A58
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08017A58.
- * sub_08017A58 @ 0x08017A58
- */
-
 /* `s16` and NOT `bool8`, settled from its caller: sub_08017D30 returns this
  * function's result unconverted and the ROM narrows it `lsls #0x10; asrs
  * #0x10`, where a `bool8` return probes as `lsls #0x18; lsrs #0x18`. The body

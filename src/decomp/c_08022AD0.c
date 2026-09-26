@@ -7,13 +7,6 @@
  * sub_08022AD0 @ 0x08022AD0
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08022AD0.
- * sub_08022AD0 @ 0x08022AD0
- */
-
 /* Both parameters are `s16` and not the `u16` this was promoted with. The body
  * is two plain `strh`s and is byte-identical either way, so the evidence is
  * entirely on the caller side: sub_08019DCC (wave 26) passes an `ldrsh` member

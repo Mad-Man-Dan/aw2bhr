@@ -8,13 +8,6 @@
  * sub_08035C90 @ 0x08035C90
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08035C90.
- * sub_08035C90 @ 0x08035C90
- */
-
 #include "proc.h"
 /* "Is the cell under this proc terrain kind 2?"  The cell key is the standard
  * gUnknown_08499590 one -- `rowOffset[y] + x` off the +0x417A row table into

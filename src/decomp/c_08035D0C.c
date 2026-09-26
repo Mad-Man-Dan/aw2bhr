@@ -8,13 +8,6 @@
  * sub_08035D0C @ 0x08035D0C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08035D0C.
- * sub_08035D0C @ 0x08035D0C
- */
-
 #include "proc.h"
 /* Picks the help/message id for whatever the proc's cursor is standing on:
  * two overriding predicates first, then a table on the low five bits of the

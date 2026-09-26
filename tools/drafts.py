@@ -213,8 +213,14 @@ def build(fn, src_rel, label, include=None, profile="configured"):
     if rc != 0 or MARK not in so:
         b.err = (se or so).strip()
         return b
-    b.ok = True
     b.text = _read(absp(tb))
+    if not b.text:
+        # Without pipefail a failed cpp still "succeeds": agbcc reads nothing,
+        # `as` assembles an empty file. No draft compiles to zero bytes.
+        b.err = se.strip() or "the draft compiled to an empty .text " \
+                              "(the preprocessor probably failed)"
+        return b
+    b.ok = True
     b.rodata = _read(absp(rb))
     b.relocs = _parse_relocs(so.split(MARK, 1)[1])
     return b
@@ -292,8 +298,8 @@ def target(fn):
 def score(fn, b):
     """dict(state, pct, size_delta, first, n_diff) for a Build against the ROM.
 
-    Same arithmetic as trymatch.check(): identical bytes over the common
-    prefix, as a share of the TARGET size; relocations must agree or be
+    Same arithmetic as trymatch.check() (awlib.byte_score: identical bytes
+    as a share of the longer of candidate and target); relocations must agree or be
     equivalent under trymatch's own rules.
     """
     if not b.ok:
@@ -307,9 +313,7 @@ def score(fn, b):
     cand_fn = cand[:size]
     c_rel = [(o, ty, sy) for (sect, o, ty, sy) in b.relocs
              if sect == ".text" and o < size]
-    n_diff = sum(1 for x, y in zip(tgt_fn, cand_fn) if x != y)
-    common = min(len(tgt_fn), len(cand_fn))
-    pct = (common - n_diff) / size * 100 if size else 0.0
+    n_diff, common, pct = awlib.byte_score(tgt_fn, cand, size)
     first = next((i for i, (x, y) in enumerate(zip(tgt_fn, cand_fn)) if x != y),
                  common)
     same = tgt_fn == cand_fn and len(cand) == size

@@ -34,6 +34,7 @@ included.
     python tools/lc_screen.py                 # summarise the straight-line band
     python tools/lc_screen.py sub_0800AA30    # classify one function's refs
 """
+import bisect
 import json
 import os
 import re
@@ -93,8 +94,78 @@ class Screen:
         return pool, real
 
 
+_ROM_SYM = re.compile(r"\bgUnknown_(08[0-9A-F]{6})\b")
+
+
+def _is_address(word):
+    return (0x02000000 <= word < 0x02040000 or 0x03000000 <= word < 0x03008000
+            or 0x08000000 <= word < 0x08800000)
+
+
+def pool_word_drafts(fns):
+    """[(fn, symbol, word)]: unmatched drafts that name a compiler-made pool
+    word instead of the global it points at.
+
+    agbcc sometimes puts a global's address in a word of .rodata and loads
+    it from there. The splitter names that word gUnknown_08XXXXXX, and a
+    draft that reads the word as a pointer variable compiles to different
+    code than one that names the real global. Wave 91 changed four drafts
+    from the first spelling to the second and all four moved; one matched.
+
+    A symbol is flagged when its ROM word is itself an address AND no other
+    function references it. Both halves matter: without the fan-in test,
+    shared pointer globals such as gUnknown_08499594 (167 readers) are
+    flagged too.
+    """
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    from comment_check import strip_c
+    with open(os.path.join(ROOT, "baserom.gba"), "rb") as fh:
+        rom = fh.read()
+    scr = Screen(fns)
+    code_spans = sorted((f["addr"], f["addr"] + f["size"]) for f in fns)
+    starts = [s for s, _ in code_spans]
+
+    def inside_code(word):
+        """A word pointing into the middle of a function is data that happens
+        to look like an address (two halfwords, say), not a pointer."""
+        k = bisect.bisect_right(starts, word) - 1
+        return k >= 0 and code_spans[k][0] < (word & ~1) < code_spans[k][1]
+
+    out = []
+    for f in fns:
+        if f["status"] != "parked":
+            continue
+        path = os.path.join(ROOT, "work", f["name"], f["name"] + ".c")
+        if not os.path.isfile(path):
+            continue
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            code = strip_c(fh.read())
+        for hexaddr in sorted(set(_ROM_SYM.findall(code))):
+            off = int(hexaddr, 16) - 0x08000000
+            if off % 4 or off + 4 > len(rom):
+                continue
+            word = int.from_bytes(rom[off:off + 4], "little")
+            sym = "gUnknown_" + hexaddr
+            if (_is_address(word) and not inside_code(word)
+                    and scr.fanin[sym] <= FANIN_MAX):
+                out.append((f["name"], sym, word))
+    return out
+
+
 def main(argv):
     fns = load()
+    if argv[:1] == ["--drafts"]:
+        hits = pool_word_drafts(fns)
+        by_fn = collections.defaultdict(list)
+        for fn, sym, word in hits:
+            by_fn[fn].append((sym, word))
+        print("%d unmatched draft(s) name a compiler-made pool word:" % len(by_fn))
+        for fn in sorted(by_fn):
+            print("  %s" % fn)
+            for sym, word in by_fn[fn]:
+                print("      %s holds 0x%08X -- name the global at 0x%08X, "
+                      "not %s" % (sym, word, word, sym))
+        return 0
     scr = Screen(fns)
     by_name = {f["name"]: f for f in fns}
 

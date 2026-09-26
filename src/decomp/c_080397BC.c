@@ -7,13 +7,6 @@
  * sub_080397BC @ 0x080397BC, sub_080397CC @ 0x080397CC, sub_080397DC @ 0x080397DC, sub_080397F4 @ 0x080397F4, sub_08039820 @ 0x08039820
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080397BC.
- * sub_080397BC @ 0x080397BC
- */
-
 #include "proc.h"
 struct Unk397BCProc
 {
@@ -28,20 +21,6 @@ struct Unk397CCProc
     /* 0x29 */ STRUCT_PAD(0x29, 0x54);
     /* 0x54 */ int unk54;
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080397DC.
- * sub_080397DC @ 0x080397DC
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080397F4.
- * sub_080397F4 @ 0x080397F4
- */
-
 
 /* The proc is ActivateCoPower's third argument. `adds r2, r0, #0` BEFORE either
  * load is the whole evidence: r2 is the third argument register, and a

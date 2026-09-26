@@ -34,12 +34,6 @@
  * take opposite sides on them. Same lever, opposite polarity. */
 
 #include "global.h"
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08073770.
- * sub_08073770 @ 0x08073770
- */
 
 #include "hardware.h"
 #include "proc.h"

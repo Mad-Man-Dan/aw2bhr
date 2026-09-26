@@ -7,14 +7,6 @@
  * sub_0804D6C8 @ 0x0804D6C8
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0804D6C8.
- * sub_0804D6C8 @ 0x0804D6C8
- */
-
-
 /* F087 -- three members that differ only in one size constant. The whole
  * function is one call to sub_08011E54(src, dest, size) with size 0x400.
  *

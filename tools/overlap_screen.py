@@ -600,9 +600,7 @@ def delta_rows(recs, args):
 
         tgt_fn = tgt[off:off + r["size"]]
         cand_fn = cand[:r["size"]]
-        n_diff = sum(1 for a, b in zip(tgt_fn, cand_fn) if a != b)
-        common = min(len(tgt_fn), len(cand_fn))
-        pct = (common - n_diff) / r["size"] * 100 if r["size"] else 0.0
+        n_diff, common, pct = awlib.byte_score(tgt_fn, cand, r["size"])
         code_delta = cl[0] - rl[0]
         rows.append({
             "rec": r, "name": r["name"], "size": r["size"],

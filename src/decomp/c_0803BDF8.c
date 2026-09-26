@@ -7,28 +7,6 @@
  * sub_0803BDF8 @ 0x0803BDF8, sub_0803BE10 @ 0x0803BE10, sub_0803BE28 @ 0x0803BE28
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BDF8.
- * sub_0803BDF8 @ 0x0803BDF8
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BE10.
- * sub_0803BE10 @ 0x0803BE10
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BE28.
- * sub_0803BE28 @ 0x0803BE28
- */
-
-
 /* F083 -- the three members differ only in the byte they store.
  *
  * The double load (`ldr r0,=gUnknown_0849ECDC; ldr r1,[r0]; strb`) is the

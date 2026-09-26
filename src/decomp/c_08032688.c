@@ -7,14 +7,6 @@
  * sub_08032688 @ 0x08032688
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08032688.
- * sub_08032688 @ 0x08032688
- */
-
-
 /* F079 -- a three-argument forwarder that passes its own argument through
  * untouched and supplies the other two as literals.
  *

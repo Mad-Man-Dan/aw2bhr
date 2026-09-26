@@ -7,13 +7,6 @@
  * sub_08032420 @ 0x08032420
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08032420.
- * sub_08032420 @ 0x08032420
- */
-
 #include "proc.h"
 
 /* `lsls #2; adds; lsls #0x13; asrs #0x10` is `x * 40` narrowed to s16: the x5

@@ -7,14 +7,6 @@
  * sub_08032048 @ 0x08032048
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08032048.
- * sub_08032048 @ 0x08032048
- */
-
-
 /* Three things here are structure and not noise:
  *
  * 1. The two byte globals are one CHAINED assignment, not two statements.

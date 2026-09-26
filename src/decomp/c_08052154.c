@@ -7,13 +7,6 @@
  * sub_08052154 @ 0x08052154
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08052154.
- * sub_08052154 @ 0x08052154
- */
-
 #include "hardware.h"
 
 /* The wave-17 shape cluster of src/decomp/c_08051DE0.c, two members further

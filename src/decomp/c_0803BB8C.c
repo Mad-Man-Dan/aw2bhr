@@ -7,14 +7,6 @@
  * sub_0803BB8C @ 0x0803BB8C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BB8C.
- * sub_0803BB8C @ 0x0803BB8C
- */
-
-
 /* `movs r0, #1; bx lr` -- a leaf returning a constant 1, exactly 4 bytes with
  * no padding, and one of three identical copies in this block with
  * sub_0803BAF8 and sub_0803BBA4. The return type is not recoverable: a returned

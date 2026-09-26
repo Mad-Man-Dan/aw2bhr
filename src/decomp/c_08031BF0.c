@@ -7,13 +7,6 @@
  * sub_08031BF0 @ 0x08031BF0, sub_08031C1C @ 0x08031C1C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031BF0.
- * sub_08031BF0 @ 0x08031BF0
- */
-
 #include "proc.h"
 
 /* The (u32) cast is sub_080337D8's own promoted signature

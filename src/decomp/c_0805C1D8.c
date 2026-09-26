@@ -7,14 +7,6 @@
  * CopCondTurnBoundary @ 0x0805C1D8
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0805C1D8.
- * CopCondTurnBoundary @ 0x0805C1D8
- */
-
-
 /* The three-level `ldr rN,=<word>; ldr rM,[rN]; ldr rD,[rM]` is agbcc's own
  * -fforce-addr copy supplying the middle level, not a pointer-to-pointer: the
  * ROM word at 0x0816D9D4 holds 0x03004770, and its neighbours 0x0816D9D0 and

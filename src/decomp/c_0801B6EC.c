@@ -7,21 +7,6 @@
  * sub_0801B6EC @ 0x0801B6EC, sub_0801B6FC @ 0x0801B6FC
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0801B6EC.
- * sub_0801B6EC @ 0x0801B6EC
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0801B6FC.
- * sub_0801B6FC @ 0x0801B6FC
- */
-
-
 /* Family F024's shape, but the `bl` target is `_call_via_r1` -- the ARMv4T
  * interworking veneer (`bx r1`), which is how gcc/agbcc compiles an INDIRECT
  * call in THUMB, since the GBA has no `blx rN`. There are 40 of these in the

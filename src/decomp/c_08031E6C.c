@@ -8,12 +8,6 @@
  */
 
 #include "proc.h"
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031E6C.
- * sub_08031E6C @ 0x08031E6C
- */
 
 /* Family F000 (tools/families.py): `push {lr}; ldr r0,=X; bl S;
  * pop {r0}; bx r0` -- a one-line forwarder. `pop {r0}` is the void epilogue

@@ -7,20 +7,6 @@
  * sub_0803B18C @ 0x0803B18C, sub_0803B198 @ 0x0803B198
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B18C.
- * sub_0803B18C @ 0x0803B18C
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B198.
- * sub_0803B198 @ 0x0803B198
- */
-
 #include "hardware.h"
 
 /* Twelve bytes: one call, then a literal 0 in r0 and `pop {r1}; bx r1`. The

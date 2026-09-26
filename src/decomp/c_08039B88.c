@@ -7,13 +7,6 @@
  * sub_08039B88 @ 0x08039B88
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08039B88.
- * sub_08039B88 @ 0x08039B88
- */
-
 #include "proc.h"
 
 /* sub_080321A8's predicate, returned instead of acted on: 1 when either

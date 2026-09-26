@@ -7,21 +7,7 @@
  * sub_0803BE40 @ 0x0803BE40, sub_0803BE5C @ 0x0803BE5C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BE40.
- * sub_0803BE40 @ 0x0803BE40
- */
-
 #include "proc.h"
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803BE5C.
- * sub_0803BE5C @ 0x0803BE5C
- */
-
 
 /* Three statements: sub_0801A168 (whose `int` result is discarded -- nothing
  * re-narrows it and `pop {r0}` makes this void), then start the

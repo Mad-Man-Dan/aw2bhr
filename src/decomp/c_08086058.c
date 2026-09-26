@@ -11,13 +11,6 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x08086058.
- * PutMapPropertiesPreview_IDLE_08086059 @ 0x08086058
- */
-
 /* Family F062 (data/families.json): `push {r4,lr}; adds r4,r0,#0; bl A;
  * adds r0,r4,#0; bl B; pop {r4}; pop {r0}; bx r0` -- 20 bytes, three members.
  * Both `adds` immediates are absent from `varies`, so only the two callees

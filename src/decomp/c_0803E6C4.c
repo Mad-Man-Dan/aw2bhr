@@ -7,13 +7,6 @@
  * sub_0803E6C4 @ 0x0803E6C4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803E6C4.
- * sub_0803E6C4 @ 0x0803E6C4
- */
-
 #include "map.h"
 
 /*

@@ -572,8 +572,10 @@ def start_function(name_or_addr: str) -> dict:
 
 
 @mcp.tool()
-def try_match(name_or_addr: str, c_code: str, show_diff: bool = True,
-              compiler_profile: str = "configured") -> dict:
+def try_match(name_or_addr: str, c_code: str | None = None,
+              show_diff: bool = True, compiler_profile: str = "configured",
+              cflags_add: list[str] | None = None,
+              cflags_remove: list[str] | None = None) -> dict:
     """Compile candidate C for one function and report whether it matches.
 
     This is the verdict the whole pipeline exists to produce. `matched` is true
@@ -591,6 +593,13 @@ def try_match(name_or_addr: str, c_code: str, show_diff: bool = True,
     The other named profiles are temporary experiments. A match under one is
     provisional until the coordinator records an evidence-backed override and
     re-runs the configured profile.
+
+    cflags_add / cflags_remove change single compiler flags on top of
+    compiler_profile, e.g. cflags_add=["-fno-gcse"]. The result is the
+    temporary profile "custom", so a match is provisional as above.
+
+    c_code=None re-scores the draft already in work/ without rewriting it;
+    use that to try the same draft under different flags.
     """
     rec = _resolve(name_or_addr)
     if rec is None:
@@ -606,11 +615,26 @@ def try_match(name_or_addr: str, c_code: str, show_diff: bool = True,
         if not scaffold["ok"]:
             return {"step": "scaffold", **scaffold}
 
-    awlib.write_text(os.path.join(work, name + ".c"), c_code)
+    if c_code is not None:
+        awlib.write_text(os.path.join(work, name + ".c"), c_code)
+    elif not os.path.exists(os.path.join(work, name + ".c")):
+        return {"error": f"c_code is empty and work/{name}/{name}.c does not "
+                         f"exist; pass the C to score"}
 
     args = ["tools/trymatch.py", name]
     if compiler_profile != "configured":
         args.extend(["--profile", compiler_profile])
+    for opt in cflags_add or []:
+        args.append("--cflags-add=" + opt)
+    for opt in cflags_remove or []:
+        args.append("--cflags-remove=" + opt)
+    if cflags_add or cflags_remove:
+        try:
+            compiler_profile = agbenv.custom_profile(
+                cflags_add or [], cflags_remove or [], base=compiler_profile,
+                fn=name)
+        except ValueError as exc:
+            return {"error": str(exc)}
     if show_diff:
         args.append("--diff")
     res = _run(args)
@@ -697,7 +721,9 @@ def permute(name_or_addr: str, seconds: int = 300, threads: int = 4) -> dict:
 
 @mcp.tool()
 def compile_probe(c_code: str, name_or_addr: str | None = None,
-                  compiler_profile: str = "configured") -> dict:
+                  compiler_profile: str = "configured",
+                  cflags_add: list[str] | None = None,
+                  cflags_remove: list[str] | None = None) -> dict:
     """Compile candidate C and return the assembly agbcc produced. No verdict.
 
     Use this to test a hypothesis. It does not count as an attempt and does not
@@ -707,6 +733,8 @@ def compile_probe(c_code: str, name_or_addr: str | None = None,
 
     Reading the output against the target tells you most of what a diff would,
     without needing a candidate good enough to score.
+
+    cflags_add / cflags_remove change single compiler flags, as in try_match.
     """
     # name_or_addr is optional and only names the scratch file. Guarding here
     # rather than inside _resolve, which is entitled to assume a string: without
@@ -718,6 +746,13 @@ def compile_probe(c_code: str, name_or_addr: str | None = None,
                          (compiler_profile,
                           ", ".join(agbenv.compiler_profiles()))}
     stem = (_resolve(name_or_addr) or {}).get("name") if name_or_addr else None
+    if cflags_add or cflags_remove:
+        try:
+            compiler_profile = agbenv.custom_profile(
+                cflags_add or [], cflags_remove or [], base=compiler_profile,
+                fn=stem)
+        except ValueError as exc:
+            return {"ok": False, "error": str(exc)}
     stem = stem or "probe"
     suffix = "" if compiler_profile == "configured" else "." + compiler_profile
     rel = "build/probe/%s%s.c" % (stem, suffix)

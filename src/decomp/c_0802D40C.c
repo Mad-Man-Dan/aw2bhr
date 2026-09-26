@@ -7,11 +7,10 @@
  * sub_0802D40C @ 0x0802D40C, sub_0802D41C @ 0x0802D41C, sub_0802D42C @ 0x0802D42C, sub_0802D43C @ 0x0802D43C, sub_0802D44C @ 0x0802D44C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802D40C.
- * sub_0802D40C @ 0x0802D40C
+/* Family F000 (tools/families.py): `push {lr}; ldr r0,=X; bl S;
+ * pop {r0}; bx r0` -- a one-line forwarder. `pop {r0}` is the void epilogue
+ * per docs/agbcc-codegen.md, so the callee's result is discarded and this
+ * returns nothing. The exemplar is src/decomp/c_080733B8.c.
  */
 
 /* Family F000 (tools/families.py): `push {lr}; ldr r0,=X; bl S;
@@ -20,37 +19,10 @@
  * returns nothing. The exemplar is src/decomp/c_080733B8.c.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802D41C.
- * sub_0802D41C @ 0x0802D41C
- */
-
 /* Family F000 (tools/families.py): `push {lr}; ldr r0,=X; bl S;
  * pop {r0}; bx r0` -- a one-line forwarder. `pop {r0}` is the void epilogue
  * per docs/agbcc-codegen.md, so the callee's result is discarded and this
  * returns nothing. The exemplar is src/decomp/c_080733B8.c.
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802D42C.
- * sub_0802D42C @ 0x0802D42C
- */
-
-/* Family F000 (tools/families.py): `push {lr}; ldr r0,=X; bl S;
- * pop {r0}; bx r0` -- a one-line forwarder. `pop {r0}` is the void epilogue
- * per docs/agbcc-codegen.md, so the callee's result is discarded and this
- * returns nothing. The exemplar is src/decomp/c_080733B8.c.
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802D43C.
- * sub_0802D43C @ 0x0802D43C
  */
 
 /* Family F000 (tools/families.py): `push {lr}; ldr r0,=X; bl S;

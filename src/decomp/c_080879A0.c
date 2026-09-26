@@ -7,13 +7,6 @@
  * sub_080879A0 @ 0x080879A0
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080879A0.
- * sub_080879A0 @ 0x080879A0
- */
-
 #include "proc.h"
 
 /* One of family F000's 16-byte forwarders: `push {lr}; ldr r0,=script;

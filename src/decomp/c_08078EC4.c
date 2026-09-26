@@ -7,14 +7,6 @@
  * sub_08078EC4 @ 0x08078EC4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08078EC4.
- * sub_08078EC4 @ 0x08078EC4
- */
-
-
 /* One of family F000's 16-byte forwarders, over the sub_0803B524 sound-id
  * call. The id is 0x1A1, which does not fit `movs #imm8` and so arrives from the
  * literal pool -- the same pool `ldr` a symbol would produce, per

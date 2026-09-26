@@ -7,13 +7,6 @@
  * sub_080638A8 @ 0x080638A8
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080638A8.
- * sub_080638A8 @ 0x080638A8
- */
-
 #include "hardware.h"
 
 /* Clears one 4bpp tile (32 bytes) of VRAM with DMA3: fixed source pointing at

@@ -2,7 +2,7 @@
 
 0x080560A4, 680 bytes, THUMB, parked.
 
-Best score so far: 25.4%, +4 bytes.
+Best score so far: 25.3%, +4 bytes.
 
 ## What it does
 

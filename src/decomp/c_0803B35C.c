@@ -7,28 +7,6 @@
  * sub_0803B35C @ 0x0803B35C, sub_0803B37C @ 0x0803B37C, sub_0803B3B0 @ 0x0803B3B0
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B35C.
- * sub_0803B35C @ 0x0803B35C
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B37C.
- * sub_0803B37C @ 0x0803B37C
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B3B0.
- * sub_0803B3B0 @ 0x0803B3B0
- */
-
-
 /* The setter twin of sub_0803B350 (src/decomp/c_0803B350.c), one slot along:
  * park the new value in gUnknown_030005CE, then push it to the m4a mixer as
  * sub_08071420's (MPlayVolumeControl) volume, with 0xFFFF as the track mask.

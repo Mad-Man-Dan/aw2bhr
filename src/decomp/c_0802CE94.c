@@ -7,14 +7,6 @@
  * sub_0802CE94 @ 0x0802CE94
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0802CE94.
- * sub_0802CE94 @ 0x0802CE94
- */
-
-
 /* Family F045: `push {lr}; lsls r1,#0x18; lsrs r1,#0x18; ldr r0,=g;
  * str r1,[r0]; bl sub_0801A168; bl <second>; pop {r0}; bx r0`.
  *

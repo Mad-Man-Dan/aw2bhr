@@ -11,14 +11,6 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08027B68.
- * DayStart_IDLE_08027B69 @ 0x08027B68
- * sub_08027CC8 @ 0x08027CC8
- */
-
 #include "hardware.h"
 #include "proc.h"
 /* The ProcScr_DayStart proc, started by sub_08027B10: a spinning, shrinking

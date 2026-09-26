@@ -7,13 +7,6 @@
  * SetupCoSelectNeotanksYc @ 0x080787EC
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x080787EC.
- * SetupCoSelectNeotanksYc @ 0x080787EC
- */
-
 /* Family F035 (data/families.json): `push {lr}; bl A; movs r0,#0; bl B; bl C;
  * pop {r0}; bx r0` -- 20 bytes, five members, and `varies` lists only the three
  * `bl` targets, so the `movs r0, #0` is byte-identical in every member.

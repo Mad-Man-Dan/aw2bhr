@@ -7,42 +7,6 @@
  * sub_0803B640 @ 0x0803B640, sub_0803B660 @ 0x0803B660, sub_0803B680 @ 0x0803B680, sub_0803B684 @ 0x0803B684, sub_0803B688 @ 0x0803B688
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B640.
- * sub_0803B640 @ 0x0803B640
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B660.
- * sub_0803B660 @ 0x0803B660
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B680.
- * sub_0803B680 @ 0x0803B680
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B684.
- * sub_0803B684 @ 0x0803B684
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B688.
- * sub_0803B688 @ 0x0803B688
- */
-
-
 /* The drain half of sub_0803B4EC: if a song id was PARKED in gUnknown_030005C8
  * while sound was suppressed (i.e. the slot is not the 0xFFFF sentinel), start
  * it now. The `ldrh` for the sentinel compare and the `ldrsh` for the argument

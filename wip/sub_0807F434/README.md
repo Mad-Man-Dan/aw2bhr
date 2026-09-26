@@ -2,7 +2,7 @@
 
 0x0807F434, 240 bytes, THUMB, parked.
 
-Best score so far: 18.3%, +8 bytes.
+Best score so far: 17.7%, +8 bytes.
 
 ## What it does
 

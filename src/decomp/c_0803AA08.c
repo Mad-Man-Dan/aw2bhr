@@ -7,14 +7,6 @@
  * sub_0803AA08 @ 0x0803AA08
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803AA08.
- * sub_0803AA08 @ 0x0803AA08
- */
-
-
 /* src/decomp/c_0803AA78.c's other twin, and the only structural difference is
  * what the two sub_0803A190 / sub_0803A2BC calls are handed: sub_0803AA78
  * passes &gUnknown_03004100 itself, this one passes the unk18 word of the

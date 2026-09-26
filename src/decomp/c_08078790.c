@@ -7,13 +7,6 @@
  * SetupCoSelectLiberation @ 0x08078790, SetupCoSelectNeotanksBm @ 0x080787A4
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x08078790.
- * SetupCoSelectLiberation @ 0x08078790
- */
-
 /* Family F035 (data/families.json): `push {lr}; bl A; movs r0,#0; bl B; bl C;
  * pop {r0}; bx r0` -- 20 bytes, five members, and `varies` lists only the three
  * `bl` targets, so the `movs r0, #0` is byte-identical in every member.
@@ -26,13 +19,6 @@
  *     which is what makes A's result dead;
  *   - callee C writes r0 before reading it, so a nest is not expressible.
  * `pop {r0}` is the void epilogue, so nothing is returned either.
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file .text as one
- * contiguous block at 0x080787A4.
- * SetupCoSelectNeotanksBm @ 0x080787A4
  */
 
 /* Family F035 (data/families.json): `push {lr}; bl A; movs r0,#0; bl B; bl C;

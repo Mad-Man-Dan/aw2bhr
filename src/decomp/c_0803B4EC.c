@@ -7,20 +7,6 @@
  * sub_0803B4EC @ 0x0803B4EC, sub_0803B524 @ 0x0803B524
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B4EC.
- * sub_0803B4EC @ 0x0803B4EC
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B524.
- * sub_0803B524 @ 0x0803B524
- */
-
 #include "proc.h"
 
 /* "Play song id, unless sound is suppressed": when gPlaySt.unk0c is

@@ -7,25 +7,12 @@
  * sub_08031E7C @ 0x08031E7C, sub_08031E9C @ 0x08031E9C, sub_08031ED0 @ 0x08031ED0, sub_08031EE4 @ 0x08031EE4, sub_08031F10 @ 0x08031F10, sub_08031F28 @ 0x08031F28, sub_08031F5C @ 0x08031F5C, sub_08031F88 @ 0x08031F88, sub_08031FB8 @ 0x08031FB8
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031E7C.
- * sub_08031E7C @ 0x08031E7C
- */
-
 struct Unk31E7CProc
 {
     /* 0x00 */ u8 filler_00[0x58];
     /* 0x58 */ int unk58; /* a frame counter: sub_08031E9C decrements it every
                            * fourth frame and Proc_Break's when it reaches 0 */
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031E9C.
- * sub_08031E9C @ 0x08031E9C
- */
 
 #include "proc.h"
 struct Unk31E9CProc
@@ -33,12 +20,6 @@ struct Unk31E9CProc
     /* 0x00 */ u8 filler_00[0x58];
     /* 0x58 */ int unk58;
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031ED0.
- * sub_08031ED0 @ 0x08031ED0
- */
 
 /* +0x1e is BELOW PROC_HEADER's 0x29 bytes -- it lands inside proc_next -- so
  * whatever this callback is handed, it is not being read as a `struct Proc`.
@@ -52,49 +33,24 @@ struct Unk31ED0Proc
                            * with `lsls #0x10; cmp #0; bge`, i.e. bit 15 as a
                            * sign */
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031EE4.
- * sub_08031EE4 @ 0x08031EE4
- */
 
 struct Unk31EE4Proc
 {
     /* 0x00 */ u8 filler_00[0x1e];
     /* 0x1e */ s16 unk1e;
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031F10.
- * sub_08031F10 @ 0x08031F10
- */
 
 struct Unk31F10Proc
 {
     /* 0x00 */ u8 filler_00[0x1e];
     /* 0x1e */ s16 unk1e;
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031F88.
- * sub_08031F88 @ 0x08031F88
- */
 
 struct Unk31F88Proc
 {
     /* 0x00 */ u8 filler_00[0x58];
     /* 0x58 */ int unk58;
 };
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031FB8.
- * sub_08031FB8 @ 0x08031FB8
- */
-
 
 /* `movs r1, #1; rsbs r1, r1, #0` here is the CONSTANT -1 handed to
  * sub_0801394C as its second argument, NOT the negate-and-subtract bitfield
@@ -161,13 +117,6 @@ void sub_08031F10(struct Unk31F10Proc *proc)
     sub_080135A4();
 }
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031F28.
- * sub_08031F28 @ 0x08031F28
- */
-
 void sub_08031F28(void)
 {
     sub_0803B4DC(0x6c);
@@ -175,13 +124,6 @@ void sub_08031F28(void)
     if (gUnknown_0849B018->unk00 == 3)
         gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 12, 2);
 }
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08031F5C.
- * sub_08031F5C @ 0x08031F5C
- */
 
 void sub_08031F5C(void)
 {

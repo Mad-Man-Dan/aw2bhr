@@ -7,21 +7,6 @@
  * sub_0803B7D8 @ 0x0803B7D8, sub_0803B804 @ 0x0803B804
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B7D8.
- * sub_0803B7D8 @ 0x0803B7D8
- */
-
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0803B804.
- * sub_0803B804 @ 0x0803B804
- */
-
-
 /* "Suspend the BGM": stash the currently-requested song id in gUnknown_030005C8
  * so sub_0803B640 / sub_0803B660 can restart it later, blank the requested slot
  * to the 0xFFFF sentinel, then fade the mixer out and pause it over 2 frames

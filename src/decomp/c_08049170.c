@@ -11,13 +11,6 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08049170.
- * BattleMaps_08049171 @ 0x08049170
- */
-
 struct Unk8049170
 {
     /* 0x00 */ u8 filler_00[0x64];

@@ -8,13 +8,6 @@
  * IsTerrainSilo @ 0x0804247C
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0804247C.
- * IsTerrainSilo @ 0x0804247C
- */
-
 /* The c_08001158.c map-cell idiom: gUnknown_08499590 is a `u8 *` whose +0x417A
  * is a table of per-row halfword offsets and whose +0x1432 is the cell array
  * this one reads (c_08001158.c uses +0xA22 for tiles). The four locals are what

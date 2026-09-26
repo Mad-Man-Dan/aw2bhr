@@ -7,13 +7,6 @@
  * sub_08012C48 @ 0x08012C48
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08012C48.
- * sub_08012C48 @ 0x08012C48
- */
-
 struct Unk8012C30
 {
     u8 unk00_0 : 2;

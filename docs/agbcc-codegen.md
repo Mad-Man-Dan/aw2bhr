@@ -1880,7 +1880,8 @@ gcse for one function, and none is known. sub_0805D888 points the same way:
 without its asm barrier it is +36 / 33.1% configured, but size-exact and
 64.8% under `-fno-gcse`, with ONE 2-byte residual (the y-loop guard; see
 work/sub_0805D888/NOTES.md). **`--profile o1` is NOT this test**, because it
-changes ten flags. Test with `-fno-gcse` alone.
+changes ten flags. Test with `-fno-gcse` alone:
+`python tools/trymatch.py <fn> --cflags-add=-fno-gcse`.
 
 ## Six parks closed by W90-C, and what each one teaches (wave 90)
 

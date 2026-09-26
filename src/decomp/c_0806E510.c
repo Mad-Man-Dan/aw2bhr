@@ -7,13 +7,6 @@
  * sub_0806E510 @ 0x0806E510
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x0806E510.
- * sub_0806E510 @ 0x0806E510
- */
-
 #include "proc.h"
 /* Spawns the six gUnknown_08582B14 procs -- one per row of gUnknown_08582A7C,
  * whose 0x78 ROM extent is exactly the six 0x14-byte rows this loop walks --

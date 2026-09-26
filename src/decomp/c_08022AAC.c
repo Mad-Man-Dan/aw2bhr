@@ -7,13 +7,6 @@
  * sub_08022AAC @ 0x08022AAC
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x08022AAC.
- * sub_08022AAC @ 0x08022AAC
- */
-
 /* Wave 31, W31-A RETYPED the parameters u16 -> s16, and re-verified this
  * function byte-for-byte afterwards. Nothing in this body can tell the two
  * apart: agbcc's PROMOTE_MODE narrows a parameter of either signedness with

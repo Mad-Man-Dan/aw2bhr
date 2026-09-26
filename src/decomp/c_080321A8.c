@@ -7,13 +7,6 @@
  * sub_080321A8 @ 0x080321A8, sub_080321D4 @ 0x080321D4, sub_080321F0 @ 0x080321F0, sub_08032234 @ 0x08032234
  */
 
-/* Promoted from assembly; each function below is byte-for-byte
- * identical to the original. Order is address order and must
- * stay that way -- the linker places this file's .text as one
- * contiguous block at 0x080321A8.
- * sub_080321A8 @ 0x080321A8
- */
-
 #include "proc.h"
 #include "hardware.h"
 
