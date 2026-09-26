@@ -2,7 +2,7 @@
 
 0x0802AA78, 2356 bytes, THUMB, parked.
 
-Best score so far: 93.9% (preprocessed form, not included).
+Best score so far: 89.3%.
 
 ## What it does
 

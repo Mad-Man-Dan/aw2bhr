@@ -62,3 +62,29 @@ The draft is restored to the port.
   than the start.
 - Temporary -O2 -fno-gcse profile: the configured-tuned draft goes -16.
 Residual unchanged: the zero-store r0/r3 reload tie, 2 code bytes.
+
+## Wave 92 (W92-C)
+
+Unchanged: 380/380, two code bytes at +0xd5/+0xd6 (the store of zero uses r0 in
+the original and r3 here). The two other reported bytes are the addend of the
+equivalent read-only-data alias and are not part of the residual.
+
+A 900-second permuter run from the current draft (12,235 attempts, four
+threads) found nothing better.
+
+The wave-90 description of the mechanism can be made one-directional, which
+narrows the search. The compiler hands out scratch registers in a rotation,
+one step per scratch it hands out, in instruction order:
+
+- With the zero written as a plain literal it becomes an ordinary allocated
+  value in r0, which is what the original has. The next scratch handed out
+  after the one for the key test then goes to the row-pointer copy, and lands
+  one register too high.
+- So the original's rotation is one step **behind** this draft's at the row
+  pointer copy, and the fix is one **fewer** scratch handed out somewhere
+  **before the key test** — not an extra one after it. Everything before that
+  point is already byte-exact, so the instruction that differs must be one the
+  original writes without needing a scratch, most likely one of the two places
+  where a value in a high register is read into a low one.
+
+This is the same tie recorded since wave 70; the new part is the direction.

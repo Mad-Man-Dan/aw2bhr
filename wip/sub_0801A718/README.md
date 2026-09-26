@@ -2,7 +2,7 @@
 
 0x0801A718, 132 bytes, THUMB, parked.
 
-Best score so far: 59.1%.
+Best score so far: 68.9% (best.c).
 
 ## What it does
 
@@ -26,6 +26,8 @@ Add a symbol for the sentinel node at 0x0200C618 to the linker script (aw2bhr.ld
 ## Files
 
 - `sub_0801A718.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -60,5 +62,9 @@ The shape is solved and verified against the listing, including the double `node
 ### Why it is parked
 
 Wave 58 (W58-A), carried from wave 41. Blocked on a linker symbol at 0x0200C618, not on C. The fix is verified by probe and is one line of aw2bhr.lds plus one declaration; it needs a full split build to confirm, which an agent cannot run.
+
+### Wave 92
+
+WAVE 92 (W92-B): no movement (68.94%, SIZE-EXACT); seven spellings measured negative in two compile runs. THE SENTINEL SYMBOL LANDED AND IT WAS WORTH 10 POINTS: aw2bhr.lds now carries 0x00C618 and the draft's tail reads gUnknown_030020A8.unk04 = gUnknown_0200C618.unk04. Re-measured side by side this wave, the old pointer-word spelling gUnknown_0808E5D0->unk04 is 59.09% at the same size, so the symbol is the fix and the workaround must not come back. GOING THROUGH THE ROM WORDS IS WORSE, AND IT IS MEASURED. 0x0808E5C8/CC/D0 hold 0x0200C618, 0x030020A8 and 0x0200C618, and this function's own pool holds 0x0808E5CC (+0x1C) and 0x0808E5D0 (+0x48), which looks like an invitation to name them. Reading gUnknown_030020A8 through a declared gUnknown_0808E5CC is 13.97% at +4; that plus the sentinel through gUnknown_0808E5D0 is 14.29% at +8; the sentinel alone is 59.09% at size-exact. Declaring one of these words and dereferencing it makes agbcc add its own force-addr level ON TOP, one load and four bytes per word, so wave 58's result for gUnknown_0808E5D0 now generalises to gUnknown_0808E5CC. The three words behave exactly as the address-constant cells agbcc emits for a multi-block reference, which means the candidate's .rodata relocation at +0x1C is the honest spelling and the promotion carries it. THE cur/base SPELLING AXIS IS CLOSED: four more spellings, all BYTE-IDENTICAL to the draft -- base bound to a local with node and cur both derived from it; base bound for node only; cur = &gUnknown_0200C624[-1]; cur = (struct Unk0808E5C8 *)((u8 *)gUnknown_0200C624 - 12). Whether base and cur share a register is decided after the source is gone, so it is not reachable by rebinding or by respelling the subtraction; with the two already recorded the axis is six deep. RESIDUAL: pure register allocation on a size-exact function. 41 of 132 bytes differ and the first difference at +0x2 is a register number -- the ROM keeps the first parameter in r3, the draft in r5. NO PERMUTER RUN HAS EVER BEEN MADE HERE and it is the obvious next step (wave 59's repeated-run recipe); this agent's two run slots were taken by sub_080607E8 and sub_0806F41C.
 
 </details>

@@ -3,7 +3,7 @@
 /* Lays out one unit's info panel: the portrait, two text rows, an optional
  * third, and a per-terrain icon.
  *
- * gUnknown_08610A38 IS a real table, not an agbcc -fforce-addr pool word: it is
+ * gTextTable IS a real table, not an agbcc -fforce-addr pool word: it is
  * indexed by a computed subscript (`lsls #2; adds`) BEFORE anything is
  * dereferenced. The words at 0x0812A110 and 0x0812A114 are the opposite case --
  * they hold 0x08499578 and 0x084C20C0, i.e. they are private address constants
@@ -26,7 +26,7 @@ void sub_08046914(u8 a, u8 b)
     u32 t;
     u16 i;
 
-    gfx = gUnknown_08610A38[gUnknown_085D583C[b].unk0c];
+    gfx = gTextTable[gUnknown_085D583C[b].nameIndex];
     sub_080149C0((s16)((a - (sub_08014CEC(gfx) / 2 - 0x50) + 4) / 8), 1,
                  gUnknown_08499578, gfx, 0x8000, 0);
 
@@ -44,7 +44,7 @@ void sub_08046914(u8 a, u8 b)
 
     for (i = 0; i <= 2; i++)
     {
-        if (gUnknown_085D5ABC[gUnknown_084C20C0[i]].unk54[b] != 0)
+        if (gUnknown_085D5ABC[gUnknown_084C20C0[i]].repairTable[b] != 0)
         {
             sub_08014A5C(t / 8, 7, gUnknown_08499578, 0x961, 0x8000, 0);
             break;

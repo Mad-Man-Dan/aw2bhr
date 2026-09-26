@@ -17,7 +17,7 @@ u8 sub_080611D8(void *arg)
 
     if (gUnknown_030046C0.unk07 != 5)
     {
-        t = gUnknown_085D5ABC[gUnknown_030046C0.unk06].unk1a;
+        t = gUnknown_085D5ABC[gUnknown_030046C0.unk06].deployLocation;
 
         if ((gUnknown_030046C0.unk06 == 20 && sub_08061308(t, 3, out) == 1)
             || (gUnknown_030046C0.unk06 == 23 && sub_08061308(t, 4, out) == 1)

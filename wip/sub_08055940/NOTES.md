@@ -189,3 +189,29 @@ So the residual is now ONLY the pool direction plus where the `ldr` sits.
 **Classification: basic-block / instruction ORDER across a loop boundary** —
 the same unreachable family as `sub_080373F0`'s block layout and W58-A's LICM
 hoist. Instruction multiset is exact.
+
+## Wave 92 (W92-C) — the residual restated
+
+Still 248/248 with 9 bytes differing, first difference at +0x28. Nothing in
+the loop body differs; the whole residual is the order of the five values the
+compiler lifts out of the loop.
+
+Original, in order: address of `counts[0]` (which is `sp`), the address of
+row 1 loaded from the literal pool, a copy of the address of `counts[1]`, and
+finally row 0, worked out as row 1 minus 40.
+
+Draft, in order: row 0 loaded from the pool, address of `counts[0]`, row 1
+worked out as row 0 plus 40, address of `counts[1]`.
+
+Read as a list, the original's order is the draft's order **rotated by one**:
+the draft leads with row 0 and the original puts row 0 last. That also settles
+which row comes from the pool, because the compiler always derives whichever
+row address it lifted *second* from the one it lifted first. So there is one
+requirement, not two: the loop body has to mention `counts[0]` before it
+mentions row 1, and row 0 after `counts[1]`, while still reading row 0 before
+`counts[0]` in the emitted code. Every source order that produces the right
+lift order also reorders the body, which is currently byte-exact.
+
+No new spelling was measured this wave; the axes in `data/parked.json` cover
+row spellings, pointer locals inside and outside the loop, block swaps,
+opaque offsets and about 40,000 permuter attempts.

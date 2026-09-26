@@ -65,28 +65,13 @@
  * sub_0802042C's to (int, int, u8 *), both in include/unknown-functions.h with
  * the evidence. sub_0805D648 itself MATCHED. */
 
-struct Map
-{
-    /* 0x0000 */ u16 unk00;
-    /* 0x0002 */ u16 unk02;
-    /* 0x0004 */ u16 unk04;
-    /* 0x0006 */ u16 unk06;
-    /* 0x0008 */ u8 filler_0008[0x0A];
-    /* 0x0012 */ u8 unk0012[0x0508];
-    /* 0x051A */ u8 unk051A[0x0F18];
-    /* 0x1432 */ u8 unk1432[0x0A10];
-    /* 0x1E42 */ u8 unk1E42[0x0508];
-    /* 0x234A */ u8 unk234A[0x0508];
-    /* 0x2852 */ u8 unk2852[0x1928];
-    /* 0x417A */ u16 unk417A[0x100];
-};
 
 void sub_0805D888(void)
 {
     int bestX;
     int bestY;
     int flag;
-    struct Unk08499594 *e;
+    struct Unit *e;
     int best;
     int x;
     int y;
@@ -116,9 +101,9 @@ void sub_0805D888(void)
 
     sub_080202A4(gUnknown_030040D8);
 
-    for (y = 0; y < ((struct Map *)gUnknown_08499590)->unk02; y++)
+    for (y = 0; y < ((struct Map *)gUnknown_08499590)->height; y++)
     {
-        for (x = 0; x < ((struct Map *)gUnknown_08499590)->unk00; x++)
+        for (x = 0; x < ((struct Map *)gUnknown_08499590)->width; x++)
         {
             if ((s8)gUnknown_03003340[y][x] < 0)
                 continue;
@@ -127,16 +112,16 @@ void sub_0805D888(void)
             sy = y;
             asm("" : "+r" (sx), "+r" (sy));
             if (sub_0804236C(sx, sy) == 1
-                && ((struct Map *)gUnknown_08499590)->unk0012[((struct Map *)gUnknown_08499590)->unk417A[y] + x] == 0)
+                && ((struct Map *)gUnknown_08499590)->unit[((struct Map *)gUnknown_08499590)->rowOffset[y] + x] == 0)
             {
-                if ((((struct Map *)gUnknown_08499590)->unk1432[((struct Map *)gUnknown_08499590)->unk417A[y] + x] & 0x1f) == 8
+                if ((((struct Map *)gUnknown_08499590)->terrain[((struct Map *)gUnknown_08499590)->rowOffset[y] + x] & 0x1f) == 8
                     && (s8)gUnknown_03003340[y][x] + 8 > best)
                 {
                     bestX = x;
                     bestY = y;
                     best = (s8)gUnknown_03003340[y][x] + 8;
                 }
-                else if (gUnknown_085767F2[((struct Map *)gUnknown_08499590)->unk1432[((struct Map *)gUnknown_08499590)->unk417A[y] + x] & 0x1f] != 0
+                else if (gUnknown_085767F2[((struct Map *)gUnknown_08499590)->terrain[((struct Map *)gUnknown_08499590)->rowOffset[y] + x] & 0x1f] != 0
                          && (s8)gUnknown_03003340[y][x] + 4 > best)
                 {
                     bestX = x;
@@ -151,8 +136,8 @@ void sub_0805D888(void)
                 }
             }
             else if (flag != 0
-                     && (((struct Map *)gUnknown_08499590)->unk1432[((struct Map *)gUnknown_08499590)->unk417A[y] + x] & 0x1f) == 0x11
-                     && ((struct Map *)gUnknown_08499590)->unk0012[((struct Map *)gUnknown_08499590)->unk417A[y] + x] == 0)
+                     && (((struct Map *)gUnknown_08499590)->terrain[((struct Map *)gUnknown_08499590)->rowOffset[y] + x] & 0x1f) == 0x11
+                     && ((struct Map *)gUnknown_08499590)->unit[((struct Map *)gUnknown_08499590)->rowOffset[y] + x] == 0)
             {
                 goto found;
             }
@@ -167,7 +152,7 @@ void sub_0805D888(void)
 found:
     fx = x;
     fy = y;
-    sub_0805D648(fx, fy, 0x14, e->unk02, e->unk03);
+    sub_0805D648(fx, fy, 0x14, e->x, e->y);
 }
 
 

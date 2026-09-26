@@ -27,6 +27,7 @@ At each of the three places a value held in a high register must pass through a 
 ## Files
 
 - `sub_08031824.c`: the current draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -66,5 +67,9 @@ Parked in wave 90 (W90-A) after W88, W89 and W90 worked it. Four permuter runs a
 ### Wave 90
 
 W90-A: unchanged 97.3%/8 bytes. The fixed-objective permuter found nothing in 2 x 900 s (11,049 undirected, 10,679 directed). The .greg dump shows that the three residual picks W88/W89 called bare local_alloc scratch picks are reload spill registers (find_reg: spill_cost, then REG_ALLOC_ORDER from r0). The next attempt should make a pseudo that lives in r0 stay live across loop 1's r8 read, the gUnknown_020280C0 bind, and the copy setup.
+
+### Wave 92
+
+W92-C: unchanged 97.26%/8 bytes, size-exact, first difference +0x14. NEWLY RULED OUT, each measured: (a) separate counters for the three header loops (i / i2 / i3 in place of one reused i) is BYTE-IDENTICAL -- they coalesce, so this adds no pressure and is not a lever; (b) binding `c = gUnknown_020280C0` BEFORE `j = 0` instead of after gives 12 bytes / 95.89%, confirming the bind must follow the counter init; (c) a pointer local for loop 1's destination does not compile at all -- the member is volatile, so `&p->unk00[i]` will not convert to `u8 *`. A fresh -dg dump (work/sub_08031824/rtl-w92/) reconfirms W90-A: the three picks are reload spill registers (`Spilling for insn 11/26/64/167. Spilling reg 0.`) chosen by spill cost, so the lever is unchanged -- make a pseudo that holds r0 live across those points. A 900 s permuter chain from --current ran this wave (perm-w92-1.log). A 900 s permuter chain from --current ran this wave (13,907 iterations, perm-w92-1.log): nothing better than the 480 base score.
 
 </details>

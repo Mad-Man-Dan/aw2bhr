@@ -95,3 +95,44 @@ Permuter, fixed scorer: perm-w90-1 undirected 900 s (11,720 it) and
 perm-w90-2 directed 900 s (10,674 it; `w90-directed.perm.txt`: LINESWAP of the
 locals, RANDOMIZE of the body, five PERM_GENERAL swap-block shapes) -- nothing
 better than the base (720).
+
+## Wave 92 (W92-C)
+
+Unchanged: 144/144, 6 bytes differ, first difference at +0x28. No new axis was
+measured. The arithmetic recorded in wave 90 still bounds the problem: the
+compiler ranks an address by (a step function of its use count) times the use
+count, divided by how long the value stays alive. The keys array needs 8 or 9
+weighted uses and the payload array at most 7, with `side * 0x6c` keeping its
+register. Raising the keys array's count by a use with a constant subscript
+would not touch `side * 0x6c`, but no such use exists in the code, and a dead
+one is deleted before the counts are taken.
+
+Two arithmetic routes nobody has measured, recorded here so they are not
+re-derived: shortening the keys address's lifetime below about half its
+current value, or roughly doubling the payload address's lifetime, each
+reverses the ranking without changing either use count. Both need a live
+reference in a place the sort does not have one.
+
+### The two arrays are rows of one record — measured, and the flat spelling wins
+
+Both arrays this function walks are rows of `struct Unk02029808` (stride 0x6c):
+the payload is the `unk02` row and the keys are the `unk1a` row, so
+`gUnknown_0202980A[side][j]` and `gUnknown_02029808[side].unk02[j]` are the same
+halfword, as are `gUnknown_02029822[side][j]` and
+`gUnknown_02029808[side].unk1a[j]`. A matched function nearby, `sub_0805653C`,
+writes that memory both ways, and the note on `gUnknown_020297CC` in
+`include/unknown-globals.h` records a matched function that deliberately mixes
+the two forms for two rows of one record.
+
+Measured here, all three combinations:
+
+| keys | payload | result |
+| --- | --- | --- |
+| row symbol | record member | 144 bytes, 7 differ (95.1%) |
+| record member | row symbol | 144 bytes, 7 differ (95.1%) |
+| record member | record member | 148 bytes (+4), 132 differ (10.8%) |
+
+So the mixed form costs one byte more than the draft and the doubled member
+form is far worse — with both rows reached through one record the compiler
+shares a single base address, and the original plainly keeps two. The draft's
+row-symbol spelling for both arrays is right, and this axis is closed.

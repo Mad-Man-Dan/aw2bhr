@@ -2,7 +2,7 @@
 
 0x0802FACC, 1388 bytes, THUMB, parked.
 
-Best score so far: 31.1% (preprocessed form, not included).
+Best score so far: 29.0% (best.c).
 
 ## What it does
 
@@ -30,6 +30,7 @@ The original has both one shared base register for the record and the compiler's
 ## Files
 
 - `sub_0802FACC.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

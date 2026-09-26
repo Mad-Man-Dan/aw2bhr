@@ -102,7 +102,7 @@ void sub_0801DCD4(int a1, int a2)
         b = (struct Unk0801DCD4Bits *) (&e->unk30);
         if (b->unk00_c == 0)
         {
-          if ((b->unk00_d == 0) || (gUnknown_03004008 & 1))
+          if ((b->unk00_d == 0) || (gGameClock & 1))
           {
             sub_0801ECE8(e->unk1e, (e->unk14 + e->unk0c) / 256, (e->unk18 + e->unk10) / 256, *q, *((long long *) (&e->unk30)), e->unk38);
           }
@@ -130,7 +130,7 @@ void sub_0801DCD4(int a1, int a2)
           b = (struct Unk0801DCD4Bits *) (&e->unk30);
           if (b->unk00_c == 0)
         {
-          if ((b->unk00_d == 0) || (gUnknown_03004008 & 1))
+          if ((b->unk00_d == 0) || (gGameClock & 1))
           {
             sub_0801ECE8(e->unk1e, (e->unk14 + e->unk0c) / 256, (e->unk18 + e->unk10) / 256, *q, *((long long *) (&e->unk30)), e->unk38);
           }

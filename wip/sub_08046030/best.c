@@ -125,11 +125,11 @@ void sub_08046030(void)
     y = 8;
     for (k = 1; k <= sub_080248F8(); k++)
     {
-        sub_08014B0C(6, (s16)y, gUnknown_08499578, gUnknown_08499598[k].unk3a,
+        sub_08014B0C(6, (s16)y, gUnknown_08499578, gPlayers[k].unitCount,
                      0x8000, 0);
-        sub_08014B0C(0xa, (s16)y, gUnknown_08499578, gUnknown_08499598[k].unk3b,
+        sub_08014B0C(0xa, (s16)y, gUnknown_08499578, gPlayers[k].unitsLost,
                      0x8000, 0);
-        v = gUnknown_08499598[k].unk14;
+        v = gPlayers[k].defeated;
         if (v != 0)
         {
             sub_08014A5C(1, (s16)(k * 2 + 6), gUnknown_08499578, 0x95e, 0x8000,
@@ -142,7 +142,7 @@ void sub_08046030(void)
             sub_080149C0(0x1c, (s16)(k * 2 + 6), gUnknown_08499578,
                          gUnknown_084C3F40, 0x8000, 0);
         }
-        else if (gUnknown_08499598[k].unk1b == 0)
+        else if (gPlayers[k].aiControlled == 0)
         {
             sub_080149C0(3, (s16)(k * 2 + 6), gUnknown_08499578,
                          gUnknown_084C3F40, 0x8000, 0);
@@ -158,25 +158,25 @@ void sub_08046030(void)
         {
             gUnknown_084C1430->unk3c[k] = gUnknown_084C1430->unk28[k] * 100
                                         / gUnknown_084C1430->unk24;
-            if (gUnknown_03003FC0.unk0d == 0
-             || gUnknown_08499598[k].unk2a
-                    == gUnknown_08499598[gUnknown_030033EC].unk2a)
+            if (gPlaySt.fog == 0
+             || gPlayers[k].team
+                    == gPlayers[gUnknown_030033EC].team)
             {
                 sub_08014B0C(0xd, (s16)y, gUnknown_08499578,
-                             gUnknown_08499598[k].unk11, 0x8000, v);
+                             gPlayers[k].captures, 0x8000, v);
                 sub_08014B0C(0x14, (s16)(k * 2 + 6), gUnknown_08499578,
-                             gUnknown_08499598[k].unk08, 0x8000, v);
+                             gPlayers[k].income, 0x8000, v);
                 sub_08014B0C(0x1c, (s16)(k * 2 + 6), gUnknown_08499578,
-                             gUnknown_08499598[k].unk00, 0x8000, v);
+                             gPlayers[k].funds, 0x8000, v);
             }
             else
             {
-                if ((gUnknown_03003FC0.unk30 | gUnknown_03003FC0.unk31) != 0)
+                if ((gPlaySt.turnLimit | gPlaySt.captureLimit) != 0)
                 {
                     sub_08014B0C(0xd, (s16)y, gUnknown_08499578,
-                                 gUnknown_08499598[k].unk11, 0x8000, v);
+                                 gPlayers[k].captures, 0x8000, v);
                     sub_08014B0C(0x14, (s16)(k * 2 + 6), gUnknown_08499578,
-                                 gUnknown_08499598[k].unk08, 0x8000, v);
+                                 gPlayers[k].income, 0x8000, v);
                 }
                 else
                 {
@@ -192,9 +192,9 @@ void sub_08046030(void)
         y += 2;
     }
 
-    if (gUnknown_03003FC0.unk0d == 0
-     || (gUnknown_03003FC0.unk30 | gUnknown_03003FC0.unk31) != 0)
-        sub_08014B0C(0xd, 0x10, gUnknown_08499578, gUnknown_08499598->unk11,
+    if (gPlaySt.fog == 0
+     || (gPlaySt.turnLimit | gPlaySt.captureLimit) != 0)
+        sub_08014B0C(0xd, 0x10, gUnknown_08499578, gPlayers->captures,
                      0x8000, 0);
     else
         sub_080149C0(0xd, 0x10, gUnknown_08499578, gUnknown_084C3F4C, 0x8000,

@@ -2,33 +2,32 @@
 
 0x08050FF8, 804 bytes, THUMB, parked.
 
-Best score so far: 21.5% (best.c).
+Best score so far: 17.8%, -4 bytes (best.c).
 
 ## What it does
 
-Sets up the current sprite object (gUnknown_03001FBC) for one side and slot, taking its tile number from the other side's record, then computes the sprite's position and places it. When the other side's unit has a certain flag it also plays an alternating effect through sub_0803B48C.
+Sets up the current sprite object for one side and slot, taking its tile number from the other side's record, then computes the sprite's position and places it. When the other side's unit has a certain flag it also plays an alternating effect through sub_0803B48C.
 
 ## How close it is
 
-Compiles 8 bytes too short (796 against 804). 672 of 796 bytes differ (15.4% identical), which means little because the difference starts in the first instructions and the size difference shifts everything after it.
+Compiles 4 bytes short (800 against 804). The percentage is low because the difference starts in the first instructions and the size difference shifts everything after it, so read the diff rather than the score.
 
 ## What is left
 
-First try naming gUnknown_03004580, gUnknown_0300453C, gUnknown_020298E0 and gUnknown_085D6A48 directly wherever the draft reads them through the cells gUnknown_081360E4, gUnknown_081360DC, gUnknown_081360D8 and gUnknown_081360E0 (the `pE4`/`pDC`/`pD8` locals): those cells sit in the block of compiler-made address words that include/unknown-globals.h documents, and naming the global directly fixed four other drafts with this pattern. After that, the known gap is that the original keeps three addresses in registers where the draft keeps four: it reloads gUnknown_03001FBC's address from the pool at each group of uses.
+4 bytes. Half of the old 8-byte gap was the side variable, which the original re-reads from memory at every use; that is fixed. The rest is a different mechanism and has not been identified.
 
 ## Already tried
 
-- A `static inline` helper returning gUnknown_03001FBC, at all seven uses or only after the first call: 30 to 32 bytes shorter, because the compiler then merges the record-index computations.
-- Reading gUnknown_03001FBC through a volatile pointer: the right per-use reloads, but a zero-extend and two shifts instead of the original's signed halfword load.
-- A redundant mask on the record indices to keep them apart: the mask is folded into the load, which becomes a narrower load, one instruction shorter each.
-- Binding `*pDC` to a local before the x sum: fixes that part, but the compiler then adds a read-only address word for gUnknown_020298E0.
-- Binding the side, or `side * 8`, before the column address: the add and shift stay in the wrong order; only binding the byte offset `side * 16` puts them right (kept).
-- Any inline form of the column-1 read (2-D subscript, constant in the index): the add disappears into the load.
+- Reading the side variable through a volatile pointer so it is re-read at each use: 4 bytes better and kept. This is what the earlier -fno-force-mem finding was pointing at.
+- Naming the four globals the draft reaches through compiler-made cells directly: 40 bytes worse. The cells have to be chased the way the draft does.
+- Making the second route to the side variable volatile as well: 68 bytes too long.
+- Five ways of respelling the sprite-object global (earlier waves): all measured, none helps.
 
 ## Files
 
 - `sub_08050FF8.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -39,5 +38,15 @@ First try naming gUnknown_03004580, gUnknown_0300453C, gUnknown_020298E0 and gUn
 ### Why it is parked
 
 Worked across several waves without a match; the full record is the draft's header comment and the notes files in work/sub_08050FF8/.
+
+### Wave 92
+
+- **agent:** W92-A
+- **measured:** 800/804 (-4), 17.79%, first difference +0xc, up from 796/804 (-8), 15.42%.
+- **moved:** A volatile re-read of gUnknown_0300453C. The wave-91 flag sweep found -fno-force-mem makes this function size-exact, which says the missing bytes are memory operands our build holds in registers and the original re-reads. W89-A's volatile probe was aimed at gUnknown_03001FBC, where a volatile MEM cannot fold into a sign_extend and the ldrsh is lost; gUnknown_0300453C is read with ldrh, so that objection does not apply and nobody had tried it. Half the size gap in one edit, and the first movement since wave 89.
+- **header_question_for_the_orchestrator:** The draft carries this as a file-local macro over a cast, because 42 promoted files read gUnknown_0300453C and a shared declaration must not be retyped unilaterally. If those 42 can be re-verified, the honest fix is to declare gUnknown_0300453C volatile u16 in include/unknown-globals.h and drop the macro.
+- **refuted:** - The wave-92 brief's own plan for this function -- naming gUnknown_03004580, gUnknown_0300453C, gUnknown_020298E0 and gUnknown_085D6A48 directly instead of the pE4/pDC/pD8 binds. 756 bytes (-48), 11.82%: a 40-byte regression, because the honest spelling folds the base into every use and deletes the per-use re-chase W88-C installed deliberately. This axis is now closed from both ends, the bare pointer-object reference (W88-C) and the target global (here).
+- Extending the volatile to the other route to the same variable (retyping the pDC local to volatile u16 *const *): 868 bytes (+68), 14.22%. Only the direct reads want it.
+- **next:** Re-run -fno-force-mem from the new fixpoint and say whether the last 4 bytes are the same mechanism.
 
 </details>

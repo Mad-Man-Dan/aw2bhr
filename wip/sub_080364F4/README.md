@@ -2,7 +2,7 @@
 
 0x080364F4, 296 bytes, THUMB, parked.
 
-Best score so far: 9.5% (best.c).
+Best score so far: 9.5%, -16 bytes.
 
 ## What it does
 
@@ -25,7 +25,6 @@ The original loads the record table's base address through a pointer word, keeps
 ## Files
 
 - `sub_080364F4.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

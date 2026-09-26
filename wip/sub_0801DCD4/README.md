@@ -2,7 +2,7 @@
 
 0x0801DCD4, 516 bytes, THUMB, parked.
 
-Best score so far: 14.7% (best.c).
+Best score so far: 14.7%, -4 bytes (best.c).
 
 ## What it does
 

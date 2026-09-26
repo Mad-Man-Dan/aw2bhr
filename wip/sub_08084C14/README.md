@@ -2,7 +2,7 @@
 
 0x08084C14, 816 bytes, THUMB, parked.
 
-Best score so far: 79.2% (preprocessed form, not included).
+Best score so far: 75.9% (best.c).
 
 ## What it does
 
@@ -29,6 +29,7 @@ Rewrite the Left-key arm so only the army-count result is narrowed (for example 
 ## Files
 
 - `sub_08084C14.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

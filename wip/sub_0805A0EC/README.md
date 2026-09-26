@@ -47,4 +47,8 @@ WAVE86: WAVE 86 (W86-A): (1) wave-84's killed chain re-run full length from w84-
 
 W91-B, pre-registered struct Map member test: NEGATIVE. The ->height/->width bounds and ->terrain/->unit/(u8 *)->rowOffset through the q cast are BYTE-IDENTICAL (98.95%). rowp = (u8 *)&((struct Map *)q)->rowOffset[y] gives 95.79%, because the member builds (y*2 + 0x417A) + q and the ROM's (q + 0x417A) + t order needs the byte pointer. Member access off the global with no q (cast or gMap) is 33.68%: the row address hoists into the outer loop. A 900 s permuter run from --current (35,635 iterations) found nothing. Under a temporary -O2 -fno-gcse profile this draft is -16. Residual unchanged: 2 code bytes, the zero-store reload tie. work/sub_0805A0EC/NOTES.md.
 
+### Wave 92
+
+W92-C: unchanged 98.95%, 2 code bytes at +0xd5/+0xd6 (+0x34/+0x164 are .rodata alias addends, not residual). 900 s permuter from --current, 14,676 iterations: nothing. MECHANISM SHARPENED TO ONE DIRECTION: W90-B offered two ('one more reload between the key test and the zero store, OR one fewer before the ip copy'). For the literal-zero form only the second is consistent -- with the literal the zero is a local_alloc pseudo in r0 (ROM-correct) and the ip copy is the NEXT reload after the key test's, landing one register high. So the ROM's round-robin cursor is one step BEHIND this draft's at the ip copy, and the lever is one FEWER reload BEFORE the key test, not an extra one after it. Everything before +0xd5 is byte-exact, so the reload the ROM does not spend must be on an insn this draft also emits -- most plausibly one of the two high-to-low `mov rLO, r8` reads.
+
 </details>

@@ -2,7 +2,7 @@
 
 0x0804BB74, 324 bytes, THUMB, parked.
 
-Best score so far: 29.5%, +12 bytes (best.c).
+Best score so far: 29.5%, +12 bytes.
 
 ## What it does
 
@@ -28,7 +28,6 @@ Find a spelling where one value holds gUnknown_0200FC50's address for the decomp
 ## Files
 
 - `sub_0804BB74.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

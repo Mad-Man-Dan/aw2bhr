@@ -2,7 +2,7 @@
 
 0x080506B0, 680 bytes, THUMB, parked.
 
-Best score so far: 38.5%, +4 bytes (best.c).
+Best score so far: 38.5%, +4 bytes.
 
 ## What it does
 
@@ -28,7 +28,6 @@ Make the compiler load gUnknown_03004580's address through a force-addr word, as
 ## Files
 
 - `sub_080506B0.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

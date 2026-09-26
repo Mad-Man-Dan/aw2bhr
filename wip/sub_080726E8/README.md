@@ -2,7 +2,7 @@
 
 0x080726E8, 216 bytes, THUMB, parked.
 
-Best score so far: 56.9% (preprocessed form, not included).
+Best score so far: 56.9% (best.c).
 
 ## What it does
 
@@ -30,6 +30,7 @@ In the flipped loop the compiler turns both the source and the destination addre
 ## Files
 
 - `sub_080726E8.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

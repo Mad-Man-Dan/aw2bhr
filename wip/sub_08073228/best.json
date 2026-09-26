@@ -1,0 +1,1 @@
+{"audited": true, "candidate_bytes": 224, "exact_size": false, "percent": 81.7, "scored_over": "max(candidate, target)", "size_delta": 4, "source_sha1": "5860d3c76be9c6e2c3e0b6ac3c49827e9499791d", "target_bytes": 220}

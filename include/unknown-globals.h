@@ -12971,16 +12971,13 @@ extern u16 *gUnknown_085519FC;
  * relocates as gUnknown_02028E5C+8 and resolves to the same address and pool
  * word. See work/sub_0804BD58/sub_0804BD58.c. Wave 43. */
 
-/* Wave 44, W44-D. Two adjacent ROM words at 0x081D9440/0x081D9444, each a
- * POINTER and not an object: sub_08087040 holds both ADDRESSES in callee-saved
- * registers and does `ldr r3, [rN]` inside its loop, handing the loaded word
- * straight to PutSprite's `u16 *` fourth parameter with no arithmetic. `u16 *`
- * for that reason, and NOT `const` -- PutSprite's parameter is a plain `u16 *`.
- * The load is repeated every iteration rather than hoisted, which is what says
- * the pointer objects themselves are non-const. data/data.s gives each exactly
- * 4 bytes. */
-extern u16 *gUnknown_081D9440;
-extern u16 *gUnknown_081D9444;
+/* Nothing lives at 0x081D9440 or 0x081D9444. The two words there are the
+ * address constants the compiler emits for sub_08087040's two sprite-data
+ * arguments, and they hold the addresses of gUnknown_0848B690 and
+ * gUnknown_0848B6A8. That function names both arrays directly and the build
+ * places the words, so neither address needs -- or may have -- a declaration:
+ * reading one as a pointer variable adds a load at every use. The word at
+ * 0x081D9328 is the same thing for gUnknown_0848B6C6, a few entries below. */
 /* Wave 44, W44-D. A table of 0x5c-byte records in ROM, indexed by a
  * gUnknown_02027F74.unk04[] unit id. sub_08087B74 reads
  * `gUnknown_085C77DC[id].unk01[i]` with a single `ldrb` and hands the byte to

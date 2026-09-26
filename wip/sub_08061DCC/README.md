@@ -2,7 +2,7 @@
 
 0x08061DCC, 136 bytes, THUMB, parked.
 
-Best score so far: 27.2% (best.c).
+Best score so far: 27.2%.
 
 ## What it does
 
@@ -14,7 +14,7 @@ Compiles to 136 bytes, the ROM's size, but only because 2 bytes of alignment pad
 
 ## What is left
 
-First, name the two globals directly (gUnknown_03004784 and the unit-type table gUnknown_085D5ABC) instead of reading them through gUnknown_0816DB08 and gUnknown_0816DB0C, which are the compiler's own pointer words; that fixed four similar drafts, and the one measurement against it was taken on a much earlier draft. Otherwise the draft holds five values across the branches where the ROM holds four, because it keeps the constant 0x5c in a register instead of loading it at each multiply.
+Do NOT name gUnknown_03004784 and gUnknown_085D5ABC directly. That was measured three ways on this draft and all three lose a load: this function's own pool words hold 0x0816DB08 and 0x0816DB0C, and the words at those addresses hold the two globals' addresses, so the ROM really does load through both levels. What is left is one mechanism. cse gives the two multiplies by the record stride a single register, so the stride stays live in a callee-saved register, the multiply's destination has to be a copy of the index, and there is no register left for the second pool-address copy the ROM makes. Stopping cse from carrying that constant past the || join is the whole job, and a mask on a constant folds before cse numbers it, so the usual splitter does not reach it.
 
 ## Already tried
 
@@ -28,7 +28,7 @@ First, name the two globals directly (gUnknown_03004784 and the unit-type table 
 ## Files
 
 - `sub_08061DCC.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -64,5 +64,9 @@ WAVE 87 (W87-D): pre-registered W81-C two-definition / W86-G join re-derivation 
 ### Wave 89
 
 WAVE 89 (W89-D then W89-H): 15.4% -> 19.1% -> 27.2%, size delta -8 -> size-exact header with code -4 -> -2. TWO levers landed. (1) W89-D, the FIFTH SPLITTER: a bare `& 0xff` is byte-identical (fold discharges it before cse numbers the multiply) but `(((u32)p->unk00 << 24) & 0xff000000) >> 24` on the SECOND reference survives to cse and dies in combine, so the product is no longer available at the join -- the ROM's recomputed multiply, its live bare index and its {r4,r5,r6,lr} push mask all reproduced for the first time in five waves; binding the quotient to a u8 local also fixes the post-call block. The prompt's premise (wave 88's static-inline helper, on the ground that p->unk00 is a memory read) was REFUTED without a probe: the disputed value is `p->unk00 * 0x5c`, an address-arithmetic pseudo, the class the helper is inert on. (2) W89-H: bind the symbol's ADDRESS to a local AND LEAVE THE FIRST REFERENCE BARE -- the bind creates the cross-block pseudo (a block-local and a global allocno cannot coalesce, so the copy survives) and the bare reference stops the allocator collapsing them, reproducing the ROM's `ldr r0,=X / adds r6,r0,#0`. THIS OVERTURNS THE STANDING WAVE-37 `c_local` NEGATIVE AND NAMES ITS CAUSE: that measurement bound locals at EVERY reference, and re-running it reproduces the regression exactly (push mask grows to {r4,r5,r6,r7,lr}). It was the leave-one-bare rule all along, not a fact about binding -- worth re-testing every park whose ruled-out list contains a bind-the-address negative. Evidence: work/sub_08061DCC/W89-notes.md.
+
+### Wave 92
+
+WAVE 92 (W92-B): no movement (27.21%, size-exact), and TWO briefed leads refuted by controlled probe. (1) THE POOL-WORD PREMISE IS FALSE HERE. This function's OWN literal pool, at +0x24 and +0x84, holds 0x0816DB08 and 0x0816DB0C; the words at those two addresses hold 0x03004784 and 0x085D5ABC. The ROM therefore executes three loads to reach the data, and the existing u8 **volatile / struct UnitType *volatile declarations have the right number of levels. The honest spelling was re-measured on the CURRENT draft, with the wave-89 levers in place, three ways: both globals named directly, 5.15% at -12 bytes; the same plus the wave-89 bind on the table, 5.15% at -12; unit table honest with the threshold row left as the pool word, 22.79% at -4. The wave-37 negative was never stale -- it was right, and its cause is this indirection level. The left field has been corrected. (2) -fno-force-mem, the flag sweep's top-ranked lead at 66.91%, IS A FALSE SCORE. Compiling with and without it and diffing both against the ROM: the entry block and the multiply block are byte-for-byte identical either way, so the residual is untouched. What the flag does is break the unk04 & 0x780 test, which the draft already matches exactly -- it stops forcing the memory operand out first and emits movs / lsls / adds r1,r0,#0 / ldrh / ands where the ROM has ldrh / movs / lsls / ands. That is one extra instruction, the draft is one instruction short overall, the two cancel, every later instruction lands on the ROM's address, and the whole tail after bl __divsi3 compares equal. The flag bought byte alignment by breaking a block that was already correct; do not carry it forward. Read the other way the probe confirms the DEFAULT: -fforce-mem is what produces the ROM's ldrh-first order there. (3) THE RESIDUAL'S PASS IS NOW NAMED: cse. Counting const_int 92 in the per-pass RTL dumps (tools/rtldump.py --flags=-da) gives rtl 4, jump 4, cse 2, and 2 in every pass after. cse substitutes a register already holding 92 for the second multiply's constant, which keeps the stride live in a callee-saved register, which forces the multiply's destination to be a copy of the index, which leaves no register for the second pool-address copy the ROM makes. It is NOT gcse (declines CONST_INT), not regmove and not the allocator; wave 89 had guessed the allocator. A lever must stop cse carrying that constant's register past the || join. The permuter remains the backstop.
 
 </details>

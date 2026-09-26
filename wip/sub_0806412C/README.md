@@ -2,7 +2,7 @@
 
 0x0806412C, 232 bytes, THUMB, parked.
 
-Best score so far: 85.3% (preprocessed form, not included).
+Best score so far: 85.3% (best.c).
 
 ## What it does
 
@@ -28,6 +28,7 @@ Find what keeps the first loop's counter counting up with a `<= 7` test while th
 ## Files
 
 - `sub_0806412C.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

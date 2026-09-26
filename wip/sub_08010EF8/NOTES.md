@@ -94,3 +94,41 @@ talked into it either.
   `.c` and the choice is per (function, symbol).
 - `extern u16 *const gUnknown_0808DF8C;` in include/unknown-globals.h exists
   only for this draft and should go with it if this stays parked.
+
+# Wave 92 (W92-A)
+
+NOT RE-MEASURED BEYOND `tools/drafts.py bases`, which confirms both `best.c` and
+the draft at 79.69%, size-exact, first difference +0x11. The wave-79 row that
+says "treat this entry as closed" is correct and I did not spend a try_match
+against it.
+
+WHAT THE WAVE-92 BRIEF ASKED FOR IS ALREADY IN THE RULED-OUT LIST. It told this
+batch to "fix the pool-word spelling" by naming gUnknown_0300308C directly. That
+is the first entry under `axes_ruled_out`: the honest spelling is one
+instruction SHORT, because agbcc then puts 0x0300308C straight in the text pool
+and the loop body keeps only the `ldrh`.
+
+ONE NEW OBSERVATION, and it is narrower than another declaration sweep. Three
+other functions in this same batch (sub_080359A4, sub_0802F588, sub_0802F6A0)
+DID close part of their gap by naming the global directly, and in all three
+agbcc answered with the very chain this function needs -- a text pool word
+pointing at a `.rodata` word that holds the global's address, then two loads.
+So agbcc can be made to emit it.
+
+The mechanism is already settled in docs/agbcc-codegen.md ("The `.rodata`
+force-addr word is made by GCSE's PRE", wave 91 W91-B): at expand EVERY global
+access goes through the pool as `(set P (symbol_ref .LCn))` then
+`(set Q (mem/u P))`, the pair collapses to a plain `ldr rQ,=g` when P has ONE
+use, and the `.LCn` word survives only when P has SEVERAL -- which is what
+gcse's PRE creates. That chapter even names this function's shape as a case
+where PRE fires: "a loop containing a call". This loop contains two
+(__umodsi3, __udivsi3).
+
+SO THE OPEN QUESTION IS NOT "WHICH DECLARATION". It is why, with the honest
+spelling, P ends up with one use here when PRE has a partially redundant
+occurrence to unify and a call in the loop to make the pseudo live. That is a
+question for `-da`/`-dp` dumps of this function's `.gcse` pass, comparing the
+`.LC` pseudo's use count against sub_0805A9AC's (where the chapter traced the
+insns). `-fno-gcse` is already in the swept flag set and did not move this
+function, which is itself a datum: if the word were a PRE insertion we would
+expect the flag to change something here.

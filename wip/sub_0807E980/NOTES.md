@@ -114,3 +114,59 @@ this function this wave: three runs, ~36.8k iterations, no permuter gain; the
 10 -> 6 byte step was the hand-found walker form. The directed sources are kept
 as `w90-directed.perm.txt` and `w90-R6-directed.perm.txt`. Draft left at 99.4%
 (`sub_0807E980.c` == `w90-R6-994.c`).
+
+## Wave 92 (W92-C)
+
+Current draft: 1040/1040, 6 bytes differ (99.4%), first difference at +0x370,
+in the set-up of the copy loop at the tail.
+
+A 900-second permuter run from the current draft (12,235 attempts) found
+nothing, which repeats the wave-90 result from the same starting point.
+
+New this wave: `work/sub_0807E980/w92-ptr.c` holds the pointer form the wave-81
+notes describe — source and destination as plain `int` locals stepped in the
+loop body, with the three set-up statements written in the original's own order
+(source, then the counter, then the destination). It scores 53.5% and is 12
+bytes too long, matching the earlier measurement. Its value is that its
+instruction order inside the loop is the original's and only the register
+choices are wrong, which is the case the automatic search is meant for; every
+earlier search started from the high-scoring draft, whose loop order the search
+cannot reach. A run from this base is the first of its kind.
+
+### What the pointer form actually costs, measured
+
+The earlier notes say the pointer form is 12 bytes too long because it adds two
+pointer locals. That is wrong. Writing the same do-while loop using only
+locals the function already declares — no new declarations at all — is still
+12 bytes too long (52.9% identical). The cost is not the number of names.
+
+Reading the prologue diff gives the real cause in one line: with the do-while
+loop the screen's record pointer lands in r9, where the original keeps it in
+r7 (`mov r9, r0` against `adds r7, r0, #0`). The copy loop's own instructions
+are all present and correct; only their registers differ. That one placement
+cascades through the whole function and is the entire 12 bytes.
+
+Two attempts to force it, both measured:
+
+- Asking for the three loop values in the registers the original uses
+  (`register int x asm("r4")` and so on for the source, the destination and
+  the counter) is **byte-identical** to not asking — three separate variants,
+  all 12 bytes long and 53% identical. The request is inert here.
+- Asking for the record pointer in r7, by renaming the parameter and copying it
+  into a pinned local, is **much worse**: 1032 bytes (8 short) and 18.6%
+  identical. The whole function is rebuilt around the pin.
+
+So the open question is unchanged but better stated: the do-while loop needs one
+more callee-saved register than the original's shape does, and the register it
+takes is the one holding the record pointer. Asking for registers by name does
+not recover it.
+
+### The automatic search does move this base
+
+A 900-second run from the pointer form climbed it from 53.5% to 94.4%, ending
+size-exact with its first difference at +0xff. That result is kept as
+`work/sub_0807E980/w92-ptr-perm1.c`. It is still below the active draft, so the
+draft is unchanged, but it is the first time this starting point has been
+searched at all, and three separate 900-second runs from the 99.4% draft (two
+in wave 90, one here) have now produced nothing. Chaining further runs from
+`w92-ptr-perm1.c` is the better use of the next search budget.

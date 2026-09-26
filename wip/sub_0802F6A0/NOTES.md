@@ -89,3 +89,109 @@ and allocation search did not resolve it.
  * the permuter is NOT useless on.  Do not hand-rewrite the statements; they
  * are correct.
  */
+
+# Wave 92 (W92-A)
+
+## The draft this wave inherited was not faithful, and its score was not real
+
+The wave-74 draft scored 45.86% size-exact, and every wave since has quoted that
+number. It was produced by adopting a permuter form whose `new_var` binding
+changed what the code does: from the length read onward it indexed BOTH the
+cursor table gUnknown_03003128 and the receive ring's player column by the
+wrapped cursor value, and it also wrote `gUnknown_02025C18[t][t]`, using the
+cursor as the player index as well. The original indexes both by `slot`.
+
+Read off the ROM, twice, at two independent points:
+
+  * at 0x0802F78E, `asrs r0,r2,#0x17` is (s8)slot * 2 and it is added to the
+    cursor table's base, so the cursor is `gUnknown_03003128[slot]`;
+  * at 0x0802F7B2, the same `asrs r4,r2,#0x17` is added to `cursor * 8` and to
+    gUnknown_02025C18's base, so the ring element is
+    `gUnknown_02025C18[cursor][slot]` -- 1024 rows of four halfwords, one per
+    player, and `slot` selects the column.
+
+`r2` there is the spilled `slot` byte reloaded from sp+0 and re-sign-extended,
+which is why the same shift appears in every block.
+
+The faithful draft is now at work/sub_0802F6A0/sub_0802F6A0.c and measures
+604/604 (size-exact), 26.32%, first difference +0xc. THAT IS THE REAL BASELINE.
+It is lower than 45.86% because the broken draft's wrapped-cursor indexing
+happened to produce a register assignment closer to the original's; the score
+was measuring the wrong program. `best.c` at 49.83% is the same kind of artefact
+(wave 74 rejected it for reading locals that are assigned only after an
+unconditional return) and must not be quoted either.
+
+## The residual
+
+Size-exact and the control flow is right. The difference is one allocation fact,
+visible in the first hunk:
+
+    ROM         str r1,[sp,#4]   -- dst spilled at entry, reloaded once
+                                    (`ldr r5,[sp,#4]`) just before the copy loop
+                mov sl,r3        -- the address word's address kept in sl and
+                                    re-used at 0x0802F748 / F78E / F7FA
+    candidate   mov r8,r1        -- dst kept in r8
+                (no sl bind)     -- the address word rematerialised each block
+
+Those are one fact, not two: the ROM carries one MORE long-lived value than the
+candidate (the address-word pointer), which is what pushes `dst` out to the
+stack. The stack frame is already the right size (12 bytes) and `slot` is at
+sp+0 in both; only sp+4 and sp+8 are swapped (ROM: dst at +4, comp at +8;
+candidate: comp at +4, dst in a register).
+
+Already measured and not worth repeating: copying dst to a local before the loop
+(dst reaches the stack but the frame grows and expSum still spills); widening
+expSum from u16 to int (byte-neutral).
+
+The permuter is the right tool from here -- size-exact, correct instruction
+order, a pure allocation residual -- but it must be run from THIS draft, not
+from best.c and not from the wave-74 draft.
+
+## Two negatives on the wrap-around subtraction (measured this wave)
+
+In the original, `avail` is built as `F48 - X` where X is the cursor, or the
+cursor plus 0xFFFFFC00 when the writer has wrapped. The ROM builds the constant
+from a POOL WORD (`.word 0xFFFFFC00`) and adds it to the cursor; our build
+reassociates the whole expression and materialises 0x400 as `movs #128;
+lsls #3`, then subtracts. Two ways of pinning the constant to the cursor were
+tried and both are worse than the plain if/else:
+
+  * binding it to an `int` local inside the taken arm
+    (`wrapped = cursor + 0xFFFFFC00; avail = F48 - wrapped;`):
+    608 bytes, +4, 19.41%.
+  * a conditional expression with the subtraction outside
+    (`avail = F48 - (F48 < cursor ? cursor + 0xFFFFFC00 : cursor);`), which
+    is the shape the ROM's two arms and shared `subs r0,r0,r1` join look like:
+    596 bytes, -8, 18.71%.
+
+The plain if/else at 604/604 and 26.32% stands. Whatever pins the constant, it
+is not a statement boundary and not the join.
+
+## The permuter run was stopped on purpose, and why
+
+One 900-second run was started from the faithful draft. It finished its search
+and produced **854 output directories**, because the faithful draft scores low
+enough that almost any mutation improves on it by permuter score.
+
+`tools/permute.py`'s harvest has NO CAP: it verifies every output, spliced and
+raw, which is up to 1,708 trymatch compiles -- hours of work. The run was
+stopped during that phase, the process was confirmed gone, and the draft was
+restored from `work/sub_0802F6A0/w92-faithful.c` and re-verified at 604/604,
+26.32%.
+
+THE DRAFT HAD IN FACT BEEN LEFT AS 204 KB OF HEADER-EXPANDED SOURCE at the
+moment it was checked -- that is normal for the harvest (it writes each
+candidate into the draft while trymatch judges it), but it means an unattended
+harvest of this length leaves the function's deliverable unreadable for hours.
+Anyone finding a 200 KB `.c` in this folder should restore `w92-faithful.c`
+rather than investigate it.
+
+The 854 outputs are kept under `work/sub_0802F6A0/permuter/`. A future wave can
+verify the best of them cheaply without re-running the search -- the scores are
+in each directory's `score.txt`, and the ones worth checking are the LOWEST
+scores, not the highest.
+
+FOR THE TOOLING: harvest should take the best N candidates rather than all of
+them, or at least verify in score order and stop on a time budget. A search
+started from a weak base currently produces a verification phase far longer
+than the search it follows.

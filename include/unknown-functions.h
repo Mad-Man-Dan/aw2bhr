@@ -4014,8 +4014,9 @@ void sub_08030F60(int);
 void sub_0801394C(u8, s8);
 /* sub_0802F588 queues halfwords into a ring and returns how many it queued,
  * or -1 when the ring is full. sub_0803227C steps the army-slot cursor left or
- * right, skipping empty slots. */
-int sub_0802F588(struct Unk0202575C *, int);
+ * right, skipping empty slots. The byte count is a u16: the body converts it
+ * at entry, and every caller passes a small constant. */
+int sub_0802F588(struct Unk0202575C *, u16);
 void sub_0803227C(void);
 /* sub_08032340 takes the proc and a pixel position (x, y). sub_08032950 is
  * sub_0803227C's wrap-around twin. */

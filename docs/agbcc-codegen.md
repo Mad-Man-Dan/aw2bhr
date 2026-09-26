@@ -53872,3 +53872,250 @@ Three statement-level readouts from the same batch, each measured:
   folds a1's assign_parms copy into it and emits it at the assignment, i.e.
   after a3's copy. That is the ROM's `adds r3,r2,#0; mov sl,r0` order, which
   had been parked as "no source distinction" for three waves.
+
+## The force-addr declaration sweep is STILL not finished, and an unapplied rule cost `sub_08087040` five waves (wave 92, W92-B) — MATCHED
+
+`sub_08087040` matched on the first probe of wave 92 by deleting two declarations
+and naming the real arrays:
+
+    -   u16 **p = &gUnknown_081D9440, **q = &gUnknown_081D9444;
+    -   PutSprite(1, x, 0, *p, attr);
+    +   PutSprite(1, x, 0, gUnknown_0848B690, attr);
+
+23.33% at -4 bytes to `MATCH`, with `trymatch` reporting the expected
+same-address relocation difference and asking for
+`"rodata": ["0x081D9440", "0x081D9444"]`.
+
+**Nothing here is a new rule.** W40-H already gives the test (`ldr rN,=sym;
+ldr rM,[rN]` on a ROM word: TWO levels is an address constant, THREE means you
+invented a global), W38-E already says a force-addr word is not a pointer object
+*even when the ROM reloads it inside a loop*, and W33-G already says a
+force-addr word declared as a pointer is one indirection too many. The wave-44
+declaration of `gUnknown_081D9440` / `gUnknown_081D9444` as `u16 *` objects
+predates all three and nobody re-tested it. Its stated evidence — "the load is
+repeated every iteration rather than hoisted, which is what says the pointer
+objects themselves are non-const" — is exactly the inference W38-E refutes.
+
+Two things made it easy to miss, and both are worth knowing:
+
+- **The wave-53 audit of this run stopped four words short.** Its heading reads
+  `0x081D92xx-0x081D940F`, and these two words are at 0x081D9440 and 0x081D9444.
+  An audited range's *end* is not a boundary in the data; the pool block
+  continues.
+- **Dumping the ROM cannot settle it.** The function's own pool holds
+  0x081D9440/44 and the words there hold the array addresses, which is the same
+  byte pattern under both readings. Two levels from a pool word to the value the
+  code uses is the *normal* shape for an address constant spilled to `.rodata`.
+  The only decisive test is to compile the honest spelling and compare.
+
+### Measured both ways in one batch, so do not over-generalise
+
+Applying the same probe to three other parks in the same wave:
+
+- `sub_08087040` — honest spelling MATCHES (the words are cells).
+- `sub_08061DCC` — honest spelling is **-12 bytes** (5.15%), and -4 (22.79%)
+  when only one of the two is converted. `gUnknown_0816DB08` / `0x0816DB0C`
+  cannot be replaced.
+- `sub_0801A718` — declaring `gUnknown_0808E5CC` and reading
+  `gUnknown_030020A8` through it is **+4 bytes** (13.97%), and +8 when the
+  sentinel word is added, generalising W58-A from `gUnknown_0808E5D0`.
+
+So the declaration sweep needs a per-function probe, not a rule about an address
+range. The cheap screen is the honest spelling itself: one compile through
+`tools/drafts.py bases`, which scores every `.c` in `work/<fn>/` in one run and
+never touches the draft.
+
+### The open corollary, and it is a real lead
+
+`sub_08061DCC` is the interesting case, because under W40-H's test its draft is
+the thing W40-H warns about: the ROM reaches the data in THREE loads, and the
+draft models the first level as an object (`u8 **volatile gUnknown_0816DB08`).
+Read as an address constant instead, the ROM's three loads are exactly what
+`gUnknown_03004784[3]` produces **provided agbcc emits the `.rodata` cell** —
+and it does not, because (W37, re-confirmed this wave) cse merges the two
+references across `bl __divsi3`, since a libcall does not clobber memory, and one
+reference gets no cell.
+
+That leaves the draft reproducing the ROM's bytes with a model the project's own
+rules call invented. Both readings are consistent with the ROM, so nothing here
+is proven wrong — but the next attempt on that function should try to *earn the
+cell* (a third reference, or anything that defeats the cse merge) rather than
+respell the residual, because if the cell appears the honest spelling becomes
+available and the register pressure changes with it.
+
+## A VOLATILE READ OF A NARROW GLOBAL IS THE SOURCE-LEVEL `-fno-force-mem` (wave 92, W92-A)
+
+`sub_08050FF8`, 8 bytes short for five waves. The wave-91 flag sweep found one
+flag for it: `-fno-force-mem` made it SIZE-EXACT (15.42% -> 26.62%). Read
+forwards, that says the missing instructions are memory operands the candidate
+holds in a register and the original re-reads. The symbol is `gUnknown_0300453C`,
+a `u16` read six times across the first half of the function.
+
+    plain reads of gUnknown_0300453C                     796 / 804   -8   15.42%
+    #define SIDE (*(volatile u16 *)&gUnknown_0300453C)    800 / 804   -4   17.79%
+
+Half the gap, in one edit, on a function that had not moved since wave 89. And
+the flag confirms the mechanism from the other side: from the new fixpoint
+`-fno-force-mem` now OVERSHOOTS by +8, the same four bytes it used to supply.
+
+**This is a THIRD volatile mechanism and neither of the two recorded ones covers
+it.** The wave-88 chapter above is about defeating a gcse store-to-load forward
+(there is no store here). The wave-65 refutation in `sub_0802FACC`'s header is
+about a volatile cast on a POINTER-OBJECT read after a call, which does not
+change which register holds the base. This one is a plain narrow global whose
+VALUE `-fforce-mem` copies into a pseudo once; the volatile forces the `ldrh`
+back at each use.
+
+- **It works here because the reads are `ldrh`.** W89-A's volatile probe on the
+  same function failed against `gUnknown_03001FBC` for a reason that is specific
+  to that symbol: combine will not fold a volatile MEM into a `sign_extend`, so
+  a volatile read loses the ROM's `ldrsh` and pays `ldrh / lsl #16 / asr #16`.
+  An UNSIGNED narrow global has no such obstacle. **Check the load the ROM uses
+  before ruling the lever out -- the wave-89 negative is about `ldrsh`, not about
+  `volatile`.**
+- **Only the reads that the ROM spells directly want it.** This function reaches
+  the same variable a second way, through the force-addr cell 0x081360DC, from
+  the `03004580[side^1][2] == 1` test onward. Making that route volatile too is
+  +68 bytes.
+- Carry it as a file-local macro over a cast unless the whole repo is being
+  re-verified: 42 promoted files read this symbol, and retyping a shared
+  declaration is what has broken five builds.
+
+## NAMING THE TARGET GLOBAL BEATS CHASING THE CELL -- UNLESS THE LOADED VALUE IS AN INDEXED BASE (wave 92, W92-A)
+
+Wave 92 ran the same edit on four drafts that reached a global by hand through
+agbcc's own `-fforce-addr` cell, and got a 3-1 split that has a clean rule
+behind it.
+
+| function | cell | chased by hand | global named directly |
+|---|---|---|---|
+| `sub_080359A4` | 0x08090EA8 -> `&gMap` | 320 / -4, 45.06% | 320 / -4, **49.38%** |
+| `sub_0802F588` | 0x08090C80/84/88 | 280 / +0, 40.36% | 280 / +0, **40.71%** |
+| `sub_0802F6A0` | 0x08090C8C/90/94 | (already direct) | reproduces the ROM's cells exactly |
+| `sub_08050FF8` | 0x081360D8/DC/E0/E4 | 796 / -8, **15.42%** | 756 / -48, 11.82% |
+
+**The discriminator is what the loaded value is used AS.** In the first three the
+cell holds the address of a scalar or of an array that is then indexed, so
+naming the global makes agbcc rebuild the same chain by itself -- pool word ->
+`.rodata` cell -> the global's address -> the member load. In `sub_08050FF8` the
+loaded value is a BASE that every use would fold into a load displacement, so
+the honest spelling deletes the per-use re-chase that the wave-88 `c_local` bind
+installed on purpose, and 40 bytes go with it.
+
+So the wave-88 chapter above and this one are not in conflict, and the
+`sub_08050FF8` axis is now closed from BOTH ends: the bare pointer-object
+reference adds a `.rodata` word and a third load, and the target global deletes
+the second load. Neither is the ROM.
+
+**Cheap test before spending the edit: dereference the cell in `baserom.gba` and
+look at what the ROM does with the loaded value.** Two loads and then a member
+displacement off it means a scalar or array address and the honest spelling is
+worth trying. Two loads and then an index ADD means a base, and the bind stays.
+
+## RE-TEST EVERY ALLOCATION HACK AFTER A POOL-WORD FIX (wave 92, W92-A)
+
+`sub_080359A4` carried `register int y asm("r12")` from wave 71, where it was
+measured at 12 bytes against the draft of the day. Once the pool chase was
+replaced by `gMap->`, the same pin COST the last four bytes:
+
+    gMap-> with the wave-71 pin        320 / 324   -4   49.38%
+    gMap-> with the pin removed        324 / 324   +0   54.63%
+
+It also hid the function from the permuter for twenty waves: pycparser cannot
+parse `register ... asm("rN")`, and `permute.py` reports that as "the permuter
+could not score the starting point", which reads like a result rather than a
+syntax error. With the pin gone, one 900-second run took it to 56.17%.
+
+**A ruled-out axis is evidence about the exact spelling measured, and an
+ACCEPTED hack is evidence about the exact code it was measured against.** When a
+structural fix lands, re-measure the hacks the draft is carrying -- pins,
+`do/while(0)` wrappers, redundant copies -- before building on them.
+
+## Asking for a register by name (`register T x asm("rN")`)
+
+The project's standing advice is that these pins wreck new code, and the
+measurement behind it stands. But the advice is too broad as stated, and two
+facts bound it.
+
+**A promoted, byte-exact function uses them on purpose.** `sub_0807F8FC`
+(`src/decomp/c_0807F8FC.c`, `trymatch` exit 0) pins a loop counter to r2 and
+three call operands to r0/r1/r2, adds a `volatile int` to force an explicit
+save slot, and uses an empty `asm volatile ("" : "+r" (x))` as a barrier. That
+is how its frame and its counter-versus-parameter allocation were reproduced.
+So a pin is a legitimate tool, not a smell, once the allocation is understood.
+
+**Whether a pin does anything at all depends on what you pin.** Measured on
+`sub_0807E980`, same function, same wave:
+
+- Pinning three loop-carried locals (a source pointer, a destination pointer
+  and a counter) to the three registers the ROM uses for them is **completely
+  byte-neutral** â€” three variants, each byte-identical to the unpinned source.
+  The compiler was already free to honour the request, or free to ignore it,
+  and nothing downstream changed.
+- Pinning a **parameter** â€” renaming it and copying it into a pinned local â€” is
+  destructive: the same function went from 12 bytes long at 53% identical to 8
+  bytes short at 18.6% identical. The pin is live from function entry, so it
+  constrains every allocation in the function rather than one loop.
+
+Read together: a pin on a short-lived local is usually inert and costs nothing
+to try, and a pin on a value live across the whole function rewrites the whole
+function. Try the first freely; treat the second as a rewrite, not a tweak.
+
+**Neither kind of pin recovers a register the shape does not have.** The same
+measurement showed that a loop written with explicit stepped pointers needs one
+more callee-saved register than the ROM's shape, and asking for the registers
+by name does not create one â€” the pressure simply moves somewhere else.
+
+## A flag or permuter result that changes SIZE must be judged on its first-difference offset, not its percentage — `-fno-force-mem` measured on three functions (wave 92, W92-B)
+
+A flag sweep ranked `-fno-force-mem` as the best lead on three parks in the AI
+block. All three gains are size-realignment artefacts, and one of the three is
+structurally *worse* than the draft it beats by 36 points.
+
+    function        default                      with -fno-force-mem
+    sub_08061DCC    27.2%, size match, +0x4      66.9%, size match, +0x4
+    sub_08062FF4    22.3%, size -8,    +0x14     61.6%, size -4,    +0x14
+    sub_08061308    13.5%, size -20,   +0x1c     49.8%, size +4,    +0xa
+
+- `sub_08061DCC`: the entry block and the multiply block are byte-for-byte
+  identical under both settings. What the flag does is break the `unk04 & 0x780`
+  test, which the draft already matched exactly, emitting one extra instruction
+  there. The draft is one instruction short overall, the two cancel, every later
+  instruction lands on the ROM's address, and the whole tail after the division
+  call compares equal.
+- `sub_08062FF4`: the first difference does not move and the leading region is
+  instruction-for-instruction identical under both settings. The only visible
+  change there is a branch whose target label shifted by the four bytes the flag
+  added further down.
+- `sub_08061308`: the flag moves the first difference from +0x1c to +0xa — it
+  breaks eighteen bytes the draft had right — and overshoots the size from -20
+  to +4.
+
+The mechanism is what the flag's name says. `-fforce-mem` makes `expand_binop`
+copy a memory operand into a register before the other operand is expanded, so
+the load is emitted ahead of the constant beside it. Turning it off flips that
+order at *every* such site in the file: it breaks the sites the draft had right
+and fixes the ones it had wrong, and on a function short of the ROM's size the
+net byte change is what moves the score. Read the other way, the default is
+confirmed — `-fforce-mem` is what produces the ROM's load-before-constant order.
+
+### The general rule, which is not about this flag
+
+**Byte identity is positional, so on a candidate that is not yet the ROM's size,
+any change that moves the size toward the ROM's multiplies the percentage
+without fixing anything.** This has now fooled two different automated rankers
+in one wave: the flag sweep above, and the permuter on `sub_080607E8`, which
+reached the ROM's exact size and 80.8% by inserting a second call to a
+side-effecting function inside a loop — dead as an assignment, undeletable as a
+call, and worth exactly the eight missing bytes.
+
+Screen any size-changing result on two things before believing it:
+
+1. **Did the first-difference offset move later?** If it stayed put, or moved
+   earlier, the leading divergence is untouched and the gain is realignment.
+2. **Which instructions did it add?** Diff the two candidates against the ROM
+   side by side. If the added instructions are not the ones the ROM has at that
+   point, the size match is a coincidence.
+
+A candidate that is already size-exact is not exempt — there the same trap
+appears as a pair of cancelling errors, which is what `sub_08061DCC` is.

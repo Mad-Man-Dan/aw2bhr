@@ -516,8 +516,31 @@ def _restore(snap):
     return changed
 
 
+# How many of a run's outputs verify() re-checks, best permuter score first.
+# Each check is a full compile with the draft held as the candidate, and an
+# unlucky run can leave hundreds: sub_0802F6A0 left 854 in wave 92, hours of
+# checking with the draft sitting as expanded source the whole time. The rest
+# stay on disk under permuter/output-*/.
+MAX_VERIFY = 40
+
+
+def improves(pct, size, best_pct, best_size):
+    """Whether a candidate (pct, size delta) should replace the kept form.
+
+    The right size comes first, as in `drafts.py bases`: a size-exact form is
+    never given up for one of the wrong size, and it beats one of the wrong
+    size at any score. The percentage alone installed a +4-byte candidate over
+    a size-exact sub_0802F588 draft in wave 74 and again in wave 92.
+    """
+    if best_size == 0 and size != 0:
+        return False
+    if size == 0 and best_size not in (0, None):
+        return True
+    return pct > best_pct
+
+
 def verify(rec, pdir, keep_all):
-    """Run every candidate past trymatch and keep the first that matches.
+    """Run the best candidates past trymatch and keep the first that matches.
 
     Returns (exit status, final-line state, detail).
     """
@@ -532,6 +555,10 @@ def verify(rec, pdir, keep_all):
     if not cands:
         print("\nno candidate scored better than the starting point.")
         return 1, "NO-IMPROVEMENT", "no candidate scored better in the permuter"
+    if len(cands) > MAX_VERIFY:
+        print("\n%d outputs; checking the best %d by permuter score (--max-verify)."
+              % (len(cands), MAX_VERIFY))
+        cands = cands[:MAX_VERIFY]
 
     print("\n%d candidate(s) to check against trymatch (full reports: %s):"
           % (len(cands), os.path.relpath(vlog, awlib.REPO).replace(os.sep, "/")))
@@ -548,11 +575,13 @@ def verify(rec, pdir, keep_all):
     # against a number describing some other source.
     _, base = _check_quietly(name, vlog)
     base_pct = trymatch.LAST_PCT
+    base_size = base.get("size")
     print("  baseline  %s" % trymatch.format_result(base))
     if base_pct is None:
         print("  draft does not compile or cannot be scored; improvements "
               "cannot be judged, so the original will be restored as before.")
     best_pct, best_lines, best_label = base_pct, None, None
+    best_size = base_size
     raw_pct, raw_lines = base_pct, None
     best_files = [os.path.join(workdir, "best.c"), os.path.join(workdir, "best.json")]
     matched = False
@@ -600,9 +629,11 @@ def verify(rec, pdir, keep_all):
                 pct = trymatch.LAST_PCT
                 if pct is None or base_pct is None:
                     continue
-                if label == "spliced" and pct > best_pct:
+                if label == "spliced" and improves(pct, r.get("size"), best_pct, best_size):
                     best_pct, best_lines, best_label = pct, lines, rel
-                    print("             improvement: %.2f%% -> %.2f%% (kept)" % (base_pct, pct))
+                    best_size = r.get("size")
+                    print("             improvement: %.2f%% -> %.2f%% size%+d (kept)"
+                          % (base_pct, pct, best_size or 0))
                     break   # the raw form of this candidate is the same code
                 if label == "raw" and pct > raw_pct:
                     raw_pct, raw_lines = pct, lines
@@ -675,7 +706,16 @@ def self_test():
           % ("PASS" if good else "FAIL"))
     ok &= good
 
-    # 3. The default thread count is a share of the machine, not all of it.
+    # 3. The right size outranks the percentage when keeping an improvement.
+    good = (not improves(90.0, 4, 80.0, 0)       # never trade size-exact away
+            and improves(40.0, 0, 60.0, -4)      # size-exact wins at any score
+            and improves(81.0, 4, 80.0, 8)       # same side of exact: by score
+            and not improves(79.0, 0, 80.0, 0))
+    print("[self-test] a size-exact form is never replaced by a wrong-size one: %s"
+          % ("PASS" if good else "FAIL"))
+    ok &= good
+
+    # 4. The default thread count is a share of the machine, not all of it.
     good = DEFAULT_THREADS == 4
     print("[self-test] default threads = %d: %s" % (DEFAULT_THREADS, "PASS" if good else "FAIL"))
     ok &= good
@@ -708,6 +748,9 @@ def main():
                     help="keep output directories even on success")
     ap.add_argument("--live", action="store_true",
                     help="echo the permuter's raw progress (the pre-wave-90 output)")
+    ap.add_argument("--max-verify", type=int, default=MAX_VERIFY,
+                    help="check at most this many outputs, best permuter "
+                         "score first (default %(default)s)")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
@@ -720,6 +763,8 @@ def main():
 
 
 def _main(args):
+    global MAX_VERIFY
+    MAX_VERIFY = max(1, args.max_verify)
     if not os.path.isdir(PERMUTER_DIR):
         print(CLONE_HINT)
         return 2, "SETUP-FAILED", "vendor/decomp-permuter missing"

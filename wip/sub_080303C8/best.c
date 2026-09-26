@@ -6,7 +6,7 @@ u16 sub_080303C8(void)
     int acc;
     int i;
 
-    if (gUnknown_03003FC0.unk32 == 0)
+    if (gPlaySt.savingEnabled == 0)
         goto reset;
     if (gUnknown_0849B018->unk01 != 2)
         goto reset;
@@ -54,5 +54,5 @@ u16 sub_080303C8(void)
 reset:
     gUnknown_0849B018->unk1b = 0;
 keys:
-    return gpKeySt->repeated;
+    return gpKeySt->previous;
 }

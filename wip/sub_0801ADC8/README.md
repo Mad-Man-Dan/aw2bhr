@@ -2,7 +2,7 @@
 
 0x0801ADC8, 556 bytes, THUMB, parked.
 
-Best score so far: 64.6% (best.c).
+Best score so far: 64.6%.
 
 ## What it does
 
@@ -26,7 +26,6 @@ Find a way of writing the two identical wipe-and-retry loops that makes the comp
 ## Files
 
 - `sub_0801ADC8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

@@ -2,7 +2,7 @@
 
 0x0804FA2C, 632 bytes, THUMB, parked.
 
-Best score so far: 72.9% (preprocessed form, not included).
+Best score so far: 72.9% (best.c).
 
 ## What it does
 
@@ -29,6 +29,7 @@ Find what makes the compiler load gUnknown_03004580's address one step later, in
 ## Files
 
 - `sub_0804FA2C.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `target.s`: the original assembly
 
 ## Technical history

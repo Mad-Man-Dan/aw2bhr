@@ -24,7 +24,7 @@ void sub_0801F4B4(int a1, int a2, int a3, int a4, int a5)
     gUnknown_084999C8->unk24[1] = 2;
     gUnknown_084999C8->unk24[2] = 4;
     gUnknown_084999C8->unk24[3] = 8;
-    gUnknown_084999C8->unk2a = gUnknown_08499598[gUnknown_03004480].unk2c;
+    gUnknown_084999C8->unk2a = gPlayers[gUnknown_03004480].unk2c;
     sub_0801F838(0xff);
     sub_0801F888(a3);
     gUnknown_03003F64[0] = a1;

@@ -63,4 +63,11 @@ The body is not in question -- prologue, the `dest + x + 0x20` start cell, both 
 
 Wave 58 (W58-A), carried from waves 42 and 51. Ten spellings measured; the residual is an LICM hoist, which is instruction order across a loop boundary and has no source lever.
 
+### Wave 92
+
+- **agent:** W92-A
+- **measured:** 79.69%, size-exact 64/64, first difference +0x11 (tools/drafts.py bases; no try_match spent).
+- **verdict:** Entry confirmed closed. The brief's instruction to 'fix the pool-word spelling' names an axis that is already the first line of axes_ruled_out: the honest gUnknown_0300308C spelling is one instruction SHORT.
+- **new:** Three other functions in this batch closed part of their gap by naming the global directly, and agbcc answered each with the three-level chain this function needs, so the chain is reachable. The mechanism is already settled in docs/agbcc-codegen.md ("The `.rodata` force-addr word is made by GCSE's PRE", wave 91 W91-B): the .LC word survives only when the pool pseudo has more than one use, and PRE is what creates the extra uses -- and that chapter names this function's shape, a loop containing a call, as a case where PRE fires. So the open question is NOT which declaration to write. It is why, with the honest spelling, the pool pseudo ends up with ONE use here. Read it off a -da dump of the .gcse pass rather than spending an eleventh declaration. Note that -fno-gcse is already in the swept flag set and did not move this function, which argues against a PRE insertion being what the ROM has.
+
 </details>

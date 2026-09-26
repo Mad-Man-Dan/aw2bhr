@@ -64,7 +64,7 @@ void sub_08046A84(u8 a, u8 b)
 
     for (i = 0; i <= 2; i++)
     {
-        if (gUnknown_085D5ABC[gUnknown_084C20C0[i]].unk54[b] != 0)
+        if (gUnknown_085D5ABC[gUnknown_084C20C0[i]].repairTable[b] != 0)
             sub_0801F34C(i + 0x2C, a + 0x52, 0x38, 0, 0);
     }
 
@@ -74,7 +74,7 @@ void sub_08046A84(u8 a, u8 b)
         break;
 
     case 1:
-        for (i = 0; i < gUnknown_085D583C[b].unk10; i++)
+        for (i = 0; i < gUnknown_085D583C[b].defense; i++)
             sub_0801F34C(0x39, gUnknown_084C2112[i * 2] + 0x50 + a,
                          gUnknown_084C2112[i * 2 + 1] + 0x19, 0, 0);
 
@@ -82,11 +82,11 @@ void sub_08046A84(u8 a, u8 b)
 
         for (i = 0; i <= 6; i++)
         {
-            if (gUnknown_085D3DD0[gUnknown_03003FC0.unk08
-                        ? gUnknown_08499598[gUnknown_030033EC].unk1d
+            if (gUnknown_085D3DD0[gPlaySt.coAbilities
+                        ? gPlayers[gUnknown_030033EC].co
                         : 1]
-                    .unk38[gUnknown_08499598[gUnknown_030033EC].unk1e]
-                    .unk18[gUnknown_03003FC0.unk2c]
+                    .power[gPlayers[gUnknown_030033EC].coMode]
+                    .movementChart[gPlaySt.weather]
                         [gUnknown_084C212A[i] * 32 + b] != -1)
             {
                 sub_0801F34C(gUnknown_084C20C3[i],
@@ -98,7 +98,7 @@ void sub_08046A84(u8 a, u8 b)
         break;
 
     case 2:
-        for (i = 0; i < gUnknown_085D583C[b].unk10; i++)
+        for (i = 0; i < gUnknown_085D583C[b].defense; i++)
             sub_0801F34C(0x39, gUnknown_084C2112[i * 2] + 0x50 + a,
                          gUnknown_084C2112[i * 2 + 1] + 0x19, 0, 0);
 

@@ -56,7 +56,7 @@ void sub_0805A0EC(void *out_)
   volatile u8 *new_var;
   int new_var3;
   struct Unk5A514Cell *out;
-  struct Unk08499594 *u;
+  struct Unit *u;
   struct Unk030040D8 *p;
   u8 *q;
   u8 *rows;

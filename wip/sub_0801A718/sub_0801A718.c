@@ -1,6 +1,13 @@
 #include "global.h"
 
-/* PARKED at 59.1% (size exact, 132 B). Wave 41, W41-A.
+/* 68.9%, size exact. gUnknown_0200C618 now has a linker symbol and the tail
+ * names it, which removed the extra load described below. The remaining
+ * difference is register choice and when the array base is loaded: the
+ * original loads &gUnknown_0200C624 after computing the node index and
+ * derives the sentinel from that same register; this draft loads it first.
+ * The older notes below predate the symbol.
+ *
+ * PARKED at 59.1% (size exact, 132 B). Wave 41, W41-A.
  *
  * The SHAPE IS SOLVED -- the whole remaining residual is ONE extra `ldr` in
  * the tail statement plus the register shuffle it drags along.
@@ -137,6 +144,6 @@ s16 sub_0801A718(struct Unk0200ED20 *a1, s16 key)
     }
 
     gUnknown_030020A8.unk00++;
-    gUnknown_030020A8.unk04 = gUnknown_0808E5D0->unk04;
+    gUnknown_030020A8.unk04 = gUnknown_0200C618.unk04;
     return 0;
 }
