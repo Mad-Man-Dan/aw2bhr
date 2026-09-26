@@ -71,6 +71,41 @@ def _abs(path):
     return path if os.path.isabs(path) else os.path.join(awlib.REPO, path)
 
 
+def uncommented_definitions(lines):
+    """Line indexes of function definitions with no comment directly above.
+
+    A definition here is the column-0 declarator line (it has a `(` and no
+    `=` or `;`) above a line that is just `{`, the style every file in
+    src/decomp uses.
+    """
+    out = []
+    for i, ln in enumerate(lines):
+        if ln.rstrip("\r") != "{":
+            continue
+        d = next((k for k in range(i - 1, max(-1, i - 6), -1)
+                  if lines[k][:1].isalpha() or lines[k][:1] == "_"), None)
+        if d is None:
+            continue
+        decl = " ".join(l.strip() for l in lines[d:i])
+        if "(" not in decl or "=" in decl or decl.endswith(";"):
+            continue
+        j = d - 1
+        while j >= 0 and not lines[j].strip():
+            j -= 1
+        prev = lines[j].rstrip("\r").rstrip() if j >= 0 else ""
+        if prev.lstrip().startswith("//"):
+            continue
+        if prev.endswith("*/"):
+            # The file's generated banner is not this function's comment.
+            k = j
+            while k > 0 and "/*" not in lines[k]:
+                k -= 1
+            if not lines[k].lstrip().startswith("/* Promoted from assembly;"):
+                continue
+        out.append(d)
+    return out
+
+
 def extract_doc(path, lines):
     raw, text = read(path)
     lo, hi = lines
@@ -91,6 +126,17 @@ def extract_doc(path, lines):
         blocks.append({"id": len(blocks), "line": ln, "start": start, "end": end,
                        "before": before, "old": text[start:end].replace("\r\n", "\n"),
                        "after": after})
+    # An empty slot above each function definition that has no comment right
+    # above it, so a comment can be added where none was. "old" is "".
+    for d in uncommented_definitions(all_lines):
+        if not lo <= d + 1 <= hi:
+            continue
+        off = starts[d]
+        blocks.append({"id": len(blocks), "line": d + 1, "start": off, "end": off,
+                       "slot": "no comment above this function; set new to add one",
+                       "before": [l.rstrip("\r") for l in all_lines[max(0, d - 2):d]],
+                       "old": "",
+                       "after": [l.rstrip("\r") for l in all_lines[d:d + 4]]})
     rel = os.path.relpath(path, awlib.REPO).replace("\\", "/")
     return {"file": rel, "sha1": hashlib.sha1(raw).hexdigest(),
             "lines": "%d-%d" % (lo, hi), "blocks": blocks}
@@ -137,6 +183,11 @@ def apply_doc(path, doc):
         eol = text.find("\n", e)
         nl = "\r\n" if eol > 0 and text[eol - 1] == "\r" else "\n"
         new = b["new"].replace("\r\n", "\n").replace("\n", nl)
+        if b["old"] == "":
+            if new:                     # a new comment in an empty slot
+                text = text[:s] + new + nl + text[s:]
+                changed += 1
+            continue
         if new == "":
             # Take the whole line(s) when the comment stood alone on them.
             ls = text.rfind("\n", 0, s) + 1
