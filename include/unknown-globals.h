@@ -3916,7 +3916,6 @@ struct Unk8019A60
 /* Table of 19-byte strings: sub_08032A00 passes entry gUnknown_0849B060->unk04
  * to sub_080149C0's text parameter. */
 extern u8 gUnknown_02027C2C[];
-extern u16 *gUnknown_0849957C;
 /* Two LZ77 blobs sub_08075314 decompresses: the first to VRAM 0x06000800, the
  * second into the buffer gUnknown_0849957C points at. Non-const because
  * Decompress takes a plain u8 *. */
@@ -3942,8 +3941,7 @@ extern const u8 gUnknown_085814A8[];
 extern u16 *gUnknown_08499580;
 /* Tilemap buffer pointer, like gUnknown_08499578 and gUnknown_08499580.
  * sub_08077B74 clears the buffer with CpuFastSet and then reads u16 entries at
- * proc->unk4a * 32 + t. (gUnknown_0849957C is declared twice in this file; the
- * two declarations agree.) */
+ * proc->unk4a * 32 + t. */
 extern u16 *gUnknown_0849957C;
 /* Not real objects: compiler-made pool words holding &gUnknown_08499580 and
  * &gUnknown_085D5ABC. They are declared as pointers to their targets for

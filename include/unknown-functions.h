@@ -3819,10 +3819,10 @@ int sub_0801ED80(int, int, int, long long, s16);
 void sub_0803FF48(int, int, int, ProcPtr);
 void sub_0803F3E4(int, int, ProcPtr);
 
-/* The two arms of sub_08041958. sub_0804074C is declared without a
- * prototype; its definition takes (struct Unk02028360 *, ProcPtr parent).
- * sub_08040790's first two arguments are a cell column and row. */
-void sub_0804074C();
+/* The two arms of sub_08041958. sub_0804074C takes the entry the proc holds
+ * at +0x4c and the parent proc. sub_08040790's first two arguments are a cell
+ * column and row. */
+void sub_0804074C(struct Unk02028360 *, ProcPtr);
 void sub_08040790(int, int, ProcPtr);
 
 /* ---- Cross-unit callees of the 0x08040000 block ---- */
@@ -3848,10 +3848,9 @@ void sub_0808AC20(void);
 
 /* The BIOS LZ77 decompressor, VRAM variant: (source, destination). */
 void LZ77UnCompVram(const void *, void *);
-/* Declared without a prototype; the definition takes
- * (volatile u16 *src, void *dst). It halves each 5-bit colour channel of 64
- * palette entries into a scratch buffer, then copies that to dst. */
-void sub_0804BD58();
+/* Halves each 5-bit colour channel of the 64 palette entries at src into a
+ * scratch buffer, then copies that to dst. */
+void sub_0804BD58(volatile u16 *, void *);
 
 /* Callees of the 0x0802D000 block. sub_080637AC returns the
  * gUnknown_03001470 slot whose script (unk00) is `a`, or NULL. */
@@ -5414,11 +5413,9 @@ bool8 sub_0802700C(int, int, int);
 /* sub_08061788 and sub_08061868 (RunAiTurn) are in c_0806171C.c.
  * sub_08061B00 steps a shared cursor through two ROM tables of functions and
  * calls the entries. sub_08061CF8 sums sub_08061DA8(n) over the set low four
- * bits of a flag byte. sub_08061868 and sub_08061B00 are also declared
- * above. */
+ * bits of a flag byte. sub_08061868 and sub_08061B00 are declared with the
+ * other AI blocks above. */
 void sub_08061788(u16);
-void sub_08061868(void);
-void sub_08061B00(void);
 void sub_08061CF8(void);
 
 /* The gUnknown_03001470 wake pass. sub_080159E0 runs one slot's pending wake:
@@ -5614,8 +5611,6 @@ void sub_080845C4(int, int);
 void sub_080845E8(int, int);
 void sub_08086F3C(int);
 
-#endif // UNKNOWN_FUNCS_H
-
 /* sub_080085E0 is MakeTile: it runs one of nineteen handlers on the cell
  * under the cursor, chosen by gActiveMap->selectedTerrain, and leaves a
  * result code in gActiveMap->unk6a. sub_0800AEAC takes a cell (x, y). */
@@ -5627,3 +5622,5 @@ int sub_0800AEAC(int, int);
 int sub_0800105C(void);
 void sub_08004D10(void);
 int sub_0800BC5C(int, int);
+
+#endif // UNKNOWN_FUNCS_H

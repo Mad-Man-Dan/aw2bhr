@@ -16,10 +16,7 @@
  * `ldrh; lsls #0x16; lsrs #0x1c` is extract_bit_field on the unk02_6 bitfield,
  * not `(unk02 >> 6) & 0xf` on a plain u16 -- the latter gives
  * `lsr #6; movs #0xf; and`, which is longer. include/unknown-globals.h already
- * models unk02 as a 6/4/6 bitfield for exactly this reason.
- *
- * The declaration in include/unknown-functions.h is `void sub_0804074C();`
- * without a prototype, which is compatible with this definition. */
+ * models unk02 as a 6/4/6 bitfield for exactly this reason. */
 struct Unk4074CProc
 {
     /* 00 */ u8 filler_00[0x2c];

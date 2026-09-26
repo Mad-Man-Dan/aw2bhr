@@ -53,9 +53,6 @@
  */
 
 #define MAP gMap
-/* The same prototype include/unknown-functions.h now carries; this local copy
- * predates that entry. */
-int sub_0800F77C(int, int, int);
 
 int sub_0800FD44(int x, int y, int a3)
 {
