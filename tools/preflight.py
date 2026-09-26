@@ -51,6 +51,32 @@ def sect(title):
     print("\n=== %s ===" % title)
 
 
+def better_base(name, v):
+    """A note when best.c (or a recovered.c) beats the draft just scored.
+
+    The re-test scores the draft only, and 2026-09-26 found 27 parked
+    functions whose draft sat below another file in the same folder --
+    sub_0801D390 at 8.76% beside a 62.97% size-exact best.c. An agent handed
+    the draft starts from the worse one unless something says so.
+    """
+    notes = []
+    try:
+        with open(os.path.join("work", name, "best.json"), encoding="utf-8") as fh:
+            b = json.load(fh)
+        sd = b.get("size_delta")
+        if sd is not None and (abs(sd) < abs(v["size"])
+                               or (abs(sd) == abs(v["size"])
+                                   and b.get("percent", 0) > v["pct"] + 0.5)):
+            notes.append("best.c %.2f%% size%+d" % (b["percent"], sd))
+    except (OSError, ValueError, KeyError):
+        pass
+    if os.path.exists(os.path.join("work", name, "recovered.c")):
+        notes.append("recovered.c")
+    if not notes:
+        return ""
+    return "   <- better: %s (drafts.py bases %s)" % (", ".join(notes), name)
+
+
 def retest_parked(names):
     """Re-test each name by EXIT CODE, telling a compile failure from a miss.
 
@@ -72,7 +98,8 @@ def retest_parked(names):
             print("  COMPILE-FAIL %s :: %s" % (name, err[:150]))
             compile_fail.append(name)
         elif v["state"] == "MISMATCH":
-            print("  still-fails %-16s %6.2f%% size%+d" % (name, v["pct"], v["size"]))
+            print("  still-fails %-16s %6.2f%% size%+d%s"
+                  % (name, v["pct"], v["size"], better_base(name, v)))
         else:
             print("  %s %s -- no verdict (exit %d)" % (v["state"], name, r.returncode))
             no_verdict.append(name)
@@ -243,8 +270,13 @@ def main():
     # A blob is ~50KB of expanded headers; a MUTATED draft can be normal-sized
     # and is only findable by the permuter's injected `new_var`, so check both.
     sect("permuter-contaminated drafts (wave 17 residue, still present)")
+    # Only unmatched functions: a matched function's draft is refreshed from
+    # src/decomp by sync_work.py, and a permuter-found match keeps its
+    # `new_var` there legitimately -- listing those buried the real cases.
     blobs, mutated = [], []
     for p in glob.glob("work/*/*.c"):
+        if st.get(os.path.basename(os.path.dirname(p))) == "matched":
+            continue
         try:
             with open(p, encoding="utf-8", errors="replace") as fh:
                 text = fh.read()
@@ -265,13 +297,14 @@ def main():
         # The dangerous case is the WORK DRAFT being gone, not best.c: promote
         # reads the draft, and best.c beside a good draft is merely ignorable.
         fn = os.path.basename(os.path.dirname(p))
-        tag = "DRAFT GONE" if os.path.basename(p) == fn + ".c" else "best.c only"
+        tag = "DRAFT" if os.path.basename(p) == fn + ".c" else "other file"
         print("  MUTATED  %-12s %s" % (tag, p))
-    print("%d blob(s), %d mutated file(s). `DRAFT GONE` means the readable C is"
+    print("%d blob(s), %d mutated file(s), unmatched functions only. `DRAFT`"
           % (len(blobs), len(mutated)))
-    print("lost and must be rebuilt from the assembly -- do not trust it as a")
-    print("starting point. `best.c only` means the draft beside it is probably")
-    print("fine; ignore the best.c. Nothing here is cleaned up automatically.")
+    print("means the draft itself carries permuter edits (`new_var`): read what")
+    print("they changed before building on it. A blob is header-expanded output;")
+    print("permute.splice() turns one back into a readable draft, and a blob")
+    print("kept for reference is named *.c.blob so nothing scans it.")
     print("For any function here, `python tools/drafts.py bases <fn>` compiles")
     print("every candidate file in work/<fn>/ and names the real base (read-only).")
 
