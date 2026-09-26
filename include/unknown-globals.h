@@ -3521,14 +3521,12 @@ extern struct SoundInfo *gUnknown_03007FF0;
 /* A ROM word holding the address of a RAM array of 0x0c-byte records (struct
  * Unk0808E5C8). */
 extern struct Unk0808E5C8 *gUnknown_0808E5C8;
-/* gUnknown_0808E5D0 is really a compiler-made pool word: it holds 0x0200C618,
- * entry [0] of the same record array. It is declared as a pointer only
- * because 0x0200C618 has no linker symbol; sub_0801A718 reads through it at
- * the cost of one extra load, so do not copy this pattern. gUnknown_0200C624
- * is entry [1] of that array
- * (sub_0801A718 reaches entry [0] as gUnknown_0200C624 - 1). The pool word
- * 0x0808E5CC holds &gUnknown_030020A8 and needs no declaration. */
-extern struct Unk0808E5C8 *gUnknown_0808E5D0;
+/* The list's head sentinel, the record just before the gUnknown_0200C624
+ * array. sub_0801A718 starts its sorted insert here and reads its link back
+ * into gUnknown_030020A8.unk04. The ROM word 0x0808E5D0 is a compiler-made
+ * pool word holding this address, and 0x0808E5CC one holding
+ * &gUnknown_030020A8; neither needs a declaration. */
+extern struct Unk0808E5C8 gUnknown_0200C618;
 extern struct Unk0808E5C8 gUnknown_0200C624[];
 /* 0x0808E580-0x0808E58C are compiler-made pool words, not objects: 0x0808E580
  * and 0x0808E588 hold &gUnknown_0200C528, 0x0808E584 and 0x0808E58C hold
