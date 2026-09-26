@@ -10,10 +10,22 @@
 
 #define MAP08009DFC gMap
 
-/* MATCHED in wave 67 (276/276).  The aggregate map view fixes the address
- * pseudo ordering and the ROM's r2-to-r7 copy.  The x-neighbour indices must
- * stay block-scoped and be adjusted in separate statements.  Promotion also
- * needs the ROM pool word at 0x0808D82C. */
+/*
+ * sub_08009DFC -- count how many of the four cells next to (x, y) are water.
+ *
+ * Water here means terrain 7, 0xD or 2 -- the same ids MakeBridge will span.
+ * If (x, y) is itself one of them the answer is -1. Otherwise the four
+ * neighbours that are on the map are counted, and a cell surrounded on all
+ * four sides gives -1 as well, unless sub_080094EC objects to the cell.
+ *
+ * MAP08009DFC is only another name for gMap.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The two left/right blocks keep their own `idx` and adjust it in separate
+ *     statements (`idx--; idx += x;`). In one expression the compiler folds the
+ *     arithmetic differently.
+ */
 
 int sub_08009DFC(int x, int y)
 {

@@ -8,40 +8,34 @@
  * sub_0800A098 @ 0x0800A098, sub_0800A2EC @ 0x0800A2EC
  */
 
-/* MATCHED (wave 37, W37-C).
+/*
+ * sub_0800A098 -- repair the cell on each side of (x, y) after its tile changed.
  *
- * Four one-sided repairs around (x, y), gated on the cell's own tile: the two
- * horizontal neighbours when it is 0x39, the two vertical ones when it is
- * 0x18.  Each arm needs the neighbour to be free (IsTerrainWater), the ORIGINAL
- * cell still to read as that tile, and sub_0800AA30 for that direction to be
- * clear; then it stamps kind 2 with a fixed tile and, when the terrain byte one
- * row up and one column left/right is 0xD, calls sub_0800BA9C on it.
+ * The tile now at (x, y) says which pair of neighbours can be wrong: 0x39 the
+ * two horizontal ones, 0x18 the two vertical ones. A neighbour is only touched
+ * when IsTerrainWater says it is not water, (x, y) still reads that same tile,
+ * and sub_0800AA30 has nothing against that direction (0 left, 1 right, 2 up,
+ * 4 down). It is then made sea -- terrain 2 with a fixed tile, 0x11D, 0xFD,
+ * 0xFC or 0x11C, one per direction. Finally, if the terrain in the cell
+ * diagonally beyond it reads 0xD, sub_0800BA9C is called on that cell.
  *
- * `c` is spilled to the stack because its live range spans both halves; the
- * inner re-reads of the same cell are in the ROM too, at the same index.
+ * The diagonal reads have no bounds check: with y == 0 the 0x39 arms read the
+ * row table one entry before its start, and the 0x18 arms can reach column -1.
+ * The original does the same.
  *
- * THE COMMA IS LOAD-BEARING and is a reproduction of what CSE did, not the
- * original source.  The terrain index is `(rowOffset[ny] -+ 1) + x`, with the
- * constant applied to the ROW and x added afterwards.  Written inline agbcc
- * folds it two other ways, both wrong and both measured on this function:
- *   - `rowOffset[ny] + x - 1` reassociates to `(rowOffset + x) - 1` and sinks
- *     the -1 into the terrain base, emitting `ldr =0x1431` where the ROM has
- *     `ldr =0x1432`;
- *   - `rowOffset[ny] - 1 + x` reassociates to `rowOffset + (x - 1)`, which
- *     then CSEs with the `x - 1` this function already has -- with `nx` in the
- *     two 0x39 arms (2 bytes short each, 592 of 596) and with sub_0800BA9C's
- *     own argument in the two 0x18 arms (right size, wrong registers);
- *   - binding `int row = rowOffset[ny] - 1;` as a STATEMENT fixes the
- *     arithmetic but hoists the whole row load above the SetTerrainAt /
- *     MakeTileSimple pair, where the ROM has it after them.
- * `(t = <row expr>, t + x)` is the only spelling that keeps the association
- * AND the position; `t` is declared per-arm so each is its own short-lived
- * allocno and stays in r0.
+ * sub_0800A2EC below is a separate sweep: every one of the four neighbours that
+ * sub_08009B38 accepts is set to terrain 1 with tile 1.
  *
- * gUnknown_08499590 is named honestly throughout.  agbcc force-addrs it once,
- * for the first statement, and that .rodata word is the ROM's
- * gUnknown_0808D834 (promotion needs "rodata": ["0x0808D834"]); the later arms
- * use the plain literal-pool address, which is exactly the mix the ROM has. */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The diagonal index is written `(t = <row> -+ 1, t + x)`, so the 1 is
+ *     added to the row and x afterwards. As one expression the compiler
+ *     regroups it, either folding the 1 into the terrain array's own offset or
+ *     sharing it with an `x - 1` computed elsewhere in the function. Binding
+ *     the row in a statement of its own instead lifts the whole row load above
+ *     the two calls that must come first.
+ *   - `t` is declared inside each arm so that each one is short-lived.
+ */
 #define MAP gMap
 
 void sub_0800A098(int x, int y)

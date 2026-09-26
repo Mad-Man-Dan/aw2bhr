@@ -7,51 +7,34 @@
  * Decompress @ 0x08011CAC
  */
 
-/* Decompress @ 0x08011CAC, 100 bytes. Wave 56 (W56-S): MATCHED.
+/*
+ * Decompress -- unpack src into dst, choosing the unpacker from src's header.
  *
- * Dispatches to a per-format decompressor, or falls back to a straight
- * CpuFastSet copy when the table slot is NULL. gUnknown_08489314 is declared in
- * include/unknown-globals.h with the evidence for its element type.
+ * The top nibble of the first byte is the format. gUnknown_08489314 holds two
+ * entries per format, one for a VRAM destination and one for anywhere else, so
+ * the index is (src[0] & 0xF0) >> 3 plus one when dst is outside
+ * 0x06000000..0x06017FFF. A NULL slot means the data is not packed at all and
+ * is copied straight through with CpuFastSet.
  *
- * Three things here were each worth an attempt, and all three are ORDERING or
- * CODEGEN-SHAPE facts rather than semantics -- the size matched from the second
- * attempt onward while the byte score sat at 76%, exactly the case the brief's
- * size-delta rule describes.
+ * The count for that copy is the header word with the format nibble taken out
+ * and the two remaining pieces closed up -- the low nibble of byte 0 beside
+ * bits 8 and above, 28 bits of byte count -- then divided by 4 for CpuFastSet's
+ * word count and masked down to its 21-bit count field.
  *
- * 1. THE 0/1 FLAG. The ROM emits `movs r2,#1 / cmp / bhi L / movs r2,#0 / L:`.
- *    Getting this required matching BOTH the position of the preset and its
- *    polarity, and the two pull in opposite directions:
- *      - `notVram = <comparison>;` as an rvalue, or `? 0 : 1` (which folds to
- *        the same tree), presets 0 and branches `bls` -- right position, wrong
- *        polarity.
- *      - `notVram = 1; if (...) notVram = 0;` presets 1 but emits the store at
- *        the top of the function, before the comparison's operands are even
- *        materialised -- right polarity, wrong position.
- *      - an if/else gets both right, because the arms are emitted after the
- *        condition's operands. THE RULE, measured over four attempts here:
- *        agbcc presets the ELSE arm's value and branches on !cond to skip the
- *        THEN arm's store. So to obtain `preset 1 / bhi / store 0` the else arm
- *        must be 1 and the condition must be the `<=` one. Writing the test in
- *        its "natural" polarity gives the mirror image and costs 12 bytes.
- *
- * 2. THE TABLE SUBSCRIPT MUST BE ITS OWN STATEMENT. With the index written
- *    inline in the subscript, agbcc hoists the base's pool `ldr` to the TOP of
- *    the block the if/else merges into -- ahead of the `ldrb` that starts the
- *    index computation. Binding the index to `idx` first moves the whole
- *    address computation (pool ldr, `lsls #2`, add, load) to the assignment
- *    statement, which is where the ROM has it. That one change was 88% -> match
- *    and was the last defect.
- *
- * 3. THE SIZE FIELD IS SPLIT AROUND THE TYPE NIBBLE. The count is
- *    `(src[0] & 0xF) | ((header & 0xFFFFFF00) >> 4)`, i.e. the header word with
- *    the type nibble at bits 4-7 DELETED and the two remaining pieces closed up
- *    -- a 28-bit byte count -- then `>> 2` for CpuFastSet's word count. Write
- *    the high half as `& 0xFFFFFF00) >> 4` and not as `(header >> 8) << 4`:
- *    they are arithmetically equal but agbcc 2.9 does NOT fold the second into
- *    the first, and leaves two shifts where the ROM has a mask and one shift.
- *    The `& 0x1FFFFF` is CpuFastSet's 21-bit count field; agbcc combines it
- *    with the `>> 2` into the `lsls #9 / lsrs #11` pair the ROM shows, so read
- *    that pair as `(x >> 2) & 0x1FFFFF` and not as a bitfield read.
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The VRAM test must be an if/else with 1 in the else arm, not
+ *     `notVram = <comparison>;` and not a `?:`. The compiler presets the else
+ *     arm's value and branches around the then arm's store, so this is the only
+ *     spelling that sets 1 first and stores 0 afterwards, in the original's
+ *     order.
+ *   - The table index is a statement of its own. Written inside the subscript,
+ *     the load of the table's address is lifted to the top of the block, ahead
+ *     of the byte load that starts the index.
+ *   - The high part of the count is `(header & 0xFFFFFF00) >> 4`, not
+ *     `(header >> 8) << 4`. The two are equal, but this compiler does not turn
+ *     the second into the first and leaves two shifts where the original has a
+ *     mask and one shift.
  */
 
 void Decompress(u8 * src, void * dst)

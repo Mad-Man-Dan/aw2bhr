@@ -11,9 +11,45 @@
 #include "hardware.h"
 #define MAP gMap
 
-/* Wave 66: the final four bytes were allocation in the table lookup. A ternary
- * delays the default 6 until after the compare, and the explicit `index +=`
- * accumulator selects the ROM's add destination. */
+/*
+ * sub_0800081C -- run one frame of the map editor's cursor and painting mode.
+ *
+ * Reads the pad, works out whether the current selection may be placed under
+ * the cursor, draws the cursor accordingly and acts on the buttons.
+ * gUnknown_030033E4 holds the live cursor position (unk00 = x, unk02 = y);
+ * gActiveMap keeps the copy this function last saw.
+ *
+ *   - First frame after the mode change: copy the cursor position, rebuild the
+ *     editor's view, and return through state 0 without reading the pad.
+ *   - Pad source: while the cursor is still moving (the live position differs
+ *     from the stored one) held keys are used, otherwise newly pressed keys.
+ *   - Placement test, result in r: 1 allowed, 6 refused, 5 for unit id 0x19.
+ *     In terrain mode each of terrain 2, 5, 0xC, 0xD, 0x10 and 0x13 has its
+ *     own test, and flag 0x2000 refuses everything. In unit mode the unit's
+ *     movement type is charged for this terrain and a cost of -1 refuses the
+ *     tile. sub_08023274 then draws the cursor for r.
+ *   - A: in terrain mode paint the tile (MakeTile) unless refused; in unit
+ *     mode ask sub_08008928 and place the unit when it answers 1, setting flag
+ *     0x1000 on any positive answer. A refused press plays sound 0x68 and
+ *     counts cursorIdleFrames up; after 0x31 of them it calls sub_08004D10.
+ *   - B: redraw the ring and re-test the tile under the cursor.
+ *   - START selects mode 5; SELECT mode 3; R mode 2 in terrain mode; L mode 2
+ *     in unit mode. All four need sub_0802DBF8 true, and the last three also
+ *     need GetMapLock to be 0. When none of them is pressed the cursor
+ *     position is resynchronised.
+ *   - Last: play gActiveMap->soundId if it was set, otherwise the id
+ *     sub_0800105C returned, and count inputDelay down, clearing flag 0x2000
+ *     when it reaches zero.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The movement-cost lookup must build its index with a separate
+ *     `index +=` and choose between 1 and 6 with `?:`. Spelled as one
+ *     expression, or as an if/else, the compiler picks different registers.
+ *   - `gActiveMap->editMode = t;` and `cursorIdleTimer = t;` store a zero that
+ *     is known to be in `t`; the original reuses the register the key test
+ *     left behind, so a literal 0 no longer matches.
+ */
 void sub_0800081C(void)
 {
     int r;

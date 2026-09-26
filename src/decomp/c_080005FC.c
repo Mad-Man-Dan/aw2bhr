@@ -7,13 +7,21 @@
  * sub_080005FC @ 0x080005FC
  */
 
-/* Wave 37 (W37-E). Matched on the second attempt.
- * The two script openers reach ONE `bl sub_080193B0`, with the two `ldr` arms
- * joined by an unconditional `b`. That is a `?:` on the ARGUMENT, not an
- * if/else with two calls: two calls plus cross-jumping leaves both `bl`s in
- * place and costs 4 bytes (measured -- attempt 1). The wave-37 rule that a
- * single `strh` fed by two b-joined arms is NOT a `?:` is about a STORE; for a
- * call argument the `?:` is exactly what produces this shape. */
+/*
+ * sub_080005FC -- wait 30 frames, then hand one of two tables to sub_080193B0.
+ *
+ * On the first frame after the mode change (stateChanged set) it clears the
+ * state and arms a 30-frame timer. While the state is 0 it counts the timer
+ * down; at zero it moves to state 1 and calls sub_080193B0 with
+ * gUnknown_084856FC if sub_08004E44 returned 0 and gUnknown_084857AC
+ * otherwise. What sub_08004E44 tests, and what sub_080193B0 does with the
+ * table, are not visible from here.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - The table must be chosen with `?:` inside the call. An if/else with a
+ *     call in each arm leaves two call instructions in the output.
+ */
 
 void sub_080005FC(void)
 {

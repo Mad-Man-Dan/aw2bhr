@@ -61,7 +61,24 @@ s16 sub_08007DD0(int x, int y)
     }
 }
 
-/* MATCHED, wave 75, 324/324 configured bytes. The two block-local table
- * pointers are fixed to r1 so agbcc emits the ROM's pool-load/index-shift order
- * in both return arms. The .rodata relocation at 0x0808D7F0 is the unit's
- * force-address word and is placed by the promotion metadata. */
+/*
+ * sub_08007DD0 (the function above) -- choose the tile shape for (x, y) from
+ * which of its neighbours are land.
+ *
+ * `mask` collects one bit per cell of the 3 x 3 block around (x, y), from
+ * IsTerrainLand: bit 8 is the top left, bit 4 the cell itself, bit 0 the
+ * bottom right. Cells off the edge of the map stay 0.
+ *
+ * What happens with the mask depends on the terrain already at (x, y):
+ *   0xD  -- ignore it and return sub_0800B61C's answer for the cell.
+ *   2    -- return -1, meaning no tile.
+ *   0xC  -- use the mask only when sub_08008C34 returns 0, else return -1.
+ *   any other terrain -- use the mask.
+ * Using the mask means returning gUnknown_08485DC4[mask], the shape table.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - Both of the blocks that read the table bind it to a pointer pinned to
+ *     r1. That is what puts the load of the table's address and the shift of
+ *     the index in the original's order on both return paths.
+ */

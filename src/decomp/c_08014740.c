@@ -7,22 +7,19 @@
  * sub_08014740 @ 0x08014740, sub_080147B4 @ 0x080147B4, sub_08014824 @ 0x08014824
  */
 
-/* The third member of the sub_08014668 / sub_080146D4 family, but NOT their
- * shape: those two fill &gUnknown_0200C020 and then start a script, while this
- * one starts the script FIRST and fills in the slot sub_080152EC returned.
- * r0 is never reloaded between the two `bl`s -- the proc pointer is already
- * there -- and r8 carries it to the epilogue, which is why it is the return
- * value.
+/*
+ * sub_08014740 -- start a text box as its own process and return it.
  *
- * Arguments 1 and 2 are `s16`, settled wave 32 from the CALLER side and synced
- * here. The prologue's `lsls #0x10; lsrs #0x10` does NOT discriminate: agbcc's
- * PROMOTE_MODE zero-extends every sub-word parameter regardless of signedness,
- * so s16 and u16 are identical at entry. What settles it is the `lsls #0x10;
- * asrs #0x10` in front of the `bl` -- through a `u16` parameter agbcc would
- * narrow with `lsls; lsrs` there instead. Both spellings are byte-exact for
- * THIS function (verified each way), so the header is the only thing that can
- * be wrong, and it now reads s16. The other three narrow arguments stay `u16`;
- * nothing has exercised their sign. */
+ * sub_080152EC starts the gUnknown_08489530 process and sub_080147B4 then fills
+ * that process's record, so the record and the process are one object. The
+ * pointer is returned. sub_08014668 and sub_080146D4 do the same job the other
+ * way round: they fill gUnknown_0200C020 first and start the script afterwards.
+ *
+ * a and b are the left and top margins in tiles, c the tilemap to write into, d
+ * the entry of gTextTable to read the script from, e the tile attribute bits and
+ * f the VRAM tile index. Only a and b are known to be signed; the other narrow
+ * parameters have nothing here that exercises their sign.
+ */
 struct Unk03001470 *sub_08014740(s16 a, s16 b, u16 *c, u16 d, u16 e, u16 f)
 {
     struct Unk03001470 *p;
@@ -34,10 +31,19 @@ struct Unk03001470 *sub_08014740(s16 a, s16 b, u16 *c, u16 d, u16 e, u16 f)
     return p;
 }
 
-/* Fills in the whole tail of the record. `lsls #0x10; lsrs #0xe` on argument 5
- * is the u16 narrowing folded with the *4 scaling of gTextTable[], a
- * `u8 *[]`, so +0x20 is a `u8 *`. The two `strb`s of arguments 2 and 3 each
- * happen twice (0x30/0x32 and 0x31/0x33) off one narrowed register. */
+/*
+ * sub_080147B4 -- fill a text writer's record from its parameters.
+ *
+ * The script is gTextTable[a5]; a4 is the tilemap to write into, a6 the tile
+ * attribute bits, a7 the VRAM tile index, and a2/a3 the left and top margins,
+ * which are also the starting position. The delay starts at two frames with its
+ * counter at -1, and unk3c is set to the routine that flags BG0 for copying.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - `s->unk34 = s->unk36 = a7;` is one chained assignment, so one narrowed
+ *     value feeds both stores and unk36 is written first.
+ */
 void sub_080147B4(struct Unk08014074 *s, s16 a2, s16 a3, u16 *a4, u16 a5, u16 a6, u16 a7)
 {
     s->unk20 = gTextTable[a5];
@@ -57,14 +63,19 @@ void sub_080147B4(struct Unk08014074 *s, s16 a2, s16 a3, u16 *a4, u16 a5, u16 a6
     s->unk40 = 0;
 }
 
-/* "Is any of sub_08014878's three scripts still running?" -- counts the three
- * sub_08015BD0 lookups that are not -1 and returns whether the count is
- * positive.
+/*
+ * sub_08014824 -- is any of the three text-box processes still running?
  *
- * The first test is a BRANCHLESS `!= -1`: `mvns r0,r0; rsbs r1,r0,#0;
- * orrs r1,r0; lsrs r4,r1,#0x1f` is do_store_flag initialising the counter,
- * while the second and third are `cmp`/`beq` because they only increment.
- * -1 is materialised once in r5 for both compares. */
+ * sub_08015BD0 answers -1 for a process that is not there. The three asked about
+ * are gUnknown_08489530, gUnknown_08489548 and gUnknown_08489568, and the result
+ * is 1 when at least one of them answered anything else.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - `n` is initialised from the first comparison itself and the other two are
+ *     `if`s that increment it. The original works the first one out without a
+ *     branch and branches on the other two, which is what this gives.
+ */
 int sub_08014824(void)
 {
     int n;

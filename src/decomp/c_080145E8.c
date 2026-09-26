@@ -7,14 +7,17 @@
  * sub_080145E8 @ 0x080145E8
  */
 
-/* Copies the tail of the gUnknown_0200C020 record into another record of the
- * same type -- exactly the fields sub_080147B4 builds, in exactly the order
- * sub_080147B4 writes them (0x20, 0x24, 0x28, 0x2c, 0x2e, then 0x36/0x34,
- * 0x38, 0x30..0x33, 0x39, 0x3a, 0x3c, 0x40). That agreement is what let
- * struct Unk08014074's filler be replaced with real fields in wave 32.
+/*
+ * sub_080145E8 -- copy the text writer's parameters out of gUnknown_0200C020
+ * into another record of the same type.
  *
- * `d->unk34 = d->unk36 = src` and not two statements: one `ldrh` feeds two
- * `strh`s, and the 0x36 store comes FIRST, which is the inner assignment. */
+ * Exactly the fields sub_080147B4 fills, in the order sub_080147B4 writes them.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - `d->unk34 = d->unk36 = <value>` is one chained assignment. One load feeds
+ *     both stores and unk36 is written first, as in the original.
+ */
 void sub_080145E8(struct Unk08014074 *d)
 {
     d->unk20 = gUnknown_0200C020.unk20;

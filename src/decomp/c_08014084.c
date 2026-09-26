@@ -7,109 +7,67 @@
  * sub_08014084 @ 0x08014084
  */
 
-/* WAVE 78 (W78-A): MATCHED configured, 872/872. The former +8 was two
- * independent source shapes: the byte-command scan had to be a goto loop with
- * a named 0x80 lower bound, and case 11 needed a distinct signed value local.
- * A fresh s2 pointer then restored case 10's r6/r7 allocation. The final two
- * bytes were the false-arm zero in case 20: keeping the hoisted zero in r1
- * with a fixed-register local reproduces the ROM's cross-jump exactly. */
-
-/* WAVE 72 ADDENDUM: the entry guard is now two separate comparisons, matching
- * the ROM instead of range-folding `> 0x83 || < 0x80`. The configured draft
- * remains 880/872 (+8), 13.9% positional identity: case 15's 0x208 lifetime
- * and case 0's recursive tail already match instruction-for-instruction, so
- * the remaining excess/register rotation is elsewhere in the switch bodies.
+/*
+ * sub_08014084 -- run one command of the text script at p->unk20 and say what
+ * the caller should do next.
  *
- * WAVE 55 (W55-G) PARK, first attempt on this function, 3 try_match rounds on
- * 872 bytes. STRUCTURALLY COMPLETE: the entry loop, the 24-entry jump table,
- * all nine reachable cases and every shared tail read out and reproduce. What
- * is left is (a) REGISTER NAMING -- the ROM has p=r5, s=r6, n=r7 (n reusing
- * dst's register, which is dead from case 10 on) where this draft has p=r6,
- * s=r5, n=r5 and spends r7 on &p->unk32 -- and (b) an EIGHT-BYTE excess
- * somewhere before case 10, which I could not locate because try_match's report
- * is truncated at the front and every hunk I can see is downstream of it. The
- * two are very likely one fact: 8 bytes of extra code earlier is exactly the
- * kind of thing that flips a four-way tie between r5/r6/r7.
+ * p is the text writer's state. unk20 is the read position in the script, unk28
+ * the tilemap being written, unk2c the tile attribute bits, unk2e the colour,
+ * unk30/unk31 the left and top margins in tiles, unk32/unk33 the position now,
+ * unk34 the VRAM tile index, unk3a the per-character delay and unk3c a routine
+ * that flags the background for copying. dst is the tilemap entry the next
+ * character goes to.
  *
- * WHERE TO LOOK FIRST for the 8 bytes, in my order of suspicion: case 15's
- * `dst[0x21] = p->unk2c | 0x208` (the ROM materialises 0x208 as
- * `movs r7,#0x82; lsls r7,r7,#2; adds r1,r7,#0` -- note it BURNS dst's register
- * on the constant, having already hoisted `dst + 1` into r4, so if this draft
- * keeps dst live the shape changes); then case 0's recursive tail; then the
- * switch dispatch itself.
- * This is also the documented case FOR the permuter -- instruction order
- * correct, slots wrong -- and it has not been run on this function.
+ * The answer is 0 for "the script is finished", 1 for "this byte is an ordinary
+ * character, draw it", 2 for "stop until the next frame" and 3 for "nothing to
+ * draw, ask again straight away".
  *
- * WAVE 77 (W77-D) CORRECTION: the permuter HAS been run. `work/sub_08014084/
- * permuter/` exists and `best.c` is 7,103 lines of RAW EXPANDED permuter
- * output scoring size-exact / 54.8% / first difference +0x8, against this
- * draft's +8 bytes / 13.9%. Per the wave-73 chapter on raw expanded output
- * that 54.8% is NOT reachable from any source spelling, so do not transplant
- * it and do not read it as this draft's score.
- * W77-D then ran ONE MORE chained run from that best.c: 1,921 iterations,
- * 4 threads, 300 s, base score 2515, and NOT ONE candidate scored below the
- * base. Under the wave-59 chaining rule ("keep going until a run returns no
- * improvement") that is the terminating run, so the permuter chain on this
- * function is exhausted as of wave 77. The active draft was verified byte
- * identical before and after.
+ * Bytes 0x80 to 0x83 are consumed first, in a loop, each one setting the colour
+ * in unk2e. The byte after them is the command:
  *
- * W77-D also checked the wave-77 address-expression lever: this function's
- * ROM pool contains NO -fforce-addr word (every entry is a plain symbol
- * literal, gUnknown_03002514 re-materialised four times, gUnknown_0848A3C4
- * and gUnknown_0848A398 three each), so the lever's precondition does not
- * hold and the array spellings must stay as they are.
+ *   0          end of script: if unk24 holds a continuation, switch to it and
+ *              start again, otherwise answer 0.
+ *   9          write the four tilemap entries of a 2 x 2 glyph, their tile
+ *              numbers worked out from the next byte.
+ *   10         draw a unit: the next byte picks which of gUnknown_030040D8's two
+ *              units, and its hp is rounded up to tens for sub_0802216C.
+ *   11         set the speed from the next byte. 0x80 switches the delay off
+ *              (sub_08014074); 0x81 to 0x89 store that byte plus 0x80 in unk3a
+ *              and restart the counter; anything else is ignored.
+ *   12         go back to the margins and hand the text to sub_080179D0.
+ *   13         next line: two rows down and back to the left margin.
+ *   14         pause, unless the delay is off, in which case carry straight on.
+ *   15         new page: blank the first entry, set the one at 0x21 from unk2c,
+ *              go back to the margins and start the gUnknown_0848A398 helper.
+ *   20, 22, 23 start the gUnknown_0848A3C4 helper at the current position, with
+ *              its unk1e set to 1 when the next script byte is 0x17.
  *
- * TWO CODEGEN FINDINGS, BOTH MEASURED HERE, BOTH WORTH MORE THAN THIS FUNCTION.
- * Each was worth several hundred bytes of diff and neither is in the brief.
+ * Any other byte answers 1 and is drawn by the caller.
  *
- * 1. SWITCH CASE BODIES ARE EMITTED IN SOURCE ORDER, NOT IN CASE-LABEL ORDER,
- *    AND THE JUMP TABLE DOES NOT CONSTRAIN THEM. Writing the cases in numeric
- *    order (0, 9, 10, 11, 12, 13, 14, 15, 20/22/23) put every block in the
- *    wrong place and made the diff look total. The ROM's block order is
- *    0, 20/22/23, 13, 15, 12, 14, 11, 10, 9 -- so THAT is the order the
- *    original source wrote them in, and it is recoverable for free by reading
- *    the jump table's targets and sorting them by ADDRESS. Do that before
- *    writing a single case. Generalises to any jump-table function.
- *
- * 2. TWO IDENTICAL if/else ARMS GET CROSS-JUMPED, AND WHERE THE SHARED TAIL
- *    LIVES IN THE SOURCE DECIDES WHETHER THEY DO. Case 10's arms differ only in
- *    `unk07[0]` vs `unk07[1]` and are identical for ~40 instructions after
- *    that. Written as `if (..) {A} else {B}` with the common
- *    `p->unk20 += 2; return 3;` AFTER the if, gcc merged the two tails into one
- *    block and the ROM's second copy vanished. Written with each arm carrying
- *    its OWN copy of that tail -- `if (..) { A; p->unk20 += 2; return 3; }` then
- *    B falling out of the switch arm -- gcc keeps both copies in full, which is
- *    what the ROM has, and still merges the final two-instruction tail into the
- *    shared `_080143C8`. So a duplicated block in the ROM is not evidence of a
- *    macro or of hand-written asm: it is evidence about where the `return` was.
- *
- * A third, smaller one: `if (x >= 0x80 && x <= 0x89)` gets RANGE-FOLDED into
- * `(u8)(x + 0x80) <= 9` -- one truncation and one unsigned compare. The ROM's
- * two separate signed compares against 0x80 and 0x89 need two separate `if`
- * statements with their own early `return`, which fold does not reach across.
- *
- * TYPE MODEL, all of it already written down by other waves -- this function
- * needed no new struct and only one new global:
- *   - the parameter is `struct Unk08014074 *`, and every offset this function
- *     touches (unk20/24/28/2c/2e/30..33/34/36/39/3a/3c/40) is already declared
- *     there at the right width. sub_08014074's prototype fixes it.
- *   - sub_080152EC's slot is reached through a file-local view because
- *     struct Unk03001470 declares u32 at 0x30 where this function does a
- *     `strh`; that is the overlay situation the header note on Unk08014074
- *     already describes, so the shared tag is NOT reshaped.
- *   - case 10 is the same unk04_0/Div/sub_0802216C idiom as sub_08013D7C's
- *     C1/C2 arms, character for character. Matching that function first is what
- *     made this one cheap.
- *   - gUnknown_08489518 was undeclared and is now in include/unknown-globals.h.
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The 0x80-to-0x83 scan is a `goto` loop and its lower bound is the local
+ *     `lo`, not the literal. It also needs two separate comparisons with their
+ *     own exits: `c >= 0x80 && c <= 0x83` is folded into one unsigned compare
+ *     and the original compares twice. Case 11 tests its byte against the same
+ *     `lo`, through its own signed local.
+ *   - Case 20's false arm assigns through `zero`, a local pinned to r1, which is
+ *     what leaves the hoisted zero where the original has it.
+ *   - Case 10's two arms are near-identical and each carries its own copy of the
+ *     ending. With the common `p->unk20 += 2; return 3;` moved below the `if`,
+ *     the compiler merges the two arms into one block; the original has both in
+ *     full. Case 10 also reaches unk32 through the separate `s2` pointer.
+ *   - The cases are written in the order the original's blocks appear in -- 0,
+ *     20/22/23, 13, 15, 12, 14, 11, 10, 9 -- and not in label order. The
+ *     compiler lays case bodies out in source order, so reordering them moves
+ *     every block in the function.
  */
 
-/* sub_08013D64 is promoted in src/decomp/c_08013D4C.c against the file-local
- * `struct Unk8013D4C`, which the header note on struct Unk08014074 records as a
- * drop-in retype of this same object (identical types at identical offsets).
- * Declared locally rather than in include/unknown-functions.h for exactly the
- * reason that note gives, and the way work/sub_080149C0/ already does it.
- * Unifying the two tags is an open, self-contained job; doing it here would
- * force a re-verify of c_08013D4C.c that this draft has not earned. */
+/* sub_08013D64 is defined in src/decomp/c_08013D4C.c against a file-local
+ * struct that describes this same record, with the same types at the same
+ * offsets. It is declared here rather than in include/unknown-functions.h so
+ * that the two files need not agree on one tag; merging the two views is a
+ * separate job. */
 u16 *sub_08013D64(struct Unk08014074 *);
 struct Unk8014084Slot
 {

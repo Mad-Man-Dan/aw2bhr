@@ -7,35 +7,37 @@
  * sub_080078E4 @ 0x080078E4
  */
 
-/* MATCHED, wave 42 (W42-B2). Byte-for-byte identical.
+/*
+ * sub_080078E4 -- build the design ring's list of entries at
+ * gUnknown_0200B224.
  *
- * The one finding that closed it, and it is general: AGBCC EMITS SWITCH CASE
- * BODIES IN SOURCE ORDER, so the ROM's block order reads the original's case
- * order straight off. This body was 95.3% and size-exact with the cases
- * written in ascending case-value order (6, 8, 10, 11, 14); the ROM's five
- * blocks assign 0,1,2,3,4 in address order, so the source lists them ordered
- * by the ASSIGNED value, not by the case label. Reordering was the whole
- * difference -- 10 bytes, all of them in the jump table and the block
- * sequence. The last block in source order is the one with no trailing `b`.
- * sub_080077EC's switch is the same table with the values mirrored and its
- * blocks run 4,3,2,1,0, i.e. descending by assigned value.
+ * a picks the list: 0 walks the terrain template gUnknown_08488810, anything
+ * else the unit template gUnknown_08488856. Both are halfwords terminated by
+ * 0xFF, and every entry becomes two halfwords of output.
  *
- * Two other things were worth a probe each:
- *   - `b = (b - 1) << 6;` REASSIGNS THE PARAMETER rather than binding a new
- *     local. That is what puts the shifted value back in b's own register
- *     (`lsls r5, r0, #6`) and drops the whole function from four callee-saved
- *     registers to three. It also stopped jump.c's duplicate_loop_exit_test
- *     from copying the second loop's `(v = *s++) != 0xFF` test to the top:
- *     with the copy the loop is entered by a 4-instruction guard, without it
- *     by the ROM's single `b` to the bottom test. One source change, both
- *     effects.
- *   - the table's second halfword is `e[1]` off a bound pointer, not a second
- *     subscript of the array. `gUnknown_084887AC[(b + k*5)*2 + 1]` recomputes
- *     the whole address; `e = &gUnknown_084887AC[(b + k*5)*2]` then e[0]/e[1]
- *     gives the ROM's `ldrh r1,[r0]` / `ldrh r0,[r0,#2]` pair. fold turns the
- *     doubled index into the `lsls #2` byte scale.
- * `int v` and not `u16 v`: a u16 local makes `v |= b` re-truncate with an
- * lsl/lsr pair the ROM has not.
+ * Terrain template: an entry with any of bits 5-7 set is a property. Its low
+ * five bits select one of five kinds (8, 6, 14, 10 and 11 map to 0 to 4; any
+ * other value leaves the previous kind in place), and the two output halfwords
+ * come from gUnknown_084887AC row (b + kind * 5) while the template's next
+ * halfword is skipped. Any other entry is copied out together with the
+ * halfword that follows it.
+ *
+ * Unit template: b is the army number, and (b - 1) << 6 puts it in bits 6-7 of
+ * every id except 0x19, which is left as it is. Each id is written twice.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The cases are listed 8, 6, 14, 10, 11 -- the order of the values they
+ *     assign, not ascending label order. The compiler emits case bodies in
+ *     source order, so reordering them changes the jump table and the layout
+ *     of the blocks.
+ *   - `b = (b - 1) << 6;` overwrites the parameter instead of using a new
+ *     local. That keeps the shifted value in b's own register and also stops
+ *     the compiler from copying the loop's end test to the top of the loop.
+ *   - The row's two halfwords are read through the bound pointer `e`, as e[0]
+ *     and e[1]. Subscripting the array twice recomputes the whole address.
+ *   - `v` is an `int`. As a u16 the `v |= b` would have to be truncated again,
+ *     which the original does not do.
  */
 
 void sub_080078E4(int a, int b)

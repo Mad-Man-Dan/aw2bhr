@@ -7,21 +7,30 @@
  * sub_08004F9C @ 0x08004F9C
  */
 
-/* MATCHED, wave 36 (W36-I). PROMOTION NEEDS THE POOL WORD PLACED:
- *     "rodata": ["0x0808D7AC"]
- * 0x0808D7AC holds &gActiveMap (checked in baserom.gba); it is a
- * -fforce-addr word, not a global, so gActiveMap is named honestly.
+/*
+ * sub_08004F9C -- run the save-slot call for the current design and redraw
+ * that slot's row on screen.
  *
- * `case 0: break;` is not decoration: sharing the default label with case 0 is
- * what puts the low-bound `cmp r0,#1; ble` into the compare tree. Without it
- * agbcc emits three comparisons instead of four.
+ * sub_0803CF54 is handed gActiveMap->designSlot, gActiveMap->designName and
+ * sub_0800C9E8's result; whether it writes the slot or reads it is not visible
+ * here. sub_0800CB30 brackets the call, first with (0, 0) and then with (1,
+ * <what the first call returned>), so it suspends something and restores it
+ * from that token.
  *
- * `gBG0TilemapBuffer + (v * 32 + 3)` must keep the index parenthesised --
- * `+ v * 32 + 3` adds the base before the constant and costs the ROM's
- * `lsls #6; adds #6` pairing.
+ * Slots 0, 1 and 2 occupy tile rows 7, 9 and 0xB. The row is blanked
+ * (sub_08012BC8), given its marker (sub_0801F2AC) and has the name drawn on it
+ * (sub_080149C0), then BG0 is flagged for copying to VRAM. Flag 0x100 means
+ * the name is to be emptied, and is consumed here; flag 0x1000 is cleared on
+ * every call.
  *
- * sub_0800CB30 returns a value: it is called (0, 0) here and then
- * (1, <that result>), which is the only site in the tree that shows it. */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - `case 0: break;` must stay. It shares the switch's default label, which
+ *     is what makes the compiler emit four comparisons instead of three.
+ *   - The tilemap index stays bracketed as `+ (v * 32 + 3)`. Without the
+ *     brackets the base address is added first and the shift-and-add pair the
+ *     original uses does not come out.
+ */
 
 void sub_08004F9C(void)
 {

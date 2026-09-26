@@ -7,9 +7,34 @@
  * sub_08007A30 @ 0x08007A30
  */
 
-/* WAVE 76: configured exact match. Reusing the eased values in fixed r3/r5
- * lifetimes reproduces both switch arms; an explicit r0 halfword-extension
- * chain reproduces the tail. Promotion needs rodata 0x0808D7E8. */
+/*
+ * sub_08007A30 -- slide the two overlay markers toward their next position and
+ * draw them.
+ *
+ * gActiveMap->overlayX and overlayY are screen positions in 1/16 of a pixel.
+ * Each frame an eighth of the remaining distance to the target is added, so
+ * they ease in. gActiveMap->overlayState runs the two stages:
+ *
+ *   state 0:    X eases toward 0x730 and is stopped at 0x750, which also moves
+ *               to state 0xA; Y eases toward 0x9C0, stopped at 0x9A0.
+ *   state 0xA:  X eases toward 0x7A0 and is stopped at 0x780, which moves to
+ *               state 0x14 and arms a 30-frame timer; Y eases toward 0x950,
+ *               stopped at 0x970.
+ *   state 0x14: count the timer down; at zero go back to state 0.
+ *
+ * Whatever the state, both positions are then shifted down to whole pixels,
+ * have bit 10 set, and are handed to sub_0801BD00: object 0x64 with the sprite
+ * data at gUnknown_08488880, object 0x86 with gUnknown_08488888.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - `a`, `b` and `raw` are pinned to r3, r5 and r0. The original holds the
+ *     two eased values in those registers across both switch arms and the
+ *     tail; left to itself the compiler chooses others.
+ *   - overlayY is reached by stepping the `pair` pointer on from &overlayX
+ *     rather than by name, and the sign extension at the end is written out as
+ *     a shift left by 16 and an arithmetic shift right by 20.
+ */
 
 void sub_08007A30(void)
 {
@@ -88,12 +113,3 @@ void sub_08007A30(void)
   b |= 0x400;
   sub_0801BD00(0x86, b, gUnknown_08488888, 0);
 }
-
-/* PARKED, wave 65 (W65-H). Size-exact, 90.4%: 28 of 292 bytes differ.
- * A 15,422-iteration permuter pass improved the configured 71.23% draft to
- * this fixpoint. The remaining two repeated hunks are allocation-only: each
- * unk6e/unk70 chain uses r2/r1 where the ROM uses r1/r5, and the tail assigns
- * the second eased value and 0x400 constant to r4/r5 where the ROM uses r5/r4.
- * Instruction count, control flow, literal placement, and relocations align.
- * The pass was re-measured from its extracted source; do not submit the raw
- * preprocessed permuter best.c directly. */

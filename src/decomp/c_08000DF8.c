@@ -8,13 +8,21 @@
  * sub_08000DF8 @ 0x08000DF8
  */
 
-/* Wave 37 (W37-E). Matched on the second attempt.
- * The six halfword clears share ONE base load. Written as
- * `gMap->unkNN = 0` six times agbcc reloads the
- * pointer global before every store (it must assume the store aliases the
- * pointer variable), which is +8 bytes; binding `u16 *map` once fixes it.
- * The stores use r4 -- the parameter -- because cse knows a1 == 0 on this side
- * of `cmp r4, #0`, so the source really does say 0. */
+/*
+ * sub_08000DF8 -- reset the map view, and generate a fresh map when a1 is 0.
+ *
+ * Clears gUnknown_030032D8 and calls sub_080215D0. When a1 is 0 it also zeroes
+ * the map's scroll and camera position and calls GenerateRandomMap, so a
+ * non-zero a1 keeps the map that is already loaded. Either way it then moves
+ * both cursors (gUnknown_030033E4, gUnknown_030033E0) to 0,0 and calls
+ * sub_0802BB98.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - The six clears go through one local `map` pointer. Written as
+ *     `gMap->field = 0` six times, the compiler has to assume a store could
+ *     change gMap itself and reloads the pointer before every store.
+ */
 
 void sub_08000DF8(int a1)
 {

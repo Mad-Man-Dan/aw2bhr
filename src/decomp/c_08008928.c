@@ -55,10 +55,10 @@ int sub_08008928(void)
                 return -1;
             }
 
-            /* WAVE 37 final sweep: `.unk18` was `s8 *` when this function was
-             * verified; W37-H later widened it to `s8 *[3]`. Element 0 is at
-             * the same offset, so `[0]` is byte-identical to the spelling that
-             * matched -- this is a declaration change, not a behaviour one. */
+            /* The movement chart: the cost of entering each terrain, 32 terrain entries
+             * per movement type, so the index is terrain + movementType * 32. A
+             * cost of -1 means the unit cannot go there. movementChart holds three
+             * such tables and this is the first. */
             costs = gUnknown_085D3DD0[1].power[0].movementChart[0];
 
             idx = gMap->rowOffset[y] + x;

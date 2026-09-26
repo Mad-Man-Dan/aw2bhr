@@ -8,124 +8,53 @@
  * sub_0800FD44 @ 0x0800FD44
  */
 
-/* Wave 56, W56-P produced the read-out below and transcribed through count==2.
- * Wave 66, W66-O completed count==3 and count==4 from the immutable assembly.
- * All logical blocks are now represented, including the four deliberate
- * repeated-call tie-breaks and count==4's <=0 pass before its <=1 pass.
- * Wave 67 first source-CFG breakthrough: spelling count==1's two 0x142 exits
- * as gotos to shared return labels collapsed the long-branch cascade, leaving
- * a 2232/2240-byte fixpoint whose only absent code was the logically
- * unreachable count>4 default.
+/*
+ * sub_0800FD44 -- choose the tile for a cell that joins onto its neighbours,
+ * such as a road or a river, at (x, y).
  *
- * Controlled attempts to retain that dead default (external -1 label,
- * if/else count ladder, reordered labels, and a do/while wrapper) changed the
- * cross-jump CFG and fell back to +64/+72 or undershot by 20/72 bytes. Six
- * compiler-profile probes also failed to reproduce the ROM layout. A fresh
- * residual pass closed it by putting count==4 in a one-case switch, placing
- * ret143, ret142, then `default: return -1` inside that switch, and spelling
- * the count==4 shared tail as gotos plus fall-through into those labels. That
- * keeps the late ret143 copy from being cross-jumped to an early one while the
- * switch retains the otherwise unreachable default. Configured verification
- * is exact: 2240/2240 bytes and matching relocations.
+ * Two shortcuts come first: with a3 == 0 and the cell already showing tile
+ * 0x162 or 0x163, GetSeamType answers instead; and if sub_0800F8D4 accepts the
+ * cell, the tile it already has is kept.
  *
- * ------------------------------------------------------------------ READ-OUT
+ * Otherwise sub_0800F564 is asked about each of the four directions -- 0 and 1
+ * are the horizontal pair, 2 and 3 the vertical one -- and n counts how many
+ * answered. The rest of the function is a ladder on n that names a tile:
  *
- * NOTHING HERE NEEDS A NEW DECLARATION. gUnknown_08499590 is the only data ref
- * and it is the map POINTER (`extern u8 *`), reached with TWO loads here
- * (`ldr r0,=gUnknown_08499590; ldr r1,[r0]`) and not the three-load
- * -fforce-addr form -- so there is no pool word to carve for this function,
- * unlike sub_0800B61C. The struct is the one src/decomp uses everywhere:
- * cells (u16) at +0x0A22, terrain at +0x1432, rowOffset (u16) at +0x417A.
+ *   0x142  a horizontal piece         0x161  a corner joining 0 and 2
+ *   0x143  a vertical piece           0x141  a corner joining 0 and 3
+ *   0x122  horizontal, nothing found  0x160  a corner joining 1 and 2
+ *   0x123  vertical, nothing found    0x140  a corner joining 1 and 3
  *
- * CALLEE SIGNATURE -- READ THIS BEFORE DECLARING ANYTHING. sub_0800F77C was
- * MATCHED earlier in wave 56 by W56-J and its status in data/functions.json
- * still says `asm` because promotion happens at wave close. Its verified draft
- * is work/sub_0800F77C/sub_0800F77C.c and the signature is
- *     int sub_0800F77C(int x, int y, int dir);
- * Do not re-derive it from the call sites here and do not add a conflicting
- * declaration to include/ -- proto_check compiles nothing and cannot see a
- * work/ draft, so only compiling this caller would catch the break.
+ * Inside an arm, a direction that answered 2 outranks one that merely answered
+ * non-zero, and where two are still equal sub_0800F77C is asked about each: an
+ * answer of 1 or less means that side wins. The n == 4 arm asks twice, first
+ * for 0 or less and then for 1 or less. Where nothing decides, the plain
+ * horizontal or vertical piece is returned. n above 4 cannot happen and gives
+ * -1.
  *
- * sub_0800F8D4 is PARKED, not matched -- do not read its draft as a worked
- * example. Only its arity matters here: (int, int), result truth-tested.
- *
- * THE RETURN-CONSTANT MAP. Nine exits, and naming them is what makes the rest
- * legible. agbcc builds three of them with `movs #k; lsls #1`, so read those as
- * the literal, not as a shift in the source:
- *     _080105F0  0x142   (movs #0xa1; lsls #1)   "blocked / no join"
- *     _080105E8  0x143
- *     _08010540  0x161
- *     _08010564  0x141
- *     _08010588  0x160   (movs #0xb0; lsls #1)
- *     _080105AA  0x140   (movs #0xa0; lsls #1)
- *     _080100A4  0x122   (movs #0x91; lsls #1)
- *     _080101E4  0x123
- *     _080105F6  -1      (the count>4 fall-through)
- *
- * THE SHARED TAIL IS ONE CHAIN, AND IT IS THE COUNT==4 DEFAULT PATH. The run
- * _08010524 -> _08010548 -> _0801056C -> _0801058E -> _080105B0 reads as
- *     if (F(0) <= 1 && F(2) <= 1) return 0x161;
- *     if (F(0) <= 1 && F(3) <= 1) return 0x141;
- *     if (F(1) <= 1 && F(2) <= 1) return 0x160;
- *     if (F(1) <= 1 && F(3) <= 1) return 0x140;
- *     if (F(0) <= 1) return 0x142;
- *     if (F(1) <= 1) return 0x142;
- *     if (F(2) <= 1) return 0x143;
- *     if (F(3) <= 1) return 0x143;
- *     return 0x142;
- * where F(d) is sub_0800F77C(x, y, d). EVERY earlier arm cross-jumps into the
- * middle of this chain -- that is why the count==2 arms end in `b _08010540`
- * and friends, and why `_0800FE76` / `_0800FE86` are branched to from six
- * places as though they were subroutines. They are not separate code: they are
- * gcc's cross-jumping merging identical `bl sub_0800F77C; cmp r0,#1; bgt ...`
- * tails. DO NOT try to author those merges -- write the arms out longhand and
- * they will merge by themselves. Mis-reading them as shared source is the one
- * way this function turns into a rewrite.
- *
- * THE FOUR-SHAPE PATTERN. Every arm from count==2 onward is built from one
- * shape instantiated on a (dirA, dirB) pair, with the pair fixing the constant:
- *     (0,2) -> 0x161     (0,3) -> 0x141     (1,2) -> 0x160     (1,3) -> 0x140
- * and the shape is
- *     if (F(a) <= 1 && F(b) <= 1) return PAIR;
- *     if (F(a) <= 1) return 0x142;
- *     if (F(b) <= 1) return 0x143;
- *     return 0x142;
- * Count the DISTINCT shapes, not the bytes: there are four, plus the
- * "both <= 1, compare them" tie-break below, and that is the whole function.
- *
- * THE TIE-BREAK, which appears four times in count==3 and count==4 (_0801000A,
- * _080100AA, _08010148, _080101EC) and is the only place F() is called twice
- * for its VALUE rather than for a predicate:
- *     if (F(a) <= 1 && F(b) <= 1)
- *         return F(a) < F(b) ? PAIR_A : PAIR_B;
- *     if (F(a) <= 1) return PAIR_A;
- *     if (F(b) <= 1) return PAIR_B;
- *     return 0x142;
- * The ROM really does re-call sub_0800F77C for the comparison after having
- * called it for the guard -- four calls on that path. It is not a CSE failure
- * to fix; the source is written that way.
- *
- * COUNT==3 AND COUNT==4 TEST `== 2`, NOT `!= 0`. count==2's arms branch on
- * `s[i] != 0`; count==3 and count==4 open with `cmp r0, #2` on the same bytes
- * and only fall back to `!= 0` further in. sub_0800F564's result is therefore a
- * small enum (0, 1, 2, 3 are all reachable -- see sub_0800F77C's draft, which
- * returns 0, 2 and a count) and 2 is a distinguished value. That is the single
- * fact most likely to be got wrong by someone skimming the two arms.
- *
- * THE COUNT LADDER IS AN if/else-if CHAIN, NOT A switch. Five arms compared in
- * order 0,1,2,3,4 with the bodies in the same order; a 5-case switch balances
- * its decision tree and would open with `cmp #2`. (Measured this wave on
- * sub_0800B61C: a 3-case switch already balances.)
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The arms are written out longhand, with the same tests repeated arm after
+ *     arm. The original shares those tails, but the sharing is the compiler
+ *     merging identical code; a shared helper or a loop in the source gives
+ *     something different.
+ *   - sub_0800F77C really is called again to compare two values after being
+ *     called to test them, so one path makes four calls. That is what the
+ *     original does.
+ *   - The ladder on n is an if/else-if chain, not a `switch`. A five-case switch
+ *     is compiled as a balanced comparison tree and would test 2 first.
+ *   - n == 4 is the exception: it sits in a one-case `switch` whose
+ *     `default: return -1;` cannot be reached, with the two shared returns as
+ *     labels inside it that the arm reaches by `goto` and by falling through.
+ *     That is the only arrangement found that keeps the unreachable default and
+ *     still stops the compiler merging those two returns with earlier copies;
+ *     the `goto ret142` / `goto ret143` jumps in the n == 1 and n == 4 arms are
+ *     load-bearing for the same reason.
  */
 
 #define MAP gMap
-/* Declared HERE and deliberately not in include/unknown-functions.h. The
- * signature is copied verbatim from the verified draft
- * work/sub_0800F77C/sub_0800F77C.c (W56-J matched it earlier in wave 56); its
- * status still reads `asm` only because promotion happens at wave close, and
- * W56-J owns the include/ entry. A file-local prototype cannot conflict with
- * whatever that promotion adds, and it keeps this draft compiling in the
- * meantime. */
+/* The same prototype include/unknown-functions.h now carries; this local copy
+ * predates that entry. */
 int sub_0800F77C(int, int, int);
 
 int sub_0800FD44(int x, int y, int a3)

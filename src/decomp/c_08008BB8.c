@@ -25,9 +25,9 @@ void EnsureValidTile(int x, int y)
         int idx;
         int c;
 
-        /* WAVE 37 final sweep: `.unk18` was `s8 *` when this function was
-         * verified; W37-H later widened it to `s8 *[3]`. Element 0 is at the
-         * same offset, so `[0]` is byte-identical to the spelling that matched. */
+        /* The movement chart: the cost of entering each terrain, 32 entries per
+         * movement type, so the index is terrain + movementType * 32. A cost of
+         * -1 means the unit cannot be there. */
         costs = gUnknown_085D3DD0[1].power[0].movementChart[0];
 
         idx = gMap->rowOffset[y] + x;

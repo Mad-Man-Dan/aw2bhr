@@ -7,9 +7,15 @@
  * sub_08014074 @ 0x08014074
  */
 
-/* struct Unk08014074 moved to include/unknown-globals.h in wave 21 (W21-A) --
- * gUnknown_0200C020 is the instance and sub_080147B4 the other accessor, so
- * the layout had to become shared. */
+/*
+ * sub_08014074 -- switch the text writer's per-character delay off.
+ *
+ * unk3a is the delay in frames and unk39 the counter that runs it. With unk3a at
+ * 0 and unk39 at -2, sub_08014400's loop never waits and the rest of the text
+ * appears in one frame. struct Unk08014074 is declared in
+ * include/unknown-globals.h; gUnknown_0200C020 is one instance of it and
+ * sub_080147B4 the routine that fills one in.
+ */
 
 void sub_08014074(struct Unk08014074 *s)
 {

@@ -115,30 +115,22 @@ void sub_08007F9C(int x, int y)
     sub_08010ADC(x, y);
 }
 
-/* PARKED, wave 37 (W37-D). 348 bytes, size-exact. ONE difference, repeated at
- * all nine neighbour sites, 2 bytes each:
+/*
+ * sub_08007F9C (the function above) -- redraw the eight cells around (x, y)
+ * after (x, y) itself changed.
  *
- *     ROM:        lsls r0, r0, #16 ; asrs r2, r0, #16
- *     candidate:  adds r2, r0, #0  ; lsls r2, r2, #16 ; asrs r2, r2, #16
+ * For each of the eight neighbours that is on the map it asks sub_08007DD0 for
+ * that cell's tile shape, stores it with MakeTileSimple and repaints the cell.
+ * The centre cell is left to sub_08010ADC at the end.
  *
- * The ROM sign-extends sub_08007DD0s s16 return straight out of r0 into the
- * argument register; agbcc first copies the result into the pseudo and then
- * narrows it in place. Everything else -- the nine blocks, the three
- * *(u16 *)gUnknown_08499590 bound tests, the n = y +/- 1 bindings, the .rodata
- * pool word and the final sub_08010ADC -- is byte-identical.
- *
- * FOUR spellings measured with compile_probe, ALL FOUR emit the copy:
- *     s16 v; v = f(x, y); g(x, y, v);
- *     g(x, y, (s16)f(x, y));
- *     int v; v = f(x, y); g(x, y, v);
- *     int v; v = (s16)f(x, y); g(x, y, v);
- *
- * The discriminator is not the spelling, it is whether the narrowed value has
- * a SECOND use. RepaintTile and MakeSea (both worked this wave) produce
- * the ROM lsls r0 / asrs rN exactly, and in both the value is COMPARED before
- * it is passed. Where the only use is the argument, agbcc inserts the copy.
- * So either the original compared this value too -- nothing in the ROM stream
- * tests it, so that comparison would have to be one agbcc folded away -- or
- * the lever is register pressure rather than the expression. Do not re-run the
- * four spellings above.
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - Every site pins sub_08007DD0's result to r0 and the outgoing argument to
+ *     r2, and sign-extends with two inline assembly instructions. In plain C
+ *     -- an s16 local, a cast, or an int local -- the compiler copies the
+ *     result into another register and narrows it there, which is two bytes
+ *     longer at each of the eight sites. No plain-C spelling has been found
+ *     that gives the original's pair of shifts.
+ *   - The neighbours are written out as eight separate blocks with their own
+ *     `m` and `n` locals rather than as a loop.
  */

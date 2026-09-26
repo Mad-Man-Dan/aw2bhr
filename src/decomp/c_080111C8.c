@@ -8,21 +8,20 @@
  */
 
 #include "proc.h"
-/* gUnknown_03001FDC IS DELIBERATELY DECLARED HERE AND NOT IN
- * include/unknown-globals.h. Wave 32 put it in the shared header and broke the
- * SPLIT=1 ROM: src/proc.c defines it as `s32 IWRAM_DATA gUnknown_03001FDC;`,
- * a tentative definition carrying a section attribute, and src/proc.c includes
- * that header -- so the plain extern was seen FIRST and agbcc dropped the
- * attribute, moving the symbol out of 0x03001FDC. The note in
- * unknown-globals.h concluded "leave the function unpromoted".
+/*
+ * sub_080111C8 (below) -- start the screen-line fade process and give it its
+ * parameters: two buffers, two 16-bit values and a function pointer.
+ * gUnknown_03001FDC is 0 while the process is being set up and 1 once it is
+ * ready.
  *
- * It does not have to be. A translation-unit-local extern reaches only THIS
- * file; src/proc.c does not include src/decomp/*.c, so its tentative
- * definition still sees no prior declaration and keeps its section. That is
- * the whole of the wave-32 hazard, and it is confined to the shared header.
- * NOT verified by a SPLIT=1 build here (per-function trymatch cannot link
- * proc.o) -- the reasoning is the evidence, so re-check the ROM SHA the first
- * time this file is promoted. */
+ * gUnknown_03001FDC is declared in this file on purpose, not in
+ * include/unknown-globals.h. src/proc.c defines it as
+ * `s32 IWRAM_DATA gUnknown_03001FDC;`, a tentative definition carrying a
+ * section attribute; if a plain `extern` for it is seen first -- which is what
+ * happens when the declaration sits in a header that src/proc.c includes -- the
+ * attribute is dropped, the symbol moves out of IWRAM and the built ROM
+ * changes. A declaration in this file is seen by nothing else.
+ */
 extern s32 gUnknown_03001FDC;
 struct Unk80111C8Proc
 {

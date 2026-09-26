@@ -8,20 +8,21 @@
  * sub_0800EB5C @ 0x0800EB5C
  */
 
-/* sub_0800EB5C @ 0x0800EB5C, 160 bytes. Wave 56 (W56-S): MATCHED, first attempt.
+/*
+ * sub_0800EB5C -- draw the 3 x 3 block of tiles for a terrain-4 cell at (x, y).
  *
- * Places a 3x3 block of tiles when the terrain cell at (x, y) reads 4. The two
- * map reads use the local-struct idiom that include/unknown-globals.h documents
- * for gUnknown_08499590 (wave 34, W34-F): the SYMBOL stays `u8 *`, but the byte
- * arithmetic is written through a struct declared locally here and cast onto it,
- * because only a COMPONENT_REF preserves the ROM's `(map + K) + idx`
- * association. Written flat as `*(u16 *)(gUnknown_08499590 + 0x417A + y * 2)`,
- * fold's associate path reorders it to `(map + y * 2) + 0x417A` and the match is
- * lost; binding a `u16 *rows` local fixes the association but moves the pool.
+ * Nothing happens unless the terrain at (x, y) reads 4. The left column goes
+ * through sub_0800EBFC with tiles 0x25, 0x45 and 0x65; the other six are
+ * written straight with MakeTileSimple, so the block ends up as 0x25 0x26 0x27
+ * over 0x45 0x46 0x47 over 0x65 0x66 0x67. What sub_0800EBFC does besides
+ * setting its tile is not visible here.
  *
- * Both planes are reached from the one `map` binding, so gUnknown_08499590 is
- * loaded once -- matching the ROM's single `ldr r1, [r0]`. The pool order
- * (0x417A before 0x1432) falls out of source order: the row table is read first.
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - Both map reads go through the one `map` local, which is what loads the
+ *     map pointer once and reads the row table before the terrain plane.
+ *     Reaching the bytes by arithmetic on the raw pointer makes the compiler
+ *     add the offsets in a different order.
  */
 
 void sub_0800EB5C(int x, int y)

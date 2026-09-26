@@ -8,9 +8,24 @@
  * sub_08008E3C @ 0x08008E3C, MakeBridge @ 0x08008F6C
  */
 
-/* MATCHED in wave 67 (304/304). The struct Map rowOffset member index expands
- * y * 2 before the rowOffset base is formed, while the separate rows pointer
- * preserves the later reuse. */
+/*
+ * sub_08008E3C -- turn a pair of neighbouring bridge tiles the right way round.
+ *
+ * 0x13 and 0x16 are the two orientations of a bridge tile. A bridge drawn as
+ * 0x13 with another 0x13 directly above or below it should be the other
+ * orientation, and the other way round for 0x16 side by side, so both cells of
+ * the pair are rewritten with MakeTileSimple. Nothing happens unless the tile
+ * at (x, y) is one of the two, and sub_08008CB8 returning non-zero skips the
+ * whole check.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The map is read through byte pointers taken from the struct once per
+ *     block -- `rows`, `tiles`, and the `q...` copies in the later blocks --
+ *     and the row index is multiplied by 2 in its own statement. One set of
+ *     variables shared by the whole function, or indexing the arrays directly,
+ *     makes the compiler compute the addresses in a different order.
+ */
 
 void sub_08008E3C(int x, int y)
 {
@@ -104,8 +119,37 @@ void sub_08008E3C(int x, int y)
     }
 }
 
-/* MATCHED, wave 66. The typed gMap spelling is byte-exact here as long as the
- * rowOffset/terrain byte-pointer locals stay scoped per use. */
+/*
+ * MakeBridge -- build a bridge at (x, y) and pick its graphic.
+ *
+ * sub_08008D14 and sub_08008CB8 describe the cell's surroundings; each returns
+ * a small number whose bits say which sides are joined. The terrain already at
+ * (x, y) decides which half of the function runs:
+ *
+ *   terrain 7, 0xD or 0x13 -- a bridge is laid: sub_0800C608 clears the cell,
+ *     0xD is turned to sea first (MakeSeaSafest), the terrain becomes 0xC and
+ *     the tile is 0x36 for a straight span or 0x14 for the other case;
+ *     sub_08007F9C then redraws the neighbours. Some surroundings (3, 5, 10 and
+ *     12) build nothing, and the default arm asks sub_08008D70 for the tile
+ *     instead and uses it when it is positive.
+ *   any other terrain -- only if sub_08009B38 allows it, and then only the
+ *     terrain and tile are set, to 0xC with tile 0x13 or 0x16, chosen from
+ *     whether a bridge cell (terrain 0xC) already sits next to it in that
+ *     direction.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The inner tests on sub_08008CB8 are written as three-case `switch`
+ *     statements, not as `if` expressions with `||`. The compiler builds a
+ *     comparison tree for a switch that is six bytes longer than the `if`, and
+ *     those are exactly the bytes the original has.
+ *   - Two case arms fall through on purpose: the switch after `case 1: case 8:`
+ *     runs into `case 9:`, and the one after `case 2: case 4:` runs into the
+ *     code below it. The `goto tile14` / `goto set13` / `goto set16` jumps and
+ *     the repeated bodies are also deliberate; sharing them changes the output.
+ *   - As in sub_08008E3C above, each block reads the map through its own byte
+ *     pointers and multiplies the row index in a separate statement.
+ */
 
 void MakeBridge(int x, int y)
 {
@@ -344,9 +388,3 @@ void MakeBridge(int x, int y)
 }
 
 asm(".global sub_08008F6C\n.thumb_set sub_08008F6C, MakeBridge\n");
-
-/* MATCHED, wave 66. The missing 12 bytes were the two inner predicates, not
- * duplicated repaint bodies. Each predicate is a three-case switch: agbcc's
- * balanced case tree emits six more bytes than the equivalent if expression,
- * reproducing both ROM compare trees while leaving the exact suffix intact.
- */

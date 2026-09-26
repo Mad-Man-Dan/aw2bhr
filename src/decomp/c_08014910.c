@@ -7,13 +7,20 @@
  * sub_08014910 @ 0x08014910, sub_0801496C @ 0x0801496C
  */
 
-/* Seeds slot `d` of the three gUnknown_0200BC14 arrays and then forwards the
- * untouched arguments to sub_0801489C with a fifth argument of 0. That 0 is
- * ONE quantity: it is both the unk000 store and the stack argument, which is
- * what costs the extra callee-saved register (sb) -- sub_0801496C, whose fifth
- * argument is 1, needs one fewer.
+/*
+ * sub_08014910 -- record slot d's parameters and start it, passing 0 as
+ * sub_0801489C's fifth argument.
  *
- * The +0x400 word array is new in wave 32; see struct Unk0200BC14. */
+ * gUnknown_0200BC14 holds three parallel arrays indexed by the slot: unk000 is
+ * cleared, unk400 takes a1 and unk408 takes b. What a1, b and c mean is not
+ * visible here; sub_0801489C gets all four unchanged.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - The 0 stored in unk000 and the 0 passed as the fifth argument are one
+ *     value in the original, which is why this function uses one more
+ *     callee-saved register than sub_0801496C below.
+ */
 u16 sub_08014910(int a1, u16 b, u16 c, u16 d)
 {
     gUnknown_0200BC14.unk000[d] = 0;
@@ -23,9 +30,9 @@ u16 sub_08014910(int a1, u16 b, u16 c, u16 d)
     return sub_0801489C(a1, b, c, d, 0);
 }
 
-/* sub_08014910 with sub_0801489C's fifth argument 1 instead of 0. See that
- * function for why this one is eight bytes shorter: the 0 there is shared
- * between the unk000 store and the stack word, here they are two constants. */
+/* sub_0801496C -- the same as sub_08014910, but sub_0801489C's fifth argument is
+ * 1. Being two different constants they cannot share a register, which is why
+ * this function is eight bytes shorter. */
 u16 sub_0801496C(int a1, u16 b, u16 c, u16 d)
 {
     gUnknown_0200BC14.unk000[d] = 0;

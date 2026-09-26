@@ -9,22 +9,20 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The gUnknown_0848936C proc's starter body: clears three word fields and then
- * sets up the blend registers. gUnknown_0808E528 in asm/ is NOT an object --
- * the word at 0x0808E528 in baserom.gba holds 0x030030E0, i.e. it is agbcc's
- * own -fforce-addr .rodata address-constant pool slot for gUnknown_030030E0.
- * The honest spelling below reproduces it (the .LC word is emitted into this
- * unit's .rodata); the reference count across the if/else MERGE is what earns
- * the pool word, exactly as the W35-D rule predicts.
+/*
+ * sub_08013168 -- the start-up body of the gUnknown_0848936C process: clear its
+ * three word fields and set the blend registers up.
  *
- * The two arms really do repeat `effect = 2` and the two zero stores -- agbcc
- * does not tail-duplicate here, and hoisting them above the `if` emits them
- * once, which is two blocks short.
+ * unk64 chooses the starting blend level in gUnknown_03001FFC -- 0x10 when it
+ * is 0, otherwise 0. Either way the blend effect becomes 2 and
+ * gUnknown_03002020 and gUnknown_03002B28 are cleared. The blend control word
+ * then names the targets: all four backgrounds, the sprites and the backdrop as
+ * the first blend target, and none of them as the second.
  *
- * Same family as sub_0806717C/sub_08067410: `ldrh` with a pool mask is `.raw`,
- * `ldrb` with a movs/neg mask is `.bits`. The two AND masks (0xffe0 then
- * 0xe0ff) survive side by side in one ldrh/strh because agbcc CSEs the second
- * statement's load against the first statement's stored value.
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - Both arms of the `if` repeat `effect = 2` and the two zero stores. Lifted
+ *     above the `if` they are emitted once, and the original has them twice.
  */
 struct Unk08013168Proc
 {

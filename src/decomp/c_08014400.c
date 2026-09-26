@@ -8,39 +8,44 @@
  */
 
 #include "hardware.h"
-/* Wave 56, W56-F.
+/*
+ * sub_08014400 -- draw the next part of a text box, one frame's worth at a time.
  *
- * The third member of the sub_080149C0 / sub_08014A5C family: the same
- * `for (;;) { v = sub_08013D4C(s); switch (sub_08014084(s, v)) ... }` render
- * pump over a `struct Unk08014074 *`, but driven by a frame counter instead of
- * run to completion. src/decomp/c_080149C0.c is the exemplar and its three
- * file-local callee prototypes are repeated here for the same reason it gives:
- * none of sub_08013D4C / sub_08013D64 / sub_08014084 / sub_080143EC is declared
- * in any header, and the two promoted definitions that exist (c_08013D4C.c,
- * c_080143EC.c) use file-local partial views -- `struct Unk8013D4C` and
- * `struct Unk080143EC` -- of this same record, at the same offsets with the
- * same widths.  Declaring them against `struct Unk08014074 *` here is
- * byte-neutral and keeps this file self-consistent; the shared-header
- * unification is the clean self-contained job c_080149C0.c already describes.
+ * s is the text writer's state (see sub_08014084 in c_08014084.c for the
+ * fields). Nothing happens while any of the three helper processes is still
+ * there: sub_08015BD0 answers -1 for a process that is gone and all three must
+ * answer -1.
  *
- * THE SWITCH HAS FOUR CASES AND `default` SHARES CASE 1'S BODY. The ROM's tree
- * is `cmp #1/beq; cmp #1/bgt; cmp #0/beq; b case1` with the `>1` arm doing
- * `cmp #2/beq; cmp #3/beq; b case1`, i.e. balance_case_nodes over {0,1,2,3}
- * rooted at 1 -- so all four labels exist.  The two unconditional `b`s go to
- * CASE 1's block, not to the end of the switch, which is what forces
- * `case 1: default:` on one body.  Omitting `default:` sends them to the loop
- * test instead.
+ * If sub_08014BE8 allows it and START is down in gpKeySt->unk0c, the rest of the
+ * box is skipped: gUnknown_03002514 is set, the text is handed to sub_080179D0
+ * and sub_08015328 restores the screen named by gUnknown_03001FBC. Otherwise
+ * holding A while the delay is above 1 switches the delay off, so the remainder
+ * appears at once.
  *
- * THE TWO `cmp r2, #0` AT THE COUNTER ARE TWO SEPARATE `if`s, not one nested
- * pair.  `if (t >= 0) { if (t < s->unk3a) return; s->unk39 = 0; }` emits the
- * zero test once.  The ROM tests it twice because the source tests it twice;
- * the first `if`'s false exit then reaches the second `if`'s identical test and
- * jump threading collapses it onto the shared continuation, which is why the
- * first branch appears to jump straight past the store.
+ * unk39 then counts frames towards the delay in unk3a and the function returns
+ * until it runs out. After that it pumps sub_08014084: 0 ends the box and
+ * restores the previous screen, 2 stops until the next frame, 3 asks for another
+ * command immediately, and 1 (which shares its body with default) draws one
+ * character -- sub_0801B738 renders it into the tile data at the background's
+ * character block, sub_08014CA4 and sub_080143EC move the write position on,
+ * sound 0x70 plays when unk38 is set, and the read position steps on by one. The
+ * loop repeats while unk39 is negative, which is how a box with the delay off
+ * empties in a single frame.
  *
- * The VRAM destination is spelled exactly as promoted src/decomp/c_0801B780.c
- * spells its own: the char base is cast to `u8 *` so fold cannot re-associate
- * 0x06000000 out of the tile term and onto it. */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - All four case labels must be present and `case 1:` must share its body
+ *     with `default:`. Without `default:` the two unlabelled values go to the end
+ *     of the switch instead of into case 1's block.
+ *   - The frame counter is tested by two separate `if` statements, not one
+ *     nested pair. The original tests `t >= 0` twice; nesting the second test
+ *     inside the first emits it once.
+ *   - The character base is cast to `u8 *` before the tile offset is added, so
+ *     that the compiler cannot lift the 0x06000000 out of the tile term.
+ *   - The four callee prototypes are declared in this file: none of them is in a
+ *     header, and the two that are already promoted describe this same record
+ *     through their own file-local structs.
+ */
 
 u16 *sub_08013D4C(struct Unk08014074 *);
 u16 *sub_08013D64(struct Unk08014074 *);

@@ -7,17 +7,21 @@
  * sub_080129F8 @ 0x080129F8
  */
 
-/* A percent-chance roll: draw from the GetNextRandomNumber LCG, reduce mod 10000 and
- * compare against a * 100, so the parameter is a percentage in hundredths.
- * `__umodsi3` and `blo` make both sides unsigned, which follows from
- * GetNextRandomNumber's declared u32 return.
+/*
+ * sub_080129F8 -- roll a percentage chance; 1 means it succeeded.
  *
- * `movs #0; b` / `movs #1` split across the pool is the if/else-return form,
- * not a returned comparison -- a returned comparison would preset the false
- * value and arrive via `adds r0, r1, #0` with no unconditional branch. */
-/* Wave 37 (W37-H): retyped `int` -> `u8`. Its only caller sub_08035170 narrows
- * the result with `lsls r0,#0x18; cmp r0,#0`, which an int return does not
- * produce. Byte-exact before and after -- both arms return a 0/1 constant. */
+ * `a` is a whole percentage. The next random number is reduced modulo 10000 and
+ * compared with a * 100, which puts the two on the same scale. Both sides are
+ * unsigned, which follows from GetNextRandomNumber returning u32.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The two answers are returned from separate statements rather than by
+ *     returning the comparison. Returning the comparison presets the false value
+ *     and copies it into place, which the original does not do.
+ *   - The return type is u8 because the only caller narrows the result to a byte
+ *     before testing it, which an `int` return would not produce.
+ */
 u8 sub_080129F8(u16 a)
 {
     if (GetNextRandomNumber() % 10000 < a * 100)

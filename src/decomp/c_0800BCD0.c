@@ -8,36 +8,28 @@
  * sub_0800BCD0 @ 0x0800BCD0
  */
 
-/* MATCHED (wave 37, W37-C).
+/*
+ * sub_0800BCD0 -- is (x, y) and all eight cells around it terrain 0x13 or 7?
  *
- * sub_0800BC5C's bridge test written out NINE times, once per cell of the 3x3
- * block around (x, y), accumulated into a 9-bit mask; the answer is whether all
- * nine are bridge.  The centre is tested first and short-circuits the rest.
+ * The same test is written out nine times, once per cell of the 3 x 3 block,
+ * each setting its own bit of `m` (bit 8 the top left, bit 4 the centre, bit 0
+ * the bottom right). The centre is done first and a miss returns 0 at once. A
+ * cell off the edge of the map leaves its bit clear, so any cell on the border
+ * answers 0. The result is `m == 0x1FF`.
  *
- * TWO register-allocation facts, both measured here and both worth reusing:
- *
- *  - `y - 1` and `y + 1` are written INLINE in all six row references, with no
- *    `int n` binding them.  With `int n = y - 1;` the draft is 484 of 488: the
- *    scaled index `n * 2` survives from the middle arm into the following
- *    `x < width - 1` arm and is reused, where the ROM recomputes `lsls rN,n,#1`
- *    in every one of the three arms (2 bytes x 2 groups).  Binding the row
- *    value to a local (`int r = rowOffset[n] + 1;`) instead of the comma made
- *    no difference at all -- this function has no calls, so a leading
- *    initialiser and a comma are the same RTL.  Inlining the neighbour
- *    expression is what stops the multiply being carried across.
- *
- *  - `t` and `c` are FUNCTION scope, one pair for all nine tests.  Declared per
- *    block they are nine independent allocno pairs and four of the nine come
- *    out with `t` and `c` swapped (`ldrb r1,[r1]; movs r0,#0` where the ROM has
- *    `ldrb r0,[r1]; movs r1,#0`) -- size-exact, wrong registers.  One pair for
- *    the whole function makes the assignment uniform, and it costs nothing
- *    because there is no call in this function, so r0/r1 are free to hold a
- *    long-lived pseudo.  This is the wave-17 "binding locals are punctuation"
- *    rule read the other way round: with no calls, FEWER locals is what the ROM
- *    has.
- *
- * The `(i = row, i + x)` comma is the sub_0800A098 lever: it keeps the -+1 on
- * the ROW rather than letting agbcc sink it into the 0x1432 terrain base. */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - `y - 1` and `y + 1` are written out in all six row lookups instead of
+ *     being bound to a local. With a local the compiler works the row's scaled
+ *     index out once and carries it into the next block, where the original
+ *     works it out again.
+ *   - `t` and `c` are declared once for the whole function, not per block. This
+ *     function makes no calls, so the original keeps both in low registers
+ *     throughout; nine separate pairs come out with some of them swapped.
+ *   - The side and diagonal indexes are written `(i = <row> -+ 1, i + x)`, so
+ *     the 1 is added to the row and x afterwards. In one expression the
+ *     compiler folds the 1 into the terrain array's own offset instead.
+ */
 #define MAP gMap
 
 int sub_0800BCD0(int x, int y)

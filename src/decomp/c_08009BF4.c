@@ -8,21 +8,21 @@
  * sub_08009BF4 @ 0x08009BF4, sub_08009CF8 @ 0x08009CF8
  */
 
-/* Wave 57 (W57-A). Neighbour-count on the typed gMap alias, the same
- * rowOffset/terrain idiom as the promoted sub_08009B38 in
- * src/decomp/c_08009B38.c 188 bytes below.
+/*
+ * sub_08009BF4 -- count how many of the four cells next to (x, y) are sea.
  *
- * `mov r7, sb; mov r6, r8` is not a loop -- it is five live values: x, y, the
- * count, the neighbour row, and the cached map pointer that survives each
- * sub_080094EC call.
+ * A neighbour counts when it is on the map, sub_080094EC returns 0 for it, and
+ * its terrain is 2. The order is up, down, left, right, and the result is 0
+ * to 4.
  *
- * The per-block scoping of p/rows/cells/t/idx is load-bearing, not style: one
- * function-level `p` assigned in all four blocks is a multi-block pseudo, which
- * local_alloc skips, and the ROM's `adds r1,r1,r2` (cells overwriting the dead
- * p) plus its in-place `adds r0,r0,r5` (idx tied to the ldrh result) are
- * exactly local_alloc's reuse-the-dying-register tie.  Hoisting `t = yy * 2`
- * to its own statement ahead of `rows` is what puts the `lsls` before the
- * 0x417A pool load, as in the exemplar. */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - Each of the four blocks declares its own p, rows, cells, t and idx, and
+ *     computes `t = yy * 2;` in a statement of its own before setting `rows`.
+ *     Shared across the whole function the compiler keeps them in different
+ *     registers, and hoisting the multiply changes the order of the address
+ *     load and the shift.
+ */
 int sub_08009BF4(int x, int y)
 {
     int n;
@@ -102,16 +102,24 @@ int sub_08009BF4(int x, int y)
     return n;
 }
 
-/* Wave 57 (W57-A). sub_08009BF4's neighbour count with a two-value terrain
- * test (2 or 0xC) and the map read hoisted AHEAD of the sub_080094EC call
- * instead of after it -- which is why the terrain byte lands in a
- * callee-saved register here and does not in sub_08009BF4. Same typed gMap
- * rowOffset/terrain idiom as src/decomp/c_08009B38.c.
+/*
+ * sub_08009CF8 -- count how many of the four cells next to (x, y) are sea or
+ * bridge.
  *
- * NOT a twin of sub_08009BF4 despite both being exactly 260 bytes: 120 vs 121
- * instructions, the call/read order is reversed, and only this one needs the
- * 0xC case.  See the scoping note in work/sub_08009BF4/sub_08009BF4.c for why
- * p/rows/cells/t/idx are declared per block. */
+ * The same count as sub_08009BF4 above, except that terrain 0xC (a bridge) is
+ * accepted as well as terrain 2, and the terrain byte is read before
+ * sub_080094EC is called rather than after it.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - Reading the map before the call is what makes the original keep the
+ *     terrain byte in a register that survives it; the two are not
+ *     interchangeable even though the result is the same.
+ *   - The per-block p, rows, cells, t and idx, and the separate `t = yy * 2;`,
+ *     matter here for the same reason as in sub_08009BF4.
+ *   - The second and fourth blocks put the bound test inside the block, after
+ *     `p = gMap;`, so that the map pointer is loaded before the comparison.
+ */
 int sub_08009CF8(int x, int y)
 {
     int terrain;

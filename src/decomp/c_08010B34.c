@@ -8,27 +8,31 @@
  * sub_08010B34 @ 0x08010B34, MakePipe @ 0x08010D28, MakeSeam @ 0x08010D80, sub_08010DD4 @ 0x08010DD4
  */
 
-/* See the note on struct Map in work/GetSeamType/GetSeamType.c. */
-
-/* Picks the connector tile for a road/bridge cell from which of its four
- * neighbours sub_0800F564 reports as joinable, after re-drawing the cell when
- * it is one of the two bridge ids. -1 means "leave it alone".
+/*
+ * sub_08010B34 -- the end-piece tile for a cell that joins in one direction
+ * only; -1 for anything else.
  *
- * The fourteen-way `||` chain must be written in EXACTLY this order: agbcc's
- * fold merges only the FIRST adjacent pair (0x142 / 0x143) into the range test
- * `(u16)(t - 0x142) <= 1`, because from the third term on the left operand is
- * a compound OR rather than a bare comparison. 0x140/0x141 are adjacent too
- * and are NOT merged, which is what fixes the order rather than the set.
- * The `adds r0,#1` / `subs r0,#0x1d` chain between compares is agbcc reusing
- * the previous constant's register, not source arithmetic.
+ * Nothing happens unless the tile at (x, y) is one of the fourteen joining ids.
+ * A cell showing 0x162 or 0x163 is rebuilt first: if sub_0800F8D4 accepts it the
+ * function gives up with -1, otherwise sub_0800C608 clears the cell, the terrain
+ * becomes 0xF and sub_0800FD44 supplies a fresh tile.
  *
- * The cell is READ TWICE: the second read is a separate expression, not the
- * local `t`, because the fourteen-way merge is a control-flow join and agbcc's
- * CSE runs on extended basic blocks, so the ROM reloads.
+ * Each direction is then asked whether sub_0800F564 reports 2 for it. The first
+ * one that does wins, but only if none of the other three does as well:
+ * direction 0 gives tile 0x121, 1 gives 0x120, 2 gives 0x103 and 3 gives 0x102.
+ * A cell that joins in no direction, or in more than one, gives -1.
  *
- * The word at 0x0808D8A4 is agbcc's -fforce-addr .rodata address constant
- * holding 0x08499590 (dereferenced in baserom.gba), not a global; the honest
- * spelling below reproduces it and promotion must carry the rodata entry. */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The fourteen-way `||` chain must keep this order. The compiler folds only
+ *     the first adjacent pair, 0x142 and 0x143, into a single range test; from
+ *     the third term on the left-hand side is already a compound test and no
+ *     further pair is folded, so it is the order and not the set of values that
+ *     matters.
+ *   - The cell is read twice, the second time as a fresh expression rather than
+ *     through `t`. The original reloads it, because the fourteen tests join
+ *     control flow and the compiler carries no value across that join.
+ */
 int sub_08010B34(int x, int y)
 {
     u16 t;
@@ -94,10 +98,19 @@ int sub_08010B34(int x, int y)
     return -1;
 }
 
-/* Eight redraw passes over one (x, y) cell, all sharing the same key. The
- * second is `MakeTileSimple(x, y, sub_0800FD44(x, y, 1))` -- the nested call
- * leaves its result in r0 and agbcc moves it to r2 before reloading r0/r1, so
- * the nesting costs the same `add r2,r0,#0` a temporary would. */
+/*
+ * MakePipe -- lay a pipe at (x, y) and refresh everything around it.
+ *
+ * The terrain becomes 0xF and the tile comes from sub_0800FD44. The six calls
+ * that follow all take the same cell and redraw its surroundings; sub_0800A588
+ * and sub_08007F9C are the neighbour sweeps in c_0800A588.c and c_08007F9C.c.
+ *
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - sub_0800FD44's call stays nested inside MakeTileSimple. The original
+ *     moves the result into the argument register and reloads the other two, so
+ *     the nesting costs exactly what a temporary would.
+ */
 void MakePipe(int x, int y)
 {
     SetTerrainAt(x, y, 0xf);
@@ -112,31 +125,20 @@ void MakePipe(int x, int y)
 
 asm(".global sub_08010D28\n.thumb_set sub_08010D28, MakePipe\n");
 
-/* Redraws one cell as a road/bridge, gated on either the campaign counter being
- * low or GetPropertyKindAt accepting the cell. GetSeamType supplies the tile id
- * that both MakeTileSimple and sub_0800C574 are handed.
+/*
+ * MakeSeam -- lay a seam at (x, y), if the map may have another property.
  *
- * `(s8)gActiveMap->propertyCount` is a CAST on a u8 member, not an s8 member.
+ * Nothing happens unless gActiveMap->propertyCount is 0x3B or less, or
+ * GetPropertyKindAt already reports something for the cell. The terrain becomes
+ * 0x10, GetSeamType gives the tile, which goes both to MakeTileSimple and to
+ * sub_0800C574, and the per-army property totals are counted again.
  *
- * Wave 48 (W48-A) corrects the REASON this comment used to give.  It read the
- * `ldrb; lsl #24; asr #24` here as proof of the u8 declaration, on the grounds
- * that an s8 member would have needed `movs rN,#0x12; ldrsb r0,[r1,rN]`
- * (ldrsb has no immediate form) -- and noted that sub_0800C574 does exactly
- * that with the same member, concluding "the two readers disagree, and this one
- * is the matched evidence".  They do not disagree: sub_0800C574 and
- * sub_0800C608 are both matched now, both read this same u8 member with the
- * same `(s8)` cast, and both get `ldrsb`.  One member, one spelling, two
- * outputs, three matches.
- *
- * So the choice between `ldrsb` and the shift pair is context, not signedness,
- * and neither form is evidence about the type.  That holds at a REGISTER offset
- * too: sub_0800C6E8 reads two u8 members four instructions apart at the same
- * `base + K + i` addressing under the same test and gets one of each.  What
- * does settle a byte member is an operation that folds under only one
- * signedness -- RegisterArmyHqs's `|= 0xFF` -- see the
- * "`ldrsb` vs `ldrb; lsl #24; asr #24`" chapter of docs/agbcc-codegen.md.
- *
- * The u8 declaration itself is unaffected -- this file still matches. */
+ * Why the C looks odd: this spelling does not change what the code does, but
+ * the original compiler only produces identical output with it.
+ *   - propertyCount is a u8 read through an `(s8)` cast, so the comparison is
+ *     signed and a count of 0x80 or more also passes. Keep the cast and leave
+ *     the field's type alone.
+ */
 void MakeSeam(int x, int y)
 {
     int t;
@@ -153,32 +155,26 @@ void MakeSeam(int x, int y)
 
 asm(".global sub_08010D80\n.thumb_set sub_08010D80, MakeSeam\n");
 
-/* "Is this bridge cell connected?" -- a horizontal bridge (0x142) is checked
- * against its left and right neighbours, a vertical one (0x143) against the
- * cells above and below, and anything else is accepted outright. A neighbour
- * counts when it is 0x162 or 0x163, which agbcc's range-test fold turns into
- * the `+ -0x162; lsl/lsr #16; cmp #1; bls` in the ROM.
+/*
+ * sub_08010DD4 -- does the bridge at (x, y) meet a seam on either side?
+ * 1 means yes.
  *
- * The `x + 1` neighbour is emitted as `(rowOffset[y] + 1) + x` and the `y + 1`
- * one as `rowOffset[y + 1] + x`; both are the plain inline spelling below --
- * binding the incremented coordinate to its own local blocks the
- * reassociation and costs a multiply. The map pointer is re-read after each
- * bounds test because those are control-flow merges and agbcc's CSE runs on
- * extended basic blocks, so nothing here needs a temporary to reproduce.
+ * A horizontal bridge (tile 0x142) is tested against the cells left and right of
+ * it, a vertical one (0x143) against the cells above and below, and any other
+ * tile is accepted at once. A neighbour counts when its tile is 0x162 or 0x163.
+ * Running off the edge of the map on the second side answers 0.
  *
- * `return 0` is the FUNCTION'S LAST STATEMENT and the "accept" arm is an
- * explicit `else return 1`. Written the other way round -- `if (!ok) return 0`
- * inside each arm with a shared trailing `return 1` -- agbcc emits exactly the
- * same 232 bytes with the two tail blocks SWAPPED (`bls`+`movs #0` where the
- * ROM has `bhi`+`movs #1`), worth 8 bytes across four branches. Measured both
- * ways; the source-level polarity of the last `if` alone does nothing, it is
- * which return is the fall-through at the end of the function that decides it.
- *
- * The word at 0x0808D8A8 is NOT a global: it is agbcc's own -fforce-addr
- * .rodata address constant and holds 0x08499590 in baserom.gba, so the honest
- * `gUnknown_08499590` spelling below reproduces the two-level load and
- * promotion must carry a rodata entry for it (0x0808D8A4, used by
- * sub_08010B34, is a second private copy of the same address). */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - `return 0;` is the function's last statement and the accepting case is an
+ *     explicit `else return 1;`. Written the other way round the compiler emits
+ *     the same instructions with the two tail blocks swapped. What decides it is
+ *     which return falls through at the end of the function, not the polarity of
+ *     the last `if`.
+ *   - The neighbour indexes stay written inline. Binding the adjusted coordinate
+ *     to a local of its own stops the compiler regrouping the index and costs a
+ *     multiply.
+ */
 int sub_08010DD4(int x, int y)
 {
     u16 t;

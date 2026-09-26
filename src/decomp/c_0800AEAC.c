@@ -7,32 +7,24 @@
  * sub_0800AEAC @ 0x0800AEAC
  */
 
-/* MATCHED, wave 57 (W57-F). 120 bytes, byte-for-byte identical.
+/*
+ * sub_0800AEAC -- may sea be placed at (x, y)? 1 means yes.
  *
- * Wave 52 parked this size-exact at 50.8% with ONE extra `b` and diagnosed it
- * as "a jump.c block-placement tie, so the permuter is the right tool". It is
- * not a tie, it is a source shape, and the rule is now a chapter in
- * docs/agbcc-codegen.md:
+ * sub_0800A6AC gives the cell's land shape, and a negative answer refuses
+ * outright. A non-zero shape is accepted when sub_0800A95C reports nothing
+ * (0), or, when it reports a shape of its own, only if the top bits of the land
+ * shape are 0x4000, 0x2000 or 0. A zero shape falls back on sub_0800A884 and is
+ * accepted when that -- or sub_0800A95C's answer, where it has one -- is
+ * positive. Everything else refuses.
  *
- *   The value returned by the LAST statement gets the block that falls into
- *   the epilogue. Every other returned value's block is placed at the LAST
- *   site of that value inside the FIRST if/else arm, and sites in later arms
- *   reach it by a BACKWARD conditional branch.
- *
- * The ROM has `movs r0,#1; b _0800AF1C` mid-function at the mask chain's
- * fall-through and `movs r0,#0` falling into the epilogue, so `return 0;` is
- * the trailing statement and every `return 1;` is a conditional return inside
- * an arm. Wave 52's draft closed the `v != 0` block with a plain `return 1;`,
- * which makes agbcc keep the merged block at the TAIL and pay a `b` at the
- * mask chain's fall-through -- the whole 2-byte residual.
- *
- * Identified with one compile_probe carrying three variants: the mirror image
- * (conditional `return 0;`s in the arms, single trailing `return 1;`) emits the
- * ROM's instruction COUNT with the two blocks swapped.
- *
- * Settled by wave 52 and unchanged: the return is `int`; `w <= 0` not `w < 0`;
- * the second `sub_0800A6AC(x, y)` really is a second call with the same
- * arguments; this is NOT do_store_flag.
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - `return 0;` must be the function's last statement and every `return 1;`
+ *     must sit inside an arm. The compiler gives the value returned by the last
+ *     statement the block that falls into the function's exit; the mirror image
+ *     puts those two blocks the other way round and costs an extra branch.
+ *   - sub_0800A6AC really is called a second time with the same arguments in
+ *     the else arm. That is what the original does.
  */
 
 int sub_0800AEAC(int x, int y)

@@ -7,16 +7,27 @@
  * sub_080055B8 @ 0x080055B8, sub_08005634 @ 0x08005634, sub_080056B0 @ 0x080056B0
  */
 
-/* Family F059: three copies of one shape, differing only in the slot index --
- * 0, 1 and 2 -- which appears twice, once as sub_0803CCB8's first argument and
- * once as sub_0803CDBC's third. Both arms call sub_0803CEAC and sub_08012BC8
- * with identical arguments and the ROM keeps both copies: cross-jumping cannot
- * merge them because the `0` that goes to [sp, #4] is CSEd with the two `strh`
- * zeroes in the then-arm and so lands in r4 there and r1 in the else-arm. */
-/* The three parameters are unused here and so are invisible in this body --
- * `(void)` was byte-identical. They are proved by the only call site,
- * sub_08004D28, which materialises `movs r0,#0; movs r1,#0; movs r2,#0` in
- * front of each of the three `bl`s. Widened and re-verified in wave 36. */
+/*
+ * sub_080055B8 -- put save slot 0's name box on screen, or take it down.
+ *
+ * sub_0803CCB8 is asked about slot 0, with gDesignRoomName. Either way
+ * sub_0803CEAC runs and the 0xF x 0xA tile window at (0xE, 4) of BG0 is
+ * blanked. If the answer was not 1 the window is then flagged for copying to
+ * VRAM and nothing more happens; if it was 1, sub_0803CDBC draws slot 0 into
+ * the window and the two view-offset globals are zeroed instead.
+ *
+ * The three parameters are never read here. They are known from the only
+ * caller, sub_08004D28, which passes three zeroes to each of the three
+ * functions in this file.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - sub_08005634 and sub_080056B0 are this function again for slots 1 and 2.
+ *     The original holds all three copies; do not factor them into one.
+ *   - Both arms of the `if` repeat the same first two calls. Merged into a
+ *     common prologue, the zero stored on the stack ends up in a different
+ *     register from the original's.
+ */
 void sub_080055B8(int a, int b, int c)
 {
     if (sub_0803CCB8(0, gDesignRoomName) != 1)
@@ -35,12 +46,7 @@ void sub_080055B8(int a, int b, int c)
     }
 }
 
-/* Family F059: three copies of one shape, differing only in the slot index --
- * 0, 1 and 2 -- which appears twice, once as sub_0803CCB8's first argument and
- * once as sub_0803CDBC's third. Both arms call sub_0803CEAC and sub_08012BC8
- * with identical arguments and the ROM keeps both copies: cross-jumping cannot
- * merge them because the `0` that goes to [sp, #4] is CSEd with the two `strh`
- * zeroes in the then-arm and so lands in r4 there and r1 in the else-arm. */
+/* sub_08005634 -- the same as sub_080055B8, for save slot 1. */
 void sub_08005634(int a, int b, int c)
 {
     if (sub_0803CCB8(1, gDesignRoomName) != 1)
@@ -59,12 +65,7 @@ void sub_08005634(int a, int b, int c)
     }
 }
 
-/* Family F059: three copies of one shape, differing only in the slot index --
- * 0, 1 and 2 -- which appears twice, once as sub_0803CCB8's first argument and
- * once as sub_0803CDBC's third. Both arms call sub_0803CEAC and sub_08012BC8
- * with identical arguments and the ROM keeps both copies: cross-jumping cannot
- * merge them because the `0` that goes to [sp, #4] is CSEd with the two `strh`
- * zeroes in the then-arm and so lands in r4 there and r1 in the else-arm. */
+/* sub_080056B0 -- the same as sub_080055B8, for save slot 2. */
 void sub_080056B0(int a, int b, int c)
 {
     if (sub_0803CCB8(2, gDesignRoomName) != 1)
