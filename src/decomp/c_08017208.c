@@ -8,72 +8,14 @@
  * sub_08017208 @ 0x08017208
  */
 
-/* Wave 80 (W80-C): the y/x plane-copy loop's r0/r1 exchange was a SOURCE
- * CONSTRUCT -- the W77-K lever from sub_08052BBC: bind the integer BYTE
- * OFFSET early and reference the base late. `off = idx * 2;` as its own
- * statement creates the index chain's pseudo before the pool constant
- * (0xa22) and the gUnknown_03003F68 load, so the chain takes r1 and the
- * constants take r0 as the ROM has it. The destination stays the array
- * reference `unk0a22[idx]` (its `idx * 2` is CSE'd onto `off`): spelling the
- * destination as `(u8 *)unk0a22 + off` reassociates to (map + off) + 0xa22
- * and the source read is `*(u16 *)((u8 *)gUnknown_03003F68 + off + 2)`. */
 
-/* WAVE 78 (W78-A): configured baseline reverified size-exact with 7 differing
- * bytes (99.2%). Reusing each dead int local a/b/v for the plane index and
- * reordering the int declarations were new allocator mechanisms; all were
- * worse (best alternative 97.7%), so the readable baseline is retained. */
 
-/* WAVE 77, W77-B. Size-exact 916/916, now 7 bytes differ (99.2%) -- the
- * sentinel-replay loop noted below is byte-exact and the whole residual is
- * item 1. CLASSIFIED as NOT ORDER: twelve instructions in identical sequence,
- * every differing byte a register field of one r0/r1 exchange. +0x196 ldrh Rd,
- * +0x19A adds Rd/Rn, +0x19C lsls Rd/Rm, +0x19F ldr Rd, +0x1A0 adds Rm,
- * +0x1A2 adds Rm, +0x1A6 ldr Rd. ROM keeps the index chain in r1 and the pool
- * base in r0; this draft does the reverse.
- *
- * RULED OUT this wave: a comma operator creating the unk0a22 array base ahead
- * of the idx computation (7, unchanged); *(u16 *)((u8 *)gUnknown_03003F68 +
- * idx * 2 + 2) on the source read (7, unchanged); swapping the idx addends to
- * `y + ...unk417a[x]` (8, worse). Consistent with the wave-77 finding that
- * source-level commutative operand order is byte-neutral. */
 
-/* WAVE 72 RERUN: configured remains size-exact at 916/916 and 97.1% (27 bytes
- * differ). A bounded fresh value-local and element-pointer split at the plane
- * copy changed the instruction grouping instead of only swapping r0/r1, so
- * the original fixpoint is retained; the prior 300-second permuter still
- * rules out generic allocation search.
- *
- * Wave 53, W53-B. PARKED. SIZE-EXACT at 916 bytes, every branch offset agrees
- * and the instruction stream is identical to the ROM's instruction for
- * instruction. The residual is purely which register each pseudo landed in, in
- * two places:
- *
- *   1. the y/x plane-copy loop: the ROM keeps the index chain in r1
- *      (`ldrh r1,[r0]` ... `adds r0,r0,r1` with the gUnknown_03003F68 pointer
- *      in r0), this keeps it in r0 with the pointer in r1. Same instructions,
- *      operands swapped. Spelling the read as
- *      `*(u16 *)((u8 *)gUnknown_03003F68 + 2 + idx * 2)` instead of
- *      `((u16 *)gUnknown_03003F68)[idx + 1]` emits byte-identical output, so
- *      the operand order is not reachable from the source here.
- *   2. the sentinel-replay loop: r3/r5/r6 where the ROM has r5/r6/r7.
- *
- * decomp-permuter, 300 s / 4 threads / ~14,500 iterations, found nothing.
- *
- * Everything else was derived and is confirmed byte-exact:
- *   - `gUnknown_030032D8 = 5 / 0xc` is an if/else with TWO stores (the ROM
- *     duplicates the `ldr =gUnknown_030032D8` in both arms and cross-jumps only
- *     the `strh`); a `?:` hoists the symbol load and drops the `b`.
- *   - `gUnknown_030033EC = v = p->unk0002;` as ONE statement is what puts the
- *     destination's pool word before the `ldrh`; two statements swap them.
- *     Same for `map->unk04 = a = p->unk0bb2;`, which is also what keeps the
- *     VALUE live for the later unk08/unk0a stores instead of the address.
- *   - gUnknown_03003F2C names gUnknown_030033EC and RELOADS it, while
- *     gUnknown_03004084 and gUnknown_03004480 use the bound value: the store to
- *     gUnknown_03004084 in between is what kills the CSE entry.
- *
- * The `.rodata` relocation against gUnknown_0808E554 is the -fforce-addr pool
- * word for &gPlaySt (0x0808E554 holds 0x03003FC0 in baserom.gba), not
- * a global and not a difference -- see work/sub_08016F38/. */
+/* gUnknown_02023284 and sub_080456B8 are declared here rather than in a header
+ * because nothing else in src/decomp uses them. The two structs are the save
+ * block sub_08016F38 (src/decomp/c_08016F38.c) writes; that file carries its
+ * own copy of the same declaration. SaveBlkRec is one entry of the
+ * map-difference list at 0x0bb8 -- a column, a row and a tile number. */
 
 extern u8 gUnknown_02023284[];
 void sub_080456B8(u8 *);
@@ -110,6 +52,48 @@ struct SaveBlk
     /* 0x0da8 */ u8 unk0da8[4];
 };
 
+/*
+ * sub_08017208 -- load the game state back out of the save block.
+ *
+ * The reverse of sub_08016F38 (src/decomp/c_08016F38.c), which wrote the block
+ * at gUnknown_02000000.
+ *
+ *   1. gUnknown_030032D8 takes 5 or 0xc depending on the block's .unk0bac
+ *      flag. The loose globals, gPlaySt (0x48 bytes) and the unit at
+ *      gUnknown_03004490 are copied back out. Two of gUnknown_0200C420's
+ *      fields are re-derived from gPlaySt rather than restored.
+ *   2. The map's size and scroll position are restored, and the camera
+ *      position is recomputed as the scroll position divided by 16.
+ *   3. Unless the map ID is one of 0xb4..0xbf, rebuild the map: sub_0802490C
+ *      and sub_08024944 for its header word and its name, LoadMapData for its
+ *      tiles, then copy the pristine tiles at gUnknown_03003F68 into the live
+ *      map and replay the difference list at .unk0bb8 over the top, stopping
+ *      at the record whose tile is 0xffff.
+ *   4. Copy the five 0x3c-byte records, the four armies' 51 units each and the
+ *      sixteen gUnknown_02028360 entries back where sub_08016F38 took them
+ *      from, and hand the last four bytes to sub_080456B8.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The tile copy splits the byte offset out as its own statement
+ *     (`off = idx * 2;`) while the destination stays the array reference
+ *     `gMap->tile[idx]`. Folding the multiply into the read, or spelling the
+ *     destination as a pointer, swaps which register holds the index and which
+ *     holds the constants.
+ *   - gUnknown_030032D8 is an if/else with two separate stores and not a `?:`,
+ *     because the original loads the symbol's address in both arms.
+ *   - `gUnknown_030033EC = v = p->unk0002;` and `map->scrollX = a = p->unk0bb2;`
+ *     are single chained statements. Split in two they load the value before
+ *     the destination's address; `a` and `b` also keep the values alive for the
+ *     later .unk08 and .unk0a stores.
+ *   - gUnknown_03003F2C is computed from gUnknown_030033EC read back out of
+ *     memory while its neighbours use the local `v`. That is what the original
+ *     does: the store to gUnknown_03004084 in between is what forces the
+ *     reload.
+ *   - `a`, `b` and `v` are three separate locals and the map-ID test is written
+ *     out twice. Sharing a local, or merging the two blocks under one test,
+ *     changes the register assignment.
+ */
 void sub_08017208(void)
 {
     struct SaveBlk *p = (struct SaveBlk *)gUnknown_02000000;

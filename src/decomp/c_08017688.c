@@ -7,11 +7,17 @@
  * sub_08017688 @ 0x08017688
  */
 
-/* `u16` and not `int`: the prologue's `adds r4, r0, #0; lsls r4, r4, #0x10;
- * lsrs r4, r4, #0x10` is PROMOTE_MODE's copy-then-narrow of a sub-word
- * parameter. An `int` parameter with a `(u16)` cast at the use folds the shift
- * pair away entirely, because the `strh` into the s16 field truncates for free
- * (measured with compile_probe, wave 26). */
+/*
+ * sub_08017688 -- start the gUnknown_0848A1EC script with `a` as its argument.
+ *
+ * sub_080152EC takes a gUnknown_03001470 slot for the script, and the slot's
+ * .unk1e carries `a` through to it. Nothing checks the result: if every slot
+ * were in use this would write through NULL.
+ *
+ * Why the C looks odd: `a` is declared u16 rather than being an int cast at the
+ * use. With a cast the narrowing folds away, because the halfword store
+ * truncates for free, and the original narrows the parameter on entry.
+ */
 void sub_08017688(u16 a)
 {
     sub_080152EC(gUnknown_0848A1EC, 0)->unk1e = a;

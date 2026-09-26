@@ -7,16 +7,22 @@
  * sub_080184E0 @ 0x080184E0
  */
 
-/* Wave 32, W32-A: retyped from a file-local duplicate of the slot struct
- * (`struct Unk80184D8`, filler[8] + a callback word) to the shared
- * `struct Unk0200C528`. sub_080184EC installs THIS function into a slot's +8
- * and steps that slot's `unk0e`, which is what identifies the object; the two
- * files can now name one type. Byte-identical -- the +8 slot is declared
- * `struct Unk0200C528Node *` because sub_08018B40 stores a node link there, so
- * the function is cast rather than the member retyped (the c_080180A8.c
- * precedent). */
+/* sub_080184D8 is the next callback in this sequence and lives in its own file;
+ * it is declared here because src/decomp has no shared header for these slot
+ * callbacks. */
 void sub_080184D8(struct Unk0200C528 *s);
 
+/*
+ * sub_080184E0 -- hand a gUnknown_0200C528 slot on to sub_080184D8.
+ *
+ * Installed as a slot's callback by sub_080184EC (src/decomp/c_080184EC.c).
+ * All it does is put the next callback in the sequence in its own place, so the
+ * slot runs sub_080184D8 from the next frame on.
+ *
+ * The callback field .unk08 is declared as a node pointer, because
+ * sub_08018B40 stores a node link in it, so the function is cast rather than
+ * the member retyped.
+ */
 void sub_080184E0(struct Unk0200C528 *s)
 {
     s->unk08 = (struct Unk0200C528Node *)sub_080184D8;

@@ -7,12 +7,19 @@
  * sub_08017A58 @ 0x08017A58
  */
 
-/* `s16` and NOT `bool8`, settled from its caller: sub_08017D30 returns this
- * function's result unconverted and the ROM narrows it `lsls #0x10; asrs
- * #0x10`, where a `bool8` return probes as `lsls #0x18; lsrs #0x18`. The body
- * below is byte-identical either way -- `return FALSE` is `movs r0, #0` in both
- * -- so the call site is the only evidence there is. See the family note in
- * include/unknown-functions.h. Wave 26, W26-C. */
+/*
+ * sub_08017A58 -- script command: copy the current node's .unk0c into the slot.
+ *
+ * gUnknown_0200C528[a].unk04 is the slot's cursor into its list of script
+ * nodes. The node's .unk0c is copied to the slot's own .unk0c and the cursor
+ * steps on one node. Returns FALSE, which ends the slot's turn for this frame
+ * (see the dispatcher in src/decomp/c_08019404.c).
+ *
+ * The s16 return type comes from the caller and not from this body: sub_08017D30
+ * (src/decomp/c_08017C4C.c) passes the result straight on and sign-extends it
+ * as a halfword, which a bool8 return could not produce. See the family note in
+ * include/unknown-functions.h.
+ */
 s16 sub_08017A58(s16 a)
 {
     gUnknown_0200C528[a].unk0c = gUnknown_0200C528[a].unk04->unk0c;

@@ -7,44 +7,10 @@
  * sub_08014EF4 @ 0x08014EF4, sub_08014FB0 @ 0x08014FB0
  */
 
-/* realloc for the gUnknown_03000050 arena, alongside sub_08014E44 (alloc),
- * sub_08014ED4 (free) and sub_08014DCC / sub_08014E68 one level down. The
- * block header layout and the `((struct MemBlock *)ptr)[-1].member` idiom are
- * the ones src/decomp/c_08014E68.c already established.
- *
- * gUnknown_0300004C IS REACHED THROUGH agbcc's -fforce-addr ADDRESS-CONSTANT
- * POOL, not through a global called gUnknown_0808E52C. The splitter invented
- * that name for the pool word at 0x0808E52C; the ROM word THERE holds
- * 0x0300004C, and its neighbours at +/-4 hold 0x030030E0 and 0x03000050, i.e.
- * it sits in a run of address constants. Naming the global directly is the
- * honest spelling and is what produces the ROM's `ldr r1, <pool>; ldr r7, [r1]`
- * plus the `mov ip, r1` / `mov r0, ip` shuffle. PROMOTION MUST CARRY THE POOL
- * WORD: add "rodata": ["0x0808E52C"] to this function's data/promoted.json
- * entry, then re-run tools/split_rodata.py and tools/gen_lds.py.
- *
- * THE `do { } while (0)` IS LOAD-BEARING and is the last thing that closed the
- * function (found by decomp-permuter, confirmed by try_match). Without it the
- * output is size-exact at 188/188 and 92.0% identical, with EVERY differing
- * byte being the same swap: `blk` takes r3 and `avail` takes r4, where the ROM
- * has blk in r4 and avail in r3. Same instructions, same order, two pseudos in
- * each other's slots -- the case docs/agbcc-codegen.md gives the permuter.
- * Declaration order does NOT move it (probed both orders, byte-identical).
- *
- * The separate `t` is load-bearing for a different reason and is NOT part of
- * that: writing the merge as `avail += 0x10; avail += next->size;` updates
- * avail in place (`add r3, r3, #0x10`, one instruction) where the ROM computes
- * into a fresh register (`adds r1, r3, #0; adds r1, #0x10`, two). The fresh
- * register is what clobbers the pool address in r1 and forces the ROM's
- * `mov ip, r1` / `mov r0, ip` pair, so all three instructions stand or fall
- * together.
- *
- * The split arm reaches the new block as `q[1]` off `q = ptr + size` rather
- * than through its own pointer: that is what puts the member offsets in the
- * load displacements (`str r2, [r1, #0x10]`) while `q + 1` is CSE'd into the
- * one register the two pointer stores share. Note the new header lands at
- * ptr + size + 0x10, one header FURTHER on than sub_08014DCC places its split
- * block (best + size + 0x10, i.e. ptr + size); that asymmetry is in the ROM,
- * not in this transcription. */
+
+/* Header the heap keeps in front of every block it hands out. A caller's
+ * pointer is the byte just past its own header, so the header is
+ * `((struct MemBlock *)ptr)[-1]`. `used` is 0 while the block is free. */
 struct MemBlock
 {
     /* 0x00 */ struct MemBlock *next;
@@ -52,14 +18,48 @@ struct MemBlock
     /* 0x08 */ u32 used;
     /* 0x0c */ u32 filler_0c;
 };
-/* 0x0300004C has no symbol in upstream's aw2bhr.lds (the IWRAM table jumps
- * 0x48 -> 0x50), and gen_lds.py passes that table through verbatim, so an
- * `extern gUnknown_0300004C` can never link in the split build. Spell it as
- * an offset into the covering symbol instead: the reloc becomes
- * gUnknown_03000048+4, which resolves to the same address and the same pool
- * word. Wave 42, replacing the unlinkable extern proto_check.py flagged. */
+
+/* The scratch word at 0x0300004C has no symbol of its own in aw2bhr.lds -- the
+ * IWRAM symbol table jumps from 0x48 straight to 0x50 -- so it cannot be
+ * declared as an extern and still link in the split build. Reaching it as an
+ * offset from the symbol that does cover it resolves to the same address.
+ * Leave it spelled this way. */
 #define gUnknown_0300004C (*(void **)((u8 *)&gUnknown_03000048 + 4))
 
+
+/*
+ * sub_08014EF4 -- resize a block in the gUnknown_03000050 heap (realloc).
+ *
+ * The same heap sub_08014E44 (allocate) and sub_08014ED4 (free) work in. A
+ * caller's pointer is the byte just past its own header.
+ *
+ *   1. A NULL pointer is a plain allocation; a size of 0 frees and returns
+ *      NULL.
+ *   2. Round the request up to a multiple of 16, and give up (NULL) if the
+ *      block is already free.
+ *   3. Work out the space available: the block's own size, plus the next
+ *      block's size and one header if that block is free.
+ *   4. Not enough? Allocate a fresh block, copy `size` bytes across with
+ *      sub_0808B6E8, free the old block and return the new pointer.
+ *   5. Enough? Keep the pointer. If at least 0x20 bytes would be left over,
+ *      cut the tail off as a new free block; otherwise the block keeps the lot.
+ *
+ * gUnknown_0300004C is written four times and never read; it looks like a
+ * scratch slot recording the block the heap code is working on.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The neighbour's size is added through the temporary `t`, inside a
+ *     `do { } while (0)`. Without the temporary the sum is computed in place
+ *     instead of into a fresh register; without the loop two locals end up in
+ *     each other's registers.
+ *   - The new free block is reached as `q[1]` off `q = ptr + size` rather than
+ *     through a pointer of its own, which is what folds the member offsets
+ *     into the store instructions.
+ *
+ * The new header lands at ptr + size + 0x10, one header further along than the
+ * block sub_08014DCC splits off. That asymmetry is in the original.
+ */
 void *sub_08014EF4(void *ptr, u32 size)
 {
     struct MemBlock *blk;
@@ -128,22 +128,22 @@ void *sub_08014EF4(void *ptr, u32 size)
     return ptr;
 }
 
-/* calloc for the gUnknown_03000050 arena: n * size bytes from sub_08014E44,
- * then zeroed a byte at a time.
+
+/*
+ * sub_08014FB0 -- allocate n * size zeroed bytes from the gUnknown_03000050
+ * heap (calloc).
  *
- * `i` MUST be a local distinct from `total`. Decrementing `total` in place
- * (`while (total-- != 0)`) makes the loop counter the same pseudo as the
- * malloc argument, which is already parked in a callee-saved register because
- * it is live across the `bl` -- the counter then stays in r4, the returned
- * pointer stays in r0, and the ROM's `adds r2, r0, #0` / `adds r0, r2, #0`
- * pair disappears (-4 bytes, measured). With a separate `i`, `total` dies at
- * `subs r0, r4, #1` and r4 is free to hold the zero byte, which is what the
- * ROM does.
+ * Returns NULL if the heap is not set up (gUnknown_03000050 is -1) or if
+ * sub_08014E44 cannot satisfy the request. The clear is a plain byte loop.
  *
- * `while (i-- != 0)` and not a `for`: the post-decrement is what makes the
- * exit test `!= -1` rather than `!= 0`, and that -1 is CSE'd with the one the
- * gUnknown_03000050 guard already materialised in r5 (hence r5 surviving the
- * call). */
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The loop counts a separate `i` down instead of `total` itself. Sharing
+ *     the one local makes the byte count and the loop counter the same value,
+ *     and the original's copy of the returned pointer then disappears.
+ *   - `while (i-- != 0)` and not a `for`: the post-decrement is what makes the
+ *     compiler test against -1, and reuse the -1 the heap check already loaded.
+ */
 void *sub_08014FB0(int n, int size)
 {
     u8 *q;

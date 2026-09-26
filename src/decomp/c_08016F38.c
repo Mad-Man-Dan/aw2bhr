@@ -7,37 +7,10 @@
  * sub_08016F38 @ 0x08016F38
  */
 
-/* MATCHED — Wave 86 (W86-D), configured profile, 720/720 byte-exact.
- * Requires the pool word to be PLACED on promotion:
- *   "rodata": ["0x0808E550"]   (gUnknown_0808E550, the -fforce-addr word)
- *
- * Parked since wave 74 at 99.6% / 3 bytes at +0x12e/+0x132/+0x134 — an r0/r1
- * exchange on `adds; ldrh [.,#2]; cmp`, the ROM landing the sum in the loaded
- * pointer's register and the draft in the offset's. W77-M, W81-A, W82-A and
- * W84 each ruled the residual a bare commutation tie with no source lever.
- *
- * IT HAD A SOURCE LEVER, and it was written down in the MIRROR function.
- * sub_08017208 (src/decomp/c_08017208.c) is this function's load-side twin —
- * same struct SaveBlk, same struct Map, same `unk417a[x] + y` plane loop, same
- * `gUnknown_03003F68 + 2` read, source and destination exchanged. Its wave-53
- * residual was the SAME r0/r1 exchange on the SAME two operands, and wave 80
- * (W80-C) closed it with the W77-K lever: bind the integer BYTE OFFSET as its
- * own statement, keep the destination an ARRAY REFERENCE.
- *
- *     idx = ...unk417a[x] + y;
- *     off = idx * 2;                                  <-- the whole lever
- *     ... != *(u16 *)((u8 *)gUnknown_03003F68 + off + 2)
- *
- * `off = idx * 2;` creates the index chain's pseudo BEFORE the pool constant
- * and the gUnknown_03003F68 load, so the chain takes r1 and the constants take
- * r0, as the ROM has it. The park had ruled out the INLINE form
- * `*(u16 *)((u8 *)g + idx*2 + 2)` as byte-neutral at 3 — that is exactly the
- * spelling wave 80 showed is NOT the lever. The statement split is.
- *
- * The wave-75 `asm volatile ("" : "=r" (k));` pin is RETAINED and still
- * load-bearing (it emits no instruction; without it the early
- * gUnknown_030033EC copy takes r5 instead of ROM scratch r0). It also blocks
- * tools/permute.py — do not remove it to enable a permuter run. */
+/* The save block: the state sub_08016F38 writes out and sub_08017208
+ * (src/decomp/c_08017208.c) reads back in. Both files carry their own copy of
+ * this declaration. SaveBlkRec is one entry of the map-difference list at
+ * 0x0bb8 -- a column, a row and a tile number. */
 
 struct SaveBlkRec
 {
@@ -72,6 +45,39 @@ struct SaveBlk
     /* 0x0da8 */ u8 unk0da8[4];
 };
 
+/*
+ * sub_08016F38 -- write the running game state into the save block.
+ *
+ * The block is the RAM area at gUnknown_02000000, laid out as struct SaveBlk
+ * above. sub_08017208 (src/decomp/c_08017208.c) reads back everything written
+ * here.
+ *
+ *   1. Record the flag `a1` in .unk0bac, then copy the loose globals the block
+ *      holds: four scalars, the play state gPlaySt (0x48 bytes), the unit at
+ *      gUnknown_03004490, four ints from gUnknown_030033F4, one struct and the
+ *      two callbacks at .unk0ba0 and .unk0ba4.
+ *   2. Copy the map's width, height, scroll position and .unk10.
+ *   3. Unless the map ID is one of 0xb4..0xbf, store the map as a difference
+ *      from its pristine form: sub_080247A4 loads the map's original tiles at
+ *      gUnknown_03003F68, and every live tile that differs from the original
+ *      is appended to .unk0bb8 as a (column, row, tile) record. A record whose
+ *      tile is 0xffff terminates the list, and sub_0802481C releases the
+ *      loaded original.
+ *   4. Copy five 0x3c-byte records from gUnknown_02023284 to offset 0x14, the
+ *      four armies' 51 units each out of gUnknown_02022684 (which leaves 64
+ *      units of room per army), and sixteen gUnknown_02028360 entries.
+ *   5. sub_08045700 fills in the last four bytes.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - The tile comparison splits the byte offset out as its own statement
+ *     (`off = idx * 2;`) while the live map stays an array reference. Folding
+ *     the multiply into the comparison swaps which register holds the index
+ *     and which holds the constants.
+ *   - `asm volatile ("" : "=r" (k));` emits no instruction; it makes the
+ *     compiler choose the original's register for the copy just below it.
+ *     Leave it in. It also stops tools/permute.py running on this function.
+ */
 void sub_08016F38(u8 a1)
 {
   struct SaveBlk *p = (struct SaveBlk *) gUnknown_02000000;

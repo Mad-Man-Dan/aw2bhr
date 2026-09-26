@@ -8,54 +8,42 @@
  */
 
 #include "hardware.h"
-/* MATCHED, wave 42 (W42-E), by decomp-permuter after three waves of hand
- * attempts. Byte-for-byte identical, relocs match.
- *
- * THE TOOL WAS THE BLOCKER, NOT THE DECOMPILATION -- this is the part worth
- * carrying forward. Wave 40 ended with "NEXT THING TO TRY: decomp-permuter"
- * and that run had never actually been able to start: wave 40's best.c carried
- * its own copies of `struct Unk8019A60Item` and `struct Unk8019A60`, both of
- * which are ALREADY in include/unknown-globals.h (and the header's versions are
- * strictly fuller -- unk04, unk1c, unk41, unk48, unk4a). trymatch tolerates
- * such a duplicate; decomp-permuter expands headers, so every run died
- * instantly with `redefinition of struct Unk8019A60Item`. Deleting the two
- * local definitions was the whole fix, and the function then fell in one
- * 600 s run at score 0.
- *   GENERAL LESSON: a local struct definition duplicating a header one is
- * INVISIBLE to trymatch and FATAL to the permuter. Grep the bare tag before
- * defining it even when the draft already compiles and scores -- and if a
- * permuter run dies at once, read its error before concluding anything about
- * the function.
- *
- * TWO SOURCE LEVERS, both needed, both measured:
- *   - DO NOT COPY THE PARAMETER INTO A LOCAL. `struct Unk8019A60 *p = arg;`
- *     costs an entire register: agbcc keeps both pseudos live and emits
- *     `adds r5,r0,#0; adds r7,r5,#0`, two callee-saved registers holding the
- *     same pointer, which pushes a fifth value into r8 and costs the
- *     `mov r7,r8; push {r7}` pair. The `#define P` cast removes it.
- *   - `new_var` -- binding `*idx` to a local before the sub_08074410 guard --
- *     is what the permuter found, and it is the difference between 248 bytes
- *     and 240. It frees the ROM's allocation: p->r6, &unk42->r5, &unk31->r4,
- *     &unk24->r7, with the idx VALUE reusing r5 once the address dies, k in
- *     scratch r3 and fn in r4. That allocation also earns the +4 the size diff
- *     looked like a second cause: branch 2's tail then uses the same registers
- *     as branch 1's, so jump.c cross-jumps the two
- *     `ldrb r2,[r0]; adds r0,r3,#0; adds r1,r5,#0; bl _call_via_r4` tails into
- *     one block -- that is the `b _08019AFC` at the end of branch 1, which
- *     jumps INTO branch 2. The +8 was always ONE fact with two consequences.
- *
- * CORRECTION TO THE WAVE-40 NOTE: `&P->unk24` does NOT need a source local.
- * agbcc binds it across the two sub_0803B4DC calls on its own. Wave 40 read
- * the ROM's r7 as evidence of a bound local; it is not, and adding one only
- * makes the fifth register explicit. Binding `&unk42` and `&unk31` (`idx` and
- * `tbl`) IS load-bearing -- without them branch 2 recomputes both addresses
- * the way branches 1 and 3 do, which is not what the ROM has.
- *
- * The `do { } while (0)` around the last call is the permuter's and is kept
- * because it was not re-derived; it is byte-neutral as far as was tested. */
+/* The list object is reached through this cast and never copied into a local
+ * pointer -- see the note on the function below. */
 
 #define P ((struct Unk8019A60 *)arg)
 
+/*
+ * sub_08019A60 -- act on a button press in an option list.
+ *
+ * `arg` is the list object (struct Unk8019A60). .unk42 is the row the cursor is
+ * on, .unk31 maps a row to an item index, .unk20 is the array of item records
+ * and .unk24 holds one flags byte per item. Each item record carries three
+ * callbacks, and each is called with (item index, row, that item's flags). The
+ * bits of gpKeySt->pressed are the GBA key order, so bit 0 is A, bit 1 is B and
+ * bit 2 is Select:
+ *
+ *   - Select runs the item's .unk10 callback.
+ *   - A runs .unk14, but only if sub_08074410 lets the item through. A sound
+ *     plays first: 0x68 when bit 1 of the item's flags is set, 0x65 otherwise.
+ *   - B stops the gUnknown_08489568 script, runs .unk18, then plays sound 0x66.
+ *
+ * A callback of NULL means that button does nothing for that item. Only the
+ * first of the three buttons found pressed is acted on.
+ *
+ * Why the C looks odd: these spellings do not change what the code does, but
+ * the original compiler only produces identical output with them.
+ *   - `arg` goes through the `#define P` cast and is never copied into a local
+ *     pointer. A local costs a second register holding the same pointer, and
+ *     that pushes a further value into a high register.
+ *   - In the A branch `idx` and `tbl` hold the cursor's address and the row
+ *     table, and `new_var` holds the cursor value read before the sub_08074410
+ *     test. Without them that branch recomputes both addresses, which the
+ *     original does not.
+ *   - The `do { } while (0)` around the last call in that branch is
+ *     byte-neutral as far as was tested, and is kept because nothing has
+ *     re-derived it.
+ */
 void sub_08019A60(void *arg)
 {
     long new_var;

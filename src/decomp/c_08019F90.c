@@ -7,48 +7,43 @@
  * sub_08019F90 @ 0x08019F90
  */
 
-/* Wave 56, W56-F. The CONSTRUCTOR for the option list that promoted
- * src/decomp/c_08019E68.c only rebuilds: same 0x20-byte entry walk, same
- * unk24[i] / unk31[n++] pair, same `sub_0801A444(unk48, unk4a, maxw + 2,
- * w >> 3)` close -- read that function first, it is the whole shape. What is
- * new here is the head (allocate the slot, park the four parameters, pick the
- * proc callback off a4) and the tail (a SECOND sub_080152EC slot at unk44,
- * sized from a2/a3).
+/*
+ * sub_08019F90 -- build an option list and return it.
  *
- * `p->unk31[13] = 0` is a +0x3e store that falls inside unk31[0x0f]. The array
- * length is not proved and 13 is very likely one past its real end -- see the
- * note on struct Unk8019A60 in include/unknown-globals.h. Both readings are
- * byte-identical; the shared member is deliberately not reshaped.
+ * `a1` is an array of 0x20-byte item records, ending at the one whose .unk00 is
+ * 0xff. `a2` and `a3` are the list's top-left cell, `a4` chooses which teardown
+ * the list gets and `a5` is the row the cursor starts on.
  *
- * `(w >> 2) >> 1` IS NOT COSMETIC AND IS NOT A PERMUTER ARTEFACT TO CLEAN UP.
- * Written as the honest `w >> 3` this function is size-exact with 17 bytes
- * differing, and every one of them is a `[sp, #N]` immediate: the eight
- * preheader computations get the right values in the wrong SPILL SLOTS.
+ *   1. sub_080152EC puts the gUnknown_0848A42C script in a gUnknown_03001470
+ *      slot; that slot, seen as struct Unk8019A60, is the list object. Its
+ *      .unk0c takes sub_08019D78 when a4 is 0 and sub_08019DA8 when it is 1.
+ *   2. Walk the item array. Each item's .unk04 is called and its result kept as
+ *      that item's flags in .unk24. An item with bit 0 clear is visible: its
+ *      index is appended to the row table .unk31, and the pixel width of its
+ *      string (gTextTable[.unk1c], measured by sub_08014D20) goes into the
+ *      running maximum. Each visible row adds 0x10 to a height counter that
+ *      starts at 0x10.
+ *   3. Record the item count, the visible-row count and the starting cursor
+ *      row, then take a second slot for the cursor sprite. It goes in .unk44,
+ *      sized from a2 and a3 in pixels, with the cursor row in its .unk20.
+ *   4. sub_08019C40 draws the rows, and sub_0801A444 opens the window round
+ *      them: the same position, the widest string plus 2, and the height
+ *      counter divided by 8.
  *
- * The mechanism, because it will recur. Everything between `ldrb r0, [r5]` and
- * `cmp r0, #0xff` in the preheader -- the six `p + K` addresses AND the two
- * `+ 1` values -- is inserted there by gcse's PRE, not by the source and not
- * by LICM: they are all used only AFTER the loop, and lazy code motion places
- * them at their earliest anticipatable point, which is the end of the
- * preheader block (PRE inserts before the block's final jump, which is why
- * they land after the guard's load and before its compare). PRE creates one
- * `reaching_reg` pseudo per expression while walking the hash table BUCKET BY
- * BUCKET, so those pseudo numbers -- and therefore the stack slots reload
- * hands out in pseudo order -- are ordered by `hash_expr` value, not by source
- * order. That is why the six addresses come out sorted by OFFSET (0x3e, 0x40,
- * 0x41, 0x42, 0x43, 0x4a) rather than in the order the tail stores them.
- * The table size is `max_cuid / 4`, i.e. a function of the PRE-REGISTER-ALLOC
- * insn count, so `a2 + 1` and `a3 + 1` (hashing on consecutive parameter
- * regnos) either land together below the address group or straddle a wrap and
- * land at both ends of it. `w >> 3` wraps; `(w >> 2) >> 1` is one more insn at
- * gcse time, moves the table size, and unwraps them.
+ * Returns the list object as an int. src/decomp/c_08019E68.c rebuilds an
+ * existing list with the same walk; read it alongside this one.
  *
- * The practical rule: a size-exact residual whose ONLY differences are `[sp,
- * #N]` immediates is a spill-ORDER problem, and if the values were placed by
- * PRE there is no source-level spelling of the intent that fixes it -- the
- * lever is the insn count, so hand it to the permuter rather than rewriting
- * the expression that looks wrong. decomp-permuter found this in 30
- * iterations. */
+ * `p->unk31[13] = 0` writes at +0x3e, which falls inside .unk31. 13 is very
+ * likely one past the row table's real end -- see the note on struct
+ * Unk8019A60 in include/unknown-globals.h. Both readings emit the same bytes,
+ * so the shared member is left alone.
+ *
+ * Why the C looks odd: the height is divided as `(w >> 2) >> 1` and not
+ * `w >> 3`. The extra shift is one more instruction at the point where the
+ * compiler decides which stack slots to spill to; with the single shift, the
+ * eight values it has hoisted out of the loop land in each other's slots and 17
+ * bytes of stack offsets differ. Leave the two shifts.
+ */
 
 int sub_08019F90(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
 {

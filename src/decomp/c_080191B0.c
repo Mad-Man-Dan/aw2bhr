@@ -6,26 +6,25 @@
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080191B0.
  * sub_080191B0 @ 0x080191B0
- *
- * Named per src/aw2e-names.s (proc-table labels auto-generated from
- * AW2E.lua). The old sub_XXXXXXXX symbols are kept as linker aliases
- * below so every other unit keeps resolving them unchanged.
  */
 
-/* The reset for the whole gUnknown_0200C528 list system: clear the ten slots,
- * clear the eight gUnknown_0200C508 script pointers, then re-init the
- * subsystems and re-upload the two 0x200-byte tile blocks.
+/*
+ * MainMenu_080191B1 -- reset the gUnknown_0200C528 script system.
  *
- * Both loops are the `s16 i` shape of the already-matched sub_08019260
- * (src/decomp/c_08019260.c): the counter is kept zero-extended and
- * sign-extended at each use, and `i < 10` / `i < 8` come out as `cmp #9` /
- * `cmp #7` with `ble`. Neither loop is strength-reduced -- the index math is
- * recomputed every iteration -- which is what the s16 round-trip costs and is
- * NOT something an index spelling can change (wave 37, W37-N).
+ * Clears all ten slots and the eight gUnknown_0200C508 script pointers,
+ * re-initialises the subsystems that hang off them, sets gUnknown_03002F08's
+ * palette and CO words to 8 and 0xFFFF, and re-uploads the two 0x200-byte tile
+ * blocks to BG VRAM. It is the first command of ProcScr_MainMenu below.
  *
- * 0x200 is materialised once into r4 and copied into r2 for both
- * sub_08011C68 calls: it is not an imm8, so gcc CSEs the
- * `movs r4,#0x80; lsls r4,#2` pair across the pair of calls. */
+ * The name comes from src/aw2e-names.s, where the proc-table labels are
+ * generated from AW2E.lua. The `.thumb_set` below keeps sub_080191B0 working as
+ * an alias, so other units resolve it unchanged.
+ *
+ * Why the C looks odd: both loops count an `s16`, which the compiler keeps
+ * zero-extended and sign-extends at each use, so the index arithmetic is
+ * recomputed every pass rather than being reduced to a running pointer. An int
+ * counter tidies that up and the output no longer matches.
+ */
 void MainMenu_080191B1(void)
 {
     s16 i;

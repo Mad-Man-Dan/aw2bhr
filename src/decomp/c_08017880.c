@@ -9,26 +9,28 @@
 
 #include "hardware.h"
 
-/* The HBlank raster handler: three scanline triggers, each reprogramming a
- * group of display registers mid-frame. Two of the three compare against a
- * moving offset -- `0x2f - (s16)gUnknown_030030A8` and `0x2c - ...` -- which is
- * the same scroll value the 0xe2 arm writes to BG0VOFS/BG1VOFS.
+/*
+ * sub_08017880 -- the HBlank handler: reprogram display registers part-way
+ * down the frame.
  *
- * UNPARKED, wave 35 (W35-I). The 92.5% park note blamed 18 bytes of register
- * fields on the BLDALPHA statement needing a fourth register and called that
- * the cause; that reading was right and the cause is VOLATILE. Reading both
- * gUnknown_030030C0 and gUnknown_03001FEC through a `vu16` gives exactly the
- * ROM's four-register block -- `ldr r3,=REG_BLDALPHA; ldr r2,=&gUnknown_030030C0;
- * ldr r0,=&gUnknown_03001FEC; ldrh r1,[r0]; lsls #8; ldrh r0,[r2]` -- with the
- * pool words in the ROM's order, and that in turn pushes `v` into r4 and
- * &gUnknown_030030A8 into r5, which is the whole rest of the residual. A
- * non-volatile read lets combine fold each address into its own load and reuse
- * one register for both, which is the 3-register block the park recorded.
- * gUnknown_030030A8 was already known volatile; these two are its neighbours in
- * the same HBlank shadow-register set, so all three being volatile is the
- * consistent reading. The operand ORDER is NOT the lever and was the obvious
- * thing to try: swapping to `(gUnknown_03001FEC << 8) + gUnknown_030030C0`
- * reverses the two pool words away from the ROM's order. */
+ * Reads the current scanline out of REG_VCOUNT and acts on three of them:
+ *   - 0x2f minus gUnknown_030030A8: load the BG0 control word, both horizontal
+ *     scroll registers, and the blend control, blend weights and fade level,
+ *     each from its RAM shadow.
+ *   - 0x2c minus gUnknown_030030A8: load the display control word.
+ *   - 0xe2, a fixed line: load a second display control word and BG0 control
+ *     word, point both vertical scroll registers at gUnknown_030030A8, turn
+ *     blending off and reset both horizontal scrolls to 0.
+ * gUnknown_030030A8 is a vertical scroll amount, so the first two triggers
+ * follow the scrolled region down the screen.
+ *
+ * Why the C looks odd: the two halves of REG_BLDALPHA are read through `vu16`
+ * casts. Without them the compiler folds each address into its own load and
+ * shares one register between the two reads. Swapping the two operands does not
+ * help either; it reverses the order the two addresses are stored in.
+ * gUnknown_030030A8 is already declared volatile, and these two are its
+ * neighbours in the same set of HBlank shadow registers.
+ */
 void sub_08017880(void)
 {
     int v;

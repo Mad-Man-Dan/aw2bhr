@@ -7,23 +7,17 @@
  * sub_0801A168 @ 0x0801A168
  */
 
-/* `return <call>;` and nothing else -- the `pop {r1}; bx r1` epilogue is the
- * returns-a-value one, and the value can only be sub_0801537C's, since nothing
- * touches r0 between the `bl` and the branch.
+/*
+ * sub_0801A168 -- stop the option-list script.
  *
- * The interesting part is the ABSENCE of a `lsls #0x18; asrs #0x18` after that
- * `bl`. agbcc RE-NARROWS the result of a narrow-returning callee at the call
- * site -- it never trusts a callee to have narrowed its own return -- so while
- * include/unknown-functions.h declared `s8 sub_0801537C(const void *)` this
- * function came out four bytes too long, and it did so with an `int` return,
- * with an `s8` return, and with an `s8` local in between (all three probed).
- * Both this function and sub_0801537C were retyped to `int` in wave 12; the
- * argument for that, and the one alternative the ROM cannot rule out (the
- * `return` keyword simply being absent, which is byte-identical here and draws
- * no warning even under -Werror), is written up on sub_0801537C's declaration.
+ * sub_0801537C ends whichever gUnknown_03001470 slot is running
+ * gUnknown_0848A42C -- the script sub_08019F90 starts -- and returns that slot
+ * index, or -1. This function passes the value straight on.
  *
- * gUnknown_0848A42C is a gUnknown_03001470 slot script: sub_08019F90 starts it
- * with sub_080152EC and this is the matching stopper.
+ * Both this function and sub_0801537C return int and not s8. The compiler
+ * re-narrows a narrow-returning callee's result at the call site, which adds an
+ * instruction the original does not have. The argument for the int is written up
+ * on sub_0801537C's declaration in include/unknown-functions.h.
  */
 int sub_0801A168(void)
 {

@@ -7,18 +7,18 @@
  * sub_080161B4 @ 0x080161B4, sub_080162A4 @ 0x080162A4, sub_08016370 @ 0x08016370, sub_0801642C @ 0x0801642C, sub_080164E0 @ 0x080164E0
  */
 
-/* The gUnknown_03001470 slot's 0x3c..0x5f tail seen as the FLOAT path-mover
- * state that sub_080161B4..sub_0801642C and sub_080162A4 share. struct
- * Unk03001470 in include/unknown-globals.h describes the same bytes as a
- * function pointer plus halfword flags, which is a different subsystem's view
- * of the same scratch area -- the original almost certainly had a union here.
+
+/* How the script commands below see a gUnknown_03001470 slot: from 0x3c on the
+ * bytes are floats -- position, velocity, acceleration -- and a frame count.
+ * struct Unk03001470 in include/unknown-globals.h describes the same bytes as
+ * a function pointer and halfword flags, which is another subsystem's view of
+ * the same scratch area; the original was most likely a union.
  *
- * The WRAPPER STRUCT is load-bearing, and for the reason wave 18 recorded on
- * struct Unk08136090: the ROM HOISTS the member offset onto the base
- * (`adds r4,r7,#0; adds r4,#0x3c; adds r4,r6,r4`), which `p[i].m` on a plain
- * pointer cannot produce -- that folds the offset into the load displacement
- * (`ldr r0,[r5,#0x3c]`). `p->arr[i].m` reproduces it instruction for
- * instruction. Probed both ways. */
+ * Unk1470Wrap only exists so the slots can be written `gPath[a].member`. They
+ * are reached that way, and not as `p[i].member` on a plain pointer, because
+ * the original adds the member offset to the base address and then indexes; a
+ * plain pointer folds the offset into the load instruction instead and the
+ * output no longer matches. */
 struct Unk1470Path
 {
     /* 0x00 */ u8 filler_00[0x04];
@@ -41,16 +41,23 @@ struct Unk1470Wrap /* not a real object: see above */
 };
 #define gPath (((struct Unk1470Wrap *)gUnknown_03001470)->unk00)
 
-/* One command of the gUnknown_03001470[a].unk04 script stream: walk a ROM list
- * of s16 x/y PAIRS, one pair per frame, offsetting the slot's start position by
- * it. The slot's unk38 doubles as the cursor into that list; a leading -1 is the
- * terminator, and retiring the command steps the script cursor 8 bytes on and
- * resets the tick.
+
+/*
+ * sub_080161B4 -- script command: step along a list of per-frame offsets.
  *
- * `r` is bound and THEN advanced, two statements: the ROM dereferences the
- * command word into its own register before it computes unk38 * 2 (`ldr r6,[r2]`
- * ahead of the `ldrsh`/`lsls #2`), where the single-expression spelling emits
- * the deref last and adds into a fresh register. */
+ * The command word points at a list of s16 x/y pairs in ROM, one pair per
+ * frame. The slot's .unk38 is both the cursor into that list and the frame
+ * count: on the first frame the slot's current position is read out with
+ * sub_080155E8 and kept as the float origin, and every frame after that
+ * sub_080155C0 moves the sprite to the origin plus this frame's pair. An x of
+ * -1 ends the list -- the tick is cleared and the script cursor steps 8 bytes
+ * on to the next command. Returns FALSE, as all the command handlers in this
+ * file do; what the caller reads into that is not visible here.
+ *
+ * Why the C looks odd: `r` is set from the command word and advanced in a
+ * second statement. As one expression the compiler reads the command word
+ * last, and the output no longer matches.
+ */
 bool8 sub_080161B4(u8 a)
 {
     s16 x, y;
@@ -73,18 +80,22 @@ bool8 sub_080161B4(u8 a)
     return FALSE;
 }
 
-/* One frame of the smooth move sub_08016370/sub_0801642C set up: integrate
- * velocity into position and acceleration into velocity, push the truncated
- * position out through sub_080155C0, and count the frame off. When the counter
- * was already 0 the command is retired -- the tick is cleared and the script
- * cursor steps one 8-byte command on.
+
+/*
+ * sub_080162A4 -- one frame of the smooth move that the three commands below
+ * set up.
  *
- * `n = p->unk5c--` rather than `n = p->unk5c; p->unk5c = n - 1;`: the ROM's
- * `adds r2,r0,#0; subs r0,#1` is the post-decrement's copy-then-clobber, where
- * the two-statement spelling emits the three-address `subs r1,r2,#1` and is two
- * bytes short. And `if (p->unk5c-- == 0)` with no local at all is different
- * again -- with the old value dead, agbcc compares the DECREMENTED value
- * against -1. */
+ * Adds velocity to position and acceleration to velocity, pushes the position
+ * out through sub_080155C0, and counts the frame off .unk5c. When that counter
+ * was already 0 the command is done: the tick is cleared and the script cursor
+ * steps 8 bytes on to the next command.
+ *
+ * Why the C looks odd: the counter is read and decremented in one go, as
+ * `n = p->unk5c--`. Split into two statements the decrement becomes a
+ * three-operand subtract instead of the original's copy-then-decrement; with
+ * no local at all, `p->unk5c-- == 0` compares the decremented value against -1
+ * instead.
+ */
 void sub_080162A4(u8 a)
 {
     int n;
@@ -101,13 +112,16 @@ void sub_080162A4(u8 a)
     }
 }
 
-/* One command of the gUnknown_03001470[a].unk04 script stream: start a smooth
- * move whose five parameters are five floats the command word points at --
- * velocity x/y, acceleration x/y and the frame count. The starting position is
- * the slot's current one, fetched through sub_080155E8's two s16 out-params
- * (both packed into the single `sub sp,#4` word). Only done on the first frame,
- * i.e. while the slot's unk38 tick is still 0; every frame then steps
- * sub_080162A4. */
+
+/*
+ * sub_08016370 -- script command: start a move under constant acceleration.
+ *
+ * The command word points at five floats: velocity x and y, acceleration x and
+ * y, and a frame count. On the first frame only (the slot's tick is still 0)
+ * the current position is read out with sub_080155E8 as the float origin and
+ * the five values are copied into the slot. Every frame then runs one step of
+ * sub_080162A4, which is what retires the command. Returns FALSE.
+ */
 bool8 sub_08016370(u8 a)
 {
     s16 x, y;
@@ -129,13 +143,16 @@ bool8 sub_08016370(u8 a)
     return FALSE;
 }
 
-/* One command of the gUnknown_03001470[a].unk04 script stream: a constant-speed
- * move, i.e. sub_08016370's setup with the two accelerations forced to zero.
- * Unlike sub_08016370 the operands are INLINE in the 8-byte command rather than
- * behind its first word -- `ldr r5,[&unk04]` then `ldr [r5]` / `ldrh [r5,#4]` is
- * one deref, not two -- the same shape as src/decomp/c_080167CC.c. The velocity
- * is a whole signed word converted to float; the frame count is the unsigned
- * halfword at +4. */
+
+/*
+ * sub_0801642C -- script command: move horizontally at a constant speed.
+ *
+ * sub_08016370's setup with both accelerations forced to 0, and with the
+ * operands stored inline in the 8-byte command instead of behind its first
+ * word: the signed word at +0 is the x velocity and the unsigned halfword at
+ * +4 is the frame count. sub_080164E0 below is the vertical version. Returns
+ * FALSE.
+ */
 bool8 sub_0801642C(u8 a)
 {
     s16 x, y;
@@ -155,9 +172,12 @@ bool8 sub_0801642C(u8 a)
     return FALSE;
 }
 
-/* sub_0801642C's vertical twin: the same constant-speed move with the inline
- * word driving unk50 (y) instead of unk4c (x), and the other three float
- * members zeroed. One `.4byte 0` pool word serves all three zeros. */
+
+/*
+ * sub_080164E0 -- script command: move vertically at a constant speed.
+ * sub_0801642C with the inline word driving y instead of x, and the other
+ * three float members zeroed. Returns FALSE.
+ */
 bool8 sub_080164E0(u8 a)
 {
     s16 x, y;

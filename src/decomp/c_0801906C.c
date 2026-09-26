@@ -7,29 +7,24 @@
  * sub_0801906C @ 0x0801906C
  */
 
-/* A gUnknown_0200C528 list-script handler in the c_0801903C / c_080190EC
- * family: `s16` slot index, `return TRUE`. The parameter's zero-extended copy
- * lives in r8 across the `bl DivRem` -- PROMOTE_MODE at entry, then a signed
- * `lsls #0x10; asrs #0x10` at each of the two uses, exactly as c_0801903C.c
- * documents. Both `(s16)` casts on the u16 members are the c_080190EC.c
- * reading: they fold the truncate-then-sign-extend into the two-instruction
- * register-offset `movs r1,#8; ldrsh` and are NOT evidence of signed members.
+/*
+ * sub_0801906C -- script command: skip a block of nodes unless a CO matches.
  *
- * The loop counts DOWN in the ROM and the source counts down too -- the bottom
- * test is `bgt`, not the `bne` check_dbra_loop leaves behind when it reverses
- * an ascending counter (wave 37, W37-N).
+ * The current node holds an army index in .unk08, a CO number in .unk0a and a
+ * node count in .unk0c. DivRem reduces the CO number modulo 24; if the army is
+ * not playing that CO, the cursor jumps .unk0c nodes forward and skips that
+ * block of the script. Either way the cursor then steps one more node on, past
+ * this command itself, and TRUE comes back so the dispatcher runs the next
+ * command in the same frame.
  *
- * There is NO pointer local for the cursor, and that is the whole function.
- * The ROM's `adds r0, r7, #0` preheader copy plus `str r3, [r0]` on the loop
- * EXIT edge is gcc's `load_mems`: the slot `gUnknown_0200C528[a].unk04` is a
- * loop-invariant MEM, so loop.c hoists it into a register (reusing the r3 the
- * `->unk0c` read already loaded), runs the loop on the register, copies the
- * address into the preheader and stores back once on the way out. That is why
- * the store is SKIPPED on the zero-trip path -- the store-back sits on the exit
- * edge, which the `ble` guard bypasses -- and why a fifth callee-saved register
- * (r8) is needed. Writing the obvious `p = ...unk04; while (n>0) p++;
- * ...unk04 = p;` instead is 8 bytes longer and recomputes the store address:
- * the local kills the address pseudo, so load_mems never fires. */
+ * Why the C looks odd: there is no pointer local for the cursor -- the skip
+ * loop steps `gUnknown_0200C528[a].unk04` itself. That is what lets the
+ * compiler keep the cursor in a register for the loop and store it back once on
+ * the way out, and it is also why nothing is stored at all when the count is 0.
+ * A pointer local written back afterwards is 8 bytes longer. The `(s16)` casts
+ * on the two u16 members fold the narrowing into the load and are not evidence
+ * that the members are signed.
+ */
 bool8 sub_0801906C(s16 a)
 {
     int army;

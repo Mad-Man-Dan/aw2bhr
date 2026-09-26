@@ -7,13 +7,18 @@
  * sub_08018BAC @ 0x08018BAC
  */
 
-/* RETYPED in wave 28 (W28-A) from `bool8` to `int`, and re-verified: the body
- * is `movs r0, #1` at every return width, so it never was evidence. Its three
- * callers are -- sub_08018BCC, sub_08018F34 and sub_08018F74 each end
- * `bl sub_08018BAC; lsls r0, #0x10; asrs r0, #0x10`, which is an INT result
- * converted to those functions' own `s16` return type. A `bool8` result would
- * have been re-narrowed `lsls #0x18; lsrs #0x18` instead, and an `s16` one
- * needs no conversion at all. See the note in include/unknown-functions.h. */
+/*
+ * sub_08018BAC -- script command: follow the current node's link.
+ *
+ * The slot's cursor is set to the node's .unk04, which is how a script jumps
+ * instead of falling through to the next node. Returns TRUE, which makes the
+ * dispatcher in src/decomp/c_08019404.c run the next command in the same frame.
+ *
+ * The int return type comes from the callers, not from this body: sub_08018BCC,
+ * sub_08018F34 and sub_08018F74 each sign-extend the result as a halfword into
+ * their own s16 return, which neither a bool8 nor an s16 callee would produce.
+ * See the note in include/unknown-functions.h.
+ */
 int sub_08018BAC(s16 a)
 {
     gUnknown_0200C528[a].unk04 = gUnknown_0200C528[a].unk04->unk04;
