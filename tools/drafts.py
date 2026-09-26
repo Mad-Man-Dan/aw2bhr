@@ -41,6 +41,14 @@ CHANGED is the dangerous case: wave 90's KeySt reshape left old field names
 compiling at new offsets. Relocations are compared by resolved address, so a
 pure symbol rename (gUnknown_03003FC0 -> gPlaySt) is SAME.
 
+`audit [fn...]` recompiles each function's best.c (default: every parked
+function) and checks best.json against it: the hash, the size fields and the
+score. `--write` rewrites the stale records from best.c's score; it is the
+one command here that writes in work/, and only best.json.
+
+    python tools/drafts.py audit              # report
+    python tools/drafts.py audit --write      # and fix the stale records
+
 `--headers-at REV` compiles against include/ as it was at git revision REV
 (extracted once into build/headers/<sha>/, placed ahead of include/ on the
 quote-include path). With it a snapshot can be taken AFTER the fact, from the
@@ -52,6 +60,7 @@ Exit status: 0 on success, 1 if any draft failed to compile or changed
 """
 
 import argparse
+import collections
 import glob
 import hashlib
 import io
@@ -542,6 +551,67 @@ def cmd_bases(args):
     return 0
 
 
+def cmd_audit(args):
+    """Recompile each function's best.c and check best.json against it."""
+    names = names_from(args)
+    if not names:
+        recs = json.load(open(os.path.join(awlib.DATA_DIR, "functions.json"),
+                              encoding="utf-8"))
+        names = [r["name"] for r in recs if r["status"] == "parked"]
+    counts = collections.Counter()
+    for fn in names:
+        wd = os.path.join(WORK, fn)
+        best_c, meta_p = os.path.join(wd, "best.c"), os.path.join(wd, "best.json")
+        if not os.path.exists(best_c):
+            counts["no best.c"] += 1
+            continue
+        try:
+            meta = json.load(open(meta_p, encoding="utf-8"))
+        except (OSError, ValueError):
+            meta = {}
+        data = _read(best_c)
+        b = build(fn, rel(best_c), "audit-best")
+        r = score(fn, b)
+        if r["state"] not in ("MATCH", "MISMATCH"):
+            counts["best.c does not compile"] += 1
+            print("%-16s BEST.C FAILS  %s" % (fn, r.get("error", "")))
+            continue
+        now = 100.0 if r["state"] == "MATCH" else r["pct"]
+        had = trymatch.recorded_percent(meta) if meta else None
+        problems = []
+        if not meta:
+            problems.append("no best.json")
+        else:
+            if meta.get("source_sha1") != sha1(data):
+                problems.append("hash missing" if not meta.get("source_sha1")
+                                else "hash is for another source")
+            if "size_delta" not in meta:
+                problems.append("no size")
+            if had is not None and abs(had - now) > 0.05:
+                problems.append("recorded %.2f%%" % had)
+        verdict = "OK" if not problems else "FIXED" if args.write else "STALE"
+        counts[verdict] += 1
+        print("%-16s %-5s %s%s" % (fn, verdict, fmt(r),
+                                   ("   (" + "; ".join(problems) + ")") if problems else ""))
+        if problems and args.write:
+            size = target(fn)[0]["size"]
+            payload = {"percent": round(now, 2),
+                       "scored_over": trymatch.SCORED_OVER,
+                       "source_sha1": sha1(data),
+                       "candidate_bytes": len(b.text), "target_bytes": size,
+                       "size_delta": len(b.text) - size,
+                       "exact_size": len(b.text) == size,
+                       "audited": True}
+            if meta.get("origin"):
+                payload["origin"] = meta["origin"]
+            atomic_write(meta_p, (json.dumps(payload, sort_keys=True) + "\n")
+                         .encode("utf-8"))
+    print("\n" + ", ".join("%s %d" % kv for kv in sorted(counts.items())))
+    if counts["STALE"]:
+        print("re-run with --write to rewrite the STALE records from best.c")
+    return 0
+
+
 def _snap_dir(tag):
     if not re.match(r'^[A-Za-z0-9_.-]+$', tag):
         raise SystemExit("error: snapshot tag must be [A-Za-z0-9_.-]+")
@@ -648,6 +718,16 @@ def main():
     p.add_argument("--permuter-outputs", type=int, default=3,
                    help="newest-best permuter outputs to include (default 3)")
     p.set_defaults(func=cmd_bases)
+
+    p = sub.add_parser("audit", help="recompile best.c and check best.json "
+                                     "against it (default: every parked function)")
+    p.add_argument("names", nargs="*")
+    p.add_argument("--list", help="file of function names")
+    p.add_argument("--unmatched", action="store_true",
+                   help="every unmatched function that has a draft")
+    p.add_argument("--write", action="store_true",
+                   help="rewrite each stale best.json from best.c's score")
+    p.set_defaults(func=cmd_audit)
 
     for name, func, hlp in (("snapshot", cmd_snapshot, "store drafts' bytes under a tag"),
                             ("compare", cmd_compare, "recompile and diff against a tag")):

@@ -2,7 +2,7 @@
 
 0x08070F44, 104 bytes, THUMB, parked.
 
-Best score so far: 73.1% (best.c).
+Best score so far: 58.6% (best.c).
 
 ## What it does
 

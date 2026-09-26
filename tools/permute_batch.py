@@ -154,6 +154,7 @@ def main():
                                 "reason": "source missing", "pass": pass_no})
                 continue
             before = digest(src)
+            before_text = src.read_bytes()
             seconds = min(args.seconds_per_target, max(30, int(remaining) - 35))
             log = run_dir / (f"pass{pass_no:02d}-{name}.log")
             record(events, {"event": "start", "name": name, "pass": pass_no,
@@ -204,7 +205,17 @@ def main():
                     print("  improved; the next pass starts from it", flush=True)
                     searchable += 1
                     continue
-                print("source changed without a verified match; stopping to protect it",
+                # Put the draft back as it was before this run. The changed
+                # text is kept beside the log for inspection, never left in
+                # the draft where a later trymatch would file it as best.c.
+                kept = run_dir / f"pass{pass_no:02d}-{name}.unverified.c"
+                if src.is_file():
+                    kept.write_bytes(src.read_bytes())
+                src.write_bytes(before_text)
+                record(events, {"event": "restored", "name": name, "pass": pass_no,
+                                "unverified_copy": str(kept)})
+                print(f"source changed without a verified match; restored the "
+                      f"draft and saved the changed text to {kept}; stopping",
                       flush=True)
                 return 3
             if rc != 2:

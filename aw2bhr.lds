@@ -102,6 +102,7 @@ SECTIONS
 		. = 0x00C500; gUnknown_0200C500 = .;
 		. = 0x00C508; gUnknown_0200C508 = .;
 		. = 0x00C528; gUnknown_0200C528 = .;
+		. = 0x00C618; gUnknown_0200C618 = .;
 		. = 0x00C624; gUnknown_0200C624 = .;
 		. = 0x00CC24; gUnknown_0200CC24 = .;
 		. = 0x00CC28; gUnknown_0200CC28 = .;

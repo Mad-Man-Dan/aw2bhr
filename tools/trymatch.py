@@ -732,6 +732,12 @@ def recorded_percent(meta):
     return pct
 
 
+# Who wrote the source being scored; saved in best.json as "origin".
+# permute.py sets "permuter" while it scores candidates, so a later run knows
+# not to start from a mutation (which can be wrong C) as if a person wrote it.
+RECORD_ORIGIN = "draft"
+
+
 def record_best(workdir, name, pct, candidate_bytes=None, target_bytes=None,
                 compiled=None):
     """Keep the highest-scoring candidate seen, beside the current one.
@@ -778,6 +784,7 @@ def record_best(workdir, name, pct, candidate_bytes=None, target_bytes=None,
     # byte in a draft instead of hashing it.
     payload = {"percent": round(pct, 2),
                "scored_over": SCORED_OVER,
+               "origin": RECORD_ORIGIN,
                "source_sha1": hashlib.sha1(
                    text.encode("utf-8", errors="surrogateescape")).hexdigest()}
     if candidate_bytes is not None and target_bytes is not None:

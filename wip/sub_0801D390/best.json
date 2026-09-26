@@ -1,1 +1,1 @@
-{"percent": 62.97}
+{"audited": true, "candidate_bytes": 856, "exact_size": true, "percent": 62.97, "scored_over": "max(candidate, target)", "size_delta": 0, "source_sha1": "cb1fe621f84043b6625b48b2f923b589030d6f91", "target_bytes": 856}

@@ -141,7 +141,20 @@ def pick_source(workdir, name, prefer_best):
     cur = os.path.join(workdir, name + ".c")
     best = os.path.join(workdir, "best.c")
     if prefer_best and os.path.exists(best):
-        return best, "best.c"
+        # A best.c the permuter produced can be wrong C that happens to score
+        # well (a do/while(0) wrapper, `by = (ax *= 2)`). Starting from it
+        # builds on the mistake, so the draft is used instead unless asked.
+        try:
+            with open(os.path.join(workdir, "best.json"), encoding="utf-8") as fh:
+                origin = json.load(fh).get("origin")
+        except (OSError, ValueError):
+            origin = None
+        if origin != "permuter" or prefer_best == "any" or not os.path.exists(cur):
+            return best, "best.c"
+        print("  NOTE     best.c came from an earlier permuter run and may be "
+              "wrong C;")
+        print("           starting from %s.c instead (--from-permuter-best to "
+              "override)" % name)
     if os.path.exists(cur):
         return cur, name + ".c"
     return None, None
@@ -228,8 +241,6 @@ def setup(rec, unit, prefer_best):
 
     awlib.write_text(os.path.join(pdir, "settings.toml"),
                      'func_name = "%s"\ncompiler_type = "gcc"\n' % name)
-
-    check_scorer_patch()
 
     rel_pdir = os.path.relpath(pdir, awlib.REPO).replace(os.sep, "/")
     # The permuter checks the executable bit itself and refuses to start
@@ -334,28 +345,30 @@ def harvest(pdir):
 
 
 def check_scorer_patch():
-    """Warn if the vendored scorer still carries upstream's penalty weights.
+    """False if the vendored scorer still carries upstream's penalty weights.
 
     vendor/ is gitignored, so a re-clone silently restores PENALTY_REGALLOC = 5
     and the search goes back to treating a wrong register as a twelfth of a
     reordering -- which for a byte verdict is the wrong objective and produced
     two documented cases where the best-SCORING candidate was a byte-level
-    regression. A run under the wrong objective still looks like it worked, so
-    this has to be checked rather than assumed.
+    regression. A run under the wrong objective still looks like it worked,
+    and a warning scrolls past at the start of a long run, so the caller
+    refuses to start unless --force is given.
     """
     p = os.path.join(PERMUTER_DIR, "src", "scorer.py")
     try:
         with open(p, encoding="utf-8") as fh:
             text = fh.read()
     except OSError:
-        return
+        return True          # no permuter at all; the caller reports that
     if "AW2_PENALTY_REGALLOC" in text:
-        return
+        return True
     print("\n  !! vendor/decomp-permuter/src/scorer.py is UNPATCHED --")
     print("     PENALTY_REGALLOC is upstream's 5 against PENALTY_REORDERING 60,")
     print("     so this search will trade register correctness for ordering and")
     print("     its best-scoring candidate may be a byte-level regression.")
     print("     See vendor/README.md; re-apply the patch before trusting a result.\n")
+    return False
 
 
 def helper_run_start(cand_lines, b):
@@ -435,7 +448,29 @@ def splice(orig_lines, cand_lines, name):
     b = definition_line(cand_lines, name)
     if a is None or b is None:
         return None
-    return orig_lines[:a] + cand_lines[helper_run_start(cand_lines, b):]
+    a_end, b_end = definition_end(orig_lines, a), definition_end(cand_lines, b)
+    if a_end is None or b_end is None:
+        return None
+    # Whatever followed the function in the draft (a `.thumb_set` alias, a
+    # second function) comes from the draft. The permuter's copy of the file
+    # can stop at the function's closing brace, and taking the candidate's
+    # tail used to drop that code.
+    return (orig_lines[:a] + cand_lines[helper_run_start(cand_lines, b):b_end + 1]
+            + orig_lines[a_end + 1:])
+
+
+def definition_end(lines, start):
+    """Index of the line holding the closing brace of the definition that
+    starts at `start`, or None. Braces inside comments are ignored."""
+    from promote import strip_comments
+    depth, opened, in_comment = 0, False, False
+    for i in range(start, len(lines)):
+        code, in_comment = strip_comments(lines[i], in_comment)
+        depth += code.count("{") - code.count("}")
+        opened = opened or "{" in code
+        if opened and depth <= 0:
+            return i
+    return None
 
 
 def _check_quietly(name, log):
@@ -521,6 +556,7 @@ def verify(rec, pdir, keep_all):
     raw_pct, raw_lines = base_pct, None
     best_files = [os.path.join(workdir, "best.c"), os.path.join(workdir, "best.json")]
     matched = False
+    trymatch.RECORD_ORIGIN = "permuter"     # best.c written below is a mutation
     try:
         for score, src in cands:
             rel = os.path.relpath(src, awlib.REPO).replace(os.sep, "/")
@@ -571,6 +607,7 @@ def verify(rec, pdir, keep_all):
                 if label == "raw" and pct > raw_pct:
                     raw_pct, raw_lines = pct, lines
     finally:
+        trymatch.RECORD_ORIGIN = "draft"
         if not matched:
             if best_lines is not None:
                 awlib.write_text(csrc, "".join(best_lines))
@@ -662,6 +699,11 @@ def main():
                     help="build the permuter directory and stop")
     ap.add_argument("--current", action="store_true",
                     help="start from <name>.c rather than best.c")
+    ap.add_argument("--from-permuter-best", action="store_true",
+                    help="start from best.c even when an earlier permuter run "
+                         "wrote it (by default the draft is used then)")
+    ap.add_argument("--force", action="store_true",
+                    help="run even if the vendored scorer is unpatched")
     ap.add_argument("--keep", action="store_true",
                     help="keep output directories even on success")
     ap.add_argument("--live", action="store_true",
@@ -686,7 +728,11 @@ def _main(args):
     if rec is None or unit is None:
         return 2, "SETUP-FAILED", "unknown function"
 
-    pdir = setup(rec, unit, prefer_best=not args.current)
+    if not check_scorer_patch() and not args.force:
+        return 2, "SETUP-FAILED", "unpatched scorer (see above; --force to run anyway)"
+
+    prefer = False if args.current else ("any" if args.from_permuter_best else True)
+    pdir = setup(rec, unit, prefer_best=prefer)
     if pdir is None:
         return 2, "SETUP-FAILED", "see above"
 

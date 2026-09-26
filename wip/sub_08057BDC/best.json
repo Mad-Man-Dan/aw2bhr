@@ -1,1 +1,1 @@
-{"candidate_bytes": 360, "exact_size": true, "percent": 61.94, "scored_over": "max(candidate, target)", "size_delta": 0, "target_bytes": 360}
+{"audited": true, "candidate_bytes": 360, "exact_size": true, "percent": 61.94, "scored_over": "max(candidate, target)", "size_delta": 0, "source_sha1": "5a332c4c07acc0e47dc1937c83f77bb7a1d16318", "target_bytes": 360}

@@ -89,6 +89,14 @@ correct under a different compiler or optimization level.
   residuals or `best.c`. A profile match is provisional: report the mechanism
   to the coordinator, record an evidence-backed override, regenerate
   `build/compiler-overrides.mk`, and re-run the `configured` verdict.
+- To test ONE flag, use `trymatch.py <fn> --cflags-add=-fno-gcse` (or
+  `--cflags-remove=`; MCP `cflags_add` / `cflags_remove`). Before proposing
+  an override, run `python tools/flag_probe.py <fn> --cflags-add=...`: it
+  compiles the neighbours with the same change and names the nearest
+  promoted functions it breaks, which bounds the file the flag could apply to.
+- A RAM address the code reads with no linker symbol cannot be named in C.
+  `python tools/add_ram_symbol.py 0x0200C618` adds the symbol to
+  `aw2bhr.lds`; then declare it in `include/unknown-globals.h`.
 - Start from the existing draft. Run it once, read the current diff, and
   classify the residual before editing. Do not discard prior measurements.
 - Budget about ten tool-call turns per function. At the budget, record the
@@ -101,11 +109,14 @@ correct under a different compiler or optimization level.
   the code does, in plain words, for a programmer new to the project. Match
   history (wave numbers, agent names, scores, register diffs, failed
   spellings) goes in the commit message, never in `src/` or `include/`. After
-  editing comments in a promoted file, run `python tools/sync_work.py <fn>`,
-  or `promote.py` will restore the old text from the draft, and prove the edit
-  touched comments only with `python tools/comment_check.py`.
+  editing comments in a promoted file, run `python tools/sync_work.py <fn>` so
+  the draft in work/ carries the same text, and prove the edit touched
+  comments only with `python tools/comment_check.py`.
 - Preserve the starting draft before any permuter run and re-run `trymatch.py`
-  on any reported result. The MCP wrapper's missing-`exit_code` timeout crash
+  on any reported result. `best.json` records whether the permuter wrote
+  `best.c` (`"origin"`); `permute.py` will not start from such a file unless
+  given `--from-permuter-best`. `python tools/drafts.py audit` re-checks
+  every parked `best.json` against its `best.c`. The MCP wrapper's missing-`exit_code` timeout crash
   was fixed after Wave 61; a server-side timeout is now an ordinary exit 124
   failure. The Codex MCP client timeout in `../.codex/config.toml` must also be
   at least 600 seconds for a normal 300-second run.
