@@ -51,4 +51,8 @@ W91-B, pre-registered struct Map member test: NEGATIVE. The ->height/->width bou
 
 W92-C: unchanged 98.95%, 2 code bytes at +0xd5/+0xd6 (+0x34/+0x164 are .rodata alias addends, not residual). 900 s permuter from --current, 14,676 iterations: nothing. MECHANISM SHARPENED TO ONE DIRECTION: W90-B offered two ('one more reload between the key test and the zero store, OR one fewer before the ip copy'). For the literal-zero form only the second is consistent -- with the literal the zero is a local_alloc pseudo in r0 (ROM-correct) and the ip copy is the NEXT reload after the key test's, landing one register high. So the ROM's round-robin cursor is one step BEHIND this draft's at the ip copy, and the lever is one FEWER reload BEFORE the key test, not an extra one after it. Everything before +0xd5 is byte-exact, so the reload the ROM does not spend must be on an insn this draft also emits -- most plausibly one of the two high-to-low `mov rLO, r8` reads.
 
+### Wave 93
+
+W93-F: one 900 s run from the draft under the old permuter scoring returned nothing; not yet run under the length-penalty scorer.
+
 </details>

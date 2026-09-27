@@ -71,4 +71,8 @@ WAVE 81 (D): interleaving t=a6 BETWEEN the two DImode masks refuted by probe. Th
 
 WAVE 86 (W86-E, vocabulary-twin axis): twin sub_0801E8D8 (src/decomp/c_0801E8D8.c, Jaccard 1.00) is a TRUE SHAPE TWIN; its only spelling difference (constant-first operand order `v = ~0x2000 & a5; v = ~0x1000 & v;`) is byte-neutral -- still `and r4,r4,r1`, still FIVE pool words against the ROM's FOUR. compile_probe only, no try_match, draft unchanged. MECHANISM NAMED AND CLOSED: agbcc's own .s comment says the -0x1 high word is `created by thumb_load_double_from_address` -- the DImode constant loader pulls BOTH words of the CONST_DOUBLE out of the pool into a register pair BEFORE any AND rtx exists; the high-half AND folds away but its operand register is already live, and cse merely re-spends it. So NO source-level respelling of a DImode AND against a negative int constant can avoid the high-word pool constant; the five spellings measured to date (one-expression fold and parameter self-assignment in wave 58, interleaving and statement split in W81-D, operand order in W86-E) all behave identically as predicted. The only escape is not having a DImode AND, and every spelling that removes it loses the single element-address expression (+20 bytes, wave 58). Treat as a closed kind-3 with a named mechanism, like kinds 4 and 5: stop respelling the mask.
 
+### Wave 93
+
+W93-E: not reached; still never permuted.
+
 </details>

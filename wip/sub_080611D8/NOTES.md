@@ -56,3 +56,9 @@ Residual is now the last ~20 bytes, from +0xde. Files: `perm-w93-1.log` (the
 run that found it), `sub_080611D8.w93-start.c` (the 75.00% wave-start draft),
 `sub_080611D8.w93-r1.c` (this 93.42% form), `w93-p1-clean.c` (the measured
 negative above).
+
+## Second run
+
+A chained 900 s run from the 93.42% form (`perm-w93-2.log`, run under the new
+length-penalty scorer) found nothing better. The draft is left at the 93.42%
+form. The last ~20 bytes from +0xde are a hand problem, not a search problem.

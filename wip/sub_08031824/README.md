@@ -72,4 +72,8 @@ W90-A: unchanged 97.3%/8 bytes. The fixed-objective permuter found nothing in 2 
 
 W92-C: unchanged 97.26%/8 bytes, size-exact, first difference +0x14. NEWLY RULED OUT, each measured: (a) separate counters for the three header loops (i / i2 / i3 in place of one reused i) is BYTE-IDENTICAL -- they coalesce, so this adds no pressure and is not a lever; (b) binding `c = gUnknown_020280C0` BEFORE `j = 0` instead of after gives 12 bytes / 95.89%, confirming the bind must follow the counter init; (c) a pointer local for loop 1's destination does not compile at all -- the member is volatile, so `&p->unk00[i]` will not convert to `u8 *`. A fresh -dg dump (work/sub_08031824/rtl-w92/) reconfirms W90-A: the three picks are reload spill registers (`Spilling for insn 11/26/64/167. Spilling reg 0.`) chosen by spill cost, so the lever is unchanged -- make a pseudo that holds r0 live across those points. A 900 s permuter chain from --current ran this wave (perm-w92-1.log). A 900 s permuter chain from --current ran this wave (13,907 iterations, perm-w92-1.log): nothing better than the 480 base score.
 
+### Wave 93
+
+W93-F: one 900 s run from the draft under the new length-penalty scorer returned nothing.
+
 </details>

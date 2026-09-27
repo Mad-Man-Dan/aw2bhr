@@ -40,4 +40,8 @@ The original keeps the per-cell counter k in a low callee-saved register, runs o
 
 Worked across several waves without a match; the full record is the draft's header comment and the notes files in work/sub_0803CFA4/.
 
+### Wave 93
+
+W93-E: not reached; still never permuted.
+
 </details>

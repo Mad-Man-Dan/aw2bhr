@@ -2,7 +2,7 @@
 
 0x080611D8, 304 bytes, THUMB, parked.
 
-Best score so far: 93.4% (best.c).
+Best score so far: 93.4%.
 
 ## What it does
 
@@ -29,7 +29,6 @@ Close the last twenty bytes, from offset 0xde: the two return endings are now ar
 ## Files
 
 - `sub_080611D8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

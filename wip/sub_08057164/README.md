@@ -38,4 +38,8 @@ Make the compiler step one element index by 1 and scale it at each table read, a
 
 PARKED Wave 70 at exact size 268/268. All statements and branches are present; the residual is strength_reduce retaining an address GIV for gUnknown_0855203C where ROM keeps an element-index IV. A bound table pointer and Wave 70's explicit idx counter plus record-pointer walk still form the address GIV. The new source counter does recover the desired +1 element IV, proving the remaining problem is the second GIV decision rather than loop semantics.
 
+### Wave 93
+
+W93-E: two negatives recorded in work/sub_08057164/NOTES.md; never permuted yet.
+
 </details>
