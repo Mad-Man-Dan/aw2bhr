@@ -2,7 +2,7 @@
 
 0x0801A718, 132 bytes, THUMB, parked.
 
-Best score so far: 79.5%.
+Best score so far: 88.6% (best.c).
 
 ## What it does
 
@@ -10,7 +10,7 @@ Inserts an entry into a linked list kept sorted by a signed 16-bit key, taking a
 
 ## How close it is
 
-Right size (132 bytes), 79.5% of bytes in place, up from 68.9%. Computing the list cursor before the new node, and deriving both from one local holding the node pool's address, gets the original's register sharing. What is left starts at the second byte and is register choice: the original keeps the first parameter in r3, this build in r5.
+Compiles to the right size (132 bytes); about 83% of bytes line up.
 
 ## What is left
 
@@ -26,6 +26,7 @@ Add a symbol for the sentinel node at 0x0200C618 to the linker script (aw2bhr.ld
 ## Files
 
 - `sub_0801A718.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -75,5 +76,9 @@ WAVE 92 (W92-B): no movement (68.94%, SIZE-EXACT); seven spellings measured nega
 - **positions_measured:** base bound AFTER the bare first reference 68.94% and unchanged; cur and prev swapped with cur still last 68.18%; cur moved before node 76.52%; that plus a shared base local 79.55%; cur moved above the unk00 > 0x80 guard 10.29% at +4.
 - **negative_corrected:** The recorded negative that binding the base with node and cur both derived from it is byte-identical holds only with node computed FIRST. With cur computed first the same base local is worth a further 3 points. The mechanism is the documented one: of two address constants used the same number of times, the pseudo created first wins the register.
 - **residual:** 132/132, 27 of 132 bytes differ, first difference +0x2, the first parameter's register. A pure allocation residual at the exact size, and the permuter has not yet been run on this new base.
+
+### Wave 94
+
+W94-A: run 1 reached 83.33% size-exact (kept); run 2's 88.64% form was wrong C and is quarantined as w94-perm2-8864.c.wrongc.
 
 </details>

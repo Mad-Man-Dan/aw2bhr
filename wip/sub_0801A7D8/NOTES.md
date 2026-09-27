@@ -2,3 +2,51 @@
 ## Wave 90 port (orchestrator)
 
 Ported to PR #3 names with tools/port_rename.py; `gUnknown_0200CC88` became `struct SaveSlotGenerations`, so the five `(&gUnknown_0200CC88[16])[x]` uses were hand-ported to `(&gUnknown_0200CC88.slotGeneration[0])[x]`, which is byte-identical to the pre-merge candidate (verified against _cand.prepr3.bin). The plain member `gUnknown_0200CC88.slotGeneration[x]` CHANGES the bytes: 1068/1056 (+12, unchanged size delta), 23.2% against the port's 20.0% -- a small positional change, not adopted as part of the port. Worth re-trying as a lever once the +12 is solved (see W90-B's member-vs-pointer chapter in docs/agbcc-codegen.md).
+
+## Wave 94 (W94-A) - adopted Vesly's draft, 19.76% at +12 -> 83.71% size-exact
+
+**Our draft was the wrong C, not Vesly's.** Diffing the two statement by
+statement left exactly one semantic difference: ours wrote
+`unk20[cur] = (unk20[cur] | 8 | tag) & 0xfb` with `tag = idx << 4`, Vesly's ORs
+a plain `int` zero. `target.s` settles it: line 413 is `movs r7, #0`,
+immediately before the checksum stores, so r7 holds ZERO at the `orrs r0, r7`
+on line 432. The wave-65 note in the park ("r7 is NOT zero ... the honest
+expression is therefore `| (idx << 4)`") is REFUTED - the `lsls r7, r6, #4` on
+line 233 is an earlier, unrelated use of r7, and r7 is redefined to 0 before
+the OR. Everything else in the two files computes the same thing.
+
+What bought the 12 bytes, both structural:
+
+- the two 16-element int arrays are ONE local struct
+  (`struct SaveSegments { int length[16]; int offset[16]; }`), not two
+  separate locals;
+- the 4 KiB staging buffer is reached through a cast struct view
+  (`struct SaveSector`), not raw `*(u32 *)(buf + k)` stores.
+
+**A promotion blocker to fix, not to copy.** Vesly's file renames two
+`include/unknown-globals.h` declarations out of the way with `#define` /
+`#undef` around `#include "global.h"` and redeclares the same symbols typed
+(`u8 *gUnknown_0200CC2C`, `int (*gUnknown_0200CC24)(u8 *)`). That is two
+`extern`s in a `.c`, which the standing rules forbid. It is load-bearing for
+this draft as it stands; promotion needs those declarations moved into the
+header.
+
+Permuter, two chained runs, 83.24 -> 83.43 -> 83.71, size-exact throughout,
+first difference stuck at +0x82. Three mutations, each audited equivalent:
+
+- `length` reused as a scratch for `gUnknown_0200CD08` before the
+  `<= (u32)-2` test (dead there; reset at the top of the outer loop);
+- `unk00[i]` bound to a local (renamed `owner`) for its two equality tests;
+- `writtenSlots[i]` bound to the dead `total`.
+
+The scratch reuse of `length` and `total` is pseudo sharing and is
+load-bearing. Do not tidy either into a fresh local.
+
+### Residual
+
+1056/1056, 172 bytes differ, 83.71%, first difference +0x82 - pure register
+allocation in the sort loop. The ROM binds `freeSlots`'s stack base into `ip`
+and the generation table's pool address into `r8`; the candidate has the two
+swapped, and the low-register numbering follows from it. Both create the two
+pseudos in the same order, so this is the allocator's tie-break rather than a
+source-order lever.

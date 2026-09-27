@@ -207,3 +207,27 @@ one wave 92 stated: the do-while shape needs one more callee-saved register
 than the original's, and it takes the one holding the record pointer.
 
 Draft restored to the 99.42% form (`sub_0807E980.w93-start.c`), unchanged.
+
+## Wave 94 (W94-B): fourth undirected run from the 99.42% draft, nothing
+
+`--current`, 900 s, 4 threads, under the length-penalised scorer
+(`AW2_PENALTY_SIZE=1000`) for the first time. 30,055 iterations, 944 errors,
+**zero improving candidates reported** -- the search never beat the starting
+point's objective score of 60, so there was nothing to verify and the draft was
+not touched.
+
+This is the fourth run from this draft (two in wave 90, one in wave 92, this
+one) and the first under the fixed objective. The objective was the reason
+wave 93 gave for retrying this function; the retry is negative, and on this
+draft the fix could not have helped anyway: the draft is already size-exact,
+so the length term is zero for it and for every size-exact neighbour, leaving
+the ranking exactly as it was.
+
+The residual is unchanged and is still the one wave 90 stated precisely: the
+inner copy loop's counter init `movs r6,#7` sits after the destination init
+where the ROM has it between the source and destination inits, because in the
+ROM the destination pointer is a giv reduced in the SECOND loop pass (after
+check_dbra_loop wrote the counter) and in every spelling measured here it is
+reduced in the first. That is a question about `loop.c`'s reduction threshold
+across the two passes, not about register allocation, which is why an
+allocation search cannot reach it.

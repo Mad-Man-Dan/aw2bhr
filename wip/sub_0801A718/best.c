@@ -116,6 +116,7 @@ s16 sub_0801A718(struct Unk0200ED20 *a1, s16 key)
     return -1;
   }
   freeIndex = (s16) gUnknown_030020A8.unk00;
+  node = &base[freeIndex];
   base = gUnknown_0200C624;
   cur = base - 1;
   node = &base[freeIndex];

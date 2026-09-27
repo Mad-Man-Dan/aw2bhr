@@ -1,269 +1,271 @@
+/* Typed views of the save-system globals. include/unknown-globals.h declares
+ * these symbols with the untyped widths their first users measured, so the
+ * draft renames those declarations away and redeclares the same symbols with
+ * their real types. On promotion this becomes gMap-style header declarations
+ * plus aw2bhr.lds aliases. gUnknown_0200CC88 is already a struct in the header. */
+#define gUnknown_0200CC24 gUnknown_0200CC24_untyped
+#define gUnknown_0200CC2C gUnknown_0200CC2C_untyped
 #include "global.h"
+#undef gUnknown_0200CC24
+#undef gUnknown_0200CC2C
 
-/* PARKED at 18.6% / +16 bytes -- wave 56, W56-F. The SHAPE is derived and is
- * believed complete; what is left is address materialisation and register
- * allocation. Do not re-derive the control flow, and do not read the
- * percentage: the candidate is +16 bytes so every later byte is shifted.
- *
- * SETTLED, read out of the assembly and confirmed by the diff shrinking each
- * time one was applied:
- *
- *   - `a2` IS DEAD. r1 is overwritten by the sub_0801B598 argument setup before
- *     anything reads it. The prototype keeps three parameters because
- *     src/decomp/c_0801ABF8.c already calls it with three.
- *   - `a1` and `a3` are the loop variables themselves, not copies. Writing
- *     `size = a3;` costs a stack slot and pushes a1 out of r4 (measured: +8).
- *   - The retry dispatch is a SWITCH over {0, 4} with case 4 falling through
- *     into case 0, not `if (retry == 0 || retry == 4)`. The `||` spelling emits
- *     a third `cmp #4` that jump threading does not remove because `retry` is
- *     in memory and gets reloaded; the switch emits agbcc's two-case chain
- *     `cmp #0/beq low; cmp #4/bne default` exactly. Worth 8 bytes.
- *   - `list[n] = i; n++;` as two statements, not `list[n++] = i;` -- the
- *     compound form increments before storing, the ROM stores first.
- *   - `gUnknown_0200CC88[16 + x]` is WRONG and `(&gUnknown_0200CC88.slotGeneration[0])[x]` is
- *     right: the first keeps `16 + x` as an integer and emits `adds #16; lsls
- *     #2`, the second folds &g[16] into the address constant asm/ prints as
- *     gUnknown_0200CCC8 and leaves `lsls #2; add base`. Worth ~12 bytes.
- *
- * THE TWO REMAINING DEFECTS:
- *
- * (1) The 0x02002000 ADDRESS HUB. The ROM materialises the buffer base as
- *     `ldr =gUnknown_02002050; subs #0x50` and reaches byte 0xfff as
- *     `base + 0xFFF` with 0xFFF loaded as a plain pool constant. This
- *     candidate folds &gUnknown_02002000[0xfff] into its own address constant
- *     0x02002FFF and then derives the base back from it as
- *     `0x02002FFF + (-0xFFF)`, which costs an extra pool word and an extra
- *     insn. Both are legal agbcc output for the same source; which one you get
- *     depends on which folded address constant CSE picks as the hub, and the
- *     hub is picked by reference count and creation order. NOTE that folding
- *     IS correct at the same offset in sub_0801ADC8 (`ldr =gUnknown_02002FFF`),
- *     so this is not a spelling rule -- do not "fix" it by making the index
- *     non-constant.
- *
- * (2) Wave 65 corrected the old reading of `orrs r0, r7`: r7 is NOT zero. It
- *     is defined by `lsls r7, r6, #4` with r6 = idx and is also used to build
- *     BUF[0xc]. The honest expression is therefore `| (idx << 4)`. This is
- *     distinct from sub_0801ADC8's genuinely zero third operand. Writing that
- *     expression directly was measured in wave 65: it widens the OR/mask to
- *     SImode (`movs #5; negs`) and regresses +16/18.56% to +24/17.71%. The
- *     source therefore needs a narrow binding that reuses the already-created
- *     `idx << 4` pseudo; the direct spelling is not retained below.
- *
- * Everything else in the diff is spill-slot numbering, which follows from those
- * two.
- *
- * WAVE 71: a `u8 tag` first defined inside the byte-0xc expression and reused
- * in the success OR is a positive result.  Writing
- * `(tag = idx << 4) + nc - 1` and later `| tag` improves the configured draft
- * from 1072/1056 (+16, 18.6%) to 1068/1056 (+12, 20.0%).  `u16 tag` regresses
- * to +16 and `int tag` to +24.  The narrow mode and definition at the first
- * store are both load-bearing; the remaining residual still includes the
- * 0x02002000 address-hub choice and its spill/allocation knock-on. */
-
-int sub_0801A7D8(u8 a1, void *a2, int a3)
+/* One 4 KiB flash sector, assembled in the gUnknown_02002000 staging buffer
+ * before each write attempt. The buffer must stay a cast view: declaring the
+ * symbol itself as this struct costs +20 bytes (measured). */
+struct SaveSector
 {
-    int lens[16];
-    int offs[16];
-    u8 list[16];
-    u8 flags[16];
-    int cur;
-    u8 n;
-    int i;
-    int j;
-    int k;
-    int nc;
-    int off;
-    int idx;
-    u8 retry;
-    u8 sum;
-    u8 tag;
+    /* 0x000 */ u32 signature;
+    /* 0x004 */ u8 marker;
+    /* 0x005 */ u8 version;
+    /* 0x006 */ u8 checksum;
+    /* 0x007 */ u8 checksumInverse;
+    /* 0x008 */ u32 generation;
+    /* 0x00c */ u8 segmentTag;
+    /* 0x00d */ u8 saveId;
+    /* 0x00e */ u16 dataOffset;
+    /* 0x010 */ u32 slotGenerations[16];
+    /* 0x050 */ u16 dataLength;
+    /* 0x052 */ u8 data[0xf9d];
+    /* 0xfef */ u8 slotOwners[16];
+    /* 0xfff */ u8 endMarker;
+};
+#define gSaveSector (*(struct SaveSector *)gUnknown_02002000)
 
-    sub_0801B598(gUnknown_0200CC30, (void (**)(void))gUnknown_0200CC34);
+/* How the save data is split across sectors. */
+struct SaveSegments
+{
+    /* 0x00 */ int length[16];
+    /* 0x40 */ int offset[16];
+};
 
-    cur = 0;
-    n = 0;
+extern u8 *gUnknown_0200CC2C;           /* the save data being written */
+extern int (*gUnknown_0200CC24)(u8 *);  /* returns the size of gSaveData */
+#define gSaveData gUnknown_0200CC2C
+#define gSaveDataSize gUnknown_0200CC24
 
-    for (i = 0; i < 16; i++)
+/* Write a save to flash, using spare slots and retrying failed sectors. */
+int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
+{
+  struct SaveSegments segments;
+  int *offsets;
+  int zero;
+  u8 freeSlots[16];
+  u8 writtenSlots[16];
+  int segmentCount;
+  int lastByte;
+  int *segmentOffsets;
+  u8 id;
+  u8 owner;
+  u8 freeCount;
+  u8 retryCount;
+  int segment;
+  int slot;
+  int i;
+  int j;
+  int length;
+  int total;
+  u8 checksum;
+  u8 updatedFlags;
+  int preservedFlags;
+  sub_0801B598(gUnknown_0200CC30, (void (**)(void)) gUnknown_0200CC34);
+  id = saveId;
+  slot = 0;
+  freeCount = 0;
+  for (i = 0; i < 16; i++)
+  {
+    owner = gUnknown_0200CC38.unk00[i];
+    if ((owner == saveId) || (owner == 0))
     {
-        if (gUnknown_0200CC38.unk00[i] == a1 || gUnknown_0200CC38.unk00[i] == 0)
-            gUnknown_0200CC38.unk10[i] = 0xff;
-        else if (gUnknown_0200CC38.unk00[i] == 0xff)
-        {
-            list[n] = i;
-            n++;
-        }
+      gUnknown_0200CC38.unk10[i] = 0xff;
+    }
+    else
+      if (gUnknown_0200CC38.unk00[i] == 0xff)
+    {
+      freeSlots[freeCount] = i;
+      freeCount++;
+    }
+    writtenSlots[i] = 0;
+  }
 
-        flags[i] = 0;
+  for (i = 0; i < (freeCount - 1); i++)
+  {
+    for (j = i + 1; j < freeCount; j++)
+    {
+      if (gUnknown_0200CC88.slotGeneration[freeSlots[i]] < gUnknown_0200CC88.slotGeneration[freeSlots[j]])
+      {
+        u8 oldSlot = freeSlots[i];
+        freeSlots[i] = freeSlots[j];
+        freeSlots[j] = oldSlot;
+      }
     }
 
-    for (j = 0; j < n - 1; j++)
-    {
-        for (k = j + 1; k < n; k++)
-        {
-            if ((&gUnknown_0200CC88.slotGeneration[0])[list[j]] < (&gUnknown_0200CC88.slotGeneration[0])[list[k]])
-            {
-                u8 t;
+  }
 
-                t = list[k];
-                list[k] = list[j];
-                list[j] = t;
-            }
-        }
+  for (;;)
+  {
+    total = 0;
+    segmentCount = 0;
+    while (byteCount != 0)
+    {
+      length = 0xfad;
+      if ((segmentCount == 0) && (id == 0))
+      {
+        length -= 0x10;
+      }
+      if (length > byteCount)
+      {
+        length = byteCount;
+      }
+      byteCount -= length;
+      segments.length[segmentCount] = length;
+      segments.offset[segmentCount] = total;
+      total += length;
+      segmentCount++;
     }
 
-    for (;;)
+    retryCount = 0;
+    for (segment = segmentCount - 1; segment >= 0;)
     {
-        off = 0;
-        nc = 0;
+      switch (retryCount)
+      {
+        case 4:
+          gUnknown_0200CC38.unk20[slot] |= 2;
+          retryCount = 0;
 
-        if (a3 != 0)
+        case 0:
+          if (freeCount == 0)
         {
-            do
-            {
-                int len;
+          for (i = 0; i < 16; i++)
+          {
+            gUnknown_0200CC38.unk10[i] = gUnknown_0200CC38.unk00[i];
+          }
 
-                len = 0xFAD;
-                if (nc == 0 && a1 == 0)
-                    len = 0xF9D;
-                if (len > a3)
-                    len = a3;
-                a3 -= len;
-                lens[nc] = len;
-                offs[nc] = off;
-                off += len;
-                nc++;
-            } while (a3 != 0);
+          return 1;
+        }
+          freeCount--;
+          slot = freeSlots[freeCount];
+          break;
+
+      }
+
+      retryCount++;
+      if (gUnknown_0200CC88.slotGeneration[slot] != (-1))
+      {
+        gUnknown_0200CC88.slotGeneration[slot]++;
+      }
+      segmentOffsets = segments.offset;
+      gUnknown_0200CC38.unk10[slot] = id;
+      offsets = segmentOffsets;
+      for (i = 0; i <= 0xfff; i++)
+      {
+        gUnknown_02002000[i] |= 0xff;
+      }
+
+      lastByte = 0xfff;
+      (*((struct SaveSector *) gUnknown_02002000)).signature = 0x73726132;
+      if (gUnknown_0200CC38.unk40[slot] == 0x55)
+      {
+        (*((struct SaveSector *) gUnknown_02002000)).marker = 0x55;
+        gUnknown_02002000[0xfff] = 0xaa;
+      }
+      else
+      {
+        (*((struct SaveSector *) gUnknown_02002000)).marker = 0xaa;
+        gUnknown_02002000[0xfff] = 0x55;
+      }
+      zero = 0;
+      i = 0xf;
+      (*((struct SaveSector *) gUnknown_02002000)).version = i;
+      (*((struct SaveSector *) gUnknown_02002000)).checksum = zero;
+      (*((struct SaveSector *) gUnknown_02002000)).checksumInverse = 0xff;
+      (*((struct SaveSector *) gUnknown_02002000)).generation = gUnknown_0200CD08;
+      (*((struct SaveSector *) gUnknown_02002000)).segmentTag = ((segment * 16) + segmentCount) - 1;
+      (*((struct SaveSector *) gUnknown_02002000)).saveId = id;
+      (*((struct SaveSector *) gUnknown_02002000)).dataOffset = offsets[segment];
+      for (i = 0; i < 16; i++)
+      {
+        (*((struct SaveSector *) gUnknown_02002000)).slotGenerations[i] = gUnknown_0200CC88.slotGeneration[i];
+      }
+
+      (*((struct SaveSector *) gUnknown_02002000)).dataLength = segments.length[segment];
+      for (i = 0; i < segments.length[segment]; i++)
+      {
+        (*((struct SaveSector *) gUnknown_02002000)).data[i] = gUnknown_0200CC2C[segments.offset[segment] + i];
+      }
+
+      if ((segment == 0) && (id == 0))
+      {
+        for (i = 0; i < 16; i++)
+        {
+          gUnknown_0200CC38.unk00[i] = gUnknown_0200CC38.unk10[i];
         }
 
-        retry = 0;
-
-        for (idx = nc - 1; idx >= 0; )
+        if (gUnknown_0200CD08 == 0)
         {
-            switch (retry)
+          for (i = 0; i < 16; i++)
+          {
+            total = writtenSlots[i];
+            if ((total == 0) && (i != slot))
             {
-            case 4:
-                gUnknown_0200CC38.unk20[cur] |= 2;
-                retry = 0;
-                /* fallthrough */
-
-            case 0:
-                if (n == 0)
-                {
-                    for (i = 0; i < 16; i++)
-                        gUnknown_0200CC38.unk10[i] = gUnknown_0200CC38.unk00[i];
-
-                    return 1;
-                }
-
-                n--;
-                cur = list[n];
-                break;
-            }
-
-            retry++;
-
-            if ((&gUnknown_0200CC88.slotGeneration[0])[cur] != -1)
-                (&gUnknown_0200CC88.slotGeneration[0])[cur]++;
-
-            gUnknown_0200CC38.unk10[cur] = a1;
-
-            for (i = 0; i <= 0xfff; i++)
-                gUnknown_02002000[i] |= 0xff;
-
-            *(u32 *)gUnknown_02002000 = 0x73726132;
-
-            if (gUnknown_0200CC38.unk40[cur] == 0x55)
-            {
-                gUnknown_02002000[4] = 0x55;
-                gUnknown_02002000[0xfff] = 0xaa;
+              (*((struct SaveSector *) gUnknown_02002000)).slotOwners[i] |= 0xff;
             }
             else
             {
-                gUnknown_02002000[4] = 0xaa;
-                gUnknown_02002000[0xfff] = 0x55;
+              (*((struct SaveSector *) gUnknown_02002000)).slotOwners[i] = gUnknown_0200CC38.unk00[i];
             }
+          }
 
-            gUnknown_02002000[5] = 0xf;
-            gUnknown_02002000[6] = 0;
-            gUnknown_02002000[7] = 0xff;
-            *(u32 *)(gUnknown_02002000 + 8) = gUnknown_0200CD08;
-            gUnknown_02002000[0xc] = (tag = idx << 4) + nc - 1;
-            gUnknown_02002000[0xd] = a1;
-            *(u16 *)(gUnknown_02002000 + 0xe) = offs[idx];
-
-            for (i = 0; i < 16; i++)
-                ((u32 *)(gUnknown_02002000 + 0x10))[i] = (&gUnknown_0200CC88.slotGeneration[0])[i];
-
-            *(u16 *)(gUnknown_02002000 + 0x50) = lens[idx];
-
-            for (j = 0; j < lens[idx]; j++)
-                gUnknown_02002000[0x52 + j] = *(u8 *)(gUnknown_0200CC2C + offs[idx] + j);
-
-            if (idx == 0 && a1 == 0)
-            {
-                for (i = 0; i < 16; i++)
-                    gUnknown_0200CC38.unk00[i] = gUnknown_0200CC38.unk10[i];
-
-                if (gUnknown_0200CD08 == 0)
-                {
-                    for (i = 0; i < 16; i++)
-                    {
-                        if (flags[i] == 0 && i != cur)
-                            gUnknown_02002000[0xfef + i] |= 0xff;
-                        else
-                            gUnknown_02002000[0xfef + i] = gUnknown_0200CC38.unk00[i];
-                    }
-                }
-                else
-                {
-                    for (i = 0; i < 16; i++)
-                        gUnknown_02002000[0xfef + i] = gUnknown_0200CC38.unk00[i];
-                }
-            }
-
-            sum = 0;
-
-            for (i = 0; i <= 0xfff; i++)
-                sum += gUnknown_02002000[i];
-
-            gUnknown_02002000[6] = sum;
-            gUnknown_02002000[7] = ~sum;
-
-            sub_0801B618(cur, (int)gUnknown_02002000);
-
-            if (sub_0801B648(cur, (int)gUnknown_02002000) == 0)
-            {
-                gUnknown_0200CC38.unk20[cur] = (gUnknown_0200CC38.unk20[cur] | 8 | tag) & 0xfb;
-                gUnknown_0200CC38.unk30[cur] = gUnknown_02002000[0xc];
-                gUnknown_0200CC38.unk40[cur] = gUnknown_02002000[0xfff];
-                (&gUnknown_0200CC88.slotGeneration[0])[cur] = *(u32 *)(gUnknown_02002000 + 8);
-                retry = 0;
-                flags[cur] = 1;
-                idx--;
-            }
-            else
-            {
-                gUnknown_0200CC38.unk10[cur] = 0xff;
-                gUnknown_0200CC38.unk40[cur] = gUnknown_02002000[0xfff];
-                retry++;
-            }
         }
+        else
+        {
+          for (i = 0; i < 16; i++)
+          {
+            (*((struct SaveSector *) gUnknown_02002000)).slotOwners[i] = gUnknown_0200CC38.unk00[i];
+          }
 
-        if (gUnknown_0200CD08 <= 0xfffffffe)
-            gUnknown_0200CD08++;
+        }
+      }
+      checksum = 0;
+      for (i = 0; i <= 0xfff; i++)
+      {
+        checksum += gUnknown_02002000[i];
+      }
 
-        if (a1 == 0)
-            return 0;
-
-        a1 = 0;
-        a3 = ((int (*)(int))gUnknown_0200CC24)(gUnknown_0200CC2C);
+      (*((struct SaveSector *) gUnknown_02002000)).checksum = checksum;
+      (*((struct SaveSector *) gUnknown_02002000)).checksumInverse = ~checksum;
+      preservedFlags = 0;
+      sub_0801B618(slot, (int) (&(*((struct SaveSector *) gUnknown_02002000))));
+      if (sub_0801B648(slot, (int) (&(*((struct SaveSector *) gUnknown_02002000)))) == 0)
+      {
+        j = slot;
+        updatedFlags = (gUnknown_0200CC38.unk20[j] | 8) | preservedFlags;
+        gUnknown_0200CC38.unk20[slot] = updatedFlags & 0xfb;
+        gUnknown_0200CC38.unk30[slot] = (*((struct SaveSector *) gUnknown_02002000)).segmentTag;
+        gUnknown_0200CC38.unk40[slot] = gUnknown_02002000[0xfff];
+        gUnknown_0200CC88.slotGeneration[slot] = (*((struct SaveSector *) gUnknown_02002000)).generation;
+        retryCount = 0;
+        writtenSlots[slot] = 1;
+        segment--;
+      }
+      else
+      {
+        gUnknown_0200CC38.unk10[slot] = 0xff;
+        gUnknown_0200CC38.unk40[slot] = gUnknown_02002000[lastByte];
+        retryCount++;
+      }
     }
+
+    length = gUnknown_0200CD08;
+    if (length <= ((u32) (-2)))
+    {
+      gUnknown_0200CD08++;
+    }
+    if (id == 0)
+    {
+      return 0;
+    }
+    id = 0;
+    byteCount = gUnknown_0200CC24(gUnknown_0200CC2C);
+  }
+
 }
-
-
-
-
-
-
-
-

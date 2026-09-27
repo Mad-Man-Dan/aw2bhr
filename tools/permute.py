@@ -622,9 +622,15 @@ def verify(rec, pdir, keep_all):
                 # A raw form must never become best.c: that is how 36 best.c
                 # files turned into 190 KB header-expanded blobs. Its score is
                 # kept in permuter/best-raw.c instead.
-                snap = _snapshot(best_files) if label == "raw" else None
+                # Every form is checked with best.c snapshotted: trymatch
+                # records any higher score in best.c by itself, and a spliced
+                # form this loop then REFUSES (wrong size, or a read before a
+                # set) used to stay there as the recommended base. Wave 94 found
+                # three best.c files holding forms the permuter had rejected.
+                # best.c keeps a form only if it is kept below or matches.
+                snap = _snapshot(best_files)
                 rc, r = _check_quietly(name, vlog)
-                if snap is not None and _restore(snap):
+                if label == "raw" and _restore(snap):
                     r["note"] = "best.c left as it was"
                 print("  score %-6d %-7s %s%s" % (score, label, trymatch.format_result(r),
                                                   "  (" + r["note"] + ")" if r.get("note") else ""))
@@ -652,11 +658,15 @@ def verify(rec, pdir, keep_all):
                 # saved beside it, never written over the readable draft.
                 pct = trymatch.LAST_PCT
                 if pct is None or base_pct is None:
+                    _restore(snap)
                     continue
+                if label == "spliced" and not improves(pct, r.get("size"), best_pct, best_size):
+                    _restore(snap)
                 if label == "spliced" and improves(pct, r.get("size"), best_pct, best_size):
                     bad = sorted(set(agbenv.uninitialized_reads(csrc, fn=name, profile=PROFILE))
                                  - base_uninit)
                     if bad:
+                        _restore(snap)
                         print("             not kept: reads %s before setting it"
                               % ", ".join(bad))
                         break
@@ -812,6 +822,64 @@ def _main(args):
     if not check_scorer_patch() and not args.force:
         return 2, "SETUP-FAILED", "unpatched scorer (see above; --force to run anyway)"
 
+    lock, held = _take_lock(rec["name"], args.seconds)
+    if lock is None and not args.force:
+        print("\nanother permute.py run on %s holds %s (%s)." % (rec["name"],
+              os.path.relpath(_lock_path(rec["name"]), awlib.REPO), held))
+        print("Two runs on one function corrupt its draft: the second restores")
+        print("the first one's candidate. Wait for it, or pass --force if it died.")
+        return 2, "SETUP-FAILED", "another run on this function is live"
+    try:
+        return _run_locked(args, rec, unit)
+    finally:
+        if lock is not None:
+            try:
+                os.remove(lock)
+            except OSError:
+                pass
+
+
+def _lock_path(name):
+    return os.path.join(WORK, name, ".permute.lock")
+
+
+def _take_lock(name, seconds):
+    """(path, None) when this run now owns work/<fn>/.permute.lock, else
+    (None, description of the holder).
+
+    Wave 94 had two runs on one function at once: a launch wrapper reported
+    "failed" while its permute.py lived on, a second run started, and the
+    second verify phase restored the FIRST run's header-expanded candidate
+    (203 KB) over the draft while printing that it had restored it unchanged.
+    A lock older than its run's time budget plus an hour is treated as stale.
+    """
+    import time
+    path = _lock_path(name)
+    for _ in range(2):
+        try:
+            fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except FileExistsError:
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    info = json.load(fh)
+                started = float(info.get("started", 0))
+                budget = float(info.get("seconds", 900)) + 3600
+            except (OSError, ValueError):
+                started, budget, info = 0.0, 0.0, {}
+            if time.time() < started + budget:
+                return None, "pid %s, started %s" % (
+                    info.get("pid"), time.strftime("%H:%M:%S",
+                                                   time.localtime(started)))
+            os.remove(path)          # stale: its run cannot still be going
+            continue
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            json.dump({"pid": os.getpid(), "started": time.time(),
+                       "seconds": seconds}, fh)
+        return path, None
+    return None, "could not create the lock file"
+
+
+def _run_locked(args, rec, unit):
     prefer = False if args.current else ("any" if args.from_permuter_best else True)
     pdir = setup(rec, unit, prefer_best=prefer)
     if pdir is None:

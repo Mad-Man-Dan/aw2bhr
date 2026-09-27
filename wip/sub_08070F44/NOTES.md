@@ -83,3 +83,55 @@ One note on the older record: the parked entry credits a permuter run "with
 the older compiler" in an earlier wave, reaching 73%. That cannot be what it
 says it is — before this wave `permute.py` had no way to select a compiler and
 always used the configured one. Treat that line as a default-compiler run.
+
+## Wave 94 (W94-B): the fixed scorer keeps the length, and still does not find it
+
+First campaign under the length-penalised objective (`AW2_PENALTY_SIZE=1000`),
+`--profile old-agbcc --current` from the 75.00% draft. 32,175 iterations,
+40 outputs kept.
+
+**Every one of the 40 was re-verified by hand afterwards**, one at a time,
+against the real bytes under `old-agbcc` (the run's own verify phase had been
+contaminated — see the incident note below — so its numbers were thrown away).
+Result: best candidate **69.23%**, and nothing beat the draft.
+
+The scorer fix did change the search, measurably:
+
+- **40 of 40 kept outputs are size-exact.** Under the old objective W93-F's
+  best candidate was 4 bytes short and the whole top of the list was shorter
+  than the target. The length drift is gone.
+- **The inversion is not.** All 40 score BETTER on the permuter objective
+  (1340-2080 against the draft's 2100) and match WORSE on the bytes. So
+  holding the length fixed is necessary and not sufficient: with the length
+  constant the objective still ranks a different register assignment above the
+  right one, because a register mismatch and an instruction it happens to line
+  up with weigh the same to it.
+
+Read together with W93-F, this closes the undirected search on this function
+for a second, independent reason. The residual is a two-allocno priority tie
+(see above); the randomizer's moves do not reach it and the objective cannot
+rank it.
+
+### Incident: two concurrent permute.py runs on one function strand cpp output
+
+Worth knowing because it produces exactly the corruption the wave brief warns
+about, from a direction the brief does not mention.
+
+A backgrounded launch wrapper reported "failed, exit 1" while the
+`tools/permute.py` it started was still running. A second run was then started
+on the same function, writing the same log name and sharing
+`work/<fn>/permuter/`. Both reached their verify phase together. Verify leaves
+each candidate in `work/<fn>/<fn>.c` while trymatch judges it, and reads the
+form to restore (`orig`, permute.py:564) at the START of verify -- so run B
+read run A's header-expanded candidate as "the draft" and faithfully restored
+203 KB of `cpp -P` output over the real draft, while printing "restored
+unchanged".
+
+Two consequences: (1) every percentage in a raced verify phase is unreliable,
+because the file being compiled may be the other run's candidate; (2) the draft
+is silently replaced by expanded source that still compiles.
+
+So: never run two permuters on one function, and do not trust a launch
+wrapper's exit status as evidence that the run died -- check that
+`work/<fn>/permuter/permuter.log` has stopped growing over a minute, not
+over ten seconds (it writes one snapshot a minute by design).

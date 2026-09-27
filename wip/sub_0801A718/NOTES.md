@@ -175,3 +175,33 @@ Kept as `w93-base-7955.c`; the 68.94% draft is `sub_0801A718.w93-start.c`.
 
 132/132, 27 of 132 bytes differ, 79.55%, first difference still at +0x2 — the
 first parameter's register. A pure allocation residual at the exact size.
+
+## Wave 94 (W94-A) - 79.55% -> 83.33%, and run 2's 88.64% is wrong C
+
+Run 1: 79.55 -> 83.33, size-exact, first difference still +0x2. The mutation
+binds `(s16) gUnknown_030020A8.unk00` to a local (renamed `freeIndex`) and uses
+it for the node index. The field is read twice in the old form with nothing
+writing it in between, so this is equivalent. It is NOT the wave-93 form that
+also scored 83.33% and was quarantined - that one read `node` before setting
+it.
+
+Run 2 reported 83.33 -> 88.64 and the form is WRONG C, quarantined as
+`w94-perm2-8864.c.wrongc`. It inserts `node = &base[freeIndex];` BEFORE
+`base = gUnknown_0200C624;` - an uninitialised read of `base`. The value is
+dead, because `node` is reassigned two lines later, but the read is undefined.
+**`permute.py`'s `-Wuninitialized` gate did not catch this**, presumably
+because `base` is assigned later in the same block; the gate is not sufficient
+for a dead uninitialised read.
+
+The effect is not reachable legitimately. Writing that early statement as
+`node = &gUnknown_0200C624[freeIndex];` - the same address, no UB - scores
+70.45%, well below the 83.33% base. What the mutation buys is a `node`
+reference created before `base`'s set, which no defined C produces.
+
+The linker-symbol fix this park has been waiting on (a symbol at 0x0200C618)
+was not attempted: agents in this wave are forbidden to edit `aw2bhr.lds`.
+
+### Residual
+
+132/132, 83.33%, first difference +0x2 - still the first parameter's register
+(ROM r3, candidate r5). A pure allocation residual at the exact size.

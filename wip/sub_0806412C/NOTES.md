@@ -108,3 +108,11 @@ combination it was measured in.
 ## Residual
 
 232/232, 21 of 232 bytes differ, 90.95%, first difference at +0x45.
+
+## Wave 94 (W94-A) - chain closed, 90.95% stands
+
+Permuter run 1 (900 s, 4 threads, `--current` from the 90.95% base) found no
+candidate better than the starting point, so the chain is closed here rather
+than truncated by budget. The draft is byte-identical to the pre-run copy
+(`sub_0806412C.pre-run1.c`). The residual is the two facts already recorded in
+`data/parked.json`.

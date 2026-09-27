@@ -54,7 +54,7 @@
 
 void sub_0801ADC8(void)
 {
-  int erased;
+  int new_var;
   int i;
   int k;
   int len;
@@ -99,8 +99,8 @@ void sub_0801ADC8(void)
           if (sub_0801B018(i) != 0)
           {
             gUnknown_0200CC38.unk40[i] = gUnknown_02002000[0xfff];
-            erased = -1;
-            gUnknown_0200CC38.unk00[i] = erased;
+            new_var = -1;
+            gUnknown_0200CC38.unk00[i] = new_var;
             gUnknown_0200CC38.unk10[i] = 0xff;
             gUnknown_0200CC38.unk20[i] |= 4;
             gUnknown_0200CC88.sectorGeneration[i] = 0;

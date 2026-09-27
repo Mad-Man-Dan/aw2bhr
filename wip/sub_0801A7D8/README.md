@@ -2,7 +2,7 @@
 
 0x0801A7D8, 1056 bytes, THUMB, parked.
 
-Best score so far: 22.9%, +12 bytes (best.c).
+Best score so far: 83.7%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Saves a block of game data to flash memory in 4 KiB sectors. It splits the data 
 
 ## How close it is
 
-Both retained drafts compile to the original size (1056 bytes). The current draft matches 81.91% of the bytes; best.c matches 83.24%. Neither matches the ROM yet.
+Compiles to the right size (1,056 bytes); about 84% of bytes line up.
 
 ## What is left
 
@@ -29,7 +29,6 @@ Resolve the remaining instruction and register differences in the size-exact dra
 ## Files
 
 - `sub_0801A7D8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -41,5 +40,9 @@ Resolve the remaining instruction and register differences in the size-exact dra
 ### Notes
 
 PARKED Wave 71 at 1068/1056 (+12), 20.0%. A narrow block-local u8 tag improved +16 to +12; the remaining 0x02002000 address-hub choice and spill cascade survive. Switch/retry CFG, folded-address forms, direct narrow OR, and wider tag spellings are settled in the draft comment.
+
+### Wave 94
+
+W94-A adopted Vesly's local draft (work/sub_0801A7D8/vesly-best.c, 83.24% size-exact) over ours (19.76% at +12), then two chained permuter runs: 83.71% size-exact. Kept forms audited by the orchestrator: a u8 `owner` local for unk00[i] (unk00 is u8) and `total` reused as scratch in the slot-owner loop (the outer for(;;) resets it before its only other use). Next: chain further.
 
 </details>

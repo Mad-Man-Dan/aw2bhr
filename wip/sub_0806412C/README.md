@@ -82,4 +82,8 @@ Two loop-optimiser facts, not source semantics. WAVE 77 (W77-J) moved this from 
 - **negatives_corrected:** TWO recorded ruled-out axes here were combination-specific and are false as stated. (1) i <= 7 was recorded as always reversing the counter; it does not, once the second loop is spelled (i + 1) <= (5 + 1) -- worth 28 points. (2) i = 0 placed before or after the v7/v8 lines was recorded as ruled out; under the new base it is worth 2.2 points. Read every ruled-out line in this entry as scoped to the exact combination it was measured in.
 - **residual:** 232/232, 21 of 232 bytes differ, first difference +0x45, outer counter and row pointer transposed.
 
+### Wave 94
+
+W94-A: one run from the 90.95% draft returned no kept improvement.
+
 </details>

@@ -32,3 +32,32 @@ reaches it.
 ## Permuter
 
 Never run before this wave. See `perm-w93-*.log` in this folder.
+
+## Wave 94 (W94-B): first permuter run. One "improvement", and it is wrong C
+
+`--current`, 900 s, 4 threads, under the length-penalised scorer. The run
+reported an improvement and kept it: **20.90% -> 30.22%, size-exact**. It is
+rejected, and the file is kept as `w94b-perm1-idx-clobber.c.wrongc`.
+
+What it did: it split `idx = a * 10 + y * 5;` into `idx = 10; idx = (a * idx)
++ (y * 5);` (harmless), and then, inside the loop body, **reassigned the same
+variable**:
+
+    idx = a * 5;
+    e[i].unk00 = gUnknown_085521DC[((y * 55) + idx) + i];
+
+`idx` is the index the three `unk1a` table reads use at the TOP of the body. So
+on the first pass it is `a * 10 + y * 5` as intended, and on passes 2 to 5 it is
+`a * 5`: four of the five entries read the wrong element of gUnknown_0855203C /
+gUnknown_08551F60 / gUnknown_08551E84. Every read is of a variable that was
+assigned, so `-Wuninitialized` cannot see it, and the length is unchanged, so
+the size guard cannot either. Only reading the body catches this one.
+
+**A screen that does work on this function:** the draft's first difference is
+at +0xe, and this candidate's is at **+0xa** -- earlier -- while its score rose.
+The wave-93 negatives (`w93-literal.c`, `w93-idxonly.c`) have the same
+signature: higher percentage, first difference +0xa. On this function a
+candidate that moves the first difference from +0xe to +0xa is reorganising the
+loop's opening rather than fixing it, and that is where the wrong-C forms live.
+
+Draft restored and re-verified: 268/268, 20.90%, first difference +0xe.

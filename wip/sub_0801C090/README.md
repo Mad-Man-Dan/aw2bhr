@@ -2,7 +2,7 @@
 
 0x0801C090, 360 bytes, THUMB, parked.
 
-Best score so far: 53.3%.
+Best score so far: 79.4%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Copies a sprite's list of OAM entries into the OAM buffer at the write cursor gU
 
 ## How close it is
 
-Compiles to the right size (360 bytes) and about 53% of the bytes match. The stack frame is now correct: the original keeps the loop counter in a stack slot, and a redundant outer loop plus two source halfwords held in locals makes the compiler do the same. The counter is signed, which is what produces the original's decrement. What is left is which registers the remaining values land in.
+Compiles to the right size (360 bytes); about 79% of bytes line up.
 
 ## What is left
 
@@ -51,5 +51,9 @@ WHAT CREATES THE SPILL, measured nine ways: a zero-trip `do { } while (0) round 
 NEWLY RULED OUT, and it retires three park lines at once: `while`, `for (;;) { if (count == 0) break; ... }` and `if (count) do { } while (count)` are BYTE-IDENTICAL -- same size, same first difference, same percentage to the hundredth. gcc normalises loop rotation long before allocation. Do not spend probes rotating this loop.
 RESIDUAL: size-exact with the frame and the counter's slot correct. This is now an ordinary register-allocation residual, which is the permuter's case -- for five waves it was a structural difference the permuter could not reach, which is why the chains before this wave gained a point per run.
 BASES REJECTED: `recovered.c` (43.33%, size-exact) and `best.c` (45.83%, -8) are not wrong C -- the `(char)` cast is on a 0..12 value and the `inline_fn` is an identity -- but both reach their size with padding and their first difference is +0xe, the same as the honest spelling. The extra bytes buy nothing.
+
+### Wave 94
+
+W94-A adopted Vesly's local draft (75.56% size-exact), then three chained runs: 78.33, 79.44, and a third stopped unfinished by the orchestrator (draft restored to the 79.44% pre-run copy). Kept change audited: `remaining`, already scratch in the loop body, holds the negated width; it is recomputed before the loop test.
 
 </details>

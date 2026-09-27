@@ -88,3 +88,26 @@ one step per scratch it hands out, in instruction order:
   where a value in a high register is read into a low one.
 
 This is the same tie recorded since wave 70; the new part is the direction.
+
+## Wave 94 (W94-B): fifth undirected run, nothing, and the fix cannot come from here
+
+`--current`, 900 s, 4 threads, under the length-penalised scorer
+(`AW2_PENALTY_SIZE=1000`) for the first time on this function. 34,891
+iterations, 1,112 errors, **zero improving candidates** -- nothing beat the
+starting point's objective score of 120, so nothing was verified and the draft
+was not touched (re-checked afterwards: 380/380, 98.95%, first difference
++0x34, of which only the +0xd5/+0xd6 pair is code).
+
+Runs from this draft now stand at five (waves 84, 86, 90, 91, 92 and this one,
+counting only the ones that ran to their own deadline). The scorer fix changes
+nothing here for a structural reason worth writing down: **the draft is already
+size-exact, so the new length term is zero for it and for every size-exact
+neighbour.** The fix removes a drift towards shorter candidates; it does not add
+any pull towards a particular register assignment. On a park whose whole
+residual is two bytes of register numbering, the objective is exactly as blind
+as it was.
+
+Read with the wave-92 direction note (the rotation must be one step BEHIND this
+draft's at the row-pointer copy, so the change has to remove one scratch
+hand-out BEFORE the key test, not add one after), this says the remaining work
+is a reload-ordering read off the RTL dumps, not a search.

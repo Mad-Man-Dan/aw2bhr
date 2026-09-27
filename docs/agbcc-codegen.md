@@ -54691,3 +54691,38 @@ one hoisted the middle `ldr`. Two facts explain why:
 So when a parked draft declares a pointer global to reach a `.rodata` word,
 dereference the word in the ROM first. If it holds a RAM address, that word
 is force-addr, and the lever is operand order, not a declaration.
+
+
+## An explicit narrowing cast folds away when the value is PROVABLY representable, so the wave-15 rule has a precondition (wave 94, W94-A)
+
+The wave-15 finding is that a probe cannot tell `u16 v` from `int v` with an
+explicit `(u16)` cast at each use, because both fold in straight-line code,
+yet in a real function they are different code: the cast expands to an
+`lsl #16` / `lsr #16` pair that survives. That is true, but only where the
+narrowing is not redundant. Measured on `sub_080607E8`, whose ROM
+sign-extends its second call argument with `lsls #0x10 / asrs #0x10` where the
+candidate emits a bare register move:
+
+- `int b = p->unk01 + 4;` passed to an `s16` parameter - no shifts;
+- `u16 b` - byte-identical, no shifts;
+- `(s16) b` written as an explicit cast at the call site - byte-identical, no
+  shifts;
+- `b = p->unk01; b += 4;` - byte-identical in the narrowing (the dead first
+  set is eliminated, so `b` is still single-set), and it costs allocation
+  elsewhere.
+
+The reason is `combine`'s `num_sign_bit_copies` / `nonzero_bits`, which are
+tracked only for a pseudo with ONE set. `b` is one set of `(u8 load) + 4`, so
+`nonzero_bits <= 0x1ff` and a 16-bit sign extension of it is provably the
+identity. `combine` then deletes it however the source spells it - conversion
+or cast, narrow local or int.
+
+So an explicit cast is not a lever for making a narrowing appear. To keep one,
+the VALUE has to be something agbcc cannot bound: a genuinely multiply-set
+pseudo (a loop counter is the common case, which is why the same call's first
+argument `a + i` does keep its shift pair), a memory read it cannot track, or
+a wider operand. Reach for the operand's provenance, not for a cast.
+
+The same measurement refutes one plausible-looking workaround: masking with
+`& 0xffff` to widen the range does nothing, because `nonzero_bits` already
+proves the AND is a no-op and it is folded along with the extension.

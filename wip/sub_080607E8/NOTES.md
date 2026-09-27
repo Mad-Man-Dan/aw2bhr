@@ -82,3 +82,48 @@ anything that adds the missing number of bytes anywhere realigns the whole tail
 and multiplies the percentage.** The permuter's objective and the flag sweep's
 ranking are both vulnerable to it. A candidate that gains size should be checked
 for *which* instructions it added before its score is believed.
+
+## Wave 94 (W94-A) - both imported drafts rejected, draft unchanged at 54.65%
+
+**Vesly's two files are wrong C and are quarantined** as
+`vesly-best.c.wrongc` and `vesly-sub_080607E8.c.wrongc`. The defect is not the
+wave-92 duplicated call (there is none): it is `(char) b` as the second
+argument of `sub_08025CC8`. `b = p->unk01 + 4` ranges 4..259, so the cast
+truncates it; agbcc's `char` is unsigned here, so the cast compiles to
+`lsl #0x18 / lsr #0x18` where the ROM has `lsls #0x10 / asrs #0x10`. The file
+is size-exact only because three errors cancel: the truncation adds an
+instruction pair, an extra `add r0, r2, #0` adds one, and the missing
+`movs r0, #0` for `unk09` removes one.
+
+Three axes re-tested on the current (wave-77 goto-loop) base, since all three
+were originally measured on the pre-wave-77 base. All still negative:
+
+- `b = p->unk01; b += 4;` - the dead first set is eliminated, so `b` is still
+  a single-set pseudo and the narrowing still folds; it also moves the loop
+  counter into r8. Worse.
+- `u16 b` - byte-identical.
+- `(s16) b` written as an explicit cast at the call - byte-identical.
+
+**That last one bounds the wave-15 rule.** "An explicit narrowing cast expands
+to a shift pair that survives where the implicit conversion folds" holds only
+where the narrowing is NOT provably redundant. `b` is a single-set pseudo with
+`nonzero_bits <= 0x1ff`, so combine folds a 16-bit sign extension of it
+whatever the source spelling is. For the ROM's shifts to survive, `b` must be
+a pseudo whose range agbcc cannot bound - not a cast.
+
+Permuter run 1 from the 54.65% base reported 79.65% size-exact and the form is
+WRONG C, quarantined as `w94-perm1-7965.c.wrongc`. It inserts
+`band = c; i = band;` before `u->unk0a = i;`. The stored value is right (`c` is
+0 in that branch) but it clobbers `band`, the loop-invariant schedule row, and
+resets the loop counter `i` to 0 - a unit created at column 1 makes the loop
+repeat column 1 for ever. No uninitialised-read check can see this.
+
+What that form does establish, and it is worth having: the right size (172) is
+reachable from this draft by adding two register copies inside the loop body,
+which agrees with the recorded three-instruction residual.
+
+### Residual
+
+164/172 (-8), 54.65%, first difference +0xa - the mask shuffle's high register
+(ROM `sb`, candidate `r8`), which follows from the missing instructions in the
+`sub_08025CC8` call block rather than being independent.

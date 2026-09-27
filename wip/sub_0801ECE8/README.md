@@ -10,11 +10,11 @@ Queues one sprite for drawing. It fills the next free record of gUnknown_0200ED2
 
 ## How close it is
 
-Compiles to the right size (152 bytes); 63 bytes differ. The cause is one constant: clearing bits in the 64-bit template leaves the compiler holding 0xFFFFFFFF for the upper word, and it reuses that for the `== -1` test where the original builds -1 with two instructions. That adds a literal-pool word and moves registers around it.
+The recorded draft compiles to the right size (152 bytes) with 63 bytes different. A form found in wave 94 is far better understood, though 4 bytes short: it reproduces every constant the original uses, both stores of the 8-byte template, and the whole stack frame, and differs only in which of two values keeps the last spare register. It is kept beside the draft as w94b-simode-words.c.
 
 ## What is left
 
-Clear the two template bits without a 64-bit AND against a negative constant, while still computing the record's address only once. Every way of writing that 64-bit AND loads the 0xFFFFFFFF, so the fix has to avoid the 64-bit AND altogether.
+In the w94b-simode-words.c form, give the template's high word the last spare low register instead of the record array's base address. That swap is worth exactly the 4 bytes the form is short, because a base address in a high register cannot be advanced by an immediate and so costs two more instructions. Reading the two halves of the 64-bit argument as a register pair, rather than through its address, does produce the original's choice, so what is left is to do that without the shift that currently forces a larger stack frame.
 
 ## Already tried
 
@@ -23,6 +23,8 @@ Clear the two template bits without a 64-bit AND against a negative constant, wh
 - Masking the template as two 32-bit halves through pointer casts: the -1 comes out right, but the record's address is rebuilt three times; 20 bytes too long.
 - A pointer local for the record: changes the address arithmetic away from the original's.
 - Reading a6 between the two masks, splitting the masks into separate statements, or putting the constant first (`~0x2000 & a5`): no change, because the constant is loaded before the AND is built.
+- Masking the low 32 bits only, and writing the record's two words through a file-local struct that spells the 64-bit member as two words: this removes the extra constant entirely and is 4 bytes short, not 20 bytes long as the earlier pointer-cast attempt was.
+- Two plain int parameters instead of the 64-bit one: refuted by two already-matched callers, which pass a 64-bit value.
 
 ## Files
 
@@ -74,5 +76,9 @@ WAVE 86 (W86-E, vocabulary-twin axis): twin sub_0801E8D8 (src/decomp/c_0801E8D8.
 ### Wave 93
 
 W93-E: not reached; still never permuted.
+
+### Wave 94
+
+W94-B: THE CONSTANT IS SOLVED; the residual is now one register. The new form work/sub_0801ECE8/w94b-simode-words.c measures 148 bytes (-4) and 30.92% -- positional: it is two instructions short in one place -- and it reproduces the ROM's four pool words (no 0xFFFFFFFF), its [r0,#0xc]/[r0,#0x10] store pair, its prologue, its 4-byte frame and its long-form -1, with correct semantics and no change to any shared header. Three parts: (1) mask the LOW WORD in SImode, via ((int *)&a5)[0]. The ROM cannot come from a DImode AND, because thumb_load_double_from_address pulls BOTH words of a CONST_DOUBLE from the pool, so two DImode masks would leave FOUR mask words where the ROM has two. (2) Write the 0x0c and 0x10 words through a FILE-LOCAL struct that spells the 64-bit member as two u32, casting the array base: ((struct W *)gUnknown_0200ED20)[gUnknown_03002510].unk0c = lo. This CSEs with every other member access, where the &member casts the park rejected each rebuilt the index and re-read gUnknown_03002510. struct Unk0200ED20 is NOT changed, so c_0801E338.c is untouched. (3) Bind lo then hi at the top, which gives the ROM's two ldr order, its frame and its three saved high registers. RESIDUAL: five values want the four low callee-saved registers, and the ROM gives the last one to the template's high word while this form gives it to the record array's base (ROM r5=lo, r6=hi, base->r8; ours r5=base, r6=lo, hi->sl). The ROM's choice is the dearer one and is exactly the -4: a base address in a high register cannot be advanced by an immediate, so the ROM pays one extra insn to load it and one more to add 4. Allocno priority floor_log2(refs)*refs/live_length predicts OUR order (base 2*4/8=1.0 against hi 1*2/25=0.08), not the ROM's. MEASURED INERT, three variants in one probe, all the same length: reading hi before lo; masking into a separate variable (copy propagation folds it back, so it does not produce the ROM's `adds r5,r1,#0`); moving the unk10 store after the unk0a store. NEXT LEAD, and it is a positive: `lo = a5; hi = a5 >> 32;` -- no &a5, so the parameter stays a DImode register pair -- DOES produce the ROM's assignment, base in r8 and hi in a low register. It costs an 8-byte frame and spills a2, so it is worse overall, but it proves the ROM's assignment is reachable; get the halves as a register pair without the shift and this closes. ALSO REFUTED THIS WAVE: parameters 5 and 6 are NOT two ints -- the matched callers c_0801ED80.c (a long long straddling r3 and the first stack slot, with agbcc's own thumb_load_double_from_address annotation) and sub_0801EDF8 (one movs r3,#0 covers both halves of a 64-bit zero, measured 4 bytes better than two int zeros) both prove the 64-bit argument. And the ROM's two unfolded ANDs are NOT a DImode tell: agbcc leaves two statement-level SImode ANDs unfolded too. PERMUTER, 900 s --current: reported 58.55% -> 89.47% size-exact, and the form is WRONG C (w94b-perm1-hi-zeroed.c.wrongc). It wrote `unsigned int new_var = 0x1000; v &= ~new_var;`; `~` on an unsigned int ZERO-extends to 64 bits, so the template's high word is cleared where the ROM stores it unchanged. It scored because clearing the high word makes the dead 0xFFFFFFFF visibly dead -- the same shape the correct form reaches honestly. Draft left at the 58.55% size-exact form; w94b-simode-words.c is the real base for the next attempt, and drafts.py bases will NOT name it, because it scores lower.
 
 </details>

@@ -2,7 +2,7 @@
 
 0x08057164, 268 bytes, THUMB, parked.
 
-Best score so far: 22.4%, -4 bytes (best.c).
+Best score so far: 20.9%.
 
 ## What it does
 
@@ -25,7 +25,6 @@ Make the compiler step one element index by 1 and scale it at each table read, a
 ## Files
 
 - `sub_08057164.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -41,5 +40,9 @@ PARKED Wave 70 at exact size 268/268. All statements and branches are present; t
 ### Wave 93
 
 W93-E: two negatives recorded in work/sub_08057164/NOTES.md; never permuted yet.
+
+### Wave 94
+
+W94-B: first permuter run on this function (--current, 900 s, 4 threads, length-penalised scorer). It reported and KEPT an improvement, 20.90% -> 30.22% size-exact -- and the form is WRONG C, now work/sub_08057164/w94b-perm1-idx-clobber.c.wrongc. It reassigns `idx` to `a * 5` inside the loop body, after the three unk1a table reads that use `idx` have already run once, so four of the five entries read the wrong table element. Neither guard can see it: every read follows an assignment, and the length does not change. Draft restored and re-verified at 268/268, 20.90%, first difference +0xe. Screen that works here: this candidate and both wave-93 negatives all move the first difference EARLIER, from +0xe to +0xa, while scoring higher -- on this function that signature marks a reorganised loop opening, not progress. The GIV residual in `left` is untouched.
 
 </details>

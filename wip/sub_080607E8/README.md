@@ -2,7 +2,7 @@
 
 0x080607E8, 172 bytes, THUMB, parked.
 
-Best score so far: 54.6%, -8 bytes.
+Best score so far: 79.7% (best.c).
 
 ## What it does
 
@@ -28,6 +28,7 @@ Find a way of writing b (the row plus 4) whose 16-bit narrowing the compiler can
 ## Files
 
 - `sub_080607E8.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -68,5 +69,9 @@ The gUnknown_08499590 access is settled and must not be re-litigated: the file-l
 ### Wave 92
 
 WAVE 92 (W92-B): no movement (54.65%, -8), but the residual is now closed arithmetically and the permuter result was REJECTED as wrong C. THE -8 IS FULLY ACCOUNTED FOR: the ROM narrows b to 16 bits before sub_08025CC8's second argument (mov r2,r8 / lsls r1,r2,#16 / asrs r1,r1,#16) where the draft copies in one instruction, +4 bytes; the ROM materialises movs r0,#0 for u->unk09 = 0 where the draft reuses c's register, +2; the code then reaches 170 and the literal pool's alignment needs the ROM's .short 0x0000, +2, giving 172. Nothing else in the function differs. The narrowing is requested (the prototype is (s16, s16, s16)) and combine deletes it because b = zero-extended byte plus constant has 23 sign-bit copies. The contrast that names the mechanism is the FIRST argument a + i, whose narrowing survives in both, because the loop counter gives combine no range. CORRECTING THIS ENTRY: the recorded claim that splitting b's definition gets 4 bytes back is true of the size and false of the reason. Compiled and diffed, the narrowing is STILL absent; the split only moves b out of a high register so the copy becomes adds r1,r7,#0, and the four bytes come from an unrelated register shuffle earlier in the loop. It is not a partial fix and the draft is the better base. Also measured negative this wave: u->unk0a re-read from the map, 16.11% at +8; that plus the split, +12; the map cell's address bound to a local with unk0a re-read through it, 25.57% at +4; the two stores swapped in source order, BYTE-IDENTICAL, so store order is not a lever either. PERMUTER (900 s, 4 threads, the first run ever on this function): reported 54.65% -> 80.81% at the ROM's exact size and kept that source. The mutation inserts a second p = sub_0803E354(7) INSIDE THE LOOP -- a dead assignment whose call cannot be deleted, worth exactly the missing 8 bytes, after which every later instruction lands on the ROM's address. The ROM's loop body has no such call, so the candidate would call it four extra times per invocation: a behaviour change, not a spelling. Rejected; draft, best.c and best.json restored. NOTE the last pool word's relocation prints as a difference (gUnknown_030046B4 against gFactoryUnitSchedule) and is NOT one: the map puts gFactoryUnitSchedule at 0x030046b4.
+
+### Wave 94
+
+W94-A: Vesly's 86.63% size-exact file was judged wrong C and quarantined (vesly-best.c.wrongc), as was a permuter run's 79.65% form (w94-perm1-7965.c.wrongc). Draft unchanged at 54.65%, 8 bytes short.
 
 </details>

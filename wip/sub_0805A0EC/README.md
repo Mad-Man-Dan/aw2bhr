@@ -55,4 +55,8 @@ W92-C: unchanged 98.95%, 2 code bytes at +0xd5/+0xd6 (+0x34/+0x164 are .rodata a
 
 W93-F: one 900 s run from the draft under the old permuter scoring returned nothing; not yet run under the length-penalty scorer.
 
+### Wave 94
+
+W94-B: 900 s / 4 threads / --current under the length-penalised scorer (AW2_PENALTY_SIZE=1000), the first run here under the fixed objective. 34,891 iterations, 1,112 errors, ZERO improving candidates -- nothing beat the draft's objective score of 120, nothing was verified, the draft was not touched (re-checked: 380/380, 98.95%, first difference +0x34; only the +0xd5/+0xd6 pair is code). The scorer fix cannot help this park and the reason generalises: the draft is already size-exact, so the new length term is zero for it and for every size-exact neighbour, and the objective is exactly as blind to a two-byte register-numbering residual as before. The remaining work is the reload-ordering read the wave-92 note sets up (one FEWER scratch handed out before the key test), not another search.
+
 </details>
