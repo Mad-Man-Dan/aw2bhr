@@ -15,7 +15,7 @@ void sub_0801DED8(void)
     {
         if (gUnknown_0200E438[i].unk08)
         {
-            sub_0801DCD4(i, 0);
+            RunSimpleSpriteScript(i, 0);
             sub_0801DB04(i);
         }
     }
@@ -27,5 +27,5 @@ void sub_0801DF20(void)
 
     for (i = 0; i < gUnknown_03003034; i++)
         if (gUnknown_0200E438[i].unk08)
-            sub_0801DCD4(i, 1);
+            RunSimpleSpriteScript(i, 1);
 }

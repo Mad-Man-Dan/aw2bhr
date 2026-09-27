@@ -104,12 +104,14 @@ def c_objects():
     return out
 
 
-def load_upstream_from_map(known):
+def load_upstream_from_map(asm):
     """Pre-existing C functions recovered from the linker map.
 
-    Anything already in the assembly index is skipped, leaving src/proc.c and
-    src/title-screen.c. Promoted decomp functions stay in the index and are
-    classified there, so these rows cannot inflate the primary metric.
+    Assembly-index functions are skipped by address as well as name. The
+    source definition may have a human-readable name while the assembly index
+    still uses sub_XXXXXXXX; address matching keeps renamed promoted functions
+    out of the upstream bucket. This leaves pre-existing C functions such as
+    those in src/proc.c and src/title-screen.c.
     """
     path = os.path.join(awlib.REPO, "aw2bhr.map")
     if not os.path.exists(path):
@@ -117,6 +119,13 @@ def load_upstream_from_map(known):
               "to appear; showing assembly only")
         return []
 
+    known_names = {r["name"] for r in asm}
+    promoted_path = os.path.join(awlib.DATA_DIR, "promoted.json")
+    if os.path.exists(promoted_path):
+        with open(promoted_path, encoding="utf-8") as fh:
+            for unit in json.load(fh):
+                known_names.update(unit.get("functions", []))
+    known_addrs = {r["addr"] for r in asm}
     wanted = c_objects()
     out, cur_obj, cur_end = [], None, None
     with open(path, encoding="utf-8", errors="replace") as fh:
@@ -130,7 +139,7 @@ def load_upstream_from_map(known):
             if not m or cur_obj not in wanted:
                 continue
             name, addr = m.group(2), int(m.group(1), 16)
-            if name in known or name.startswith("."):
+            if name in known_names or addr in known_addrs or name.startswith("."):
                 continue
             out.append({"name": name, "addr": addr, "obj": cur_obj,
                         "end": cur_end})
@@ -154,8 +163,6 @@ def collect():
     fe = load_fe_names()
     parked = load_status_names("parked.json")
     resident = load_status_names("asm-resident.json")
-    known = {r["name"] for r in asm}
-
     items = []
     for r in asm:
         # Promoted functions remain in asm/ as reference, so presence there says
@@ -181,7 +188,7 @@ def collect():
             "name": r["name"], "addr": r["addr"], "size": max(2, r["size"]),
             "status": status, "note": note,
         })
-    for r in load_upstream_from_map(known):
+    for r in load_upstream_from_map(asm):
         items.append({"name": r["name"], "addr": r["addr"],
                       "size": max(2, r["size"]), "status": "upstream",
                       "note": "pre-existing C: " + r["obj"]})

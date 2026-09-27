@@ -8791,43 +8791,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "Writes a number into a tilemap buffer as decimal digits, right to left. It starts at `dest + x + 32` (one 32-entry row down, x cells across) and, for each digit, stores the digit plus the base tile of the digit glyphs (the first u16 of gUnknown_0300308C, reached through a pointer word at 0x0808DF8C), dividing by 10 until the number reaches 0. The second parameter is never read.",
-    "status": "Compiles to the right size (64 bytes); 13 bytes differ. All of the difference is where one load sits: the original re-reads the pointer to the digit base tile on every loop pass, while our build reads it once before the loop.",
-    "left": "Get the compiler to keep that pointer read inside the loop instead of moving it out (loop hoisting). Every way of declaring the global gives the same code, so this is thought to have no fix in the C source.",
-    "tried": [
-     "Using the plain name `gUnknown_0300308C[0]`: one instruction short, because the compiler loads the address directly instead of through the pointer word.",
-     "Ten declarations of the pointer word (const pointer, plain pointer, volatile pointer, pointer array, const pointer array, sized array and more): all move the read out of the loop, and the volatile and plain-pointer forms also add an extra load.",
-     "Copying the global into a local inside the loop, or indexing it with a variable (`g[value % 10]`): no change.",
-     "Blaming the two division calls or the store through `dest` for the reload: ruled out, because our build has both and the compiler still moves the read out."
-    ]
-   },
-   "bytes": 64,
-   "best": "79.7% identical, SIZE-EXACT, 13 differing bytes",
-   "remaining_diff": "One instruction's POSITION, across a loop boundary. The ROM keeps `ldr r6,<pool>` in the preheader and re-reads BOTH levels inside the loop (`ldr r1,[r6]; ldrh r1,[r1]`); every candidate hoists the middle `ldr` into the preheader and leaves only the `ldrh` in the body. Same instruction count, hence the exact size.",
-   "why_it_is_close": "The body is not in question -- prologue, the `dest + x + 0x20` start cell, both libgcc calls, the digit arithmetic, the u16 re-narrowing and the exit test are byte-exact, and wave 51 re-derived the same body independently from the assembly.",
-   "axes_ruled_out": [
-    "TEN declaration spellings across waves 42, 51 and 58: honest `gUnknown_0300308C[0]`; volatile array; sized array [2]; base bound to a local inside the loop; variable index `g[value % 10]`; `u16 *const` scalar; `u16 *`; `u16 *volatile`; `u16 *const volatile`; and (wave 58) `u16 *g[]` and `u16 *const g[]` measured side by side in one probe. The last two are byte-identical to each other AND to the scalar draft, which closes the wave-51 row that called the non-const array 'one LICM decision away'.",
-    "Wave 58: call-clobbering and store aliasing as explanations. This loop contains TWO calls (__umodsi3, __udivsi3) and a store through a pointer parameter, and agbcc hoists a non-const, non-volatile global load out of it regardless. The two compilations differ in neither, so neither can be the mechanism.",
-    "Not a permuter case: the difference is instruction ORDER across a loop boundary, not a register assignment.",
-    "Wave 79 (W79-C) re-measured and CONFIRMED this entry unchanged: 64/64 size-exact, 79.7%, 13 differing bytes, first difference at +0x11. No new axis was opened, and the smallest budget in the batch was spent here deliberately. Two candidates were checked on paper and neither reaches it: the wave-79 u32-pointer-arithmetic lever that closed sub_080228D8 moves a pool ldr past an index scaling and says nothing about an LICM hoist; and the W40-J / W43-A chapters of docs/agbcc-codegen.md already explain why a constant subscript cannot be talked into the reloaded form -- in sub_08010ADC, the function that DOES get the reload, the index is an INDUCTION VARIABLE with strength reduction in play, which g[value % 10] is not. Treat this entry as closed."
-   ],
-   "settled_by_this_attempt": [
-    "Classification: constant placement realised as an LICM decision -- instruction ORDER across a loop boundary. This is the same unreachable family as sub_080373F0's basic-block layout: a choice made inside a compiler pass with no source-level handle, and no spelling of the declaration reaches it.",
-    "`const`ness and `volatile`ness do not decide the hoist; all ten spellings hoist. The question was never how to spell the global."
-   ],
-   "reason": "Wave 58 (W58-A), carried from waves 42 and 51. Ten spellings measured; the residual is an LICM hoist, which is instruction order across a loop boundary and has no source lever.",
-   "wave92": {
-    "agent": "W92-A",
-    "measured": "79.69%, size-exact 64/64, first difference +0x11 (tools/drafts.py bases; no try_match spent).",
-    "verdict": "Entry confirmed closed. The brief's instruction to 'fix the pool-word spelling' names an axis that is already the first line of axes_ruled_out: the honest gUnknown_0300308C spelling is one instruction SHORT.",
-    "new": "Three other functions in this batch closed part of their gap by naming the global directly, and agbcc answered each with the three-level chain this function needs, so the chain is reachable. The mechanism is already settled in docs/agbcc-codegen.md (\"The `.rodata` force-addr word is made by GCSE's PRE\", wave 91 W91-B): the .LC word survives only when the pool pseudo has more than one use, and PRE is what creates the extra uses -- and that chapter names this function's shape, a loop containing a call, as a case where PRE fires. So the open question is NOT which declaration to write. It is why, with the honest spelling, the pool pseudo ends up with ONE use here. Read it off a -da dump of the .gcse pass rather than spending an eleventh declaration. Note that -fno-gcse is already in the swept flag set and did not move this function, which argues against a PRE insertion being what the ROM has."
-   },
-   "wave93": "WAVE 93 (W93-D): re-measured unchanged at 79.7%, 64/64 size-exact, first difference +0x11. Three axes closed with controlled probes. (1) VOLATILE IS REFUTED. Reading the global through a volatile cast at the use -- the technique that unlocked sub_08073480 this wave -- was tried three ways (**(u16 *volatile *)&g, the same through a local, and (*(u16 *volatile *)&g)[0]); all three are size-exact at 29.7%, first difference +0x0. The volatile read does stay in the loop, but the cast makes agbcc park the symbol's address in this unit's own .rodata and reach it through an EXTRA indirection -- `ldr r7,[pc]` relocating against .rodata rather than gUnknown_0808DF8C, then `ldr r0,[r7]`, `ldr r4,[r0]`, `ldrh r1,[r4]`, three loads in the loop where the ROM has two. DECISIVE: -fvolatile-global on the plain draft gives the SAME 29.7% / +0x0, so the compiler's own volatile-everything flag produces exactly what the targeted cast produces and it is not the ROM. The same cast WITHOUT volatile, **(u16 **)&g, is byte-identical to the draft at 79.7%, so the cast is free and the volatile is what costs. (2) ALIAS ANALYSIS IS REFUTED: the theory that the u16 store through the pointer parameter cannot alias a `u16 *` object under strict aliasing, which would make the pointer load invariant, dies on -fno-strict-aliasing, which leaves the draft at exactly 79.7% / +0x11. (3) NO PASS FLAG OWNS IT: -fno-gcse, -fno-rerun-cse-after-loop, -fno-rerun-loop-opt and -fno-expensive-optimizations each leave it at 79.7% / +0x11. The hoist is loop.c's own invariant motion, which agbcc has no flag to disable. The flag axis is now exhausted as well as the declaration axis. Treat this entry as closed, with more evidence behind it."
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,
@@ -22769,15 +22735,16 @@
   "parked_reason": {
    "summary": {
     "does": "Saves a block of game data to flash memory in 4 KiB sectors. It splits the data into pieces, writes each piece with a header and checksum to a free slot chosen by its generation counter, and checks it, moving to another slot if the check fails. Returns 1 if it runs out of slots, otherwise 0.",
-    "status": "Compiles 12 bytes too long (1068 against 1056). Because every byte after the first extra instruction is shifted, most of the function compares as different; the real differences are in how the buffer's address is built and in the stack spills that follow from it.",
-    "left": "Make the compiler build the 0x02002000 buffer address as the original does (load a nearby address and subtract, then reach byte 0xFFF by adding a constant) instead of creating its own address constant for byte 0xFFF and working back from it. The spill differences are expected to follow from that.",
+    "status": "Both retained drafts compile to the original size (1056 bytes). The current draft matches 81.91% of the bytes; best.c matches 83.24%. Neither matches the ROM yet.",
+    "left": "Resolve the remaining instruction and register differences in the size-exact drafts. The earlier 12-byte excess belongs to the superseded draft.",
     "tried": [
      "Writing the success flags as `| (idx << 4)` directly: 8 bytes worse, because the OR widens to a full word. A `u8 tag` set inside the byte-0xC store and reused later (the current draft) saves 4 bytes; `u16` or `int` for that local are 4 and 12 bytes worse.",
      "`if (retry == 0 || retry == 4)` instead of a switch with a fall-through: 8 bytes worse.",
      "Indexing `gUnknown_0200CC88[16 + x]` instead of taking the address of the second array: about 12 bytes worse.",
      "Copying a3 into its own local before the loop: 8 bytes worse, and a1 loses its register.",
      "`list[n++] = i` in one statement: increments before storing, where the original stores first.",
-     "The plain member spelling `gUnknown_0200CC88.slotGeneration[x]` (kept in best.c): same size, a few more bytes line up; not adopted until the 12 bytes are solved."
+     "The plain member spelling `gUnknown_0200CC88.slotGeneration[x]` (kept in best.c): same size, a few more bytes line up; not adopted until the 12 bytes are solved.",
+     "The merged size-exact drafts improve on the 1068-byte versions; their earlier experiment notes are retained in NOTES.md."
     ]
    },
    "note": "PARKED Wave 71 at 1068/1056 (+12), 20.0%. A narrow block-local u8 tag improved +16 to +12; the remaining 0x02002000 address-hub choice and spill cascade survive. Switch/retry CFG, folded-address forms, direct narrow OR, and wider tag spellings are settled in the draft comment."
@@ -22915,7 +22882,7 @@
   "parked_reason": {
    "summary": {
     "does": "Tidies the save slots in flash memory. It marks the parts of the newest complete save as kept (writing a fresh save with sub_0801A7D8 if there is none), then wipes or frees every slot that is not kept.",
-    "status": "Compiles to the right size (556 bytes); 197 bytes differ. The instructions are nearly all right; what differs is register choice and block order in the two copies of the wipe-and-retry loop.",
+    "status": "Compiles to the right size (556 bytes); about 76% of bytes line up. The remaining difference is register allocation around the two duplicated scan loops.",
     "left": "Find a way of writing the two identical wipe-and-retry loops that makes the compiler pick the original's registers and block order. The flag update that was missing, `(unk20 | 8 | v) & 0xEF` with v a zero held in a register, is already solved by declaring v as `int`.",
     "tried": [
      "Declaring the zero operand as `u8 v = 0`: the compiler drops the OR and the code is 4 bytes short.",
@@ -22924,7 +22891,8 @@
      "A zero-filled local array indexed by the loop counter: the OR survives in the right shape, but it adds a load."
     ]
    },
-   "note": "PARKED Wave 71 at exact size 556/556, 64.6%. The retained int zero restores the otherwise missing OR operand; remaining differences are duplicated-retry allocation/block placement. Earlier u8, uninitialised, array, global-derived and arithmetic-zero spellings are ruled out."
+   "note": "PARKED Wave 71 at exact size 556/556, 64.6%. The retained int zero restores the otherwise missing OR operand; remaining differences are duplicated-retry allocation/block placement. Earlier u8, uninitialised, array, global-derived and arithmetic-zero spellings are ruled out.",
+   "wave93": "First permuter run ever (W93-E): 64.57% -> 76.26% size-exact. The kept form reads `unk20[i] | 8` into a volatile local before the 0x10 test in the second loop and uses it inside; audited by the orchestrator: same meaning, no read before set. The volatile local is what moved it (a volatile local always gets a stack slot). Next: chain further runs from this form."
   },
   "named": false,
   "kind": "game",
@@ -27114,31 +27082,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code-0801D390.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "Runs the command script of one animated object (a 0x4C-byte record in gUnknown_0200E438) until it reaches a wait or an end command. Commands include wait, jump, show a frame, set a field and end. a2 picks the pass: 1 counts down waits without drawing, 0 draws.",
-    "status": "Still 4 bytes short (852 against 856) and unchanged this wave. The whole difference is at the top of the loop, where the original copies the 0xFFFFF000 mask through two extra registers before the AND. Both builds use the same amount of stack, so those copies have no variable behind them.",
-    "left": "Find C that makes the compiler copy the mask constant twice before the AND, as the original does. The same fix should also close sub_0801DCD4, which has exactly this difference.",
-    "tried": [
-     "Seventeen spellings of the mask and the switch value (operand order, `~0xFFF` or `-0x1000`, the mask or the value in a local inside or outside the loop, `&=` forms, re-reading `*p`, different types for v): all give one direct AND. Writing the mask as `0xFFFFF000` also makes it unsigned, which turns every case comparison unsigned.",
-     "Two chained mask locals, nested inline identity functions, locals pinned to a register, and empty or volatile barriers around them: all compile to the same single AND.",
-     "The permuter for 600 seconds: nothing better.",
-     "A `do { } while` loop with an extra `if (p == NULL) return;` guard (kept in best.c): right size and 63% of bytes matching, but only because the redundant guard adds 4 bytes; it moves the first literal pool and is further from the original.",
-     "Dropping the `end` flag that nothing sets: 6 bytes shorter, so the flag stays."
-    ]
-   },
-   "note": "PARKED Wave 71 at 852/856 (-4). The whole residual is the shared loop-top mask routed through two missing copies. Seventeen mask spellings, chained locals, fixed-register qualifiers, barriers, inline identity calls and long permuter searches are ruled out.",
-   "wave93": {
-    "result": "no change; 8.76% at -4 bytes, first difference +0x10",
-    "best_c_NOT_adopted": "The wave-93 brief instructed that best.c (62.97%, size-exact) was 'the only sane base if it is correct C'. It IS correct C -- the honest while loop rewritten as if (p == NULL) return; do { } while (p != NULL); -- but it is not a better base, and the instruction is wrong. The guard is redundant, the loop's own test already covers it, and it compiles to exactly the 4 bytes this function is short. The whole residual stays at +0x10 in both forms and the guarded form additionally moves the first literal pool about 40 bytes, so it is further from the ROM's layout, not closer. This is the brief's own 'a score that rose because the SIZE changed is not progress' case, and wave 56 had already recorded it in the draft's header. The honest while draft is kept.",
-    "frame_lever_ruled_out": "Wave 93's frame-slot lever (an ordinary local never creates a stack slot, a volatile local always does) was checked here because the function is 4 bytes short and a volatile local costs about that. It does not apply: BOTH frames are sub sp, #24, so the ROM allocates exactly the same number of addressable locals. The two missing copies are register-to-register with no object behind them, and volatile cannot produce them without adding a slot the ROM has not got. No probe spent.",
-    "residual_reread": "ROM: ldrh r1,[r7] / ldr r4,[pc,#44] / adds r0,r4,#0 / adds r2,r0,#0 / ands r2,r1. Candidate: ldrh r1,[r7] / ldr r2,[pc,#40] / ands r2,r1. Three pseudos for the mask in the ROM (r4 -> r0 -> r2), one in the candidate; ands is destructive, so each copy implies the previous pseudo is still live afterwards. A pseudo-COUNT fact with no frame object and no instruction selection in it, which is why seventeen respellings have all folded to one AND.",
-    "permuter_REJECTED": "900 s x 4 threads, the first run from the honest draft, reported IMPROVED 8.76% -> 56.19% at the exact 856 bytes. REJECTED as wrong C. The only semantic change is one read-before-set: new_var = (struct Unk0801D390Bits *)&e->unk30; was bound inside the 0x2000-family arm and then used for the SAME unk00_c test in the 0xF000 / 0xF00 arm, where it is never assigned. The two arms are mutually exclusive cases of one switch, and being inside the while loop does not save it because the first iteration can take 0xF000 directly. Output kept as w93-perm1-5619.c.wrongc.",
-    "draft_recovery_warning": "work/ is not tracked by git and no copy of the draft had been taken before the run, because the draft was being KEPT rather than replaced -- which is exactly when the brief's 'copy work/<fn>/<fn>.c before any permuter run' gets skipped. The draft was reconstructed by reverting the three edits (declaration, assignment, two uses) and re-measures at 8.76%, size -4, first +0x10, the recorded numbers to the digit."
-   }
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,
@@ -27841,22 +27787,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code-0801D390.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "A cut-down copy of sub_0801D390's script interpreter for the same animated objects, with fewer commands. It draws with sub_0801ECE8 and can make the object flicker by drawing only on odd frames.",
-    "status": "Compiles 4 bytes too short (512 against 516). The difference is the same one as in sub_0801D390: at the top of the loop the original copies the 0xFFFFF000 mask through two extra registers before the AND. Everything after it is shifted, so the byte score (about 12%) means little.",
-    "left": "Find C that makes the compiler copy the mask constant twice before the AND. Solve it in either this function or sub_0801D390 and the fix should carry to the other.",
-    "tried": [
-     "Seventeen spellings of the mask and the switch value, tried on both functions (operand order, `~0xFFF` or `-0x1000`, the mask or the value in a local, `&=` forms, re-reading `*p`, different types for v): all give one direct AND. `0xFFFFF000` also makes every case comparison unsigned.",
-     "Two chained mask locals, nested inline identity functions, locals pinned to a register, and empty or volatile barriers: all compile to the same single AND.",
-     "The permuter: nothing close. Its best result (in best.c, about 15%) only adds meaningless edits such as subtracting a variable that holds 1.",
-     "A `do { } while` loop with an extra null guard: reaches the right size in sub_0801D390 only by adding a redundant check, so it was not used here."
-    ]
-   },
-   "note": "PARKED Wave 71 at 512/516 (-4). Exact twin of sub_0801D390's loop-top mask-copy residual. Direct, chained, fixed-register and barrier vehicles all collapse to the same one-pseudo AND; CFG and semantic body are settled."
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,
@@ -28784,7 +28717,8 @@
    ],
    "reason": "Wave 58 (W58-A), carried from waves 33/36/40/42. Constant placement: a DImode mask's high-word all-ones constant that CSE re-spends on the `== -1` compare. Type model confirmed against a matched twin, so allocation and typing are both excluded.",
    "wave81": "WAVE 81 (D): interleaving t=a6 BETWEEN the two DImode masks refuted by probe. The masks do split into two separate ANDs, but the 0xFFFFFFFF high word is created BEFORE the first mask regardless (its ldr/adds pair sits above the ANDs) and the ==-1 compare still consumes it; three pool constants persist. High-word materialisation follows from ANY DImode AND against a negative int constant, not from statement adjacency or evaluation window.",
-   "wave86": "WAVE 86 (W86-E, vocabulary-twin axis): twin sub_0801E8D8 (src/decomp/c_0801E8D8.c, Jaccard 1.00) is a TRUE SHAPE TWIN; its only spelling difference (constant-first operand order `v = ~0x2000 & a5; v = ~0x1000 & v;`) is byte-neutral -- still `and r4,r4,r1`, still FIVE pool words against the ROM's FOUR. compile_probe only, no try_match, draft unchanged. MECHANISM NAMED AND CLOSED: agbcc's own .s comment says the -0x1 high word is `created by thumb_load_double_from_address` -- the DImode constant loader pulls BOTH words of the CONST_DOUBLE out of the pool into a register pair BEFORE any AND rtx exists; the high-half AND folds away but its operand register is already live, and cse merely re-spends it. So NO source-level respelling of a DImode AND against a negative int constant can avoid the high-word pool constant; the five spellings measured to date (one-expression fold and parameter self-assignment in wave 58, interleaving and statement split in W81-D, operand order in W86-E) all behave identically as predicted. The only escape is not having a DImode AND, and every spelling that removes it loses the single element-address expression (+20 bytes, wave 58). Treat as a closed kind-3 with a named mechanism, like kinds 4 and 5: stop respelling the mask."
+   "wave86": "WAVE 86 (W86-E, vocabulary-twin axis): twin sub_0801E8D8 (src/decomp/c_0801E8D8.c, Jaccard 1.00) is a TRUE SHAPE TWIN; its only spelling difference (constant-first operand order `v = ~0x2000 & a5; v = ~0x1000 & v;`) is byte-neutral -- still `and r4,r4,r1`, still FIVE pool words against the ROM's FOUR. compile_probe only, no try_match, draft unchanged. MECHANISM NAMED AND CLOSED: agbcc's own .s comment says the -0x1 high word is `created by thumb_load_double_from_address` -- the DImode constant loader pulls BOTH words of the CONST_DOUBLE out of the pool into a register pair BEFORE any AND rtx exists; the high-half AND folds away but its operand register is already live, and cse merely re-spends it. So NO source-level respelling of a DImode AND against a negative int constant can avoid the high-word pool constant; the five spellings measured to date (one-expression fold and parameter self-assignment in wave 58, interleaving and statement split in W81-D, operand order in W86-E) all behave identically as predicted. The only escape is not having a DImode AND, and every spelling that removes it loses the single element-address expression (+20 bytes, wave 58). Treat as a closed kind-3 with a named mechanism, like kinds 4 and 5: stop respelling the mask.",
+   "wave93": "W93-E: not reached; still never permuted."
   },
   "named": false,
   "kind": "game",
@@ -30507,7 +30441,7 @@
    "wave91": "WAVE 91 (W91-A), pre-registered member-form test: NEGATIVE, BYTE-IDENTICAL. This draft was already a member form through its local struct Unk20754Map; respelled through the shared struct Map (`((struct Map *)gUnknown_08499590)->terrain[->rowOffset[y] + x]`, `->unitUnk[...]`) and through gMap, _cand.bin is cmp-identical to the wave-90 draft (220/208, +12, 27.9%). NEW MECHANISM READ OFF `rtldump.py --flags=\"-da -dp\"` (dump.cse): the candidate's `= 0` arm reuses the index (reg 47) because CSE reaches that arm by -fcse-skip-blocks -- the `unit == 0` jump branches AROUND the unit-type block (no other entry) to a single-use label -- not by fall-through as this entry's why_it_is_close says; the `= 1` label has two uses, so it starts a fresh block and recomputes with a reload of gUnknown_08499590. The ROM is the mirror, so its source must at CSE time deny the skip-blocks path into `= 0` (a second use of that label, or a second entry into the type block) AND give `= 1` a single-use label behind a barrier. Measured, all byte-identical to the draft: negated tests each `goto one;` then `= 0; continue; one: = 1;`; nested ifs with a shared `zero:` label inside the inner if; `... && !(unit != 0 && (u8)(type - 0x10) <= 4)`. `if (cond) goto zero; = 1; continue; zero: = 0;` is +8/45.7% but puts `= 1` first, recomputes there, and grows the frame to sub sp,#8. Evidence: work/sub_08020754/NOTES.md.",
    "summary": {
     "does": "Fills a map-sized byte buffer with 0 or 1 per tile: 0 where the terrain is wood (4) or reef (0x13) and the tile has no unit or a unit whose type is outside 0x10-0x14; 1 everywhere else.",
-    "status": "12 bytes too long. Everything matches except where the tile's index is recomputed: the original recomputes it in the '= 0' branch and reuses it in the '= 1' branch, and our draft does the opposite, which costs two extra pool words and a lost tail merge.",
+    "status": "The retained draft compiles 8 bytes too long and matches 38.46% of the bytes. Its branch layout still differs from the original; the earlier draft was 12 bytes too long.",
     "left": "Find how the original wrote the if/else so that the compiler's common-subexpression pass reaches the '= 1' branch and not the '= 0' branch. The RTL dumps show it currently reaches '= 0' by skipping around the unit-type check.",
     "tried": [
      "The map through the shared struct Map or gMap: identical output (the draft already used members).",
@@ -47266,7 +47200,8 @@
    ],
    "reason": "Parked in wave 90 (W90-A) after W88, W89 and W90 worked it. Four permuter runs across both scorers (~52k iterations) never moved the three reload picks. Notes: work/sub_08031824/W88-notes.md, W89-notes.md, W90-notes.md.",
    "wave90": "W90-A: unchanged 97.3%/8 bytes. The fixed-objective permuter found nothing in 2 x 900 s (11,049 undirected, 10,679 directed). The .greg dump shows that the three residual picks W88/W89 called bare local_alloc scratch picks are reload spill registers (find_reg: spill_cost, then REG_ALLOC_ORDER from r0). The next attempt should make a pseudo that lives in r0 stay live across loop 1's r8 read, the gUnknown_020280C0 bind, and the copy setup.",
-   "wave92": "W92-C: unchanged 97.26%/8 bytes, size-exact, first difference +0x14. NEWLY RULED OUT, each measured: (a) separate counters for the three header loops (i / i2 / i3 in place of one reused i) is BYTE-IDENTICAL -- they coalesce, so this adds no pressure and is not a lever; (b) binding `c = gUnknown_020280C0` BEFORE `j = 0` instead of after gives 12 bytes / 95.89%, confirming the bind must follow the counter init; (c) a pointer local for loop 1's destination does not compile at all -- the member is volatile, so `&p->unk00[i]` will not convert to `u8 *`. A fresh -dg dump (work/sub_08031824/rtl-w92/) reconfirms W90-A: the three picks are reload spill registers (`Spilling for insn 11/26/64/167. Spilling reg 0.`) chosen by spill cost, so the lever is unchanged -- make a pseudo that holds r0 live across those points. A 900 s permuter chain from --current ran this wave (perm-w92-1.log). A 900 s permuter chain from --current ran this wave (13,907 iterations, perm-w92-1.log): nothing better than the 480 base score."
+   "wave92": "W92-C: unchanged 97.26%/8 bytes, size-exact, first difference +0x14. NEWLY RULED OUT, each measured: (a) separate counters for the three header loops (i / i2 / i3 in place of one reused i) is BYTE-IDENTICAL -- they coalesce, so this adds no pressure and is not a lever; (b) binding `c = gUnknown_020280C0` BEFORE `j = 0` instead of after gives 12 bytes / 95.89%, confirming the bind must follow the counter init; (c) a pointer local for loop 1's destination does not compile at all -- the member is volatile, so `&p->unk00[i]` will not convert to `u8 *`. A fresh -dg dump (work/sub_08031824/rtl-w92/) reconfirms W90-A: the three picks are reload spill registers (`Spilling for insn 11/26/64/167. Spilling reg 0.`) chosen by spill cost, so the lever is unchanged -- make a pseudo that holds r0 live across those points. A 900 s permuter chain from --current ran this wave (perm-w92-1.log). A 900 s permuter chain from --current ran this wave (13,907 iterations, perm-w92-1.log): nothing better than the 480 base score.",
+   "wave93": "W93-F: one 900 s run from the draft under the new length-penalty scorer returned nothing."
   },
   "named": false,
   "kind": "game",
@@ -64538,7 +64473,8 @@
      "A struct member at offset 2 for the halfword store: the compiler still folds the offset into the store instruction."
     ]
    },
-   "reason": "Worked across several waves without a match; the full record is the draft's header comment and the notes files in work/sub_0803CFA4/."
+   "reason": "Worked across several waves without a match; the full record is the draft's header comment and the notes files in work/sub_0803CFA4/.",
+   "wave93": "W93-E: not reached; still never permuted."
   },
   "named": false,
   "kind": "game",
@@ -86182,7 +86118,8 @@
     ]
    },
    "note": "PARKED Wave 70 at exact size 144/144 with 6 differing bytes. The only residual is the allocno/pool inversion between gUnknown_02029822 and gUnknown_0202980A. Flat indexing, typed pointer binding, separate swap temps, four permuter runs and Wave 70's payload opaque-use barrier are ruled out; the barrier flips the held base but over-hoists both rows and removes the required inline load. Preserve the verified readable draft. Wave 77, W77-L: configured re-verdict still 144/144 with SIX differing bytes, and they are exactly three halfwords -- +0x28 `mov r3,sb` vs `ldr r3,[pc]`, +0x34 `mov r0,sb` vs `ldr r0,[pc]`, +0x56 `ldr r2,[pc]` vs `mov r2,sb`. NEWLY RULED OUT, each measured: moving the whole payload swap inside the do/while(0) so its base pseudo lives in ONE basic block (14 bytes, 90.3%); moving only the last payload store inside it (byte-neutral, still 6); deleting the do/while(0) entirely (still 6 bytes, but the held base moves from sb to sl and the outer counter takes sb -- the do/while is load-bearing for the COUNTERS, not for the payload); and byte-offset-first/base-last flat spelling of the PAYLOAD ONLY, `*(u16 *)(j * 2 + side * 0x6c + (u8 *)g)` (+4 bytes, 26.4%) -- the doc's one `later` lever, refuted here by its collateral exactly as on sub_0804C5A4. The wave-57 `two basic blocks leaves local_alloc` rule does NOT explain this residual: block count of the payload accesses was varied over 1, 2 and 3 and the held register never flipped. Both address constants have 2 references and near-equal live ranges, so this is an allocno TIE, and no source-level block or operand-order lever this project has reaches a tie-break. Wave 80 (W80-F), dead-statement/creation-order transfer, four compile_probes, no try_match spent, still 144/144 and 6 bytes: dead row/element address locals for gUnknown_02029822 at the loop top or in the swap block are byte-identical (flow deletes them before refs are counted); a dead gUnknown_0202980A address created BEFORE the first gUnknown_02029822 use is byte-identical too, which lowers 0A's pseudo number below 22's and shows the allocno-number tie-break is not the decider -- the priorities differ; a second do/while(0) region around the gUnknown_02029822 loads does put 22 in sb but drags side*0x6c into ip and spills the outer counter (worse), and around the first load only it swaps the symbols with the same collateral. W83-B: no new axis measured (batch budget went to the permuted siblings); state per W77-L/W80-F stands.\n\nWAVE90: WAVE 90 (W90-A): unchanged 95.8%/6 bytes. The residual is now arithmetic: global.c priority = floor_log2(refs)*refs/live_length from the .greg dump; &gUnknown_02029822 (pseudo 31) 7 refs/88 = 0.159 gets NO register (rematerialised), &gUnknown_0202980A (109) 8 refs/80 = 0.300 gets sb, side*0x6c (36) 0.333 r8, i+1 (169) 0.229 sl. Refs are loop-depth weighted and the swap do/while(0) counts as a loop level: it is worth exactly the one ref that lifts 0A over the floor_log2 step at 8. The ROM needs refs(22) in {8,9} and refs(0A) <= 7 with the rest unchanged. All 1,024 per-statement do/while(0) wrap combinations compiled (-dg): 320 give the ROM's 22-in-sb / 0A-rematerialised split, and in every one side*0x6c moves from r8 to ip because the statements that reference 22 also reference 36. Permuter: undirected 11,720 it, directed 10,674 it, exhaustive PERM_GENERAL do/while enumeration 1,024 it: nothing better. Next lever must raise 22's refs without 36's (or the j+1 copy's with them).",
-   "wave92": "W92-C: unchanged 95.83%/6 bytes, first difference +0x28. No new axis was measured; the W90-A allocno arithmetic stands (keys address 7 refs / live_length 88, payload address 8 refs / 80, priority = floor_log2(refs)*refs/live_length). Recorded so it is not re-derived as though already measured: there are TWO arithmetic routes nobody has tried, both via LIVE_LENGTH rather than refs -- cutting the keys address's live_length below about 47, or raising the payload address's above about 151, reverses the ranking with both ref counts unchanged. Each needs a LIVE reference in a place the sort does not have one, and a dead one is deleted before refs are counted (W80-F). THE MATCHED-SIBLING SPELLING AXIS IS NOW CLOSED, measured. Both arrays are rows of struct Unk02029808 (stride 0x6c): the payload is the unk02 row and the keys are the unk1a row, so gUnknown_0202980A[side][j] == gUnknown_02029808[side].unk02[j] and gUnknown_02029822[side][j] == gUnknown_02029808[side].unk1a[j]. Matched sub_0805653C writes that memory BOTH ways in one function, and the gUnknown_020297CC note in include/unknown-globals.h records matched sub_080546F0 deliberately mixing the flat and member forms for two rows of one record -- so this was the strongest open lead. All three combinations compiled: keys flat + payload member = 144/144, 7 differ (95.1%); keys member + payload flat = 144/144, 7 differ (95.1%); BOTH member = 148 bytes (+4), 132 differ (10.8%). The mixed form costs one byte MORE than the draft and the doubled member form collapses, because with both rows reached through one record the compiler shares a single base address while the ROM plainly keeps two. The draft's row-symbol spelling for both arrays is correct."
+   "wave92": "W92-C: unchanged 95.83%/6 bytes, first difference +0x28. No new axis was measured; the W90-A allocno arithmetic stands (keys address 7 refs / live_length 88, payload address 8 refs / 80, priority = floor_log2(refs)*refs/live_length). Recorded so it is not re-derived as though already measured: there are TWO arithmetic routes nobody has tried, both via LIVE_LENGTH rather than refs -- cutting the keys address's live_length below about 47, or raising the payload address's above about 151, reverses the ranking with both ref counts unchanged. Each needs a LIVE reference in a place the sort does not have one, and a dead one is deleted before refs are counted (W80-F). THE MATCHED-SIBLING SPELLING AXIS IS NOW CLOSED, measured. Both arrays are rows of struct Unk02029808 (stride 0x6c): the payload is the unk02 row and the keys are the unk1a row, so gUnknown_0202980A[side][j] == gUnknown_02029808[side].unk02[j] and gUnknown_02029822[side][j] == gUnknown_02029808[side].unk1a[j]. Matched sub_0805653C writes that memory BOTH ways in one function, and the gUnknown_020297CC note in include/unknown-globals.h records matched sub_080546F0 deliberately mixing the flat and member forms for two rows of one record -- so this was the strongest open lead. All three combinations compiled: keys flat + payload member = 144/144, 7 differ (95.1%); keys member + payload flat = 144/144, 7 differ (95.1%); BOTH member = 148 bytes (+4), 132 differ (10.8%). The mixed form costs one byte MORE than the draft and the doubled member form collapses, because with both rows reached through one record the compiler shares a single base address while the ROM plainly keeps two. The draft's row-symbol spelling for both arrays is correct.",
+   "wave93": "W93-F: one 900 s run from the draft under the new length-penalty scorer returned nothing."
   },
   "named": false,
   "kind": "game",
@@ -86579,7 +86516,8 @@
      "Removing `tbl` in that form: no change."
     ]
    },
-   "note": "PARKED Wave 70 at exact size 268/268. All statements and branches are present; the residual is strength_reduce retaining an address GIV for gUnknown_0855203C where ROM keeps an element-index IV. A bound table pointer and Wave 70's explicit idx counter plus record-pointer walk still form the address GIV. The new source counter does recover the desired +1 element IV, proving the remaining problem is the second GIV decision rather than loop semantics."
+   "note": "PARKED Wave 70 at exact size 268/268. All statements and branches are present; the residual is strength_reduce retaining an address GIV for gUnknown_0855203C where ROM keeps an element-index IV. A bound table pointer and Wave 70's explicit idx counter plus record-pointer walk still form the address GIV. The new source counter does recover the desired +1 element IV, proving the remaining problem is the second GIV decision rather than loop semantics.",
+   "wave93": "W93-E: two negatives recorded in work/sub_08057164/NOTES.md; never permuted yet."
   },
   "named": false,
   "kind": "game",
@@ -88513,7 +88451,8 @@
      "Compiling with the gcse pass turned off: 16 bytes too short."
     ]
    },
-   "wave92": "W92-C: unchanged 98.95%, 2 code bytes at +0xd5/+0xd6 (+0x34/+0x164 are .rodata alias addends, not residual). 900 s permuter from --current, 14,676 iterations: nothing. MECHANISM SHARPENED TO ONE DIRECTION: W90-B offered two ('one more reload between the key test and the zero store, OR one fewer before the ip copy'). For the literal-zero form only the second is consistent -- with the literal the zero is a local_alloc pseudo in r0 (ROM-correct) and the ip copy is the NEXT reload after the key test's, landing one register high. So the ROM's round-robin cursor is one step BEHIND this draft's at the ip copy, and the lever is one FEWER reload BEFORE the key test, not an extra one after it. Everything before +0xd5 is byte-exact, so the reload the ROM does not spend must be on an insn this draft also emits -- most plausibly one of the two high-to-low `mov rLO, r8` reads."
+   "wave92": "W92-C: unchanged 98.95%, 2 code bytes at +0xd5/+0xd6 (+0x34/+0x164 are .rodata alias addends, not residual). 900 s permuter from --current, 14,676 iterations: nothing. MECHANISM SHARPENED TO ONE DIRECTION: W90-B offered two ('one more reload between the key test and the zero store, OR one fewer before the ip copy'). For the literal-zero form only the second is consistent -- with the literal the zero is a local_alloc pseudo in r0 (ROM-correct) and the ip copy is the NEXT reload after the key test's, landing one register high. So the ROM's round-robin cursor is one step BEHIND this draft's at the ip copy, and the lever is one FEWER reload BEFORE the key test, not an extra one after it. Everything before +0xd5 is byte-exact, so the reload the ROM does not spend must be on an insn this draft also emits -- most plausibly one of the two high-to-low `mov rLO, r8` reads.",
+   "wave93": "W93-F: one 900 s run from the draft under the old permuter scoring returned nothing; not yet run under the length-penalty scorer."
   },
   "named": false,
   "kind": "game",

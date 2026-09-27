@@ -75,7 +75,7 @@ void sub_080377C4(void *a1)
     {
         for (x = 0; x < gMap->width; x++)
         {
-            dst = gUnknown_03003F68;
+            dst = (u16 *)gUnknown_03003F68;
             dst += gMap->rowOffset[y] + x;
             dst[1] = gMap->tile[
                 gMap->rowOffset[y] + x];

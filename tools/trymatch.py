@@ -605,7 +605,8 @@ def reloc_equivalent(tgt_fn, cand_fn, t_rel, c_rel, cand_o=None):
             if t_sym != c_sym:
                 t_name, t_extra = _split_sym(t_sym)
                 c_name, c_extra = _split_sym(c_sym)
-                if (t_extra != c_extra or syms.get(t_name) is None
+                if (t_typ != "R_ARM_THM_CALL" or t_extra != c_extra
+                        or syms.get(t_name) is None
                         or syms.get(t_name) != syms.get(c_name)):
                     return False
             continue

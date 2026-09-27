@@ -4,81 +4,90 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08042998.
- * sub_08042998 @ 0x08042998
+ * JoinUnits @ 0x08042998
+ *
+ * Not a Xenesis-documented name. The old sub_08042998 symbol is kept as a
+ * linker alias below so every other unit keeps resolving it unchanged.
  */
 
 #include "map.h"
+/* gUnknown_030040D8 points at the selected unit (sub_0802E4B4 sets it to
+ * &gUnits[...]); the header types it as a layout-only mirror struct. */
+#define gSelectedUnit ((struct Unit *)gUnknown_030040D8)
 
-/*
- * sub_08042998 -- join the active unit with the unit on the target tile.
+/* Joins the unit under the cursor into the selected unit. HP adds up in
+ * display units (1..10 each), and anything over 10 is paid back to the current
+ * player (sub_08025B58) at sub_08042C9C's per-HP value for the unit type. The
+ * joiner's unk05_3 is kept, the higher of the two unk06_7 flags wins, and ammo
+ * and fuel add up, capped at the type's maxAmmo / maxFuel. Then the joiner's
+ * slot is freed (type 0).
  *
- * The active unit is gUnknown_030040D8; the other unit is the one on the
- * tile at gUnknown_03003100.pos. The two are merged into the active unit:
- *   - HP: each unit's displayed HP (hp / 10, rounded up) is added. Anything
- *     above 10 is passed to sub_08025B58 for the current player, multiplied
- *     by sub_08042C9C's per-type value -- most likely the funds refund the
- *     game gives for excess HP. HP is then set to the total * 10.
- *   - unk05_3 is copied from the other unit; unk06_7 keeps the larger value.
- *   - Ammo and fuel are added and capped at the unit type's maximum.
- *   - With saving disabled and fog off, sub_08025B80 is called with
- *     gUnknown_03004074, which is then cleared.
- * Finally the other unit is removed (type = 0) and sub_080424E4 is called.
- *
- * Why the C looks odd:
- *   - The second HP term is a `?:` expression, and the ammo total is a u8
- *     `sum`. Both change which values the compiler reloads; the original
- *     reads maxAmmo again for the cap, which only this spelling reproduces.
- *   - Ammo goes through the local `q`, but fuel is written through
- *     gUnknown_030040D8 directly. Using `q` for both does not match.
+ * Measured spelling notes (14.2% / -28 bytes -> match):
+ * - The sums are narrow: ONE `u8 sum` is reused for the ammo total and then
+ *   the fuel total. u8 gives the ROM's unsigned `bls` compares and the
+ *   un-merged per-branch bitfield stores (the "un-cross-jumped" residual of
+ *   the old draft). A u32 sum is 12 bytes short; separate u8 locals match
+ *   the size but swap two registers in the fuel block (98.1%). The shared
+ *   local is what decomp-permuter found.
+ * - The HP total is a conditional expression: the ROM computes both arms
+ *   into one temporary and copies it into totalHp after the join. An if/else
+ *   assigns it in each arm (35%).
+ * - gUnknown_030040D8 is named directly. -fforce-addr then emits the ROM's
+ *   pool word 0x08091364 and the three-load chain. The old draft spelled that
+ *   word as a pointer-to-pointer local.
  */
-
-void sub_08042998(void)
+void JoinUnits(void)
 {
-    struct Unit *u;
-    struct Unit *q;
-    int a;
-    u8 n;
-    u16 m;
+    struct Unit *joiner;
+    int joinerHp;
+    u8 totalHp;
     u8 sum;
+    u16 player;
 
-    u = &gUnknown_08499594[((struct Map *)gUnknown_08499590)->unitUnk[((struct Map *)gUnknown_08499590)->rowOffset[gUnknown_03003100.pos.unk02] + gUnknown_03003100.pos.unk00]];
-    if (u->hp != 0)
-        a = Div(u->hp - 1, 10) + 1;
+    joiner = &gUnits[gMap->unitUnk[gMap->rowOffset[gUnknown_03003100.pos.unk02]
+                                   + gUnknown_03003100.pos.unk00]];
+
+    if (joiner->hp != 0)
+        joinerHp = Div(joiner->hp - 1, 10) + 1;
     else
-        a = 0;
+        joinerHp = 0;
 
-    n = ((struct Unit *)gUnknown_030040D8)->hp != 0 ? a + 1 + Div(((struct Unit *)gUnknown_030040D8)->hp - 1, 10) : a;
+    totalHp = gSelectedUnit->hp != 0
+            ? joinerHp + 1 + Div(gSelectedUnit->hp - 1, 10)
+            : joinerHp;
 
-    if (n > 10)
+    if (totalHp > 10)
     {
-        m = gUnknown_030033EC;
-        sub_08025B58(m, sub_08042C9C(m, ((struct Unit *)gUnknown_030040D8)->type) * (n - 10));
-        n = 10;
+        player = gUnknown_030033EC;
+        sub_08025B58(player, sub_08042C9C(player, gSelectedUnit->type) * (totalHp - 10));
+        totalHp = 10;
     }
 
-    ((struct Unit *)gUnknown_030040D8)->hp = n * 10;
-    ((struct Unit *)gUnknown_030040D8)->unk05_3 = u->unk05_3;
-    if (((struct Unit *)gUnknown_030040D8)->unk06_7 < u->unk06_7)
-        ((struct Unit *)gUnknown_030040D8)->unk06_7 = u->unk06_7;
+    gSelectedUnit->hp = totalHp * 10;
+    gSelectedUnit->unk05_3 = joiner->unk05_3;
+    if (gSelectedUnit->unk06_7 < joiner->unk06_7)
+        gSelectedUnit->unk06_7 = joiner->unk06_7;
 
-    q = ((struct Unit *)gUnknown_030040D8);
-    sum = q->ammo + u->ammo;
-    if (sum > gUnknown_085D5ABC[q->type].maxAmmo)
-        q->ammo = gUnknown_085D5ABC[q->type].maxAmmo;
+    sum = gSelectedUnit->ammo + joiner->ammo;
+    if (sum > gUnknown_085D5ABC[gSelectedUnit->type].maxAmmo)
+        gSelectedUnit->ammo = gUnknown_085D5ABC[gSelectedUnit->type].maxAmmo;
     else
-        q->ammo = sum;
+        gSelectedUnit->ammo = sum;
 
     if (gPlaySt.savingEnabled == 0 && gPlaySt.fog == 0)
     {
-        sub_08025B80(((struct Unit *)gUnknown_030040D8), gUnknown_03004074);
+        sub_08025B80(gSelectedUnit, gUnknown_03004074);
         gUnknown_03004074 = 0;
     }
 
-    sum = ((struct Unit *)gUnknown_030040D8)->fuel + u->fuel;
-    if (sum > gUnknown_085D5ABC[((struct Unit *)gUnknown_030040D8)->type].maxFuel)
-        ((struct Unit *)gUnknown_030040D8)->fuel = gUnknown_085D5ABC[((struct Unit *)gUnknown_030040D8)->type].maxFuel;
+    sum = gSelectedUnit->fuel + joiner->fuel;
+    if (sum > gUnknown_085D5ABC[gSelectedUnit->type].maxFuel)
+        gSelectedUnit->fuel = gUnknown_085D5ABC[gSelectedUnit->type].maxFuel;
     else
-        ((struct Unit *)gUnknown_030040D8)->fuel = sum;
-    u->type = 0;
+        gSelectedUnit->fuel = sum;
+
+    joiner->type = 0;
     sub_080424E4();
 }
+
+asm(".global sub_08042998\n.thumb_set sub_08042998, JoinUnits\n");

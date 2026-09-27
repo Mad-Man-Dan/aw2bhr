@@ -212,7 +212,11 @@ void sub_0801D924(void);
 /* Per-slot workers of the four sweeps above, called as f(slot, 0) or f(slot,
  * 1). */
 void sub_0801D390(int, int);
+void RunSpriteScript(int, int); /* sub_0801D390's readable name; see
+                                 * src/decomp/c_0801D390.c. */
 void sub_0801DCD4(int, int);
+void RunSimpleSpriteScript(int, int); /* sub_0801DCD4's readable name; see
+                                      * src/decomp/c_0801DCD4.c. */
 void sub_0801DB04(s16);
 int sub_0801DC50(s16, u32 *, s16, int);
 /* Allocate and free a block in the heap at gUnknown_03000050. sub_08014E44
@@ -1281,6 +1285,7 @@ void *sub_0802813C(void);
  * sign-extended values and -1, which narrow parameters would change. */
 void sub_08015328(s16);
 void sub_08015C30(u8);
+void DebugVersusPauseScreen(void); /* sub_080283E4; see src/decomp/c_080283E4.c. */
 void sub_080294FC(void);
 void sub_08029570(void);
 void sub_08029868(u8);
@@ -2101,6 +2106,7 @@ void sub_080745C0(void);
  * sub_0801F024 with a `(void *)` cast. It ignores what sub_0801F024 passes, so
  * the cast is correct. */
 void sub_08039188(void);
+void DrawMarkerSprites(void); /* sub_08039188; see src/decomp/c_08039188.c. */
 
 /* Walks the byte-stream script at its first argument until a 1, calling
  * sub_0801B7C0(cursor, arg) on each opcode and advancing by
@@ -2236,6 +2242,8 @@ void sub_080872D0(int);
 /* Argument 2 must stay int: the body compares it with signed branches and
  * counts its loops down, and a u32 changes both. */
 void sub_08086A58(int, int, int);
+void DrawMapList(int, int, int); /* sub_08086A58's readable name; see
+                                 * src/decomp/c_08086A58.c. */
 /* sub_08086A58 passes its own three parameters straight through. */
 void sub_08087548(int, int, int);
 void sub_08085950(int, int);
@@ -2532,6 +2540,7 @@ void sub_080616F0(void);
 /* Joins the active unit (gUnknown_030040D8) with the unit on the target
  * tile. */
 void sub_08042998(void);
+void JoinUnits(void); /* sub_08042998's readable name; see src/decomp/c_08042998.c. */
 
 /* sub_0803CCB8 copies the NUL-terminated string at gUnknown_020280C0[id].unk02
  * into the buffer, through sub_0803CC84. sub_0803CDBC returns 0 or 1, but no
@@ -2659,6 +2668,8 @@ void sub_08016944(int);
  * when the count reaches 0. */
 void sub_080162A4(u8);
 void sub_08016F38(u8);
+void CaptureBattleSaveState(u8); /* sub_08016F38's readable name; see
+                                  * src/decomp/c_08016F38.c. */
 /* Frees an affine matrix slot that sub_0801DAB0 handed out from
  * gUnknown_03001430. */
 void sub_0801DAE8(s16);
@@ -2702,6 +2713,7 @@ void sub_0803E310(int, int, int, int, int, int);
 void sub_0803E554(void);
 void sub_0803E594(int, int, int);
 void sub_0803E6C4(int, int, int);
+void ScanUnitsBelowStrip(int, int, int); /* sub_0803E6C4; see src/decomp/c_0803E6C4.c. */
 void sub_0803E764(struct Unk02028360Pos *, int);
 void sub_0803E808(int, int, int, int, int);
 void sub_0803EF44(int, int, ProcPtr);
@@ -4932,6 +4944,7 @@ void sub_08020B88(s16, s16, s16, s16);
  * of (x, y); r == 0 touches only the centre. The sixth parameter must stay
  * `int`: the definition only matches with it narrowed inside the body. */
 void sub_08020EDC(s16, s16, s16, u8 *, int, int);
+void AddValueInRange(s16, s16, s16, u8 *, int, int);
 
 /* Callees of the 0x08028000-0x0802E000 blocks. sub_08012E4C buckets the low
  * five bits of gGameClock into 0, 1 or 2. */
@@ -5073,6 +5086,10 @@ int sub_0800F8D4(int, int);
 int sub_0800FD44(int, int, int);
 int sub_08010604(int, int);
 int sub_08010B34(int, int);
+
+/* Right-aligned decimal number into a tilemap; see src/decomp/c_08010EF8.c. */
+void sub_08010EF8(u16 x, int unused, u16 value, u16 *dest);
+void DrawNumberRightAligned(u16 x, int unused, u16 value, u16 *dest); /* sub_08010EF8 */
 int sub_08010DD4(int, int);
 bool8 sub_0801659C(u8);
 void sub_080179AC(void);
@@ -5277,6 +5294,7 @@ void sub_0805FB70(void);
  * can board and writes it through the pointer. sub_0805C988 walks the record
  * list at 0x02028360; callers use its result as a byte. */
 void sub_0805FC1C(int, void *);
+void FindTransportForSelectedUnit(int, void *); /* sub_0805FC1C; see src/decomp/c_0805FC1C.c. */
 int sub_0805C988(int, int);
 /* sub_0805A8C0 is deliberately not declared: its definition takes u16
  * parameters, while its caller sub_08059674 passes ints with no prototype in
@@ -5623,5 +5641,6 @@ int sub_0800AEAC(int, int);
 int sub_0800105C(void);
 void sub_08004D10(void);
 int sub_0800BC5C(int, int);
+void CompactMapArmies(void); /* sub_0803D558; see src/decomp/c_0803D558.c. */
 
 #endif // UNKNOWN_FUNCS_H

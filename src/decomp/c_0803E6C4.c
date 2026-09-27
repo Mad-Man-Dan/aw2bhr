@@ -4,49 +4,52 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0803E6C4.
- * sub_0803E6C4 @ 0x0803E6C4
+ * ScanUnitsBelowStrip @ 0x0803E6C4
+ *
+ * Not a Xenesis-documented name. The old sub_0803E6C4 symbol is kept as a
+ * linker alias below so every other unit keeps resolving it unchanged.
  */
 
 #include "map.h"
 
-/*
- * sub_0803E6C4 -- run sub_0803E560 on every unit in a 3-column strip below a
- * point.
+/* For each row from y + 3 to the bottom of the map, looks at the three cells
+ * starting at column x. Every cell holding a unit is passed to sub_0803E560
+ * (column, row, the unit byte, a3), unless the owning player's teamColor
+ * (player slot = (unit byte >> 6) + 1) is 5.
  *
- * Scans map columns a1 .. a1+2, from row a2+3 down to the bottom edge of the
- * map. For each tile that holds a unit, the unit's army is the top two bits of
- * its map byte; if that army's player (gPlayers[army + 1]) does not have
- * teamColor 5, it calls sub_0803E560(x, y, unit byte, a3). What teamColor 5
- * marks is not known yet.
- *
- * Why the C looks odd:
- *   - `col = a1;` is a separate first statement. Using a1 directly makes the
- *     compiler copy the parameters in a different order at entry.
+ * Measured spelling notes (parked since wave 38 at 156/160, -4):
+ * - All map reads through gMap's members, the first height check included.
+ *   Naming gMap lets -fforce-addr emit its own address word; the draft spelled
+ *   that first check through gUnknown_080912FC and was 4 bytes short.
+ * - `left = x;` copied into a local before the loop is what orders the
+ *   prologue's parameter moves (a3's copy before x's move to sl). Found by
+ *   decomp-permuter; 97.5% without it.
  */
-
-void sub_0803E6C4(int a1, int a2, int a3)
+void ScanUnitsBelowStrip(int x, int y, int a3)
 {
     int row;
+    int left;
     int i;
     int t;
-    int col;
 
-    col = a1;
-    row = a2 + 3;
-    if (row < ((struct Map *)gUnknown_08499590)->height)
+    left = x;
+    row = y + 3;
+    if (row < gMap->height)
     {
         do
         {
             for (i = 0; i <= 2; i++)
             {
-                if (((struct Map *)gUnknown_08499590)->unit[((struct Map *)gUnknown_08499590)->rowOffset[row] + (col + i)] != 0)
+                if (gMap->unit[gMap->rowOffset[row] + (left + i)] != 0)
                 {
-                    t = ((struct Map *)gUnknown_08499590)->unit[((struct Map *)gUnknown_08499590)->rowOffset[row] + (col + i)];
+                    t = gMap->unit[gMap->rowOffset[row] + (left + i)];
                     if (gPlayers[(t >> 6) + 1].teamColor != 5)
-                        sub_0803E560(col + i, row, t, a3);
+                        sub_0803E560(left + i, row, t, a3);
                 }
             }
             row++;
-        } while (row < ((struct Map *)gUnknown_08499590)->height);
+        } while (row < gMap->height);
     }
 }
+
+asm(".global sub_0803E6C4\n.thumb_set sub_0803E6C4, ScanUnitsBelowStrip\n");

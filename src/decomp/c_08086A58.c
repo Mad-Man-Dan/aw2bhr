@@ -4,92 +4,120 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08086A58.
- * sub_08086A58 @ 0x08086A58
+ * DrawMapList @ 0x08086A58
+ *
+ * Not a Xenesis-documented name. The old sub_08086A58 symbol is kept as a
+ * linker alias below so every other unit keeps resolving it unchanged.
  */
 
-/* Draws the two-row list of campaign-map entries from
- * gUnknown_02027F74.unk04[], one sub_080149C0 per row.
+/* Draws `count` rows of the map list gUnknown_02027F74.unk04[], starting at
+ * entry `first`, onto BG0 at tile rows top + 5, + 7, ... (two rows each). A map
+ * id up to 0xB3 that is not unlocked yet is drawn as the gUnknown_084C3F50
+ * placeholder label, anything else as its name. The last argument to
+ * sub_080149C0 is 1 when the map's bit in gUnknown_02028030.unk30 (tested by
+ * sub_0803CB24) is clear.
  *
- * Spelled like its matched sibling c_08086BF8.c: the list is read as the
- * struct member `gUnknown_02027F74.unk04[a + i]`, not through a local pointer
- * bumped by 4. With the member, the `ldr =gUnknown_02027F74` lands ahead of
- * the k-giv's zero init and the `+4` after it, which is the ROM's preheader
- * order; the reload scratch registers (the zero for r8, the sl copy, the
- * latch's #2) then come out right with no other change. Promotion needs
- * "rodata": ["0x081D9438"]. */
-
-void sub_08086A58(int a, int n, int b)
+ * In game mode 2 the rows start at top + 5 and sub_08087548 draws the rest of
+ * the screen. Otherwise a header from gUnknown_08499CE4 goes on row 5, the rows
+ * start at top + 9, and the count is clamped to the list's length
+ * (unk37 + 1). sub_08086BF8 is the same list drawn two rows at most.
+ *
+ * Measured spelling notes:
+ * - The entries are read through the struct's own member array,
+ *   gUnknown_02027F74.unk04[first + i]. That is what closed the function
+ *   (97.6% -> match). A `u8 *` local set to (u8 *)&gUnknown_02027F74 and
+ *   bumped by 4 lets strength reduction fold the base load into the entry
+ *   pointer's giv. The ROM instead hoists the base as its own invariant, which
+ *   puts its `ldr` ahead of the row counter's `movs #0` in the preheader. A
+ *   local set to the member (`list = gUnknown_02027F74.unk04;`) is 4 bytes
+ *   short.
+ * - The row is `rowOffset = i * 2; top = ...; row = rowOffset + top;` in its
+ *   own block in each arm (W85-D2). At function scope strength reduction
+ *   turns the whole (s16) expression into one giv.
+ * - The flag is set after the call from a block-local result:
+ *   `unflagged = 1; if (bit != 0) unflagged = 0;`. A ?: or a preset before
+ *   the call orders the `movs` differently (W85).
+ */
+void DrawMapList(int first, int count, int top)
 {
     int i;
-    int f;
-    int y;
-    int z;
-    u8 c;
+    int unflagged;
+    int rowTop;
+    int row;
+    int unlocked;
 
     sub_08013C00();
 
     if (gPlaySt.gameMode == 2)
     {
-        for (i = 0; i < n; i++)
+        for (i = 0; i < count; i++)
         {
-            c = sub_0803CB24(gUnknown_02027F74.unk04[a + i]);
-            f = 1;
-            if (c)
-                f = 0;
-
-            if (gUnknown_02027F74.unk04[a + i] <= 0xB3 && (u8)sub_0803CA54(gUnknown_02027F74.unk04[a + i]) == 0)
             {
-                int k = i * 2;
-                y = b + 5;
-                z = k + y;
-                sub_080149C0(1, (s16)z, gUnknown_08499578,
-                             gUnknown_084C3F50, 0, f);
+                u8 bit = sub_0803CB24(gUnknown_02027F74.unk04[first + i]);
+                unflagged = 1;
+                if (bit != 0)
+                    unflagged = 0;
+            }
+
+            if (gUnknown_02027F74.unk04[first + i] <= 0xB3
+                && (unlocked = (u8)IsCampaignMapUnlocked(gUnknown_02027F74.unk04[first + i])) == 0)
+            {
+                int rowOffset = i * 2;
+                rowTop = top + 5;
+                row = rowOffset + rowTop;
+                sub_080149C0(1, (s16)row, gBG0TilemapBuffer,
+                             gUnknown_084C3F50, unlocked, unflagged);
             }
             else
             {
-                u8 *p = sub_08024944(gUnknown_02027F74.unk04[a + i]);
-                int k = i * 2;
-                y = b + 5;
-                z = k + y;
-                sub_080149C0(1, (s16)z, gUnknown_08499578, p, 0, f);
+                u8 *name = sub_08024944(gUnknown_02027F74.unk04[first + i]);
+                int rowOffset = i * 2;
+                rowTop = top + 5;
+                row = rowOffset + rowTop;
+                sub_080149C0(1, (s16)row, gBG0TilemapBuffer, name, 0, unflagged);
             }
         }
 
-        sub_08087548(a, n, b);
+        sub_08087548(first, count, top);
     }
     else
     {
-        sub_08014A5C(1, 5, gUnknown_08499578,
+        sub_08014A5C(1, 5, gBG0TilemapBuffer,
                      gUnknown_08499CE4[gUnknown_0300596C], 0, 0);
 
-        if (gUnknown_02027F74.unk37 < n)
-            n = gUnknown_02027F74.unk37 + 1;
+        if (gUnknown_02027F74.unk37 < count)
+            count = gUnknown_02027F74.unk37 + 1;
 
-        for (i = 0; i < n; i++)
+        for (i = 0; i < count; i++)
         {
-            c = sub_0803CB24(gUnknown_02027F74.unk04[a + i]);
-            f = 1;
-            if (c)
-                f = 0;
-
-            if (gUnknown_02027F74.unk04[a + i] <= 0xB3 && (u8)sub_0803CA54(gUnknown_02027F74.unk04[a + i]) == 0)
             {
-                int k = i * 2;
-                y = b + 9;
-                z = k + y;
-                sub_080149C0(1, (s16)z, gUnknown_08499578,
-                             gUnknown_084C3F50, 0, f);
+                u8 bit = sub_0803CB24(gUnknown_02027F74.unk04[first + i]);
+                unflagged = 1;
+                if (bit != 0)
+                    unflagged = 0;
+            }
+
+            if (gUnknown_02027F74.unk04[first + i] <= 0xB3
+                && (unlocked = (u8)IsCampaignMapUnlocked(gUnknown_02027F74.unk04[first + i])) == 0)
+            {
+                int rowOffset = i * 2;
+                rowTop = top + 9;
+                row = rowOffset + rowTop;
+                sub_080149C0(1, (s16)row, gBG0TilemapBuffer,
+                             gUnknown_084C3F50, unlocked, unflagged);
             }
             else
             {
-                u8 *p = sub_08024944(gUnknown_02027F74.unk04[a + i]);
-                int k = i * 2;
-                y = b + 9;
-                z = k + y;
-                sub_080149C0(1, (s16)z, gUnknown_08499578, p, 0, f);
+                u8 *name = sub_08024944(gUnknown_02027F74.unk04[first + i]);
+                int rowOffset = i * 2;
+                rowTop = top + 9;
+                row = rowOffset + rowTop;
+                sub_080149C0(1, (s16)row, gBG0TilemapBuffer, name, 0, unflagged);
             }
         }
     }
 
     sub_08013AEC();
 }
+
+asm(".global sub_08086A58\n.thumb_set sub_08086A58, DrawMapList\n");

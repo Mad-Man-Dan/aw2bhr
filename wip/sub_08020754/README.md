@@ -10,7 +10,7 @@ Fills a map-sized byte buffer with 0 or 1 per tile: 0 where the terrain is wood 
 
 ## How close it is
 
-12 bytes too long. Everything matches except where the tile's index is recomputed: the original recomputes it in the '= 0' branch and reuses it in the '= 1' branch, and our draft does the opposite, which costs two extra pool words and a lost tail merge.
+The retained draft compiles 8 bytes too long and matches 38.46% of the bytes. Its branch layout still differs from the original; the earlier draft was 12 bytes too long.
 
 ## What is left
 

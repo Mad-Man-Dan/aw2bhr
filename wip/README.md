@@ -28,7 +28,7 @@ it yourself as described under Contributing in the main README.
 
 ## Functions
 
-81 functions, 37892 bytes, closest first. The score is the share of
+78 functions, 36456 bytes, closest first. The score is the share of
 bytes identical to the original. A byte count after it means the attempt
 compiles to a different size.
 
@@ -52,7 +52,6 @@ compiles to a different size.
 | [sub_0802F588](sub_0802F588/) | 280 | 86.6%, +4 bytes (best.c) | parked |
 | [sub_08035170](sub_08035170/) | 128 | 85.2% (best.c) | parked |
 | [sub_08073228](sub_08073228/) | 220 | 81.7%, +4 bytes (best.c) | parked |
-| [sub_08010EF8](sub_08010EF8/) | 64 | 79.7% (best.c) | parked |
 | [sub_0801A718](sub_0801A718/) | 132 | 79.5% | parked |
 | [sub_080359A4](sub_080359A4/) | 324 | 79.3% (best.c) | parked |
 | [sub_08057BDC](sub_08057BDC/) | 360 | 77.5%, +4 bytes (best.c) | parked |
@@ -106,11 +105,9 @@ compiles to a different size.
 | [sub_08050FF8](sub_08050FF8/) | 804 | 17.8%, -4 bytes (best.c) | parked |
 | [sub_0807F434](sub_0807F434/) | 240 | 17.7%, +8 bytes | parked |
 | [sub_0804CA98](sub_0804CA98/) | 416 | 17.3%, -4 bytes (best.c) | parked |
-| [sub_0801DCD4](sub_0801DCD4/) | 516 | 14.7%, -4 bytes (best.c) | parked |
 | [sub_08061308](sub_08061308/) | 864 | 13.5%, -20 bytes | parked |
 | [sub_080364F4](sub_080364F4/) | 296 | 9.5%, -16 bytes | parked |
 | [sub_0807B7BC](sub_0807B7BC/) | 156 | 9.0%, -12 bytes | parked |
-| [sub_0801D390](sub_0801D390/) | 856 | 8.8%, -4 bytes | parked |
 | [sub_08071918](sub_08071918/) | 48 | 2.1%, -8 bytes | parked |
 | [sub_08020754](sub_08020754/) | 208 | not measured | parked |
 | [sub_080303C8](sub_080303C8/) | 428 | not measured | parked |

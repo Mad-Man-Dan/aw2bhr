@@ -87,7 +87,7 @@ void sub_080378A8(void *a1)
     {
         for (x = 0; x < w; x++)
         {
-            buf = gUnknown_03003F68;
+            buf = (u8 *)gUnknown_03003F68;
             if (x >= buf[0] || y >= buf[1])
             {
                 src = gUnknown_0849D434;

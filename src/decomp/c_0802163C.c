@@ -25,13 +25,6 @@
  * folded into the load displacement, i.e. a member array and not `+ 1` on a
  * bare u16 pointer. */
 
-struct Unk2163CSrc
-{
-    /* 0x00 */ u8 width;
-    /* 0x01 */ u8 height;
-    /* 0x02 */ u16 tile[1];
-};
-
 void sub_0802163C(int a)
 {
     int x;
@@ -47,9 +40,9 @@ void sub_0802163C(int a)
     LoadMapData(a);
 
     gMap->width =
-        ((struct Unk2163CSrc *)gUnknown_03003F68)->width;
+        gUnknown_03003F68->width;
     gMap->height =
-        ((struct Unk2163CSrc *)gUnknown_03003F68)->height;
+        gUnknown_03003F68->height;
     gMap->scrollX = 0;
     gMap->scrollY = 0;
     gMap->unk08 = 0;
@@ -68,7 +61,7 @@ void sub_0802163C(int a)
     {
         for (x = 0; x < gMap->width; x++)
         {
-            t = ((struct Unk2163CSrc *)gUnknown_03003F68)->tile[
+            t = gUnknown_03003F68->tile[
                     gMap->rowOffset[y] + x];
             gMap->tile[
                 gMap->rowOffset[y] + x] = t;

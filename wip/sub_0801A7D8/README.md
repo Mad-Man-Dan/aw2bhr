@@ -10,11 +10,11 @@ Saves a block of game data to flash memory in 4 KiB sectors. It splits the data 
 
 ## How close it is
 
-Compiles 12 bytes too long (1068 against 1056). Because every byte after the first extra instruction is shifted, most of the function compares as different; the real differences are in how the buffer's address is built and in the stack spills that follow from it.
+Both retained drafts compile to the original size (1056 bytes). The current draft matches 81.91% of the bytes; best.c matches 83.24%. Neither matches the ROM yet.
 
 ## What is left
 
-Make the compiler build the 0x02002000 buffer address as the original does (load a nearby address and subtract, then reach byte 0xFFF by adding a constant) instead of creating its own address constant for byte 0xFFF and working back from it. The spill differences are expected to follow from that.
+Resolve the remaining instruction and register differences in the size-exact drafts. The earlier 12-byte excess belongs to the superseded draft.
 
 ## Already tried
 
@@ -24,6 +24,7 @@ Make the compiler build the 0x02002000 buffer address as the original does (load
 - Copying a3 into its own local before the loop: 8 bytes worse, and a1 loses its register.
 - `list[n++] = i` in one statement: increments before storing, where the original stores first.
 - The plain member spelling `gUnknown_0200CC88.slotGeneration[x]` (kept in best.c): same size, a few more bytes line up; not adopted until the 12 bytes are solved.
+- The merged size-exact drafts improve on the 1068-byte versions; their earlier experiment notes are retained in NOTES.md.
 
 ## Files
 

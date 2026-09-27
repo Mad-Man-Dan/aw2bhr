@@ -9,7 +9,7 @@ void LoadMapData(u16 a1)
     if (a1 >= 0xb4 && a1 <= 0xbf)
     {
         sub_08037B84(sub_08014E44(0x724));
-        sub_0801AC58(8, gUnknown_03003F68);
+        sub_0801AC58(8, (u8 *)gUnknown_03003F68);
     }
     else
     {

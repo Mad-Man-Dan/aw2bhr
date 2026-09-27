@@ -24,13 +24,6 @@
  *    unk03 last -- the same unk01/unk00/unk02/unk03 order as the four zero
  *    stores above. Written 6/0xa/0xb/0xe the four bodies come out reversed
  *    and the `case 0xe` test flips from `bne` to `beq`+`b`. */
-struct Unk37C34Map
-{
-    /* 0x00 */ u8 width;
-    /* 0x01 */ u8 height;
-    /* 0x02 */ u16 tile[1];
-};
-
 /* Clears the whole 0x400-entry buffer gBG1TilemapBuffer points at, then lays a
  * fresh 2x2-metatile grid over it and kicks the consumer.
  *
@@ -87,11 +80,11 @@ void sub_08037C34(void)
     gUnknown_02027F74.unk02 = 0;
     gUnknown_02027F74.unk03 = 0;
 
-    for (i = 0; i < ((struct Unk37C34Map *)gUnknown_03003F68)->height; i++)
+    for (i = 0; i < gUnknown_03003F68->height; i++)
     {
-        for (j = 0; j < ((struct Unk37C34Map *)gUnknown_03003F68)->width; j++)
+        for (j = 0; j < gUnknown_03003F68->width; j++)
         {
-            switch (gUnknown_0849959C[((struct Unk37C34Map *)gUnknown_03003F68)->tile[base + j]] & 0x1f)
+            switch (gUnknown_0849959C[gUnknown_03003F68->tile[base + j]] & 0x1f)
             {
             case 0xe:
                 gUnknown_02027F74.unk01++;
@@ -107,6 +100,6 @@ void sub_08037C34(void)
                 break;
             }
         }
-        base += ((struct Unk37C34Map *)gUnknown_03003F68)->width;
+        base += gUnknown_03003F68->width;
     }
 }

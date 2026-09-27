@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="860" height="662" viewBox="0 0 860 662" role="img" aria-label="Advance Wars 2: Black Hole Rising decompilation progress by ROM address: 92.59% of code bytes matched">
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="662" viewBox="0 0 860 662" role="img" aria-label="Advance Wars 2: Black Hole Rising decompilation progress by ROM address: 92.84% of code bytes matched">
 <text x="4.0" y="22.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" fill="#727982" font-weight="600">Advance Wars 2: Black Hole Rising — ROM code map</text>
-<text x="4.0" y="42.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#828992">529,512 of 571,868 code bytes decompiled and byte-matched  ·  4,491 of 4,658 functions  ·  0x08000234–0x0808D6DA</text>
+<text x="4.0" y="42.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#828992">530,948 of 571,868 code bytes decompiled and byte-matched  ·  4,494 of 4,658 functions  ·  0x08000234–0x0808D6DA</text>
 <rect x="4" y="56" width="852" height="20" fill="none" stroke="#9aa1a9" stroke-width="1"/>
-<rect x="4.00" y="56.0" width="788.90" height="20.0" fill="#2f9e57"/><rect x="792.90" y="56.0" width="56.45" height="20.0" fill="#c9922e"/><rect x="849.35" y="56.0" width="6.65" height="20.0" fill="#5f8fbf"/>
-<text x="4.0" y="94.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#2f9e57" font-weight="700">92.59%</text>
+<rect x="4.00" y="56.0" width="791.04" height="20.0" fill="#2f9e57"/><rect x="795.04" y="56.0" width="54.31" height="20.0" fill="#c9922e"/><rect x="849.35" y="56.0" width="6.65" height="20.0" fill="#5f8fbf"/>
+<text x="4.0" y="94.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#2f9e57" font-weight="700">92.84%</text>
 <text x="96.0" y="94.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#828992">of the code region is matched C</text>
 <rect x="4.0" y="118.0" width="10" height="10" rx="2" fill="#2f9e57"/>
 <text x="19.0" y="127.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#828992">matched — built from C, proven by make compare</text>
@@ -31,14 +31,14 @@
 <text x="856.0" y="222.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#828992" text-anchor="end">34,060 / 34,060</text>
 <text x="4.0" y="246.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#727982">0x08010000</text>
 <rect x="104" y="237.5" width="431.25" height="13" fill="none" stroke="#9aa1a9" stroke-width="0.8" opacity="0.75"/>
-<rect x="104.00" y="237.5" width="429.15" height="13.0" fill="#2f9e57"/><rect x="533.15" y="237.5" width="2.10" height="13.0" fill="#c9922e"/>
-<text x="638.0" y="246.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#727982" font-weight="600" text-anchor="end">99.5%</text>
-<text x="856.0" y="246.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#828992" text-anchor="end">31,100 / 31,252</text>
+<rect x="104.00" y="237.5" width="430.04" height="13.0" fill="#2f9e57"/><rect x="534.04" y="237.5" width="1.21" height="13.0" fill="#c9922e"/>
+<text x="638.0" y="246.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#727982" font-weight="600" text-anchor="end">99.7%</text>
+<text x="856.0" y="246.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#828992" text-anchor="end">31,164 / 31,252</text>
 <text x="4.0" y="270.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#727982">0x08018000</text>
 <rect x="104" y="261.5" width="452.23" height="13" fill="none" stroke="#9aa1a9" stroke-width="0.8" opacity="0.75"/>
-<rect x="104.00" y="261.5" width="358.72" height="13.0" fill="#2f9e57"/><rect x="462.72" y="261.5" width="93.50" height="13.0" fill="#c9922e"/>
-<text x="638.0" y="270.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#727982" font-weight="600" text-anchor="end">79.3%</text>
-<text x="856.0" y="270.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#828992" text-anchor="end">25,996 / 32,772</text>
+<rect x="104.00" y="261.5" width="377.66" height="13.0" fill="#2f9e57"/><rect x="481.66" y="261.5" width="74.57" height="13.0" fill="#c9922e"/>
+<text x="638.0" y="270.0" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#727982" font-weight="600" text-anchor="end">83.5%</text>
+<text x="856.0" y="270.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#828992" text-anchor="end">27,368 / 32,772</text>
 <text x="4.0" y="294.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#727982">0x08020000</text>
 <rect x="104" y="285.5" width="456.09" height="13" fill="none" stroke="#9aa1a9" stroke-width="0.8" opacity="0.75"/>
 <rect x="104.00" y="285.5" width="430.09" height="13.0" fill="#2f9e57"/><rect x="534.09" y="285.5" width="26.00" height="13.0" fill="#c9922e"/>

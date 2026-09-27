@@ -4,43 +4,48 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08020EDC.
- * sub_08020EDC @ 0x08020EDC
+ * AddValueInRange @ 0x08020EDC
+ *
+ * Not a Xenesis-documented name. The old sub_08020EDC symbol is kept as a
+ * linker alias below so every other unit keeps resolving it unchanged.
  */
 
 #include "map.h"
 
-/* sub_08020B88's twin against a caller-supplied u8 plane: same Manhattan-disk
- * walk, but every visited cell gets `buf[off] += d` instead of an overlay write,
- * and r == 0 short-circuits to the single centre cell.
+/* Adds `delta` to every cell of the map-sized u8 plane `buf` within Manhattan
+ * distance r of (x, y). r == 0 touches only the centre cell. Beyond distance
+ * 1, when bit 3 of sub_08043050(flags) is clear, a cell of terrain type 4 or
+ * 0x13 is skipped if it holds no unit or a unit whose type is outside
+ * 0x10..0x14. sub_080210C8 calls it with planes in gMap->visible. Twin of
+ * sub_08020B88, which writes an overlay instead of adding.
  *
- * MATCHED wave 90 (W90-C), from the 90.7% park, by four changes:
- *   - every map access through the struct members, spelled like the sibling
- *     sub_08020B88 (c_08020984.c): `gMap->rowOffset[yy] + xx` with the row
- *     FIRST, `gMap->terrain[off]`, `gMap->unitUnk[off]` (0x51A; `unit` is
- *     0x12), `gMap->width` / `gMap->height`. That removed the p/rows/cells/ids
- *     pointer locals and put y in r5 as the ROM has it (98.4%).
- *   - `s8 d`: with `u8 d` the two `+= d` adds come out as `d + v`; the ROM
- *     has `v + d`. Same low byte either way.
- *   - the 6th parameter is `int`, not `u8`: a u8 formal is narrowed in the
- *     prologue ahead of `d = delta;`, the ROM narrows it at `f = flags;`.
- *     include/unknown-functions.h and the caller c_080210C8.c were changed to
- *     match (explicit `(u8)a6` there, re-verified by exit code).
- * Both stack parameters are copied into locals: the ROM's slot order (d at
- * sp+0xc, f at sp+0x10) is local-declaration order.
- * `ty = terrain & 0x1f; t = ty;` is the wave-73 live-range split, still needed. */
-void sub_08020EDC(s16 x, s16 y, s16 r, u8 *buf, int delta, int flags)
+ * Measured spelling notes (parked since wave 49 at 90.7%):
+ * - `flags` is an INT parameter. The one caller, sub_080210C8, narrows its
+ *   own int with an explicit `(u8)` at the call; a u8 parameter here would
+ *   narrow it a second time at entry, and that half-emitted narrowing is
+ *   what slipped `lsls r4,#24` ahead of delta's group. Earlier waves read the
+ *   caller's `lsls #0x18; lsrs #0x18` as proof of a u8 prototype. It is the
+ *   cast.
+ * - `d` is `u32 d = (u8)delta;`, a word-wide copy. As a u8 local the
+ *   `buf[...] += d` adds are emitted with their operands swapped.
+ * - Map access through gMap's members (rowOffset, terrain, unitUnk, width,
+ *   height) rather than byte offsets. The centre cell is
+ *   `buf[gMap->rowOffset[y] + x]`, row first, and the swept cell reads its
+ *   row into a u16 `row` before the add.
+ */
+void AddValueInRange(s16 x, s16 y, s16 r, u8 *buf, int delta, int flags)
 {
-    s8 d;
+    u32 d;
     u8 f;
     s16 xx;
     s16 yy;
     s16 dy;
     int off;
-    int ty;
     int t;
+    u16 row;
     struct Unit *unit;
 
-    d = delta;
+    d = (u8)delta;
     f = flags;
 
     if (r == 0)
@@ -72,18 +77,20 @@ void sub_08020EDC(s16 x, s16 y, s16 r, u8 *buf, int delta, int flags)
               + (yy - y < 0 ? y - yy : yy - y) > 1)
             {
                 off = xx + gMap->rowOffset[yy];
-                ty = gMap->terrain[off] & 0x1f;
-                t = ty;
+                t = gMap->terrain[off] & 0x1f;
                 if (t == 4 || t == 0x13)
                 {
                     if (gMap->unitUnk[off] == 0)
                         continue;
-                    if ((u8)((unit = &gUnknown_08499594[gMap->unitUnk[off]])->type - 0x10) > 4)
+                    if ((u8)((unit = &gUnits[gMap->unitUnk[off]])->type - 0x10) > 4)
                         continue;
                 }
             }
 
-            buf[gMap->rowOffset[yy] + xx] += d;
+            row = gMap->rowOffset[yy];
+            buf[xx + row] += d;
         }
     }
 }
+
+asm(".global sub_08020EDC\n.thumb_set sub_08020EDC, AddValueInRange\n");
