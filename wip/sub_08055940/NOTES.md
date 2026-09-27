@@ -215,3 +215,58 @@ lift order also reorders the body, which is currently byte-exact.
 No new spelling was measured this wave; the axes in `data/parked.json` cover
 row spellings, pointer locals inside and outside the loop, block swaps,
 opaque offsets and about 40,000 permuter attempts.
+
+## Wave 93 (W93-F): the hoist order is reachable, and it costs a register
+
+Wave 87 left the open problem as a rotation: the loop body refers to its four
+loop-invariant values in the order [row0][counts0][row1][counts1], and the
+original's preheader emits them rotated left by one,
+[counts0][row][counts1][row'].
+
+**That rotation is reachable, and it needs no pointer local.** Read counts[0]
+into an ordinary local at the top of the body, do the row-1 test, and write
+counts[0] back through the local in the row-0 test:
+
+    for (i = 0; i < 5; i++)
+    {
+        u16 c;
+
+        c = counts[0];
+        do { if (gUnknown_020296BC[1][i] != 0xff) counts[1]++; } while (0);
+        if (gUnknown_020296BC[0][i] != 0xff) counts[0] = c + 1;
+    }
+
+That is the same function -- counts[0] is not touched anywhere else in the
+body -- and it moves counts[0]'s first reference ahead of any row reference.
+The preheader comes out
+
+    mov r4, sp | ldr r7, <row anchor> | mov r5, r8 | add r6, r7, #0 | add r6, #0x28
+
+against the original's
+
+    mov r3, sp | ldr r5, <row anchor> | adds r4, r7, #0 | adds r6, r5, #0 | subs r6, #0x28
+
+which is the original's order, value class for value class. The old draft put
+the row anchor's `ldr` first; this one does not.
+
+**It still loses, and the reason is worth more than the order was: +12 bytes,
+9.23% identical, first difference at +0x2.** The prologue gives it away. The
+original saves two high registers (`mov r7, sb | mov r6, r8 | push {r6, r7}`);
+this form saves three. Keeping the counts[0] value live across the row-1 test
+is one more simultaneously live value, so the address constant that the
+original rematerialises gets a callee-saved register instead, and the whole
+function shifts.
+
+That is the **same 12 bytes** every row-pointer-local form costs (waves 70, 77,
+80, 87). Those waves read the tax as something about pointer locals inhibiting
+the loop's induction variable. This measurement says it is not about pointers
+at all: an ordinary `u16` value local costs exactly the same 12. **The tax is
+one extra simultaneously live value, whatever it holds.** So the constraint on
+this function is tighter than it looked -- any construct that reaches the
+original's hoist order by keeping something alive across the body pays 12
+bytes, and the original reaches that order with nothing extra alive.
+
+What is left is the anchor direction, unchanged: the original loads
+gUnknown_020296E4 (row 1) and derives row 0 with a runtime `subs #0x28`, and
+every spelling that names row 1 folds to a single pool word of
+gUnknown_020296E4-0x28 (wave 80). Draft restored unchanged.

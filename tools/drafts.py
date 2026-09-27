@@ -473,6 +473,13 @@ def cmd_bases(args):
     except (OSError, ValueError):
         pass
 
+    # Locals the draft itself might read before setting. A candidate that adds
+    # a name to this list is reading something no assignment reaches, which
+    # is wrong C whatever it scores (see agbenv.uninitialized_reads).
+    draft_path = os.path.join(wd, fn + ".c")
+    draft_uninit = set(agbenv.uninitialized_reads(draft_path, fn=fn)
+                       if os.path.exists(draft_path) else ())
+
     rows = []
     for p in cands:
         data = _read(p)
@@ -484,6 +491,10 @@ def cmd_bases(args):
             notes.append("new_var")
         if ".prepr" in label:
             notes.append("pre-rename source")
+        if not is_blob(data):
+            extra = sorted(set(agbenv.uninitialized_reads(p, fn=fn)) - draft_uninit)
+            if extra:
+                notes.append("reads before set: " + ", ".join(extra))
         b = build(fn, rel(p), "base-" + label.replace("/", "_"))
         r = score(fn, b)
         rows.append((label, r, notes, data))
@@ -519,10 +530,12 @@ def cmd_bases(args):
 
     # `new_var` is only a note: it is the permuter's name for a local it
     # added, and that local is sometimes the real fix (wave 89's sub_080073F8
-    # rise came from one). Only header-expanded text is unusable as a base.
+    # rise came from one). Header-expanded text is unusable as a base, and so
+    # is a form that reads a local no assignment reaches.
     usable = [row for row in rows
               if row[1]["state"] in ("MATCH", "MISMATCH")
-              and "header-expanded" not in row[2]]
+              and "header-expanded" not in row[2]
+              and not any(n.startswith("reads before set") for n in row[2])]
     if not usable:
         print("NO USABLE BASE: nothing here compiles as a readable draft. "
               "Rebuild from the assembly or port a pre-rename source "
@@ -546,8 +559,22 @@ def cmd_bases(args):
         dr = next((row for row in rows if row[0] == draft_label), None)
         if dr is not None:
             print("      the draft is %s" % fmt(dr[1]))
+            # A higher score with an EARLIER first difference usually means
+            # bytes were gained after a point the candidate breaks. In wave 93
+            # this flagged four of five rejected bases (dead-store padding, a
+            # spelling measured and rejected in an earlier wave), though once
+            # (sub_0808A3DC) the earlier-differing file was the better base.
+            d1, b1 = dr[1].get("first"), r.get("first")
+            if (dr[1]["state"] == "MISMATCH" and r["state"] == "MISMATCH"
+                    and d1 is not None and b1 is not None and b1 < d1):
+                print("      CAUTION: its first difference (+0x%x) is EARLIER than "
+                      "the draft's (+0x%x). Read what it changed, and grep "
+                      "work/%s/NOTES.md and include/ for that spelling, before "
+                      "adopting it." % (b1, d1, fn))
         print("      to start from it:  cp work/%s/%s work/%s/%s.c   "
               "(back the draft up first)" % (fn, best[0], fn, fn))
+        print("      It is a measurement, not a verdict: read every statement "
+              "it changes first.")
     return 0
 
 

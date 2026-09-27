@@ -178,6 +178,7 @@ void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
   const u8 *p;
   short acc;
   int c;
+  const u8 *glyph;
   j = 0;
   i = 0;
   acc = 4;
@@ -197,7 +198,8 @@ void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
     j++;
     goto _search;
     _found:
-    CpuFastSet(((const u8 *) a2) + (j * 0x100), (void *) ((j = (i * 0x100) + 0x06010000) + (a3 * 0x20)), 0x40);
+    glyph = ((const u8 *) a2) + (j * 0x100);
+    CpuFastSet(glyph, (void *) ((j = (i * 0x100) + 0x06010000) + (a3 * 0x20)), 0x40);
 
     ((struct Unk73228Proc *) a4)->unk2a[i] = (i * 0x10) + 4;
     ((struct Unk73228Proc *) a4)->unk46[i] = acc;

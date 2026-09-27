@@ -2,7 +2,7 @@
 
 0x0806412C, 232 bytes, THUMB, parked.
 
-Best score so far: 85.3% (best.c).
+Best score so far: 91.0%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Initialises two tables, gUnknown_0202F140 and gUnknown_0202F110, from ROM data (
 
 ## How close it is
 
-Right size (232 bytes), 56.9% of bytes in place. Two differences: the first loop ends with a `!= 8` test where the ROM tests `<= 7`, and its counter and row pointer sit in each other's registers; and the second loop's base comes from its own constant (table plus 2) where the ROM reuses the one table address for the loop and the six stores, so the draft has 7 constants to the ROM's 6.
+Right size (232 bytes), 91.0% of bytes in place. The first loop's counter now counts up as the original's does, so the long-standing counter reversal is gone. What is left starts 0x45 bytes in: the outer loop's counter and its row pointer are still in each other's registers.
 
 ## What is left
 
@@ -28,7 +28,7 @@ Find what keeps the first loop's counter counting up with a `<= 7` test while th
 ## Files
 
 - `sub_0806412C.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -38,7 +38,7 @@ Find what keeps the first loop's counter counting up with a `<= 7` test while th
 
 ### Best so far
 
-56.9% -- 232 bytes, SIZE-EXACT (was 52.2% before wave 77)
+90.95% -- 232 bytes, SIZE-EXACT (was 56.90% at wave 93 start)
 
 ### What still differs
 
@@ -72,5 +72,14 @@ Everything else is exact: the eight-parameter prologue with four u16s spilled to
 ### Why it is parked
 
 Two loop-optimiser facts, not source semantics. WAVE 77 (W77-J) moved this from 52.2% to 56.9% and split the first defect in two. The counter reversal is now KNOWN to be blockable -- an `i != 8` exit test blocks check_dbra_loop and produces the ROM's ascending counter next to the giv -- and the init position, previously believed unreachable, falls out of hoisting `i = 0;` above the v7/v8 statements once the init exists. What is left of defect (a) is exactly two things: the exit test is `cmp #8 / bne` where the ROM has `cmp #7 / ble`, and the outer loop's counter and row pointer hold the OPPOSITE registers from the ROM (candidate counter r3 / rowptr r1, ROM counter r1 / rowptr r3). The one question is what suppresses check_dbra_loop with a RELATIONAL test still in place; every relational form (`<= 7`, `< 8`, do/while, init hoisted or not) reverses, and NE is the only thing measured that does not. Defect (b), the `gUnknown_0202F110+0x2` pool word, is untouched and independent.
+
+### Wave 93
+
+- **result:** 56.90% -> 90.95%, still size-exact, first difference +0x40 -> +0x45
+- **base_adopted:** best.c/recovered.c (85.34%), audited as equivalent C and adopted. Its changes: the first loop rewritten for (i = 0; i <= 7; i++) where the draft had i != 8, the second loop's test written (i + 1) <= (5 + 1) where the draft had i <= 5, and a temporary holding gUnknown_0202F110's base (renamed new_var -> entries). All three preserve values: same iteration counts, an array address is a constant, no read before set, and this function calls nothing.
+- **permuter:** 900 s x 4 threads from the 85.34% base: 85.34% -> 88.79%. Three mutations, each audited as equivalent: v8 = a8 * 0x1000 sunk into the inner loop (both loops have constant bounds so it always runs and a8 never changes), j = i used as the row index before the inner for reassigns j, and i = 4 written before the [4] store. Do not tidy these.
+- **hand_gain:** 88.79% -> 90.95% by moving i = 0; out of the for-init to its own statement immediately before v7 = a7 * 0x1000;, with the loop written for (; i <= 7; i++). The ROM emits the counter's init one instruction earlier than the candidate did (ROM counter in r1 and row pointer in r3; the candidate had them swapped). Five positions measured: at the top 88.79%, after src 89.66%, after tbl 90.95%, after v7 88.79%, left in the for-init 88.79%. A single optimum, not a direction.
+- **negatives_corrected:** TWO recorded ruled-out axes here were combination-specific and are false as stated. (1) i <= 7 was recorded as always reversing the counter; it does not, once the second loop is spelled (i + 1) <= (5 + 1) -- worth 28 points. (2) i = 0 placed before or after the v7/v8 lines was recorded as ruled out; under the new base it is worth 2.2 points. Read every ruled-out line in this entry as scoped to the exact combination it was measured in.
+- **residual:** 232/232, 21 of 232 bytes differ, first difference +0x45, outer counter and row pointer transposed.
 
 </details>

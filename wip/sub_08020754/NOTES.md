@@ -41,3 +41,27 @@ the value") names the wrong mechanism: it is skip_blocks, not fall-through.
 - k3: `if (cond) goto zero; = 1; continue; zero: = 0;` -- +8, 45.7%, but it
   puts the `= 1` arm first, recomputes there, and grows the frame to
   `sub sp,#8`. Wrong direction.
+
+
+# Wave 93 (W93-C) -- best.c is the already-rejected k3 shape
+
+Draft unchanged at 220/208 (+12), 26.36%, first difference +0xc.
+`best.c` renamed `best.c.wrongc`.
+
+best.c is, statement for statement:
+
+    if (cond) goto zero;
+    dst[...] = 1;
+    continue;
+  zero:
+    dst[...] = 0;
+
+which this file's own "Measured this wave" section already records as k3:
+"+8, 45.7%, but it puts the `= 1` arm first, recomputes there, and grows the
+frame to `sub sp,#8`. Wrong direction." Measured again this wave: 43.98%,
+size+8, first difference +0xa against the draft's +0xc, so it diverges
+EARLIER. It is correct C and it is going the wrong way; its higher
+percentage is entirely the 4 bytes it gives back on a draft that is already
+over size.
+
+The residual is unchanged: which arm CSE recomputes `rowOffset[y] + x` on.

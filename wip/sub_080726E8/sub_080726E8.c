@@ -69,23 +69,39 @@
  * the thing that has not been tried. */
 void sub_080726E8(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, u8 flip)
 {
-    const u16 *p = src;
-    int ix;
-    int iy;
+  const u16 *p = src;
+  volatile int col;
+  int ix;
+  int iy;
+  if (flip)
+  {
+    for (iy = 0; iy < h; iy++)
+    {
+      for (ix = 0; ix < w; ix++)
+      {
+        if ((((unsigned) (x + ix)) < 0x20) && (((unsigned) (y + iy)) < 0x20))
+        {
+          col = ix;
+          *((map + (x + col)) + ((y + iy) * 0x20)) = (p[(((iy * 0x20) + w) - ix) - 1] + base) ^ 0x400;
+        }
+      }
 
-    if (flip)
-    {
-        for (iy = 0; iy < h; iy++)
-            for (ix = 0; ix < w; ix++)
-                if ((unsigned) (x + ix) < 0x20 && (unsigned) (y + iy) < 0x20)
-                    *(map + (x + ix) + (y + iy) * 0x20) =
-                        (p[iy * 0x20 + w - ix - 1] + base) ^ 0x400;
     }
-    else
+
+  }
+  else
+  {
+    for (iy = 0; iy < h; iy++)
     {
-        for (iy = 0; iy < h; iy++)
-            for (ix = 0; ix < w; ix++)
-                if ((unsigned) (x + ix) < 0x20 && (unsigned) (y + iy) < 0x20)
-                    *(map + (x + ix) + (y + iy) * 0x20) = *(p + ix + iy * 0x20) + base;
+      for (ix = 0; ix < w; ix++)
+      {
+        if ((((unsigned) (x + ix)) < 0x20) && (((unsigned) (y + iy)) < 0x20))
+        {
+          *((map + (x + ix)) + ((y + iy) * 0x20)) = (*((p + ix) + (iy * 0x20))) + base;
+        }
+      }
+
     }
+
+  }
 }

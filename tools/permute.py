@@ -206,7 +206,7 @@ def setup(rec, unit, prefer_best):
     # reachable. Wave 47 (W47-F): sub_08070F44 had been permuted for 300 s under
     # default agbcc while its block is old_agbcc, and the flash trio at
     # 0x0808B had 38,000 iterations spent at -O2 against an -O1 library.
-    f = agbenv.flags(name)
+    f = agbenv.flags(name, profile=PROFILE)
     rel_src = os.path.relpath(src, awlib.REPO).replace(os.sep, "/")
     rel_base = os.path.relpath(os.path.join(pdir, "base.c"),
                                awlib.REPO).replace(os.sep, "/")
@@ -361,8 +361,13 @@ def check_scorer_patch():
             text = fh.read()
     except OSError:
         return True          # no permuter at all; the caller reports that
-    if "AW2_PENALTY_REGALLOC" in text:
+    if "AW2_PENALTY_REGALLOC" in text and "AW2_PENALTY_SIZE" in text:
         return True
+    if "AW2_PENALTY_REGALLOC" in text:
+        print("\n  !! vendor/decomp-permuter/src/scorer.py lacks the length penalty")
+        print("     (AW2_PENALTY_SIZE): a size-exact draft's search will drift to")
+        print("     shorter, worse candidates. See vendor/README.md.\n")
+        return False
     print("\n  !! vendor/decomp-permuter/src/scorer.py is UNPATCHED --")
     print("     PENALTY_REGALLOC is upstream's 5 against PENALTY_REORDERING 60,")
     print("     so this search will trade register correctness for ordering and")
@@ -477,7 +482,7 @@ def _check_quietly(name, log):
     """trymatch.check with its report appended to `log`; (rc, result dict)."""
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        rc = trymatch.check(name)
+        rc = trymatch.check(name, profile=PROFILE)
     with open(log, "a", encoding="utf-8") as fh:
         fh.write(buf.getvalue() + "\n")
     return rc, dict(trymatch.LAST_RESULT or {"state": "ERROR"})
@@ -522,6 +527,15 @@ def _restore(snap):
 # checking with the draft sitting as expanded source the whole time. The rest
 # stay on disk under permuter/output-*/.
 MAX_VERIFY = 40
+
+# The compiler profile every compile in a run uses: the permuter's own
+# compile.sh, each trymatch check and the uninitialised-read check. A
+# function whose block needs another toolchain and has no override entry
+# yet (sub_08070F44, old_agbcc) could not be permuted at all before this.
+# Under a temporary profile trymatch leaves best.c alone, so the kept form
+# lives only in <fn>.c, and a match is provisional until an override
+# entry names the profile.
+PROFILE = "configured"
 
 
 def improves(pct, size, best_pct, best_size):
@@ -577,6 +591,9 @@ def verify(rec, pdir, keep_all):
     base_pct = trymatch.LAST_PCT
     base_size = base.get("size")
     print("  baseline  %s" % trymatch.format_result(base))
+    # Locals the draft itself might read before setting; a candidate may not
+    # add to them (agbenv.uninitialized_reads).
+    base_uninit = set(agbenv.uninitialized_reads(csrc, fn=name, profile=PROFILE))
     if base_pct is None:
         print("  draft does not compile or cannot be scored; improvements "
               "cannot be judged, so the original will be restored as before.")
@@ -618,6 +635,13 @@ def verify(rec, pdir, keep_all):
                     if lines is cand:
                         print("      this is the header-expanded form; reduce it to")
                         print("      an include plus externs before promoting.")
+                    else:
+                        bad = sorted(set(agbenv.uninitialized_reads(csrc, fn=name, profile=PROFILE))
+                                     - base_uninit)
+                        if bad:
+                            print("      WARNING: it may read %s before setting it;"
+                                  " the bytes match but the C is wrong -- fix the"
+                                  " source before promoting." % ", ".join(bad))
                     return 0, "MATCH", "%s form, permuter output %s" % (label, rel)
                 # Not a match, but it may still be an IMPROVEMENT, and until
                 # 2026-08-29 that was thrown away: the finally block restored
@@ -630,6 +654,12 @@ def verify(rec, pdir, keep_all):
                 if pct is None or base_pct is None:
                     continue
                 if label == "spliced" and improves(pct, r.get("size"), best_pct, best_size):
+                    bad = sorted(set(agbenv.uninitialized_reads(csrc, fn=name, profile=PROFILE))
+                                 - base_uninit)
+                    if bad:
+                        print("             not kept: reads %s before setting it"
+                              % ", ".join(bad))
+                        break
                     best_pct, best_lines, best_label = pct, lines, rel
                     best_size = r.get("size")
                     print("             improvement: %.2f%% -> %.2f%% size%+d (kept)"
@@ -751,6 +781,11 @@ def main():
     ap.add_argument("--max-verify", type=int, default=MAX_VERIFY,
                     help="check at most this many outputs, best permuter "
                          "score first (default %(default)s)")
+    ap.add_argument("--profile", choices=agbenv.compiler_profiles(),
+                    default="configured",
+                    help="compile every candidate under this temporary profile "
+                         "(as trymatch --profile); a match is provisional until "
+                         "data/compiler-overrides.json names it")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
@@ -763,8 +798,9 @@ def main():
 
 
 def _main(args):
-    global MAX_VERIFY
+    global MAX_VERIFY, PROFILE
     MAX_VERIFY = max(1, args.max_verify)
+    PROFILE = args.profile
     if not os.path.isdir(PERMUTER_DIR):
         print(CLONE_HINT)
         return 2, "SETUP-FAILED", "vendor/decomp-permuter missing"

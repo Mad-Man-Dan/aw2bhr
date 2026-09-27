@@ -23,6 +23,7 @@ void sub_0801FAC4(u16 a1, u16 a2, u16 a3, u16 a4, u8 a5)
     int s;
     int e;
     int w;
+    volatile int bound;
 
     k = 1;
     switch (a3) {
@@ -43,7 +44,8 @@ void sub_0801FAC4(u16 a1, u16 a2, u16 a3, u16 a4, u8 a5)
         }
         break;
     case 0:
-        for (y = a2; y < a2 + a4 && y < *(u16 *)(gUnknown_08499590 + 2); k++, y++) {
+        bound = a2 + a4;
+        for (y = a2; y < bound && y < *(u16 *)(gUnknown_08499590 + 2); k++, y++) {
             s = a1 + 1;
             s -= k;
             w = k * 2 - 1;

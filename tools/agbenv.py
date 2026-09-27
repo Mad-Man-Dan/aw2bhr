@@ -371,6 +371,27 @@ def compile_c(src, out_o, out_s=None, extra_cflags="", fn=None,
     return run(script)
 
 
+def uninitialized_reads(src, fn=None, profile="configured"):
+    """Names of locals agbcc says `src` might read before setting them.
+
+    The permuter's commonest wrong-C form reads a local before any assignment
+    reaches it; in wave 93 three of five kept "improvements" were that, and
+    they scored well because the undefined read reuses a register the ROM
+    also reuses. gcc's own flow analysis names them. The build's -Werror turns
+    the warning into a failed compile, so this compiles a throwaway object
+    under build/uninit/ and reads only the messages; it cannot change a verdict.
+    gcc can also warn about a local that is set on every path it cannot prove,
+    so compare against the draft's own list before calling a name wrong.
+    """
+    safe = re.sub(r'[^A-Za-z0-9_.-]', '_', os.path.relpath(src, awlib.REPO))
+    out = "build/uninit/%s.o" % safe
+    rel = os.path.relpath(src, awlib.REPO).replace(os.sep, "/")
+    rc, so, se = compile_c(rel, out, extra_cflags="-Wuninitialized",
+                           fn=fn, profile=profile)
+    names = re.findall(r"`(\w+)' might be used uninitialized", so + se)
+    return sorted(set(names))
+
+
 def assemble(src_s, out_o):
     """Assemble one .s exactly as the Makefile's asm rule does."""
     f = flags()

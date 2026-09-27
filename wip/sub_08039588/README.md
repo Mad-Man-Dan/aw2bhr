@@ -30,6 +30,7 @@ The original computes the VRAM destination once per character in the setup of th
 
 - `sub_08039588.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -68,5 +69,9 @@ THE CONSTANT MERGE, which was the whole park for four waves, IS SOLVED. cse merg
 ### Why it is parked
 
 Wave 79 W79-E: THE SPAN IS CLOSED AT BOTH ENDS AND THERE IS NO POINT LEFT IN IT. The hoist needs the def to dominate the use (loop.c will not move a movable whose register is read before its set, nor one live on loop entry); the two-pool-word split needs the def to sit outside the use's extended basic block. The inner loop body contains no control-flow join, so no position satisfies both, and every position has now been measured: outside the loop (W73-G, foreclosed by liveness), top of the body (hoisted but merged, and ahead of the table base), inside the `if` at the use (merged), bottom of the body (W79-E, not hoisted at all). A SOURCE CONSTRUCT IS BEHIND THIS RESIDUAL -- the LICM hoist position of `dst` -- but it is not reachable from C without adding control flow the ROM does not have. Do not spend another wave on positioning. If this function is resumed, the only untried direction is that the ROM's `dst` is not this expression at all.
+
+### Wave 93
+
+WAVE 93 (W93-D): still 87.2%, size-exact, draft unchanged. HALF THE RESIDUAL IS SOLVED. Residual (a) had two parts, the hoist's POSITION and its ORDER; the order is now a solved, general lever. Reading the table entry into a local as the FIRST statement of the search loop body (c = gUnknown_08090F30[k]; then comparing against c) flips the preheader from `lsl` then `ldr` to `ldr` then `lsl`, which is the ROM's order, at no instruction cost -- the ROM loads tbl[k] into a register there anyway. General rule, now written into docs/agbcc-codegen.md: LICM emits its hoists in the order the invariants' first references appear in the loop body, so a leading reference decides the preheader order. WHAT IS LEFT is only the constant merge: the preheader gets `lsl r4, r4, #8` and the +0x6140 folds into the use as one `=0x6016140` pool word, 164 bytes (-8) at 43.0%. NEWLY REFUTED merge-blockers, all still producing the single 0x6016140 word: -fno-cse-follow-jumps (measured end to end, 43.0% / -8, unchanged); splitting the def into `dst = j * 0x100;` then `dst = dst + 0x6140;`; declaring dst a `u8 *` and adding the VRAM base as pointer arithmetic; and a volatile read of the table entry between the def and the use (which also reverses the hoist order again, so volatile does not split cse's REGISTER value numbering -- the wave-89 splitter is about memory). -fno-cse-follow-jumps cannot help in hindsight: gcc lays the if-body out as the FALL-THROUGH of the inverted compare, so def and use sit on one cse path with no jump followed. The impasse is now exact, and the two halves are mutually exclusive at every position in the body: the def must be INSIDE the inner loop and BEFORE any conditional branch or LICM will not hoist it (everything after the `if` is maybe_never, which is why the bottom-of-body spelling keeps both constants but never moves); and the def must be OUT of the use's fall-through path or cse reassociates 0x6140 with 0x06010000. Breaking it needs a JOIN between def and use inside the loop, and no C construct that survives the `jump` pass creates one here.
 
 </details>

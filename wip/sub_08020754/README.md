@@ -2,7 +2,7 @@
 
 0x08020754, 208 bytes, THUMB, parked.
 
-Best score so far: 44.0%, +8 bytes (best.c).
+Best score so far: not measured.
 
 ## What it does
 
@@ -26,7 +26,6 @@ Find how the original wrote the if/else so that the compiler's common-subexpress
 ## Files
 
 - `sub_08020754.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -75,5 +74,12 @@ WAVE 87 (W87-C, unnamed-twin axis, J = 1.00 on the two map globals but no loops)
 ### Wave 91
 
 WAVE 91 (W91-A), pre-registered member-form test: NEGATIVE, BYTE-IDENTICAL. This draft was already a member form through its local struct Unk20754Map; respelled through the shared struct Map (`((struct Map *)gUnknown_08499590)->terrain[->rowOffset[y] + x]`, `->unitUnk[...]`) and through gMap, _cand.bin is cmp-identical to the wave-90 draft (220/208, +12, 27.9%). NEW MECHANISM READ OFF `rtldump.py --flags="-da -dp"` (dump.cse): the candidate's `= 0` arm reuses the index (reg 47) because CSE reaches that arm by -fcse-skip-blocks -- the `unit == 0` jump branches AROUND the unit-type block (no other entry) to a single-use label -- not by fall-through as this entry's why_it_is_close says; the `= 1` label has two uses, so it starts a fresh block and recomputes with a reload of gUnknown_08499590. The ROM is the mirror, so its source must at CSE time deny the skip-blocks path into `= 0` (a second use of that label, or a second entry into the type block) AND give `= 1` a single-use label behind a barrier. Measured, all byte-identical to the draft: negated tests each `goto one;` then `= 0; continue; one: = 1;`; nested ifs with a shared `zero:` label inside the inner if; `... && !(unit != 0 && (u8)(type - 0x10) <= 4)`. `if (cond) goto zero; = 1; continue; zero: = 0;` is +8/45.7% but puts `= 1` first, recomputes there, and grows the frame to sub sp,#8. Evidence: work/sub_08020754/NOTES.md.
+
+### Wave 93
+
+WAVE 93 (W93-C). UNCHANGED at 220/208 (+12), 26.36%, first difference +0xc. The recommended base is a shape this function's own notes had already measured and rejected.
+BASE REJECTED: `best.c` (43.98%, size+8) is, statement for statement, the `k3` variant recorded in work/sub_08020754/NOTES.md -- `if (cond) goto zero; = 1; continue; zero: = 0;` -- which that file describes as '+8, 45.7%, but it puts the `= 1` arm first, recomputes there, and grows the frame to `sub sp,#8`. Wrong direction.' Re-measured this wave: 43.98%, size+8, FIRST DIFFERENCE +0xa against the draft's +0xc, so it diverges EARLIER. It is correct C going the wrong way, and its higher percentage is entirely the 4 bytes it gives back on a draft that is already OVER size. Renamed `best.c.wrongc`.
+METHOD NOTE: on a draft that is over size, a candidate closer to the target size scores higher whatever it does to the code. This entry and sub_080303C8's are the same trap in opposite directions (over size and under size); in both, the first-difference offset gave the right answer and the percentage gave the wrong one.
+RESIDUAL unchanged: which arm CSE recomputes `rowOffset[y] + x` on.
 
 </details>

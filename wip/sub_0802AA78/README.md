@@ -2,7 +2,7 @@
 
 0x0802AA78, 2356 bytes, THUMB, parked.
 
-Best score so far: 89.3%.
+Best score so far: 98.0% (best.c).
 
 ## What it does
 
@@ -10,7 +10,7 @@ Draws the map information panel for the cell under the cursor: the terrain box, 
 
 ## How close it is
 
-Compiles to the right size (2356 bytes); 253 bytes differ (89.3% identical). The first differences are compiler-made address words; the first differing instruction is about 920 bytes in.
+Compiles to the right size (2356 bytes); 46 bytes differ (98.0% identical). Two things remain: five compiler-made address words that the build still has to place where the original keeps them, and one pair of stack copies the compiler emits in the opposite order.
 
 ## What is left
 
@@ -27,6 +27,7 @@ Two spots remain. In one if/else pair the original loads two tables in the oppos
 ## Files
 
 - `sub_0802AA78.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -60,5 +61,9 @@ Control flow, canonical Map view, call sequence and total size are settled; Wave
 ### Why it is parked
 
 Wave 74 W74-B. Resume with a new GCSE/merge-allocation mechanism from the include-based active draft.
+
+### Wave 93
+
+WAVE 93 (W93-D): 89.26% -> 98.05%, still size-exact at 2356 bytes, 46 differing bytes, first difference +0x90. The park said two clean chained permuter runs over 11,000 iterations found nothing; that was true of the run, not of the method. FIVE runs, each started from the previous one's kept improvement, gave 89.26 -> 93.80 -> 95.84 -> 97.28 -> 98.05, and a sixth found nothing. Every gain is a BINDING LOCAL or a REASSOCIATION; no statement was added, removed or reordered. The kept changes, each read and checked: the first sub_0802BAFC argument in the hp branch bound to `q` (a dead-range reuse -- q is assigned 0 later, before its own first read); gUnknown_0849A284[1] indexed through a local holding 1 (renamed yIndex); the table's unk04 column base bound to a local (renamed tblUnk04); `accv != zero` written as `accv != 0`, the same test because zero = 0 is assigned earlier; and three address sums reassociated. Both permuter temporaries were renamed out of new_var form and re-measured byte-identical. drafts.py bases reports no read-before-set and names the draft as the base. WHAT IS LEFT, two things. (a) FIVE .rodata POOL WORDS: the candidate emits its own address-constant pool relocating against .rodata with addends 0, 4, 8, 0xc, 0x10, where the ROM names gUnknown_08090B98, _B9C, _BA0, _BA4 and _BA8 -- five consecutive 4-byte incbins in data/rodata-0808F098.s, i.e. the ORIGINAL unit's own -fforce-addr pool that the splitter gave invented names. This is the ordinary rodata-carve case; the promotion needs a "rodata" entry naming those five words. (b) ONE SWAPPED PAIR OF SPILL COPIES: the ROM copies [sp,#36]->[sp,#56] then [sp,#32]->[sp,#52]; the candidate does the two the other way round, while the following pairs [sp,#40]->[sp,#60], [sp,#44]->[sp,#64] and the [sp,#72] store already agree. There is no struct copy in the source there -- these are reload's own spill copies around the terrain switch, so the order is reload's, not the source's. NOTE for the next wave: the 92.5%/93.9% figures this entry warned about as header-expanded contamination are now beaten by an honest include-based draft.
 
 </details>

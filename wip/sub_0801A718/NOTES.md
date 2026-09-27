@@ -74,3 +74,104 @@ not started only because two runs were already occupying this agent's slots.
     +0x1C -> the address cell for gUnknown_030020A8 (ROM: 0x0808E5CC)
     +0x44 -> gUnknown_0200C624
     +0x48 -> the address cell for gUnknown_0200C618 (ROM: 0x0808E5D0)
+
+# wave 93 (W93-B)
+
+## First permuter run on this function: 83.33% reported, REJECTED as wrong C
+
+900 s x 4 threads from the 68.94% draft. `permute.py` reported
+`IMPROVED 68.94% -> 83.33%` and kept its output. Audited before adopting, and it
+does not compute what the draft computes:
+
+    if (((s16) gUnknown_030020A8.unk00) > 0x80)
+    {
+      return -1;
+      node = &gUnknown_0200C624[(s16) gUnknown_030020A8.unk00];   /* unreachable */
+    }
+    (&gUnknown_0200C624[(s16) gUnknown_030020A8.unk00])->unk00 = (u32) a1;
+    node->unk08 = key;
+
+The only assignment to `node` was moved **after a `return`**, into dead code. On
+the path that actually runs, `node` is never set and is then dereferenced four
+times — `node->unk08`, `node->unk04` twice and `prev->unk04 = node` /
+`cur->unk04 = node`. The first store escaped notice because the permuter rewrote
+it to spell the address out in full, so only that one store still lands
+correctly; every later use writes through an uninitialised pointer.
+
+This is the wave-92 rejection class (a variable read before it is set) and the
+run has been discarded. The draft is restored from `sub_0801A718.w92-start.c` and
+re-measured at **68.94%, size-exact, first difference +0x2**. The permuter's
+output is kept as `w93-perm1-8333.c.wrongc` and its `best.c` as
+`best.c.wrongc`, both reference only and invisible to `drafts.py bases`;
+`best.json` was deleted and regenerated from the restored draft.
+
+## But WHY it scored 83.33% is the most useful thing this function has produced
+
+Uninitialised `node` is not a random register. agbcc leaves `node`'s pseudo
+holding whatever the address computation for the first store
+(`&gUnknown_0200C624[...]`) already put in a register — so the wrong C gets
+`node` and the node-array base to SHARE a register, and sharing them is worth
+14 points.
+
+That is the same fact as this function's recorded residual read from the other
+side. The notes above record that the ROM copies the base before biasing it:
+
+    ROM     ldr r0,[pc,#16] / adds r2,r1,r0 / adds r3,r0,#0 / subs r3,#12
+    draft   ldr r2,[pc,#28] / ...           / adds r3,r0,r2 / subs r2,#12
+
+and that six spellings of `cur = base - 1` all compile byte-identically. The
+permuter has now shown that the register sharing IS reachable — just not by
+respelling the subtraction. **What needs to share a register is `node` and the
+array base, not `cur` and the array base**, and the previous six probes were all
+aimed at `cur`. That is a new and specific target for the next attempt: find a
+legal spelling in which `node` and the base are one pseudo.
+
+The obvious candidates, none yet measured: computing `node` from a base local
+that `cur` is also derived from; writing the first store through `node` rather
+than through a separate address expression; and giving `node` and the base the
+same live range by moving `node`'s assignment to sit between the two stores.
+
+## Acting on that diagnostic closed 10.6 points with ordinary C — 68.94% -> 79.55%
+
+Five spellings were compiled together, all aimed at the pseudo-creation ORDER of
+the node-array base rather than at respelling `cur`:
+
+    base bound to a local AFTER the bare first reference ... 68.94%  (no change)
+    `cur` and `prev` swapped, `cur` still last ............. 68.18%  (worse)
+    `cur = gUnknown_0200C624 - 1;` moved BEFORE `node` ..... 76.52%
+    that, plus a `base` local both are derived from ........ 79.55%  <- adopted
+    `cur` moved above the `unk00 > 0x80` guard ............. 10.29%, size +4
+
+The adopted form is plain C with no compiler-fighting in it:
+
+    base = gUnknown_0200C624;
+    cur = base - 1;
+    node = &base[(s16)gUnknown_030020A8.unk00];
+    node->unk00 = (u32)a1;
+    node->unk08 = key;
+    prev = NULL;
+
+`cur` is pure address arithmetic with no dependency on the two stores and
+nothing between reads it, so hoisting it above `node` is equivalent; `base`
+holds the array's address, which is a constant. This is very plausibly how the
+original was written.
+
+## It also corrects a recorded negative, the same way wave 93 corrected two others
+
+The notes above record "base bound to a local, node and cur both derived from
+it .... byte-identical". That is true — when `node` is computed first. With
+`cur` computed first the same base local is worth a further 3 points. The two
+levers are not independent, and the earlier measurement is evidence about the
+pair of spellings tried, not about binding the base.
+
+The mechanism is the documented one: of two address constants used the same
+number of times, the pseudo created FIRST wins the register, and the loser is
+rematerialised. Creating `cur`'s base pseudo before `node`'s is what makes the
+ROM's `adds r3,r0,#0` copy appear instead of the draft's in-place `subs r2,#12`.
+
+Kept as `w93-base-7955.c`; the 68.94% draft is `sub_0801A718.w93-start.c`.
+
+## Residual
+
+132/132, 27 of 132 bytes differ, 79.55%, first difference still at +0x2 — the
+first parameter's register. A pure allocation residual at the exact size.

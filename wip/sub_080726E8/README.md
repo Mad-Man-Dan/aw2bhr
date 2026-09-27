@@ -2,7 +2,7 @@
 
 0x080726E8, 216 bytes, THUMB, parked.
 
-Best score so far: 56.9% (best.c).
+Best score so far: 56.9%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Copies a w-by-h block of tilemap entries into a 32-wide BG tilemap at (x, y), ad
 
 ## How close it is
 
-Compiles 12 bytes too long (228 against 216), 18.5% of bytes match; the score means little because the extra code starts near the top (a bigger stack frame) and shifts everything after it. Everything outside the flipped loop is right, including the unflipped loop.
+Now compiles to the right size (216 bytes) where it used to be 12 too long, with 56.9% of bytes in place. The flipped loop no longer builds stepping pointers the original does not have. What is left is one stack slot: this build keeps three local values on the stack where the original keeps two, and that shifts the registers everywhere.
 
 ## What is left
 
@@ -30,7 +30,7 @@ In the flipped loop the compiler turns both the source and the destination addre
 ## Files
 
 - `sub_080726E8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -40,7 +40,7 @@ In the flipped loop the compiler turns both the source and the destination addre
 
 ### Best so far
 
-228 bytes against 216 (+12), 18.5% identical, first difference at +0xa. Re-verified wave 73 (W73-C). THE DRAFT SCORES 18.5%; the 56.9% trymatch prints as 'best so far' is best.c's score and is NOT the draft -- best.c is 142KB of permuter output and is not a readable draft.
+56.94% -- 216 bytes, SIZE-EXACT (was 17.54% at +12 at wave 93 start)
 
 ### What still differs
 
@@ -70,5 +70,16 @@ Everything else is byte-exact and must be kept: the UNFLIPPED arm (which the ROM
 ### Notes
 
 Wave 73 (W73-C). The open lever is register PRESSURE, not spelling -- the ROM's flipped arm reads like a loop strength_reduce declined to reduce because too much was already live. Wave 72 ruled out the cross-arm form of that; what remains untried is pressure INSIDE the flipped inner loop itself. Compare sub_0806B120, matched in wave 73, where switching two stores to bitfields added exactly one live constant and that alone stopped strength_reduce from making an element address a pointer giv -- the same mechanism, in the direction this function needs.
+
+### Wave 93
+
+- **result:** 17.54% at +12 bytes -> 56.94% SIZE-EXACT, first difference stays +0xa
+- **base_adopted:** best.c/recovered.c (56.94%), audited as equivalent C and adopted. Its only change is a volatile int temporary in the flipped arm's store holding ix (renamed new_var -> col); the source index still uses ix, so the same cell gets the same value, and volatile on a local nothing else touches adds no observable behaviour.
+- **mechanism:** The volatile read forces the value to memory and back, which defeats exactly the strength reduction this park was about -- the first thing that has ever moved this function. It is the right MECHANISM and the wrong CONSTRUCT, and the frame proves it: ROM sub sp, #8 (map at [sp], p at [sp,#4]) against the candidate's sub sp, #12. A volatile local is an addressable object so it costs a third slot, and the ROM has no third stack object at all. The size still comes out exact because the one new slot replaces the two the hoisted giv inits needed.
+- **six_spellings_measured:** plain int col temp 17.54% at +12 and BYTE-IDENTICAL to writing no temp; u16 *d bound in its own statement 17.54% at +12 and also byte-identical; 8-bit fold-proof mask on the destination index 18.64% at +4 with NO local; the same mask on both indices 19.64% at +8; u16 ix 10.19% at the EXACT size but with a 4-byte frame because it drops p off the stack; u16 ix and u16 iy 11.82% at +4.
+- **what_this_rules_out:** An ordinary local is not a splitter here -- agbcc coalesces it away and reduces exactly as before. Only volatile defeats the reduction, and it cannot do so without adding a frame object. Size-exact is reachable two ways and neither frame is right: the volatile form is one slot long and u16 ix is one slot short. The fold-proof mask is the only partial splitter that needs no local (+12 to +4 on the destination index alone, and applied to the source index as well it costs 4 bytes back), and it is where the next attempt should start.
+- **permuter:** 900 s x 4 threads from the 56.94% base: no candidate matched or improved, draft restored unchanged.
+- **generalised:** docs/agbcc-codegen.md now carries a chapter on reading the frame-slot count as a spelling lever, measured here and on sub_0801FAC4 in opposite directions.
+- **residual:** 216/216, 123 of 216 bytes differ, first difference +0xa. One extra frame slot (12 against 8) and the register renumbering that follows from it, which is also why the previously byte-exact unflipped arm now differs.
 
 </details>

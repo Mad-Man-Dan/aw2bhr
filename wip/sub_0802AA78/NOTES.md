@@ -63,3 +63,42 @@ Allocation/permuter axis:
 - At the final `q` merge, the target emits `lsls`/`asrs` signed materialization and reuses that value. The include-based candidate proves the `u8` range and rotates registers instead; tested declaration, cast, scope, and lifetime variants did not reproduce the pair.
 
 The requested guide filenames `docs/decomp-principles-and-practice.md`, `docs/dual_toolchain_matching.md`, and `docs/decomp-matching-discoveries.md` are absent from this checkout. The available shared brief and `docs/agbcc-codegen.md` guidance were used instead, along with promoted vocabulary exemplars `src/decomp/c_0802AA14.c` and `src/decomp/c_0802B4D4.c`.
+
+## Wave 93 (W93-D) -- 89.26% -> 98.05%, size-exact, by five chained permuter runs
+
+The park said two clean chained runs over 11,000 iterations had found nothing.
+That was true of the run, not of the method: five runs chained from each
+other's kept improvement moved it 89.26 -> 93.80 -> 95.84 -> 97.28 -> 98.05,
+and the sixth found nothing. Every gain is a BINDING LOCAL or a
+REASSOCIATION -- no statement was added, removed or reordered:
+
+  * the first sub_0802BAFC argument in the hp branch bound to `q` (which is
+    dead there; `q = 0` is assigned later, before its own first read, so the
+    reuse is a dead-range reuse and not a semantic change);
+  * `gUnknown_0849A284[1]` indexed through a local holding 1 (now `yIndex`);
+  * the table's unk04 column base bound to a local (now `tblUnk04`);
+  * `accv != zero` written as `accv != 0` (`zero = 0` is assigned earlier, so
+    the two are the same test);
+  * three address sums reassociated, e.g.
+    `gUnknown_0849A284[6] + (cx + tbl)` to `(cx + tbl) + gUnknown_0849A284[6]`.
+
+Every changed statement was read and checked; `drafts.py bases` reports no
+read-before-set and names this file as the base. The two permuter temporaries
+were renamed from new_var/new_var2 to yIndex/tblUnk04 and re-measured
+byte-identical at 98.05%.
+
+WHAT IS LEFT, 46 of 2356 bytes:
+  (a) FIVE .rodata POOL WORDS. The candidate emits its own address-constant
+      pool, relocating against .rodata with addends 0, 4, 8, 0xc and 0x10,
+      where the ROM names gUnknown_08090B98, _B9C, _BA0, _BA4 and _BA8. Those
+      five ROM symbols are five consecutive 4-byte incbins in
+      data/rodata-0808F098.s -- that is, the ORIGINAL unit's own
+      -fforce-addr pool, which the splitter gave invented names. This is the
+      ordinary rodata-carve case: the promotion needs a "rodata" entry naming
+      those five words.
+  (b) ONE SWAPPED PAIR OF SPILL COPIES. The ROM copies [sp,#36]->[sp,#56] and
+      then [sp,#32]->[sp,#52]; the candidate does the two the other way round.
+      The following two pairs ([sp,#40]->[sp,#60], [sp,#44]->[sp,#64]) and the
+      [sp,#72] store already agree. There is no struct copy in the source
+      here: these are reload's own spill copies around the terrain `switch`,
+      so the order is reload's, not the source's.

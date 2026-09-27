@@ -2,7 +2,7 @@
 
 0x08047190, 1292 bytes, THUMB, parked.
 
-Best score so far: 77.3%.
+Best score so far: 88.8%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Builds the current army's sorted unit list in gUnknown_02028DD8, ended by 0xff. 
 
 ## How close it is
 
-Compiles to the right size (1292 bytes); 293 bytes differ (77.3% line up), starting near the top. The remaining difference is register choice and instruction order; no statement is missing.
+Compiles to the right size (1292 bytes); 144 bytes differ (88.9% line up), starting near the top. The remaining difference is register choice and instruction order in the first loop; no statement is missing.
 
 ## What is left
 
@@ -27,6 +27,7 @@ The function makes no calls, so one different register choice in the first loop 
 ## Files
 
 - `sub_08047190.c`: the current draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -37,5 +38,9 @@ The function makes no calls, so one different register choice in the first loop 
 ### Notes
 
 PARKED Wave 71 at exact size 1292/1292, 77.3%. Remaining class is allocation/order after the prior permuter gain. Chained o/n grows to 1296 at 19.0%, fixed-r3 rank to 1304 at 10.7%; older low-scoring and header-regression candidates are rejected.
+
+### Wave 93
+
+WAVE 93 (W93-D): 77.32% -> 88.85%, still size-exact at 1292 bytes, 144 differing bytes, first difference +0x11. The entry's own suggestion (another permuter run from the current best) is right provided the runs are CHAINED: four runs, each started from the previous one's kept improvement, gave 77.32 -> 77.86 -> 87.93 -> 88.85, and the fifth found nothing. The big step was run 2, worth ten points. All three kept changes are semantically neutral and each was read: the type compare in the second scan written with the constant on the left, `if (t == gUnknown_08499594[...].type)`; that same element bound to `e` before the compare (e is assigned before every one of its reads throughout the function, so no stale value is possible); and the loop bound's `+ 1` taken from a u8 local set to 1 immediately before the loop (q3, which is separately re-initialised to 0 before its later use as a counter). drafts.py bases reports no read-before-set and names the draft as the base. WHAT IS LEFT is the same class as before and nothing structural is missing: register choice and instruction order in the first scan, cascading through everything after it because the function makes no calls. The three zero-initialisations at the top land in r5/sl/r9 where the ROM uses r9/sl/r3, and one `ble` moves relative to a `movs`.
 
 </details>

@@ -61,6 +61,10 @@ def better_base(name, v):
     """
     notes = []
     try:
+        # A best.json outlives a best.c renamed *.wrongc after review; its
+        # score then describes a file judged wrong, so say nothing.
+        if not os.path.exists(os.path.join("work", name, "best.c")):
+            raise OSError("no best.c")
         with open(os.path.join("work", name, "best.json"), encoding="utf-8") as fh:
             b = json.load(fh)
         sd = b.get("size_delta")

@@ -132,3 +132,36 @@ question for `-da`/`-dp` dumps of this function's `.gcse` pass, comparing the
 insns). `-fno-gcse` is already in the swept flag set and did not move this
 function, which is itself a datum: if the word were a PRE insertion we would
 expect the flag to change something here.
+
+## Wave 93 (W93-D) -- three more axes closed with controlled probes
+
+The entry said to treat this as closed. It is closer to closed now: the
+remaining plausible mechanisms were tested and all are refuted.
+
+1. VOLATILE IS NOT THE MECHANISM. The wave-93 technique that unlocked
+   sub_08073480 -- reading the global through a volatile cast AT THE USE --
+   was tried in three spellings (`**(u16 *volatile *)&g`, the same through a
+   local, and `(*(u16 *volatile *)&g)[0]`). All three are size-exact at 29.7%,
+   first difference +0x0. The volatile read does stay in the loop, but the
+   cast makes agbcc park the symbol's address in this unit's own .rodata and
+   reach it through an EXTRA indirection: `ldr r7,[pc]` (relocating against
+   .rodata, not gUnknown_0808DF8C), then `ldr r0,[r7]`, `ldr r4,[r0]`,
+   `ldrh r1,[r4]` -- three loads in the loop where the ROM has two.
+   DECISIVE: `-fvolatile-global` on the plain draft gives the SAME 29.7% /
+   +0x0 result. The compiler's own volatile-everything flag produces exactly
+   what the targeted cast produces, and it is not the ROM. No volatile
+   spelling reaches this residual.
+   The same cast WITHOUT volatile, `**(u16 **)&g`, is byte-identical to the
+   draft at 79.7% -- the cast itself is free; the volatile is what costs.
+
+2. ALIAS ANALYSIS IS NOT THE MECHANISM. The theory was that the `strh` through
+   the `u16 *` parameter cannot alias a `u16 *` object under strict aliasing,
+   which would make the pointer load invariant and hoistable.
+   `-fno-strict-aliasing` leaves the draft at 79.7% / first +0x11, unchanged.
+
+3. NO PASS FLAG OWNS IT. `-fno-gcse`, `-fno-rerun-cse-after-loop`,
+   `-fno-rerun-loop-opt` and `-fno-expensive-optimizations` each leave the
+   draft at exactly 79.7% / +0x11. The hoist is loop.c's own invariant motion,
+   which agbcc has no flag to disable, so the flag axis is exhausted too.
+
+Draft unchanged: 64 bytes size-exact, 79.7%, 13 differing bytes.

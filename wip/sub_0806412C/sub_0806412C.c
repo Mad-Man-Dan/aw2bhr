@@ -96,43 +96,49 @@
  * other. */
 void sub_0806412C(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u16 a6, u16 a7, u16 a8)
 {
-    const s16 *src;
-    const u8 *tbl;
-    int *dst;
-    u8 *q;
-    int v7;
-    int v8;
-    int i;
-    int j;
-
-    src = gUnknown_0858089C;
-    tbl = gUnknown_085808CC;
-    i = 0;
-    v7 = a7 * 0x1000;
-    v8 = a8 * 0x1000;
-
-    for (; i != 8; i++)
+  const s16 *src;
+  const u8 *tbl;
+  int *dst;
+  u8 *q;
+  int v7;
+  struct Unk0202F110Entry *entries;
+  int v8;
+  int i;
+  int j;
+  src = gUnknown_0858089C;
+  tbl = gUnknown_085808CC;
+  i = 0;
+  v7 = a7 * 0x1000;
+  for (; i <= 7; i++)
+  {
+    j = i;
+    dst = gUnknown_0202F140[j].unk00;
+    for (j = 2; j >= 0; j--)
     {
-        dst = gUnknown_0202F140[i].unk00;
-
-        for (j = 2; j >= 0; j--)
-            *dst++ = *src++ * 0x1000;
+      v8 = a8 * 0x1000;
+      *(dst++) = (*(src++)) * 0x1000;
     }
 
-    for (i = 0; i <= 5; i++)
-    {
-        q = gUnknown_0202F110[i].unk02;
+  }
 
-        for (j = 3; j >= 0; j--)
-            *q++ = *tbl++;
+  for (i = 0; (i + 1) <= (5 + 1); i++)
+  {
+    entries = gUnknown_0202F110;
+    q = entries[i].unk02;
+    for (j = 3; j >= 0; j--)
+    {
+      *(q++) = *(tbl++);
     }
 
-    gUnknown_0202F110[0].unk00 = a1;
-    gUnknown_0202F110[1].unk00 = a2;
-    gUnknown_0202F110[2].unk00 = a3;
-    gUnknown_0202F110[3].unk00 = a4;
-    gUnknown_0202F110[4].unk00 = a5;
-    gUnknown_0202F110[5].unk00 = a6;
-    gUnknown_030005F4 = v7;
-    gUnknown_030005F8 = v8;
+  }
+
+  gUnknown_0202F110[0].unk00 = a1;
+  i = 4;
+  gUnknown_0202F110[1].unk00 = a2;
+  gUnknown_0202F110[2].unk00 = a3;
+  gUnknown_0202F110[3].unk00 = a4;
+  gUnknown_0202F110[i].unk00 = a5;
+  gUnknown_0202F110[5].unk00 = a6;
+  gUnknown_030005F4 = v7;
+  gUnknown_030005F8 = v8;
 }

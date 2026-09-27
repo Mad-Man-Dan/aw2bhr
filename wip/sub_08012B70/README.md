@@ -30,6 +30,7 @@ The original keeps `dst` alive only until the row base is computed and then reus
 
 - `sub_08012B70.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -73,5 +74,9 @@ The type model and the statement order are settled and independently corroborate
 ### Why it is parked
 
 Register allocation, not source semantics. The instruction stream, the type model and every read form are settled; what remains is which hard register the row base and the row pointer land in, and that is coupled to whether dst survives as a pseudo of its own. Both sides of that coupling have been probed to exhaustion from source, the toolchain axis is measured and worse, and the permuter has converged. Unparking needs a construct that keeps dst alive across the stack-parameter load WITHOUT making it the row base. WAVE 73: still the correct diagnosis. This was the ONE function in the wave-73 pure-register-name batch that no lever moved, and it is also the only one of the six that had ALREADY had the permuter run on it before this wave.
+
+### Wave 93
+
+WAVE 93 (W93-D): still 87.5%, size-exact, draft unchanged. NEW STRUCTURAL FAMILY, and a sharper statement of the park. Reusing the PARAMETER `dst` as the row pointer while giving the row base its own local (base = dst + x; base = base + y * 0x20; then dst = base + i * 0x20; inside the outer loop) reproduces the ROM's pseudo structure exactly for the first time: the `adds r4, r0, #0` prologue copy of dst, the row base as a separate SCRATCH pseudo, and the row pointer recycling dst's now-dead register. Every earlier attempt gave the base its own local while ALSO keeping p separate, which let dst die at once and lost the copy. It is still not a match: agbcc then honours src's copy-preference for its incoming r1, leaves src there, and DROPS the `adds r5, r1, #0` prologue copy -- 42 instructions against the ROM's 43, 2 bytes short. Measured at 42 instructions with src in r1: both orders of the two inner increments; the draft's do-while(0) + int yoff wrapper carried over; src++ before or after the base computation; and parameter 2 taken as `const void *` and walked through a local `u16 *` (the local folds away entirely, byte-identical to the direct form). The mirror-image spelling `p = dst;` at the top is copy-propagated away: dst then stays in r0, the stack parameter loads into r1 instead, and it is SRC that gets the copy and dst that loses it. CONCLUSION: the dst/base SPLIT and the TWO prologue copies are mutually exclusive in every spelling measured -- agbcc always leaves exactly one of the two pointer parameters in its incoming register. Full write-up in work/sub_08012B70/NOTES.md.
 
 </details>

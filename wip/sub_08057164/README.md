@@ -26,6 +26,7 @@ Make the compiler step one element index by 1 and scale it at each table read, a
 
 - `sub_08057164.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history

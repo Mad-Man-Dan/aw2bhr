@@ -109,16 +109,18 @@ s16 sub_0801A718(struct Unk0200ED20 *a1, s16 key)
     struct Unk0808E5C8 *prev;
     struct Unk0808E5C8 *cur;
     struct Unk0808E5C8 *next;
+    struct Unk0808E5C8 *base;
 
     if ((s16)gUnknown_030020A8.unk00 > 0x80)
         return -1;
 
-    node = &gUnknown_0200C624[(s16)gUnknown_030020A8.unk00];
+    base = gUnknown_0200C624;
+    cur = base - 1;
+    node = &base[(s16)gUnknown_030020A8.unk00];
     node->unk00 = (u32)a1;
     node->unk08 = key;
 
     prev = NULL;
-    cur = gUnknown_0200C624 - 1;
 
     for (;;)
     {

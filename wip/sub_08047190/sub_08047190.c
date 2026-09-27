@@ -34,233 +34,271 @@
 
 void sub_08047190(void *arg, int a2)
 {
-    u8 list[0x40];
-    struct Unit *e;
-    s8 rank;
-    s8 i;
-    s8 k;
-    s8 t;
-    s8 g;
-    u8 j;
-    u8 s;
-    u8 n;
-    u8 o;
-    u8 q;
-    u8 q2;
-    u8 q3;
-    u8 v;
-    s16 c1;
-    s16 c2;
-    s16 d1;
-    s16 d2;
-
-    o = (rank = 0);
-    n = 0;
-
-    for (i = 0; i <= 0x18; i++)
+  u8 list[0x40];
+  struct Unit *e;
+  s8 rank;
+  s8 i;
+  s8 k;
+  s8 t;
+  s8 g;
+  u8 j;
+  u8 s;
+  u8 n;
+  u8 o;
+  u8 q;
+  u8 q2;
+  u8 q3;
+  u8 v;
+  s16 c1;
+  s16 c2;
+  s16 d1;
+  s16 d2;
+  o = (rank = 0);
+  n = 0;
+  for (i = 0; i <= 0x18; i++)
+  {
+    if (gUnknown_081BA068[i] > 0)
     {
-        if (gUnknown_081BA068[i] > 0)
+      for (j = 1; j <= 0x3f; j++)
+      {
+        if (gUnknown_081BA068[i] > rank)
         {
-            for (j = 1; j <= 0x3f; j++)
-            {
-                if (gUnknown_081BA068[i] > rank)
-                    rank = gUnknown_081BA068[i];
-            }
+          rank = gUnknown_081BA068[i];
         }
+      }
+
+    }
+  }
+
+  if (gUnknown_02028E18 == 0)
+  {
+    q3 = 1;
+    for (k = 1; k < (rank + q3); k++)
+    {
+      for (t = 0; t <= 0x18; t++)
+      {
+        if (gUnknown_081BA068[t] == k)
+        {
+          for (s = 1; s <= 0x3f; s++)
+          {
+            if (t == gUnknown_08499594[gUnknown_03003F2C + s].type)
+            {
+              gUnknown_02028DD8[n] = s;
+              n++;
+            }
+          }
+
+        }
+      }
+
     }
 
-    if (gUnknown_02028E18 == 0)
+    gUnknown_02028DD8[n] = 0xff;
+    ((struct Unk0804769C *) arg)->unk21 = n;
+    if (a2 == 0)
     {
-        for (k = 1; k < rank + 1; k++)
-        {
-            for (t = 0; t <= 0x18; t++)
-            {
-                if (gUnknown_081BA068[t] == k)
-                {
-                    for (s = 1; s <= 0x3f; s++)
-                    {
-                        if (gUnknown_08499594[gUnknown_03003F2C + s].type == t)
-                        {
-                            gUnknown_02028DD8[n] = s;
-                            n++;
-                        }
-                    }
-                }
-            }
-        }
+      for (q = 0; q < n; q++)
+      {
+        list[q] = gUnknown_02028DD8[q];
+      }
 
-        gUnknown_02028DD8[n] = 0xff;
-        ((struct Unk0804769C *)arg)->unk21 = n;
-
-        if (a2 == 0)
-        {
-            for (q = 0; q < n; q++)
-                list[q] = gUnknown_02028DD8[q];
-        }
-        else
-        {
-            for (g = 0; g <= 0x64; g++)
-            {
-                for (q = 0; q < n; q++)
-                {
-                    v = gUnknown_02028DD8[q];
-                    e = &gUnknown_08499594[gUnknown_03003F2C + v];
-
-                    if (a2 == 1 && e->hp != g)
-                        continue;
-                    if (a2 == 2 && e->fuel != g)
-                        continue;
-                    if (a2 == 3)
-                    {
-                        if (g == 0)
-                        {
-                            if (e->ammo != 0)
-                                continue;
-                            if (gUnknown_085D5ABC[e->type].unk11 == 0)
-                                continue;
-                        }
-                        else if (g == 0x64)
-                        {
-                            if (e->ammo != 0)
-                                continue;
-                            if (gUnknown_085D5ABC[e->type].unk11 != 0)
-                                continue;
-                        }
-                        else
-                        {
-                            if (e->ammo != g)
-                                continue;
-                        }
-                    }
-
-                    list[o] = v;
-                    o++;
-                }
-            }
-        }
     }
     else
     {
-        for (k = rank; k > 0; k--)
+      for (g = 0; g <= 0x64; g++)
+      {
+        for (q = 0; q < n; q++)
         {
-            for (t = 0; t <= 0x18; t++)
+          v = gUnknown_02028DD8[q];
+          e = &gUnknown_08499594[gUnknown_03003F2C + v];
+          if ((a2 == 1) && (e->hp != g))
+          {
+            continue;
+          }
+          if ((a2 == 2) && (e->fuel != g))
+          {
+            continue;
+          }
+          if (a2 == 3)
+          {
+            if (g == 0)
             {
-                if (gUnknown_081BA068[t] == k)
-                {
-                    for (s = 1; s <= 0x3f; s++)
-                    {
-                        if (gUnknown_08499594[gUnknown_03003F2C + s].type == t)
-                        {
-                            gUnknown_02028DD8[n] = s;
-                            n++;
-                        }
-                    }
-                }
+              if (e->ammo != 0)
+              {
+                continue;
+              }
+              if (gUnknown_085D5ABC[e->type].unk11 == 0)
+              {
+                continue;
+              }
             }
-        }
-
-        gUnknown_02028DD8[n] = 0xff;
-        ((struct Unk0804769C *)arg)->unk21 = n;
-
-        if (a2 == 0)
-        {
-            for (q = 0; q < n; q++)
-                list[q] = gUnknown_02028DD8[q];
-        }
-        else
-        {
-            for (g = 0x64; g >= 0; g--)
+            else
+              if (g == 0x64)
             {
-                for (q = 0; q < n; q++)
-                {
-                    v = gUnknown_02028DD8[q];
-                    e = &gUnknown_08499594[gUnknown_03003F2C + v];
-
-                    if (a2 == 1 && e->hp != g)
-                        continue;
-                    if (a2 == 2 && e->fuel != g)
-                        continue;
-                    if (a2 == 3)
-                    {
-                        if (g == 0)
-                        {
-                            if (e->ammo != 0)
-                                continue;
-                            if (gUnknown_085D5ABC[e->type].unk11 == 0)
-                                continue;
-                        }
-                        else if (g == 0x64)
-                        {
-                            if (e->ammo != 0)
-                                continue;
-                            if (gUnknown_085D5ABC[e->type].unk11 != 0)
-                                continue;
-                        }
-                        else
-                        {
-                            if (e->ammo != g)
-                                continue;
-                        }
-                    }
-
-                    list[o] = v;
-                    o++;
-                }
+              if (e->ammo != 0)
+              {
+                continue;
+              }
+              if (gUnknown_085D5ABC[e->type].unk11 != 0)
+              {
+                continue;
+              }
             }
+            else
+              if (e->ammo != g)
+            {
+              continue;
+            }
+          }
+          list[o] = v;
+          o++;
         }
+
+      }
+
     }
-
-    o = 0;
-
-    for (q = 0; q < n; q++)
+  }
+  else
+  {
+    for (k = rank; k > 0; k--)
     {
-        v = list[q];
-        if (v == 0xff)
-            continue;
-
-        e = &gUnknown_08499594[gUnknown_03003F2C + v];
-        if (e->flags & 8)
-            continue;
-
-        gUnknown_02028DD8[o] = v;
-        list[q] = 0xff;
-        o++;
-
-        if (!(e->flags & 0x10))
-            continue;
-
-        c1 = e->unk07 - gUnknown_03003F2C;
-        c2 = e->unk08 - gUnknown_03003F2C;
-
-        for (q2 = 0; q2 < n; q2++)
+      for (t = 0; t <= 0x18; t++)
+      {
+        if (gUnknown_081BA068[t] == k)
         {
-            if (list[q2] != c1 && list[q2] != c2)
-                continue;
-
-            gUnknown_02028DD8[o] = list[q2];
-            e = &gUnknown_08499594[gUnknown_03003F2C + gUnknown_02028DD8[o]];
-            list[q2] = 0xff;
-            o++;
-
-            if (!(e->flags & 0x10))
-                continue;
-
-            d1 = e->unk07 - gUnknown_03003F2C;
-            d2 = e->unk08 - gUnknown_03003F2C;
-
-            for (q3 = 0; q3 < n; q3++)
+          for (s = 1; s <= 0x3f; s++)
+          {
+            e = &gUnknown_08499594[gUnknown_03003F2C + s];
+            if ((*e).type == t)
             {
-                if (list[q3] == d1 || list[q3] == d2)
-                {
-                    gUnknown_02028DD8[o] = list[q3];
-                    list[q3] |= 0xff;
-                    o++;
-                }
+              gUnknown_02028DD8[n] = s;
+              n++;
             }
+          }
+
         }
+      }
+
     }
 
-    gUnknown_02028DD8[o] = 0xff;
+    gUnknown_02028DD8[n] = 0xff;
+    ((struct Unk0804769C *) arg)->unk21 = n;
+    if (a2 == 0)
+    {
+      for (q = 0; q < n; q++)
+      {
+        list[q] = gUnknown_02028DD8[q];
+      }
+
+    }
+    else
+    {
+      for (g = 0x64; g >= 0; g--)
+      {
+        for (q = 0; q < n; q++)
+        {
+          v = gUnknown_02028DD8[q];
+          e = &gUnknown_08499594[gUnknown_03003F2C + v];
+          if ((a2 == 1) && (e->hp != g))
+          {
+            continue;
+          }
+          if ((a2 == 2) && (e->fuel != g))
+          {
+            continue;
+          }
+          if (a2 == 3)
+          {
+            if (g == 0)
+            {
+              if (e->ammo != 0)
+              {
+                continue;
+              }
+              if (gUnknown_085D5ABC[e->type].unk11 == 0)
+              {
+                continue;
+              }
+            }
+            else
+              if (g == 0x64)
+            {
+              if (e->ammo != 0)
+              {
+                continue;
+              }
+              if (gUnknown_085D5ABC[e->type].unk11 != 0)
+              {
+                continue;
+              }
+            }
+            else
+              if (e->ammo != g)
+            {
+              continue;
+            }
+          }
+          list[o] = v;
+          o++;
+        }
+
+      }
+
+    }
+  }
+  o = 0;
+  for (q = 0; q < n; q++)
+  {
+    v = list[q];
+    if (v == 0xff)
+    {
+      continue;
+    }
+    e = &gUnknown_08499594[gUnknown_03003F2C + v];
+    if (e->flags & 8)
+    {
+      continue;
+    }
+    gUnknown_02028DD8[o] = v;
+    list[q] = 0xff;
+    o++;
+    if (!(e->flags & 0x10))
+    {
+      continue;
+    }
+    c1 = e->unk07 - gUnknown_03003F2C;
+    c2 = e->unk08 - gUnknown_03003F2C;
+    for (q2 = 0; q2 < n; q2++)
+    {
+      if ((list[q2] != c1) && (list[q2] != c2))
+      {
+        continue;
+      }
+      gUnknown_02028DD8[o] = list[q2];
+      e = &gUnknown_08499594[gUnknown_03003F2C + gUnknown_02028DD8[o]];
+      list[q2] = 0xff;
+      o++;
+      if (!(e->flags & 0x10))
+      {
+        continue;
+      }
+      d1 = e->unk07 - gUnknown_03003F2C;
+      d2 = e->unk08 - gUnknown_03003F2C;
+      for (q3 = 0; q3 < n; q3++)
+      {
+        if ((list[q3] == d1) || (list[q3] == d2))
+        {
+          gUnknown_02028DD8[o] = list[q3];
+          list[q3] |= 0xff;
+          o++;
+        }
+      }
+
+    }
+
+  }
+
+  gUnknown_02028DD8[o] = 0xff;
 }
 
 

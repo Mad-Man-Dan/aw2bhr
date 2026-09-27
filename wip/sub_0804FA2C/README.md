@@ -2,7 +2,7 @@
 
 0x0804FA2C, 632 bytes, THUMB, parked.
 
-Best score so far: 72.9% (best.c).
+Best score so far: 75.2%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Sets up the current sprite object (gUnknown_03001FBC) for one side and slot: its
 
 ## How close it is
 
-Compiles 4 bytes too long (636 against 632). 340 of 632 bytes differ (46.2% identical), which means little because the extra bytes come early. The instructions are otherwise in the original's order; the difference is that gUnknown_03004580's address is loaded one instruction too early into a different register, which also costs two register copies at the tile-number multiply.
+Now compiles to the right size (632 bytes) where it used to be 4 too long, with 75.2% of bytes in place. The remaining difference starts 0x80 bytes in: the original keeps the address of gUnknown_03004580 in a spare register across the tile-number calculation, and this build reloads it, paying two register copies at the multiply.
 
 ## What is left
 
@@ -29,7 +29,7 @@ Find what makes the compiler load gUnknown_03004580's address one step later, in
 ## Files
 
 - `sub_0804FA2C.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -39,7 +39,7 @@ Find what makes the compiler load gUnknown_03004580's address one step later, in
 
 ### Best so far
 
-636 bytes (+4), 46.2% identical, first difference at +0xc (re-measured wave 79, W79-F). NOTE: the 46.2% here is the DRAFT's. best.c holds an unrelated variant scoring 72.9%, and that number has twice been quoted as this function's state.
+75.16% -- 632 bytes, SIZE-EXACT (was 45.91% at +4 at wave 93 start)
 
 ### What still differs
 
@@ -72,5 +72,14 @@ This was the same failure mode that sub_0804D290 and sub_0804DCA8 had, and both 
 ### Why it is parked
 
 Register allocation with NO source construct behind it. The instruction stream, the type model and every read form are settled; what remains is one address constant landing one slot early in a function that is one live value tighter than its two matched twins, and wave 79 measured that the twins' own lever does not transfer in either of its two forms. Wave-77 class: register numbers with nothing behind them.
+
+### Wave 93
+
+- **result:** 45.91% at +4 bytes -> 75.16% SIZE-EXACT, first difference +0xc -> +0x80
+- **base_adopted:** best.c/recovered.c (72.94%), audited as equivalent C and adopted. Its changes: a local holding &gUnknown_03004580 read twice later (renamed new_var -> sideData), a dead comma anchor holding the same address inside the tileNum subscript (renamed meta -> sideDataAnchor), and the draft's four write-only locals r1..r4 collapsed into one row assigned four times. An array's address is a constant, so binding it cannot change what the later reads load, and all five row spellings are dead stores.
+- **permuter:** 900 s x 4 threads from the 72.94% base: 72.94% -> 75.16%. One mutation, audited: a do { } while (0); around the first eleven statements, from oam.hFlip through the .unk06 store, leaving the final .y store outside. No break or continue in the body and nothing reordered.
+- **negatives_corrected:** The entry's claim that best.c held an unrelated variant is wrong -- it is this draft plus two address binds and the collapsed row local, and it is worth the +4 the function carried for four waves. It also re-opens the twins' lever: the wave-79 measurements that judged the sub_0804D290 / sub_0804DCA8 comma-anchor fix WORSE here (652 bytes at 16.6%, and 636 at 26.7%) were all taken with the four separate r1..r4 locals still in place. With them collapsed to one, an anchor of the same kind is worth 27 points and the exact size.
+- **anchor_position_swept:** Against the new residual, four positions for the comma anchor: inside the subscript (the base) 75.16% first +0x80; inside the cast's operand 75.16% and byte-identical; as its own statement before oam.tileNum 75.16% but first difference EARLIER at +0x7e; in the first operand of the + 36.23% and size -4. The base's position is the optimum of the four.
+- **residual:** 632/632, 157 of 632 bytes differ, first difference +0x80. The ROM loads three pool words before the index shift and parks the third in r8 (ldr r3,=B then mov r8,r3); the candidate loads two and pays adds r3,r1,#0 / muls r3,r0 / adds r0,r3,#0 where the ROM has a bare muls r0, r1. The copies are downstream of the allocation, not an operand-order choice.
 
 </details>

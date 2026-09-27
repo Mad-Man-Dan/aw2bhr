@@ -2,7 +2,7 @@
 
 0x0808AAF4, 152 bytes, THUMB, parked.
 
-Best score so far: 92.8%.
+Best score so far: 94.1% (best.c).
 
 ## What it does
 
@@ -30,6 +30,8 @@ No source spelling reaches that copy: with the constant used once the compiler d
 ## Files
 
 - `sub_0808AAF4.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -68,5 +70,9 @@ THIS IS SELF-RELOCATING CODE: it calls sub_0808AD6C, which copies four bytes of 
 ### Wave 88
 
 WAVE 88 (W88-A then W88-D): the park's central claim is REFUTED -- this is NOT the flash block's -O2 exception. The 'gets +8 longer at -O1' note was measured on a draft whose `u16 v` was itself the +8. Under `o1-no-force` (the profile ALL sixteen matched flash entries actually use: -O1 with -fforce-addr removed) the residual is ONE register-copy of the delay constant per loop, everything else byte-identical; W88-D measured 148 B (-4) / 28.3% under o1-no-force. Mechanism settled: nothing is coalesced -- `update_equiv_regs` DELETES a single-use constant pseudo's defining insn, so agbcc has exactly two states (one use: def deleted, no copy, push {r4,r5,lr}; two uses: copies survive but the pseudo crosses the calls, takes r6, pool load hoists to one) and the ROM is neither. Nine spellings measured; the `do { } while (0)` lever was an exact no-op (not a regression); dead second def, dead copy-out and role-swap are exact no-ops (confirms the W80-F bound). Evidence: work/sub_0808AAF4/W88-notes.md.
+
+### Wave 93
+
+WAVE 93 (W93-A): 59.87% -> 92.76% (installing the better of the two files already in the work directory) -> 94.08% SIZE-EXACT at 152 from a 900 s / 4-thread permuter run on the DEFAULT profile. First difference still +0x0. Draft replaced; wave-start copy in sub_0808AAF4.w93-start.c, pre-permuter copy in sub_0808AAF4.w93-base.c. THE CONFIGURATION CONTRADICTION IN THIS ENTRY IS SETTLED -- DEFAULT -O2 IS RIGHT AND THE wave88 KEY IS WRONG. On the same source: configured 92.76% size-exact, o1-no-force 28.29% at size-4. The wave-88 claim that o1-no-force is 'the profile ALL sixteen matched flash entries actually use' is true of those entries and false of this function: the -O1 run in data/compiler-overrides.json begins at sub_0808AB8C, this function sits before it, and sub_0808AD6C inside the same span carries only cflags_remove [-fforce-addr] at -O2. The flash library is several files, not one. NO OVERRIDE IS NEEDED HERE; do not measure it at -O1 again. THE PERMUTER'S KEPT MUTATION IS SEMANTICALLY SOUND and was audited statement by statement: a second pointer to the same counter (`ptest = &(*p);`, i.e. `ptest == p`) whose only use is the SECOND delay loop's exit test, `if (*ptest != 0)`. `p` does not change inside that loop, so the test is identical at runtime. Renamed from new_var and re-verified at 94.08% after the rename. MEASURED BY HAND AND BYTE-NEUTRAL, WHICH KILLS THE OBVIOUS FIX: the wave-17 'one local where the original had N' lever does NOT reach the remaining residual. Splitting the single `vu16 *p` into two pointer locals, one per delay loop, is byte-identical to the baseline; so is splitting `int v` into v1 and v2; so is doing both. CSE knows every one of them holds the same stack address and coalesces them back, so the number of SOURCE variables is not the number of pseudos here. Consistent with the wave-89 splitter list: the fold-proof mask splits cse's value numbering of an address computation with a NARROW VARIABLE OPERAND, and `sp + 64` has no variable operand. W79's other direction (two block-scoped `vu16 i` objects) gives two stack slots and +4, so the two live ranges must come from one object AND one source variable. REMAINING RESIDUAL, 9 of 152 bytes: the ROM opens `push {r4,r5,lr}` and recomputes `add r1,sp,#0x40` before EACH delay loop, carrying two pool words for 20000; the candidate still computes that address once and keeps it in a callee-saved register across both `bl _call_via_r5` calls. NEXT: chain another permuter run from the 94.08% draft -- this was the first run ever made on this function and it improved on its first attempt.
 
 </details>

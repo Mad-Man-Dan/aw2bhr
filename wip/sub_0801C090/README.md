@@ -2,7 +2,7 @@
 
 0x0801C090, 360 bytes, THUMB, parked.
 
-Best score so far: 45.8%, -8 bytes (best.c).
+Best score so far: 53.3%.
 
 ## What it does
 
@@ -10,11 +10,11 @@ Copies a sprite's list of OAM entries into the OAM buffer at the write cursor gU
 
 ## How close it is
 
-Compiles 16 bytes too short (344 against 360). The instructions are the right ones; the difference is that the original keeps the loop counter in a stack slot (with a larger stack frame) and reuses two source halfwords already in registers, while the draft keeps the counter in a register and reloads the halfwords.
+Compiles to the right size (360 bytes) and about 53% of the bytes match. The stack frame is now correct: the original keeps the loop counter in a stack slot, and a redundant outer loop plus two source halfwords held in locals makes the compiler do the same. The counter is signed, which is what produces the original's decrement. What is left is which registers the remaining values land in.
 
 ## What is left
 
-Make the compiler put the loop counter on the stack as the original does. That probably needs one more value live at the same time somewhere in the loop body, and no draft has found it.
+Work out which registers the remaining values belong in. The frame and the counter's stack slot are solved; the original also keeps two source halfwords in registers across the mirrored branch where the draft only keeps some of them.
 
 ## Already tried
 
@@ -28,7 +28,6 @@ Make the compiler put the loop counter on the stack as the original does. That p
 ## Files
 
 - `sub_0801C090.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -42,5 +41,15 @@ Make the compiler put the loop counter on the stack as the original does. That p
 PARKED Wave 71 at 344/360 (-16), 14.2%. The authoritative readable draft is retained; best.c is contaminated preprocessed output. Count self-assignment is inert and memory-index self-assignments rotate registers without producing the ROM's spill slot. Residual is loop allocation/frame placement.
 
 WAVE86: WAVE 86 (W86-F, vocabulary-twin axis): twin sub_0801BD00 (src/decomp/c_0801BD00.c) is a TRUE SHAPE TWIN and names three constructs the park never tried: (a) `s16 n` for the counter -- REFUTED FROM THE ROM without a probe: the decrement is `lsls #16 / adds 0xFFFF0000 / lsrs #16`, i.e. UNSIGNED, so `u16 count` is correct and the twin's declaration is a real difference between the functions (method note: the ROM's own shift settles signedness in ten seconds; do not transplant a twin's declarations wholesale); (b) walking the `void *a3` PARAMETER itself, cast at each use, instead of a fresh `u16 *src` local, and (c) `*dst++; *dst++; *dst = ...; dst += 2;` -- both transplanted in one probe: ALLOCATION-NEUTRAL, byte-identical in every figure. Configured, 344/360, 14.2%, draft unchanged (w86-start.c).
+
+### Wave 93
+
+WAVE 93 (W93-C). 14.17% at -16 -> 53.33% at size+0 (SIZE-EXACT), and the FIRST DIFFERENCE MOVED FROM +0xa TO +0xe, which is the park's whole point: +0xa IS the `sub sp, #N` instruction in this prologue, so every draft for five waves has been failing on the frame and nothing else. Full table in NOTES.md.
+THE BIGGEST SINGLE FACT: **W86's `u16 count` IS WRONG AND THE TWIN'S `s16` WAS RIGHT.** Two chained permuter runs from the 33.33% base changed exactly one thing in the body -- `u16 count` to `short` -- and that one declaration is worth 8 bytes and 15 points and reproduces the ROM's loop bottom instruction for instruction, including the `0xFFFF0000` pool constant. W86 recorded `s16 n` as 'REFUTED FROM THE ROM without a probe', reasoning that the decrement ends `lsrs` not `asrs` so the counter is unsigned, and generalised that into 'the ROM's own shift settles signedness in ten seconds'. MEASURED: a `short` counter ALSO ends in `lsrs` here. The trailing shift is the 16-bit TRUNCATION of the result and is unsigned for both declarations, because the only use is `!= 0`. What actually discriminates is the `0xFFFF0000` add, which only the signed form emits -- and it was in the same seven instructions all along. The matched twin sub_0801BD00 declares its counter `s16`; transplanting it wholesale would have worked. Recorded in docs/agbcc-codegen.md. METHOD: a reading of the ROM is a hypothesis, and `compile_probe` is free and does not count as an attempt. A refutation recorded without one becomes a ruled-out axis that stops later waves looking, which is what happened here for six waves.
+THE FRAME RULE APPLIES BUT POINTS THE WRONG WAY. The ROM has one slot more than the draft, which by the W93-B rule suggests a `volatile` local. It is wrong here and the ROM says so without a probe: the slot is written `str` and read `ldr` (word), while a `volatile u16` is a 2-byte object compiling to `strh`/`ldrh`. A word slot holding a zero-extended u16 is an ALLOCATOR SPILL. Added to docs/agbcc-codegen.md: read the ACCESS WIDTH before applying the frame rule -- slot the size of the declared type means a volatile object, slot the size of a register means a spill, and they need opposite levers. (The same dump re-confirms W86: the decrement ends `lsrs`, so `u16 count` is right and `short count` is not.)
+WHAT CREATES THE SPILL, measured nine ways: a zero-trip `do { } while (0) round the loop ALONE does nothing (-16, +0xa); extra bound locals in the body ALONE do nothing (-16, +0xa); TOGETHER they spill the counter (+0xe). The nest takes the counter's live range out of local_alloc; the pressure makes it lose once it is there. It is a conjunction, and a wave that tries one half and sees nothing has measured half a lever.
+NEWLY RULED OUT, and it retires three park lines at once: `while`, `for (;;) { if (count == 0) break; ... }` and `if (count) do { } while (count)` are BYTE-IDENTICAL -- same size, same first difference, same percentage to the hundredth. gcc normalises loop rotation long before allocation. Do not spend probes rotating this loop.
+RESIDUAL: size-exact with the frame and the counter's slot correct. This is now an ordinary register-allocation residual, which is the permuter's case -- for five waves it was a structural difference the permuter could not reach, which is why the chains before this wave gained a point per run.
+BASES REJECTED: `recovered.c` (43.33%, size-exact) and `best.c` (45.83%, -8) are not wrong C -- the `(char)` cast is on a 0..12 value and the `inline_fn` is an identity -- but both reach their size with padding and their first difference is +0xe, the same as the honest spelling. The extra bytes buy nothing.
 
 </details>

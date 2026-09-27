@@ -78,6 +78,27 @@ Keep it overridable so the weight can be A/B'd without another edit:
 PENALTY_REGALLOC = int(__import__("os").environ.get("AW2_PENALTY_REGALLOC", "60"))
 ```
 
+Second part, added in wave 93: a penalty per instruction of LENGTH difference
+from the target. Add beside the other weights:
+
+```python
+PENALTY_SIZE = int(__import__("os").environ.get("AW2_PENALTY_SIZE", "1000"))
+```
+
+and to `final_score`:
+
+```python
++ abs(len(cand_seq) - len(self.target_seq)) * self.PENALTY_SIZE
+```
+
+Without it, a candidate two instructions short pays only 2 x 100 and sheds
+many register penalties along with the instructions, so on a size-exact draft
+whose residual is register numbering the search walks away from the answer.
+Wave 93's run on sub_08070F44 verified 40 candidates that all beat the draft's
+score (620-1940 against 2100) and every one matched worse, 4 bytes short at
+best. A wrong-length candidate can never be a byte match, so it must never
+outrank a right-length one. `AW2_PENALTY_SIZE=0` restores upstream behaviour.
+
 Do not invoke `permuter.py` directly — `tools/permute.py` builds the input
 directory, imposes a time limit, and re-checks every result with
 `tools/trymatch.py`. The permuter scores by diffing objdump text, which is a

@@ -55,3 +55,33 @@ at the end of the wave; see perm-w91-2.log.
 No kept improvement. Its best raw candidate (63.25%, size-exact, first diff
 +0x28) is SEMANTICALLY WRONG -- `by = (ax *= 2);` overwrites by with ax -- so
 it is discarded. The draft is back on the readable 29.0% version.
+
+
+## Wave 93 (W93-C): 29.00% -> 60.25%, still size-exact
+
+Base scan rejected `recovered.c` (63.25%): it is the candidate W91-A already
+discarded for `by = (ax *= 2);`, which overwrites by with ax. Renamed
+`recovered.c.wrongc`. Adopted the scan's second suggestion `perm-w91-q1.c`
+(51.25%, size-exact, sound C) and renamed its `inline_fn`/`inline_fn2` to
+`row_start`/`to_u16` -- byte-neutral, re-verified.
+
+Two chained permuter runs, each audited before keeping:
+
+- **51.25 -> 55.00.** Deleted the first `tile = ...` binding and spelled that
+  one address out at the store. All four tile stores still address the same
+  words, and `tile` is still assigned before the two reads that use it. This
+  is the wave-77 `sub_08073304` lever (delete a redundant copy statement),
+  found by search rather than by reading.
+- **55.00 -> 60.25.** Added `id = x;` at the top and used `id` for the column
+  in `off = rowOffset[y] + id` and in `sub_080225CC(id, y)`, before `id` is
+  reassigned to the unit id. One local now carries two roles, which merges two
+  live ranges -- the same lever the original park entry found between `id` and
+  `flags`. No read-before-set: `id` is written before every read. Map columns
+  cannot reach 0x8000, so the u16-to-s16 narrowing is value-preserving here.
+
+Both kept forms were reformatted into house style and re-verified byte-identical
+at 55.00 and 60.25 respectively.
+
+Residual is still pure allocation and still size-exact; first difference +0xc.
+The `.rodata` pool words are not part of it -- trymatch resolves the
+candidate's own two-word pool against the ROM's 0x080909A8 / 0x080909AC.

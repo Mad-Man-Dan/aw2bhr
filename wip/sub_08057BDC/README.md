@@ -2,7 +2,7 @@
 
 0x08057BDC, 360 bytes, THUMB, parked.
 
-Best score so far: 61.9% (best.c).
+Best score so far: 77.5%, +4 bytes (best.c).
 
 ## What it does
 
@@ -10,11 +10,11 @@ Per-frame update of the two-side display. For the first eight frames it slides a
 
 ## How close it is
 
-Compiles 4 bytes short of 360. Everything up to the second loop is identical; in the second loop the compiler keeps a different table address in a register across iterations than the ROM does, and that also reorders the last nine constants in the pool.
+Compiles to the right size (360 bytes) and about 77% of the bytes match. An empty statement between the two redraw calls stopped the compiler holding the wrong table address in a register, which was the long-standing problem. What is left is that the original keeps two other table addresses in registers for the whole of the second loop and this version reloads them each time round.
 
 ## What is left
 
-Stop the compiler keeping gUnknown_08551A04's address in a register for the second loop (it is the only one of the three addresses used twice per pass), so that it keeps gUnknown_085D6A48 and gUnknown_03004582 there instead, as the ROM does.
+Get the compiler to keep the row table gUnknown_085D6A48 and the selector table gUnknown_03004582 in registers across the second loop, the way it now no longer does. Once those two are hoisted the trailing constants should fall into the original's order as well.
 
 ## Already tried
 
@@ -27,6 +27,7 @@ Stop the compiler keeping gUnknown_08551A04's address in a register for the seco
 
 - `sub_08057BDC.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -37,5 +38,14 @@ Stop the compiler keeping gUnknown_08551A04's address in a register for the seco
 ### Notes
 
 PARKED Wave 70 at 356/360 (-4). Everything before loop 2 is byte-exact. ROM hoists gUnknown_085D6A48 and gUnknown_03004582 while rematerialising gUnknown_08551A04; candidate does the reverse. Pointer bindings, pointer/pointee self-use barriers and dead-local uses are ruled out: the latter recover size but preserve the wrong hoist and perturb loop 1. Residual is one LICM priority choice.
+
+### Wave 93
+
+WAVE 93 (W93-C). 58.06%% at -4 (first difference +0x19) -> **76.94%%, SIZE-EXACT 360/360, first difference +0x90**. The whole gain came from one thing, and it is a process finding as much as a codegen one: **THE PERMUTER HAD NEVER BEEN RUN ON THIS FUNCTION.** Eight waves of parking with a long ruled-out list, on a residual the park itself describes as one LICM priority choice, 4 bytes short, instruction order otherwise correct -- which is exactly the tool's case. One 900 s run closed the size and moved the first difference 0x77 bytes later.
+WHAT IT FOUND is the lever this entry had been asking for: an empty `do { } while (0);` BETWEEN the two redraw calls. gUnknown_08551A04 is the only one of the three addresses used twice per pass, that pair is what lets it win the hoist, and a statement boundary between the two references stops them being unified (wave 89's EBB-table splitter). Every lever the park had tried -- pointer self-use, pointee `+= 0`, self-assignment, dead local uses -- acted on the VALUE or on the loop as a whole, never BETWEEN the two references. Two further edits came with it, both audited: `sel`, a `u16 (*)[8]` bound to gUnknown_03004582 (load-bearing -- without it 59.44%% and the size is lost again), and `idx` reused for `p->unk02` in the first loop's else arm after `p` is computed from the old value (value-identical, recomputed next pass).
+MEASURED WARNING, do not 'fix' it: the guard `active = 0 != gUnknown_030005E8[i]` compiles to a branchless `negs/orrs/cmp/bge` where the ROM has a plain `cmp r0,#0; beq`, and it looks like free bytes. Binding the VALUE instead (`active = gUnknown_030005E8[i]; if (active != 0 && ...)`) is 68.33%%, and binding `sel` late is also 68.33%%; all four variants share the first difference at +0x90, so the odd-looking form is the one with the fewest differing bytes downstream.
+EARLIER NEGATIVES THIS WAVE (all on the pre-permuter draft, and they narrow the park): the ROM's two hoists sit AFTER `movs r7,#0`, so by the preheader rule both are LICM hoists rather than source bindings -- yet moving the `rows` binding makes no difference anywhere. Removing it and casting inline is 57.78%%, moving it inside the loop body is BYTE-IDENTICAL to the draft, and pulling the selector into its own local is 57.78%%. So 'the compiler substitutes the global straight back' holds for every placement, not just the one the park measured. Also: +0x19 was never an early divergence -- it is an odd address, the high byte of the `ldr rN,[pc,#imm]` at +0x18, whose immediate moved because the pool at the END of the function was reordered.
+BASE REJECTED: `best.c` (61.94%%, size-exact) was the draft plus five dead statements (`gUnknown_08551A04[0] += 0;`, `rows += 0;`, `c = c;` and two more). Value-preserving, so not wrong C, but its first difference was +0x19 -- IDENTICAL to the draft's. Four bytes of padding that moved nothing. Renamed `best.c.wrongc`.
+RESIDUAL: size-exact, first difference +0x90. The ROM hoists gUnknown_085D6A48 and gUnknown_03004582 into sb/r8 in the second loop's preheader; the candidate now rematerialises all three inside the body, which is also why the tail pool words sit in a different order. The 08551A04 half of the park is solved, the other two are not.
 
 </details>

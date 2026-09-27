@@ -170,3 +170,40 @@ draft is unchanged, but it is the first time this starting point has been
 searched at all, and three separate 900-second runs from the 99.4% draft (two
 in wave 90, one here) have now produced nothing. Chaining further runs from
 `w92-ptr-perm1.c` is the better use of the next search budget.
+
+## Wave 93 (W93-F): the wave-92 starting point is wrong C — withdrawn
+
+Wave 92 ended by recommending `w92-ptr-perm1.c` (94.42%, size-exact) as the
+base for the next search, on the grounds that it was the first result from a
+starting point whose loop order is the original's. **That file does not do
+what the function does**, and the recommendation is withdrawn. It is now
+`w92-ptr-perm1.c.wrongc`.
+
+Its copy loop reads:
+
+    vram_p = i;
+    do { CpuFastSet(src, (void *)(0x06015000 + vram_p * 0x800), 0x40);
+         vram_p += 0x100; ... } while (j >= 0);
+
+The destination is scaled by 0x800 *after* the step is added, so it advances
+0x80000 per pass. The function copies eight 0x100-byte rows into consecutive
+VRAM, 0x100 apart. Seven of the eight destinations are wrong.
+
+**Why it scored 94.42% anyway**, which is the part worth keeping: the
+compiler strength-reduces the scaled destination into a stepping pointer
+either way, and the step is materialised as a two-instruction constant. The
+ROM's 0x100 is `movs r0, #0x80; lsls r0, #1`; the broken 0x80000 is
+`movs r0, #0x80; lsls r0, #0xc`. Same instructions, same length, one
+immediate field apart. A wrong constant in a strength-reduced loop is almost
+free in the byte score, so the byte score cannot see this class of error at
+all. Nothing about the scoring was at fault — it measured what it measures.
+
+Corrected to the ROM's semantics, keeping everything else the search found
+(`w93f-ptr-fixed.c`: `vram_p = 0x06015000 + i * 0x800`, passed to CpuFastSet
+directly), it measures **51.24% at +12 bytes** — the same +12 as `w92-ptr.c`
+before any search. So the entire 53.5% -> 94.4% climb was the broken loop.
+The pointer form's real cost is unchanged and the open question is still the
+one wave 92 stated: the do-while shape needs one more callee-saved register
+than the original's, and it takes the one holding the record pointer.
+
+Draft restored to the 99.42% form (`sub_0807E980.w93-start.c`), unchanged.

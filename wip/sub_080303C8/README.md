@@ -2,7 +2,7 @@
 
 0x080303C8, 428 bytes, THUMB, parked.
 
-Best score so far: 19.6% (best.c).
+Best score so far: not measured.
 
 ## What it does
 
@@ -28,7 +28,7 @@ Two small code patterns differ. At two places the original sets the volatile fie
 ## Files
 
 - `sub_080303C8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -61,5 +61,13 @@ All known faithful volatile pointer forms and both site contexts are now measure
 ### Why it is parked
 
 Wave 74 W74-C. Needs a new faithful volatile-C model.
+
+### Wave 93
+
+WAVE 93 (W93-C). UNCHANGED at 420/428 (-8), 17.99%, first difference +0xe. Three probes, all size-neutral, and one base rejected.
+BASE REJECTED: `best.c` (19.63%, size-exact) diverges EARLIER than the draft -- first difference +0xa against the draft's +0xe. Its percentage is higher only because it is 8 bytes longer while the draft is short. On a short draft the percentage is not comparable across sizes; compare the first-difference offset. Renamed `best.c.wrongc`.
+TWO VISIBLE ROM CONSTRUCTS MEASURED, BOTH BYTE-NEUTRAL. The ROM's key word ends `movs r4,#0x80; lsls r4,r4,#8; adds r2,r4,#0` (0x8000 built in a register and COPIED, i.e. held in a local) and then `ldrh r0,[r3,#6]` -- a dead read -- immediately before `strh r1,[r3,#6]`. Both look like missing source. Neither is: `int hi = 0x8000` in the grouping gives 18.46% and STILL -8; a discarded read `gUnknown_0849B01C->unk06;` gives 16.82% and STILL -8; both together 17.29% and STILL -8.
+THE DRAFT ALREADY EMITS THE ROM'S DEAD READ. Every member of struct Unk0849B01C except unk08 is volatile (the header says matched siblings sub_0802F23C and sub_08031B30 only compile that way), so the read falls out of the existing assignment and authoring a second one adds nothing. This closes a lead that reads like an obvious 4 bytes: the visible `adds r2,r4,#0` and dead `ldrh` are ALREADY ACCOUNTED FOR and are not where the missing 8 bytes are.
+RESIDUAL unchanged: the two `unk210 |= 0xFFFF` sites, and the spellings the park lists are still the only ones measured.
 
 </details>

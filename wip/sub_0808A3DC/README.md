@@ -2,7 +2,7 @@
 
 0x0808A3DC, 160 bytes, THUMB, parked.
 
-Best score so far: 60.0% (best.c).
+Best score so far: 60.0%.
 
 ## What it does
 
@@ -28,7 +28,7 @@ Make the code use those address words: the compiler builds them under every spel
 ## Files
 
 - `sub_0808A3DC.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -55,5 +55,9 @@ WAVE 60: MEASURED AT -O1, WHICH IS THE CORRECT CONFIGURATION FOR THIS BLOCK. The
 ### Wave 88
 
 WAVE 88 (W88-A then W88-D): the brief's 60.0% was stale; current is 55.6% size-exact under BOTH `o1` and `o1-no-force`. Residual isolated to the address-constant indirection. Wave-60 note REFUTED: agbcc builds the two-level `.rodata` block every time and leaves it dead; a load-base use never triggers the indirection at any count, only an address VALUE does -- and (W88-D) the doc's mixed-spelling rule is a PRESERVATION rule, not a creation rule: the ROM's mixed shape still emits .LC0 and ignores it. Settled from data/promoted.json: the function's two words are the gap between c_08089C14.c's and c_0808A978.c's carved blocks in a run of seven, so they are compiler-generated and must NOT be declared as variables. Evidence: work/sub_0808A3DC/W88-notes.md.
+
+### Wave 93
+
+WAVE 93 (W93-A): 48.17% size+4 -> 60.00% SIZE-EXACT, first difference +0x4, under the DEFAULT -O2 profile. The draft was simply the worse of the two files already in the work directory: best.c has been the better base since wave 46 and nobody installed it. The only differences are `u16 fill` rather than `vu16 fill` and no cast on CpuSet's first argument; putting either back costs 12 points and 4 bytes. Wave-start copy in sub_0808A3DC.w93-start.c. *** A 900 s PERMUTER RUN REPORTED 60.00 -> 77.50 SIZE-EXACT AND THE FORM IS SEMANTICALLY WRONG. IT WAS REJECTED AND THE DRAFT IS BACK AT 60.00%. *** The mutation moved `fill = 0;` to AFTER the `CpuSet(&fill, ..., 0x01000400)` that reads it. That call is a FILL: mode bit 24 is set, so the BIOS reads the source halfword once and writes it 0x400 times. With the store moved after it the tilemap buffer is filled from an uninitialised stack slot, and the first half of the buffer is not overwritten by the Decompress that follows (it lands at +0x200). The permuter's OTHER mutation, holding the loop's 0x1020 addend in a variable assigned inside the loop body, is legitimate -- and ON ITS OWN it is 33.75%, WELL BELOW the 60.00% base, so the entire 17.5 points came from the illegal move. work/sub_0808A3DC/best.c and best.json have been overwritten with the valid 60.00% draft so the false score does not propagate (wave-73 precedent); the rejected source is preserved as w93-permuter-invalid.c and under permuter/output-880-1/. CONFIGURATION SETTLED, AND THE wave60_o1 KEY IS WRONG FOR THIS FUNCTION: the matched neighbours from 0x0808A2F4 to 0x0808AA88 carry NO override, the -O1 region starts at sub_0808AB8C, and this function is size-exact at the default -O2 while o1 and o1-no-force are not. THE PARK'S remaining_diff IS STALE -- THE ADDRESS-WORD INDIRECTION IS ALREADY CORRECT. best.c emits `ldr r6,[pc]; ldr r4,[r6]; ldr r1,[r4]` and `ldr r5,[pc]; ldr r1,[r5]; ldr r1,[r1]`, matching the ROM's three-load chains for gUnknown_0849957C and gUnknown_03001FE8 exactly, with the word addresses held in r6 and r5 as the ROM has them. That problem is solved. THE ENTRY'S UNTESTED IDEA IS NOW TESTED AND IS A NEGATIVE: reading the buffer pointer as element 1 of the table at 0x08499578, spelled `(&gUnknown_08499578)[1]`, is 13.41% at size+4. Also negative: a volatile read of the pointer global (`*(u16 *volatile *)&gUnknown_0849957C`) at all four uses is BYTE-IDENTICAL to the plain name, with or without a volatile read of gUnknown_03001FE8 -- the W87-A lever that worked on sub_0805D344 does not transfer, because the address materialisation here is already right. WHAT IS ACTUALLY LEFT, 64 of 160 bytes in TWO places, neither about addresses: (1) the stack address of `fill` is computed TWICE in the ROM (`mov r1,sp` for the store, `mov r0,sp` again as CpuSet's first argument) and once in the candidate; `*(u16 *)&fill = 0;` and binding a `u16 *fp = &fill;` for the store both drop to 48.17% at size+4. This is the same shape as sub_0808AAF4's twice-computed `add r1,sp,#0x40`, and the permuter only 'solved' it by breaking the semantics, which is itself evidence that no correct statement order reaches it. (2) the loop's 0x1020 addend is hoisted into the preheader with a copy where the ROM rebuilds it every iteration; writing the read-modify-write out in full instead of `+=` is byte-identical, and holding it in a variable assigned inside the loop is 33.75%. Flag diagnosis: -fno-rerun-loop-opt changes NOTHING (the hoist is the first loop pass, not the rerun), -fno-rerun-cse-after-loop is 18.02% at +12 and -fno-gcse 20.62% at -4.
 
 </details>

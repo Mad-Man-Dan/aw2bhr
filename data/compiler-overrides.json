@@ -64,6 +64,12 @@
   "exact, try old_agbcc BEFORE touching the C -- but do not assume you need it."
  ],
  "functions": {
+  "sub_0805D438": {
+   "cflags_add": [
+    "-fno-gcse"
+   ],
+   "reason": "AI unit-list step. Built with -O2 -fno-gcse: the draft is byte-for-byte identical to the ROM under that configuration, relocations included, and 28 bytes too long under the default. With gcse on, its partial-redundancy pass merges the literal-pool address loads of gUnknown_030046B0, gUnknown_030040D8 and gUnknown_030046C0 across the half after the call, leaving three pool words the ROM does not have. No source construct reproduces that: empty `asm(\"\" ::: \"memory\")` barriers at one point, two points and after every statement give +28, +24 and +32 bytes, because a memory clobber cannot reach register-level address computations. flag_probe bounds a -fno-gcse file to sub_0805D338..sub_0805D438, and sub_0805D344 in that window provably needs gcse (its whole sort half is byte-exact with gcse on and loses its frame and both spills with it off), so the file carrying this flag holds this function alone. Neighbours sub_0805D2A0, sub_0805D5EC and sub_0805D648 all need gcse."
+  },
   "sub_0808B1BC": {
    "cflags_remove": [
     "-O2",

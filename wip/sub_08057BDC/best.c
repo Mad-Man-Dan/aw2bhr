@@ -54,53 +54,52 @@ struct Unk085D6A48Row
     /* 0x04 */ u8 filler_04[0x14];
 };
 
+inline int inline_fn(int arg0)
+{
+  return arg0;
+}
+
 void sub_08057BDC(void)
 {
-    struct Unk085D6A48Row *rows;
-    struct Unk8553A18 *p;
-    int i;
-    int idx;
-    int c;
-
-    if (gUnknown_03004508 <= 8)
-    {
-        c = gUnknown_08553B04[gUnknown_03004508];
-        for (i = 0; i <= 1; i++)
-        {
-            rows = (struct Unk085D6A48Row *)gUnknown_085D6A48;
-            idx = rows[gUnknown_03004580[i][1]].unk02 * 2 + i;
-            p = &gUnknown_08553A18[idx];
-            if (i != 0)
-                sub_08071900(gUnknown_08499578 + i * 0x100,
-                             gUnknown_08551A04 + ((p->unk02 << 5) + (p->unk00 + (14 - c))),
-                             c, 6);
-            else
-                sub_08071900(gUnknown_08499578 + (14 - c),
-                             gUnknown_08551A04 + ((p->unk02 << 5) + p->unk00),
-                             c, 6);
-        }
-    }
-
-    rows = (struct Unk085D6A48Row *)gUnknown_085D6A48;
-
+  struct Unk085D6A48Row *rows;
+  struct Unk8553A18 *p;
+  int c;
+  int new_var;
+  int i;
+  int idx;
+  if (gUnknown_03004508 <= 8)
+  {
+    c = gUnknown_08553B04[gUnknown_03004508];
     for (i = 0; i <= 1; i++)
     {
-        if (gUnknown_030005E8[i] != 0
-         && gUnknown_02029B78[i] != gUnknown_02029B7C[i])
+      rows = (struct Unk085D6A48Row *) gUnknown_085D6A48;
+      idx = (rows[gUnknown_03004580[i][1]].unk02 * 2) + i;
+      p = &gUnknown_08553A18[idx];
+      if (i != 0)
+      {
+        sub_08071900(gUnknown_08499578 + (i * 0x100), gUnknown_08551A04 + ((p->unk02 << 5) + (p->unk00 + (14 - c))), c, 6);
+      }
+      else
+      {
+        if (1)
         {
-            gUnknown_030005D8[i] -= gUnknown_030005E0[i];
-            gUnknown_02029B78[i] = (u32)gUnknown_030005D8[i] >> 16;
-            gUnknown_08551A04[0] += 0;
-            gUnknown_08551A04 += 0;
-            rows += 0;
-            gUnknown_03004582[i][0] += 0;
-            c = c;
-            idx = rows[gUnknown_03004582[i][0]].unk02 * 2 + i;
-            p = &gUnknown_08553A18[idx];
-            sub_0805772C(gUnknown_08551A04, idx, (struct Unk8057Pos *)p);
-            sub_080577E4(gUnknown_08551A04, idx, (struct Unk8057Pos *)p);
         }
+        sub_08071900(gUnknown_08499578 + (14 - c), gUnknown_08551A04 + ((p->unk02 << 5) + p->unk00), c, 6);
+      }
     }
+
+  }
+  rows = (struct Unk085D6A48Row *) gUnknown_085D6A48;
+  new_var = 1;
+  for (i = 0; i <= new_var; i++)
+  {
+    if ((gUnknown_030005E8[i] != ((long long) 0)) && (gUnknown_02029B78[i] != gUnknown_02029B7C[i]))
+    {
+ do { gUnknown_030005D8[i] -= inline_fn(gUnknown_030005E0[i]); gUnknown_02029B78[i] = ((u32) gUnknown_030005D8[i]) >> 16; idx = i; idx = (rows[gUnknown_03004582[i][0]].unk02 * 2) + idx; p = &gUnknown_08553A18[idx]; sub_0805772C(gUnknown_08551A04, idx, (struct Unk8057Pos *) p); } while (0);
+      sub_080577E4(gUnknown_08551A04, idx, (struct Unk8057Pos *) p);
+    }
+  }
+
 }
 
 

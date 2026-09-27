@@ -2,7 +2,7 @@
 
 0x0805D344, 244 bytes, THUMB, parked.
 
-Best score so far: 16.4%, -8 bytes.
+Best score so far: 28.2%, +4 bytes (best.c).
 
 ## What it does
 
@@ -26,6 +26,8 @@ Get n into a high register with every instruction around it unchanged. The recor
 ## Files
 
 - `sub_0805D344.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -54,5 +56,9 @@ Everything from 'if (n > 1)' onward is byte-exact -- both loop guards, the stack
 ### Wave 87
 
 WAVE 87 (W87-A): 13.5% -> 16.4%, still 236/244 (-8), draft REPLACED (wave-57 draft in w87-start.c). The pre-registered giv-asymmetry probe was MOOT: the wave-57 draft ALREADY reproduces the ROM's split (pointer giv `add r4,#1` for gUnknown_030045F0, gUnknown_030046E0 rematerialised from the pool each iteration) and nobody had checked. Park claim REFUTED: the &gUnknown_08499594 hoist and n's register are TWO facts -- the hoist is now in the ROM's preheader position with n still in r5. What moved it: a VOLATILE-qualified read of the pointer global, `(*(struct Unk08499594 *volatile *)&g)[k].unk00` -- a non-volatile read of a pointer global leaves the address folded into the load (re-emitted every iteration, no invariant pseudo for LICM); a volatile read force_regs the address into its own pseudo, which LICM hoists (`ldr r5,=g` preheader, `ldr r1,[r5]` body, the ROM's form). Taking the address is not the lever; the qualifier is (doc chapter). Also required: bind the second call argument to a local before the call (`u8 x = ...; f(g, x)`) -- without it agbcc emits arg1 first and the body is 11 insns vs the ROM's 10. Header deliberately NOT retyped (20+ promoted users; the local cast gives the same code). Remaining -8 is ENTIRELY n's register (ROM r8, candidate r5): four 2-byte items. PERMUTER, first ever run here: `tools/permute.py --seconds 480 -j 4 --current` from the 16.4% draft ran to completion (exit 0) -- one candidate at permuter score 1400 re-checks at 16.0% (worse); a genuine negative for THIS draft, single run from one base (weak; wave 83 needed a chain of three). Next: chained runs from best.c; do NOT author the pointer walk (W59-E: a giv).
+
+### Wave 93
+
+WAVE 93 (W93-A): A FAITHFUL sub_0805D344 DOES NOT MATCH UNDER -fno-gcse, AND THE REASON IS STRUCTURAL, NOT A SPELLING. Measured: configured 16.39% size-8, first difference +0xf; --cflags-add=-fno-gcse 33.20% size-20, first difference +0xa. The score RISES and the function gets WORSE: at configured the whole sort half is byte-exact (the ROM's 12-byte frame, both compiler spills, the four dead volatile loads, the ip/sb/sl inner-loop addresses, the epilogue), and the ONLY remaining differences are n's register and the two stack slot numbers swapped. Under -fno-gcse that whole structure collapses: the frame drops to 4 with no spills at all, the inner swap loses its dead loads and walks two low-register pointers instead. The ROM's register pressure IS gcse's work here, so sub_0805D344 was built WITH gcse. CONSEQUENCE FOR sub_0805D438: since files are contiguous, the only file ending at sub_0805D438 that can carry -fno-gcse is sub_0805D438 ALONE -- flag_probe's 'sub_0805D338 .. sub_0805D438' is the maximal window, not the only reading, and sub_0805D344 sits between D338 and D438 so {D338, D438} is not a file. ALSO MEASURED, all at configured, all negatives: an explicit `m = n - 2;` local instead of writing `n - 2` in both loop headers is 17.21% size-8 but moves the first difference BACKWARDS to +0xa because it changes the frame -- the ROM's two stack slots are COMPILER spills of `n - 2` and `i + 1`, not source variables, so do not name either. Reusing `n` as the outer sort counter (with `m`) is 28.23% at size+4. THE PARK'S CLAIM THAT n's REGISTER IS THE ONLY DIFFERENCE IS WRONG: the fill loop also has three evaluation-order differences (the ROM loads the unit-table pointer AFTER the index arithmetic, adds it base-owns-destination, and loads the type byte AFTER arg0's pool load). All three are source-reachable and all three REGRESS -- binding a pointer to the type byte and dereferencing it at the call is 12.70%, computing `id * 12` into an int local and adding the volatile-read base to it is 13.11% (13.11% with sizeof). So the order differences are DOWNSTREAM of n's register, not independent facts. Draft unchanged at 16.39%; the wave-start copy is in sub_0805D344.w93-start.c.
 
 </details>
