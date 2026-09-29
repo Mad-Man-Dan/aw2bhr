@@ -29,5 +29,5 @@ struct Unk08040AFCProc
 
 void sub_08040AFC(struct Unk08040AFCProc *proc)
 {
-    sub_0801C240(proc->unk30);
+    AP_Delete(proc->unk30);
 }

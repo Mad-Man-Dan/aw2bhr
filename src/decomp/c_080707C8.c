@@ -7,7 +7,8 @@
  * sub_080707C8 @ 0x080707C8
  */
 
-void sub_080707C8(void)
+void MusicPlayerJumpTableCopy(void)
 {
     asm("svc #0x2a");
 }
+asm(".global sub_080707C8\n.thumb_set sub_080707C8, MusicPlayerJumpTableCopy\n");

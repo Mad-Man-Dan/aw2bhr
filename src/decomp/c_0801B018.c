@@ -43,7 +43,7 @@ struct Unk02002000
 
 /* Load slot `a` from flash into the staging buffer and validate it, retrying up
  * to four times. Three distinct results: 4 when the transfer succeeded but
- * sub_0801B09C rejected the contents, 0 when it accepted them, and 1 when all
+ * IsSaveSectorBufferInvalid rejected the contents, 0 when it accepted them, and 1 when all
  * four transfer attempts failed.
  *
  * Only ONE member of gUnknown_0200CC38 is touched, unk20, even though asm/
@@ -53,28 +53,28 @@ struct Unk02002000
  * loop, so -fforce-addr leaves `base + 0x20` as a runtime add. Same member, two
  * materialisations -- see the struct's note in include/unknown-globals.h.
  *
- * The two casts are deliberate and byte-neutral. sub_0801B66C and sub_0801B648
- * are promoted with `int` where this passes a buffer, and sub_0801B598 with
+ * The two casts are deliberate and byte-neutral. ReadFlashIfPresent and VerifyFlashSectorIfPresent
+ * are promoted with `int` where this passes a buffer, and SetFlashTimerIntrIfPresent with
  * `void (**)(void)` where gUnknown_0200CC34 is declared `int`; a promoted
  * definition wins over anything decided at a call site, so the call sites
  * convert rather than the declarations moving. Both prototypes look like they
- * WANT retyping -- sub_0801B66C's third parameter is a pointer at every known
+ * WANT retyping -- ReadFlashIfPresent's third parameter is a pointer at every known
  * call, and gUnknown_0200CC34 is what sub_0808AC44 writes a callback through --
  * but that is a separate change with its own re-verification and it was not
  * made here. */
-int sub_0801B018(u16 a)
+int ReadAndValidateSaveSector(u16 a)
 {
     int i;
 
-    sub_0801B598(gUnknown_0200CC30, (void (**)(void))gUnknown_0200CC34);
+    SetFlashTimerIntrIfPresent(gUnknown_0200CC30, (void (**)(void))gUnknown_0200CC34);
 
     for (i = 0; i < 4; i++)
     {
-        sub_0801B66C(a, 0, (int)gUnknown_02002000, 0x1000);
+        ReadFlashIfPresent(a, 0, (int)gUnknown_02002000, 0x1000);
 
-        if (sub_0801B648(a, (int)gUnknown_02002000) == 0)
+        if (VerifyFlashSectorIfPresent(a, (int)gUnknown_02002000) == 0)
         {
-            if (sub_0801B09C() != 0)
+            if (IsSaveSectorBufferInvalid() != 0)
             {
                 gUnknown_0200CC38.unk20[a] |= 4;
                 return 4;
@@ -88,8 +88,9 @@ int sub_0801B018(u16 a)
     gUnknown_0200CC38.unk20[a] |= 1;
     return 1;
 }
+asm(".global sub_0801B018\n.thumb_set sub_0801B018, ReadAndValidateSaveSector\n");
 
-int sub_0801B09C(void)
+int IsSaveSectorBufferInvalid(void)
 {
     u8 sum;
     int i;
@@ -128,3 +129,4 @@ int sub_0801B09C(void)
 
     return 0;
 }
+asm(".global sub_0801B09C\n.thumb_set sub_0801B09C, IsSaveSectorBufferInvalid\n");

@@ -67,7 +67,7 @@ void sub_08075368(struct Unk8075368 *proc)
             proc->unk38 = 2;
             proc->unk2e = proc->unk2a;
             proc->unk30 = proc->unk2c;
-            sub_08072B54(0x1DC, proc->unk3c - proc->unk32);
+            PlaySeSpacial(0x1DC, proc->unk3c - proc->unk32);
         }
 
         proc->unk3c++;

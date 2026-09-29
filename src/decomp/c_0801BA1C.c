@@ -19,7 +19,7 @@ void sub_0801BA1C(void *dst, u16 tile, int n)
     }
 }
 
-s16 sub_0801BA4C(int a)
+s16 SinDegrees(int a)
 {
     int b;
 
@@ -38,3 +38,4 @@ s16 sub_0801BA4C(int a)
         return -gUnknown_0808EF90[a];
     return gUnknown_0808EF90[a];
 }
+asm(".global sub_0801BA4C\n.thumb_set sub_0801BA4C, SinDegrees\n");

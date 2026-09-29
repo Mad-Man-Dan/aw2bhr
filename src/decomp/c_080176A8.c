@@ -10,8 +10,9 @@
 /* A saturating bump. One `ldrh` serves both the test and the increment, so the
  * global is a plain (non-volatile) u16 -- a volatile one would keep two loads.
  */
-void sub_080176A8(void)
+void IncrementDayCount(void)
 {
     if (gUnknown_03004080 < 0x3e7)
         gUnknown_03004080++;
 }
+asm(".global sub_080176A8\n.thumb_set sub_080176A8, IncrementDayCount\n");

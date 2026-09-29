@@ -21,7 +21,7 @@
  * `p` must be a LOCAL copy of `src` rather than the parameter incremented in
  * place: a modified parameter is copied to its register in the prologue, where
  * the ROM emits `adds r4, r0, #0` after the `pal` statements. */
-void sub_080136DC(u16 *src, u16 y, u16 h, s8 pal)
+void ColFadeDirect(u16 *src, u16 y, u16 h, s8 pal)
 {
     u8 c;
     u8 base;
@@ -46,3 +46,4 @@ void sub_080136DC(u16 *src, u16 y, u16 h, s8 pal)
         }
     }
 }
+asm(".global sub_080136DC\n.thumb_set sub_080136DC, ColFadeDirect\n");

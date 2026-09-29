@@ -9,7 +9,7 @@
 
 /* The setter twin of sub_0803B350 (src/decomp/c_0803B350.c), one slot along:
  * park the new value in gUnknown_030005CE, then push it to the m4a mixer as
- * sub_08071420's (MPlayVolumeControl) volume, with 0xFFFF as the track mask.
+ * MPlayVolumeControl's (MPlayVolumeControl) volume, with 0xFFFF as the track mask.
  *
  * TWO statements and not one. The ROM keeps &gUnknown_030005CE in r2 across the
  * `strh` and then re-reads the halfword out of it (`ldrh r2, [r2]`) to build the
@@ -25,11 +25,11 @@
 void sub_0803B35C(int a)
 {
     gUnknown_030005CE = a;
-    sub_08071420(gUnknown_03005AE0, 0xFFFF, gUnknown_030005CE);
+    MPlayVolumeControl(gUnknown_03005AE0, 0xFFFF, gUnknown_030005CE);
 }
 
 /* The sound-subsystem reset: set both mixer knobs to 0x100, re-run
- * sub_080703F4 (m4aSoundInit), and blank the current/requested song id pair to
+ * m4aSoundInit (m4aSoundInit), and blank the current/requested song id pair to
  * the 0xFFFF sentinel that sub_0803B524 and sub_0803B640 test against.
  *
  * `movs r4,#0x80; lsls r4,r4,#1` is a PLAIN constant 0x100, not wave 23's
@@ -43,16 +43,16 @@ void sub_0803B37C(void)
 {
     sub_0803B350(0x100);
     sub_0803B35C(0x100);
-    sub_080703F4();
+    m4aSoundInit();
 
     gUnknown_030005C8 = 0xFFFF;
     gUnknown_030005CA = 0xFFFF;
 }
 
 /* One statement: index the twelve-word ROM table gUnknown_080910FC and hand the
- * entry to sub_08070990 (m4aSoundMode), so this is "select sound mode preset
+ * entry to SoundMode_rev01 (m4aSoundMode), so this is "select sound mode preset
  * n". It belongs to the same m4a forwarder run as src/decomp/c_0803B3C8.c,
- * which reaches sub_08070990 with a computed argument instead of a table one.
+ * which reaches SoundMode_rev01 with a computed argument instead of a table one.
  *
  * `int` and not a narrow type, on wave 21's bare-prologue rule: the parameter
  * goes straight into `lsls r0, r0, #2` with no masking of the incoming
@@ -61,5 +61,5 @@ void sub_0803B37C(void)
 
 void sub_0803B3B0(int a)
 {
-    sub_08070990(gUnknown_080910FC[a]);
+    SoundMode_rev01(gUnknown_080910FC[a]);
 }

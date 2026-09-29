@@ -10,7 +10,7 @@
 
 #include "proc.h"
 /* Scrolls the proc's animation up five pixels a frame and breaks the proc once
- * it has passed the top of the gUnknown_08499590 screen. The sub_0801C254
+ * it has passed the top of the gUnknown_08499590 screen. The AP_Update
  * result is discarded here -- no `lsls #0x18` follows the `bl`, which is what
  * distinguishes this from sub_08040150 beside it, where the same call is
  * tested.
@@ -52,7 +52,7 @@ struct Unk40554Proc
  * ApplySiloDamage then reads back against gUnknown_08499590), snapshots the
  * screen's y scroll into unk66, and installs the animation.
  *
- * `proc->unk50 = sub_0801C210(...)` followed by `sub_0801C4D4(proc->unk50, 2)`
+ * `proc->unk50 = AP_Create(...)` followed by `AP_SwitchAnimation(proc->unk50, 2)`
  * is one `str` and a reuse of r0, not a reload -- exactly as the promoted
  * sub_08040CA4 spells the same idiom three times. */
 struct Unk40590Proc
@@ -72,7 +72,7 @@ struct Unk40590Proc
 
 void sub_0804050C(struct Unk4050CProc *proc)
 {
-    sub_0801C254(proc->unk50,
+    AP_Update(proc->unk50,
                  proc->unk2c - gMap->scrollX,
                  proc->unk30 - gMap->scrollY);
 
@@ -80,7 +80,7 @@ void sub_0804050C(struct Unk4050CProc *proc)
 
     if (proc->unk30 - gMap->scrollY < 0)
     {
-        sub_0801C240(proc->unk50);
+        AP_Delete(proc->unk50);
         Proc_Break(proc);
     }
 }
@@ -101,7 +101,7 @@ void sub_08040590(struct Unk40590Proc *proc)
     proc->unk58 = (proc->unk30 << 4) + 0x10;
     proc->unk66 = gMap->scrollY;
 
-    proc->unk50 = sub_0801C210((void *)gUnknown_08111D94, 1, 1);
-    sub_0801C4D4(proc->unk50, 2);
+    proc->unk50 = AP_Create((void *)gUnknown_08111D94, 1, 1);
+    AP_SwitchAnimation(proc->unk50, 2);
     proc->unk50->unk22 = proc->unk4a;
 }

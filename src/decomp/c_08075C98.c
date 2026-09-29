@@ -59,7 +59,7 @@ void sub_08075C98(struct Unk8075C98Proc *proc)
                      Div(SIN_Q12(angle) * 16, sx),
                      Div(COS_Q12(angle) * 16, sy));
 
-        sub_0801C254(proc->unk54, (proc->unk2c - 8) & 0x1ff,
+        AP_Update(proc->unk54, (proc->unk2c - 8) & 0x1ff,
                      ((proc->unk30 - 8) & 0xff) | 0x300);
     }
 

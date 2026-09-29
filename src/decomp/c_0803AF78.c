@@ -54,6 +54,6 @@ void sub_0803AF84(void)
 
 void sub_0803AF90(void)
 {
-    sub_0801B4C0();
-    sub_08016E3C();
+    FormatSaveSectors();
+    LoadProfile();
 }

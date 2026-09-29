@@ -117,6 +117,6 @@ void sub_08049C38(struct Unk08049C38Proc *proc)
         break;
     }
 
-    sub_0801BD00(proc->unk1e, (gUnknown_084C3240->unk20 - proc->unk26) & 0xff,
+    PutOamHi(proc->unk1e, (gUnknown_084C3240->unk20 - proc->unk26) & 0xff,
                  gUnknown_0848B698, (proc->unk22 << 4) + 0x31ca);
 }

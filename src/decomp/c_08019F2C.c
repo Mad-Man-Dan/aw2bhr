@@ -8,9 +8,9 @@
  */
 
 /*
- * sub_08019F2C -- open an option list: a plain forwarder to sub_08019F90.
+ * sub_08019F2C -- open an option list: a plain forwarder to CreateMenu.
  *
- * Passes its five parameters through and returns what sub_08019F90 returns,
+ * Passes its five parameters through and returns what CreateMenu returns,
  * which is the list object as an int. The four u16 parameters are narrowed on
  * entry and the fifth arrives on the stack.
  *
@@ -19,7 +19,7 @@
  */
 int sub_08019F2C(const void *a, u16 b, u16 c, u16 d, u16 e)
 {
-    return sub_08019F90(a, b, c, d, e);
+    return CreateMenu(a, b, c, d, e);
 }
 
 /* sub_08019F50 -- sub_08019F2C above with a sub_0801A604() call in front of it.
@@ -27,5 +27,5 @@ int sub_08019F2C(const void *a, u16 b, u16 c, u16 d, u16 e)
 int sub_08019F50(const void *a, u16 b, u16 c, u16 d, u16 e)
 {
     sub_0801A604();
-    return sub_08019F90(a, b, c, d, e);
+    return CreateMenu(a, b, c, d, e);
 }

@@ -16,11 +16,12 @@
  * its store through an opaque pointer.
  *
  * The node's +0x04 doubles as a proc script here and as a list link in
- * sub_08018BAC, so it is cast rather than retyped. */
-bool8 sub_08017D70(s16 a)
+ * EventOp_Jump, so it is cast rather than retyped. */
+bool8 EventOp_StartProc(s16 a)
 {
     Proc_Start((const struct ProcCmd *)gUnknown_0200C528[a].unk04->unk04,
         (ProcPtr)gUnknown_0200C528[a].unk04->unk0c);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08017D70\n.thumb_set sub_08017D70, EventOp_StartProc\n");

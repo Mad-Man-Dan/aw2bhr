@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08019F90 -- build an option list and return it.
+ * CreateMenu -- build an option list and return it.
  *
  * `a1` is an array of 0x20-byte item records, ending at the one whose .unk00 is
  * 0xff. `a2` and `a3` are the list's top-left cell, `a4` chooses which teardown
@@ -26,7 +26,7 @@
  *   3. Record the item count, the visible-row count and the starting cursor
  *      row, then take a second slot for the cursor sprite. It goes in .unk44,
  *      sized from a2 and a3 in pixels, with the cursor row in its .unk20.
- *   4. sub_08019C40 draws the rows, and sub_0801A444 opens the window round
+ *   4. DrawMenuItems draws the rows, and sub_0801A444 opens the window round
  *      them: the same position, the widest string plus 2, and the height
  *      counter divided by 8.
  *
@@ -45,7 +45,7 @@
  * bytes of stack offsets differ. Leave the two shifts.
  */
 
-int sub_08019F90(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
+int CreateMenu(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
 {
     struct Unk8019A60 *p;
     struct Unk8019A60Item *e;
@@ -110,9 +110,10 @@ int sub_08019F90(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
     q->unk26 = (a3 + 1) * 8;
     q->unk20 = a5;
 
-    sub_08019C40(p);
+    DrawMenuItems(p);
 
     sub_0801A444(p->unk48, p->unk4a, (s16)(maxw + 2), (w >> 2) >> 1);
 
     return (int)p;
 }
+asm(".global sub_08019F90\n.thumb_set sub_08019F90, CreateMenu\n");

@@ -28,7 +28,7 @@ struct Unk39EC8Proc
 
 void sub_08039EC8(struct Unk39EC8Proc *proc)
 {
-    if (sub_0801C254(proc->unk34,
+    if (AP_Update(proc->unk34,
                      ((proc->unk29 << 4) - gMap->scrollX + 8) & 0x1ff,
                      ((proc->unk2a << 4) - gMap->scrollY + 8) & 0xff) == 0)
         Proc_Break(proc);

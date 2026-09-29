@@ -98,7 +98,7 @@ bool8 sub_080381C0(void)
  * promotion carries "rodata": ["0x08090F00", "0x08090F04"].
  *
  * THE LAST `if` IS WRITTEN INVERTED ON PURPOSE. The ROM branches `bne` to the
- * sub_080176C0 block and reaches UnlockMainMenu by falling through, so the
+ * AddBattleMapPoints block and reaches UnlockMainMenu by falling through, so the
  * UnlockMainMenu arm has to be the THEN arm in the source; spelling it the
  * natural way round emits the same instructions in the opposite order. Same
  * lever W43-E recorded on sub_080381C0 in this block.
@@ -164,5 +164,5 @@ void sub_08038240(void)
     if (!sub_080381C0())
         UnlockMainMenu();
     else
-        sub_080176C0(gUnknown_0202FDEC.unk0a);
+        AddBattleMapPoints(gUnknown_0202FDEC.unk0a);
 }

@@ -7,13 +7,13 @@
  * sub_0801930C @ 0x0801930C, sub_08019348 @ 0x08019348, sub_08019380 @ 0x08019380
  */
 
-/* sub_08019290's scan with the hit handled instead of returned: every slot
+/* FindEventScriptSlot's scan with the hit handled instead of returned: every slot
  * holding this script is torn down through sub_080192EC, and the function
  * still returns the not-found -1 unconditionally. The loop does NOT stop at
  * the first hit -- there is no branch out of the body -- so the counter has to
  * survive the call and moves from r1 to callee-saved r4, which is the only
- * difference from sub_08019290's stream. */
-int sub_0801930C(const u8 *a)
+ * difference from FindEventScriptSlot's stream. */
+int EndEventScript(const u8 *a)
 {
     s16 i;
 
@@ -24,14 +24,15 @@ int sub_0801930C(const u8 *a)
     }
     return -1;
 }
+asm(".global sub_0801930C\n.thumb_set sub_0801930C, EndEventScript\n");
 
 /* Start a script now, or queue it: if any gUnknown_0200C528 slot is still busy
  * (sub_08019260) the script is parked in the first free gUnknown_0200C508
- * slot; otherwise it runs immediately through sub_080193B0.
+ * slot; otherwise it runs immediately through StartEventScript.
  *
  * The guard is written NEGATED and the immediate-start arm comes FIRST. That
  * is not cosmetic: with the arms the other way round agbcc emits `beq` and
- * lays the sub_080193B0 call last, and the queue loop then keeps a second
+ * lays the StartEventScript call last, and the queue loop then keeps a second
  * pointer pseudo alive (an extra `adds r1, r2, #0` per iteration) instead of
  * bumping one in place.
  *
@@ -39,13 +40,13 @@ int sub_0801930C(const u8 *a)
  * fall into the epilogue, which costs the same extra copy. With `return` the
  * loop reduces to a single pointer biv (`adds r1, #4`) plus the `i` counter,
  * and the store block is laid out ahead of the loop. */
-void sub_08019348(const u8 *a)
+void StartOrQueueEventScript(const u8 *a)
 {
     int i;
 
     if (!sub_08019260())
     {
-        sub_080193B0(a);
+        StartEventScript(a);
         return;
     }
 
@@ -58,6 +59,7 @@ void sub_08019348(const u8 *a)
         }
     }
 }
+asm(".global sub_08019348\n.thumb_set sub_08019348, StartOrQueueEventScript\n");
 
 /* Pop the most recently queued gUnknown_0200C508 script and start it. The
  * sweep runs BACKWARDS from slot 7 and stops at the first non-NULL entry.
@@ -75,7 +77,7 @@ void sub_08019348(const u8 *a)
  * strength_reduce produces the ROM's single descending pointer biv -- the
  * `ldr r0,=g; adds r4,r0,#0; adds r4,#0x1c` preheader is that giv's
  * initialiser (base + 7*4), NOT a source `&gUnknown_0200C508[7]`. */
-void sub_08019380(void)
+void StartQueuedEventScript(void)
 {
     int i;
 
@@ -83,9 +85,10 @@ void sub_08019380(void)
     {
         if (gUnknown_0200C508[i] != NULL)
         {
-            sub_080193B0(gUnknown_0200C508[i]);
+            StartEventScript(gUnknown_0200C508[i]);
             gUnknown_0200C508[i] = NULL;
             return;
         }
     }
 }
+asm(".global sub_08019380\n.thumb_set sub_08019380, StartQueuedEventScript\n");

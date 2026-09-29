@@ -56,14 +56,14 @@ void sub_08039F80(void)
         sub_0802BCF0((u16)((s8)k + 0x49 + p->unk00), 0x40,
                      gUnknown_085D5ABC[q->type].maxAmmo);
 
-        sub_0801BD00(gUnknown_0849D89C->unk00 + 0x41, 0x3c, gUnknown_0849D8A0, 0x13CA);
+        PutOamHi(gUnknown_0849D89C->unk00 + 0x41, 0x3c, gUnknown_0849D8A0, 0x13CA);
 
         if (GetUnitFiringRangeWithCoBonus(gUnknown_0849D89C->unk08, q->type) > 1)
         {
             DrawOamObject(0x3b, gUnknown_0849D89C->unk00 + 0x4c, 0x38, 0, 0);
             sub_0802BCF0(gUnknown_0849D89C->unk00 + 0x50, 0x40,
                          gUnknown_085D5ABC[q->type].minRange);
-            sub_0801BD00(gUnknown_0849D89C->unk00 + 0x58, 0x41, gUnknown_0849D8A0, 0x13CB);
+            PutOamHi(gUnknown_0849D89C->unk00 + 0x58, 0x41, gUnknown_0849D8A0, 0x13CB);
             sub_0802BCF0(gUnknown_0849D89C->unk00 + 0x60, 0x40,
                          GetUnitFiringRangeWithCoBonus(gUnknown_0849D89C->unk08, q->type));
         }

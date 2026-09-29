@@ -33,7 +33,7 @@ void DesignRoomMenu_PickSlot0(int a, int b, u8 c)
 {
     if ((gActiveMap->flags & 0x200) && c != 2)
     {
-        sub_0801A168();
+        CloseTopMenu();
         gActiveMap->designSlot = 0;
         sub_080152EC(gUnknown_08487E14, 0);
         gActiveMap->state = 7;
@@ -67,7 +67,7 @@ void DesignRoomMenu_PickSlot1(int a, int b, u8 c)
 {
     if ((gActiveMap->flags & 0x400) && c != 2)
     {
-        sub_0801A168();
+        CloseTopMenu();
         gActiveMap->designSlot = 1;
         sub_080152EC(gUnknown_08487E14, 0);
         gActiveMap->state = 7;
@@ -101,7 +101,7 @@ void DesignRoomMenu_PickSlot2(int a, int b, u8 c)
 {
     if ((gActiveMap->flags & 0x800) && c != 2)
     {
-        sub_0801A168();
+        CloseTopMenu();
         gActiveMap->designSlot = 2;
         sub_080152EC(gUnknown_08487E14, 0);
         gActiveMap->state = 7;

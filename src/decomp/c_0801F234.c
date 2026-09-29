@@ -8,9 +8,9 @@
  */
 
 /*
- * sub_0801F234 -- load graphic `a` into the next free tiles of its tile pool.
+ * LoadTilePoolGraphic -- load graphic `a` into the next free tiles of its tile pool.
  *
- * sub_0801F3D4 picks the pool entry for `a`; the entry keeps a list of loaded
+ * GetTilePoolForGraphic picks the pool entry for `a`; the entry keeps a list of loaded
  * graphics (unk08[]) and a count (unk05). The next list slot already holds the
  * first free tile number. The graphic is gUnknown_0848B780[a].unk00 by .unk01
  * tiles; its data (from sub_0801F444) is copied with CpuFastSet to the pool's
@@ -25,7 +25,7 @@
  *     splits a value the compiler would otherwise share, which gives the
  *     original's register choice.
  */
-void sub_0801F234(int a)
+void LoadTilePoolGraphic(int a)
 {
   struct Unk0200F920 *e;
   int i;
@@ -35,7 +35,7 @@ void sub_0801F234(int a)
   u32 n;
   u16 tileCopy;
   u8 *dst;
-  i = sub_0801F3D4(a);
+  i = GetTilePoolForGraphic(a);
   e = &gUnknown_0200F920[i];
   tile = e->unk08[e->unk05].unk00;
   dims = gUnknown_0848B780 + a;
@@ -46,3 +46,4 @@ void sub_0801F234(int a)
   e->unk05++;
   e->unk08[e->unk05].unk00 = tileCopy + n;
 }
+asm(".global sub_0801F234\n.thumb_set sub_0801F234, LoadTilePoolGraphic\n");

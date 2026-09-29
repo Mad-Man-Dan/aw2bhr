@@ -21,5 +21,5 @@ struct Unk27414Proc
 void sub_08027414(struct Unk27414Proc *proc)
 {
     DecrementMapLock();
-    sub_0801C240(proc->unk50);
+    AP_Delete(proc->unk50);
 }

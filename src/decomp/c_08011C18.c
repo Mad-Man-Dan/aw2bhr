@@ -13,7 +13,7 @@
  * The dead `ldrh`/`ldrb` ahead of each of those two stores is the volatile
  * aggregate-member tell; the words carry no signal because SImode never gets
  * it. Counter is u16 -- `adds #1; lsls #16; lsrs #16` every iteration. */
-void sub_08011C18(void)
+void ClearTileRigistry(void)
 {
     u16 i;
 
@@ -27,3 +27,4 @@ void sub_08011C18(void)
         gUnknown_0200B3B4[i].unk0a = 0;
     }
 }
+asm(".global sub_08011C18\n.thumb_set sub_08011C18, ClearTileRigistry\n");

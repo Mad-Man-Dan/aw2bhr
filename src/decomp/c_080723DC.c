@@ -78,7 +78,7 @@
  *    container, and target1_enable_bd is a separate byte OR.
  * A 1-bit bitfield write and a `.raw` write to the same union are separate
  * accesses to agbcc, but two `.raw` writes are not. */
-void sub_080723DC(void)
+void Fade_CommonCallBack(void)
 {
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_03002020 = 0;
@@ -98,3 +98,4 @@ void sub_080723DC(void)
     gDispIo.disp_ct.bg3_enable = 0;
     gDispIo.disp_ct.obj_enable = 0;
 }
+asm(".global sub_080723DC\n.thumb_set sub_080723DC, Fade_CommonCallBack\n");

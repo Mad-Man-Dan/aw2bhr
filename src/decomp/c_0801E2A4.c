@@ -18,7 +18,7 @@
  *
  * The per-frame interpolation sweep over the 32 records: each axis steps its
  * current value one Nth of the way to its target and decrements N, and any
- * record that moved gets sub_0801E18C called on its index.
+ * record that moved gets UpdateObjAffineRecord called on its index.
  *
  * THE MEMBER IS READ TWICE PER TEST AND THAT IS THE WHOLE TYPE ARGUMENT.
  * `ldrh r5,[r4,#6]` is a plain HImode move into the local that supplies the
@@ -60,6 +60,6 @@ void sub_0801E2A4(void)
             flag = 1;
         }
         if (flag != 0)
-            sub_0801E18C(i);
+            UpdateObjAffineRecord(i);
     }
 }

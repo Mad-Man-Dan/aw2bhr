@@ -10,7 +10,7 @@
 #include "hardware.h"
 
 /* Reloads the BG char block sub_0801F150 owns and then replays every entry of
- * the 0xFF-terminated gUnknown_0849AAA8 list through sub_0801F234. The
+ * the 0xFF-terminated gUnknown_0849AAA8 list through LoadTilePoolGraphic. The
  * destination expression is c_0800572C.c's and c_08005874.c's verbatim -- only
  * the 0x1b4 length differs from those two.
  *
@@ -26,7 +26,7 @@ void sub_0802D2EC(void)
     i = 0;
     while (gUnknown_0849AAA8[i] != 0xff)
     {
-        sub_0801F234(gUnknown_0849AAA8[i]);
+        LoadTilePoolGraphic(gUnknown_0849AAA8[i]);
         i++;
     }
 }

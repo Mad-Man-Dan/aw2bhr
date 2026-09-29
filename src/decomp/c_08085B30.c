@@ -45,22 +45,22 @@ void sub_08085B30(struct Unk8085B30 *proc)
     sub_0801F114();
     sub_0801F150(2, (void *)0x06010000, 0xf0, 0x14);
 
-    sub_0801F234(0x43);
-    sub_0801F234(0x44);
-    sub_0801F234(0x45);
-    sub_0801F234(0x46);
-    sub_0801F234(0x52);
-    sub_0801F234(0x69);
+    LoadTilePoolGraphic(0x43);
+    LoadTilePoolGraphic(0x44);
+    LoadTilePoolGraphic(0x45);
+    LoadTilePoolGraphic(0x46);
+    LoadTilePoolGraphic(0x52);
+    LoadTilePoolGraphic(0x69);
 
     for (i = 0; i <= 9; i++)
-        sub_0801F234(i + 0x55);
+        LoadTilePoolGraphic(i + 0x55);
 
     sub_0801F150(4, (void *)((gUnknown_03002B6C.bits.chr_block << 14) + 0x06000000), 0x370, 9);
 
-    sub_0801F234(0xb8);
-    sub_0801F234(0xb9);
-    sub_0801F234(0xba);
-    sub_0801F234(0xbb);
+    LoadTilePoolGraphic(0xb8);
+    LoadTilePoolGraphic(0xb9);
+    LoadTilePoolGraphic(0xba);
+    LoadTilePoolGraphic(0xbb);
 
     sub_08087938();
     sub_0801B780(0);

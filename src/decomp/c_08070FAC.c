@@ -36,7 +36,7 @@
  *    ~40 bytes), and `n4 = le ? 0x40 : 0` must be an if/else -- as a `?:` agbcc
  *    goes branchless with `negs/orrs/asrs #31/ands` and loses 6 bytes.
  */
-void sub_08070FAC(void)
+void CgbSound(void)
 {
     s32 ch;
     struct CgbChannel *channels;
@@ -105,7 +105,7 @@ void sub_08070FAC(void)
 
             channels->sf = 3;
             channels->mo = 3;
-            sub_08070F44(channels);
+            CgbModVol(channels);
 
             switch (ch)
             {
@@ -167,7 +167,7 @@ void sub_08070FAC(void)
             if ((s8)(channels->echoLength & mask) <= 0)
             {
             oscOff:
-                sub_08070EF4(ch);
+                CgbOscOff(ch);
                 channels->sf = 0;
                 goto done;
             }
@@ -198,7 +198,7 @@ void sub_08070FAC(void)
             if (ch == 3)
                 channels->mo |= 1;
 
-            sub_08070F44(channels);
+            CgbModVol(channels);
 
             if ((channels->sf & 3) == 0)
             {
@@ -351,3 +351,4 @@ void sub_08070FAC(void)
         channels->mo = 0;
     }
 }
+asm(".global sub_08070FAC\n.thumb_set sub_08070FAC, CgbSound\n");

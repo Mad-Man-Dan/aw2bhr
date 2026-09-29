@@ -17,12 +17,12 @@ void sub_08031018(void)
     Decompress(gUnknown_081D3810, (void *)0x060114A0);
     sub_0801F150(2, (void *)0x06010000, 0, 0x16);
 
-    sub_0801F234(0x50);
-    sub_0801F234(0x4f);
-    sub_0801F234(0x4a);
-    sub_0801F234(0x4b);
-    sub_0801F234(0x4c);
-    sub_0801F234(0x4d);
+    LoadTilePoolGraphic(0x50);
+    LoadTilePoolGraphic(0x4f);
+    LoadTilePoolGraphic(0x4a);
+    LoadTilePoolGraphic(0x4b);
+    LoadTilePoolGraphic(0x4c);
+    LoadTilePoolGraphic(0x4d);
 
     ApplyPaletteExt(gUnknown_081320AC, 0x60, 0x20);
     ApplyPaletteExt(gUnknown_0849B0A0, 0xe0, 0x20);

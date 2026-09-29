@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08070478.
- * ActivateMusicOrSoundId @ 0x08070478, sub_080704A4 @ 0x080704A4, sub_080704F0 @ 0x080704F0, sub_08070544 @ 0x08070544, sub_08070578 @ 0x08070578, sub_080705AC @ 0x080705AC
+ * ActivateMusicOrSoundId @ 0x08070478, m4aSongNumStartOrChange @ 0x080704A4, m4aSongNumStartOrContinue @ 0x080704F0, m4aSongNumStop @ 0x08070544, m4aSongNumContinue @ 0x08070578, m4aMPlayAllStop @ 0x080705AC
  */
 
 /* PARKED, wave 31 (W31-C). m4aSongNumStart.
@@ -37,7 +37,7 @@
  * reachable from the statement shape of this function -- suspect the TYPE model
  * of one of the two tables instead.
  *
- * sub_08070544 and sub_08070578 are the same function with a guard added, and
+ * m4aSongNumStop and m4aSongNumContinue are the same function with a guard added, and
  * park on exactly the same difference.
  *
  * WAVE 32 (W32-B) applied the wave-31 allocation rule to this function -- the
@@ -80,7 +80,7 @@
  *
  * NEW this wave and worth keeping: writing the song lookup INLINE rather than
  * through a `song` local fixes the LITERAL POOL ORDER on the two conditional
- * members (sub_080704A4, sub_080704F0), taking them from a reversed pool to
+ * members (m4aSongNumStartOrChange, m4aSongNumStartOrContinue), taking them from a reversed pool to
  * 93.4% / 94.0% with five bytes differing. All five members of this family now
  * park on the identical single residual.
  */
@@ -97,7 +97,7 @@ void ActivateMusicOrSoundId(u16 n)
     const struct Song *song = &songTable[n];
     const struct MusicPlayer *mplay = &mplayTable[song->ms];
 
-    sub_08070BAC(mplay->info, song->header);
+    MPlayStart_rev01(mplay->info, song->header);
 }
 
 asm(".global sub_08070478\n.thumb_set sub_08070478, ActivateMusicOrSoundId\n");
@@ -107,7 +107,7 @@ asm(".global sub_08070478\n.thumb_set sub_08070478, ActivateMusicOrSoundId\n");
  * Every instruction, the literal-pool ORDER and the size are the ROM's. The
  * only residual is a two-register exchange: the ROM keeps &gUnknown_08242308
  * in r2 and `song->ms` in r3, this keeps them the other way round. Identical
- * cause to ActivateMusicOrSoundId / sub_08070544 / sub_08070578 / sub_080704F0 -- see
+ * cause to ActivateMusicOrSoundId / m4aSongNumStop / m4aSongNumContinue / m4aSongNumStartOrContinue -- see
  * work/ActivateMusicOrSoundId/ActivateMusicOrSoundId.c for the full analysis.
  *
  * NEW this wave: writing the song lookup INLINE (no `song` local) is what fixes
@@ -116,28 +116,30 @@ asm(".global sub_08070478\n.thumb_set sub_08070478, ActivateMusicOrSoundId\n");
  * reverse of the ROM; inlined, agbcc reaches the mplay table first and emits
  * 0x08242308 then 0x0824238C as the ROM does. That halves the residual on all
  * five and leaves exactly one difference on each. */
-void sub_080704A4(u16 n)
+void m4aSongNumStartOrChange(u16 n)
 {
     if (gUnknown_08242308[gUnknown_0824238C[n].ms].info->songHeader != gUnknown_0824238C[n].header)
-        sub_08070BAC(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
+        MPlayStart_rev01(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
     else if ((gUnknown_08242308[gUnknown_0824238C[n].ms].info->status & 0xffff) == 0
           || (gUnknown_08242308[gUnknown_0824238C[n].ms].info->status & 0x80000000))
-        sub_08070BAC(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
+        MPlayStart_rev01(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
 }
+asm(".global sub_080704A4\n.thumb_set sub_080704A4, m4aSongNumStartOrChange\n");
 
 /* PARKED -- wave 32, W32-B. m4aSongNumStartOrContinue. Same single residual as
- * sub_080704A4 (the r2/r3 exchange between the mplay-table address and
+ * m4aSongNumStartOrChange (the r2/r3 exchange between the mplay-table address and
  * `song->ms`); see work/ActivateMusicOrSoundId/ActivateMusicOrSoundId.c for the analysis and
- * work/sub_080704A4/sub_080704A4.c for why the lookup is written inline. */
-void sub_080704F0(u16 n)
+ * work/m4aSongNumStartOrChange/m4aSongNumStartOrChange.c for why the lookup is written inline. */
+void m4aSongNumStartOrContinue(u16 n)
 {
     if (gUnknown_08242308[gUnknown_0824238C[n].ms].info->songHeader != gUnknown_0824238C[n].header)
-        sub_08070BAC(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
+        MPlayStart_rev01(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
     else if ((gUnknown_08242308[gUnknown_0824238C[n].ms].info->status & 0xffff) == 0)
-        sub_08070BAC(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
+        MPlayStart_rev01(gUnknown_08242308[gUnknown_0824238C[n].ms].info, gUnknown_0824238C[n].header);
     else if (gUnknown_08242308[gUnknown_0824238C[n].ms].info->status & 0x80000000)
-        sub_080703B8(gUnknown_08242308[gUnknown_0824238C[n].ms].info);
+        MPlayContinue(gUnknown_08242308[gUnknown_0824238C[n].ms].info);
 }
+asm(".global sub_080704F0\n.thumb_set sub_080704F0, m4aSongNumStartOrContinue\n");
 
 /* PARKED, wave 31 (W31-C). m4aSongNumStop. Same 52-byte instruction stream as
  * the ROM; the only difference is that the mplay-table address lands in r3 and
@@ -184,13 +186,13 @@ void sub_080704F0(u16 n)
  *
  * NEW this wave and worth keeping: writing the song lookup INLINE rather than
  * through a `song` local fixes the LITERAL POOL ORDER on the two conditional
- * members (sub_080704A4, sub_080704F0), taking them from a reversed pool to
+ * members (m4aSongNumStartOrChange, m4aSongNumStartOrContinue), taking them from a reversed pool to
  * 93.4% / 94.0% with five bytes differing. All five members of this family now
  * park on the identical single residual.
  */
 
 
-void sub_08070544(u16 n)
+void m4aSongNumStop(u16 n)
 {
     const struct MusicPlayer *mplayTable = gUnknown_08242308;
     const struct Song *songTable = gUnknown_0824238C;
@@ -198,8 +200,9 @@ void sub_08070544(u16 n)
     const struct MusicPlayer *mplay = &mplayTable[song->ms];
 
     if (mplay->info->songHeader == song->header)
-        sub_08070C90(mplay->info);
+        MPlayStop_rev01(mplay->info);
 }
+asm(".global sub_08070544\n.thumb_set sub_08070544, m4aSongNumStop\n");
 
 /* PARKED, wave 31 (W31-C). m4aSongNumContinue. Same 52-byte instruction stream
  * as the ROM; the only difference is that the mplay-table address lands in r3
@@ -211,7 +214,7 @@ void sub_08070544(u16 n)
  * question about the two tables, recorded there in full.
  */
 
-void sub_08070578(u16 n)
+void m4aSongNumContinue(u16 n)
 {
     const struct MusicPlayer *mplayTable = gUnknown_08242308;
     const struct Song *songTable = gUnknown_0824238C;
@@ -219,8 +222,9 @@ void sub_08070578(u16 n)
     const struct MusicPlayer *mplay = &mplayTable[song->ms];
 
     if (mplay->info->songHeader == song->header)
-        sub_080703B8(mplay->info);
+        MPlayContinue(mplay->info);
 }
+asm(".global sub_08070578\n.thumb_set sub_08070578, m4aSongNumContinue\n");
 
 /* m4aMPlayAllStop -- MPlayStop on every entry of the player table.
  *
@@ -239,7 +243,7 @@ void sub_08070578(u16 n)
  * `p = gUnknown_08242308` written before the loop agbcc hoists it above the
  * `cmp` instead.
  */
-void sub_080705AC(void)
+void m4aMPlayAllStop(void)
 {
     const struct MusicPlayer * p;
     u32 i;
@@ -255,9 +259,10 @@ void sub_080705AC(void)
 
     do
     {
-        sub_08070C90(p->info);
+        MPlayStop_rev01(p->info);
         p++;
         i--;
     }
     while (i != 0);
 }
+asm(".global sub_080705AC\n.thumb_set sub_080705AC, m4aMPlayAllStop\n");

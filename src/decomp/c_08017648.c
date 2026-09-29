@@ -18,6 +18,6 @@
 
 void sub_08017648(void)
 {
-    sub_08017208();
+    RestoreBattleSaveState();
     sub_0801759C();
 }

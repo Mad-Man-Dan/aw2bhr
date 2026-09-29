@@ -14,16 +14,16 @@
  * Both arms return, so the arms are written inverted (c_08017CF0.c rule): the
  * ELSE is emitted inline and the branch goes to the THEN.
  *
- * The trailing `lsls r0, #0x10; asrs r0, #0x10` on sub_08018BAC's result is an
+ * The trailing `lsls r0, #0x10; asrs r0, #0x10` on EventOp_Jump's result is an
  * INT converted to this function's own `s16` return type, which is what retyped
- * sub_08018BAC from `bool8`. */
+ * EventOp_Jump from `bool8`. */
 s16 sub_08018BCC(s16 a)
 {
     s16 (*f)(void);
 
     f = (s16 (*)(void))gUnknown_0200C528[a].unk04->unk0c;
     if (f() != 0)
-        return sub_08018BAC(a);
+        return EventOp_Jump(a);
     else
     {
         gUnknown_0200C528[a].unk04++;

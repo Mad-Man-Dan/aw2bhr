@@ -169,7 +169,7 @@ void sub_08077304(struct Unk8077304Proc * proc)
             sub_0801F150(4,
                          (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)),
                          0x6a, 2);
-            sub_0801F234(gUnknown_086145CE[j]);
+            LoadTilePoolGraphic(gUnknown_086145CE[j]);
 
             p = gBG0TilemapBuffer;
 

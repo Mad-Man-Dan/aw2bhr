@@ -18,7 +18,7 @@ struct Unk6B050Proc
 
 void sub_0806B09C(struct Unk6B050Proc *proc)
 {
-    sub_080137AC(-1);
+    ColFadeToBlack(-1);
     proc->unk58 = 0x80;
 }
 
@@ -39,7 +39,7 @@ void sub_0806B0B4(struct Unk6B050Proc *proc)
 /* sub_0806B09C's twin: the other end of the same fade, half the frames. */
 void sub_0806B0E0(struct Unk6B050Proc *proc)
 {
-    sub_08013830(1);
+    ColFadeFromBlack(1);
     proc->unk58 = 0x40;
 }
 

@@ -23,7 +23,7 @@ struct Unk73D98Proc
  * addresses and put the pool words the other way round -- 6 bytes. */
 void sub_08073D98(struct Unk73D98Proc *proc)
 {
-    sub_080703F4();
+    m4aSoundInit();
 
     proc->unk58 = 0;
 

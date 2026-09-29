@@ -16,7 +16,7 @@ int sub_0803CDBC(int a1, int a2, u8 a3)
     p = gUnknown_02000000;
     if (sub_0801AD70(a3 + 5) != 0)
         return 0;
-    sub_0801AC58(a3 + 5, p);
+    ReadSaveSlot(a3 + 5, p);
     sub_08037B84(p);
     sub_0803D6FC((struct Unk3D6FC *)p);
     sub_080376DC((void *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),

@@ -27,7 +27,7 @@ void sub_0803ABDC(struct Unk0803ABDC *p)
     sub_080119A0(0x38, 8, gUnknown_0849E5F8[i]);
     if ((gpKeySt->pressed & 3) != 0)
     {
-        sub_08016E14();
+        WriteProfile();
         sub_08015C30(gUnknown_03001FBC);
     }
     else if ((gpKeySt->pressed & DPAD_LEFT) != 0)

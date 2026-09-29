@@ -17,7 +17,7 @@
  * `movs r3,#0x80; lsls r3,#6` is the literal 0x2000. */
 void sub_0803B1F0(void)
 {
-    sub_0801BD00(0x38, gUnknown_080910E8[(u32)gGameClock / 3 % 10] + 0x6c,
+    PutOamHi(0x38, gUnknown_080910E8[(u32)gGameClock / 3 % 10] + 0x6c,
                  gUnknown_0849E6B8, 0x5054);
-    sub_0801BD00(0x48, 0x88, gUnknown_0849E6A4, 0x2000);
+    PutOamHi(0x48, 0x88, gUnknown_0849E6A4, 0x2000);
 }

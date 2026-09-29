@@ -10,7 +10,7 @@
 /* Install the proc-list script named by the current gUnknown_085C77A0 record.
  *
  * unk08 is a POINTER, and this is the discriminating use that settles it: the
- * word goes straight into sub_080193B0, whose declared parameter is
+ * word goes straight into StartEventScript, whose declared parameter is
  * `const u8 *`. sub_0802C7FC only null-tests the same word, which cannot tell a
  * u32 from a pointer -- the "a byte-neutral wrong type has no oracle" case in
  * docs/agbcc-codegen.md, resolved here by a second, differently-shaped reader.
@@ -22,8 +22,8 @@
 
 void sub_0802C7B4(void)
 {
-    sub_0801A168();
-    sub_080193B0(gUnknown_085C77A0[gPlaySt.mapID].unk08);
+    CloseTopMenu();
+    StartEventScript(gUnknown_085C77A0[gPlaySt.mapID].unk08);
 }
 
 /* The gUnknown_030044A0 counterpart of sub_0802CD54's gUnknown_030040F0 stash:
@@ -37,6 +37,6 @@ void sub_0802C7B4(void)
 void sub_0802C7DC(int a1, u8 a2)
 {
     gUnknown_030044A0 = a2;
-    sub_0801A168();
+    CloseTopMenu();
     gUnknown_03003334 = 2;
 }

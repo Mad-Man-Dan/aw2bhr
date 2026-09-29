@@ -22,7 +22,7 @@ struct Unk722B8Proc
  * call's arguments, which is not what an inline
  * `gUnknown_081CBF68[kind].unkNN(...)` gives -- there the argument setup comes
  * first (measured, 71.1%). `_call_via_r2` / `_call_via_r1` give the arities. */
-void sub_080722B8(int kind, int speed, ProcPtr parent, void (*onDone)(void))
+void StartFadeCore(int kind, int speed, ProcPtr parent, void (*onDone)(void))
 {
     struct Unk722B8Proc *proc;
     ProcPtr (*start)(const struct ProcCmd *, ProcPtr);
@@ -43,3 +43,4 @@ void sub_080722B8(int kind, int speed, ProcPtr parent, void (*onDone)(void))
     step = gUnknown_081CBF68[kind].unk04;
     step((s8)(n * gUnknown_081CBF68[kind].unk08));
 }
+asm(".global sub_080722B8\n.thumb_set sub_080722B8, StartFadeCore\n");

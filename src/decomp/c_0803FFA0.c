@@ -48,7 +48,7 @@ void sub_0803FFA0(struct UnkFFA0Proc *proc)
         descriptor = gUnknown_08110CDC;
         break;
     }
-    proc->unk50 = sub_0801C210(descriptor, 1, 1);
+    proc->unk50 = AP_Create(descriptor, 1, 1);
     proc->unk50->unk22 = 0x51CA;
     if (proc->unk54 != -2)
     {

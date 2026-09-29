@@ -25,15 +25,16 @@ struct Unk8613F44Proc
     /* 34 */ u32 unk34;
 };
 
-void sub_08072970(u32 a, u32 b)
+void CallDelayed(u32 a, u32 b)
 {
     struct Unk8613F34Proc * proc = Proc_Start(gUnknown_08613F34, PROC_TREE_3);
 
     proc->unk2c = a;
     proc->unk34 = b;
 }
+asm(".global sub_08072970\n.thumb_set sub_08072970, CallDelayed\n");
 
-void sub_0807298C(u32 a, u32 b, u32 c)
+void CallDelayedArg(u32 a, u32 b, u32 c)
 {
     struct Unk8613F44Proc * proc = Proc_Start(gUnknown_08613F44, PROC_TREE_3);
 
@@ -41,3 +42,4 @@ void sub_0807298C(u32 a, u32 b, u32 c)
     proc->unk30 = b;
     proc->unk34 = c;
 }
+asm(".global sub_0807298C\n.thumb_set sub_0807298C, CallDelayedArg\n");

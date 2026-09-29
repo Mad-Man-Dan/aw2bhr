@@ -38,5 +38,5 @@ void sub_0801D81C(int a)
     if (gUnknown_0200E438[a].unk38 != -1)
         sub_08015328(gUnknown_0200E438[a].unk38);
     else
-        sub_0801D84C(a);
+        FreeSpriteScript(a);
 }

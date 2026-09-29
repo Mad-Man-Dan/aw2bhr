@@ -10,7 +10,7 @@
 
 #include "proc.h"
 /* The vertical twin of the matched sub_0804050C next door: same
- * sub_0801C254 / sub_0801C240 / Proc_Break shape, but scrolling the animation
+ * AP_Update / AP_Delete / Proc_Break shape, but scrolling the animation
  * DOWN eight pixels a frame and stopping once it has passed the proc's own
  * target row rather than the top of the screen.
  *
@@ -35,7 +35,7 @@ struct Unk405D8Proc
 
 void sub_080405D8(struct Unk405D8Proc *proc)
 {
-    sub_0801C254(proc->unk50,
+    AP_Update(proc->unk50,
                  proc->unk54 - gMap->scrollX,
                  proc->unk66 - gMap->scrollY);
 
@@ -43,7 +43,7 @@ void sub_080405D8(struct Unk405D8Proc *proc)
 
     if (proc->unk66 > (proc->unk30 << 4))
     {
-        sub_0801C240(proc->unk50);
+        AP_Delete(proc->unk50);
         Proc_Break(proc);
     }
 }

@@ -8,13 +8,13 @@
  */
 
 /*
- * DesignRoomMode_Start -- wait 30 frames, then hand one of two tables to sub_080193B0.
+ * DesignRoomMode_Start -- wait 30 frames, then hand one of two tables to StartEventScript.
  *
  * On the first frame after the mode change (stateChanged set) it clears the
  * state and arms a 30-frame timer. While the state is 0 it counts the timer
- * down; at zero it moves to state 1 and calls sub_080193B0 with
+ * down; at zero it moves to state 1 and calls StartEventScript with
  * gUnknown_084856FC if sub_08004E44 returned 0 and gUnknown_084857AC
- * otherwise. What sub_08004E44 tests, and what sub_080193B0 does with the
+ * otherwise. What sub_08004E44 tests, and what StartEventScript does with the
  * table, are not visible from here.
  *
  * Why the C looks odd: this spelling does not change what the code does, but
@@ -37,7 +37,7 @@ void DesignRoomMode_Start(void)
         if (--gActiveMap->stateTimer == 0)
         {
             gActiveMap->state = 1;
-            sub_080193B0(sub_08004E44() == 0 ? gUnknown_084856FC : gUnknown_084857AC);
+            StartEventScript(sub_08004E44() == 0 ? gUnknown_084856FC : gUnknown_084857AC);
         }
     }
 }

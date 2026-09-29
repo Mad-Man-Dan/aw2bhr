@@ -15,13 +15,13 @@
  * its cursor/limit pair -- sub_0803BF70 returns `unk01 == unk00`. So these
  * three are "arm the counter for 2 steps".
  *
- * sub_0801A168's result is discarded. Nothing here settles its return type;
+ * CloseTopMenu's result is discarded. Nothing here settles its return type;
  * `int` is what unknown-functions.h already declares, and the argument for
  * that is written up there.
  */
 void sub_0803BDF8(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     gUnknown_0849ECDC->unk00 = 2;
 }
 
@@ -33,13 +33,13 @@ void sub_0803BDF8(void)
  * its cursor/limit pair -- sub_0803BF70 returns `unk01 == unk00`. So these
  * three are "arm the counter for 3 steps".
  *
- * sub_0801A168's result is discarded. Nothing here settles its return type;
+ * CloseTopMenu's result is discarded. Nothing here settles its return type;
  * `int` is what unknown-functions.h already declares, and the argument for
  * that is written up there.
  */
 void sub_0803BE10(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     gUnknown_0849ECDC->unk00 = 3;
 }
 
@@ -51,12 +51,12 @@ void sub_0803BE10(void)
  * its cursor/limit pair -- sub_0803BF70 returns `unk01 == unk00`. So these
  * three are "arm the counter for 4 steps".
  *
- * sub_0801A168's result is discarded. Nothing here settles its return type;
+ * CloseTopMenu's result is discarded. Nothing here settles its return type;
  * `int` is what unknown-functions.h already declares, and the argument for
  * that is written up there.
  */
 void sub_0803BE28(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     gUnknown_0849ECDC->unk00 = 4;
 }

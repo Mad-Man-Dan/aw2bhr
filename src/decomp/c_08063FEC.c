@@ -28,8 +28,8 @@ struct Mtx43 /* 0x30 */
 
 void sub_08063FEC(struct Mtx43 *mtx, s16 a)
 {
-    s16 c = sub_0801BAA8(a) >> 2;
-    int s = sub_0801BA4C(a);
+    s16 c = CosDegrees(a) >> 2;
+    int s = SinDegrees(a);
 
     mtx->m[0][0] = 0x1000;
     mtx->m[0][1] = 0;

@@ -19,7 +19,7 @@
 void sub_0801F050(void)
 {
     if (gUnknown_03001FE0)
-        sub_0801BCA8();
+        SyncHiOamNoCopy();
     else
         sub_0801E0F0();
 }

@@ -43,7 +43,7 @@ void sub_08066470(struct Unk08580934_Obj *obj)
                  Div(SIN_Q12(0) * 16, sx != 0 ? sx : 2),
                  Div(COS_Q12(0) * 16, sy != 0 ? sy : 2));
 
-    sub_0801BD00((obj->unk28 + 0x200) & 0x1ff, (obj->unk2a + 0x100) & 0xff,
+    PutOamHi((obj->unk28 + 0x200) & 0x1ff, (obj->unk2a + 0x100) & 0xff,
                  gUnknown_08580CFC[obj->unk1c], 0);
 
     gUnknown_08580934->unk70[obj->unk1c] = 0xff;

@@ -29,7 +29,7 @@ struct Unk03001470 *sub_08014668(int a, int b, u16 *c, u16 d, u16 e, u16 f)
     s = &gUnknown_0200C020;
     gUnknown_03002514 = 0;
     sub_080147B4(s, a, b, c, d, e, f);
-    sub_08014074(s);
+    TextWriterDisableDelay(s);
 
     return sub_080152EC(gUnknown_08489548, 0);
 }
@@ -45,7 +45,7 @@ struct Unk03001470 *sub_080146D4(int a, int b, u16 *c, u16 d, u16 e, u16 f)
     s = &gUnknown_0200C020;
     gUnknown_03002514 = 0;
     sub_080147B4(s, a, b, c, d, e, f);
-    sub_08014074(s);
+    TextWriterDisableDelay(s);
 
     return sub_080152EC(gUnknown_08489568, 0);
 }

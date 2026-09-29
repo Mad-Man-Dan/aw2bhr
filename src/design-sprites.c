@@ -120,7 +120,7 @@ void sub_080035C8(void)
         "and r0, r1\n\t"
         "mov r1, r4\n\t"
         "mov r2, r5\n\t"
-        "bl sub_0801BD00\n\t"
+        "bl PutOamHi\n\t"
         "movs r0, #17\n\t"
         "add r8, r0\n\t"
         "cmp r6, #3\n\t"

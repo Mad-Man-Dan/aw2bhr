@@ -36,7 +36,7 @@ void sub_0803BD78(void)
  * written straight back after, which is the whole reason r4 is pushed.
  *
  * The four zeroed bytes at 0x39..0x3c are spelled as unk38[1..4]: the array is
- * already proved by sub_08018C0C's variable index, and a constant index folds
+ * already proved by EventOp_SetArmyAiControlled's variable index, and a constant index folds
  * to the same displacement a separate scalar field would give, so this does
  * not disturb that model. */
 void sub_0803BDBC(void)

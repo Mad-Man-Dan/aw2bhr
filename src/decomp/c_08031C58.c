@@ -19,13 +19,13 @@ void sub_08031C58(void)
 
     n = (u16)(gUnknown_0849B060->unk0a / 10);
 
-    sub_0801BD00(0x66, 0x38, gUnknown_084C145E, 0x5010);
+    PutOamHi(0x66, 0x38, gUnknown_084C145E, 0x5010);
 
     if (n != 0)
-        sub_0801BD00(0x6e, 0x38, gUnknown_084C170C[n], 0x5010);
+        PutOamHi(0x6e, 0x38, gUnknown_084C170C[n], 0x5010);
 
     if (n != 10)
-        sub_0801BD00(n * 8 + 0x6e, 0x38, gUnknown_084C178C[10 - n], 0x5010);
+        PutOamHi(n * 8 + 0x6e, 0x38, gUnknown_084C178C[10 - n], 0x5010);
 
-    sub_0801BD00(0xbe, 0x38, gUnknown_084C1466, 0x5010);
+    PutOamHi(0xbe, 0x38, gUnknown_084C1466, 0x5010);
 }

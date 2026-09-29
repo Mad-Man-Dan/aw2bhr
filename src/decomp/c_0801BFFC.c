@@ -19,7 +19,7 @@ struct Unk1BFFCProc
     /* 30 */ u32 unk30;
 };
 
-void sub_0801BFFC(struct Unk1BFFCProc *proc, u32 a, u32 b)
+void MoveSpriteRefresher(struct Unk1BFFCProc *proc, u32 a, u32 b)
 {
     if (proc == NULL)
         proc = Proc_Find(gUnknown_0848B418);
@@ -27,3 +27,4 @@ void sub_0801BFFC(struct Unk1BFFCProc *proc, u32 a, u32 b)
     proc->unk2c = a;
     proc->unk30 = b;
 }
+asm(".global sub_0801BFFC\n.thumb_set sub_0801BFFC, MoveSpriteRefresher\n");

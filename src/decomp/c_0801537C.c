@@ -14,7 +14,7 @@
  * `(s8)i` under an `int` return rather than an `s8` return -- see the long note
  * on this declaration in include/unknown-functions.h. Both spellings emit the
  * same `lsls #0x18; asrs #0x18`; the `int` side was chosen because it is the
- * only one that makes `return sub_0801537C(g);` in sub_0801A168 valid C.
+ * only one that makes `return sub_0801537C(g);` in CloseTopMenu valid C.
  */
 int sub_0801537C(const void *a)
 {

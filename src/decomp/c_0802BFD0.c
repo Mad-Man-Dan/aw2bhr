@@ -53,7 +53,7 @@ void sub_0802BFD0(int a1)
 
     Decompress((u8 *)gUnknown_081248F8, (void *)0x06013940);
     ApplyPaletteExt((u16 *)gUnknown_08125190, 0x260, 0x20);
-    sub_0801C70C(gUnknown_08124FB8,
+    APProc_Create(gUnknown_08124FB8,
                  gUnknown_03003100.pos.unk00 * 16
                      - (s16)gMap->scrollX + 8,
                  gUnknown_03003100.pos.unk02 * 16

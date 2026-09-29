@@ -9,7 +9,7 @@
 
 /* The pool word is the symbol's ADDRESS, not its contents, so this compares a
  * pointer argument against the script itself -- the same object sub_0802C280
- * and sub_0802C290 hand to sub_080193B0 / sub_0801930C.
+ * and sub_0802C290 hand to StartEventScript / EndEventScript.
  */
 
 bool8 sub_0802C2A0(const u8 *a)

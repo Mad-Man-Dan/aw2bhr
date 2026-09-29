@@ -22,7 +22,7 @@ struct Unk40C88Proc
 
 void sub_08040C88(struct Unk40C88Proc *proc)
 {
-    sub_0801C240(proc->unk2c);
-    sub_0801C240(proc->unk34);
-    sub_0801C240(proc->unk38);
+    AP_Delete(proc->unk2c);
+    AP_Delete(proc->unk34);
+    AP_Delete(proc->unk38);
 }

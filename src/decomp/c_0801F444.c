@@ -12,7 +12,7 @@
  * graphics blob by the result -- i.e. where tile a1's graphics start.
  *
  * The `ldrh` at +8 is a (u16) READ of the `int` member, NOT evidence the member
- * is narrow: sub_0801F400's jump table returns the same six words as `int` and
+ * is narrow: GetTilePoolFirstGraphic's jump table returns the same six words as `int` and
  * that typing stays. Per the wave-38 brief, a diff that seems to demand a
  * different width for a member someone else already typed is evidence about the
  * ACCESS, so the cast lives here. */

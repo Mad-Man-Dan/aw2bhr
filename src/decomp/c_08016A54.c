@@ -10,7 +10,7 @@
 /* The two table loops clear one BITFIELD word per record -- three assignments,
  * `strb` / `and 0xFFF000FF` / `and 0xF` on the upper halfword -- see
  * struct Unk0200C078Rec in include/unknown-globals.h. */
-void sub_08016A54(void)
+void ResetProfileToDefaults(void)
 {
     int i, j;
 
@@ -46,11 +46,12 @@ void sub_08016A54(void)
     sub_0803C670();
     gUnknown_0200C420.unk08 = 0;
 }
+asm(".global sub_08016A54\n.thumb_set sub_08016A54, ResetProfileToDefaults\n");
 
 /* The inner bound is 4 in BOTH loops -- five words -- while the second table's
  * stride is only 8 bytes. That overrun is the original's bug; see
  * struct Unk08016B2C in include/unknown-globals.h. */
-int sub_08016B2C(void *arg)
+int PackProfileRecord(void *arg)
 {
     struct Unk08016B2C *p = arg;
     int i, j;
@@ -66,9 +67,10 @@ int sub_08016B2C(void *arg)
     sub_0808B6E8(p->unk4d0, &gUnknown_0202FDFC, 0xfc);
     return 0x5CC;
 }
+asm(".global sub_08016B2C\n.thumb_set sub_08016B2C, PackProfileRecord\n");
 
-/* sub_08016B2C's mirror, including its five-words-per-8-byte-row overrun. */
-int sub_08016BC0(void *arg)
+/* PackProfileRecord's mirror, including its five-words-per-8-byte-row overrun. */
+int UnpackProfileRecord(void *arg)
 {
     struct Unk08016B2C *p = arg;
     int i, j;
@@ -88,3 +90,4 @@ int sub_08016BC0(void *arg)
     sub_0808B6E8(&gUnknown_0202FDFC, p->unk4d0, 0xfc);
     return 0x5CC;
 }
+asm(".global sub_08016BC0\n.thumb_set sub_08016BC0, UnpackProfileRecord\n");

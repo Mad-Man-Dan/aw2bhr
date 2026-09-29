@@ -15,10 +15,11 @@ struct Unk723C0Proc
     /* 4c */ s32 unk4c;
 };
 
-void sub_080723C0(void)
+void RemoveFadeCoreCallBack(void)
 {
     struct Unk723C0Proc * proc = Proc_Find(gUnknown_08613EE4);
 
     if (proc != NULL)
         proc->unk4c = 0;
 }
+asm(".global sub_080723C0\n.thumb_set sub_080723C0, RemoveFadeCoreCallBack\n");

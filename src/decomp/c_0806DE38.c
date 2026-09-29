@@ -32,7 +32,7 @@ void sub_0806DE38(void)
 
     sub_0806DDF4();
 
-    scale = (sub_0801BA4C(((s16)gUnknown_08580934->unk2a * 16) % 360) >> 9) + 0x100;
+    scale = (SinDegrees(((s16)gUnknown_08580934->unk2a * 16) % 360) >> 9) + 0x100;
 
     SetObjAffine(0,
         Div(gSinLut[0x40] * 16, scale != 0 ? scale : 2),

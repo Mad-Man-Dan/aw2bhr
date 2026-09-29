@@ -29,5 +29,5 @@ struct Unk08027554Proc
 
 void sub_08027554(struct Unk08027554Proc *proc)
 {
-    sub_0801C240(proc->unk50);
+    AP_Delete(proc->unk50);
 }

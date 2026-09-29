@@ -33,32 +33,38 @@ struct Unk8613EC4Proc
     /* 64 */ u16 unk64;
 };
 
-void sub_08071EF0(int a)
+void StartFadeToBlackUnused(int a)
 {
     ((struct Unk8613E64Proc *)Proc_Start(gUnknown_08613E64, PROC_TREE_3))->unk64 = a;
 }
+asm(".global sub_08071EF0\n.thumb_set sub_08071EF0, StartFadeToBlackUnused\n");
 
-void sub_08071F0C(int a)
+void StartFadeFromBlackUnused(int a)
 {
     ((struct Unk8613E84Proc *)Proc_Start(gUnknown_08613E84, PROC_TREE_3))->unk64 = a;
 }
+asm(".global sub_08071F0C\n.thumb_set sub_08071F0C, StartFadeFromBlackUnused\n");
 
-void sub_08071F28(int a, ProcPtr parent)
+void StartLockingFadeToBlackUnused(int a, ProcPtr parent)
 {
     ((struct Unk8613E64Proc *)Proc_StartBlocking(gUnknown_08613E64, parent))->unk64 = a;
 }
+asm(".global sub_08071F28\n.thumb_set sub_08071F28, StartLockingFadeToBlackUnused\n");
 
-void sub_08071F40(int a, ProcPtr parent)
+void StartLockingFadeFromBlackUnused(int a, ProcPtr parent)
 {
     ((struct Unk8613E84Proc *)Proc_StartBlocking(gUnknown_08613E84, parent))->unk64 = a;
 }
+asm(".global sub_08071F40\n.thumb_set sub_08071F40, StartLockingFadeFromBlackUnused\n");
 
-void sub_08071F58(int a, ProcPtr parent)
+void StartLockingFadeToWhiteUnused(int a, ProcPtr parent)
 {
     ((struct Unk8613EA4Proc *)Proc_StartBlocking(gUnknown_08613EA4, parent))->unk64 = a;
 }
+asm(".global sub_08071F58\n.thumb_set sub_08071F58, StartLockingFadeToWhiteUnused\n");
 
-void sub_08071F70(int a, ProcPtr parent)
+void StartLockingFadeFromWhiteUnused(int a, ProcPtr parent)
 {
     ((struct Unk8613EC4Proc *)Proc_StartBlocking(gUnknown_08613EC4, parent))->unk64 = a;
 }
+asm(".global sub_08071F70\n.thumb_set sub_08071F70, StartLockingFadeFromWhiteUnused\n");

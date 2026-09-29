@@ -31,7 +31,7 @@ void SelectUnit_CB_080363D1(ProcPtr procArg)
 {
     struct Unk363D0Proc *proc = procArg;
 
-    sub_0801C240(proc->unk2c);
+    AP_Delete(proc->unk2c);
     sub_080364D4(proc->unk48);
     gUnknown_03003124[proc->unk3a] = 0;
 }

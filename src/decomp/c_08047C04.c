@@ -110,9 +110,9 @@ void sub_08047C04(struct Unk08047C04 * a)
     CpuFastSet(gUnknown_0200FC50, (void *)0x06014100, 0x10);
     sub_0801F114();
     sub_0801F150(0, (void *)0x06010000, 0x20A, 0x16);
-    sub_0801F234(1);
+    LoadTilePoolGraphic(1);
     sub_0801F150(1, (void *)0x06010000, 0x204, 0x14);
-    sub_0801F234(gPlayers[gUnknown_030033EC].teamColor + 0x3D);
+    LoadTilePoolGraphic(gPlayers[gUnknown_030033EC].teamColor + 0x3D);
     sub_08011C68(gUnknown_0812A2AC, (void *)0x06013940, 0x80);
     sub_0801B780(0);
     sub_08013C00();

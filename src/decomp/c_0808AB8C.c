@@ -63,7 +63,7 @@ bool8 sub_0808AB8C(void)
 
     REG_WAITCNT = (REG_WAITCNT & 0xFFFC) | 3;
 
-    flashId = sub_0808AAF4();
+    flashId = ReadFlashId();
 
     cursor = gUnknown_0848548C;
     result = TRUE;

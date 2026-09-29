@@ -7,20 +7,20 @@
  * sub_0803B414 @ 0x0803B414, PlayMusicOrSfx @ 0x0803B48C
  */
 
-/* Seven identical sub_08071420 calls over the 0x03005xxx object group, all
+/* Seven identical MPlayVolumeControl calls over the 0x03005xxx object group, all
  * with the same 0xFFFF mask and the same gUnknown_030005CC frame value. Both
  * shared arguments are materialised once and kept in r5/r4 for the whole run;
  * gUnknown_030005CC is RELOADED at each call because the callee may change it,
  * which is why only its address is hoisted. */
 void sub_0803B414(void)
 {
-    sub_08071420(gUnknown_03005B20, 0xFFFF, gUnknown_030005CC);
-    sub_08071420(gUnknown_03005C30, 0xFFFF, gUnknown_030005CC);
-    sub_08071420(gUnknown_03005BA0, 0xFFFF, gUnknown_030005CC);
-    sub_08071420(gUnknown_030059E0, 0xFFFF, gUnknown_030005CC);
-    sub_08071420(gUnknown_03005A60, 0xFFFF, gUnknown_030005CC);
-    sub_08071420(gUnknown_03005AA0, 0xFFFF, gUnknown_030005CC);
-    sub_08071420(gUnknown_03005BF0, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_03005B20, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_03005C30, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_03005BA0, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_030059E0, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_03005A60, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_03005AA0, 0xFFFF, gUnknown_030005CC);
+    MPlayVolumeControl(gUnknown_03005BF0, 0xFFFF, gUnknown_030005CC);
 }
 
 /* Guarded on gUnknown_030005CC being both non-zero and not 0x100 -- the two

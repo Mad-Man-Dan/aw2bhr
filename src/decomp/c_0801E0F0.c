@@ -8,7 +8,7 @@
  */
 
 /* Family F069: hide a run of OAM entries, then reset the matching counter.
- * sub_0801E0C8(a, n) is already promoted as `void (int, int)` and blanks `n`
+ * HideOamObjects(a, n) is already promoted as `void (int, int)` and blanks `n`
  * objects starting at object `a`, so the two literals are an OAM range and the
  * `strh 0` is the shadow counter for that range going back to empty.
  *
@@ -19,6 +19,6 @@
 
 void sub_0801E0F0(void)
 {
-    sub_0801E0C8(0, 0x80);
+    HideOamObjects(0, 0x80);
     gUnknown_03002B54 = 0;
 }

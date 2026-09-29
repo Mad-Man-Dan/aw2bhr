@@ -43,8 +43,8 @@ void sub_08074754(s16 id)
   {
     mode = 3;
   }
-  sprite = sub_0801C210(gUnknown_081D2930, 1, 1);
-  sub_0801C4D4(sprite, mode);
+  sprite = AP_Create(gUnknown_081D2930, 1, 1);
+  AP_SwitchAnimation(sprite, mode);
   p->unk08 = sprite;
  do { p->unk02 = r->flagX; p->unk04 = r->flagY; } while (0);
   p->unk00 = id;

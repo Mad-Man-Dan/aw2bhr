@@ -17,7 +17,7 @@
  * answer -1.
  *
  * If sub_08014BE8 allows it and START is down in gpKeySt->unk0c, the rest of the
- * box is skipped: gUnknown_03002514 is set, the text is handed to sub_080179D0
+ * box is skipped: gUnknown_03002514 is set, the text is handed to ClearTilemapRect23x4
  * and sub_08015328 restores the screen named by gUnknown_03001FBC. Otherwise
  * holding A while the delay is above 1 switches the delay off, so the remainder
  * appears at once.
@@ -73,14 +73,14 @@ void sub_08014400(struct Unk08014074 *s)
     if (sub_08014BE8() && (gpKeySt->unk0c & 8) && gUnknown_03002514 == 0)
     {
         gUnknown_03002514 = 1;
-        sub_080179D0(sub_08013D64(s));
+        ClearTilemapRect23x4(sub_08013D64(s));
         s->unk3c();
         sub_08015328(gUnknown_03001FBC);
         return;
     }
 
     if (s->unk3a > 1 && (gpKeySt->unk0c & 1))
-        sub_08014074(s);
+        TextWriterDisableDelay(s);
 
     t = ++s->unk39;
     if (t >= 0 && t < s->unk3a)

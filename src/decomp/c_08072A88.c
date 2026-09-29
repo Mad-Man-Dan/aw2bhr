@@ -22,7 +22,7 @@
  * `chr_block * 0x4000` and not `chr_block << 14`: the multiply is what
  * shorten_binary_op folds into the single `lsl #0xe` here. */
 
-void sub_08072A88(void)
+void Clear4bppFirstTm(void)
 {
     if (gUnknown_03002B6C.bits.color_depth == 0)
         sub_08001148((u16 *)(gUnknown_03002B6C.bits.chr_block * 0x4000 + 0x06000000), 0x10, 0);
@@ -36,3 +36,4 @@ void sub_08072A88(void)
     if (gUnknown_0300251C.bits.color_depth == 0)
         sub_08001148((u16 *)(gUnknown_0300251C.bits.chr_block * 0x4000 + 0x06000000), 0x10, 0);
 }
+asm(".global sub_08072A88\n.thumb_set sub_08072A88, Clear4bppFirstTm\n");

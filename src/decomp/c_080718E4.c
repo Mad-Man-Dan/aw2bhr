@@ -7,6 +7,7 @@
  * sub_080718E4 @ 0x080718E4
  */
 
-void sub_080718E4(void)
+void DummyFunc_rev(void)
 {
 }
+asm(".global sub_080718E4\n.thumb_set sub_080718E4, DummyFunc_rev\n");

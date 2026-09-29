@@ -7,10 +7,10 @@
  * sub_08070640 @ 0x08070640
  */
 
-/* m4aMPlayFadeInContinue. See sub_080703B8 for why the trailing ident store is
+/* m4aMPlayFadeInContinue. See MPlayContinue for why the trailing ident store is
  * needed even though it emits nothing.
  */
-void sub_08070640(struct MusicPlayerInfo * mplayInfo, u16 speed)
+void m4aMPlayFadeInContinue(struct MusicPlayerInfo * mplayInfo, u16 speed)
 {
     u32 ident = mplayInfo->ident;
 
@@ -23,3 +23,4 @@ void sub_08070640(struct MusicPlayerInfo * mplayInfo, u16 speed)
     mplayInfo->status &= ~MUSICPLAYER_STATUS_PAUSE;
     mplayInfo->ident = ident;
 }
+asm(".global sub_08070640\n.thumb_set sub_08070640, m4aMPlayFadeInContinue\n");

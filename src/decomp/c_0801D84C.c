@@ -7,7 +7,7 @@
  * sub_0801D84C @ 0x0801D84C, sub_0801D8B4 @ 0x0801D8B4
  */
 
-void sub_0801D84C(int a1)
+void FreeSpriteScript(int a1)
 {
     int i;
 
@@ -25,8 +25,9 @@ void sub_0801D84C(int a1)
         }
     }
 }
+asm(".global sub_0801D84C\n.thumb_set sub_0801D84C, FreeSpriteScript\n");
 
-void sub_0801D8B4(void)
+void ClearAllSpriteScripts(void)
 {
     int i;
 
@@ -37,3 +38,4 @@ void sub_0801D8B4(void)
 
     sub_0801DA94();
 }
+asm(".global sub_0801D8B4\n.thumb_set sub_0801D8B4, ClearAllSpriteScripts\n");

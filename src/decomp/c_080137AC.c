@@ -11,10 +11,10 @@
 
 /* Unpacks the whole 32-row palette into the three-bytes-per-colour channel
  * shadow, biasing every channel by +0x20, and arms every row with `delta` so
- * sub_080139E0 fades them. The bias is the headroom the fade clamps against:
+ * ColFadeTick fades them. The bias is the headroom the fade clamps against:
  * a channel may be driven up to 0x20 below or above its 5-bit range before
- * sub_080139E0 subtracts the 0x20 back off and saturates. */
-void sub_080137AC(s8 delta)
+ * ColFadeTick subtracts the 0x20 back off and saturates. */
+void ColFadeToBlack(s8 delta)
 {
     int i, j;
 
@@ -29,10 +29,11 @@ void sub_080137AC(s8 delta)
         }
     }
 }
+asm(".global sub_080137AC\n.thumb_set sub_080137AC, ColFadeToBlack\n");
 
-/* sub_080137AC with no bias: the channel shadow is seeded with the raw 5-bit
+/* ColFadeToBlack with no bias: the channel shadow is seeded with the raw 5-bit
  * components, so the fade saturates at 0 immediately in the dark direction. */
-void sub_08013830(s8 delta)
+void ColFadeFromBlack(s8 delta)
 {
     int i, j;
 
@@ -47,8 +48,9 @@ void sub_08013830(s8 delta)
         }
     }
 }
+asm(".global sub_08013830\n.thumb_set sub_08013830, ColFadeFromBlack\n");
 
-/* The one-row form of sub_080137AC. The loop counter is s8, not int: it is
+/* The one-row form of ColFadeToBlack. The loop counter is s8, not int: it is
  * kept as a byte and sign-extended at both the use and the exit test
  * (`lsls #0x18` feeding a `lsrs` for the variable and an `asrs` for the
  * compare), which an int counter would not produce. */
@@ -81,7 +83,7 @@ void sub_08013928(int a1)
 
 /* sub_080138B0 with twice the bias, giving the fade 0x40 of headroom instead
  * of 0x20 -- the brighten direction, where a channel has to travel further
- * before sub_080139E0's clamp lets it show. */
+ * before ColFadeTick's clamp lets it show. */
 void sub_0801394C(u8 row, s8 delta)
 {
     s8 i;
@@ -119,7 +121,7 @@ void sub_080139C4(s32 delta)
  * The clamp is one s16 local per channel, not a mask: the ROM keeps the value
  * in a u16 (`lsrs #0x10`) and compares the sign-extended s16 (`asrs #0x10`),
  * which is just how agbcc holds an s16 across a compare. */
-void sub_080139E0(void)
+void ColFadeTick(void)
 {
     int i, j;
     s16 r, g, b;
@@ -154,3 +156,4 @@ void sub_080139E0(void)
     }
     sub_080135A4();
 }
+asm(".global sub_080139E0\n.thumb_set sub_080139E0, ColFadeTick\n");

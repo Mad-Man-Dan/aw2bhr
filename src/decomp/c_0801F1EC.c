@@ -18,7 +18,7 @@ void sub_0801F1EC(int a1, int a2)
     struct Unk0200F920 *e;
     int i;
 
-    e = &gUnknown_0200F920[sub_0801F3D4(a1)];
+    e = &gUnknown_0200F920[GetTilePoolForGraphic(a1)];
     for (i = 0; i < e->unk05; i++) {
         if (e->unk08[i].unk02 == a1) {
             sub_0801F19C(a2, e->unk00, e->unk08[i].unk00);

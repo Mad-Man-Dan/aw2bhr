@@ -10,7 +10,7 @@
 /*
  * sub_08017C4C -- clear a slot's callback once its script has finished.
  *
- * Installed as the callback by sub_08017C70 and sub_08017CB0 below.
+ * Installed as the callback by EventOp_ScrollCameraKeepInView and EventOp_ScrollCameraToCenter below.
  * sub_08015BD0 searches the gUnknown_03001470 slots for the one running the
  * gUnknown_0849A00C script; when there is none (-1) this slot's .unk08 is
  * cleared, which stops the callback being called again. sub_08017ABC is the
@@ -26,7 +26,7 @@ void sub_08017C4C(struct Unk0200C528 *slot)
 }
 
 /*
- * sub_08017C70 -- script command: pass the current node's x/y to sub_08029088.
+ * EventOp_ScrollCameraKeepInView -- script command: pass the current node's x/y to sub_08029088.
  *
  * gUnknown_0200C528[a].unk04 is the slot's cursor into its list of script
  * nodes. The node's .unk08 and .unk0a go to sub_08029088 as a signed pair,
@@ -39,7 +39,7 @@ void sub_08017C4C(struct Unk0200C528 *slot)
  * header is left alone. The slot's callback field is itself declared as a node
  * pointer, hence the cast on sub_08017C4C.
  */
-bool8 sub_08017C70(s16 a)
+bool8 EventOp_ScrollCameraKeepInView(s16 a)
 {
     struct Unk0200C528Node *p = gUnknown_0200C528[a].unk04;
 
@@ -48,10 +48,11 @@ bool8 sub_08017C70(s16 a)
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }
+asm(".global sub_08017C70\n.thumb_set sub_08017C70, EventOp_ScrollCameraKeepInView\n");
 
-/* sub_08017CB0 -- sub_08017C70 above with sub_0802909C in place of
+/* EventOp_ScrollCameraToCenter -- EventOp_ScrollCameraKeepInView above with sub_0802909C in place of
  * sub_08029088. */
-bool8 sub_08017CB0(s16 a)
+bool8 EventOp_ScrollCameraToCenter(s16 a)
 {
     struct Unk0200C528Node *p = gUnknown_0200C528[a].unk04;
 
@@ -60,6 +61,7 @@ bool8 sub_08017CB0(s16 a)
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }
+asm(".global sub_08017CB0\n.thumb_set sub_08017CB0, EventOp_ScrollCameraToCenter\n");
 
 /*
  * sub_08017CF0 -- script command: run sub_08017A80 unless gUnknown_03002514 is 1.
@@ -88,10 +90,10 @@ s16 sub_08017CF0(s16 a)
 }
 
 /*
- * sub_08017D30 -- sub_08017CF0 above, over sub_08017A58 instead of
+ * sub_08017D30 -- sub_08017CF0 above, over EventOp_Wait instead of
  * sub_08017A80.
  *
- * It is also what settles this family's return type: it passes sub_08017A58's
+ * It is also what settles this family's return type: it passes EventOp_Wait's
  * result straight on and sign-extends it as a halfword, which a bool8 callee
  * could not produce. See the note in include/unknown-functions.h. Same inverted
  * arms as sub_08017CF0.
@@ -99,7 +101,7 @@ s16 sub_08017CF0(s16 a)
 s16 sub_08017D30(s16 a)
 {
     if (gUnknown_03002514 != 1)
-        return sub_08017A58(a);
+        return EventOp_Wait(a);
     else
     {
         gUnknown_0200C528[a].unk04++;

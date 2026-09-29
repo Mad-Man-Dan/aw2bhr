@@ -16,7 +16,7 @@
  * directly reproduces the function exactly, including the `ldr r1, [r1]` reload
  * before unk04: what stays live in r1 is the POOL WORD's address, so each use
  * re-loads the object address through it. */
-void sub_080176C0(u32 a)
+void AddBattleMapPoints(u32 a)
 {
     if (0x270f - gUnknown_0200C420.unk00 < a)
         gUnknown_0200C420.unk00 = 0x270f;
@@ -28,3 +28,4 @@ void sub_080176C0(u32 a)
     else
         gUnknown_0200C420.unk04 += a;
 }
+asm(".global sub_080176C0\n.thumb_set sub_080176C0, AddBattleMapPoints\n");

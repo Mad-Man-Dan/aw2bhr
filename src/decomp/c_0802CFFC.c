@@ -22,7 +22,7 @@
 void sub_0802CFFC(void)
 {
     LockUnitSelection();
-    sub_0801A168();
+    CloseTopMenu();
     sub_0802C57C();
     sub_080424FC();
     sub_0802C594();

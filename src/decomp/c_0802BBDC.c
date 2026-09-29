@@ -8,7 +8,7 @@
  */
 
 /* The two sub_0802BD54 arguments carry an explicit (u16) cast and the two
- * sub_0801BD00 ones do not -- the ROM truncates the first pair with
+ * PutOamHi ones do not -- the ROM truncates the first pair with
  * `lsls #0x10; lsrs #0x10` (fused into the `0x8c << 0xf` add on the first,
  * which reuses the a1 << 16 still live in r0) and leaves the second pair
  * alone. sub_0802BD54's first parameter is declared int; the cast reproduces
@@ -19,7 +19,7 @@ void sub_0802BBDC(s16 a1)
 {
     sub_0802BD54((u16)(a1 + 0x46), 5, gPlayers[gUnknown_030033EC].funds);
     sub_0802BD54((u16)(a1 + 0xe), 5, gUnknown_03004080);
-    sub_0801BD00(a1 + 0x16, 5, gUnknown_0849A3B8, 0x700A);
-    sub_0801BD00(a1 + 0x4e, 6, gUnknown_0849A3B8, 0x700B);
+    PutOamHi(a1 + 0x16, 5, gUnknown_0849A3B8, 0x700A);
+    PutOamHi(a1 + 0x4e, 6, gUnknown_0849A3B8, 0x700B);
     gUnknown_030033F0 = 1;
 }

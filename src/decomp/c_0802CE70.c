@@ -22,6 +22,6 @@
 void sub_0802CE70(int a1, u8 a2)
 {
     gUnknown_030044A0 = a2;
-    sub_0801A168();
+    CloseTopMenu();
     sub_08019940(gUnknown_030033EC, 8);
 }

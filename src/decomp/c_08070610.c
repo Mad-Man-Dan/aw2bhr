@@ -7,7 +7,8 @@
  * sub_08070610 @ 0x08070610
  */
 
-void sub_08070610(void *a1, u16 a2)
+void m4aMPlayFadeOut(void *a1, u16 a2)
 {
-    sub_080703D4(a1, a2);
+    MPlayFadeOut(a1, a2);
 }
+asm(".global sub_08070610\n.thumb_set sub_08070610, m4aMPlayFadeOut\n");

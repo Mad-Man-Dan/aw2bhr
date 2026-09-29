@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08014074 -- switch the text writer's per-character delay off.
+ * TextWriterDisableDelay -- switch the text writer's per-character delay off.
  *
  * unk3a is the delay in frames and unk39 the counter that runs it. With unk3a at
  * 0 and unk39 at -2, sub_08014400's loop never waits and the rest of the text
@@ -17,8 +17,9 @@
  * sub_080147B4 the routine that fills one in.
  */
 
-void sub_08014074(struct Unk08014074 *s)
+void TextWriterDisableDelay(struct Unk08014074 *s)
 {
     s->unk3a = 0;
     s->unk39 = -2;
 }
+asm(".global sub_08014074\n.thumb_set sub_08014074, TextWriterDisableDelay\n");

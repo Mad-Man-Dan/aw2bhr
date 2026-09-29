@@ -86,7 +86,7 @@ void sub_080360D0(ProcPtr procArg)
             }
             if ((s16)cmd != proc->unk38)
             {
-                sub_0801C4D4(proc->unk2c, (s16)cmd);
+                AP_SwitchAnimation(proc->unk2c, (s16)cmd);
                 proc->unk38 = cmd;
                 proc->unk35 = 2;
             }
@@ -99,7 +99,7 @@ void sub_080360D0(ProcPtr procArg)
             cmd = (u32)(cmd * 0x10000 + 0xfffb0000) >> 16;
             if ((s16)cmd != proc->unk38)
             {
-                sub_0801C4D4(proc->unk2c, (s16)cmd);
+                AP_SwitchAnimation(proc->unk2c, (s16)cmd);
                 proc->unk38 = cmd;
             }
             break;

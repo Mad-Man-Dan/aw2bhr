@@ -19,10 +19,10 @@ void sub_0802BAFC(u16 a1, u16 a2, int a3)
 {
     int d;
 
-    sub_0801BD00(a1 & 0x1ff, a2 | 0x400, gUnknown_0849A3B8,
+    PutOamHi(a1 & 0x1ff, a2 | 0x400, gUnknown_0849A3B8,
                  (s16)((s16)a3 % 10) + 0x10);
     d = (s16)((s16)a3 / 10);
 
     if (d != 0)
-        sub_0801BD00((a1 - 7) & 0x1ff, a2 | 0x400, gUnknown_0849A3B8, d + 0x10);
+        PutOamHi((a1 - 7) & 0x1ff, a2 | 0x400, gUnknown_0849A3B8, d + 0x10);
 }

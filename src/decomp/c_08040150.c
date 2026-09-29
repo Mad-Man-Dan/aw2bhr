@@ -45,7 +45,7 @@ void sub_08040150(struct Unk40150Proc *proc)
     int dx;
     int dy;
 
-    if (!sub_0801C254(proc->unk50,
+    if (!AP_Update(proc->unk50,
                       proc->unk2c * 16
                           - (dx = gMap->scrollX - 8),
                       proc->unk30 * 16

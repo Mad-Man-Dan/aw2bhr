@@ -12,9 +12,9 @@
 void sub_0801F084(void)
 {
     if (gUnknown_03001FE0) {
-        sub_0801BF2C(0);
-        sub_0801BF2C(5);
-        sub_0801BE78();
+        PushSpriteLayerObjects(0);
+        PushSpriteLayerObjects(5);
+        ClearSprites();
     } else {
         sub_0801EE10();
     }

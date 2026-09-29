@@ -23,10 +23,10 @@ void sub_08080DFC(void)
 
 void sub_08080E40(ProcPtr proc)
 {
-    sub_08071B0C(0, 0x10, proc);
-    sub_08071B0C(8, 0x10, proc);
-    sub_08071B0C(0x10, 0x10, proc);
-    sub_08071B0C(0x11, 0x10, proc);
+    StartPalFadeToWhite(0, 0x10, proc);
+    StartPalFadeToWhite(8, 0x10, proc);
+    StartPalFadeToWhite(0x10, 0x10, proc);
+    StartPalFadeToWhite(0x11, 0x10, proc);
 }
 
 void StartCoPowerScript(int a, int b, ProcPtr proc)

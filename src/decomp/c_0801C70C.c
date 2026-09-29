@@ -14,11 +14,11 @@
 #include "proc.h"
 /* SIX parameters -- four in registers and two on the stack ([sp,#0x18] and
  * [sp,#0x1c] past the six pushed registers). Only the last is narrow: it
- * arrives `lsls #0x10; lsrs #0x10` on its way to sub_0801C210's u16 second
+ * arrives `lsls #0x10; lsrs #0x10` on its way to AP_Create's u16 second
  * parameter.
  *
  * The `(void *)` cast on a1 is the price of the declared `const void *` first
- * parameter meeting sub_0801C210's `void *`; it is byte-neutral and keeps the
+ * parameter meeting AP_Create's `void *`; it is byte-neutral and keeps the
  * ROM blobs its callers pass from having to drop const.
  *
  * It ends `pop {r1}; bx r1`, i.e. it returns a value, and the value is
@@ -32,7 +32,7 @@ struct Unk0801C70CProc
     /* 54 */ int unk54;
     /* 58 */ int unk58;
 };
-/* The per-frame callback of the ProcScr_WaitForLaser proc sub_0801C70C starts:
+/* The per-frame callback of the ProcScr_WaitForLaser proc APProc_Create starts:
  * the three fields it reads (+0x50, +0x54, +0x58) are exactly the three that
  * function writes, which is what pins the parameter as that proc and fixes the
  * struct below. */
@@ -45,13 +45,13 @@ struct Unk0801C754Proc
     /* 58 */ int unk58;
 };
 
-int sub_0801C70C(const void *a1, int a2, int a3, int a4, int a5, u16 a6)
+int APProc_Create(const void *a1, int a2, int a3, int a4, int a5, u16 a6)
 {
     struct Unk0801C210 *h;
     struct Unk0801C70CProc *proc;
 
-    h = sub_0801C210((void *)a1, a6, 1);
-    sub_0801C4D4(h, a5);
+    h = AP_Create((void *)a1, a6, 1);
+    AP_SwitchAnimation(h, a5);
     h->unk22 = a4;
 
     proc = Proc_Start(ProcScr_WaitForLaser, PROC_TREE_3);
@@ -61,10 +61,11 @@ int sub_0801C70C(const void *a1, int a2, int a3, int a4, int a5, u16 a6)
 
     return (int)proc;
 }
+asm(".global sub_0801C70C\n.thumb_set sub_0801C70C, APProc_Create\n");
 
 void WaitForLaser_IDLE_0801C755(struct Unk0801C754Proc *proc)
 {
-    if (sub_0801C254(proc->unk50, proc->unk54, proc->unk58) == 0)
+    if (AP_Update(proc->unk50, proc->unk54, proc->unk58) == 0)
     {
         if (proc->unk50 == NULL || proc->unk50->unk00 == NULL)
             Proc_End(proc);

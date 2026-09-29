@@ -67,7 +67,7 @@ void sub_08039C70(struct Unk39C70Proc *proc)
     y = (proc->unk2a << 4) - gMap->scrollY + 8;
 
     if ((u8)sub_0801306C(x, y, 0x40))
-        sub_0801BD00((x & 0x1ff) | (proc->unk32 << 9),
+        PutOamHi((x & 0x1ff) | (proc->unk32 << 9),
                      (y & 0xff) | 0x100,
                      gUnknown_0849D824, proc->unk2c);
 }

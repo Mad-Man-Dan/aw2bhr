@@ -9,7 +9,7 @@
 
 void sub_08005154(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_08487E8C, 0);
     gActiveMap->state = 7;
     sub_08024268();

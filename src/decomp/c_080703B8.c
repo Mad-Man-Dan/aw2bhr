@@ -13,7 +13,7 @@
  * point in this file re-stamps ident on the way out; the ones that touch tracks
  * bump it first, and here the bump is absent so only the liveness survives.
  */
-void sub_080703B8(struct MusicPlayerInfo * mplayInfo)
+void MPlayContinue(struct MusicPlayerInfo * mplayInfo)
 {
     u32 ident = mplayInfo->ident;
 
@@ -23,11 +23,12 @@ void sub_080703B8(struct MusicPlayerInfo * mplayInfo)
     mplayInfo->status &= ~MUSICPLAYER_STATUS_PAUSE;
     mplayInfo->ident = ident;
 }
+asm(".global sub_080703B8\n.thumb_set sub_080703B8, MPlayContinue\n");
 
-/* m4aMPlayFadeOut. See sub_080703B8 for why the trailing ident store is needed
+/* m4aMPlayFadeOut. See MPlayContinue for why the trailing ident store is needed
  * even though it emits nothing.
  */
-void sub_080703D4(struct MusicPlayerInfo * mplayInfo, u16 speed)
+void MPlayFadeOut(struct MusicPlayerInfo * mplayInfo, u16 speed)
 {
     u32 ident = mplayInfo->ident;
 
@@ -39,3 +40,4 @@ void sub_080703D4(struct MusicPlayerInfo * mplayInfo, u16 speed)
     mplayInfo->fadeOV = (64 << FADE_VOL_SHIFT);
     mplayInfo->ident = ident;
 }
+asm(".global sub_080703D4\n.thumb_set sub_080703D4, MPlayFadeOut\n");

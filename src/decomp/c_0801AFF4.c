@@ -22,7 +22,7 @@
  * materialised AFTER the `bl` into a caller-saved register; the ROM computes it
  * first and keeps it in r4 across the call, which costs the r4 push/pop pair
  * the two spellings differ by. */
-void sub_0801AFF4(void)
+void DetectFlash(void)
 {
     u8 *p = &gUnknown_0200CD0C;
 
@@ -33,3 +33,4 @@ void sub_0801AFF4(void)
     else
         *p = 0;
 }
+asm(".global sub_0801AFF4\n.thumb_set sub_0801AFF4, DetectFlash\n");

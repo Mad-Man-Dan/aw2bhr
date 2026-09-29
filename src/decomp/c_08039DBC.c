@@ -64,7 +64,7 @@ void sub_08039DBC(struct Unk39DBCProc *proc)
                          (proc->unk2a << 4) - gMap->scrollY,
                          0x40))
     {
-        sub_0801BD00(((proc->unk29 << 4) - gMap->scrollX + 8) & 0x1ff,
+        PutOamHi(((proc->unk29 << 4) - gMap->scrollX + 8) & 0x1ff,
                      ((proc->unk2a << 4) - gMap->scrollY + 8) & 0xff,
                      gUnknown_0849D81C,
                      proc->unk2c);

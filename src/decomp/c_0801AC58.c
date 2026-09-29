@@ -45,7 +45,7 @@ struct Unk1AC58Buf
 };
 #define BUF ((struct Unk1AC58Buf *)gUnknown_02002000)
 
-int sub_0801AC58(u8 id, u8 *a2)
+int ReadSaveSlot(u8 id, u8 *a2)
 {
     u8 tmp[0x10];
     int i;
@@ -66,7 +66,7 @@ int sub_0801AC58(u8 id, u8 *a2)
     {
         if (id == gUnknown_0200CC38.unk00[i])
         {
-            if (sub_0801B018(i) != 0)
+            if (ReadAndValidateSaveSector(i) != 0)
                 return 1;
 
             for (j = 0; j < BUF->unk050; j++)
@@ -88,3 +88,4 @@ int sub_0801AC58(u8 id, u8 *a2)
 
     return 0;
 }
+asm(".global sub_0801AC58\n.thumb_set sub_0801AC58, ReadSaveSlot\n");

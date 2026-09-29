@@ -74,9 +74,9 @@ void sub_08040EF4(struct Unk40EF4Proc *proc)
   u = (((s16) d) + base) & 0xff;
   v = (((s16) ((proc->unk46 - 0x14) * 2)) + base) & 0xff;
   proc += 0;
-  sub_0801C254(proc->unk2c, x | 0x200, new_var | 0x100);
-  sub_0801C254(proc->unk38, x | 0x600, u | 0x100);
-  sub_0801C254(proc->unk34, x | 0x400, v | 0x100);
+  AP_Update(proc->unk2c, x | 0x200, new_var | 0x100);
+  AP_Update(proc->unk38, x | 0x600, u | 0x100);
+  AP_Update(proc->unk34, x | 0x400, v | 0x100);
   SetObjAffine(3, Div(gSinLut[0x40] * 16, 0x100), Div((-gSinLut[0]) * 16, (s != 0) ? (s) : (2)), Div(gSinLut[0] * 16, 0x100), Div(gSinLut[0x40] * 16, (s != 0) ? (s) : (2)));
   sub_0802BD54(x, new_var - 0xc, 0x14 - proc->unk46);
 }

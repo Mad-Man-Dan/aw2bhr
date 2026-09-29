@@ -18,7 +18,7 @@
  * block PAST the fallthrough FALSE, which puts the literal pool between the
  * `movs #0` and the `movs #1`. That is exactly the ROM's order. The `||`
  * inside one `if` produces the opposite arrangement. */
-bool8 sub_080116A0(void)
+bool8 FadeExists(void)
 {
     if (Proc_Find(ProcScr_FadeLoadMap))
         return TRUE;
@@ -34,3 +34,4 @@ bool8 sub_080116A0(void)
 
     return FALSE;
 }
+asm(".global sub_080116A0\n.thumb_set sub_080116A0, FadeExists\n");

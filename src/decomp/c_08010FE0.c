@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* The 0x08011 counterpart of sub_08071E80: sub_08010FA0 (src/decomp) sets the
+/* The 0x08011 counterpart of FadeToWhite_OnInit: sub_08010FA0 (src/decomp) sets the
  * full target1 mask and clears the coefficients, then this overrides the blend
  * effect and seeds BLDY at 0x10 before kicking sub_080128D0.
  *

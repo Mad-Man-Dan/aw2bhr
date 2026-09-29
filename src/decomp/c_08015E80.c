@@ -27,7 +27,7 @@
 
 bool8 sub_08015E80(u8 i)
 {
-    sub_080193B0(*(const u8 **)gUnknown_03001470[i].unk04);
+    StartEventScript(*(const u8 **)gUnknown_03001470[i].unk04);
     gUnknown_03001470[i].unk04 = (const u8 *)gUnknown_03001470[i].unk04 + 8;
     return 1;
 }

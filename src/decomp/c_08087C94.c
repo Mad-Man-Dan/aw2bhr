@@ -128,25 +128,25 @@ void CoDesignC1_08087C95(struct Unk87C94Proc *proc)
     sub_0801F150(1, (void *)0x06010000, 0x2d8, 0x1b);
     sub_0801F150(2, (void *)0x06010000, 0x2ec, 0x1c);
 
-    sub_0801F234(0x3e);
-    sub_0801F234(0x3f);
-    sub_0801F234(0x40);
-    sub_0801F234(0x41);
-    sub_0801F234(0x42);
-    sub_0801F234(0x43);
-    sub_0801F234(0x44);
-    sub_0801F234(0x48);
-    sub_0801F234(0x49);
-    sub_0801F234(0x4f);
-    sub_0801F234(0x83);
-    sub_0801F234(0x84);
-    sub_0801F234(0x85);
-    sub_0801F234(0x86);
-    sub_0801F234(0x87);
-    sub_0801F234(0x88);
-    sub_0801F234(0x89);
-    sub_0801F234(0x8a);
-    sub_0801F234(0x8b);
+    LoadTilePoolGraphic(0x3e);
+    LoadTilePoolGraphic(0x3f);
+    LoadTilePoolGraphic(0x40);
+    LoadTilePoolGraphic(0x41);
+    LoadTilePoolGraphic(0x42);
+    LoadTilePoolGraphic(0x43);
+    LoadTilePoolGraphic(0x44);
+    LoadTilePoolGraphic(0x48);
+    LoadTilePoolGraphic(0x49);
+    LoadTilePoolGraphic(0x4f);
+    LoadTilePoolGraphic(0x83);
+    LoadTilePoolGraphic(0x84);
+    LoadTilePoolGraphic(0x85);
+    LoadTilePoolGraphic(0x86);
+    LoadTilePoolGraphic(0x87);
+    LoadTilePoolGraphic(0x88);
+    LoadTilePoolGraphic(0x89);
+    LoadTilePoolGraphic(0x8a);
+    LoadTilePoolGraphic(0x8b);
 
     Proc_Start(ProcScr_PutFace, proc);
 }

@@ -10,7 +10,7 @@
 #include "hardware.h"
 
 /*
- * sub_08019404 -- run one gUnknown_0200C528 slot's script for this frame.
+ * StepEventScriptSlot -- run one gUnknown_0200C528 slot's script for this frame.
  *
  * Gives up if the slot holds no script, if a callback is installed, or if the
  * cursor is NULL. A nonzero delay counter is decremented here, one per frame,
@@ -28,7 +28,7 @@
  * tested twice, before and after the callback test, as the original does; the
  * store to .unk0c in between is what stops the compiler merging the two reads.
  */
-void sub_08019404(s16 a)
+void StepEventScriptSlot(s16 a)
 {
     if (gUnknown_0200C528[a].unk00 == NULL)
         return;
@@ -47,14 +47,15 @@ void sub_08019404(s16 a)
     while (gUnknown_0848A244[gUnknown_0200C528[a].unk04->filler_00[0]](a) != 0)
         ;
 }
+asm(".global sub_08019404\n.thumb_set sub_08019404, StepEventScriptSlot\n");
 
 /*
- * sub_08019470 -- run the whole gUnknown_0200C528 script system for one frame.
+ * RunEventScripts -- run the whole gUnknown_0200C528 script system for one frame.
  *
  * Does nothing while sub_08017988 reports the system busy. Otherwise
  * gUnknown_03002EF0 is cleared and each of the ten slots that holds a script
  * gets its callback run, if it has one, and then its script stepped by
- * sub_08019404 above. Afterwards, when gUnknown_03001404 is set, all four key
+ * StepEventScriptSlot above. Afterwards, when gUnknown_03001404 is set, all four key
  * words in gpKeySt are forced to gUnknown_03002EF0 and two more globals are
  * cleared -- so a running script can feed a button state to the rest of the
  * game by writing that global.
@@ -68,7 +69,7 @@ void sub_08019404(s16 a)
  * same reason -- the original reads it as a signed halfword, and a `(s16)` cast
  * on a u16 global would fold away at a zero test.
  */
-void sub_08019470(void)
+void RunEventScripts(void)
 {
     s16 i;
 
@@ -83,7 +84,7 @@ void sub_08019470(void)
         {
             if (gUnknown_0200C528[i].unk08 != NULL)
                 ((void (*)(struct Unk0200C528 *))gUnknown_0200C528[i].unk08)(&gUnknown_0200C528[i]);
-            sub_08019404(i);
+            StepEventScriptSlot(i);
         }
     }
 
@@ -97,3 +98,4 @@ void sub_08019470(void)
         gUnknown_03004518 = 0;
     }
 }
+asm(".global sub_08019470\n.thumb_set sub_08019470, RunEventScripts\n");

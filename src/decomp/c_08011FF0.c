@@ -10,7 +10,7 @@
 /* The gUnknown_0200B3B4 deferred-copy queue DRAIN, the consumer for the six
  * pushes promoted in src/decomp/c_08011D10.c. It walks the queue backwards --
  * `for (count--; (s16)count >= 0; count--)` -- and dispatches on the tag at
- * +0x0a, then clears the queue with sub_08011C18 and blanks palette entry 0.
+ * +0x0a, then clears the queue with ClearTileRigistry and blanks palette entry 0.
  *
  * BOTH DATA REFS ARE agbcc -fforce-addr ADDRESS CONSTANTS, not globals:
  *   [0x0808E51C] = 0x03002F30 -> gUnknown_03002F30
@@ -71,6 +71,6 @@ void sub_08011FF0(void)
         }
     }
 
-    sub_08011C18();
+    ClearTileRigistry();
     *(vu16 *)0x05000000 = 0;
 }

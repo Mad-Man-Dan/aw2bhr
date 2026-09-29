@@ -17,16 +17,17 @@
  * the counter is a fresh preheader register counting down to a `bne`. Writing
  * the countdown in the source instead (`while (height > 0) ... height--`)
  * guards on the counter and exits with `bgt`. */
-void sub_080729EC(const void *src, void *dst, int width, int height)
+void VramCopyInRaw(const void *src, void *dst, int width, int height)
 {
     int size = width * 0x20;
     int i;
 
     for (i = 0; i < height; i++)
     {
-        sub_08012F6C(src, dst, size);
+        VramCopy(src, dst, size);
 
         src = (const u8 *) src + size;
         dst = (u8 *) dst + 0x400;
     }
 }
+asm(".global sub_080729EC\n.thumb_set sub_080729EC, VramCopyInRaw\n");

@@ -8,12 +8,12 @@
  */
 
 /* m4aMPlayAllContinue -- MPlayContinue on every entry of the player table.
- * Free transcription of sub_080705AC with sub_080703B8 as the callee; the two
- * are byte-identical once the `bl` target is normalised. See sub_080705AC and
+ * Free transcription of m4aMPlayAllStop with MPlayContinue as the callee; the two
+ * are byte-identical once the `bl` target is normalised. See m4aMPlayAllStop and
  * the gNumMusicPlayers comment in include/unknown-globals.h for why the count
  * is an absolute symbol and not the literal 11.
  */
-void sub_080705E4(void)
+void m4aMPlayAllContinue(void)
 {
     const struct MusicPlayer * p;
     u32 i;
@@ -29,9 +29,10 @@ void sub_080705E4(void)
 
     do
     {
-        sub_080703B8(p->info);
+        MPlayContinue(p->info);
         p++;
         i--;
     }
     while (i != 0);
 }
+asm(".global sub_080705E4\n.thumb_set sub_080705E4, m4aMPlayAllContinue\n");

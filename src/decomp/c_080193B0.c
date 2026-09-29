@@ -8,12 +8,12 @@
  */
 
 /*
- * sub_080193B0 -- start a script in a free gUnknown_0200C528 slot.
+ * StartEventScript -- start a script in a free gUnknown_0200C528 slot.
  *
  * Runs the three openers sub_08013D40, sub_08017E74 and sub_080198AC, asks
- * sub_08019290 for a free slot, and seeds it: both .unk00 and .unk04 point at
+ * FindEventScriptSlot for a free slot, and seeds it: both .unk00 and .unk04 point at
  * `script`, with no callback and a zero counter. Returns the slot, or NULL when
- * sub_08019290 reports -1.
+ * FindEventScriptSlot reports -1.
  *
  * Why the C looks odd: the slot index is held in two locals of different
  * signedness off the one call result. `r` is what the `== -1` test reads and
@@ -21,7 +21,7 @@
  * original keeps both a sign-extended and a zero-extended copy of that result,
  * and one local can only produce one of them, whatever it is cast to.
  */
-struct Unk0200C528 *sub_080193B0(const u8 *script)
+struct Unk0200C528 *StartEventScript(const u8 *script)
 {
     s16 r;
     u16 idx;
@@ -30,7 +30,7 @@ struct Unk0200C528 *sub_080193B0(const u8 *script)
     sub_08017E74();
     sub_080198AC();
 
-    r = sub_08019290(NULL);
+    r = FindEventScriptSlot(NULL);
     idx = r;
 
     if (r == -1)
@@ -43,3 +43,4 @@ struct Unk0200C528 *sub_080193B0(const u8 *script)
 
     return &gUnknown_0200C528[(s16)idx];
 }
+asm(".global sub_080193B0\n.thumb_set sub_080193B0, StartEventScript\n");

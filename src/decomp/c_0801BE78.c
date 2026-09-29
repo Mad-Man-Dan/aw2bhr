@@ -29,7 +29,7 @@
  *    permutes the whole loop's allocation while emitting the same
  *    instructions.  This one is the difference between a match and a
  *    same-length register permutation. */
-void sub_0801BE78(void)
+void ClearSprites(void)
 {
     struct SpriteEntry **pp;
     struct SpriteEntry *p;
@@ -58,3 +58,4 @@ void sub_0801BE78(void)
     r[4].next = NULL;
     gUnknown_03002B24 = gUnknown_0200CD10;
 }
+asm(".global sub_0801BE78\n.thumb_set sub_0801BE78, ClearSprites\n");

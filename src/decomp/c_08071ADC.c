@@ -23,25 +23,27 @@ void sub_08071ADC(struct Unk8071ADC *proc)
     sub_08019818(proc->unk58, 0, 0);
 }
 
-/* A front end onto sub_08071B28 that adds only the palette. See the
- * sub_08071B28 note in include/unknown-functions.h: the first argument is ROM
+/* A front end onto StartPalFade that adds only the palette. See the
+ * StartPalFade note in include/unknown-functions.h: the first argument is ROM
  * PALETTE DATA, not the proc script -- the script is hard-coded in
- * sub_08071B28's own pool. This function's own three parameters are
+ * StartPalFade's own pool. This function's own three parameters are
  * (index, b, parent) and it forwards all three untouched; the bare prologue
  * `adds r4,r0,#0; adds r5,r1,#0; adds r3,r2,#0` narrows nothing, so the first
  * two are wide, and `pop {r4,r5}; pop {r0}` makes it void.
  *
- * sub_08071B0C is the same function over gUnknown_08613F74. */
-void sub_08071AF0(int index, int b, ProcPtr parent)
+ * StartPalFadeToWhite is the same function over gUnknown_08613F74. */
+void StartPalFadeToBlack(int index, int b, ProcPtr parent)
 {
-    sub_08071B28(gUnknown_08613F54, index, b, parent);
+    StartPalFade(gUnknown_08613F54, index, b, parent);
 }
+asm(".global sub_08071AF0\n.thumb_set sub_08071AF0, StartPalFadeToBlack\n");
 
-/* sub_08071AF0's twin over the other palette -- byte-identical apart from the
+/* StartPalFadeToBlack's twin over the other palette -- byte-identical apart from the
  * pool symbol, so one derivation gives both, but each member's own data_refs
- * were re-read before transcribing. See sub_08071AF0 and the sub_08071B28
+ * were re-read before transcribing. See StartPalFadeToBlack and the StartPalFade
  * note in include/unknown-functions.h. */
-void sub_08071B0C(int index, int b, ProcPtr parent)
+void StartPalFadeToWhite(int index, int b, ProcPtr parent)
 {
-    sub_08071B28(gUnknown_08613F74, index, b, parent);
+    StartPalFade(gUnknown_08613F74, index, b, parent);
 }
+asm(".global sub_08071B0C\n.thumb_set sub_08071B0C, StartPalFadeToWhite\n");

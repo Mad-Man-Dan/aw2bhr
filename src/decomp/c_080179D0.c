@@ -15,7 +15,7 @@
  * The additive `dst + x + y * 32` form is what gives two independently scaled
  * terms (`lsl #1` for x, the asr-derived y*64); `&dst[x + y * 32]` would
  * combine them into one scaled index. */
-void sub_080179D0(u16 *dst)
+void ClearTilemapRect23x4(u16 *dst)
 {
     s16 x;
     s16 y;
@@ -24,3 +24,4 @@ void sub_080179D0(u16 *dst)
         for (x = 0; x <= 0x16; x++)
             *(dst + x + y * 32) = 0;
 }
+asm(".global sub_080179D0\n.thumb_set sub_080179D0, ClearTilemapRect23x4\n");

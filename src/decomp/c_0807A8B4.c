@@ -15,8 +15,8 @@ void sub_0807A8B4(ProcPtr proc)
         sub_0803B5A4(0);
 
     for (i = 0; i <= 6; i++)
-        sub_08071B0C(i, 0x10, proc);
+        StartPalFadeToWhite(i, 0x10, proc);
 
-    sub_08071B0C(8, 0x10, proc);
-    sub_08071B0C(0x1b, 0x10, proc);
+    StartPalFadeToWhite(8, 0x10, proc);
+    StartPalFadeToWhite(0x1b, 0x10, proc);
 }

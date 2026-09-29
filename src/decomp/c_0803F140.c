@@ -28,7 +28,7 @@ void sub_0803F140(struct UnkF140Proc *proc)
     sub_0803F29C(&x, &y, proc->unk6a);
     Decompress(sub_0803F110(proc->unk6a), (void *)0x06013940);
     ApplyPaletteExt(gUnknown_08109564, 0x260, 0x40);
-    sub_0801C70C(sub_0803F128(proc->unk6a),
+    APProc_Create(sub_0803F128(proc->unk6a),
                  proc->unk54 * 16 - gMap->scrollX + x,
                  proc->unk58 * 16 - gMap->scrollY + y,
                  0x31CA,

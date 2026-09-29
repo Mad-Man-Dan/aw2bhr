@@ -29,5 +29,5 @@ void sub_08074EB4(struct Unk8074EB4Proc *proc)
     int i;
 
     for (i = 0; i <= 4; i++)
-        sub_0801C240(proc->unk40[i]);
+        AP_Delete(proc->unk40[i]);
 }

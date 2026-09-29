@@ -88,7 +88,7 @@ void sub_0806C9C0(struct ProcTitleScreen * proc)
 
 void sub_0806CA38(struct ProcTitleScreen * proc)
 {
-    sub_080137AC(-1);
+    ColFadeToBlack(-1);
     proc->unk_30 = 0x20;
 }
 
@@ -293,7 +293,7 @@ u16 CONST_DATA Sprite_08581D40[] =
 
 void sub_0806CC4C(void)
 {
-    sub_0801BD00(40, 140, Sprite_08581D40, 0);
+    PutOamHi(40, 140, Sprite_08581D40, 0);
 }
 
 void sub_0806CC64(void)
@@ -489,7 +489,7 @@ void TitleSpriteDraw_StartIdle(struct ProcTitleSpriteDraw * proc)
     proc->unk_30 = 32;
     proc->unk_2C = 173;
 
-    sub_080136C4();
+    ColorFadeInit();
     sub_080139C4(-1);
     sub_080718F0();
     sub_080135A4();

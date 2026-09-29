@@ -10,12 +10,12 @@
 #include "hardware.h"
 
 /* The only member of this family with any control flow: a 16-iteration
- * `sub_08071AF0(i, 0, proc)` loop (signed `cmp #0xf; ble`, so `i` is `int`),
+ * `StartPalFadeToBlack(i, 0, proc)` loop (signed `cmp #0xf; ble`, so `i` is `int`),
  * then the usual straight run.
  *
- * `proc` is `ProcPtr` because sub_08071AF0 forwards its third argument to
- * sub_08071B28 in r3, which hands it to Proc_Start as the parent -- exactly
- * sub_08071B0C's shape. The prologue is bare, so it is a full word either way.
+ * `proc` is `ProcPtr` because StartPalFadeToBlack forwards its third argument to
+ * StartPalFade in r3, which hands it to Proc_Start as the parent -- exactly
+ * StartPalFadeToWhite's shape. The prologue is bare, so it is a full word either way.
  *
  * `gUnknown_03002020 = gUnknown_03002020;` and the same for 03002B28 are real
  * volatile self-stores: only a volatile lvalue emits the bare ldrh/strh pair to
@@ -28,7 +28,7 @@ void sub_0807F378(ProcPtr proc)
     int i;
 
     for (i = 0; i < 16; i++)
-        sub_08071AF0(i, 0, proc);
+        StartPalFadeToBlack(i, 0, proc);
 
     SetDispEnable(1, 1, 1, 1, 0);
 

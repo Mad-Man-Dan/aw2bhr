@@ -8,10 +8,10 @@
  */
 
 /* A three-state easing machine on unk6c (0 -> 0xA -> 0x14 -> 0) driving unk6e,
- * pushed to sub_0801BD00 every frame. sub_08005E30 is its twin on unk70.
+ * pushed to PutOamHi every frame. sub_08005E30 is its twin on unk70.
  *
  * ONE local spans the whole body: the eased position in the switch arms and the
- * shifted copy handed to sub_0801BD00 are the same `v`. That is what earns it a
+ * shifted copy handed to PutOamHi are the same `v`. That is what earns it a
  * callee-saved register and costs the function its `push {r4, r5, r6}`; split
  * into two locals the instruction stream is identical and correctly ordered but
  * only {r4, r5} are pushed and 61 of 188 bytes differ. See
@@ -59,7 +59,7 @@ void sub_08005D74(void)
         break;
     }
     v = (s16)gActiveMap->overlayX >> 4;
-    sub_0801BD00(0x2078, v | 0x400, (void *)gUnknown_08488664, 0xD000);
+    PutOamHi(0x2078, v | 0x400, (void *)gUnknown_08488664, 0xD000);
 }
 
 /* sub_08005D74's twin on unk70: the same unk6c state machine and the same
@@ -101,5 +101,5 @@ void sub_08005E30(void)
         break;
     }
     v = (s16)gActiveMap->overlayY >> 4;
-    sub_0801BD00(0x78, 0x400 | v, (void *)gUnknown_08488664, 0xD000);
+    PutOamHi(0x78, 0x400 | v, (void *)gUnknown_08488664, 0xD000);
 }

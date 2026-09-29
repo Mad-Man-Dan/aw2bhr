@@ -13,7 +13,7 @@
  * 300 s run found this.
  *
  * THE LEVER IS THE `do { ... } while (0)` AROUND THE TWO STATEMENTS OF THE
- * THEN-ARM, exactly as in sub_0801C4D4 next door, which fell to the same lever
+ * THEN-ARM, exactly as in AP_SwitchAnimation next door, which fell to the same lever
  * in the same wave. Grouping statements into a block moves where the live
  * ranges of the values they define end, and that is what flips local-alloc's
  * tie-break -- the wave-30 park had ruled out every retyping and reordering of
@@ -26,7 +26,7 @@
  * the absence of a prologue is what proves the shift spelling. Handle +0x20
  * bit 1 selects a u16 self-relative encoding against a flat u32 pointer table.
  */
-void sub_0801C640(struct Unk0801C210 *a1, void *a2)
+void AP_LoadDefinition(struct Unk0801C210 *a1, void *a2)
 {
   void *v;
   a1->unk00 = a2;
@@ -46,3 +46,4 @@ void sub_0801C640(struct Unk0801C210 *a1, void *a2)
   a1->unk08 = v;
   a1->unk0c = v;
 }
+asm(".global sub_0801C640\n.thumb_set sub_0801C640, AP_LoadDefinition\n");

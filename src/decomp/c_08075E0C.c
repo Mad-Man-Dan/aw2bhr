@@ -35,5 +35,5 @@ void sub_08075E3C(struct Unk08075E3C *proc)
 {
     sub_08075904(proc->unk58);
     sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
-    sub_0801C240(proc->unk54);
+    AP_Delete(proc->unk54);
 }

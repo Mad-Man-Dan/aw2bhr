@@ -12,7 +12,7 @@
  * data/compiler-overrides.json is needed or wanted.
  *
  * Wave 38 (W38-A). The brief predicted this whole block would need old_agbcc
- * the way its two promoted neighbours sub_080713F8 and sub_08071564 do. It does
+ * the way its two promoted neighbours MPlayTempoControl and MP_clear_modM do. It does
  * not: this is byte-for-byte under agbcc as built, and under old_agbcc too.
  * See the DISCRIMINATOR note in data/compiler-overrides.json -- only the two
  * siblings with a CALL in the loop body diverge.
@@ -22,7 +22,7 @@
  *     loaded (`adds r0,r3,#1`), and the closing store is the CONSTANT, not the
  *     loaded value, so both ends share the one `.4byte 0x68736D53` pool word.
  *     That is why this reads `= MPLAY_ID_NUMBER` rather than needing the
- *     `u32 ident` local that sub_080713F8 does.
+ *     `u32 ident` local that MPlayTempoControl does.
  *   - `volume / 4` splits across the loop guard: the u16 truncation is the
  *     parameter's PROMOTE_MODE normalisation at entry (`lsls r6,r2,#0x10`) and
  *     the divide is LICM-hoisted into the preheader (`lsrs r6,r6,#0x12`).
@@ -33,7 +33,7 @@
  * `mov r7,sb; mov r6,r8` is the five-plus-live-values frame, not a loop signal:
  * trackBits, volume/4, 0x80, 3, i, track and bit are live at once.
  */
-void sub_08071420(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u16 volume)
+void MPlayVolumeControl(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u16 volume)
 {
     s32 i;
     u32 bit;
@@ -66,15 +66,16 @@ void sub_08071420(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u16 volume)
 
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08071420\n.thumb_set sub_08071420, MPlayVolumeControl\n");
 
 /*
  * MPlayPitchControl. MATCHES under the DEFAULT compiler -- no override entry.
  * Wave 38 (W38-A); shared skeleton documented in
- * work/sub_08071420/sub_08071420.c, discriminator in
+ * work/MPlayVolumeControl/MPlayVolumeControl.c, discriminator in
  * data/compiler-overrides.json.
  *
  * The two stores are keyShiftX (+0x0b) and pitX (+0x0d) from one s16 parameter,
- * and the split reads exactly like sub_08071420's `volume / 4`: the parameter
+ * and the split reads exactly like MPlayVolumeControl's `volume / 4`: the parameter
  * is zero-extended at entry (PROMOTE_MODE, so s16 and u16 are identical THERE
  * and the sign lives in the second shift pair), r6 keeps the raw low half for
  * pitX, and `pitch >> 8` is LICM-hoisted into the preheader as
@@ -82,7 +83,7 @@ void sub_08071420(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u16 volume)
  * shift 8. That is the s16 `>> 8`, NOT a byte extract; do not read the pair as
  * a mask.
  */
-void sub_08071488(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s16 pitch)
+void MPlayPitchControl(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s16 pitch)
 {
     s32 i;
     u32 bit;
@@ -116,11 +117,12 @@ void sub_08071488(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s16 pitch)
 
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08071488\n.thumb_set sub_08071488, MPlayPitchControl\n");
 
 /*
  * MPlayPanpotControl. MATCHES under the DEFAULT compiler -- no override entry.
  * Wave 38 (W38-A); shared skeleton documented in
- * work/sub_08071420/sub_08071420.c.
+ * work/MPlayVolumeControl/MPlayVolumeControl.c.
  *
  * The simplest member of the family: one `strb` into panX (+0x15) and the
  * `|= MPT_FLG_VOLCHG`. The s8 parameter is zero-extended whole at entry
@@ -129,7 +131,7 @@ void sub_08071488(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s16 pitch)
  * 0x80 and 3 and no LICM-derived value at all. Reading the preheader that way
  * is the cheapest confirmation that the body has no arithmetic in it.
  */
-void sub_080714FC(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s8 pan)
+void MPlayPanpotControl(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s8 pan)
 {
     s32 i;
     u32 bit;
@@ -162,3 +164,4 @@ void sub_080714FC(struct MusicPlayerInfo * mplayInfo, u16 trackBits, s8 pan)
 
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_080714FC\n.thumb_set sub_080714FC, MPlayPanpotControl\n");

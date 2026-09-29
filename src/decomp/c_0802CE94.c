@@ -8,7 +8,7 @@
  */
 
 /* Family F045: `push {lr}; lsls r1,#0x18; lsrs r1,#0x18; ldr r0,=g;
- * str r1,[r0]; bl sub_0801A168; bl <second>; pop {r0}; bx r0`.
+ * str r1,[r0]; bl CloseTopMenu; bl <second>; pop {r0}; bx r0`.
  *
  * The `lsls`+`lsrs` pair is a VALUE-KEPT narrowing (not a truth test) sitting
  * before any use, i.e. PROMOTE_MODE re-narrowing a declared `u8` parameter --
@@ -28,6 +28,6 @@
 void sub_0802CE94(void *a, u8 b)
 {
     gUnknown_030044A0 = b;
-    sub_0801A168();
+    CloseTopMenu();
     sub_0802C1B0();
 }

@@ -93,7 +93,7 @@ int sub_0803D4A8(u8 a)
         gUnknown_020280C0[a].unk13 = 0xff;
         return 0;
     }
-    sub_0801AC58(b, (u8 *)p);
+    ReadSaveSlot(b, (u8 *)p);
     CopyString(gUnknown_020280C0[a].unk02, p->name);
     gUnknown_020280C0[a].unk13 = p->unk4C3;
     gUnknown_020280C0[a].filler_14[5] = p->unk4C9;

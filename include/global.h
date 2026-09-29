@@ -16,6 +16,7 @@
 #include "unknown-functions.h"
 #include "xenesis-names.h"
 #include "design-names.h"
+#include "function-names.h"
 #include "data-names.h"
 
 #define SECTION(name) __attribute__((section(name)))

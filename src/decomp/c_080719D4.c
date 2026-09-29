@@ -9,7 +9,7 @@
 
 /* Zeroes two words and seeds +0x64 with GetMapLock()'s frame snapshot --
  * the same pairing the gUnknown_08614014 note in include/unknown-globals.h
- * records for sub_080729AC, which stashes the identical value at the
+ * records for StartPartialGameLock, which stashes the identical value at the
  * identical offset. `adds r4,#0x64` before the `strh` is forced: 0x64 is past
  * the 6-bit halfword displacement, so the base has to move.
  *

@@ -38,7 +38,7 @@ void sub_08074DAC(struct Unk8074DACProc *proc)
             if (proc->unk2a[i] != proc->unk2a[i - 1]
                 || proc->unk34[i] != proc->unk34[i - 1])
             {
-                sub_0801C254(proc->unk40[i], (proc->unk2a[i] - x) & 0x1FF,
+                AP_Update(proc->unk40[i], (proc->unk2a[i] - x) & 0x1FF,
                     (proc->unk34[i] - y) & 0xFF);
 
                 proc->unk2a[i] = proc->unk2a[i - 1];
@@ -47,7 +47,7 @@ void sub_08074DAC(struct Unk8074DACProc *proc)
         }
     }
 
-    sub_0801C254(proc->unk40[0], (proc->unk2a[0] - x) & 0x1FF,
+    AP_Update(proc->unk40[0], (proc->unk2a[0] - x) & 0x1FF,
         (proc->unk34[0] - y) & 0xFF);
 
     proc->unk58++;

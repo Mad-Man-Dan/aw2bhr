@@ -66,7 +66,7 @@ static inline int CgbPan(struct SdkCgbChannel *chan)
     return 0;
 }
 
-void sub_08070F44(struct CgbChannel *arg)
+void CgbModVol(struct CgbChannel *arg)
 {
     struct SdkCgbChannel *chan = (struct SdkCgbChannel *)arg;
 
@@ -84,3 +84,4 @@ void sub_08070F44(struct CgbChannel *arg)
     chan->sg = (chan->eg * chan->su + 15) >> 4;
     chan->pan &= chan->panMask;
 }
+asm(".global sub_08070F44\n.thumb_set sub_08070F44, CgbModVol\n");

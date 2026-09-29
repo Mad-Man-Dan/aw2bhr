@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Copies sub_0803D73C's proc field into the script record sub_080193B0
+/* Copies sub_0803D73C's proc field into the script record StartEventScript
  * installs. The `adds r4,#0x64` before the `ldrh` is not a choice: 0x64 is past
  * the `ldrh` immediate's range. */
 struct UnkD8C0Proc
@@ -30,5 +30,5 @@ void sub_0803D88C(ProcPtr proc)
 
 void sub_0803D8C0(struct UnkD8C0Proc *proc)
 {
-    sub_080193B0(gUnknown_0849F3A8)->unk10 = proc->unk64;
+    StartEventScript(gUnknown_0849F3A8)->unk10 = proc->unk64;
 }

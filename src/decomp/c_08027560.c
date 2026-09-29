@@ -14,9 +14,9 @@
 void sub_08027560(int a1, int a2, int a3, struct Unk0801C210 *a4)
 {
     if (a1 > 0x7f)
-        sub_0801C4D4(a4, a3 + 1);
+        AP_SwitchAnimation(a4, a3 + 1);
     else
-        sub_0801C4D4(a4, a3);
+        AP_SwitchAnimation(a4, a3);
 
     Decompress(gUnknown_081121D0, (void *)0x06013940);
     ApplyPaletteExt(gUnknown_081126E4, 0x260, 0x20);

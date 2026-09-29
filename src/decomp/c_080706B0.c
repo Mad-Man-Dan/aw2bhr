@@ -104,7 +104,7 @@
  * (93.6% for this source, 81.1% for the `[3]` source), so the m4a-region
  * override does not apply here. Do NOT add an override entry for it.
  */
-void sub_080706B0(struct CgbChannel *cgbChans)
+void MPlayExtender(struct CgbChannel *cgbChans)
 {
   struct CgbChannel **new_var2;
   struct SoundInfo *soundInfo;
@@ -130,20 +130,20 @@ void sub_080706B0(struct CgbChannel *cgbChans)
   }
   soundInfo->ident = ident + 1;
   jumpTable = &gUnknown_03005740;
-  jumpTable[8] = (void (*)(void *, void *)) sub_0807166C;
+  jumpTable[8] = (void (*)(void *, void *)) ply_memacc;
   jumpTable[17] = (void (*)(void *, void *)) sub_08070328;
   new_var = 19;
   jumpTable[new_var] = (void (*)(void *, void *)) sub_0807033C;
-  jumpTable[28] = (void (*)(void *, void *)) sub_080717C4;
+  jumpTable[28] = (void (*)(void *, void *)) ply_xcmd;
   jumpTable[29] = (void (*)(void *, void *)) sub_080702C0;
-  jumpTable[30] = (void (*)(void *, void *)) sub_080708EC;
+  jumpTable[30] = (void (*)(void *, void *)) SampFreqSet_rev01;
   jumpTable[31] = (void (*)(void *, void *)) sub_0807004C;
-  jumpTable[32] = (void (*)(void *, void *)) sub_08070CD0;
-  jumpTable[33] = (void (*)(void *, void *)) sub_08070D98;
+  jumpTable[32] = (void (*)(void *, void *)) FadeOutBody_rev01;
+  jumpTable[33] = (void (*)(void *, void *)) TrkVolPitSet_rev01;
   soundInfo->cgbChans = cgbChans;
-  soundInfo->unk28 = sub_08070FAC;
-  soundInfo->unk2c = sub_08070EF4;
-  soundInfo->unk30 = (void (*)(void)) sub_08070E4C;
+  soundInfo->unk28 = CgbSound;
+  soundInfo->unk2c = CgbOscOff;
+  soundInfo->unk30 = (void (*)(void)) MidiKey2CgbFr;
   soundInfo->maxLines = (u8) ((u32) (&gMaxLines));
   zero = 0;
   CpuSet(&zero, cgbChans, 0x05000040);
@@ -159,3 +159,4 @@ void sub_080706B0(struct CgbChannel *cgbChans)
   (*new_var2)->panMask = 0x88;
   soundInfo->ident = ident;
 }
+asm(".global sub_080706B0\n.thumb_set sub_080706B0, MPlayExtender\n");

@@ -50,7 +50,7 @@ void PutEnemyCoMinimug_IDLE_080878A9(struct Unk080878A8Proc *proc)
     DrawOamObject(0x52, 0xd0, 0x88, 0, 2);
 }
 
-/* Three sequential sub_0801F234 runs over four id ranges: two singletons, then
+/* Three sequential LoadTilePoolGraphic runs over four id ranges: two singletons, then
  * a paired loop over 0x79.. and 0x6f.. and a single loop over 0x6a... The two
  * biased arguments in the first loop are separate expressions in the counter,
  * not one induction variable. No data refs at all. */
@@ -59,17 +59,17 @@ void sub_08087938(void)
 {
     int i;
 
-    sub_0801F234(0x61);
-    sub_0801F234(0x60);
+    LoadTilePoolGraphic(0x61);
+    LoadTilePoolGraphic(0x60);
 
     for (i = 0; i < 10; i++)
     {
-        sub_0801F234(i + 0x79);
-        sub_0801F234(i + 0x6f);
+        LoadTilePoolGraphic(i + 0x79);
+        LoadTilePoolGraphic(i + 0x6f);
     }
 
     for (i = 0; i < 5; i++)
-        sub_0801F234(i + 0x6a);
+        LoadTilePoolGraphic(i + 0x6a);
 }
 
 asm(".global sub_080878A8\n.thumb_set sub_080878A8, PutEnemyCoMinimug_IDLE_080878A9\n");

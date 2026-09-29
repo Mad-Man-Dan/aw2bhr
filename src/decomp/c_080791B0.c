@@ -56,7 +56,7 @@ void sub_080791B0(struct Unk80791B0 *proc)
     int t;
     u16 *q;
 
-    sub_08071B88();
+    EndPalFade();
     ApplyPaletteExt(gUnknown_0822AA80, 0x280, 0xc0);
 
     n = gPlayers[sub_0807A908()].rank;

@@ -8,16 +8,16 @@
  */
 
 /*
- * sub_0801B4C0 -- format the sixteen save sectors.
+ * FormatSaveSectors -- format the sixteen save sectors.
  *
  * Returns 1 without doing anything unless gUnknown_0200CD0C is 1. Otherwise
- * sub_0801B598 is handed gUnknown_0200CC30 and gUnknown_0200CC34 (the second as
+ * SetFlashTimerIntrIfPresent is handed gUnknown_0200CC30 and gUnknown_0200CC34 (the second as
  * a table of function pointers), and then for each of the sixteen sectors:
  *
  *   - the byte tables .unk00 and .unk10 are set to 0xff and .unk20 and .unk30
  *     to 0, and both generation counters are zeroed;
  *   - sub_0801B6A8 fills the 0x1000-byte buffer at gUnknown_02002000;
- *   - the sector is written with sub_0801B618 and read back with sub_0801B648,
+ *   - the sector is written with ProgramFlashSectorIfPresent and read back with VerifyFlashSectorIfPresent,
  *     up to four times. Four failed attempts abandon the whole job and return
  *     1;
  *   - the buffer's last byte is kept in that sector's .unk40.
@@ -36,13 +36,13 @@
  *     the function. As an early-return guard at the top it compiles to the same
  *     instructions with the blocks the other way round.
  */
-int sub_0801B4C0(void)
+int FormatSaveSectors(void)
 {
   int i;
   int j;
   if (gUnknown_0200CD0C == 1)
   {
-    sub_0801B598(gUnknown_0200CC30, (void (**)(void)) gUnknown_0200CC34);
+    SetFlashTimerIntrIfPresent(gUnknown_0200CC30, (void (**)(void)) gUnknown_0200CC34);
     for (i = 0; i < 0x10; i++)
     {
       gUnknown_0200CC38.unk00[i] = (gUnknown_0200CC38.unk10[i] |= 0xff);
@@ -52,8 +52,8 @@ int sub_0801B4C0(void)
       sub_0801B6A8(gUnknown_02002000, 0x1000);
       for (j = 0; j < 4; j++)
       {
-        sub_0801B618(i, (int) gUnknown_02002000);
-        if (sub_0801B648(i, (int) gUnknown_02002000) == 0)
+        ProgramFlashSectorIfPresent(i, (int) gUnknown_02002000);
+        if (VerifyFlashSectorIfPresent(i, (int) gUnknown_02002000) == 0)
         {
           break;
         }
@@ -70,3 +70,4 @@ int sub_0801B4C0(void)
   }
   return 1;
 }
+asm(".global sub_0801B4C0\n.thumb_set sub_0801B4C0, FormatSaveSectors\n");

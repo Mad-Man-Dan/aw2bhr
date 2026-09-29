@@ -7,7 +7,7 @@
  * sub_08011704 @ 0x08011704
  */
 
-/* Forwards three narrowed values plus a fixed ROM blob into sub_0801BD00.
+/* Forwards three narrowed values plus a fixed ROM blob into PutOamHi.
  *
  * The second argument is `b & 0xFF` and NOT `(u8)b`, and the two are different
  * code even though they are the same value. With `& 0xFF`, agbcc keeps the
@@ -22,5 +22,5 @@
  * the bare promote pair, which is what a declared-narrow parameter emits. */
 void sub_08011704(u16 a, u16 b, u16 c)
 {
-    sub_0801BD00(a & 0x1FF, b & 0xFF, (void *)gUnknown_0848930C, c);
+    PutOamHi(a & 0x1FF, b & 0xFF, (void *)gUnknown_0848930C, c);
 }

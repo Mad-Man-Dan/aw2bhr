@@ -39,7 +39,7 @@
 
 #define OBJ_SZ_IDX(o) ((((o)[0] & 0xc000) >> 12) + (((o)[1] & 0xc000) >> 14)) * 2
 
-void sub_0801C53C(struct Unk0801C210 *a1)
+void AP_QueueObjGraphics(struct Unk0801C210 *a1)
 {
     int n;
     int off;
@@ -73,3 +73,4 @@ void sub_0801C53C(struct Unk0801C210 *a1)
         a1->unk20 &= 0xfe;
     }
 }
+asm(".global sub_0801C53C\n.thumb_set sub_0801C53C, AP_QueueObjGraphics\n");

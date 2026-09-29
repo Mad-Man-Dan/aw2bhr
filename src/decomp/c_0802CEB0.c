@@ -11,7 +11,7 @@ void sub_0802CEB0(void)
 {
     u8 *p;
 
-    sub_0801A168();
+    CloseTopMenu();
 
     p = gUnknown_030044B0;
     *(u32 *)(p + 8) = gUnknown_03001FD4;
@@ -27,7 +27,7 @@ void sub_0802CEFC(void)
 {
     u8 *p;
 
-    sub_0801A168();
+    CloseTopMenu();
 
     p = gUnknown_030044B0;
     *(u32 *)(p + 8) = gUnknown_03001FD4;

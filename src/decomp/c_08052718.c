@@ -44,7 +44,7 @@ void sub_08052718(u16 a, u16 b)
         gUnknown_02029808[a].unk58[gUnknown_02029808[a].unk2e],
         0);
 
-    sub_08015504(gUnknown_02029808[a].unk24[b], 1);
+    SetSlotSpriteFlicker(gUnknown_02029808[a].unk24[b], 1);
 
     if (gUnknown_03004580[a ^ 1][1] == 0x14)
         sub_080504A8(a, 0x23);

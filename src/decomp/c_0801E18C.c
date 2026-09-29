@@ -8,7 +8,7 @@
  */
 
 /* Builds the four OAM affine terms for gUnknown_0200F720[a] out of the
- * sub_0801BA4C / sub_0801BAA8 sine and cosine pair and the record's own two
+ * SinDegrees / CosDegrees sine and cosine pair and the record's own two
  * scale halfwords: pa = cos*4/sx, pb = -(sin*4)/sy, pc = sin*4/sx,
  * pd = cos*4/sy. The four `__divsi3` calls are the whole 160 bytes.
  *
@@ -27,13 +27,14 @@
  * them -- struct Unk0200F720 types all three `u16` on store width alone and
  * says the signs are unproved -- but the struct is left alone and the sign
  * taken through the pointer, which emits nothing. */
-void sub_0801E18C(int a)
+void UpdateObjAffineRecord(int a)
 {
     s16 *e = (s16 *)&gUnknown_0200F720[a];
 
     SetObjAffine(a,
-                 sub_0801BAA8(e[2]) * 4 / e[0],
-                 -(sub_0801BA4C(e[2]) * 4) / e[1],
-                 sub_0801BA4C(e[2]) * 4 / e[0],
-                 sub_0801BAA8(e[2]) * 4 / e[1]);
+                 CosDegrees(e[2]) * 4 / e[0],
+                 -(SinDegrees(e[2]) * 4) / e[1],
+                 SinDegrees(e[2]) * 4 / e[0],
+                 CosDegrees(e[2]) * 4 / e[1]);
 }
+asm(".global sub_0801E18C\n.thumb_set sub_0801E18C, UpdateObjAffineRecord\n");

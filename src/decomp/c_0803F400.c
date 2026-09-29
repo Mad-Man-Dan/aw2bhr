@@ -9,7 +9,7 @@
  */
 
 #include "proc.h"
-/* The proc sub_0803F4C8 also runs on: +0x50 holds the sub_0801C210 handle and
+/* The proc sub_0803F4C8 also runs on: +0x50 holds the AP_Create handle and
  * +0x54/+0x58 are the screen-space x/y that sub_0803F4C8 converts back to
  * camera-relative coordinates. */
 struct UnkF400Proc
@@ -29,7 +29,7 @@ struct UnkF400Proc
  * form is how agbcc spells `*(s16 *)(p + 6)`, not an array index. */
 void sub_0803F400(struct UnkF400Proc *proc)
 {
-    struct Unk0801C210 *sprite = sub_0801C210(gUnknown_081171EC, 1, 1);
+    struct Unk0801C210 *sprite = AP_Create(gUnknown_081171EC, 1, 1);
 
     proc->unk50 = sprite;
     proc->unk54 = proc->unk2c * 16 + 8;

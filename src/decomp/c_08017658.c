@@ -15,7 +15,7 @@
 void sub_08017658(struct Unk03001470 *proc)
 {
     InitGameSettings();
-    sub_08016DB8(proc->unk1e);
+    LoadSuspendSave(proc->unk1e);
     sub_08026798();
     sub_08023348();
     sub_0803662C();

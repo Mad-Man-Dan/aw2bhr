@@ -53,7 +53,7 @@ struct SaveBlk
 };
 
 /*
- * sub_08017208 -- load the game state back out of the save block.
+ * RestoreBattleSaveState -- load the game state back out of the save block.
  *
  * The reverse of sub_08016F38 (src/decomp/c_08016F38.c), which wrote the block
  * at gUnknown_02000000.
@@ -94,7 +94,7 @@ struct SaveBlk
  *     out twice. Sharing a local, or merging the two blocks under one test,
  *     changes the register assignment.
  */
-void sub_08017208(void)
+void RestoreBattleSaveState(void)
 {
     struct SaveBlk *p = (struct SaveBlk *)gUnknown_02000000;
     struct Map *map;
@@ -168,3 +168,4 @@ void sub_08017208(void)
         gUnknown_02028360[i] = p->unk0d28[i];
     sub_080456B8(p->unk0da8);
 }
+asm(".global sub_08017208\n.thumb_set sub_08017208, RestoreBattleSaveState\n");

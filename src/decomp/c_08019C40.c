@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08019C40 -- draw an option list's rows into the BG0 tilemap.
+ * DrawMenuItems -- draw an option list's rows into the BG0 tilemap.
  *
  * `p` is the list object. .unk41 is the number of visible rows, .unk31 maps a
  * row to an item index, .unk24 holds one flags byte per item, and .unk20 is the
@@ -34,7 +34,7 @@
  *   - `i` is s16, which is why the index arithmetic is recomputed every pass
  *     instead of being carried in a register.
  */
-void sub_08019C40(struct Unk8019A60 *p)
+void DrawMenuItems(struct Unk8019A60 *p)
 {
     s16 i;
 
@@ -62,3 +62,4 @@ void sub_08019C40(struct Unk8019A60 *p)
 
     sub_08011E54(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
 }
+asm(".global sub_08019C40\n.thumb_set sub_08019C40, DrawMenuItems\n");

@@ -25,9 +25,9 @@ void sub_08074D28(struct Unk8074D28Proc *proc)
 
     for (i = 0; i <= 4; i++)
     {
-        sprite = sub_0801C210(gUnknown_081D2930, 0, 1);
+        sprite = AP_Create(gUnknown_081D2930, 0, 1);
         sprite->unk22 = gUnknown_0861433C[proc->unk54];
-        sub_0801C4D4(sprite, 0);
+        AP_SwitchAnimation(sprite, 0);
         sprite->unk0c += i;
         proc->unk40[i] = sprite;
         proc->unk2a[i] = gUnknown_0202FDFC.unk04 + gUnknown_0202FDFC.unk00;

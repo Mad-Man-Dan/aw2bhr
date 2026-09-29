@@ -12,6 +12,6 @@
  * object along. */
 void sub_08066340(struct Unk08580934_Obj *o)
 {
-    sub_0801BD00((o->unk28 + 0x200) & 0x1FF, (o->unk2a + 0x100) & 0xFF,
+    PutOamHi((o->unk28 + 0x200) & 0x1FF, (o->unk2a + 0x100) & 0xFF,
                  gUnknown_08580CD4, 0);
 }

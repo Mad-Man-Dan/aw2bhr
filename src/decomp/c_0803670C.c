@@ -117,7 +117,7 @@ void sub_080368E8(void)
         sub_0801F050();
         sub_08013510();
         sub_08054B7C();
-        sub_08019470();
+        RunEventScripts();
         sub_08015954();
         Proc_Run(gProcTreeRootArray[1]);
         Proc_Run(gProcTreeRootArray[2]);
@@ -166,7 +166,7 @@ void sub_080369BC(void)
         sub_0801F050();
         sub_08013510();
         sub_08054B7C();
-        sub_08019470();
+        RunEventScripts();
 
         if (gUnknown_03003F3C != 0)
         {
@@ -222,7 +222,7 @@ void sub_08036AB8(void)
     {
         sub_08013510();
         sub_08054B7C();
-        sub_08019470();
+        RunEventScripts();
         Proc_Run(gProcTreeRootArray[1]);
         Proc_Run(gProcTreeRootArray[2]);
         Proc_Run(gProcTreeRootArray[3]);

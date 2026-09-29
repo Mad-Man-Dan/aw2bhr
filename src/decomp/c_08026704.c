@@ -62,7 +62,7 @@ bool8 sub_0802672C(void)
 
 /* The same wrap-at-5 retry as sub_0802672C, but the counter IS the global:
  * gUnknown_030033EC is incremented in memory each pass, and reaching 5 calls
- * sub_080176A8 and resets it to 1.
+ * IncrementDayCount and resets it to 1.
  *
  * The `ldrb r0,[r4]` feeding IsPlayerAliveAndActive is agbcc narrowing the u16 global's
  * load to that callee's declared `u8` parameter, not a separate byte field --
@@ -78,7 +78,7 @@ void sub_08026768(void)
 
         if (gUnknown_030033EC == 5)
         {
-            sub_080176A8();
+            IncrementDayCount();
             gUnknown_030033EC = 1;
         }
     } while (!IsPlayerAliveAndActive(gUnknown_030033EC));

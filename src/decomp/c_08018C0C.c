@@ -7,7 +7,7 @@
  * sub_08018C0C @ 0x08018C0C
  */
 
-bool8 sub_08018C0C(s16 a)
+bool8 EventOp_SetArmyAiControlled(s16 a)
 {
     u8 i = gUnknown_0200C528[a].unk04->unk08;
 
@@ -16,3 +16,4 @@ bool8 sub_08018C0C(s16 a)
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08018C0C\n.thumb_set sub_08018C0C, EventOp_SetArmyAiControlled\n");

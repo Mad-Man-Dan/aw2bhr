@@ -11,7 +11,7 @@
  * `lsls #1; adds; lsls #6` is agbcc's expansion of `* 0xc0` -- (2a + a) << 6 --
  * and not a hand-rolled shift chain; the multiply spelling is what produces it.
  * Div is the BIOS-style signed divide, already declared s32(s32, s32). */
-int sub_08072B2C(int a)
+int Screen2Pan(int a)
 {
     if (a < 0)
         return -0x60;
@@ -21,3 +21,4 @@ int sub_08072B2C(int a)
 
     return Div(a * 0xc0, 0xf0) - 0x60;
 }
+asm(".global sub_08072B2C\n.thumb_set sub_08072B2C, Screen2Pan\n");

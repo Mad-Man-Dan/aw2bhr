@@ -10,9 +10,9 @@
 /* MPlayOpen. The track-clearing loop's counter is re-truncated to u8 on every
  * iteration (`subs; lsls #0x18; lsrs #0x18`), which is what says trackCount is
  * a u8 local rather than an int -- it is the incoming parameter, reused.
- * See sub_080703B8 for why the trailing ident stores are needed.
+ * See MPlayContinue for why the trailing ident stores are needed.
  */
-void sub_08070B34(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tracks, u8 trackCount)
+void MPlayOpen_rev01(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tracks, u8 trackCount)
 {
     struct SoundInfo *soundInfo;
     u32 ident;
@@ -31,7 +31,7 @@ void sub_08070B34(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tr
 
     soundInfo->ident = ident + 1;
 
-    sub_080707E0(mplayInfo);
+    Clear64byte_rev(mplayInfo);
 
     mplayInfo->tracks = tracks;
     mplayInfo->trackCount = trackCount;
@@ -56,6 +56,7 @@ void sub_08070B34(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tr
     soundInfo->ident = MPLAY_ID_NUMBER;
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08070B34\n.thumb_set sub_08070B34, MPlayOpen_rev01\n");
 
 /* MPlayStart. PARKED at 90.4% -- SIZE-EXACT (228 bytes), 22 differing bytes,
  * every one of them a register-allocation tie-break. See data/parked.json.
@@ -63,7 +64,7 @@ void sub_08070B34(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tr
  * The entry guard is one three-term condition and the whole body is its `if` --
  * there is no early return, which is why the ident test's `bne` and the
  * priority test's `bhi` share one exit label. `mplayInfo->ident` is RELOADED
- * for the `++` rather than held in a local (contrast sub_08070640): the branchy
+ * for the `++` rather than held in a local (contrast m4aMPlayFadeInContinue): the branchy
  * guard sits between the test and the increment.
  *
  * The two track loops are one `while` with a two-term guard followed by a
@@ -83,7 +84,7 @@ void sub_08070B34(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tr
  * The instruction stream, the branch targets, the loop rotation, the store
  * order in the body and the single pool word are all already byte-exact.
  */
-void sub_08070BAC(struct MusicPlayerInfo *mplayInfo, struct SongHeader *songHeader)
+void MPlayStart_rev01(struct MusicPlayerInfo *mplayInfo, struct SongHeader *songHeader)
 {
     s32 i;
     struct MusicPlayerTrack *track;
@@ -130,18 +131,19 @@ void sub_08070BAC(struct MusicPlayerInfo *mplayInfo, struct SongHeader *songHead
         }
 
         if (songHeader->reverb & 0x80)
-            sub_08070990(songHeader->reverb);
+            SoundMode_rev01(songHeader->reverb);
 
         mplayInfo->ident = MPLAY_ID_NUMBER;
     }
 }
+asm(".global sub_08070BAC\n.thumb_set sub_08070BAC, MPlayStart_rev01\n");
 
 /* MPlayStop. The standard m4a re-entrancy sandwich: bump ident, do the work,
  * restamp it. `s32 i` and not a u8 counter -- the `cmp r4,#0; ble` guard on a
  * value loaded with `ldrb` is a SIGNED compare, which a u8 counter cannot
  * produce. Track stride is 0x50, i.e. sizeof(struct MusicPlayerTrack).
  */
-void sub_08070C90(struct MusicPlayerInfo * mplayInfo)
+void MPlayStop_rev01(struct MusicPlayerInfo * mplayInfo)
 {
     s32 i;
     struct MusicPlayerTrack * track;
@@ -164,3 +166,4 @@ void sub_08070C90(struct MusicPlayerInfo * mplayInfo)
 
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08070C90\n.thumb_set sub_08070C90, MPlayStop_rev01\n");

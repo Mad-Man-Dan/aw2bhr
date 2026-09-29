@@ -7,7 +7,7 @@
  * sub_0801F3D4 @ 0x0801F3D4, sub_0801F400 @ 0x0801F400
  */
 
-/* sub_0801F400's inverse: a tile id back to its gUnknown_0848B738 row.
+/* GetTilePoolFirstGraphic's inverse: a tile id back to its gUnknown_0848B738 row.
  *
  * THE LAST CLAUSE MUST BE A BARE `return 0;`, NOT AN `else`. With
  * `else return 0;` -- or with the test written `a <= 0x3d`, or `a < 0x3e`, or
@@ -15,7 +15,7 @@
  * the other way round and emits `ble` where the ROM has `bgt`. Only the
  * trailing bare return lets the function's last block fall into the epilogue in
  * the ROM's order. See the note added to docs/agbcc-codegen.md. */
-int sub_0801F3D4(int a)
+int GetTilePoolForGraphic(int a)
 {
     if (a > 0xbb)
         return 5;
@@ -29,11 +29,12 @@ int sub_0801F3D4(int a)
         return 1;
     return 0;
 }
+asm(".global sub_0801F3D4\n.thumb_set sub_0801F3D4, GetTilePoolForGraphic\n");
 
 /* The third column of gUnknown_0848B738 read out of a jump table -- the six
  * constants are literally the words at +8 of the six rows in baserom.gba. No
  * default: out of range, r0 is never written and the argument falls back out. */
-int sub_0801F400(int a)
+int GetTilePoolFirstGraphic(int a)
 {
     switch (a) {
     case 0:
@@ -50,3 +51,4 @@ int sub_0801F400(int a)
         return 0xbc;
     }
 }
+asm(".global sub_0801F400\n.thumb_set sub_0801F400, GetTilePoolFirstGraphic\n");

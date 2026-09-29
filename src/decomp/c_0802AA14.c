@@ -27,7 +27,7 @@ struct Tbl49A2A6
 void sub_0802AA14(int a1, int a2, int a3, int a4)
 {
     sub_08011E54((void *)sub_0802A838(a1), (void *)0x06013A40, 0x100);
-    sub_0801BD00((a2 + ((struct Tbl49A2A6 *)gUnknown_0849A2A6)->unk02[a4 * 3]
+    PutOamHi((a2 + ((struct Tbl49A2A6 *)gUnknown_0849A2A6)->unk02[a4 * 3]
                      + gUnknown_0849A284[2]) & 0x1ff,
                  (a3 + gUnknown_0849A284[3]) | 0x400,
                  gUnknown_0849A248, 0x1000);

@@ -12,24 +12,26 @@
  * one command forward. Same shape as sub_08015DA0 next door, which reads the
  * same halfword into .unk10.
  */
-bool8 sub_08015FE4(u8 a)
+bool8 SlotOp_StartFadeToBlack(u8 a)
 {
-    sub_08011550(((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    StartFadeToBlack(((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return FALSE;
 }
+asm(".global sub_08015FE4\n.thumb_set sub_08015FE4, SlotOp_StartFadeToBlack\n");
 
 /* One command of the gUnknown_03001470[a].unk04 script stream: the halfword at
  * +4 of the current 8-byte command is the argument, and the cursor then steps
  * one command forward. Same shape as sub_08015DA0 next door, which reads the
  * same halfword into .unk10.
  */
-bool8 sub_08016010(u8 a)
+bool8 SlotOp_StartFadeFromBlack(u8 a)
 {
-    sub_0801156C(((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    StartFadeFromBlack(((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return FALSE;
 }
+asm(".global sub_08016010\n.thumb_set sub_08016010, SlotOp_StartFadeFromBlack\n");
 
 /* One command of the gUnknown_03001470[a].unk04 script stream: the halfword at
  * +4 of the current 8-byte command is the argument, and the cursor then steps

@@ -14,13 +14,13 @@ void sub_08005838(int a1, int a2, u8 a3)
 {
     if (a3 == 2)
     {
-        sub_080193B0(gUnknown_08488594);
+        StartEventScript(gUnknown_08488594);
     }
     else
     {
         gActiveMap->state = 0;
-        sub_0801A614();
-        sub_0801A168();
+        PushMenu();
+        CloseTopMenu();
         sub_080152C0((s32)gUnknown_08488614, 0);
     }
 }

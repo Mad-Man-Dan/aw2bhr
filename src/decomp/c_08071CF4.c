@@ -8,13 +8,13 @@
  */
 
 #include "hardware.h"
-/* Sibling of sub_08071DB4 -- the same window/blend opening, but it zeroes
+/* Sibling of FadeFromBlack_OnInit -- the same window/blend opening, but it zeroes
  * BLDY instead of setting it to 0x10, commits only the target1 half of the
  * layer mask, and seeds the proc accumulator with 0 rather than 0x100.
  * One fewer masked insert is the whole 16-byte difference.
  *
  * The `*(u16 *)&` cast on gUnknown_030030E0 is load-bearing for the same
- * reason as in sub_08071DB4: spelling it `.raw` keeps the 0 alive in its own
+ * reason as in FadeFromBlack_OnInit: spelling it `.raw` keeps the 0 alive in its own
  * callee-saved pseudo (r5 instead of the r3 the ROM rematerialises at the
  * store), which costs the extra `push {r5}`. Size stays 124 either way, so
  * this one is a pure allocation difference and a size check would miss it. */
@@ -25,7 +25,7 @@ struct Unk08071CF4
     /* 0x66 */ u16 unk66;
 };
 
-void sub_08071CF4(struct Unk08071CF4 *proc)
+void FadeToBlack_OnInit(struct Unk08071CF4 *proc)
 {
     gUnknown_030030A4.bits.win0_enable_blend = 1;
     gUnknown_030030A4.bits.win1_enable_blend = 1;
@@ -44,3 +44,4 @@ void sub_08071CF4(struct Unk08071CF4 *proc)
     proc->unk64 = 0x10;
     proc->unk66 = 0;
 }
+asm(".global sub_08071CF4\n.thumb_set sub_08071CF4, FadeToBlack_OnInit\n");

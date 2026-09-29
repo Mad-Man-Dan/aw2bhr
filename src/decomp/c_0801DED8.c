@@ -7,7 +7,7 @@
  * sub_0801DED8 @ 0x0801DED8, sub_0801DF20 @ 0x0801DF20
  */
 
-void sub_0801DED8(void)
+void DrawSimpleSpriteScripts(void)
 {
     int i;
 
@@ -20,8 +20,9 @@ void sub_0801DED8(void)
         }
     }
 }
+asm(".global sub_0801DED8\n.thumb_set sub_0801DED8, DrawSimpleSpriteScripts\n");
 
-void sub_0801DF20(void)
+void TickSimpleSpriteScripts(void)
 {
     int i;
 
@@ -29,3 +30,4 @@ void sub_0801DF20(void)
         if (gUnknown_0200E438[i].unk08)
             RunSimpleSpriteScript(i, 1);
 }
+asm(".global sub_0801DF20\n.thumb_set sub_0801DF20, TickSimpleSpriteScripts\n");

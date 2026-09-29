@@ -20,7 +20,8 @@
  * tree 3, depending on its ProcPtr argument).
  */
 
-void sub_08013378(void)
+void EndScreenShake(void)
 {
     Proc_EndEach(gUnknown_084893AC);
 }
+asm(".global sub_08013378\n.thumb_set sub_08013378, EndScreenShake\n");

@@ -15,7 +15,7 @@
 
 void sub_0801EF90(void)
 {
-    sub_0801E0C8(0x10, 0x70);
+    HideOamObjects(0x10, 0x70);
     gUnknown_03002B54 = 0x10;
 }
 
@@ -27,6 +27,6 @@ void sub_0801EF90(void)
 
 void sub_0801EFA8(void)
 {
-    sub_0801E0C8(0, 0x10);
+    HideOamObjects(0, 0x10);
     gUnknown_03001FE4 = 0;
 }

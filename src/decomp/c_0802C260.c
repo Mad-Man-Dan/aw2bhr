@@ -31,7 +31,7 @@ void sub_0802C270(void)
     sub_08011AAC((void *)sub_080184A4);
 }
 
-/* Installs one gUnknown_0200C528 list script. sub_080193B0 returns the slot it
+/* Installs one gUnknown_0200C528 list script. StartEventScript returns the slot it
  * allocated, and `pop {r0}; bx r0` here discards it -- so this is void and the
  * call is a bare statement. The script is ROM data reached only as an address,
  * hence `const u8 []` and a clean pool word.
@@ -39,15 +39,15 @@ void sub_0802C270(void)
 
 void sub_0802C280(void)
 {
-    sub_080193B0(gUnknown_0849A8F0);
+    StartEventScript(gUnknown_0849A8F0);
 }
 
 /* The removal half of the pair: sub_0802C280 installs gUnknown_0849A8F0 through
- * sub_080193B0 and this drops it through sub_0801930C. sub_0801930C returns -1
+ * StartEventScript and this drops it through EndEventScript. EndEventScript returns -1
  * unconditionally and `pop {r0}; bx r0` discards it, so this is void.
  */
 
 void sub_0802C290(void)
 {
-    sub_0801930C(gUnknown_0849A8F0);
+    EndEventScript(gUnknown_0849A8F0);
 }

@@ -11,7 +11,7 @@
  * of the two-sided range test, so the source reads as the pair of bounds.
  *
  * The prototype `void (int, int)` was already fixed by the promoted caller
- * sub_080190EC and this definition agrees with it: neither parameter is
+ * EventOp_SetCampaignFlag and this definition agrees with it: neither parameter is
  * narrowed here. The `lsls #0x18; lsrs #0x18` on the value before the first
  * two calls is sub_0803C9D4's and sub_0803CA00's `u8` showing through, and its
  * absence before the third is sub_0803CB40's `int`. */

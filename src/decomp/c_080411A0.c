@@ -8,8 +8,8 @@
  */
 
 #include "proc.h"
-/* The proc the gUnknown_0849FD44 script runs. +0x34 is a sub_0801C210 handle
- * (it goes straight to sub_0801C4D4's first parameter) and +0x42 / +0x46 are
+/* The proc the gUnknown_0849FD44 script runs. +0x34 is a AP_Create handle
+ * (it goes straight to AP_SwitchAnimation's first parameter) and +0x42 / +0x46 are
  * halfwords the 0x080412A4 / 0x080412F4 / 0x0804134C handlers drive. */
 struct Unk411A0Proc
 {
@@ -23,7 +23,7 @@ struct Unk411A0Proc
  * argument from it. */
 void sub_080411A0(ProcPtr parent)
 {
-    sub_0801C4D4(((struct Unk411A0Proc *)Proc_Find(gUnknown_0849FD44))->unk34, 1);
+    AP_SwitchAnimation(((struct Unk411A0Proc *)Proc_Find(gUnknown_0849FD44))->unk34, 1);
     Proc_StartBlocking(gUnknown_0849FE0C, parent);
     sub_0803B4DC(0x6D);
 }

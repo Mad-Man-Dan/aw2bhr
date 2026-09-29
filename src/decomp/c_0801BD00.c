@@ -7,7 +7,7 @@
  * sub_0801BD00 @ 0x0801BD00, sub_0801BDB4 @ 0x0801BDB4
  */
 
-void sub_0801BD00(s32 a1, s32 a2, void *a3, s32 a4)
+void PutOamHi(s32 a1, s32 a2, void *a3, s32 a4)
 {
     u16 *dst;
     s16 n;
@@ -29,8 +29,9 @@ void sub_0801BD00(s32 a1, s32 a2, void *a3, s32 a4)
         n--;
     }
 }
+asm(".global sub_0801BD00\n.thumb_set sub_0801BD00, PutOamHi\n");
 
-void sub_0801BDB4(s32 a1, s32 a2, u16 *src, s32 a4)
+void PutOamLo(s32 a1, s32 a2, u16 *src, s32 a4)
 {
     u16 *dst;
     s16 n;
@@ -49,3 +50,4 @@ void sub_0801BDB4(s32 a1, s32 a2, u16 *src, s32 a4)
         n--;
     }
 }
+asm(".global sub_0801BDB4\n.thumb_set sub_0801BDB4, PutOamLo\n");

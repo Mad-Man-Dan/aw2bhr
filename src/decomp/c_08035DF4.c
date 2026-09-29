@@ -9,7 +9,7 @@
 
 void sub_08035DF4(void *a)
 {
-    sub_08070610(a, 1);
+    m4aMPlayFadeOut(a, 1);
 }
 
 void sub_08035E00(struct Unk03001470 *p)
@@ -19,7 +19,7 @@ void sub_08035E00(struct Unk03001470 *p)
     p->unk1e = 0;
 }
 
-/* The first sub_08071488 call reuses the value just stored to unk1e; the second
+/* The first MPlayPitchControl call reuses the value just stored to unk1e; the second
  * reloads it, because the intervening call may have written to it. Both are
  * what the plain `-p->unk1e` spelling gives. */
 void sub_08035E24(struct Unk03001470 *p)
@@ -28,12 +28,12 @@ void sub_08035E24(struct Unk03001470 *p)
         p->unk08 = 0;
 
     p->unk1e += 0x14;
-    sub_08071488(gUnknown_03005BA0, 1, -p->unk1e);
-    sub_08071488(gUnknown_030059E0, 1, -p->unk1e);
+    MPlayPitchControl(gUnknown_03005BA0, 1, -p->unk1e);
+    MPlayPitchControl(gUnknown_030059E0, 1, -p->unk1e);
 }
 
 void sub_08035E6C(void)
 {
-    sub_08071488(gUnknown_03005BA0, 1, 0);
-    sub_08071488(gUnknown_030059E0, 1, 0);
+    MPlayPitchControl(gUnknown_03005BA0, 1, 0);
+    MPlayPitchControl(gUnknown_030059E0, 1, 0);
 }

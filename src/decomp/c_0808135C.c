@@ -60,7 +60,7 @@ void MainMenuC2_0808135D(struct Unk808135C *proc)
 
     sub_0801F114();
     sub_0801F150(2, (void *)0x06010000, 0x300, 0x19);
-    sub_0801F234(0x50);
+    LoadTilePoolGraphic(0x50);
 
     proc->unk4c = 0;
     proc->unk52 = gUnknown_03005934;

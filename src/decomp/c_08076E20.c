@@ -100,7 +100,7 @@ void sub_08076E20(u16 a1)
         m = a > b ? a : b;
 
         if (gSmoothScroll.frameCounter % (8 - m) == 0)
-            sub_08072B54(0x1D0, gUnknown_0202FDFC.unk04);
+            PlaySeSpacial(0x1D0, gUnknown_0202FDFC.unk04);
 
         gSmoothScroll.frameCounter++;
     }

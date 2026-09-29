@@ -58,7 +58,7 @@ void sub_080195F8(void *proc)
     if (gpKeySt->unk0c & 1)
     {
         gUnknown_03002EE4 = p->unk1e;
-        sub_080179D0(p->unk28);
+        ClearTilemapRect23x4(p->unk28);
         p->unk2c();
         sub_08015C30(gUnknown_03001FBC);
         sub_0803B4DC(0x65);

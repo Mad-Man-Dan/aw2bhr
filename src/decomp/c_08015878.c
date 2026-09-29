@@ -13,7 +13,7 @@
  *
  * `a` is a gUnknown_03001470 slot. sub_0801566C copies the slot's stored OAM
  * attributes into a local, the two bitfields are poked, and sub_08015608 hands
- * the eight bytes back by value. sub_080154C4 and sub_08015504 are the same
+ * the eight bytes back by value. SetSlotSpriteHidden and SetSlotSpriteFlicker are the same
  * shape, each setting a single bit.
  *
  * Why the C looks odd: all three parameters are declared narrow, and `b` is

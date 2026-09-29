@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08072598(void)
+void DeleteAllPaletteAnimator(void)
 {
     Proc_EndEach(gUnknown_08613F2C);
 }
+asm(".global sub_08072598\n.thumb_set sub_08072598, DeleteAllPaletteAnimator\n");

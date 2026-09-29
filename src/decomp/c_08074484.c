@@ -13,7 +13,7 @@
  * the leading opcode byte is 8, and for each one either accepts the record
  * (fall through to the next) or rejects it, in which case sub_08074570 skips
  * ahead to the next opcode-7-or-8 record. Only opcode 7 does any work --
- * running the +0x04 script through sub_08019348 and reporting `1` back to the
+ * running the +0x04 script through StartOrQueueEventScript and reporting `1` back to the
  * caller.
  *
  * THE RECORD IS READ THROUGH `u8 *` WITH EXPLICIT CASTS, not through a struct.
@@ -43,7 +43,7 @@
  *     u8-returning callee's result; case 6's BARE `lsls #0x18` is the same u8
  *     return used as a truth test. The pair pins the return type at u8 twice
  *     over, from the two different uses.
- *   - Case 7's +0x04 is the `const u8 *` script pointer sub_08019348 declares,
+ *   - Case 7's +0x04 is the `const u8 *` script pointer StartOrQueueEventScript declares,
  *     which is the same object cases 5 and 6 call through -- the union is real
  *     in the data, not a typing error here.
  *
@@ -79,7 +79,7 @@ u8 sub_08074484(u8 *p, struct Unk030040D8 *a2, int a3)
 
             if (*(const u8 **)(p + 4) != 0)
             {
-                sub_08019348(*(const u8 **)(p + 4));
+                StartOrQueueEventScript(*(const u8 **)(p + 4));
                 ret = 1;
             }
 

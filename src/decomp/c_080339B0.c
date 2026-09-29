@@ -59,7 +59,7 @@ void LinkC2_080339B1(struct Unk339B0Proc *proc)
 
     sub_0801F114();
     sub_0801F150(2, (void *)0x06010000, 0, 0x16);
-    sub_0801F234(0x50);
+    LoadTilePoolGraphic(0x50);
 
     ApplyPalette(gUnknown_081320AC, 3);
     ApplyPalette(gUnknown_081D92B8, 0);

@@ -9,7 +9,7 @@
 
 void sub_0803CEB8(u8 a1, const void *a2)
 {
-    sub_0801AC58(a1 + 5, gUnknown_02000000);
+    ReadSaveSlot(a1 + 5, gUnknown_02000000);
     sub_0803D3D8((int)a2, gUnknown_02000000);
     sub_08026040(gPlaySt.armyColor[1], gPlaySt.armyColor[2],
                  gPlaySt.armyColor[3], gPlaySt.armyColor[4]);

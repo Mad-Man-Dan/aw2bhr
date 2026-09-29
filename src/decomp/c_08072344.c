@@ -19,11 +19,11 @@ struct Unk72344Proc
 };
 
 /* One step of the gUnknown_08613EE4 fade: advance both accumulators by the
- * per-frame delta sub_080722B8 parked at +0x54 and report whether the fade is
+ * per-frame delta StartFadeCore parked at +0x54 and report whether the fade is
  * still running. Returns 1 while it is and on the final frame (which also
  * blanks the backdrop), 0 only once the second accumulator has run past
  * 0x1ff. */
-u8 sub_08072344(ProcPtr procPtr)
+u8 FadeCore_Tick(ProcPtr procPtr)
 {
     struct Unk72344Proc *proc = procPtr;
 
@@ -44,3 +44,4 @@ u8 sub_08072344(ProcPtr procPtr)
 
     return 1;
 }
+asm(".global sub_08072344\n.thumb_set sub_08072344, FadeCore_Tick\n");

@@ -34,7 +34,7 @@ void CampaignIntro_IDLE_0808A845(ProcPtr proc)
         sub_08013C00();
         sub_08013AEC();
         sub_08014BC0(proc);
-        sub_080193B0(gUnknown_084A0D58);
+        StartEventScript(gUnknown_084A0D58);
         sub_0801A5B0(0);
         Proc_Break(proc);
     }

@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* The draw half of the proc that sub_0801BFB8 starts: every field that
+/* The draw half of the proc that StartSpriteRefresher starts: every field that
  * function writes is read straight back out here and handed to PutSprite. The
  * two are a producer/consumer pair over the same layout, which is the
  * discriminating use the field types would otherwise lack -- neither function
@@ -29,7 +29,7 @@ struct Unk1BF90Proc
     /* 52 */ u16 unk52;
     /* 54 */ u16 *unk54;
 };
-/* Starts the sprite proc sub_0801BF90 draws, seeding all five of its fields and
+/* Starts the sprite proc SpriteRefresher_OnIdle draws, seeding all five of its fields and
  * returning it. The same script gUnknown_0848B418 appears in TWO pool words
  * because each arm of the parent test loads it independently -- that
  * duplication is the if/else, not two different scripts.
@@ -56,12 +56,13 @@ struct Unk1BFB8Proc
     /* 54 */ u16 *unk54;
 };
 
-void sub_0801BF90(struct Unk1BF90Proc *proc)
+void SpriteRefresher_OnIdle(struct Unk1BF90Proc *proc)
 {
     PutSprite(proc->unk50, proc->unk2c, proc->unk30, proc->unk54, proc->unk52);
 }
+asm(".global sub_0801BF90\n.thumb_set sub_0801BF90, SpriteRefresher_OnIdle\n");
 
-ProcPtr sub_0801BFB8(ProcPtr parent, int oam, u32 a, u32 b, u16 *gfx, int pal)
+ProcPtr StartSpriteRefresher(ProcPtr parent, int oam, u32 a, u32 b, u16 *gfx, int pal)
 {
     struct Unk1BFB8Proc *proc;
 
@@ -77,3 +78,4 @@ ProcPtr sub_0801BFB8(ProcPtr parent, int oam, u32 a, u32 b, u16 *gfx, int pal)
     proc->unk52 = pal;
     return proc;
 }
+asm(".global sub_0801BFB8\n.thumb_set sub_0801BFB8, StartSpriteRefresher\n");

@@ -17,8 +17,8 @@ void sub_0802CF48(int a1, int a2, u8 a3)
 {
     if (!(a3 & 2))
     {
-        sub_0801A614();
-        sub_0801A168();
+        PushMenu();
+        CloseTopMenu();
         sub_08034F10();
         sub_080485AC();
     }
@@ -38,7 +38,7 @@ void sub_0802CF48(int a1, int a2, u8 a3)
 
 void sub_0802CF6C(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_08042B9C();
 
     if (gPlaySt.savingEnabled != 0)
@@ -85,7 +85,7 @@ void sub_0802CF94(void)
  * count is a floor taken from the third one's register index, and `int` is the
  * weakest model for both.
  *
- * sub_0801A168 returns int and the result is discarded, so both calls are bare
+ * CloseTopMenu returns int and the result is discarded, so both calls are bare
  * statements and this is void.
  */
 
@@ -93,7 +93,7 @@ void sub_0802CFC0(int a1, int a2, u8 a3)
 {
     if (!(a3 & 2))
     {
-        sub_0801A168();
+        CloseTopMenu();
         sub_0802C280();
     }
 }
@@ -101,17 +101,17 @@ void sub_0802CFC0(int a1, int a2, u8 a3)
 /* sub_0802C1D0's twin, one block down: the same
  * `sub_08016D04(gPlaySt.gameMode)` result handed to a u16-taking
  * sub_08016Dxx entry, with the fused `lsls #0x18; asrs #8; lsrs #0x10` s8-to-u16
- * conversion between the two `bl`s. sub_08016DB8's own prologue
+ * conversion between the two `bl`s. LoadSuspendSave's own prologue
  * (`lsls r0,#0x10; lsrs r0,#0x10`) confirms the u16 independently of the call
  * site.
  *
  * The narrowing is the only thing between the second and third calls, so that
- * pair is genuine nesting; sub_0801A168 in front of it is a separate statement
+ * pair is genuine nesting; CloseTopMenu in front of it is a separate statement
  * whose int result is discarded. `pop {r0}; bx r0`, so void.
  */
 
 void sub_0802CFDC(void)
 {
-    sub_0801A168();
-    sub_08016DB8(sub_08016D04(gPlaySt.gameMode));
+    CloseTopMenu();
+    LoadSuspendSave(sub_08016D04(gPlaySt.gameMode));
 }

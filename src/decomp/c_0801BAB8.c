@@ -7,6 +7,7 @@
  * sub_0801BAB8 @ 0x0801BAB8
  */
 
-void sub_0801BAB8(void)
+void DummyIRQRoutine(void)
 {
 }
+asm(".global sub_0801BAB8\n.thumb_set sub_0801BAB8, DummyIRQRoutine\n");

@@ -24,16 +24,18 @@ struct Unk115F8Proc
     /* 64 */ u16 unk64;
 };
 
-void sub_080115E0(int a, ProcPtr parent)
+void StartLockingFadeToBlack(int a, ProcPtr parent)
 {
     struct Unk115E0Proc *proc = Proc_StartBlocking(gUnknown_0848923C, parent);
 
     proc->unk64 = a;
 }
+asm(".global sub_080115E0\n.thumb_set sub_080115E0, StartLockingFadeToBlack\n");
 
-void sub_080115F8(int a, ProcPtr parent)
+void StartLockingFadeFromBlack(int a, ProcPtr parent)
 {
     struct Unk115F8Proc *proc = Proc_StartBlocking(ProcScr_DesignRoomFadeIn, parent);
 
     proc->unk64 = a;
 }
+asm(".global sub_080115F8\n.thumb_set sub_080115F8, StartLockingFadeFromBlack\n");

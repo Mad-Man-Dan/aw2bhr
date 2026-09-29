@@ -32,7 +32,7 @@ void sub_0803F2F4(struct UnkF2F4Proc *proc)
     Decompress(gUnknown_08115A78, gUnknown_0200FC50);
     ApplyPaletteExt(gUnknown_081169B0, 0x2A0, 0x20);
     sub_0803B4DC(0x1D8);
-    ((struct UnkF2F4Ret *)sub_0801C70C(gUnknown_081161CC,
+    ((struct UnkF2F4Ret *)APProc_Create(gUnknown_081161CC,
                  (proc->unk2c * 16 - gMap->scrollX + 0x20) & 0x1FF,
                  (proc->unk30 * 16 - gMap->scrollY + 8) & 0xFF,
                  0x51CA, 0, 1))->unk50->unk24 = gUnknown_0200FC50;

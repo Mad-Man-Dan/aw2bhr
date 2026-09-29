@@ -7,10 +7,10 @@
  * sub_08070620 @ 0x08070620
  */
 
-/* m4aMPlayFadeOutTemporarily. See sub_080703B8 for why the trailing ident store
+/* m4aMPlayFadeOutTemporarily. See MPlayContinue for why the trailing ident store
  * is needed even though it emits nothing.
  */
-void sub_08070620(struct MusicPlayerInfo * mplayInfo, u16 speed)
+void m4aMPlayFadeOutPause(struct MusicPlayerInfo * mplayInfo, u16 speed)
 {
     u32 ident = mplayInfo->ident;
 
@@ -22,3 +22,4 @@ void sub_08070620(struct MusicPlayerInfo * mplayInfo, u16 speed)
     mplayInfo->fadeOV = (64 << FADE_VOL_SHIFT) | TEMPORARY_FADE;
     mplayInfo->ident = ident;
 }
+asm(".global sub_08070620\n.thumb_set sub_08070620, m4aMPlayFadeOutPause\n");

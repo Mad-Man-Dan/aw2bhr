@@ -46,7 +46,7 @@ void sub_08064288(int a1, int a2)
         x = (Add(Add(v[0]->unk0c[0], v[1]->unk0c[0]), v[2]->unk0c[0]) + v[3]->unk0c[0]) >> 9;
         y = Add(Add(Add(v[0]->unk0c[1], v[1]->unk0c[1]), v[2]->unk0c[1]), v[3]->unk0c[1]) >> 9;
 
-        sub_0801BD00(a1 + x, a2 + y, gUnknown_0858092C, 0);
+        PutOamHi(a1 + x, a2 + y, gUnknown_0858092C, 0);
 
         a = 0x10000 / ((v[1]->unk0c[0] - v[0]->unk0c[0]) >> 5);
         b = 0x10000 / ((v[1]->unk0c[1] - v[0]->unk0c[1]) >> 5);
@@ -57,13 +57,13 @@ void sub_08064288(int a1, int a2)
 
         x = Add(a1, x - 0x20);
         y = Add(a2, y - 0x20);
-        sub_0801BD00(x, y, gUnknown_08580914[i], e->unk00);
+        PutOamHi(x, y, gUnknown_08580914[i], e->unk00);
     }
 
     for (i = 0; i < 8; i++)
     {
         sx = gUnknown_0202F140[i].unk0c[0] >> 7;
         sy = gUnknown_0202F140[i].unk0c[1] >> 7;
-        sub_0801BD00(a1 + sx, a2 + sy, gUnknown_0858092C, 0);
+        PutOamHi(a1 + sx, a2 + sy, gUnknown_0858092C, 0);
     }
 }

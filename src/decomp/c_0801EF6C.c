@@ -13,7 +13,7 @@
  * sub_0801EF90 predicted from `varies` and it holds here. */
 void sub_0801EF6C(void)
 {
-    sub_0801E0C8(0, 0x80);
+    HideOamObjects(0, 0x80);
     gUnknown_03002B54 = 0x10;
     gUnknown_03001FE4 = 0;
 }

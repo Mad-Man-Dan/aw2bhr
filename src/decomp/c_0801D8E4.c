@@ -14,7 +14,7 @@
  * literal pool is NOT a global -- it is agbcc's own -fforce-addr address
  * constant for gUnknown_03003034, which is why the read costs two `ldr`s.
  */
-void sub_0801D8E4(void)
+void TickSpriteScripts(void)
 {
     int i;
 
@@ -22,8 +22,9 @@ void sub_0801D8E4(void)
         if (gUnknown_0200E438[i].unk08)
             sub_0801D390(i, 1);
 }
+asm(".global sub_0801D8E4\n.thumb_set sub_0801D8E4, TickSpriteScripts\n");
 
-void sub_0801D924(void)
+void DrawSpriteScripts(void)
 {
     int i;
 
@@ -36,3 +37,4 @@ void sub_0801D924(void)
         }
     }
 }
+asm(".global sub_0801D924\n.thumb_set sub_0801D924, DrawSpriteScripts\n");

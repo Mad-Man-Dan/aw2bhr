@@ -7,10 +7,11 @@
  * sub_080136C4 @ 0x080136C4
  */
 
-void sub_080136C4(void)
+void ColorFadeInit(void)
 {
     int i;
 
     for (i = 0x1f; i >= 0; i--)
         gUnknown_0200B5F4[i] = 0;
 }
+asm(".global sub_080136C4\n.thumb_set sub_080136C4, ColorFadeInit\n");

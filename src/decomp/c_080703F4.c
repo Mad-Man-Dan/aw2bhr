@@ -23,15 +23,15 @@
  * value, LICM hoists the address, and the store becomes a double indirection
  * through r7.
  */
-void sub_080703F4(void)
+void m4aSoundInit(void)
 {
     s32 i;
     u16 n;
 
     CpuSet((void *)((s32)sub_0806F7C8 & ~1), gUnknown_03000FB0, 0x04000100);
-    sub_080707F4(&gUnknown_03004790);
-    sub_080706B0(gUnknown_030057D0);
-    sub_08070990(0x0094DB00);
+    SoundInit_rev01(&gUnknown_03004790);
+    MPlayExtender(gUnknown_030057D0);
+    SoundMode_rev01(0x0094DB00);
 
     n = (u16)(u32)&gNumMusicPlayers;
 
@@ -39,8 +39,9 @@ void sub_080703F4(void)
     {
         struct MusicPlayerInfo *mplayInfo = gUnknown_08242308[i].info;
 
-        sub_08070B34(mplayInfo, gUnknown_08242308[i].track, gUnknown_08242308[i].trackCount);
+        MPlayOpen_rev01(mplayInfo, gUnknown_08242308[i].track, gUnknown_08242308[i].trackCount);
         mplayInfo->unk_0b = gUnknown_08242308[i].unk_0a;
         mplayInfo->memAccArea = &gUnknown_03005BE0;
     }
 }
+asm(".global sub_080703F4\n.thumb_set sub_080703F4, m4aSoundInit\n");

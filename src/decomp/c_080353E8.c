@@ -26,7 +26,7 @@ void sub_080353E8(void)
 
     for (j = n * 16; j < m * 16 + 16; j++)
     {
-        sub_0801BDB4(((gUnknown_02027DE8[j].unk00 >> 8) - gMap->scrollX) & 0xff,
+        PutOamLo(((gUnknown_02027DE8[j].unk00 >> 8) - gMap->scrollX) & 0xff,
                      ((gUnknown_02027DE8[j].unk02 >> 8) - gMap->scrollY) & 0xff,
                      &gUnknown_0849BDA0[gUnknown_02027DE8[j].unk08 * 4],
                      0);

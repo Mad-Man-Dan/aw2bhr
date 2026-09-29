@@ -13,11 +13,11 @@
  * sub_08011AAC's `void *` parameter forces, exactly as
  * src/decomp/c_08012A74.c and c_080111AC.c spell the same registration.
  *
- * The handler parameter stays `void *`: sub_0801BB00's second argument is
+ * The handler parameter stays `void *`: SetIRQHandler's second argument is
  * opaque and this function does nothing with it but pass it on. */
 void sub_08012A54(void *handler)
 {
-    sub_0801BB00(1, handler);
+    SetIRQHandler(1, handler);
     sub_0801BB10(2, 2);
     sub_08011AAC((void *)sub_08012A24);
 }

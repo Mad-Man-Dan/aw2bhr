@@ -18,18 +18,20 @@
  * `movs r1, #8; ldrsh r0, [r0, r1]` -- byte-identical to declaring the member
  * `s16`. So an `ldrsh` at a member offset does not prove a signed member, and
  * c_08018C54.c's `ldrh` on the same member is left undisturbed. */
-bool8 sub_080190EC(s16 a)
+bool8 EventOp_SetCampaignFlag(s16 a)
 {
     sub_0803CBA0((s16)gUnknown_0200C528[a].unk04->unk08, 1);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_080190EC\n.thumb_set sub_080190EC, EventOp_SetCampaignFlag\n");
 
-/* sub_080190EC with sub_0803CBA0's second argument 0 instead of 1; see the note
+/* EventOp_SetCampaignFlag with sub_0803CBA0's second argument 0 instead of 1; see the note
  * on the `(s16)` cast there. */
-bool8 sub_0801911C(s16 a)
+bool8 EventOp_ClearCampaignFlag(s16 a)
 {
     sub_0803CBA0((s16)gUnknown_0200C528[a].unk04->unk08, 0);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_0801911C\n.thumb_set sub_0801911C, EventOp_ClearCampaignFlag\n");

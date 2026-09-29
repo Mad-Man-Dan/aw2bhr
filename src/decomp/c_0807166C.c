@@ -8,8 +8,8 @@
  */
 
 /* Wave 80 (W80-C): BYTE-EXACT UNDER compiler_profile "old-agbcc" (the m4a
- * block override its three matched neighbours sub_08071564 / sub_08071584 /
- * sub_080715F8 carry in data/compiler-overrides.json: cc1 old_agbcc, remove
+ * block override its three matched neighbours MP_clear_modM / MPlayModDepthSet /
+ * MPlayLFOSpeedSet carry in data/compiler-overrides.json: cc1 old_agbcc, remove
  * -fprologue-bugfix). Provisional until the orchestrator records the
  * override entry and re-runs the configured verdict. Under the DEFAULT
  * profile this same source is NOT exact (the case bodies rotate r0/r1 and the
@@ -68,7 +68,7 @@ struct Unk0807166C_B
     /* 0x40 */ u8 *unk40;
 };
 
-void sub_0807166C(struct Unk0807166C_A *a, struct Unk0807166C_B *b)
+void ply_memacc(struct Unk0807166C_A *a, struct Unk0807166C_B *b)
 {
     u8 op;
     u8 *p;
@@ -150,3 +150,4 @@ void sub_0807166C(struct Unk0807166C_A *a, struct Unk0807166C_B *b)
 skip:
     b->unk40 += 4;
 }
+asm(".global sub_0807166C\n.thumb_set sub_0807166C, ply_memacc\n");

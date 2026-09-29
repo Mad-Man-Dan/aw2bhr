@@ -16,8 +16,8 @@
  *
  * WAVE 77, W77-E -- SIGNATURE FIXED; THIS DRAFT HAD NOT COMPILED SINCE THE
  * PROTOTYPE LANDED. include/unknown-functions.h carried
- * `void sub_08070CD0(void);`, an argument-less placeholder generated for the
- * sub_080706B0 jump table (whose entry is explicitly cast
+ * `void FadeOutBody_rev01(void);`, an argument-less placeholder generated for the
+ * MPlayExtender jump table (whose entry is explicitly cast
  * `(void (*)(void *, void *))` and so never constrained it). Against this
  * draft's `struct MusicPlayerInfo *` that is a hard `conflicting types` error,
  * so trymatch never got past the compile, never wrote a _cand.bin, and every
@@ -86,7 +86,7 @@
  * instead, which is worse. Binding the load to a local (as below) gets r7 in
  * the shutdown loop but not in the tail loop.
  */
-void sub_08070CD0(struct MusicPlayerInfo *mplayInfo)
+void FadeOutBody_rev01(struct MusicPlayerInfo *mplayInfo)
 {
     s32 i;
     struct MusicPlayerTrack *track;
@@ -150,3 +150,4 @@ void sub_08070CD0(struct MusicPlayerInfo *mplayInfo)
         track++;
     }
 }
+asm(".global sub_08070CD0\n.thumb_set sub_08070CD0, FadeOutBody_rev01\n");

@@ -25,7 +25,7 @@ void sub_0802D168(void)
         gUnknown_03000558 = 0;
 
     sub_08029948(0);
-    sub_0801A168();
+    CloseTopMenu();
     IncrementMapLock();
 }
 
@@ -38,7 +38,7 @@ void sub_0802D1A0(void)
     gUnknown_03000558 = 1;
 
     sub_08029948(1);
-    sub_0801A168();
+    CloseTopMenu();
     IncrementMapLock();
 }
 
@@ -48,7 +48,7 @@ void sub_0802D1A0(void)
 void sub_0802D1C0(void)
 {
     LockUnitSelection();
-    sub_0801A168();
+    CloseTopMenu();
     sub_08060684();
     sub_080424FC();
 
@@ -62,7 +62,7 @@ void sub_0802D1C0(void)
 void sub_0802D1F8(void)
 {
     LockUnitSelection();
-    sub_0801A168();
+    CloseTopMenu();
     sub_080606A0();
     sub_080424FC();
 

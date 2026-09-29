@@ -27,7 +27,7 @@ struct Unk8071B28Proc
     /* 0x2c */ struct Unk0202F2DC *unk2c;
 };
 
-void *sub_08071B28(const void *pal, int index, int b, ProcPtr parent)
+void *StartPalFade(const void *pal, int index, int b, ProcPtr parent)
 {
     struct Unk0202F2DC *p;
     struct Unk8071B28Proc *proc;
@@ -49,3 +49,4 @@ void *sub_08071B28(const void *pal, int index, int b, ProcPtr parent)
 
     return p;
 }
+asm(".global sub_08071B28\n.thumb_set sub_08071B28, StartPalFade\n");

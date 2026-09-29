@@ -13,7 +13,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* sub_080110A4's fade-DOWN twin, and the 0x08011 copy of sub_08071E40: clamp
+/* sub_080110A4's fade-DOWN twin, and the 0x08011 copy of FadeFromCommon_OnLoop: clamp
  * at 0 and publish `>> 8`. The floor test is the bare sign test
  * `lsls #0x10; cmp #0; bgt` -- no `asrs`, because only the sign bit matters. */
 struct Unk801113C

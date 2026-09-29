@@ -160,7 +160,7 @@ void sub_08022DD4(s16 a1, s16 a2, s16 a3)
         gUnknown_03003F58.unk00 = a1;
         gUnknown_03003F58.unk02 = a2;
         gUnknown_03003F58.unk04 = v;
-        sub_0801BD00(gUnknown_03003F58.unk00, (s16)((u16)a2 | 0x400),
+        PutOamHi(gUnknown_03003F58.unk00, (s16)((u16)a2 | 0x400),
                      gUnknown_0848ABF4[gUnknown_03003F58.unk04], 0x365);
     }
     else

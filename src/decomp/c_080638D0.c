@@ -15,7 +15,7 @@ void sub_080638D0(int a1)
     {
         REG_IE |= 4;
         gUnknown_030020B4.bits.vcount_int_enable = 1;
-        sub_0801BB00(2, (void *)a1);
+        SetIRQHandler(2, (void *)a1);
     }
     else
     {
@@ -30,7 +30,7 @@ void sub_08063928(int a1)
     {
         REG_IE |= 2;
         gUnknown_030020B4.bits.hblank_int_enable = 1;
-        sub_0801BB00(1, (void *)a1);
+        SetIRQHandler(1, (void *)a1);
     }
     else
     {

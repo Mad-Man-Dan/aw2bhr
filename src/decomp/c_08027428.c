@@ -28,7 +28,7 @@ struct Unk27428Proc
  * addresses; read that one for the derivation. */
 void sub_08027428(struct Unk27428Proc *proc)
 {
-    proc->unk50 = sub_0801C210(gUnknown_08112614, 1, 1);
+    proc->unk50 = AP_Create(gUnknown_08112614, 1, 1);
     proc->unk50->unk22 = 0x31CA;
 
     sub_08027560(proc->unk2c, proc->unk30, proc->unk54, proc->unk50);

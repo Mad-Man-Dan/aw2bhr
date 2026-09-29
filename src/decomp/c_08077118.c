@@ -13,7 +13,7 @@
 void sub_08077118(void)
 {
     gUnknown_0202FDFC.unk10 = 0;
-    sub_0801C1F8();
+    AP_ClearAll();
     sub_08074744();
     Proc_EndEach(gUnknown_086143E0);
     sub_080755E0();

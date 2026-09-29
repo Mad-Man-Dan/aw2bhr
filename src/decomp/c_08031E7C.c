@@ -60,7 +60,7 @@ void sub_08031E7C(struct Unk31E7CProc *proc)
 {
     proc->unk58 = 0x20;
 
-    sub_080136C4();
+    ColorFadeInit();
     sub_0801394C(0x11, -1);
     sub_080718F0();
     sub_080135A4();

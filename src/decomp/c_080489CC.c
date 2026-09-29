@@ -142,15 +142,15 @@ void BattleMaps_080489CD(void)
     sub_0801F150(0,
                  (void *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  0x180, 9);
-    sub_0801F234(0x18);
-    sub_0801F234(0x19);
-    sub_0801F234(0x1a);
-    sub_0801F234(0x13);
-    sub_0801F234(0x14);
+    LoadTilePoolGraphic(0x18);
+    LoadTilePoolGraphic(0x19);
+    LoadTilePoolGraphic(0x1a);
+    LoadTilePoolGraphic(0x13);
+    LoadTilePoolGraphic(0x14);
     sub_0801F150(2, (void *)0x06010000, 0x7f, 0x14);
-    sub_0801F234(0x43);
-    sub_0801F234(0x44);
-    sub_0801F234(0x51);
+    LoadTilePoolGraphic(0x43);
+    LoadTilePoolGraphic(0x44);
+    LoadTilePoolGraphic(0x51);
     Decompress(gUnknown_0823E8E8, gUnknown_0200FC50);
     CpuFastSet(gUnknown_0200FC50, (void *)0x06011360, 0x20);
     CpuFastSet(gUnknown_0200FC50 + 0x400, (void *)0x060113E0, 0x20);

@@ -36,7 +36,7 @@ void sub_08074038(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u8 a6, u16 a7)
         {
             j = i + 1;
 
-            sub_0801BD00(((a4 - (a3 - i)) * 8 - gUnknown_03001FF8) & 0x1FF,
+            PutOamHi(((a4 - (a3 - i)) * 8 - gUnknown_03001FF8) & 0x1FF,
                 a5 * 8, gUnknown_0848B690, a1 | (a2 << 12));
 
             i = j;
@@ -60,12 +60,12 @@ void sub_08074038(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u8 a6, u16 a7)
 
         k = i + 3;
 
-        sub_0801BD00(((a4 - k) * 8 - gUnknown_03001FF8) & 0x1FF,
+        PutOamHi(((a4 - k) * 8 - gUnknown_03001FF8) & 0x1FF,
             a5 * 8, gUnknown_0848B690, a1 | (a2 << 12));
 
         k = i + 1;
 
-        sub_0801BD00(((a4 - k) * 8 - gUnknown_03001FF8) & 0x1FF,
+        PutOamHi(((a4 - k) * 8 - gUnknown_03001FF8) & 0x1FF,
             a5 * 8 + 6, gUnknown_0848B688, (a1 + 4) | (a2 << 12));
 
         if (a6 != 0)

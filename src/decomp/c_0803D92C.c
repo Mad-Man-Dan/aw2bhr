@@ -20,5 +20,5 @@ void sub_0803D92C(void)
     if (v != 0)
         sub_08016CEC(v, 0);
     if (IsPlayer1TeamAlive())
-        sub_080193B0(gUnknown_0849F3A8)->unk10 = v;
+        StartEventScript(gUnknown_0849F3A8)->unk10 = v;
 }

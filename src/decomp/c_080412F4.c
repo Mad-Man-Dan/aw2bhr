@@ -74,7 +74,7 @@ void sub_0804134C(struct Unk4134CProc *proc)
     if (proc->unk4c == 0)
     {
         Proc_Break(proc);
-        sub_0801C4D4(p->unk34, 3);
+        AP_SwitchAnimation(p->unk34, 3);
     }
     else
     {

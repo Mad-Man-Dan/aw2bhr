@@ -7,7 +7,7 @@
  * sub_0801BF2C @ 0x0801BF2C
  */
 
-void sub_0801BF2C(int a1)
+void PushSpriteLayerObjects(int a1)
 {
     struct SpriteEntry *node;
 
@@ -20,8 +20,9 @@ void sub_0801BF2C(int a1)
                 sub_0801C090((s16)node->oam1, (s16)node->oam0, node->object,
                              node->oam2);
             else
-                sub_0801BD00((s16)node->oam1, (s16)node->oam0, node->object,
+                PutOamHi((s16)node->oam1, (s16)node->oam0, node->object,
                              node->oam2);
         }
     }
 }
+asm(".global sub_0801BF2C\n.thumb_set sub_0801BF2C, PushSpriteLayerObjects\n");

@@ -19,5 +19,5 @@
 void sub_0802D0A4(void)
 {
     sub_08042C10();
-    sub_0801A168();
+    CloseTopMenu();
 }

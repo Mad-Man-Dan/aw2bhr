@@ -7,7 +7,7 @@
  * sub_0801C67C @ 0x0801C67C
  */
 
-/* Runs one sub_0801C2DC step with +0x18 zeroed and +0x1a forced to 0x100,
+/* Runs one AP_ExecFrame step with +0x18 zeroed and +0x1a forced to 0x100,
  * restoring +0x1a afterwards.
  *
  * THE ZERO IS A SEPARATE STATEMENT, and that is the whole difficulty. The ROM
@@ -19,7 +19,7 @@
  * the insn order IS the source order, and the only source that puts the
  * constant's own insn ahead of the load is one where the stored value is a
  * variable assigned on its own line. */
-void sub_0801C67C(struct Unk0801C210 *a1)
+void AP_ExecDummyFrame(struct Unk0801C210 *a1)
 {
     u16 saved;
     u16 zero;
@@ -28,6 +28,7 @@ void sub_0801C67C(struct Unk0801C210 *a1)
     saved = a1->unk1a;
     a1->unk18 = zero;
     a1->unk1a = 0x100;
-    sub_0801C2DC(a1);
+    AP_ExecFrame(a1);
     a1->unk1a = saved;
 }
+asm(".global sub_0801C67C\n.thumb_set sub_0801C67C, AP_ExecDummyFrame\n");

@@ -33,7 +33,7 @@ struct Unk72948Proc
  * `_call_via_r0` is a nullary indirect call, so +0x2c is `void (*)(void)`;
  * c_08072970.c models the same slot as `u32` because a plain word store cannot
  * tell the difference. */
-void sub_08072924(struct Unk72924Proc *proc)
+void CallDelayed_OnLoop(struct Unk72924Proc *proc)
 {
     proc->unk34--;
 
@@ -43,8 +43,9 @@ void sub_08072924(struct Unk72924Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08072924\n.thumb_set sub_08072924, CallDelayed_OnLoop\n");
 
-/* The one-argument twin of sub_08072924, on the gUnknown_08613F44 proc: the
+/* The one-argument twin of CallDelayed_OnLoop, on the gUnknown_08613F44 proc: the
  * callback at +0x2c takes the word at +0x30. `_call_via_r1` rather than
  * `_call_via_r0` is the arity readout.
  *
@@ -54,7 +55,7 @@ void sub_08072924(struct Unk72924Proc *proc)
  * first forces agbcc to expand it ahead of the argument list, which is the only
  * spelling that reproduces `ldr r1,[r4,#0x2c]` then `ldr r0,[r4,#0x30]`. Both
  * forms are 40 bytes, so size alone does not catch this. */
-void sub_08072948(struct Unk72948Proc *proc)
+void CallDelayedArg_OnLoop(struct Unk72948Proc *proc)
 {
     void (*func)(int);
 
@@ -67,3 +68,4 @@ void sub_08072948(struct Unk72948Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08072948\n.thumb_set sub_08072948, CallDelayedArg_OnLoop\n");

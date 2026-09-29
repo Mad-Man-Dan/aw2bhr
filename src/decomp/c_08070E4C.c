@@ -11,7 +11,7 @@
  * both `>> 4` extractions are `asrs` on a value a bare u8 read would have let
  * agbcc shift unsigned. In the low-key arm fineAdjust is cleared BEFORE key --
  * the ROM materialises a separate zero for ip. */
-int sub_08070E4C(u8 chan, u8 key, u8 fineAdjust)
+int MidiKey2CgbFr(u8 chan, u8 key, u8 fineAdjust)
 {
     int val1;
     int val2;
@@ -57,3 +57,4 @@ int sub_08070E4C(u8 chan, u8 key, u8 fineAdjust)
 
     return val1 + ((val2 - val1) * fineAdjust >> 8) + 0x800;
 }
+asm(".global sub_08070E4C\n.thumb_set sub_08070E4C, MidiKey2CgbFr\n");

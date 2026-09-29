@@ -12,7 +12,7 @@
  * entry in data/compiler-overrides.json, so `try_match` reports the match
  * directly. Wave 38 (W38-A).
  *
- * Same skeleton as sub_08071420 (see that file); the body writes `mod` at
+ * Same skeleton as MPlayVolumeControl (see that file); the body writes `mod` at
  * +0x17 -- NOT modM at +0x16, and the neighbouring `mod`/`modM` pair is the one
  * place a layout quoted from memory slides everything by one. See the
  * MusicPlayerTrack block in include/unknown-globals.h for why +0x17 is settled.
@@ -25,20 +25,20 @@
  *     ldrb first. Pure scheduling.
  *   - the re-read of the just-stored `track->mod` lands in r1 under old_agbcc
  *     (`mov r1,sb; cmp r1,#0`) and in r0 under agbcc (`mov r0,r9; cmp r0,#0`)
- *     -- and r0 is the register the `bl sub_08071564` two instructions later
+ *     -- and r0 is the register the `bl MP_clear_modM` two instructions later
  *     needs for its argument.
  *
  * Both compilers agree on everything else, INCLUDING substituting the stored
  * register for the `track->mod` re-read rather than reloading it (the value is
  * copied into a high register in the preheader and the test reads the copy).
- * So this is NOT the sub_080713F8 store-substitution difference; it is purely
+ * So this is NOT the MPlayTempoControl store-substitution difference; it is purely
  * the allocator, and the trigger is a call inside the loop body. Three siblings
  * in the same block with no call in the body match under both compilers.
  *
  * The `if (!track->mod)` spelling is the pokeemerald one and is what produces
  * the preheader copy. Keep it -- do not rewrite it as `if (!modDepth)`.
  */
-void sub_08071584(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 modDepth)
+void MPlayModDepthSet(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 modDepth)
 {
     s32 i;
     u32 bit;
@@ -62,7 +62,7 @@ void sub_08071584(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 modDepth
                 track->mod = modDepth;
 
                 if (!track->mod)
-                    sub_08071564(track);
+                    MP_clear_modM(track);
             }
         }
 
@@ -73,19 +73,20 @@ void sub_08071584(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 modDepth
 
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08071584\n.thumb_set sub_08071584, MPlayModDepthSet\n");
 
 /*
  * m4aMPlayLFOSpeedSet. MATCHES -- but only under `old_agbcc`; it has an entry
  * in data/compiler-overrides.json. Wave 38 (W38-A).
  *
- * The exact twin of sub_08071584: same 116 bytes, same skeleton, same loop,
- * same call to sub_08071564/ClearModM, differing ONLY in which member the body
+ * The exact twin of MPlayModDepthSet: same 116 bytes, same skeleton, same loop,
+ * same call to MP_clear_modM/ClearModM, differing ONLY in which member the body
  * writes (lfoSpeed at +0x19 here, mod at +0x17 there). The default compiler
  * produces the same two 3-byte deltas at the same offsets and the same 94.8%.
- * The full mechanism is written up in work/sub_08071584/sub_08071584.c -- read
+ * The full mechanism is written up in work/MPlayModDepthSet/MPlayModDepthSet.c -- read
  * that one, not this one.
  */
-void sub_080715F8(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 lfoSpeed)
+void MPlayLFOSpeedSet(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 lfoSpeed)
 {
     s32 i;
     u32 bit;
@@ -109,7 +110,7 @@ void sub_080715F8(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 lfoSpeed
                 track->lfoSpeed = lfoSpeed;
 
                 if (!track->lfoSpeed)
-                    sub_08071564(track);
+                    MP_clear_modM(track);
             }
         }
 
@@ -120,3 +121,4 @@ void sub_080715F8(struct MusicPlayerInfo * mplayInfo, u16 trackBits, u8 lfoSpeed
 
     mplayInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_080715F8\n.thumb_set sub_080715F8, MPlayLFOSpeedSet\n");

@@ -11,7 +11,7 @@
 #include "proc.h"
 /* The fade-UP stepper: accumulate +0x64 into the +0x66 fixed-point
  * accumulator, clamp at 0x100, publish the top four bits as BLDY. Ends itself
- * once BLDY has reached 0x10. sub_08071E40 is the matching fade-DOWN.
+ * once BLDY has reached 0x10. FadeFromCommon_OnLoop is the matching fade-DOWN.
  *
  * `+=` and not `unk66 = unk64 + unk66`: the two spell DIFFERENT code. The
  * compound assignment computes the destination address first (+0x66 into the
@@ -32,7 +32,7 @@ struct Unk8071D70
     /* 0x66 */ s16 unk66;
 };
 
-void sub_08071D70(struct Unk8071D70 *proc)
+void FadeToCommon_OnLoop(struct Unk8071D70 *proc)
 {
     if (gUnknown_03001FFC == 0x10)
     {
@@ -47,3 +47,4 @@ void sub_08071D70(struct Unk8071D70 *proc)
 
     gUnknown_03001FFC = proc->unk66 >> 4;
 }
+asm(".global sub_08071D70\n.thumb_set sub_08071D70, FadeToCommon_OnLoop\n");

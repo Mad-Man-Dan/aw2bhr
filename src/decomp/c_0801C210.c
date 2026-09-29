@@ -10,14 +10,15 @@
 /* Allocates an animation handle and initialises it, or returns NULL when the
  * pool is full. The three parameters are its own (a bare pointer copy, then
  * `lsls #0x10; lsrs #0x10` and `lsls #0x18; lsrs #0x18`, i.e. PROMOTE_MODE on
- * u16 and u8) and they are forwarded to sub_0801C69C unchanged. */
-struct Unk0801C210 *sub_0801C210(void *a1, u16 a2, u8 a3)
+ * u16 and u8) and they are forwarded to AP_Init unchanged. */
+struct Unk0801C210 *AP_Create(void *a1, u16 a2, u8 a3)
 {
-    struct Unk0801C210 *p = sub_0801C6E8(0);
+    struct Unk0801C210 *p = AP_Find(0);
 
     if (p == NULL)
         return NULL;
 
-    sub_0801C69C(p, a1, a2, a3);
+    AP_Init(p, a1, a2, a3);
     return p;
 }
+asm(".global sub_0801C210\n.thumb_set sub_0801C210, AP_Create\n");

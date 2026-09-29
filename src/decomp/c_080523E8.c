@@ -31,10 +31,10 @@ void sub_080523E8(u16 a, u16 b, int c)
                      gUnknown_02029808[a].unk44[gUnknown_02029808[a].unk2e],
                      gUnknown_02029808[a].unk58[gUnknown_02029808[a].unk2e], 0);
 
-    sub_08015504(gUnknown_02029808[a].unk24[b], 1);
+    SetSlotSpriteFlicker(gUnknown_02029808[a].unk24[b], 1);
 
-    sub_08070544(0x3B);
-    sub_08070544(0x3C);
+    m4aSongNumStop(0x3B);
+    m4aSongNumStop(0x3C);
     PlayMusicOrSfx(0x51);
 
     t = gUnknown_08553B14[a];

@@ -10,14 +10,14 @@
 /* Flushes the second pending-copy descriptor unconditionally, then latches
  * where it came from. The `* 2` is the halfword count turned into bytes for
  * CpuFastSet, exactly as the note on struct OamTransfer already records for
- * sub_0801BC08.
+ * SyncLoOam.
  *
- * sub_0801BC08 forty bytes below is the same body over gOamTransferHead and
- * guarded on objectCount; sub_0801BCA8 is this body with the CpuFastSet
+ * SyncLoOam forty bytes below is the same body over gOamTransferHead and
+ * guarded on objectCount; SyncHiOamNoCopy is this body with the CpuFastSet
  * removed. All three keep gOamTransferTail's address in r4 across their calls,
  * which is what makes the descriptor a single object rather than five loose
  * globals. */
-void sub_0801BBC4(void)
+void SyncHiOam(void)
 {
     CpuFastSet(gOamTransferTail.src, gOamTransferTail.dst,
                gOamTransferTail.objectCount * 2);
@@ -26,12 +26,13 @@ void sub_0801BBC4(void)
     gUnknown_030030D4 = gUnknown_03002520;
     gUnknown_030024C0 = 0;
 }
+asm(".global sub_0801BBC4\n.thumb_set sub_0801BBC4, SyncHiOam\n");
 
-/* sub_0801BBC4's body over the OTHER descriptor, guarded on a non-zero count
+/* SyncHiOam's body over the OTHER descriptor, guarded on a non-zero count
  * and latching into a different global. The guard is the whole difference
  * between the two, and it is why this one is 52 bytes to its neighbour's 68
  * despite doing the same work. */
-void sub_0801BC08(void)
+void SyncLoOam(void)
 {
     if (gOamTransferHead.objectCount != 0)
     {
@@ -41,3 +42,4 @@ void sub_0801BC08(void)
         gUnknown_0300141C = gOamTransferHead.src;
     }
 }
+asm(".global sub_0801BC08\n.thumb_set sub_0801BC08, SyncLoOam\n");

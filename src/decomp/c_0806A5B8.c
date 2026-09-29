@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* One step of the RED-ONLY fade, and a strict subset of sub_080139E0
+/* One step of the RED-ONLY fade, and a strict subset of ColFadeTick
  * (src/decomp/c_080137AC.c): for every armed row it advances ONLY channel 0 by
  * the row's delta and clamps it, then repacks all three channels into gPal.
  * Channels 1 and 2 are read raw and never accumulated, which is what makes the
@@ -21,7 +21,7 @@
  * saturates. The ROM distinguishes the two reads of channel 0 -- `ldrb` for the
  * accumulate (only the low byte reaches the `strb`) and `ldrsb` for the clamp.
  *
- * `g` and `b` are int, NOT the s16 that sub_080139E0 uses: they carry no clamp,
+ * `g` and `b` are int, NOT the s16 that ColFadeTick uses: they carry no clamp,
  * so nothing narrows them, and the ROM shows no `lsl #0x10 / asr #0x10` pair on
  * either. They must still be LOCALS rather than subexpressions of the store --
  * that is what puts both `ldrsb`s ahead of the two `- 0x20`s, and it is also

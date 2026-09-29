@@ -8,15 +8,16 @@
  */
 
 /* TWO parameters, and the second is invisible except by absence: this body
- * never touches r1, yet it calls sub_0801C640, whose first act is
- * `str r1, [r0]`. A one-parameter sub_0801C51C would be storing whatever the
+ * never touches r1, yet it calls AP_LoadDefinition, whose first act is
+ * `str r1, [r0]`. A one-parameter AP_SetDefinition would be storing whatever the
  * caller happened to leave behind. A pass-through argument costs no
  * instruction, so the arity has to be read off the callee. */
-void sub_0801C51C(struct Unk0801C210 *a1, void *a2)
+void AP_SetDefinition(struct Unk0801C210 *a1, void *a2)
 {
     if (a1 != NULL && a1->unk00 != NULL)
     {
-        sub_0801C640(a1, a2);
-        sub_0801C67C(a1);
+        AP_LoadDefinition(a1, a2);
+        AP_ExecDummyFrame(a1);
     }
 }
+asm(".global sub_0801C51C\n.thumb_set sub_0801C51C, AP_SetDefinition\n");

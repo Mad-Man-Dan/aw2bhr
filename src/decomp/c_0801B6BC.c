@@ -20,10 +20,11 @@
  * `lsls #9; lsrs #0xb` is that divide FUSED with a mask, counted the way
  * docs/agbcc-codegen.md says to count a shift pair -- `(u32)x << 9 >> 11` keeps
  * bits 2..22, i.e. `(x / 4) & 0x1FFFFF`, and 21 bits is exactly the width of
- * the BIOS length field. The same fusion is already recorded on sub_08012F6C.
+ * the BIOS length field. The same fusion is already recorded on VramCopy.
  * `movs #0x80; lsls #0x13` is 0x04000000, the 32-bit-transfer bit. */
-void sub_0801B6BC(void)
+void StoreRoutinesToIRAM(void)
 {
     CpuSet(gUnknown_086173F0, gUnknown_03005C88,
            (((gUnknown_0300677C - gUnknown_03005C88) / 4) & 0x1FFFFF) | 0x04000000);
 }
+asm(".global sub_0801B6BC\n.thumb_set sub_0801B6BC, StoreRoutinesToIRAM\n");

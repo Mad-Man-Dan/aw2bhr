@@ -7,14 +7,15 @@
  * sub_08072BA4 @ 0x08072BA4
  */
 
-/* Schedules sub_08072BBC to run after a delay: sub_0807298C's three u32
+/* Schedules PlaySeFunc to run after a delay: CallDelayedArg's three u32
  * parameters are (callback, argument, frames), and the callback reaches the
- * proc's +0x2c slot that sub_08072948 calls through `_call_via_r1`.
+ * proc's +0x2c slot that CallDelayedArg_OnLoop calls through `_call_via_r1`.
  *
- * The cast is what makes the pool word a RELOCATION against sub_08072BBC
+ * The cast is what makes the pool word a RELOCATION against PlaySeFunc
  * rather than a bare constant -- naming the function is the honest spelling
- * even though sub_0807298C's promoted signature takes u32. */
-void sub_08072BA4(u32 a, u32 b)
+ * even though CallDelayedArg's promoted signature takes u32. */
+void PlaySeDelayed(u32 a, u32 b)
 {
-    sub_0807298C((u32)sub_08072BBC, a, b);
+    CallDelayedArg((u32)PlaySeFunc, a, b);
 }
+asm(".global sub_08072BA4\n.thumb_set sub_08072BA4, PlaySeDelayed\n");

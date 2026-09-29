@@ -55,7 +55,7 @@ void sub_080748A0(struct Unk80748A0Proc *proc)
     if (scale == 0x100)
     {
         gUnknown_0202FDFC.unk12[proc->unk2a] |= 1;
-        sub_08072B54(0x1d1, x);
+        PlaySeSpacial(0x1d1, x);
         Proc_Break(proc);
     }
 

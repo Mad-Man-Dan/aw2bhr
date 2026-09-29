@@ -13,21 +13,23 @@
  * and gPal is `u16 []`, so the destination is &gPal[a * 16] and the count 0x10
  * is in halfwords.
  *
- * This is the reader that settles what gUnknown_08613F54 IS. sub_08071B28
+ * This is the reader that settles what gUnknown_08613F54 IS. StartPalFade
  * passes the same symbol as its first argument and stashes it in a proc field,
  * which had been read as a proc script; a proc script would not survive being
  * CpuSet into palette RAM. See include/unknown-functions.h.
  *
- * sub_08071CA4 is the same function over gUnknown_08613F74. */
-void sub_08071C84(int a)
+ * SetWhitePal is the same function over gUnknown_08613F74. */
+void SetBlackPal(int a)
 {
     CpuSet(gUnknown_08613F54, &gPal[a * 16], 0x10);
 }
+asm(".global sub_08071C84\n.thumb_set sub_08071C84, SetBlackPal\n");
 
-/* sub_08071C84's twin over the other palette -- byte-identical apart from the
+/* SetBlackPal's twin over the other palette -- byte-identical apart from the
  * pool symbol, and each member's own data_refs were re-read before
- * transcribing. See sub_08071C84. */
-void sub_08071CA4(int a)
+ * transcribing. See SetBlackPal. */
+void SetWhitePal(int a)
 {
     CpuSet(gUnknown_08613F74, &gPal[a * 16], 0x10);
 }
+asm(".global sub_08071CA4\n.thumb_set sub_08071CA4, SetWhitePal\n");

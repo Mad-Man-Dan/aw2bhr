@@ -20,7 +20,7 @@
  * That is the same reason the parked sub_08040150 next door is hard: it does
  * the same arithmetic without the intervening store.
  *
- * sub_0801C70C takes SIX arguments, the last two on the stack (`str` to sp+0
+ * APProc_Create takes SIX arguments, the last two on the stack (`str` to sp+0
  * and sp+4 with 0 and 1); unk4a is the packed `tile | pal << 12` halfword that
  * sub_0804046C builds and that is copied into the sprite's +0x22 below. */
 struct Unk404A0Proc
@@ -39,13 +39,13 @@ void sub_080404A0(struct Unk404A0Proc *proc)
     proc->unk2c = (proc->unk2c << 4) + 8;
     proc->unk30 = (proc->unk30 << 4) + 0x10;
 
-    sub_0801C70C((void *)gUnknown_08111D94,
+    APProc_Create((void *)gUnknown_08111D94,
                  proc->unk2c - gMap->scrollX,
                  proc->unk30 - gMap->scrollY,
                  proc->unk4a, 0, 1);
 
-    proc->unk50 = sub_0801C210((void *)gUnknown_08111D94, 1, 1);
-    sub_0801C4D4(proc->unk50, 1);
+    proc->unk50 = AP_Create((void *)gUnknown_08111D94, 1, 1);
+    AP_SwitchAnimation(proc->unk50, 1);
     proc->unk50->unk22 = proc->unk4a;
 
     sub_0803B4DC(0x1C6);

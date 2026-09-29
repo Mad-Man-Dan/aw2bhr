@@ -21,10 +21,10 @@ struct Unk72614Proc
     /* 3a */ u16 unk3a;
 };
 
-/* The per-frame body of the sub_080725A8 palette-rotate proc: every unk34
+/* The per-frame body of the StartPaletteAnimatorExt palette-rotate proc: every unk34
  * frames, roll the unk32-entry palette by one and re-upload it as two runs
  * (tail then head). unk3a selects the direction. */
-void sub_08072614(struct Unk72614Proc *proc)
+void PaletteAnimator_Loop(struct Unk72614Proc *proc)
 {
     int i;
 
@@ -47,3 +47,4 @@ void sub_08072614(struct Unk72614Proc *proc)
         proc->unk38++;
     }
 }
+asm(".global sub_08072614\n.thumb_set sub_08072614, PaletteAnimator_Loop\n");

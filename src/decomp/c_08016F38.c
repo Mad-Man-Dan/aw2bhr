@@ -54,7 +54,7 @@ struct BattleSaveState
 };
 
 /* Saves the current battle/map state into the gUnknown_02000000 save block,
- * the mirror of sub_08017208 (restore). Map cells are stored as a list of the
+ * the mirror of RestoreBattleSaveState (restore). Map cells are stored as a list of the
  * cells that differ from the map's base layout, terminated by tile 0xffff.
  *
  * Matched by Eebit on decomp.me (scratch A6WrC). It replaces the wave-86

@@ -81,7 +81,7 @@ void sub_080780A0(ProcPtr proc)
     }
     else
     {
-        sub_0801C1F8();
+        AP_ClearAll();
         gUnknown_0202FDFC.unk10 = 0;
     }
 }

@@ -27,7 +27,7 @@ void sub_0801F2AC(int a1, u16 *a2)
     int y;
     int tile;
 
-    e = &gUnknown_0200F920[sub_0801F3D4(a1)];
+    e = &gUnknown_0200F920[GetTilePoolForGraphic(a1)];
     for (i = 0; i < e->unk05; i++) {
         if (e->unk08[i].unk02 == a1) {
             tile = e->unk08[i].unk00 | (e->unk04 << 12);

@@ -12,7 +12,7 @@
  * `lsrs` back, and the clamp arm rebuilds 0xff000000 as `movs #255; lsls #24`
  * rather than assigning 255 to the key-adjust. Shifting at the call site
  * instead costs 12 bytes (measured, 88.0%). */
-u32 sub_08070350(struct WaveData *wav, u8 key, u8 fineAdjust)
+u32 MidiKey2fr(struct WaveData *wav, u8 key, u8 fineAdjust)
 {
     u32 val1;
     u32 val2;
@@ -34,3 +34,4 @@ u32 sub_08070350(struct WaveData *wav, u8 key, u8 fineAdjust)
 
     return sub_0806F734(wav->freq, val1 + sub_0806F734(val2 - val1, fine));
 }
+asm(".global sub_08070350\n.thumb_set sub_08070350, MidiKey2fr\n");

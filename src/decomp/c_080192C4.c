@@ -25,7 +25,7 @@ void sub_080192C4(struct Unk0200C528 *p)
         if (!sub_08019260())
         {
             sub_08017E80();
-            sub_08019380();
+            StartQueuedEventScript();
         }
     }
     else

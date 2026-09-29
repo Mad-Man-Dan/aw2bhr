@@ -23,7 +23,7 @@ void sub_0801DF94(void)
     }
 
     sub_0801E0F0();
-    sub_0801E0A4();
+    CopyOamShadowToOam();
 }
 
 /* Drains the sprite-request ring: pops entries with sub_0801A700 until it

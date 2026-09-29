@@ -23,13 +23,13 @@ bool8 sub_08014BE8(void)
     if (sub_08015BD0((s32)gUnknown_0848A120) != -1)
         return FALSE;
 
-    if (sub_08019290(gUnknown_0849A520) != -1)
+    if (FindEventScriptSlot(gUnknown_0849A520) != -1)
         return FALSE;
 
-    if (sub_08019290(gUnknown_0849A5E0) != -1)
+    if (FindEventScriptSlot(gUnknown_0849A5E0) != -1)
         return FALSE;
 
-    if (sub_08019290(gUnknown_0849A8F0) != -1)
+    if (FindEventScriptSlot(gUnknown_0849A8F0) != -1)
         return FALSE;
 
     if (sub_08015BD0((s32)gUnknown_084C1824) != -1)

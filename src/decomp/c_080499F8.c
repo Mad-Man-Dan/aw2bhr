@@ -9,7 +9,7 @@
 
 void sub_080499F8(void)
 {
-    sub_0801BD00(0x7f, 0, gUnknown_084C30FC, 0x6ceb);
+    PutOamHi(0x7f, 0, gUnknown_084C30FC, 0x6ceb);
 
     sub_08043FD8((gUnknown_084C30F8->unk832 + 0x18) & 0x1ff, 0xa0, 0x60ab, 0);
 

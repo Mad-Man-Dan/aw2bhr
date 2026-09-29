@@ -29,7 +29,7 @@ struct Unk806A578
  * agbcc builds every larger literal. */
 void sub_0806A534(void)
 {
-    sub_0801BD00((gUnknown_0300060C + 0x206) & 0x1FF,
+    PutOamHi((gUnknown_0300060C + 0x206) & 0x1FF,
                  (gUnknown_0202F210 + 0x104) & 0xFF,
                  gUnknown_085815C8, 0x1000);
 }

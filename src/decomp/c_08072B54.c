@@ -9,10 +9,10 @@
 
 /* Play song `songNum` panned by the screen x `x`: report the song id to
  * sub_0803B4DC, look the song's player up through the two ROM tables and hand
- * the player's MusicPlayerInfo to the start and panpot calls. sub_08072B2C
+ * the player's MusicPlayerInfo to the start and panpot calls. Screen2Pan
  * maps 0..0xef onto -0x60..0x5f, which the `lsls #0x18; asrs #0x18` at the
  * call site narrows to s8. */
-void sub_08072B54(int songNum, int x)
+void PlaySeSpacial(int songNum, int x)
 {
     struct MusicPlayerInfo *mp;
 
@@ -20,6 +20,7 @@ void sub_08072B54(int songNum, int x)
 
     mp = gUnknown_08242308[gUnknown_0824238C[songNum].ms].info;
 
-    sub_08070668(mp);
-    sub_080714FC(mp, 0xffff, sub_08072B2C(x));
+    m4aMPlayImmInit(mp);
+    MPlayPanpotControl(mp, 0xffff, Screen2Pan(x));
 }
+asm(".global sub_08072B54\n.thumb_set sub_08072B54, PlaySeSpacial\n");

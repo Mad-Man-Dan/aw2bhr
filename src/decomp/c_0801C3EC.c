@@ -45,7 +45,7 @@
  *
  * The gSinLut base and the 0xff mask in the preheader are LICM hoists sitting
  * after the loop guard -- not authored, correctly. */
-void sub_0801C3EC(struct Unk0801C210 *a1)
+void AP_QueueObjRotScale(struct Unk0801C210 *a1)
 {
     u16 *p;
     int i;
@@ -68,3 +68,4 @@ void sub_0801C3EC(struct Unk0801C210 *a1)
         }
     }
 }
+asm(".global sub_0801C3EC\n.thumb_set sub_0801C3EC, AP_QueueObjRotScale\n");

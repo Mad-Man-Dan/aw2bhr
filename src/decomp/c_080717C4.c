@@ -23,19 +23,21 @@ struct Unk80717C4Track
     /* 0x40 */ u8 *cmd;
 };
 
-void sub_080717C4(void *mplay, struct Unk80717C4Track *track)
+void ply_xcmd(void *mplay, struct Unk80717C4Track *track)
 {
     u32 n = *track->cmd++;
 
     gUnknown_081BA00C[n](mplay, track);
 }
+asm(".global sub_080717C4\n.thumb_set sub_080717C4, ply_xcmd\n");
 
 /* One indirect call through a RAM function pointer, with both of this
  * wrapper's own arguments passed straight through. `ldr r2,=g; ldr r2,[r2]`
  * is a single load of the pointer VALUE with no index, so gUnknown_03005740
  * is one pointer and not a table; `bl _call_via_r2` counts the arguments at
  * two. Nothing here types either argument. */
-void sub_080717E4(void *a, void *b)
+void ply_xxx(void *a, void *b)
 {
     gUnknown_03005740(a, b);
 }
+asm(".global sub_080717E4\n.thumb_set sub_080717E4, ply_xxx\n");

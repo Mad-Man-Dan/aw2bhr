@@ -13,7 +13,7 @@
 void sub_08028190(struct Unk03001470 *p)
 {
     if (p->unk18 != 0)
-        sub_080196F4((void *)p->unk18);
+        ApplyUnitSpawnTable((void *)p->unk18);
 }
 
 /* "Is the gUnknown_08499EE4 script running?". The `movs #1` and `movs #0` are

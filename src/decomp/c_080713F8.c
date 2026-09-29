@@ -10,7 +10,7 @@
 /*
  * MPlayTempoControl. MATCHES -- but only when compiled with `old_agbcc`.
  * It does NOT match under the default build flags, so `try_match` and a plain
- * `python tools/trymatch.py sub_080713F8` both still report 32 bytes and fail.
+ * `python tools/trymatch.py MPlayTempoControl` both still report 32 bytes and fail.
  *
  * Verified byte-for-byte (bytes and relocations) with:
  *
@@ -52,9 +52,9 @@
  * identically under both binaries, so such an override costs nothing there.
  *
  * The trailing `mplayInfo->ident = ident` compiles to nothing and is what puts
- * `ident` in r3 rather than r1 -- see sub_080703B8. Keep it.
+ * `ident` in r3 rather than r1 -- see MPlayContinue. Keep it.
  */
-void sub_080713F8(struct MusicPlayerInfo * mplayInfo, u16 tempo)
+void MPlayTempoControl(struct MusicPlayerInfo * mplayInfo, u16 tempo)
 {
     u32 ident = mplayInfo->ident;
 
@@ -65,3 +65,4 @@ void sub_080713F8(struct MusicPlayerInfo * mplayInfo, u16 tempo)
     mplayInfo->tempoI = (mplayInfo->tempoD * mplayInfo->tempoU) >> 8;
     mplayInfo->ident = ident;
 }
+asm(".global sub_080713F8\n.thumb_set sub_080713F8, MPlayTempoControl\n");

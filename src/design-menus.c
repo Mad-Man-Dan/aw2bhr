@@ -48,21 +48,21 @@ int sub_08004838(void)
 
 void DesignRoomMenu_CloseToPaint(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     DesignRoomSetMode(1);
 }
 asm(".global sub_0800483C\n.thumb_set sub_0800483C, DesignRoomMenu_CloseToPaint\n");
 
 void DesignRoomMenu_CloseToMainMenu(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     DesignRoomOpenMainMenu();
 }
 asm(".global sub_0800484C\n.thumb_set sub_0800484C, DesignRoomMenu_CloseToMainMenu\n");
 
 void DesignRoomOpenMainMenu(void)
 {
-    sub_0801A664();
+    PopMenu();
     sub_0803B4DC(0x66);
     gActiveMap->mode = 3;
     sub_08004C5C();
@@ -125,7 +125,7 @@ void sub_0800494C(void)
 
 void sub_08004958(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_0848721C, 0);
 }
 
@@ -153,8 +153,8 @@ void sub_080049DC(void)
 
 void sub_080049E8(void)
 {
-    sub_0801A614();
-    sub_0801A168();
+    PushMenu();
+    CloseTopMenu();
     DesignRoomSetMode(6);
     sub_080152EC(gUnknown_084872B4, 0);
     gActiveMap->menuCursorX = 0x57;
@@ -163,14 +163,14 @@ void sub_080049E8(void)
 
 void DesignRoomMenu_CloseToMainMenu2(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     DesignRoomOpenMainMenu();
 }
 asm(".global sub_08004A20\n.thumb_set sub_08004A20, DesignRoomMenu_CloseToMainMenu2\n");
 
 void DesignRoomMenu_NewMap(int a)
 {
-    sub_0801A168();
+    CloseTopMenu();
     DesignRoomNewMap(a);
     sub_08002E3C();
     sub_08024268();
@@ -210,68 +210,68 @@ asm(".global sub_08004A90\n.thumb_set sub_08004A90, DesignRoomMenu_NewMapRandom\
 
 void sub_08004AA0(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_084873BC, 0);
     sub_08000654();
 }
 
 void sub_08004ABC(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_08487404, 0);
     sub_08000654();
 }
 
 void sub_08004AD8(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_0848744C, 0);
     sub_08000654();
 }
 
 void sub_08004AF4(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_08487494, 0);
     sub_08000654();
 }
 
 void sub_08004B10(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_080152EC(gUnknown_084874DC, 0);
     sub_08000654();
 }
 
 void sub_08004B2C(void)
 {
-    sub_080193B0(gUnknown_08487754);
+    StartEventScript(gUnknown_08487754);
 }
 
 void sub_08004B3C(void)
 {
-    sub_080193B0(gUnknown_084877F4);
+    StartEventScript(gUnknown_084877F4);
 }
 
 void sub_08004B4C(void)
 {
-    sub_080193B0(gUnknown_08487894);
+    StartEventScript(gUnknown_08487894);
 }
 
 void sub_08004B5C(void)
 {
-    sub_080193B0(gUnknown_08487934);
+    StartEventScript(gUnknown_08487934);
 }
 
 void sub_08004B6C(void)
 {
-    sub_080193B0(gUnknown_084879D4);
+    StartEventScript(gUnknown_084879D4);
 }
 
 void sub_08004B7C(void)
 {
-    sub_0801A614();
-    sub_0801A168();
+    PushMenu();
+    CloseTopMenu();
     sub_0801B780(0x70);
     sub_0801A148(gUnknown_084872FC, 2, 2, 0);
     DesignRoomSetMode(7);
@@ -287,9 +287,9 @@ void sub_08004BC0(void)
 
 void sub_08004BD8(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     DesignRoomSetMode(9);
-    sub_080193B0((gActiveMap->flags & 0x1000) ? gUnknown_08487B64
+    StartEventScript((gActiveMap->flags & 0x1000) ? gUnknown_08487B64
                                                      : gUnknown_08487AC4);
 }
 
@@ -303,8 +303,8 @@ void sub_08004C10(void)
 
 void sub_08004C34(void)
 {
-    sub_0801A614();
-    sub_0801A168();
+    PushMenu();
+    CloseTopMenu();
     sub_08024268();
     sub_0801A148(gUnknown_08487C04, 2, 3, 0);
     sub_08004C10();
@@ -365,7 +365,7 @@ void sub_08004D10(void)
 {
     DesignRoomHideTilePanel();
     DesignRoomResetArmyPanels();
-    sub_080193B0(gUnknown_08487D44);
+    StartEventScript(gUnknown_08487D44);
 }
 
 void sub_08004D28(void)

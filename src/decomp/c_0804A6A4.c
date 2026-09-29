@@ -53,7 +53,7 @@ int sub_0804A6D8(void)
     if (count != 0)
     {
         gUnknown_030044E0->unk63 = 2;
-        sub_080193B0(gUnknown_084C398C);
+        StartEventScript(gUnknown_084C398C);
         sub_0803B4DC(0x71);
     }
     else

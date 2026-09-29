@@ -33,12 +33,12 @@ void sub_08036B4C(void)
     gUnknown_030043F0 = 0;
     gUnknown_030033F0 = 0;
     sub_08036B34();
-    sub_0801B6BC();
+    StoreRoutinesToIRAM();
     sub_0803486C();
     sub_08034848();
     sub_0801BCE0();
     sub_08015544();
-    sub_08011C18();
+    ClearTileRigistry();
     sub_08011B18();
     sub_08011A84();
     sub_080191B0();
@@ -132,16 +132,16 @@ void AgbMain(void)
     dma[2];
     REG_WAITCNT = 0x45B4;
     keys = ~REG_KEYINPUT & 0x3FF;
-    sub_0801BABC();
+    StoreIRQToIRAM();
     if (sub_08014DA8(gUnknown_02003000, 0x8000) == -1)
         sub_08036B48();
-    sub_0801A79C(sub_08016B2C, sub_08016A54, gUnknown_02000000, 2, gUnknown_03003064);
-    sub_08016E3C();
+    InitSaveSystem(PackProfileRecord, ResetProfileToDefaults, gUnknown_02000000, 2, gUnknown_03003064);
+    LoadProfile();
     sub_0803D48C();
     sub_080129D4(0x0A6B99CD);
     sub_080128C4();
     sub_080128D0();
-    sub_0801BB00(0, sub_080366F4);
+    SetIRQHandler(0, sub_080366F4);
     flag = (keys & 0xF) != 0xF && keys == 0x214;
     if (flag)
         sub_08036E54();
@@ -200,7 +200,7 @@ void sub_08036E70(void)
 void sub_08036F20(void)
 {
     gUnknown_02028E40 = gUnknown_0200C420.unk08 >> 6;
-    sub_080193B0(gUnknown_0849D34C);
+    StartEventScript(gUnknown_0849D34C);
 }
 
 void sub_08036F44(void)

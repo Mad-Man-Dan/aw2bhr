@@ -16,8 +16,8 @@
  * exemplar of the same shape. */
 void sub_0802CD00(void)
 {
-    sub_0801A614();
-    sub_0801A168();
+    PushMenu();
+    CloseTopMenu();
     sub_0802D4B0();
 }
 
@@ -30,7 +30,7 @@ void sub_0802CD00(void)
  * exemplar of the same shape. */
 void sub_0802CD14(void)
 {
-    sub_0801A614();
-    sub_0801A168();
+    PushMenu();
+    CloseTopMenu();
     sub_0802D504();
 }

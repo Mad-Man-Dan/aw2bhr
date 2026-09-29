@@ -17,7 +17,7 @@ void sub_0801F19C(int a1, void *a2, int a3)
     u32 tileCount;
     int index;
 
-    index = sub_0801F3D4(a1);
+    index = GetTilePoolForGraphic(a1);
     tileCount = gUnknown_0848B780[a1].unk00 * gUnknown_0848B780[a1].unk01;
 
     sub_0801F444(a1, index);

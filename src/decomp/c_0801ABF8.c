@@ -8,7 +8,7 @@
  */
 
 /* Tears down every gUnknown_0200CC38 slot tagged with `id`, then re-runs the
- * link scan. gUnknown_0200CC24 is the installed callback (sub_0801A79C parks
+ * link scan. gUnknown_0200CC24 is the installed callback (InitSaveSystem parks
  * an `int` there, so the call needs a cast rather than a retyped global) and
  * gUnknown_0200CC2C is its argument; naming the latter honestly gives the two
  * `ldr r0,[r0]` -- the outer one is agbcc's own -fforce-addr word, the ROM

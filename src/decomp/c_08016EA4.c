@@ -15,7 +15,7 @@ void sub_08016EA4(void)
     struct Unk08016B2C *p = (struct Unk08016B2C *)gUnknown_02000000;
     int i;
 
-    if (sub_0801AC58(0, gUnknown_02000000) != 0)
+    if (ReadSaveSlot(0, gUnknown_02000000) != 0)
         return;
     for (i = 0; i <= 7; i++)
         gUnknown_02028030.unk08[i] = p->unk000.unk08[i];
@@ -34,7 +34,7 @@ void sub_08016ED8(void)
     struct Unk08016B2C *p = (struct Unk08016B2C *)gUnknown_02000000;
     int i;
 
-    if (sub_0801AC58(0, gUnknown_02000000) != 0)
+    if (ReadSaveSlot(0, gUnknown_02000000) != 0)
         return;
     sub_08016EA4();
     for (i = 0xe; i <= 0x37; i++)

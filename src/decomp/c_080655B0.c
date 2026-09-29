@@ -42,7 +42,7 @@ void sub_080655B0(struct Unk655B0Proc *proc)
 
     proc->unk24 = v;
     proc->unk28 = (0xc0 - v) / 16 + 20;
-    sub_0801BD00(v, proc->unk28, proc->unk3c, 0);
+    PutOamHi(v, proc->unk28, proc->unk3c, 0);
 
     proc->unk2c = gUnknown_08580934->unk30;
 

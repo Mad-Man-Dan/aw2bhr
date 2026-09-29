@@ -8,7 +8,7 @@
  */
 
 /* The same frame-entry shape as c_0802CFFC.c -- open with LockUnitSelection and
- * sub_0801A168, close with the sub_0802C57C / sub_080424FC / sub_0802C594
+ * CloseTopMenu, close with the sub_0802C57C / sub_080424FC / sub_0802C594
  * bracket -- with a different middle and one extra call (sub_08042998) in the
  * tail.
  *
@@ -31,7 +31,7 @@
 void sub_0802D0F4(void)
 {
     LockUnitSelection();
-    sub_0801A168();
+    CloseTopMenu();
 
     if (gPlaySt.savingEnabled != 0)
     {

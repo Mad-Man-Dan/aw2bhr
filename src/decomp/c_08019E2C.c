@@ -7,17 +7,20 @@
  * sub_08019E2C @ 0x08019E2C, sub_08019E30 @ 0x08019E30, sub_08019E34 @ 0x08019E34
  */
 
-int sub_08019E2C(void)
+int Menu_UsabilityShown(void)
 {
     return 0;
 }
+asm(".global sub_08019E2C\n.thumb_set sub_08019E2C, Menu_UsabilityShown\n");
 
-int sub_08019E30(void)
+int Menu_UsabilityGreyed(void)
 {
     return 2;
 }
+asm(".global sub_08019E30\n.thumb_set sub_08019E30, Menu_UsabilityGreyed\n");
 
-int sub_08019E34(void)
+int Menu_UsabilityHidden(void)
 {
     return 1;
 }
+asm(".global sub_08019E34\n.thumb_set sub_08019E34, Menu_UsabilityHidden\n");

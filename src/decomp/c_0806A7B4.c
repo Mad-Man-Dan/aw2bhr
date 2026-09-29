@@ -78,7 +78,7 @@ void sub_0806A7B4(struct Unk6A7B4Proc *proc)
         Div(COS_Q12(0) * 16, proc->unk58 != 0 ? proc->unk58 : 2));
 
     if ((proc->unk44 >> 12) > -0x40)
-        sub_0801BD00(((proc->unk40 >> 12) + 0x200) & 0x1FF,
+        PutOamHi(((proc->unk40 >> 12) + 0x200) & 0x1FF,
             ((proc->unk44 >> 12) + 0x100) & 0xFF, gUnknown_085815C0, 0);
 
     gUnknown_0300060C = proc->unk38 >> 12;
@@ -166,6 +166,6 @@ void sub_0806A8E4(struct Unk6A8E4Proc *proc)
     gUnknown_0300060C = proc->unk40 >> 12;
     gUnknown_0202F210 = proc->unk44 >> 12;
 
-    sub_0801BD00((gUnknown_0300060C + 0x200) & 0x1FF,
+    PutOamHi((gUnknown_0300060C + 0x200) & 0x1FF,
         (gUnknown_0202F210 + 0x100) & 0xFF, gUnknown_085815C0, 0);
 }

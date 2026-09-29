@@ -26,13 +26,14 @@
  * Both shift pairs are real and independent: `lsls #0x18; lsrs #0x18` on entry
  * is the u8 parameter, `lsls #0x10; lsrs #0x10` after the call is agbcc
  * re-narrowing a u16-returning callee. */
-u16 sub_0801B598(u8 a, void (**b)(void))
+u16 SetFlashTimerIntrIfPresent(u8 a, void (**b)(void))
 {
     if (gUnknown_0200CD0C == 1)
         return sub_0808AC44(a, b);
     else
         return 1;
 }
+asm(".global sub_0801B598\n.thumb_set sub_0801B598, SetFlashTimerIntrIfPresent\n");
 
 /* The nullary member of the 0x0801B598 gate family. `bl _call_via_r0` -- the
  * pointer in r0, the FIRST scratch register -- is the readout that the call
@@ -69,13 +70,14 @@ u16 sub_0801B5E8(u16 a)
  *
  * `b` is never touched -- it rides r1 from this function's own frame straight
  * into the callee -- which is why nothing here types it beyond `int`. */
-u16 sub_0801B618(u16 a, int b)
+u16 ProgramFlashSectorIfPresent(u16 a, int b)
 {
     if (gUnknown_0200CD0C == 1)
         return gUnknown_03005C74(a, b);
     else
         return 1;
 }
+asm(".global sub_0801B618\n.thumb_set sub_0801B618, ProgramFlashSectorIfPresent\n");
 
 /* The member of the 0x0801B598 gate family whose un-armed arm returns its
  * SECOND PARAMETER rather than a constant: `adds r0, r1, #0` where the others
@@ -87,13 +89,14 @@ u16 sub_0801B618(u16 a, int b)
  * a narrow-returning callee at every call site, so sub_0808AF00 returns `int`
  * too. Read on its own a tail call proves nothing about the callee's width --
  * it is the other arm that makes this one decisive. */
-int sub_0801B648(u16 a, int b)
+int VerifyFlashSectorIfPresent(u16 a, int b)
 {
     if (gUnknown_0200CD0C == 1)
         return sub_0808AF00(a, b);
     else
         return b;
 }
+asm(".global sub_0801B648\n.thumb_set sub_0801B648, VerifyFlashSectorIfPresent\n");
 
 /* The void member of the 0x0801B598 gate family, and the one that measures its
  * callee's ARITY.
@@ -108,8 +111,9 @@ int sub_0801B648(u16 a, int b)
  * pressure once they occupy the last free scratch -- the direct-call analogue
  * of the `_call_via_rN` tell. The third and fourth parameters are `int` because
  * that is what costs no instruction; nothing here types them further. */
-void sub_0801B66C(u16 a, int b, int c, int d)
+void ReadFlashIfPresent(u16 a, int b, int c, int d)
 {
     if (gUnknown_0200CD0C == 1)
         sub_0808AE54(a, b, c, d);
 }
+asm(".global sub_0801B66C\n.thumb_set sub_0801B66C, ReadFlashIfPresent\n");

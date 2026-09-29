@@ -24,16 +24,16 @@ struct Unk272C4Proc
 };
 
 /* MATCHED, and the first of a byte-identical pair with sub_08027428. Allocates
- * a sprite through sub_0801C210, stashes it at +0x50, sets its unk22 attribute
+ * a sprite through AP_Create, stashes it at +0x50, sets its unk22 attribute
  * word and seeds three proc fields.
  *
  * Nothing here needed a probe -- the proc layout falls straight out of the
- * displacements and sub_0801C210 / sub_0801C4D4 were already typed. The one
+ * displacements and AP_Create / AP_SwitchAnimation were already typed. The one
  * readout is sub_08027560's arity: four parameters, of which the fourth is the
- * sub_0801C210 result on its way to sub_0801C4D4's `struct Unk0801C210 *`. */
+ * AP_Create result on its way to AP_SwitchAnimation's `struct Unk0801C210 *`. */
 void sub_080272C4(struct Unk272C4Proc *proc)
 {
-    proc->unk50 = sub_0801C210(gUnknown_08112614, 1, 1);
+    proc->unk50 = AP_Create(gUnknown_08112614, 1, 1);
     proc->unk50->unk22 = 0x31CA;
 
     sub_08027560(proc->unk2c, proc->unk30, proc->unk54, proc->unk50);

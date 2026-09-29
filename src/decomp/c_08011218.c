@@ -20,7 +20,8 @@
  * ProcScr_FadeScreenLines and this ends every instance of it.
  */
 
-void sub_08011218(void)
+void EndFadeScreenLines(void)
 {
     Proc_EndEach(ProcScr_FadeScreenLines);
 }
+asm(".global sub_08011218\n.thumb_set sub_08011218, EndFadeScreenLines\n");

@@ -19,7 +19,7 @@ struct UnkF1F4Proc
 
 void sub_0803F1F4(struct UnkF1F4Proc *proc)
 {
-    sub_0801C70C(sub_0803F128(proc->unk6a),
+    APProc_Create(sub_0803F128(proc->unk6a),
                  proc->unk64 * 16 - gMap->scrollX + 8,
                  proc->unk66 * 16 - gMap->scrollY + 0x10,
                  0x31CA,

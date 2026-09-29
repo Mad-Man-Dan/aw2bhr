@@ -16,7 +16,7 @@
  * `*(u32 *)&p->unk20` because Unk03001470 models +0x20 and +0x22 as two s16 and
  * the ROM copies the pair as one word -- the same word/halfword duality the
  * unk28 note records, spelled with a cast until a union exists. */
-void sub_0801A614(void)
+void PushMenu(void)
 {
     struct Unk03001470 *p = sub_080637AC(gUnknown_0848A42C);
 
@@ -30,21 +30,23 @@ void sub_0801A614(void)
         gUnknown_03002F24++;
     }
 }
+asm(".global sub_0801A614\n.thumb_set sub_0801A614, PushMenu\n");
 
-/* The pop half of sub_0801A614's push. Every member read goes through the
+/* The pop half of PushMenu's push. Every member read goes through the
  * cursor AFTER the decrement, and agbcc addresses them off the pre-decrement
  * value with negative displacements because it knows what it just stored --
  * that is CSE, not five separate reads of the global.
  *
  * Each of the four `s8` members is widened twice: `lsls #24; asrs #24` reads
- * the signed byte, then `lsls #16; lsrs #16` converts it to sub_08019F90's u16
+ * the signed byte, then `lsls #16; lsrs #16` converts it to CreateMenu's u16
  * parameter. Both pairs are needed; an s16 or u8 member drops one of them. */
-void sub_0801A664(void)
+void PopMenu(void)
 {
     if (gUnknown_03002F24 != gUnknown_03002F50)
     {
         gUnknown_03002F24--;
-        sub_08019F90((const void *)gUnknown_03002F24->unk04, gUnknown_03002F24->unk00,
+        CreateMenu((const void *)gUnknown_03002F24->unk04, gUnknown_03002F24->unk00,
                      gUnknown_03002F24->unk01, gUnknown_03002F24->unk03, gUnknown_03002F24->unk02);
     }
 }
+asm(".global sub_0801A664\n.thumb_set sub_0801A664, PopMenu\n");

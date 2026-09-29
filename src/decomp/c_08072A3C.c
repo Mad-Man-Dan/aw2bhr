@@ -28,7 +28,7 @@
  * four -- before the tail -- and case 3 then needs a `b` to reach the tail:
  * same size, 22 of 76 bytes different. Jumping out of the switch to a label
  * past the tail's `return` is what puts the failure block last. */
-u16 *sub_08072A3C(int which, int x, int y)
+u16 *GetTmOffsetById(int which, int x, int y)
 {
     u16 **pp;
 
@@ -55,3 +55,4 @@ u16 *sub_08072A3C(int which, int x, int y)
 fail:
     return NULL;
 }
+asm(".global sub_08072A3C\n.thumb_set sub_08072A3C, GetTmOffsetById\n");

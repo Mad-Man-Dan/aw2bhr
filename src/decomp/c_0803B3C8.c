@@ -22,7 +22,7 @@ void sub_0803B3C8(void)
 
 void sub_0803B3D4(int n)
 {
-    sub_08070990(n << 8);
+    SoundMode_rev01(n << 8);
 }
 
 /* Forwarder to m4aSoundVSyncOn. r0 is never touched and the callee takes no
@@ -30,14 +30,14 @@ void sub_0803B3D4(int n)
 
 void sub_0803B3E0(void)
 {
-    sub_08070AF8();
+    SoundVSyncOn_rev01();
 }
 
 /* Forwarder to m4aSoundVSyncOff. void(void) -- see sub_0803B3E0. */
 
 void sub_0803B3EC(void)
 {
-    sub_08070A7C();
+    SoundVSyncOff_rev01();
 }
 
 /* Forwarder to m4aSoundVSync. void(void) -- see sub_0803B3E0. */
@@ -58,10 +58,10 @@ void sub_0803B404(void)
 {
 }
 
-/* Forwarder to sub_0807046C, which is itself a forwarder to sub_0806F744
+/* Forwarder to m4aSoundMain, which is itself a forwarder to sub_0806F744
  * (m4aSoundMain). void(void) -- see sub_0803B3E0. */
 
 void sub_0803B408(void)
 {
-    sub_0807046C();
+    m4aSoundMain();
 }

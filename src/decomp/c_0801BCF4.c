@@ -7,7 +7,8 @@
  * sub_0801BCF4 @ 0x0801BCF4
  */
 
-u16 sub_0801BCF4(void)
+u16 GetPrimaryOAMSize(void)
 {
     return gOamTransferHead.objectCount;
 }
+asm(".global sub_0801BCF4\n.thumb_set sub_0801BCF4, GetPrimaryOAMSize\n");

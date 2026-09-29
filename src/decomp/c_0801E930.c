@@ -22,14 +22,14 @@ int sub_0801E930(int a, int b, int c, int d)
 
 /* A two-call nest, and the ABSENCE of a narrowing between the calls is the
  * whole content of it: `adds r1, r0, #0` moves sub_0801E334's result straight
- * into sub_0801E0C8's second argument with no `lsls/lsrs` pair. agbcc
+ * into HideOamObjects's second argument with no `lsls/lsrs` pair. agbcc
  * re-narrows a narrow-returning callee at EVERY call site, so that gap proves
  * sub_0801E334 returns `int` -- which is why its promoted definition in
  * src/decomp/c_0801E334.c was retyped this wave. Its own body cannot say:
  * `return *p;` on a `u16 *` is one `ldrh` either way. */
 void sub_0801E950(int a, u16 *p)
 {
-    sub_0801E0C8(a, sub_0801E334(p));
+    HideOamObjects(a, sub_0801E334(p));
 }
 
 /* Dispatches the handler selected by the current record: looks up

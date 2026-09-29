@@ -15,7 +15,8 @@ struct Unk8613F0CProc
     /* 58 */ u32 unk58;
 };
 
-void sub_0807249C(ProcPtr parent, u32 a)
+void StartTemporaryLock(ProcPtr parent, u32 a)
 {
     ((struct Unk8613F0CProc *)Proc_StartBlocking(gUnknown_08613F0C, parent))->unk58 = a;
 }
+asm(".global sub_0807249C\n.thumb_set sub_0807249C, StartTemporaryLock\n");

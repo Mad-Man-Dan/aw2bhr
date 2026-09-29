@@ -16,7 +16,7 @@
  * parameter narrowing, and `adds r0, r3, r0` puts the value's own register
  * first, which is the narrow-parameter operand order sub_08012B00 records. */
 
-void sub_08072A18(u16 * src, u16 * dst, int size, u16 delta)
+void PutTmLinear(u16 * src, u16 * dst, int size, u16 delta)
 {
     while (size > 0)
     {
@@ -26,3 +26,4 @@ void sub_08072A18(u16 * src, u16 * dst, int size, u16 delta)
         size -= 2;
     }
 }
+asm(".global sub_08072A18\n.thumb_set sub_08072A18, PutTmLinear\n");

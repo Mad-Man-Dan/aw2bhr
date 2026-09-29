@@ -15,7 +15,7 @@
     (var) |= byte;                   \
 }
 
-void sub_080717F8(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xwave(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     u32 wav;
 
@@ -27,57 +27,67 @@ void sub_080717F8(void *mplayInfo, struct MusicPlayerTrack *track)
     track->tone.wav = wav;
     track->cmdPtr += 4;
 }
+asm(".global sub_080717F8\n.thumb_set sub_080717F8, ply_xwave\n");
 
-void sub_08071840(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xtype(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.type = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_08071840\n.thumb_set sub_08071840, ply_xtype\n");
 
-void sub_08071854(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xatta(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.attack = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_08071854\n.thumb_set sub_08071854, ply_xatta\n");
 
-void sub_08071868(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xdeca(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.decay = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_08071868\n.thumb_set sub_08071868, ply_xdeca\n");
 
-void sub_0807187C(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xsust(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.sustain = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_0807187C\n.thumb_set sub_0807187C, ply_xsust\n");
 
-void sub_08071890(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xrele(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.release = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_08071890\n.thumb_set sub_08071890, ply_xrele\n");
 
-void sub_080718A4(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xiecv(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->echoVolume = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_080718A4\n.thumb_set sub_080718A4, ply_xiecv\n");
 
-void sub_080718B0(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xiecl(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->echoLength = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_080718B0\n.thumb_set sub_080718B0, ply_xiecl\n");
 
-void sub_080718BC(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xleng(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.length = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_080718BC\n.thumb_set sub_080718BC, ply_xleng\n");
 
-void sub_080718D0(void *mplayInfo, struct MusicPlayerTrack *track)
+void ply_xswee(void *mplayInfo, struct MusicPlayerTrack *track)
 {
     track->tone.pan_sweep = *track->cmdPtr;
     track->cmdPtr++;
 }
+asm(".global sub_080718D0\n.thumb_set sub_080718D0, ply_xswee\n");

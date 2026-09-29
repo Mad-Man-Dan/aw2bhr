@@ -28,8 +28,8 @@ void sub_0806B3E8(struct UnkB3E8Proc *proc)
     a = Interpolate(0, 0x10, 0xa, proc->unk5c, 0x10);
     b = Interpolate(0, 0, -2, proc->unk5c, 0x10);
 
-    sub_080136DC((u16 *)gUnknown_0823BDE0, 0, 1, 1);
-    sub_080136DC(gUnknown_08194280, 4, 1, 1);
+    ColFadeDirect((u16 *)gUnknown_0823BDE0, 0, 1, 1);
+    ColFadeDirect(gUnknown_08194280, 4, 1, 1);
 
     for (i = 0; i < 0x10; i++)
     {

@@ -7,7 +7,7 @@
  * sub_0801C1F8 @ 0x0801C1F8
  */
 
-void sub_0801C1F8(void)
+void AP_ClearAll(void)
 {
     struct Unk03000288 *base;
     struct Unk03000288 *p;
@@ -24,3 +24,4 @@ void sub_0801C1F8(void)
     }
     while ((int)p >= (int)base);
 }
+asm(".global sub_0801C1F8\n.thumb_set sub_0801C1F8, AP_ClearAll\n");

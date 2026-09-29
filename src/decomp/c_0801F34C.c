@@ -27,7 +27,7 @@ void DrawOamObject(int a1, int a2, int a3, int a4, int a5)
     struct Unk0200F920 *e;
     int i;
 
-    e = &gUnknown_0200F920[sub_0801F3D4(a1)];
+    e = &gUnknown_0200F920[GetTilePoolForGraphic(a1)];
     for (i = 0; i < e->unk05; i++) {
         if (e->unk08[i].unk02 == a1) {
             a4 = a4 + e->unk08[i].unk00 + ((e->unk04 - 0x10) << 12);

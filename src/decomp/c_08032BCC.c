@@ -43,8 +43,8 @@ void sub_08032BCC(struct Unk08032BCCProc *proc)
     sub_0801A444(0x10, 1, 0xe, 4);
     sub_08013AEC();
     sub_08013B0C();
-    sub_0801F234(0x45);
-    sub_0801F234(0x46);
+    LoadTilePoolGraphic(0x45);
+    LoadTilePoolGraphic(0x46);
     ApplyPaletteExt(gUnknown_081D2224, 0xc0, 0x20);
     Decompress(gUnknown_081D2554, (void *)0x06006000);
 

@@ -25,7 +25,7 @@ do {                             \
 } while (0)
 
 
-u16 sub_0808AAF4(void)
+u16 ReadFlashId(void)
 {
     u16 flashId;
     u16 readFlash1Buffer[0x20];
@@ -49,3 +49,4 @@ u16 sub_0808AAF4(void)
 
     return flashId;
 }
+asm(".global sub_0808AAF4\n.thumb_set sub_0808AAF4, ReadFlashId\n");

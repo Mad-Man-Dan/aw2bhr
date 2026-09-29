@@ -790,7 +790,7 @@ void DesignRoomDrawTerrainIcon(int a1, int a2, int a3, int a4, int a5, int a6, i
     if (a6)
       attr1 |= 0x1000;
     a3 = (a3 & 0xFF) | 0x500;
-    sub_0801BD00(attr1, a3, gUnknown_08485CC8[a1], sub_08001D04(a4) << 12);
+    PutOamHi(attr1, a3, gUnknown_08485CC8[a1], sub_08001D04(a4) << 12);
   } else {
     int attr1;
 
@@ -798,7 +798,7 @@ void DesignRoomDrawTerrainIcon(int a1, int a2, int a3, int a4, int a5, int a6, i
     if (a6)
       attr1 |= 0x1000;
     a3 = (a3 & 0xFF) | 0x400;
-    sub_0801BD00(attr1, a3, gUnknown_08485CC8[a1], sub_08001D04(a4) << 12);
+    PutOamHi(attr1, a3, gUnknown_08485CC8[a1], sub_08001D04(a4) << 12);
   }
 }
 asm(".global sub_0800272C\n.thumb_set sub_0800272C, DesignRoomDrawTerrainIcon\n");
@@ -835,7 +835,7 @@ void DesignRoomDrawUnitIcon(int a1, int a2, int a3, int a4, int a5, int a6, int 
   attr0 = ((a3 + 8) & 0xFF) | 0x400;
   if (a5)
     attr0 |= 0x100;
-  sub_0801BD00(attr1, attr0, gUnknown_08485D44[a1],
+  PutOamHi(attr1, attr0, gUnknown_08485D44[a1],
                a4 != 0x19 ? pal << 12 : 0xE000);
 }
 asm(".global sub_08002844\n.thumb_set sub_08002844, DesignRoomDrawUnitIcon\n");
@@ -858,7 +858,7 @@ void DesignRoomDrawTerrainName(int a1, int a2, int a3, int a4, int a5, int a6) {
   attr0 = (a3 & 0xFF) | 0x400;
   if (a5)
     attr0 |= 0x100;
-  sub_0801BD00(attr1, attr0, gUnknown_08485CF4[a1], 0x1000);
+  PutOamHi(attr1, attr0, gUnknown_08485CF4[a1], 0x1000);
 }
 asm(".global sub_08002964\n.thumb_set sub_08002964, DesignRoomDrawTerrainName\n");
 
@@ -899,7 +899,7 @@ void DesignRoomDrawUnitName(int a1, int a2, int a3, int a4, int a5, int a6) {
   if (a5)
     attr0 |= 0x100;
 
-  sub_0801BD00(attr1, attr0, gUnknown_08485D68[a1], 0x1000);
+  PutOamHi(attr1, attr0, gUnknown_08485D68[a1], 0x1000);
 }
 asm(".global sub_080029F4\n.thumb_set sub_080029F4, DesignRoomDrawUnitName\n");
 
@@ -910,7 +910,7 @@ void DesignRoomDrawTerrainRing(void) {
   struct DesignRingEntry *q;
 
   if (gActiveMap->flags & 0x10) {
-    sub_0801BD00(0x78, 0x48C, (void *)gUnknown_08485B52, 0);
+    PutOamHi(0x78, 0x48C, (void *)gUnknown_08485B52, 0);
     if (gActiveMap->state == 0x33) {
       flag = gActiveMap->editMode;
       j = gActiveMap->ringIndex + 3;
@@ -958,7 +958,7 @@ void DesignRoomDrawUnitRing(void) {
   struct DesignRingEntry *q;
 
   if (gActiveMap->flags & 0x10) {
-    sub_0801BD00(0x78, 0x48C, (void *)gUnknown_08485B52, 0);
+    PutOamHi(0x78, 0x48C, (void *)gUnknown_08485B52, 0);
     if (gActiveMap->state == 0x33) {
       j = gActiveMap->ringIndex + 3;
       if (j > 7)
@@ -994,17 +994,17 @@ asm(".global sub_08002C38\n.thumb_set sub_08002C38, DesignRoomDrawUnitRing\n");
 void sub_08002D7C(void) {
   sub_0801F114();
   sub_0801F150(1, (void *)0x06010000, 0x31C, 0x14);
-  sub_0801F234(0x3E);
-  sub_0801F234(0x3F);
-  sub_0801F234(0x40);
-  sub_0801F234(0x41);
+  LoadTilePoolGraphic(0x3E);
+  LoadTilePoolGraphic(0x3F);
+  LoadTilePoolGraphic(0x40);
+  LoadTilePoolGraphic(0x41);
   sub_0801F150(2, (void *)0x06010000, 0x32C, 0x1D);
-  sub_0801F234(0x54);
-  sub_0801F234(0x90);
-  sub_0801F234(0x91);
-  sub_0801F234(0x8E);
-  sub_0801F234(0x8F);
-  sub_0801F234(0xAA);
+  LoadTilePoolGraphic(0x54);
+  LoadTilePoolGraphic(0x90);
+  LoadTilePoolGraphic(0x91);
+  LoadTilePoolGraphic(0x8E);
+  LoadTilePoolGraphic(0x8F);
+  LoadTilePoolGraphic(0xAA);
   sub_08002EF8();
 }
 
@@ -1072,7 +1072,7 @@ void DesignRoomDrawPropertyCounts(void) {
     for (i = 0; i <= 3; i++) {
       t = buf[k];
       sub_0802BD54((x + 0xA) & 0x1FF, (y + 0x10) | 0x400, CountPropertiesOfType(t));
-      sub_0801BD00((x + 2) & 0x1FF, y | 0x400, gUnknown_08485CC8[i + 1],
+      PutOamHi((x + 2) & 0x1FF, y | 0x400, gUnknown_08485CC8[i + 1],
                    sub_08001D04(t) << 12);
       x += 0x14;
       k++;

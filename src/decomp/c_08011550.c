@@ -26,16 +26,18 @@ struct Unk1156CProc
     /* 64 */ u16 unk64;
 };
 
-void sub_08011550(int a)
+void StartFadeToBlack(int a)
 {
     struct Unk11550Proc *proc = Proc_Start(gUnknown_0848923C, PROC_TREE_3);
 
     proc->unk64 = a;
 }
+asm(".global sub_08011550\n.thumb_set sub_08011550, StartFadeToBlack\n");
 
-void sub_0801156C(int a)
+void StartFadeFromBlack(int a)
 {
     struct Unk1156CProc *proc = Proc_Start(ProcScr_DesignRoomFadeIn, PROC_TREE_3);
 
     proc->unk64 = a;
 }
+asm(".global sub_0801156C\n.thumb_set sub_0801156C, StartFadeFromBlack\n");

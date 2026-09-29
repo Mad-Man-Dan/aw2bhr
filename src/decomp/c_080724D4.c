@@ -24,7 +24,7 @@
  * Likewise the terminator has to be `*(dst + end + 2)`: `dst[end + 2]`
  * reassociates and emits `add rD, end, dst` where the ROM has
  * `adds r1, r6, r0`. */
-int sub_080724D4(int value, u8 *dst)
+int NumberToStringSJis(int value, u8 *dst)
 {
     int n = 0;
     int end;
@@ -72,3 +72,4 @@ int sub_080724D4(int value, u8 *dst)
 
     return (end >> 1) + 1;
 }
+asm(".global sub_080724D4\n.thumb_set sub_080724D4, NumberToStringSJis\n");

@@ -13,7 +13,7 @@
  * narrowing. The literal pool lands in the middle of the function, between the
  * `b` of the early return and the increment block -- that placement falls out
  * of the block order and is not a spelling choice. */
-s16 sub_08019290(const u8 *a)
+s16 FindEventScriptSlot(const u8 *a)
 {
     s16 i;
 
@@ -24,3 +24,4 @@ s16 sub_08019290(const u8 *a)
     }
     return -1;
 }
+asm(".global sub_08019290\n.thumb_set sub_08019290, FindEventScriptSlot\n");

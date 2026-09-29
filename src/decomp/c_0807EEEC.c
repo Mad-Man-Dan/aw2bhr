@@ -106,7 +106,7 @@ void CoSelect_IDLE_0807EEED(struct Unk807EEEC *proc)
         sub_08043BA4(gUnknown_030058D4[2], DivRem(2, 2) * 0x140, 3);
 
     if (proc->unk4c == sub_0803BD14() * 0x20 + 0x14)
-        sub_08071B0C(0x14, 0x30, proc);
+        StartPalFadeToWhite(0x14, 0x30, proc);
 
     if (proc->unk4c < sub_0803BD14() * 0x20 + 0x14)
     {

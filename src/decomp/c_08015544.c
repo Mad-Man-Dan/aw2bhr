@@ -13,7 +13,7 @@
  */
 void sub_08015544(void)
 {
-    sub_0801D8B4();
+    ClearAllSpriteScripts();
 }
 
 /* A bare forwarder: `push {lr}; bl <callee>; pop {r0}; bx r0`. The `pop {r0}`
@@ -22,7 +22,7 @@ void sub_08015544(void)
  */
 void sub_08015550(void)
 {
-    sub_0801DED8();
+    DrawSimpleSpriteScripts();
 }
 
 /* A bare forwarder: `push {lr}; bl <callee>; pop {r0}; bx r0`. The `pop {r0}`
@@ -31,5 +31,5 @@ void sub_08015550(void)
  */
 void sub_0801555C(void)
 {
-    sub_0801DF20();
+    TickSimpleSpriteScripts();
 }

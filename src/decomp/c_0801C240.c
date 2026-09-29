@@ -12,8 +12,9 @@ struct Unk_0801C240
     /* 00 */ void * unk00;
 };
 
-void sub_0801C240(struct Unk_0801C240 * a)
+void AP_Delete(struct Unk_0801C240 * a)
 {
     if (a != NULL && a->unk00 != NULL)
         a->unk00 = NULL;
 }
+asm(".global sub_0801C240\n.thumb_set sub_0801C240, AP_Delete\n");

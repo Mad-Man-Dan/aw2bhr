@@ -63,19 +63,19 @@ void sub_08046E48(void)
     sub_0801F114();
 
     sub_0801F150(0, (void *)0x06010000, 0x1fa, 0x16);
-    sub_0801F234(0x1c);
-    sub_0801F234(0x1d);
-    sub_0801F234(0x1e);
-    sub_0801F234(0x1f);
-    sub_0801F234(0x21);
-    sub_0801F234(0x20);
-    sub_0801F234(0x22);
-    sub_0801F234(0x2c);
-    sub_0801F234(0x2d);
-    sub_0801F234(0x2e);
-    sub_0801F234(0x39);
+    LoadTilePoolGraphic(0x1c);
+    LoadTilePoolGraphic(0x1d);
+    LoadTilePoolGraphic(0x1e);
+    LoadTilePoolGraphic(0x1f);
+    LoadTilePoolGraphic(0x21);
+    LoadTilePoolGraphic(0x20);
+    LoadTilePoolGraphic(0x22);
+    LoadTilePoolGraphic(0x2c);
+    LoadTilePoolGraphic(0x2d);
+    LoadTilePoolGraphic(0x2e);
+    LoadTilePoolGraphic(0x39);
     sub_0801F150(2, (void *)0x06010000, 0x27e, 0x11);
-    sub_0801F234(0xa8);
+    LoadTilePoolGraphic(0xa8);
 
     switch (gUnknown_02028DD6)
     {

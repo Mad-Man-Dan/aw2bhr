@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_080129F8 -- roll a percentage chance; 1 means it succeeded.
+ * RollPercentChance -- roll a percentage chance; 1 means it succeeded.
  *
  * `a` is a whole percentage. The next random number is reduced modulo 10000 and
  * compared with a * 100, which puts the two on the same scale. Both sides are
@@ -22,10 +22,11 @@
  *   - The return type is u8 because the only caller narrows the result to a byte
  *     before testing it, which an `int` return would not produce.
  */
-u8 sub_080129F8(u16 a)
+u8 RollPercentChance(u16 a)
 {
     if (GetNextRandomNumber() % 10000 < a * 100)
         return 1;
 
     return 0;
 }
+asm(".global sub_080129F8\n.thumb_set sub_080129F8, RollPercentChance\n");

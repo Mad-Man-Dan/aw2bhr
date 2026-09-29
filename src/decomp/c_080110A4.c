@@ -13,13 +13,13 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* sub_08071D70's 0x08011 twin: the same fade-up stepper one binary point
+/* FadeToCommon_OnLoop's 0x08011 twin: the same fade-up stepper one binary point
  * further left -- clamp 0x1000 instead of 0x100, publish `>> 8` instead of
  * `>> 4`.
  *
  * The comparison LOOKS different and is not. 0xFFF does not fit an imm8, so
  * agbcc cannot sign-extend and compare; it leaves the value in the `lsls #0x10`
- * domain and compares against a pooled 0x0FFF0000 instead. sub_08071D70's
+ * domain and compares against a pooled 0x0FFF0000 instead. FadeToCommon_OnLoop's
  * 0xFF does fit, so that one gets `asrs #0x10; cmp #0xff`. Same C, two
  * comparison idioms, picked by whether the constant is an imm8. */
 struct Unk80110A4

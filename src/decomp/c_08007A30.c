@@ -23,7 +23,7 @@
  *   state 0x14: count the timer down; at zero go back to state 0.
  *
  * Whatever the state, both positions are then shifted down to whole pixels,
- * have bit 10 set, and are handed to sub_0801BD00: object 0x64 with the sprite
+ * have bit 10 set, and are handed to PutOamHi: object 0x64 with the sprite
  * data at gUnknown_08488880, object 0x86 with gUnknown_08488888.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
@@ -109,7 +109,7 @@ void sub_08007A30(void)
     b = raw >> 20;
   }
   a |= 0x400;
-  sub_0801BD00(0x64, a, gUnknown_08488880, 0);
+  PutOamHi(0x64, a, gUnknown_08488880, 0);
   b |= 0x400;
-  sub_0801BD00(0x86, b, gUnknown_08488888, 0);
+  PutOamHi(0x86, b, gUnknown_08488888, 0);
 }

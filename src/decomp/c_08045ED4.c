@@ -21,5 +21,5 @@
  */
 void sub_08045ED4(void)
 {
-    sub_08013378();
+    EndScreenShake();
 }

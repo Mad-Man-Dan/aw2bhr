@@ -22,7 +22,7 @@ struct Unk115B4Proc
     /* 64 */ u16 unk64;
 };
 
-/* sub_08011550 plus the blend write. `(x & 0x3f) | 0x80` really is the
+/* StartFadeToBlack plus the blend write. `(x & 0x3f) | 0x80` really is the
  * bitfield store `effect = 2`: the complement mask ~0xC0 is 0x3F in QImode,
  * whose sign bit is clear, so it materialises as a bare `movs #0x3f` rather
  * than the `mov #N; neg` pair a mask with bit 7 set would need. */

@@ -10,9 +10,9 @@
 #include "hardware.h"
 
 /* SoundVSyncOff: disarm the two PCM DMAs, offset ident by +10 to record it,
- * and zero both PCM buffers. sub_08070AF8 (SoundVSyncOn, already matched) is
+ * and zero both PCM buffers. SoundVSyncOn_rev01 (SoundVSyncOn, already matched) is
  * the exact inverse and subtracts the 10 again. */
-void sub_08070A7C(void)
+void SoundVSyncOff_rev01(void)
 {
     struct SoundInfo *soundInfo = gUnknown_03007FF0;
     u32 ident = soundInfo->ident;
@@ -35,3 +35,4 @@ void sub_08070A7C(void)
     zero = 0;
     CpuSet(&zero, soundInfo->pcmBuffer, 0x05000318);
 }
+asm(".global sub_08070A7C\n.thumb_set sub_08070A7C, SoundVSyncOff_rev01\n");

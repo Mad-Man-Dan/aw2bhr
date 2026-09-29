@@ -48,7 +48,7 @@ void ApplySiloDamage(struct Unk40640Proc *proc)
     sub_08026100(proc->unk2c + 1, proc->unk30 + 1, proc->unk44);
     sub_08026100(proc->unk2c,     proc->unk30 + 2, proc->unk44);
     sub_08024268();
-    sub_0801C70C(gUnknown_08111D94,
+    APProc_Create(gUnknown_08111D94,
                  proc->unk54 - gMap->scrollX,
                  proc->unk58 - gMap->scrollY,
                  proc->unk4a, 3, 1);

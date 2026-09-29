@@ -78,10 +78,10 @@ void sub_08049F24(void)
         sel = 0;
         if (i == gUnknown_02028E40)
             sel = 1;
-        sub_0801BD00(0x60, j * 16 + 16, gUnknown_084C37E4,
+        PutOamHi(0x60, j * 16 + 16, gUnknown_084C37E4,
             i * 16 | (sel + 2) << 12);
     }
 
-    sub_0801BD00(0x58, 0x60, gUnknown_084C3800,
+    PutOamHi(0x58, 0x60, gUnknown_084C3800,
         (gUnknown_02028E40 * 48 + 0x46) | 0x2000);
 }

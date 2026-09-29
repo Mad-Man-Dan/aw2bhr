@@ -11,7 +11,7 @@
  * different blobs. The return type is `u8 *` and not that function's
  * `const u16 *`: the note on gUnknown_0810A3E8 in include/unknown-globals.h
  * already recorded that this half of the accessor pair feeds Decompress rather
- * than sub_0801C70C, so the two halves are not the same kind of data. Byte-
+ * than APProc_Create, so the two halves are not the same kind of data. Byte-
  * neutral either way; the declaration follows the use. */
 u8 *sub_0803F110(int a)
 {

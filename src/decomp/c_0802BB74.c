@@ -13,7 +13,7 @@
  * 0x1ff and an `ands` instead. */
 void sub_0802BB74(u16 a1, u16 a2)
 {
-    sub_0801BD00(a1 & 0x1ff, a2 | 0x400, gUnknown_0849A3B8, 0x1c);
+    PutOamHi(a1 & 0x1ff, a2 | 0x400, gUnknown_0849A3B8, 0x1c);
 }
 
 /* gUnknown_08090BC0 and gUnknown_08090BC4 are agbcc address words, not globals

@@ -11,7 +11,7 @@
 
 /* The FIRST parameter is dead: the body saves r1 into r4 and never reads r0
  * at all. It is kept because both of this pair's siblings in the block
- * (sub_08037FB4 below it, and the sub_080115E0 family) are `(int, ProcPtr)`
+ * (sub_08037FB4 below it, and the StartLockingFadeToBlack family) are `(int, ProcPtr)`
  * proc starters, and dropping it would leave callers passing an argument the
  * prototype does not declare. */
 void sub_08037F94(int a, ProcPtr parent)

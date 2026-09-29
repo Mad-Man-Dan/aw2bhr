@@ -31,14 +31,14 @@ struct UnkF510Proc
  * camera-relative coordinates.
  *
  * The `lsls r0, r0, #0x18; cmp r0, #0` after the call is agbcc re-narrowing a
- * BYTE-returning callee, which is what retyped sub_0801C254 from `int` to `u8`
+ * BYTE-returning callee, which is what retyped AP_Update from `int` to `u8`
  * in unknown-functions.h -- with `int` the test is a bare `cmp r0, #0`.
  */
 void sub_0803F4C8(struct UnkF4C8Proc *proc)
 {
-    if (sub_0801C254(proc->unk50, (proc->unk54 - gMap->scrollX) & 0x1FF, (proc->unk58 - gMap->scrollY) & 0xFF) == 0)
+    if (AP_Update(proc->unk50, (proc->unk54 - gMap->scrollX) & 0x1FF, (proc->unk58 - gMap->scrollY) & 0xFF) == 0)
     {
-        sub_0801C240(proc->unk50);
+        AP_Delete(proc->unk50);
         Proc_Break(proc);
     }
 }

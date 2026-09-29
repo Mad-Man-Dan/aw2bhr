@@ -43,6 +43,6 @@ void sub_0803F550(struct UnkF550Proc *proc)
     x = proc->unk2c * 16 - gMap->scrollX;
     y = proc->unk30 * 16 - gMap->scrollY;
 
-    ((struct UnkF550Ret *)sub_0801C70C(gUnknown_081183EC, (x + 0x18) & 0x1FF,
+    ((struct UnkF550Ret *)APProc_Create(gUnknown_081183EC, (x + 0x18) & 0x1FF,
                                        (y + 0x4E) & 0xFF, 0x31CA, 0, 0))->unk50->unk24 = gUnknown_0200FC50;
 }

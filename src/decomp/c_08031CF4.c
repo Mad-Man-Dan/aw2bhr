@@ -27,7 +27,7 @@ void sub_08031CF4(struct Unk08031CF4Proc *proc)
     sub_08012BC8(gBG0TilemapBuffer, 0xc, 8, 2, 2, 0);
     sub_08013AEC();
 
-    sub_0801BD00(proc->unk1e, proc->unk20,
+    PutOamHi(proc->unk1e, proc->unk20,
                  gUnknown_0849B074[((u32)gGameClock >> 3) % 3], 0x4054);
 }
 
@@ -38,7 +38,7 @@ void sub_08031D54(struct Unk08031D54Proc *proc)
     if (proc->unk22 != proc->unk1e && (gGameClock & 1) == 0)
         proc->unk1e++;
 
-    sub_0801BD00(proc->unk1e, proc->unk20,
+    PutOamHi(proc->unk1e, proc->unk20,
                  gUnknown_0849B074[((u32)gGameClock >> 3) % 3], 0x4054);
 }
 

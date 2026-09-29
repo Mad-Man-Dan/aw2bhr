@@ -28,17 +28,17 @@ struct Unk8084600
 
 /* The first call is genuinely peeled out of the loop: the loop counter starts
  * at 0x10 and the index 0 case has to happen too, so the source runs
- * sub_08071B0C(0, ...) before the `for (i = 0x10; i <= 0x1d; i++)` rather
+ * StartPalFadeToWhite(0, ...) before the `for (i = 0x10; i <= 0x1d; i++)` rather
  * than special-casing inside it. Matched off the first probe. */
 
 void sub_08084580(ProcPtr proc)
 {
     int i;
 
-    sub_08071B0C(0, 0x10, proc);
+    StartPalFadeToWhite(0, 0x10, proc);
 
     for (i = 0x10; i <= 0x1d; i++)
-        sub_08071B0C(i, 0x10, proc);
+        StartPalFadeToWhite(i, 0x10, proc);
 }
 
 /* gUnknown_08616AC0 is an array of two-pointer records; see the evidence

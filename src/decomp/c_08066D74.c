@@ -20,7 +20,7 @@ void sub_08066D74(void)
     sub_08066B8C(gUnknown_08580934->unk33);
     sub_08066D30();
 
-    sc = (sub_0801BA4C(gUnknown_08580934->unk2a * 16 % 360) >> 9) + 0x100;
+    sc = (SinDegrees(gUnknown_08580934->unk2a * 16 % 360) >> 9) + 0x100;
 
     SetObjAffine(0,
                  Div(gSinLut[0x40] * 16, sc != 0 ? sc : 2),

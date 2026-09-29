@@ -60,7 +60,7 @@ void sub_08019E68(void)
     p->unk40 = i;
     p->unk41 = n;
 
-    sub_08019C40(p);
+    DrawMenuItems(p);
 
     sub_0801A444(p->unk48, p->unk4a, (s16)(maxw + 2), w >> 3);
 }

@@ -11,12 +11,12 @@
 
 /* The rotating-sprite idiom of its matched neighbour sub_08063BE0
  * (src/decomp/c_08063BE0.c): four Div calls feeding SetObjAffine, every
- * divisor guarded by the same `!= 0 ? : 2` ternary, then one sub_0801BD00.
+ * divisor guarded by the same `!= 0 ? : 2` ternary, then one PutOamHi.
  *
  * The two `lsls #0x14 / lsrs #0x10` and `lsls #0x12 / lsrs #0x10` pairs on the
  * merged path are not a mask plus a shift: read as `(u32)x << a >> b` they are
  * `(u16)(a5 * 0x10)` and `(u16)(a5 * 4)`. The truncation belongs to the u16
- * LOCAL, not to sub_0801BD00's parameter -- the middle arm calls sub_0801BD00
+ * LOCAL, not to PutOamHi's parameter -- the middle arm calls PutOamHi
  * directly with `a5 * 4` and emits a bare `lsls r3, r7, #2` with no truncation,
  * which it could not do if the fourth parameter were narrow.
  *
@@ -46,7 +46,7 @@ void sub_08063CCC(int a1, int a2, int a3, int a4, int a5)
     }
     else if (a3 == 0x100)
     {
-        sub_0801BD00(a1, a2, gUnknown_085806EA, a5 * 4);
+        PutOamHi(a1, a2, gUnknown_085806EA, a5 * 4);
         return;
     }
     else
@@ -61,5 +61,5 @@ void sub_08063CCC(int a1, int a2, int a3, int a4, int a5)
                  Div(SIN_Q12(0) * 16, a3 != 0 ? a3 : 2),
                  Div(COS_Q12(0) * 16, a3 != 0 ? a3 : 2));
 
-    sub_0801BD00(a1, a2, t, w);
+    PutOamHi(a1, a2, t, w);
 }

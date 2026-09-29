@@ -7,7 +7,8 @@
  * sub_0801BB00 @ 0x0801BB00
  */
 
-void sub_0801BB00(int index, void *handler)
+void SetIRQHandler(int index, void *handler)
 {
     gUnknown_03002FE0[index] = handler;
 }
+asm(".global sub_0801BB00\n.thumb_set sub_0801BB00, SetIRQHandler\n");

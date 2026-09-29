@@ -21,7 +21,7 @@
  * `i` is `u8`, not `int`: the ROM re-truncates it (`lsls #0x18; lsrs #0x18`)
  * before every bottom test, which an `int` counter against a u8 bound does
  * not do. */
-u8 *sub_08019688(u8 *p, u8 term, u8 count, u8 stride)
+u8 *SkipTerminatedRecords(u8 *p, u8 term, u8 count, u8 stride)
 {
     u8 i;
 
@@ -33,3 +33,4 @@ u8 *sub_08019688(u8 *p, u8 term, u8 count, u8 stride)
     }
     return p;
 }
+asm(".global sub_08019688\n.thumb_set sub_08019688, SkipTerminatedRecords\n");

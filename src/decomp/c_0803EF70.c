@@ -31,12 +31,12 @@ void sub_0803EF70(struct Unk3EF70Proc *proc)
     ApplyPaletteExt(gUnknown_08114E34, 0x260, 0x40);
     x = proc->unk2c * 16 - gMap->scrollX;
     y = proc->unk30 * 16 - gMap->scrollY;
-    sub_0801C70C(gUnknown_08113F84, (x + gUnknown_0849F820[0]) & 0x1ff,
+    APProc_Create(gUnknown_08113F84, (x + gUnknown_0849F820[0]) & 0x1ff,
                  (y + gUnknown_0849F828[0]) & 0xff, 0x31ca, 0, 0);
-    sub_0801C70C(gUnknown_08113F84, ((x + gUnknown_0849F820[1]) & 0x1ff) | 0x1000,
+    APProc_Create(gUnknown_08113F84, ((x + gUnknown_0849F820[1]) & 0x1ff) | 0x1000,
                  (y + gUnknown_0849F828[1]) & 0xff, 0x31ca, 0, 0);
-    sub_0801C70C(gUnknown_08114740, (x + gUnknown_0849F820[2]) & 0x1ff,
+    APProc_Create(gUnknown_08114740, (x + gUnknown_0849F820[2]) & 0x1ff,
                  (y + gUnknown_0849F828[2]) & 0xff, 0x324a, 0, 0);
-    sub_0801C70C(gUnknown_08114740, (x + gUnknown_0849F820[3]) & 0x1ff,
+    APProc_Create(gUnknown_08114740, (x + gUnknown_0849F820[3]) & 0x1ff,
                  (y + gUnknown_0849F828[3]) & 0xff, 0x324a, 1, 0);
 }

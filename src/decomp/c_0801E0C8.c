@@ -16,7 +16,7 @@
  * `push {r4, lr}`. This is the same "`p += C` in a separate statement escapes
  * the fold" split recorded in docs/agbcc-codegen.md, and it applies to a
  * variable index too. */
-void sub_0801E0C8(int a, int n)
+void HideOamObjects(int a, int n)
 {
     u16 *p;
     int i;
@@ -34,3 +34,4 @@ void sub_0801E0C8(int a, int n)
         p += 2;
     }
 }
+asm(".global sub_0801E0C8\n.thumb_set sub_0801E0C8, HideOamObjects\n");

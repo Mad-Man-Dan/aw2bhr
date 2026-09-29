@@ -7,7 +7,7 @@
  * sub_0801C6E8 @ 0x0801C6E8
  */
 
-struct Unk0801C210 *sub_0801C6E8(int a1)
+struct Unk0801C210 *AP_Find(int a1)
 {
     int i;
 
@@ -17,3 +17,4 @@ struct Unk0801C210 *sub_0801C6E8(int a1)
 
     return NULL;
 }
+asm(".global sub_0801C6E8\n.thumb_set sub_0801C6E8, AP_Find\n");

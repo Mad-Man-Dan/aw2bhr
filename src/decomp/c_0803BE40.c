@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-/* Three statements: sub_0801A168 (whose `int` result is discarded -- nothing
+/* Three statements: CloseTopMenu (whose `int` result is discarded -- nothing
  * re-narrows it and `pop {r0}` makes this void), then start the
  * gUnknown_0849BC98 proc on tree 3 through sub_0803433C, then raise
  * gUnknown_03002F1C. That last flag is the same one sub_0803B0EC sets, so the
@@ -18,7 +18,7 @@
 
 void sub_0803BE40(void)
 {
-    sub_0801A168();
+    CloseTopMenu();
     sub_0803433C(PROC_TREE_3);
     gUnknown_03002F1C = 1;
 }

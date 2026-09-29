@@ -15,7 +15,7 @@
  * The `strh r0, [r2, #0xa]` with no narrowing is what fixes the parameter at
  * 16 bits or wider; `int` and `u16` are byte-identical here.
  */
-void sub_0801BB88(int a)
+void InitOam(int a)
 {
     gOamTransferHead.src = gUnknown_03002520;
     gOamTransferHead.dst = (void *)0x07000000;
@@ -26,3 +26,4 @@ void sub_0801BB88(int a)
     gOamTransferTail.oamOffset = a * 8;
     gOamTransferTail.objectCount = 0x80 - a;
 }
+asm(".global sub_0801BB88\n.thumb_set sub_0801BB88, InitOam\n");

@@ -13,7 +13,7 @@
  *
  * MATCHES -- but only when compiled with `old_agbcc`. It does NOT match under
  * the default build flags, so `try_match` and a plain
- * `python tools/trymatch.py sub_08071564` both still report 28 bytes and fail.
+ * `python tools/trymatch.py MP_clear_modM` both still report 28 bytes and fail.
  *
  * Verified byte-for-byte (bytes and relocations) with:
  *
@@ -42,7 +42,7 @@
  * needs a per-file `CC1`/`CFLAGS` override. See "Per-file compiler and flags"
  * in docs/agbcc-codegen.md.
  */
-void sub_08071564(struct MusicPlayerTrack * track)
+void MP_clear_modM(struct MusicPlayerTrack * track)
 {
     track->lfoSpeedC = 0;
     track->modM = 0;
@@ -52,3 +52,4 @@ void sub_08071564(struct MusicPlayerTrack * track)
     else
         track->flags |= MPT_FLG_VOLCHG;
 }
+asm(".global sub_08071564\n.thumb_set sub_08071564, MP_clear_modM\n");

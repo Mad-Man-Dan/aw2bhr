@@ -27,7 +27,8 @@
  * constrains its own parameter and `s16` with no cast would be byte-identical.
  */
 
-void sub_08072BBC(int a)
+void PlaySeFunc(int a)
 {
     sub_0803B4DC((s16)a);
 }
+asm(".global sub_08072BBC\n.thumb_set sub_08072BBC, PlaySeFunc\n");

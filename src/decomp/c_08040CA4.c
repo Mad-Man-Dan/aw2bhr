@@ -45,16 +45,16 @@ void sub_08040CA4(struct Unk08040CA4 *proc)
     Decompress(gUnknown_081214B4, (void *)0x06013940);
     ApplyPaletteExt(gUnknown_0812189C, 0x260, 0x20);
 
-    proc->unk34 = sub_0801C210(gUnknown_08121344, 0, 1);
-    sub_0801C4D4(proc->unk34, 0);
+    proc->unk34 = AP_Create(gUnknown_08121344, 0, 1);
+    AP_SwitchAnimation(proc->unk34, 0);
     proc->unk34->unk22 = 0x424A;
 
-    proc->unk38 = sub_0801C210(gUnknown_081240BC, 0, 1);
-    sub_0801C4D4(proc->unk38, 0);
+    proc->unk38 = AP_Create(gUnknown_081240BC, 0, 1);
+    AP_SwitchAnimation(proc->unk38, 0);
     proc->unk38->unk22 = 0x522A;
 
-    proc->unk2c = sub_0801C210(gUnknown_08121870, 0, 1);
-    sub_0801C4D4(proc->unk2c, 0);
+    proc->unk2c = AP_Create(gUnknown_08121870, 0, 1);
+    AP_SwitchAnimation(proc->unk2c, 0);
     proc->unk2c->unk22 = 0x31CA;
 
     SetObjAffine(1, Div(gSinLut[0x40] << 4, 0x100),

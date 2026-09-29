@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-/* Family F032, exemplar sub_08072288 in src/decomp/c_08071F88.c.
+/* Family F032, exemplar WaitForFade in src/decomp/c_08071F88.c.
  *
  * The predicate takes NO argument. `adds r4, r0, #0` followed by a `bl` with
  * r0 untouched looks like `pred(proc)`, but arity is invisible in a

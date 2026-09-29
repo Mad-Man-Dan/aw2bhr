@@ -9,7 +9,7 @@
 
 bool8 sub_08018E7C(s16 a)
 {
-    sub_0801930C(gUnknown_0848A378);
+    EndEventScript(gUnknown_0848A378);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }

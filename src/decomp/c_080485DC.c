@@ -7,15 +7,15 @@
  * sub_080485DC @ 0x080485DC
  */
 
-/* Remember the blob and immediately run it. sub_080193B0's result is discarded
+/* Remember the blob and immediately run it. StartEventScript's result is discarded
  * -- pop {r0}; bx r0 overwrites r0 with the return address, which is the
  * spelling agbcc uses only for a void function.
  *
  * The argument is passed on unchanged, so its type comes entirely from
- * sub_080193B0's const u8 *; ->unk850 takes the same type for the same
+ * StartEventScript's const u8 *; ->unk850 takes the same type for the same
  * reason. */
 void sub_080485DC(const u8 *script)
 {
     gUnknown_084C30F8->unk850 = script;
-    sub_080193B0(script);
+    StartEventScript(script);
 }

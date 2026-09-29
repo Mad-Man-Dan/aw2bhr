@@ -11,7 +11,7 @@
  *
  * NEEDS THE m4a BLOCK'S OVERRIDE -- old_agbcc, -fprologue-bugfix removed -- now
  * recorded in data/compiler-overrides.json, the same entry its neighbours
- * sub_08070CD0, sub_08070BAC and sub_08070FAC carry. The parked diagnosis
+ * FadeOutBody_rev01, MPlayStart_rev01 and CgbSound carry. The parked diagnosis
  * ("allocno-priority tie, the ROM puts track in r2 and the accumulator in r3,
  * one pseudo lands one register over and renumbers the whole function, no
  * source lever in three waves") was measured under the DEFAULT compiler. The
@@ -40,11 +40,11 @@
  *    dead leading argument, not hand-written assembly.
  *
  * The wave-47 open tell -- the ROM emitting `movs r0,#1` before `ldrb r1,[r2,#0]`
- * for the first flags test, also seen in sub_08070CD0 -- is EXPLAINED: it is
+ * for the first flags test, also seen in FadeOutBody_rev01 -- is EXPLAINED: it is
  * old_agbcc's emission order and it disappears with the right compiler. It was
  * never a source-operand-order question.
  */
-void sub_08070D98(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *track)
+void TrkVolPitSet_rev01(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *track)
 {
     if (track->flags & 1)
     {
@@ -88,3 +88,4 @@ void sub_08070D98(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *tr
 
     track->flags &= 0xfa;
 }
+asm(".global sub_08070D98\n.thumb_set sub_08070D98, TrkVolPitSet_rev01\n");

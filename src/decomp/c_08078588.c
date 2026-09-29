@@ -24,6 +24,6 @@ void sub_08078588(struct UnkProc8615AAC *proc)
     {
         gUnknown_03002F08.unk00 = 0;
         sub_08014BC0(proc);
-        sub_080193B0(proc->unk_54);
+        StartEventScript(proc->unk_54);
     }
 }

@@ -22,10 +22,11 @@ struct Unk724B8Proc
  * The `b` over the else arm is a real if/else and not a returned comparison --
  * the function is void (`pop {r0}`) and the two arms do different work rather
  * than producing 0 and 1. */
-void sub_080724B8(struct Unk724B8Proc *proc)
+void TemporaryLock_OnLoop(struct Unk724B8Proc *proc)
 {
     if (proc->unk58 == 0)
         Proc_Break(proc);
     else
         proc->unk58--;
 }
+asm(".global sub_080724B8\n.thumb_set sub_080724B8, TemporaryLock_OnLoop\n");

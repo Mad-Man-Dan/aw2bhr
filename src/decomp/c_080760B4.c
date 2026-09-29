@@ -37,11 +37,11 @@ void WM_Listener_080760B5(struct Unk80760B4 *proc)
     sub_0801F150(1,
                  (void *)(0x6000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  0x29, 1);
-    sub_0801F234(0x3E);
-    sub_0801F234(0x3F);
-    sub_0801F234(0x40);
-    sub_0801F234(0x41);
-    sub_0801F234(0x42);
+    LoadTilePoolGraphic(0x3E);
+    LoadTilePoolGraphic(0x3F);
+    LoadTilePoolGraphic(0x40);
+    LoadTilePoolGraphic(0x41);
+    LoadTilePoolGraphic(0x42);
 
     proc->unk40 = 0;
     proc->unk3a = 1;

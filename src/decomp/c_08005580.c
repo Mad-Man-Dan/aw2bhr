@@ -10,6 +10,6 @@
 void sub_08005580(void)
 {
     sub_0801B780(0x70);
-    sub_0801A664();
+    PopMenu();
     sub_0803B4DC(0x66);
 }

@@ -52,7 +52,7 @@ struct Unk080196F4Cmd /* 0x0c */
     /* 0x0a */ u8 filler_0a[0x02];
 };
 
-void sub_080196F4(void *arg)
+void ApplyUnitSpawnTable(void *arg)
 {
     struct Unk080196F4Cmd *p;
     struct Unit *u;
@@ -98,3 +98,4 @@ void sub_080196F4(void *arg)
     gUnknown_030033EC = saved;
     gUnknown_03003F2C = (gUnknown_030033EC - 1) * 0x40;
 }
+asm(".global sub_080196F4\n.thumb_set sub_080196F4, ApplyUnitSpawnTable\n");

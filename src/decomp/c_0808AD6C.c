@@ -20,7 +20,7 @@
  *
  * Either compiler binary works -- agbcc and old_agbcc both match once the flag
  * is gone, and both miss by the same 8 bytes with it. So this one is purely a
- * flag, where the m4a pair (sub_080713F8, sub_08071564) is purely a binary.
+ * flag, where the m4a pair (MPlayTempoControl, MP_clear_modM) is purely a binary.
  *
  * The flag is exactly the axis the parked note said was missing. The ROM loads
  * the `sub_0808AD68` pool word TWICE -- once as the eor's destination, which

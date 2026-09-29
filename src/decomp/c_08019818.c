@@ -20,5 +20,5 @@ void sub_08019818(u16 a, u8 b, u8 c)
         b = b + c * 24;
 
     gUnknown_03002F08.unk02 = b;
-    sub_080193B0(gUnknown_0848A3EC)->unk14 = a;
+    StartEventScript(gUnknown_0848A3EC)->unk14 = a;
 }

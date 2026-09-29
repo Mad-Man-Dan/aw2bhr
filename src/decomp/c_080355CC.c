@@ -63,7 +63,7 @@ ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
 
     gfx = GetUnitSpriteFormat(a4);
     proc = Proc_Start(ProcScr_SelectUnit, PROC_TREE_5);
-    proc->unk2c = sub_0801C210(gfx, 2, 1);
+    proc->unk2c = AP_Create(gfx, 2, 1);
     proc->unk3a = slot;
     proc->unk48 = sub_080364C4();
     proc->unk30 = 0;
@@ -82,7 +82,7 @@ ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
     proc->unk40 = sub_08035B00(proc->unk36);
     proc->unk37 = a3;
 
-    sub_0801C4D4(proc->unk2c, proc->unk38);
+    AP_SwitchAnimation(proc->unk2c, proc->unk38);
     proc->unk2c->unk24 = proc->unk48;
     proc->unk2c->unk22 = (proc->unk3a * 9 + 0x29A) | (sub_08035AE8(proc->unk3a) * 0x1000);
 

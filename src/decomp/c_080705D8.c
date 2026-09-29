@@ -17,12 +17,13 @@
  * here. Everything below was read off the callee's own body instead.
  *
  * m4aMPlayContinue. One pointer passed through to MPlayContinue
- * (sub_080703B8, already promoted in src/decomp/c_080703B8.c); the
- * neighbouring sub_080705E4 is m4aMPlayAllContinue, which loops the same
+ * (MPlayContinue, already promoted in src/decomp/c_080703B8.c); the
+ * neighbouring m4aMPlayAllContinue is m4aMPlayAllContinue, which loops the same
  * callee over gUnknown_08242308. Ordinary C inside the m4a span, like every
  * other m4a*() entry point.
  */
-void sub_080705D8(struct MusicPlayerInfo * mplayInfo)
+void m4aMPlayContinue(struct MusicPlayerInfo * mplayInfo)
 {
-    sub_080703B8(mplayInfo);
+    MPlayContinue(mplayInfo);
 }
+asm(".global sub_080705D8\n.thumb_set sub_080705D8, m4aMPlayContinue\n");

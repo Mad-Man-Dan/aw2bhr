@@ -20,9 +20,9 @@
  *
  * Everything the wave-30 park settled still holds: `/ 2 * 2` is `lsrs #1;
  * lsls #1` and NOT `x & ~1` (which costs a register for -2), and the second
- * parameter is the entry INDEX into the script's table. sub_0801C640 next door
+ * parameter is the entry INDEX into the script's table. AP_LoadDefinition next door
  * is the same axis and the same lever. */
-void sub_0801C4D4(struct Unk0801C210 *a1, int a2)
+void AP_SwitchAnimation(struct Unk0801C210 *a1, int a2)
 {
   void *v;
   u8 *base;
@@ -46,5 +46,6 @@ void sub_0801C4D4(struct Unk0801C210 *a1, int a2)
     v = ((void **) base)[a2 + 1];
   }
  do { a1->unk08 = v; a1->unk0c = v; } while (0);
-  sub_0801C67C(a1);
+  AP_ExecDummyFrame(a1);
 }
+asm(".global sub_0801C4D4\n.thumb_set sub_0801C4D4, AP_SwitchAnimation\n");

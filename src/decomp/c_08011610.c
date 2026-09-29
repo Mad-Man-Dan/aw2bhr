@@ -36,22 +36,24 @@ struct Unk11684Proc
 
 /* r1 is never written before the `bl`, so the parent is this wrapper's own
  * second parameter passed straight through -- confirmed at the call site,
- * sub_08072030 does `adds r1, r0, #0; movs r0, #4; bl sub_08011610`. */
-void sub_08011610(int a, ProcPtr parent)
+ * StartSlowLockingFadeToWhite does `adds r1, r0, #0; movs r0, #4; bl StartLockingFadeToWhite`. */
+void StartLockingFadeToWhite(int a, ProcPtr parent)
 {
     struct Unk11610Proc *proc = Proc_StartBlocking(gUnknown_0848923C, parent);
 
     proc->unk64 = a;
     gUnknown_030030E0.bits.effect = 2;
 }
+asm(".global sub_08011610\n.thumb_set sub_08011610, StartLockingFadeToWhite\n");
 
-void sub_0801163C(int a, ProcPtr parent)
+void StartLockingFadeFromWhite(int a, ProcPtr parent)
 {
     struct Unk1163CProc *proc = Proc_StartBlocking(ProcScr_DesignRoomFadeIn, parent);
 
     proc->unk64 = a;
     gUnknown_030030E0.bits.effect = 2;
 }
+asm(".global sub_0801163C\n.thumb_set sub_0801163C, StartLockingFadeFromWhite\n");
 
 void sub_08011668(int a)
 {

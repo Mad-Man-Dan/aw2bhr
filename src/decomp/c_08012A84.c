@@ -13,7 +13,7 @@
  * has `ldr r0,=sub_08012A24; bl sub_08011AAC`. */
 void sub_08012A84(void *handler)
 {
-    sub_0801BB00(1, handler);
+    SetIRQHandler(1, handler);
     sub_0801BB10(2, 2);
     sub_08012A24();
 }

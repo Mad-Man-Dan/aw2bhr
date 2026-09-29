@@ -39,5 +39,5 @@ void sub_0803AF00(struct Unk0803ACF0 *p)
         gUnknown_0200C420.unk0a = 0;
         gUnknown_0200C420.unk0b = 0;
     }
-    sub_08016E14();
+    WriteProfile();
 }

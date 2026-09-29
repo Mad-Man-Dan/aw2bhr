@@ -131,7 +131,7 @@ void sub_0804A760(void)
             sub_0803B4DC(0x65);
             gUnknown_030044E0->unk63 = 3;
             sub_0804A1E4(0);
-            sub_080193B0(gUnknown_084C3A5C);
+            StartEventScript(gUnknown_084C3A5C);
             return;
         case 0x25:
             if (gUnknown_030044E0->unk5d != 0)

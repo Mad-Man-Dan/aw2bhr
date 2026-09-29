@@ -12,6 +12,6 @@
  * parameter would have added one. */
 void sub_08022974(void)
 {
-    sub_0801F178(0, 0xA);
+    LoadTilePoolPalette(0, 0xA);
     sub_0801A548(gUnknown_030033EC);
 }

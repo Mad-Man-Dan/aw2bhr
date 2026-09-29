@@ -12,7 +12,7 @@
 void sub_0801F0AC(void)
 {
     if (gUnknown_03001FE0)
-        sub_0801BC08();
+        SyncLoOam();
     else
         sub_0801EFF4();
 }
@@ -31,7 +31,7 @@ void sub_0801F0C8(void)
 void sub_0801F0E0(void)
 {
     if (gUnknown_03001FE0)
-        sub_0801BBC4();
+        SyncHiOam();
     else
         sub_0801EFD8();
 }

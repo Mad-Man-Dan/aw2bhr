@@ -33,7 +33,7 @@ struct Unk725FCProc
     /* 3a */ s16 unk3a;
 };
 
-/* The gUnknown_08613F2C starter behind sub_080725E4 and sub_080725FC. Five
+/* The gUnknown_08613F2C starter behind StartPaletteAnimatorReverse and StartPaletteAnimatorNormal. Five
  * parameters -- the fifth arrives on the stack at [sp,#0x14], which is exactly
  * the 0x14 bytes this prologue pushes, and it is the parent.
  *
@@ -44,7 +44,7 @@ struct Unk725FCProc
  * +0x36 is written before +0x34 -- the ROM's order, not a transposition -- and
  * the returned proc is settled from the callers, both of which write +0x3a
  * through the result. */
-ProcPtr sub_080725A8(int a, int b, int c, int d, ProcPtr parent)
+ProcPtr StartPaletteAnimatorExt(int a, int b, int c, int d, ProcPtr parent)
 {
     struct Unk725A8Proc *proc = Proc_Start(gUnknown_08613F2C, parent);
 
@@ -58,23 +58,26 @@ ProcPtr sub_080725A8(int a, int b, int c, int d, ProcPtr parent)
 
     return proc;
 }
+asm(".global sub_080725A8\n.thumb_set sub_080725A8, StartPaletteAnimatorExt\n");
 
-/* Mode-0 wrapper around sub_080725A8: forwards all five arguments unchanged
+/* Mode-0 wrapper around StartPaletteAnimatorExt: forwards all five arguments unchanged
  * (the fifth is reloaded from the incoming stack slot and restacked) and then
- * writes the mode flag. sub_080725A8 already zeroes +0x3a, so this store is
+ * writes the mode flag. StartPaletteAnimatorExt already zeroes +0x3a, so this store is
  * redundant at runtime -- which is exactly why the pair reads as generated
  * "mode 0 / mode 1" wrappers rather than one function with a parameter. */
-void sub_080725E4(int a, int b, int c, int d, ProcPtr parent)
+void StartPaletteAnimatorReverse(int a, int b, int c, int d, ProcPtr parent)
 {
-    struct Unk725E4Proc *proc = sub_080725A8(a, b, c, d, parent);
+    struct Unk725E4Proc *proc = StartPaletteAnimatorExt(a, b, c, d, parent);
 
     proc->unk3a = 0;
 }
+asm(".global sub_080725E4\n.thumb_set sub_080725E4, StartPaletteAnimatorReverse\n");
 
-/* The mode-1 half of the sub_080725E4 pair; see the note there. */
-void sub_080725FC(int a, int b, int c, int d, ProcPtr parent)
+/* The mode-1 half of the StartPaletteAnimatorReverse pair; see the note there. */
+void StartPaletteAnimatorNormal(int a, int b, int c, int d, ProcPtr parent)
 {
-    struct Unk725FCProc *proc = sub_080725A8(a, b, c, d, parent);
+    struct Unk725FCProc *proc = StartPaletteAnimatorExt(a, b, c, d, parent);
 
     proc->unk3a = 1;
 }
+asm(".global sub_080725FC\n.thumb_set sub_080725FC, StartPaletteAnimatorNormal\n");

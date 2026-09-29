@@ -9,7 +9,7 @@
 
 /* Rebuilds the whole save-slot table: clears the 16 words at
  * gUnknown_0200CC88.slotGeneration, then for each of the 16 slots loads it with
- * sub_0801B018 and records its id/size/flags, tracking the NEWEST valid slot
+ * ReadAndValidateSaveSector and records its id/size/flags, tracking the NEWEST valid slot
  * (`best`) by the u32 at buf+8 with buf[0xc] as the tie-break. The winner's
  * 16-word block at buf+0x10 is copied over gUnknown_0200CC88.slotGeneration and
  * gUnknown_0200CD08 gets its counter + 1.
@@ -40,7 +40,7 @@ struct Unk1B2FCBuf
 };
 #define BUF ((struct Unk1B2FCBuf *)gUnknown_02002000)
 
-void sub_0801B2FC(int a1)
+void ScanSaveSectors(int a1)
 {
     int i;
     int j;
@@ -62,7 +62,7 @@ void sub_0801B2FC(int a1)
         gUnknown_0200CC38.unk00[i] = -1;
         gUnknown_0200CC38.unk20[i] = 0;
 
-        if (sub_0801B018(i) == 0)
+        if (ReadAndValidateSaveSector(i) == 0)
         {
             gUnknown_0200CC88.sectorGeneration[i] = BUF->unk008;
             gUnknown_0200CC38.unk10[i] = BUF->unk00d;
@@ -122,7 +122,7 @@ void sub_0801B2FC(int a1)
         }
     }
 
-    sub_0801B018(j);
+    ReadAndValidateSaveSector(j);
 
     for (i = 0; i < 0x10; i++)
     {
@@ -131,3 +131,4 @@ void sub_0801B2FC(int a1)
         gUnknown_0200CC38.unk00[i] = t & BUF->unkfef[i];
     }
 }
+asm(".global sub_0801B2FC\n.thumb_set sub_0801B2FC, ScanSaveSectors\n");

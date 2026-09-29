@@ -14,7 +14,7 @@
  * `ldr`/`str`. Both bases are bound once each. */
 void sub_0804087C(void)
 {
-    sub_080193B0(gUnknown_0849FC64);
+    StartEventScript(gUnknown_0849FC64);
 
     gUnknown_030033E4.unk00 = gUnknown_03003100.pos.unk00;
     gUnknown_030033E4.unk02 = gUnknown_03003100.pos.unk02;

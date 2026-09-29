@@ -13,7 +13,7 @@
  * the shared `movs r0,#0x80; strb` after `adds r1,#2`, cases 2 and default share
  * `movs r0,#8; strb; adds r1,#4`, and case 3 joins at the final `strb` alone.
  * That merging is why each arm materialises only its own register base. */
-void sub_08070EF4(u8 chan)
+void CgbOscOff(u8 chan)
 {
     switch (chan)
     {
@@ -34,3 +34,4 @@ void sub_08070EF4(u8 chan)
         break;
     }
 }
+asm(".global sub_08070EF4\n.thumb_set sub_08070EF4, CgbOscOff\n");

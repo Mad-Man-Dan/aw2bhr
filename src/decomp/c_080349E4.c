@@ -19,7 +19,7 @@ void sub_080349E4(void)
     v = gPlayers[sub_08026704(gUnknown_030033EC)].teamColor;
 
     sub_0801F150(1, (void *)0x06010000, 0x1ca, 0x13);
-    sub_0801F234(v + 0x3d);
+    LoadTilePoolGraphic(v + 0x3d);
 
     gUnknown_030032D8 = 3;
 }

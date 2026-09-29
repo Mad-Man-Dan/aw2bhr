@@ -19,7 +19,7 @@
  * the volatility is also why the 0x04000006 pool word is re-loaded between
  * them instead of the address staying live.
  */
-void sub_080708EC(u32 mode)
+void SampFreqSet_rev01(u32 mode)
 {
     struct SoundInfo *soundInfo = gUnknown_03007FF0;
 
@@ -33,7 +33,7 @@ void sub_080708EC(u32 mode)
     REG_TM0CNT_H = 0;
     REG_TM0CNT_L = -(280896 / soundInfo->pcmSamplesPerVBlank);
 
-    sub_08070AF8();
+    SoundVSyncOn_rev01();
 
     while (*(vu8 *)0x04000006 == 0x9F)
         ;
@@ -43,15 +43,16 @@ void sub_080708EC(u32 mode)
 
     REG_TM0CNT_H = 0x80;
 }
+asm(".global sub_080708EC\n.thumb_set sub_080708EC, SampFreqSet_rev01\n");
 
 /* m4aSoundMode. Five independent field tests on one mode word, each keeping the
  * masked value in the SAME local -- that reuse is what puts every one of them
  * in r4. The fourth uses two different masks on one field: the test is
  * 0x00B00000 (three bits) and the extraction is 0x00300000 (two), which is one
  * source-level pair and not a redundancy to fold away.
- * See sub_080703B8 for why the trailing ident store is needed.
+ * See MPlayContinue for why the trailing ident store is needed.
  */
-void sub_08070990(u32 mode)
+void SoundMode_rev01(u32 mode)
 {
     struct SoundInfo *soundInfo = gUnknown_03007FF0;
     u32 ident = soundInfo->ident;
@@ -102,12 +103,13 @@ void sub_08070990(u32 mode)
 
     if (temp)
     {
-        sub_08070A7C();
-        sub_080708EC(temp);
+        SoundVSyncOff_rev01();
+        SampFreqSet_rev01(temp);
     }
 
     soundInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08070990\n.thumb_set sub_08070990, SoundMode_rev01\n");
 
 /* SoundClear. Two array walks, each stepping a `void *` cursor by the record
  * size rather than indexing: twelve PCM channels from +0x50, then the four CGB
@@ -116,10 +118,10 @@ void sub_08070990(u32 mode)
  * is PROMOTE_MODE on the hook's own u8 parameter, not a cast in the source.
  *
  * The CGB loop increments i BEFORE advancing the cursor; the other order costs
- * nothing but swaps the two `adds`. See sub_080703B8 for why the trailing ident
+ * nothing but swaps the two `adds`. See MPlayContinue for why the trailing ident
  * store is needed.
  */
-void sub_08070A28(void)
+void SoundClear_rev01(void)
 {
     struct SoundInfo *soundInfo = gUnknown_03007FF0;
     u32 ident = soundInfo->ident;
@@ -158,3 +160,4 @@ void sub_08070A28(void)
 
     soundInfo->ident = MPLAY_ID_NUMBER;
 }
+asm(".global sub_08070A28\n.thumb_set sub_08070A28, SoundClear_rev01\n");

@@ -32,7 +32,7 @@ void sub_08027308(struct Unk27308Proc *proc)
                  Div(SIN_Q12(0) * 16, proc->unk64 != 0 ? proc->unk64 : 2),
                  Div(COS_Q12(0) * 16, proc->unk64 != 0 ? proc->unk64 : 2));
 
-    sub_0801C254(proc->unk50, proc->unk2c & 0x1ff, (proc->unk30 & 0xff) | 0x300);
+    AP_Update(proc->unk50, proc->unk2c & 0x1ff, (proc->unk30 & 0xff) | 0x300);
 
     if (proc->unk44 > 0)
     {

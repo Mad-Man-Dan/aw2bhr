@@ -17,11 +17,11 @@ void sub_0800520C(void)
         {
             sub_08004E38((char *)gActiveMap->designName, (const char *)gTextTable[0x9FE]);
             gActiveMap->flags |= 0x100;
-            sub_080193B0(gUnknown_08488164);
+            StartEventScript(gUnknown_08488164);
         }
         else
         {
-            sub_080193B0(gUnknown_084882E4);
+            StartEventScript(gUnknown_084882E4);
         }
     }
     else
@@ -30,11 +30,11 @@ void sub_0800520C(void)
         {
             sub_08004E38((char *)gActiveMap->designName, (const char *)gTextTable[0x9FE]);
             gActiveMap->flags |= 0x100;
-            sub_080193B0(gUnknown_08488224);
+            StartEventScript(gUnknown_08488224);
         }
         else
         {
-            sub_080193B0(gUnknown_08488394);
+            StartEventScript(gUnknown_08488394);
         }
     }
 }
@@ -49,11 +49,11 @@ void sub_080052D8(void)
         {
             sub_08004E38((char *)gActiveMap->designName, (const char *)gTextTable[0x9FF]);
             gActiveMap->flags |= 0x100;
-            sub_080193B0(gUnknown_08488164);
+            StartEventScript(gUnknown_08488164);
         }
         else
         {
-            sub_080193B0(gUnknown_084882E4);
+            StartEventScript(gUnknown_084882E4);
         }
     }
     else
@@ -62,11 +62,11 @@ void sub_080052D8(void)
         {
             sub_08004E38((char *)gActiveMap->designName, (const char *)gTextTable[0x9FF]);
             gActiveMap->flags |= 0x100;
-            sub_080193B0(gUnknown_08488224);
+            StartEventScript(gUnknown_08488224);
         }
         else
         {
-            sub_080193B0(gUnknown_08488394);
+            StartEventScript(gUnknown_08488394);
         }
     }
 }
@@ -81,11 +81,11 @@ void sub_080053A8(void)
         {
             sub_08004E38((char *)gActiveMap->designName, (const char *)gTextTable[0xA00]);
             gActiveMap->flags |= 0x100;
-            sub_080193B0(gUnknown_08488164);
+            StartEventScript(gUnknown_08488164);
         }
         else
         {
-            sub_080193B0(gUnknown_084882E4);
+            StartEventScript(gUnknown_084882E4);
         }
     }
     else
@@ -94,11 +94,11 @@ void sub_080053A8(void)
         {
             sub_08004E38((char *)gActiveMap->designName, (const char *)gTextTable[0xA00]);
             gActiveMap->flags |= 0x100;
-            sub_080193B0(gUnknown_08488224);
+            StartEventScript(gUnknown_08488224);
         }
         else
         {
-            sub_080193B0(gUnknown_08488394);
+            StartEventScript(gUnknown_08488394);
         }
     }
 }

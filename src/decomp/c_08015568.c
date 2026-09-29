@@ -21,7 +21,7 @@
  */
 
 
-/* sub_0801D84C takes an `int` -- its prologue has no shift pair at all and the
+/* FreeSpriteScript takes an `int` -- its prologue has no shift pair at all and the
  * value goes straight into `muls r0,r7,r0` with r7 = 0x4c, and its other caller
  * at 0x0801D840 passes a bare `adds r0,r3,#0`. So the narrowing here cannot be
  * an implicit conversion and is spelled as a cast. An `s16` parameter with no
@@ -32,5 +32,5 @@
 
 void sub_08015568(int a)
 {
-    sub_0801D84C((s16)a);
+    FreeSpriteScript((s16)a);
 }

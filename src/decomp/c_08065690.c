@@ -26,7 +26,7 @@ void sub_08065690(struct Unk65690Proc *proc)
 {
     proc->unk34 += proc->unk38;
     proc->unk24 += proc->unk34;
-    sub_0801BD00((proc->unk24 + 0x200) & 0x1ff, (proc->unk28 + 0x100) & 0xff, proc->unk3c, 0);
+    PutOamHi((proc->unk24 + 0x200) & 0x1ff, (proc->unk28 + 0x100) & 0xff, proc->unk3c, 0);
 
     if (proc->unk24 + 0x30 > 0x120)
         sub_08015C30(gUnknown_03001FBC);

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08070AF8(void)
+void SoundVSyncOn_rev01(void)
 {
     struct SoundInfo * soundInfo = gUnknown_03007FF0;
     u32 ident = soundInfo->ident;
@@ -23,3 +23,4 @@ void sub_08070AF8(void)
     soundInfo->pcmDmaCounter = 0;
     soundInfo->ident = ident - 10;
 }
+asm(".global sub_08070AF8\n.thumb_set sub_08070AF8, SoundVSyncOn_rev01\n");

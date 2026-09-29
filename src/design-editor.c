@@ -30,19 +30,19 @@ void sub_080036A4(void)
 void sub_08003704(void)
 {
     sub_0801F150(0, (void *)0x06010000, 0x28D, 0x1D);
-    sub_0801F234(0x02);
-    sub_0801F234(0x0C);
-    sub_0801F234(0x2F);
-    sub_0801F234(0x30);
-    sub_0801F234(0x31);
-    sub_0801F234(0x32);
-    sub_0801F234(0x33);
-    sub_0801F234(0x34);
-    sub_0801F234(0x35);
-    sub_0801F234(0x36);
-    sub_0801F234(0x37);
-    sub_0801F234(0x38);
-    sub_0801F234(0x3C);
+    LoadTilePoolGraphic(0x02);
+    LoadTilePoolGraphic(0x0C);
+    LoadTilePoolGraphic(0x2F);
+    LoadTilePoolGraphic(0x30);
+    LoadTilePoolGraphic(0x31);
+    LoadTilePoolGraphic(0x32);
+    LoadTilePoolGraphic(0x33);
+    LoadTilePoolGraphic(0x34);
+    LoadTilePoolGraphic(0x35);
+    LoadTilePoolGraphic(0x36);
+    LoadTilePoolGraphic(0x37);
+    LoadTilePoolGraphic(0x38);
+    LoadTilePoolGraphic(0x3C);
 }
 
 void sub_0800376C(void)
@@ -55,19 +55,19 @@ void sub_0800376C(void)
 void sub_080037AC(void)
 {
     sub_0801F150(0, (void *)0x06010000, 0x28D, 0x1D);
-    sub_0801F234(0x02);
-    sub_0801F234(0x0C);
-    sub_0801F234(0x2F);
-    sub_0801F234(0x30);
-    sub_0801F234(0x31);
-    sub_0801F234(0x32);
-    sub_0801F234(0x33);
-    sub_0801F234(0x34);
-    sub_0801F234(0x35);
-    sub_0801F234(0x36);
-    sub_0801F234(0x37);
-    sub_0801F234(0x38);
-    sub_0801F234(0x3C);
+    LoadTilePoolGraphic(0x02);
+    LoadTilePoolGraphic(0x0C);
+    LoadTilePoolGraphic(0x2F);
+    LoadTilePoolGraphic(0x30);
+    LoadTilePoolGraphic(0x31);
+    LoadTilePoolGraphic(0x32);
+    LoadTilePoolGraphic(0x33);
+    LoadTilePoolGraphic(0x34);
+    LoadTilePoolGraphic(0x35);
+    LoadTilePoolGraphic(0x36);
+    LoadTilePoolGraphic(0x37);
+    LoadTilePoolGraphic(0x38);
+    LoadTilePoolGraphic(0x3C);
 }
 
 void DesignRoomDrawCoordBox(void)

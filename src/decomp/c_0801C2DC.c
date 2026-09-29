@@ -60,7 +60,7 @@ static inline u16 *inline_fn(u16 *arg0)
   return arg0;
 }
 
-u8 sub_0801C2DC(struct Unk0801C210 *a)
+u8 AP_ExecFrame(struct Unk0801C210 *a)
 {
   u16 **new_var;
   struct Unk0801C210Cmd *p;
@@ -102,7 +102,7 @@ u8 sub_0801C2DC(struct Unk0801C210 *a)
         goto expand;
       }
       a->unk18 = 1;
-      return sub_0801C2DC(a);
+      return AP_ExecFrame(a);
     }
   }
   else
@@ -111,10 +111,10 @@ u8 sub_0801C2DC(struct Unk0801C210 *a)
     {
       case 0xFF:
         a->unk0c = a->unk08;
-        return sub_0801C2DC(a);
+        return AP_ExecFrame(a);
 
       case 1:
-        sub_0801C240(a);
+        AP_Delete(a);
         return 0;
 
       case 0:
@@ -129,7 +129,7 @@ u8 sub_0801C2DC(struct Unk0801C210 *a)
   }
   a->unk28 = a->unk0c->unk02;
   a->unk0c = a->unk0c + 1;
-  return sub_0801C2DC(a);
+  return AP_ExecFrame(a);
   expand:
   a->unk18 = a->unk1c >> 8;
 
@@ -156,3 +156,4 @@ u8 sub_0801C2DC(struct Unk0801C210 *a)
   a->unk20 |= 1;
   return 1;
 }
+asm(".global sub_0801C2DC\n.thumb_set sub_0801C2DC, AP_ExecFrame\n");

@@ -9,7 +9,7 @@
 
 /* MATCHED. The near-twin of sub_08051F4C -- same install sequence, differing
  * in the sub_08015410 blob (gUnknown_085536A4), the gUnknown_08553B10 table,
- * an extra sub_08015504 call, the 0x180 rather than 0x100 handed to
+ * an extra SetSlotSpriteFlicker call, the 0x180 rather than 0x100 handed to
  * sub_080157F4, and the tail. See sub_08051F4C for the `f`, `c`/`d` and
  * pointer-local notes; all three carry over except that this one needs no
  * `row` local, because its gUnknown_085D6A48 read is column 0 and has no
@@ -54,7 +54,7 @@ void sub_08051BEC(u16 a, u16 b)
         gUnknown_02029808[a].unk58[gUnknown_02029808[a].unk2e],
         f);
 
-    sub_08015504(gUnknown_02029808[a].unk24[b], 1);
+    SetSlotSpriteFlicker(gUnknown_02029808[a].unk24[b], 1);
     sub_080504A8(a, 0x10);
 
     e = gUnknown_08553B10[a];

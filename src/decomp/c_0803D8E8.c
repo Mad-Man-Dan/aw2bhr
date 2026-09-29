@@ -31,7 +31,7 @@ void sub_0803D8E8(struct UnkD8E8Proc *proc)
 void sub_0803D8F8(struct Unk0200C528 *p)
 {
     if (p->unk10 == 6)
-        sub_08016E14();
+        WriteProfile();
     else
         sub_08016C70(p->unk10);
 }

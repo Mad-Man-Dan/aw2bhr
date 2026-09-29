@@ -11,7 +11,7 @@
  * 0x27 of it. */
 void sub_08017994(void)
 {
-    sub_080179D0(gUnknown_08499588 + 0x27);
+    ClearTilemapRect23x4(gUnknown_08499588 + 0x27);
     sub_080185A0();
 }
 

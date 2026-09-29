@@ -7,7 +7,8 @@
  * sub_08010EE8 @ 0x08010EE8
  */
 
-void sub_08010EE8(u16 index, void *value)
+void SetIrqFunc(u16 index, void *value)
 {
     gUnknown_03003050[index] = value;
 }
+asm(".global sub_08010EE8\n.thumb_set sub_08010EE8, SetIrqFunc\n");

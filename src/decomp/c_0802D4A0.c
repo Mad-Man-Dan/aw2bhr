@@ -18,6 +18,6 @@
 
 void sub_0802D4A0(void)
 {
-    sub_0801A664();
+    PopMenu();
     IncrementMapLock();
 }

@@ -12,5 +12,5 @@
 void sub_08019E50(void)
 {
     if (gUnknown_030033E8[0] + gUnknown_030033E8[1] == 0)
-        sub_0801A168();
+        CloseTopMenu();
 }

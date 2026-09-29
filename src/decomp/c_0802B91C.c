@@ -9,7 +9,7 @@
 
 /* Copies up to four 0x20-byte HP/status digit tiles plus one 0x80-byte block
  * into OBJ VRAM for a unit's map sprite, then puts the sprite out through
- * sub_0801BD00 with one of two 5-entry pointer tables depending on whether
+ * PutOamHi with one of two 5-entry pointer tables depending on whether
  * anything was drawn.
  *
  * Three source-level levers, none of which a straight transcription gets
@@ -118,5 +118,5 @@ void sub_0802B91C(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7, s16 a8)
     else
         p = gUnknown_0849A22C[a4 - 1];
 
-    sub_0801BD00(a1, a2 | 0x400, p, (a8 * 4) | 0xf000);
+    PutOamHi(a1, a2 | 0x400, p, (a8 * 4) | 0xf000);
 }

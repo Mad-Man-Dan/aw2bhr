@@ -101,7 +101,7 @@ void sub_0802BCF0(u16 x, u16 y, u32 value)
 {
     for (;;)
     {
-        sub_0801BD00(x & 0x1FF, y & 0xFF, gUnknown_0849A3B8, value % 10);
+        PutOamHi(x & 0x1FF, y & 0xFF, gUnknown_0849A3B8, value % 10);
         value /= 10;
         if (value == 0)
             return;
@@ -117,7 +117,7 @@ void sub_0802BD54(u16 x, u16 y, u32 value)
 {
     for (;;)
     {
-        sub_0801BD00(x & 0x1FF, y & 0xFF, gUnknown_0849A3B8, value % 10 + 0x10);
+        PutOamHi(x & 0x1FF, y & 0xFF, gUnknown_0849A3B8, value % 10 + 0x10);
         value /= 10;
         if (value == 0)
             return;

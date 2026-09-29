@@ -41,7 +41,7 @@ struct Unk08019DCC /* 0x28 */
 };
 
 /*
- * sub_08019D0C -- one frame of an option list: take input, then keep the cursor
+ * Menu_Loop -- one frame of an option list: take input, then keep the cursor
  * sprite in step.
  *
  * sub_08019B80 gets the frame first; when it reports nothing done,
@@ -55,7 +55,7 @@ struct Unk08019DCC /* 0x28 */
  * costs one more saved register. sub_08019D48 below is the other way round:
  * there the copy folds away and either spelling matches.
  */
-void sub_08019D0C(struct Unk08019B50 *p)
+void Menu_Loop(struct Unk08019B50 *p)
 {
     if (!sub_08019B80(p))
         sub_08019A60(p);
@@ -63,6 +63,7 @@ void sub_08019D0C(struct Unk08019B50 *p)
     if (sub_08015BD0((s32)gUnknown_0848A42C) != -1)
         p->unk44->unk20 = p->unk42;
 }
+asm(".global sub_08019D0C\n.thumb_set sub_08019D0C, Menu_Loop\n");
 
 /*
  * sub_08019D48 -- tear an option list down.
@@ -88,7 +89,7 @@ void sub_08019D48(ProcPtr proc)
  *
  * sub_08019D48 above does the teardown. sub_08012BC8 then fills the 32 x 20
  * visible area of gBG2TilemapBuffer with tile 0x360, and sub_08013AD4 flags BG2
- * for copying to VRAM. One of the two teardowns sub_08019F90 picks between when
+ * for copying to VRAM. One of the two teardowns CreateMenu picks between when
  * it builds a list.
  *
  * `proc` is only passed on: the original never touches the argument register
@@ -107,7 +108,7 @@ void sub_08019D78(ProcPtr proc)
  * sub_08019D48 above does the teardown. sub_0801A538 (which ignores all four
  * arguments), sub_08022580 and sub_080227A8 then run, and DecrementMapLock
  * releases one level of the map's input lock. The other of the two teardowns
- * sub_08019F90 picks between.
+ * CreateMenu picks between.
  */
 void sub_08019DA8(ProcPtr proc)
 {

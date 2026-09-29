@@ -32,9 +32,9 @@
  *   10         draw a unit: the next byte picks which of gUnknown_030040D8's two
  *              units, and its hp is rounded up to tens for sub_0802216C.
  *   11         set the speed from the next byte. 0x80 switches the delay off
- *              (sub_08014074); 0x81 to 0x89 store that byte plus 0x80 in unk3a
+ *              (TextWriterDisableDelay); 0x81 to 0x89 store that byte plus 0x80 in unk3a
  *              and restart the counter; anything else is ignored.
- *   12         go back to the margins and hand the text to sub_080179D0.
+ *   12         go back to the margins and hand the text to ClearTilemapRect23x4.
  *   13         next line: two rows down and back to the left margin.
  *   14         pause, unless the delay is off, in which case carry straight on.
  *   15         new page: blank the first entry, set the one at 0x21 from unk2c,
@@ -163,7 +163,7 @@ entry_done:
         p->unk33 = p->unk31;
         p->unk34 = p->unk36;
         p->unk40 = 0;
-        sub_080179D0(sub_08013D64(p));
+        ClearTilemapRect23x4(sub_08013D64(p));
         p->unk3c();
         return 2;
 
@@ -179,7 +179,7 @@ entry_done:
         c2 = s[1];
         if (c2 == 0x80)
         {
-            sub_08014074(p);
+            TextWriterDisableDelay(p);
         }
         else
         {

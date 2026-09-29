@@ -8,10 +8,10 @@
  */
 
 /*
- * sub_0801A168 -- stop the option-list script.
+ * CloseTopMenu -- stop the option-list script.
  *
  * sub_0801537C ends whichever gUnknown_03001470 slot is running
- * gUnknown_0848A42C -- the script sub_08019F90 starts -- and returns that slot
+ * gUnknown_0848A42C -- the script CreateMenu starts -- and returns that slot
  * index, or -1. This function passes the value straight on.
  *
  * Both this function and sub_0801537C return int and not s8. The compiler
@@ -19,7 +19,8 @@
  * instruction the original does not have. The argument for the int is written up
  * on sub_0801537C's declaration in include/unknown-functions.h.
  */
-int sub_0801A168(void)
+int CloseTopMenu(void)
 {
     return sub_0801537C(gUnknown_0848A42C);
 }
+asm(".global sub_0801A168\n.thumb_set sub_0801A168, CloseTopMenu\n");

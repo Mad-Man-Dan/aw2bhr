@@ -13,7 +13,7 @@
 void sub_0802D0B4(void)
 {
     LockUnitSelection();
-    sub_0801A168();
+    CloseTopMenu();
     sub_0802C57C();
     sub_08042864();
     sub_080424FC();

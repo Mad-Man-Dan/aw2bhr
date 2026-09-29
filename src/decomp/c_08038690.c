@@ -7,7 +7,7 @@
  * sub_08038690 @ 0x08038690
  */
 
-/* Family F013, the two-argument form of the fade wrappers -- see sub_08071FD0
+/* Family F013, the two-argument form of the fade wrappers -- see StartMidLockingFadeToBlack
  * in src/decomp/c_08071F88.c. `adds r1, r0, #0` ahead of `movs r0, #0x60` puts
  * the incoming parameter in the SECOND argument slot and the literal in the
  * first; the pool-free constant and the untouched-then-copied r0 are the whole

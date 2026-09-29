@@ -63,7 +63,7 @@ u8 sub_0803CD2C(u16 a1, u8 a2)
     p = gUnknown_02000000;
     if (sub_0801AD70(a2 + 5) != 0)
         return 0;
-    sub_0801AC58(a2 + 5, p);
+    ReadSaveSlot(a2 + 5, p);
     sub_08037B84(p);
     sub_0803D6FC((struct Unk3D6FC *)p);
     s1 = gUnknown_03001418;

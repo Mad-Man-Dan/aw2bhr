@@ -16,7 +16,7 @@
 void sub_0803CF04(u8 a, int b)
 {
     if (gPlaySt.savingEnabled == 0)
-        sub_0801AC58(a + 5, gUnknown_02000000);
+        ReadSaveSlot(a + 5, gUnknown_02000000);
     sub_0803D2F8(b, gUnknown_02000000);
 }
 

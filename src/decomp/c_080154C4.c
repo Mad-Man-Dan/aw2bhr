@@ -9,7 +9,7 @@
 
 /* Set one OBJ attribute bit on the slot's stashed attributes: fetch the eight
  * bytes into a stack local with sub_0801566C, poke one bitfield, hand them
- * back by value to sub_08015608. sub_08015504 is the SAME SOURCE one bit
+ * back by value to sub_08015608. SetSlotSpriteFlicker is the SAME SOURCE one bit
  * along (`bpp`, `lsls #5`, mask ~0x20).
  *
  * The `movs r0,#0x11; rsbs r0,r0,#0` mask is the bitfield-store tell: it is a
@@ -24,7 +24,7 @@
  * stop fusing. Measured against `(int, int)` and `(int, u8)`; see the note in
  * include/unknown-functions.h.
  */
-void sub_080154C4(s16 a, u8 b)
+void SetSlotSpriteHidden(s16 a, u8 b)
 {
     struct OamData o;
 
@@ -32,12 +32,13 @@ void sub_080154C4(s16 a, u8 b)
     o.mosaic = b;
     sub_08015608(a, *(struct UnkVec *)&o);
 }
+asm(".global sub_080154C4\n.thumb_set sub_080154C4, SetSlotSpriteHidden\n");
 
-/* sub_080154C4 one bit along -- see the comment there. The bit is 13 of the
+/* SetSlotSpriteHidden one bit along -- see the comment there. The bit is 13 of the
  * first attribute word, i.e. `struct OamData`'s `bpp`, NOT `vFlip`: vFlip is
  * bit 29 and lives in byte 3, where sub_0804D928/sub_0804E3B4 write it.
  */
-void sub_08015504(s16 a, u8 b)
+void SetSlotSpriteFlicker(s16 a, u8 b)
 {
     struct OamData o;
 
@@ -45,3 +46,4 @@ void sub_08015504(s16 a, u8 b)
     o.bpp = b;
     sub_08015608(a, *(struct UnkVec *)&o);
 }
+asm(".global sub_08015504\n.thumb_set sub_08015504, SetSlotSpriteFlicker\n");

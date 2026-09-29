@@ -46,10 +46,10 @@ struct UnkB578Proc
  * `lsls #0x10; lsrs #0x10` right there. Measured rather than argued -- the
  * `s16` spelling compiles to a DIFFERENT function, not merely a longer one: it
  * folds the entry zero-extension and the `<< 4` into `asrs r4, r4, #0xc` and
- * loses the separate `lsls r1, r4, #0x10` in the sub_08070610 argument setup.
+ * loses the separate `lsls r1, r4, #0x10` in the m4aMPlayFadeOut argument setup.
  * The `int` spelling below is byte-exact.
  * The `lsls #0x10; lsrs #0x10` further down IS PROMOTE_MODE, but at the CALL,
- * not at entry: sub_08070610's second parameter is `u16`, and the pair lands
+ * not at entry: m4aMPlayFadeOut's second parameter is `u16`, and the pair lands
  * after gUnknown_03005AE0 is already in r0, i.e. inside the argument setup --
  * the "conversion at a use" shape, same as sub_0803B4DC's.
  * `a = 2` is a plain default for a zero argument and reuses r4, so it is an
@@ -69,7 +69,7 @@ void sub_0803B578(struct UnkB578Proc *proc)
 }
 
 /* Stop everything: blank the requested-song slot to the 0xFFFF sentinel and
- * call sub_080705AC, whose body is a fixed eleven-iteration loop stopping every
+ * call m4aMPlayAllStop, whose body is a fixed eleven-iteration loop stopping every
  * m4a track -- m4aMPlayAllStop. The pair is the hard stop that
  * src/decomp/c_0803B5F4.c's lone `gUnknown_030005CA = 0xFFFF` is the soft half
  * of. `ldr r2,=0xFFFF; adds r0,r2,#0` is the ordinary materialisation of a
@@ -78,7 +78,7 @@ void sub_0803B578(struct UnkB578Proc *proc)
 void sub_0803B588(void)
 {
     gUnknown_030005CA = 0xFFFF;
-    sub_080705AC();
+    m4aMPlayAllStop();
 }
 
 void sub_0803B5A4(int a)
@@ -90,7 +90,7 @@ void sub_0803B5A4(int a)
         if (a == 0)
             a = 2;
 
-        sub_08070610(gUnknown_03005AE0, a);
+        m4aMPlayFadeOut(gUnknown_03005AE0, a);
 
         proc = Proc_Start(ProcScr_FadeSound, PROC_TREE_3);
         proc->unk64 = a << 4;

@@ -33,5 +33,5 @@ void sub_080196C0(void)
     i = IsHardCampaignMode() != 0;
     p = gUnknown_085C77A0[gPlaySt.mapID].unk34[i];
     if (p != NULL)
-        sub_080196F4(p);
+        ApplyUnitSpawnTable(p);
 }

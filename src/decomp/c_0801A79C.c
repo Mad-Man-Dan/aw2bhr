@@ -11,8 +11,8 @@
  * push -- and void. It parks all five in the 0x0200CCxx block and then runs the
  * link scan. The fourth is stored with `strb`, but that is the u8 global's
  * width and not the parameter's: `int` keeps the definition compatible with the
- * prototype-less `void sub_0801A79C();` the header already carries. */
-void sub_0801A79C(int a, int b, int c, int d, int e)
+ * prototype-less `void InitSaveSystem();` the header already carries. */
+void InitSaveSystem(int a, int b, int c, int d, int e)
 {
     gUnknown_0200CC24 = a;
     gUnknown_0200CC28 = b;
@@ -20,6 +20,7 @@ void sub_0801A79C(int a, int b, int c, int d, int e)
     gUnknown_0200CC30 = d;
     gUnknown_0200CC34 = e;
 
-    sub_0801AFF4();
-    sub_0801B2FC(0);
+    DetectFlash();
+    ScanSaveSectors(0);
 }
+asm(".global sub_0801A79C\n.thumb_set sub_0801A79C, InitSaveSystem\n");

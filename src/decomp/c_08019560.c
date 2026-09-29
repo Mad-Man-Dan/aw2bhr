@@ -7,8 +7,9 @@
  * sub_08019560 @ 0x08019560
  */
 
-void sub_08019560(void)
+void EndTextBoxesIfSkipping(void)
 {
     if (gUnknown_03002514 == 1)
         sub_08014878();
 }
+asm(".global sub_08019560\n.thumb_set sub_08019560, EndTextBoxesIfSkipping\n");
