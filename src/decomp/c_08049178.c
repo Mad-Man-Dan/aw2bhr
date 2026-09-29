@@ -51,7 +51,7 @@ struct Unk8049178
 };
 /* Wave 43, W43-L. MATCHED, byte-for-byte, relocs match (184/184).
  *
- * The downward twin of BattleMaps_IDLE_08049179: while unk1e + 2 is still within 9 it
+ * The downward twin of ShopList_RiseStep: while unk1e + 2 is still within 9 it
  * blanks a row and copies rows 0..(5 - unk1e) of the tilemap scratch
  * gUnknown_084C30F8->unk032 into gBG0TilemapBuffer at a fixed halfword offset
  * of 0x100; past that it hands off to ClearSlotScriptCallback instead. unk1e advances
@@ -83,7 +83,7 @@ struct Unk8049264
     /* 0x1e */ s16 unk1e;
 };
 
-void BattleMaps_IDLE_08049179(struct Unk8049178 *proc)
+void ShopList_RiseStep(struct Unk8049178 *proc)
 {
     s8 limit;
     u8 row;
@@ -152,4 +152,4 @@ void ShopList_CollapseStep(struct Unk8049264 *proc)
 }
 asm(".global sub_08049264\n.thumb_set sub_08049264, ShopList_CollapseStep\n");
 
-asm(".global sub_08049178\n.thumb_set sub_08049178, BattleMaps_IDLE_08049179\n");
+asm(".global sub_08049178\n.thumb_set sub_08049178, ShopList_RiseStep\n");

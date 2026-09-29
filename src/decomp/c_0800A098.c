@@ -13,7 +13,7 @@
  *
  * The tile now at (x, y) says which pair of neighbours can be wrong: 0x39 the
  * two horizontal ones, 0x18 the two vertical ones. A neighbour is only touched
- * when IsTerrainWater says it is not water, (x, y) still reads that same tile,
+ * when IsTerrainNotWater says it is not water, (x, y) still reads that same tile,
  * and CountLandOnSide has nothing against that direction (0 left, 1 right, 2 up,
  * 4 down). It is then made sea -- terrain 2 with a fixed tile, 0x11D, 0xFD,
  * 0xFC or 0x11C, one per direction. Finally, if the terrain in the cell
@@ -47,7 +47,7 @@ void sub_0800A098(int x, int y)
         if (x > 0)
         {
             int nx = x - 1;
-            if (IsTerrainWater(nx, y) == 0
+            if (IsTerrainNotWater(nx, y) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x39
              && CountLandOnSide(nx, y, 0) == 0)
             {
@@ -61,7 +61,7 @@ void sub_0800A098(int x, int y)
         if (x < MAP->width - 1)
         {
             int nx = x + 1;
-            if (IsTerrainWater(nx, y) == 0
+            if (IsTerrainNotWater(nx, y) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x39
              && CountLandOnSide(nx, y, 1) == 0)
             {
@@ -78,7 +78,7 @@ void sub_0800A098(int x, int y)
         if (y > 0)
         {
             int ny = y - 1;
-            if (IsTerrainWater(x, ny) == 0
+            if (IsTerrainNotWater(x, ny) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x18
              && CountLandOnSide(x, ny, 2) == 0)
             {
@@ -92,7 +92,7 @@ void sub_0800A098(int x, int y)
         if (y < MAP->height - 1)
         {
             int ny = y + 1;
-            if (IsTerrainWater(x, ny) == 0
+            if (IsTerrainNotWater(x, ny) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x18
              && CountLandOnSide(x, ny, 4) == 0)
             {

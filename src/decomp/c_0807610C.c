@@ -45,7 +45,7 @@ struct Unk807610C
     /* 0x3a */ s8 unk3a;
 };
 
-void WM_Listener_0807610D(struct Unk807610C *proc)
+void WorldMapNationPanel_Setup(struct Unk807610C *proc)
 {
     int v = GetWorldMapNationPanelSide();
     int m = 0xFF;
@@ -63,4 +63,4 @@ void WM_Listener_0807610D(struct Unk807610C *proc)
     proc->unk38 = gUnknown_0202FDFC.unk06 + gUnknown_0202FDFC.unk02;
 }
 
-asm(".global sub_0807610C\n.thumb_set sub_0807610C, WM_Listener_0807610D\n");
+asm(".global sub_0807610C\n.thumb_set sub_0807610C, WorldMapNationPanel_Setup\n");

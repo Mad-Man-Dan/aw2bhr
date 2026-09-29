@@ -10,7 +10,7 @@
 /* Family F077: run a routine, then park a state-machine id in a u16 global.
  * `gUnknown_03003334` is spelled directly, which is what the ROM does -- the
  * `-fforce-addr` .rodata pool word at 0x08090D88 that unknown-globals.h warns
- * about applies to MapMainIdle only, where the address is live across a
+ * about applies to RunMapStateMachine only, where the address is live across a
  * switch; here it dies inside one statement. */
 
 void StartUnitsTranslucentPeek(void)

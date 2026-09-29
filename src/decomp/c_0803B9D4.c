@@ -29,13 +29,13 @@ void StartCoDesign(void)
 }
 asm(".global sub_0803B9D4\n.thumb_set sub_0803B9D4, StartCoDesign\n");
 
-extern void BattleMaps_0803B83D(void);
+extern void ReturnToMainMenu(void);
 extern void StartSoundRoomBlocking(void);
 
 struct ProcCmd CONST_DATA ProcScr_CoDesign[] =
 {
     PROC_START_CHILD_BLOCKING(ProcScr_CoDesignC1),
-    PROC_CALL(BattleMaps_0803B83D),
+    PROC_CALL(ReturnToMainMenu),
     PROC_END,
 };
 
@@ -43,7 +43,7 @@ struct ProcCmd CONST_DATA ProcScr_SoundRoom[] =
 {
     PROC_CALL(StartSoundRoomBlocking),
     PROC_YIELD,
-    PROC_CALL(BattleMaps_0803B83D),
+    PROC_CALL(ReturnToMainMenu),
     PROC_END,
 };
 

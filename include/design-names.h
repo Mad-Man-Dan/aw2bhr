@@ -29,15 +29,15 @@ int MakeReefSafe(int x, int y);
 void MakeProperty(int x, int y, int t);
 void MakeTile(void);
 void MakeTile2(int x, int y, int v);
-void SetSelectedTile(int a1);
-void MapMainIdle(void);
+void DesignRoomSelectItem(int a1);
+void RunMapStateMachine(void);
 
 void RepaintTile(int x, int y);
 void RepaintTileRight(int x, int y);
 int RemoveUnitAt(int mode, int x, int y);
 void CopyString(u8 *dst, const u8 *src);
 void MarkDefeatedArmies(void);
-void FinalizeBattleResult(void);
+void FinalizeMatchResult(void);
 
 /* Design Room editor and tiler functions, named from reading the matched
  * C. Each is an alias of its sub_XXXXXXXX symbol, like the names above. */

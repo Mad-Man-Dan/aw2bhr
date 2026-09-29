@@ -23,9 +23,9 @@
  * src/decomp/c_08049BAC.c.
  */
 
-void BattleMaps_08049B71(void)
+void ShopScreen_AddScrollBackgroundHook(void)
 {
     AddVBlankHook((void *)ShopScreen_ScrollBackgroundHook);
 }
 
-asm(".global sub_08049B70\n.thumb_set sub_08049B70, BattleMaps_08049B71\n");
+asm(".global sub_08049B70\n.thumb_set sub_08049B70, ShopScreen_AddScrollBackgroundHook\n");

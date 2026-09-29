@@ -29,7 +29,7 @@ struct Unk0D0Proc
     /* 68 */ u8 unk68;
 };
 
-void MainMenu_PutSelectModeSprite_IDLE_080730D1(struct Unk0D0Proc *proc)
+void HeaderBanner_FlyInLoop(struct Unk0D0Proc *proc)
 {
     int i;
     s32 v;
@@ -65,4 +65,4 @@ void MainMenu_PutSelectModeSprite_IDLE_080730D1(struct Unk0D0Proc *proc)
     }
 }
 
-asm(".global sub_080730D0\n.thumb_set sub_080730D0, MainMenu_PutSelectModeSprite_IDLE_080730D1\n");
+asm(".global sub_080730D0\n.thumb_set sub_080730D0, HeaderBanner_FlyInLoop\n");

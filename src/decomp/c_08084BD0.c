@@ -11,8 +11,8 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void StartCoInfoScreen_IDLE_08084BD1(ProcPtr proc)
+void CoInfoScreen_Idle(ProcPtr proc)
 {
 }
 
-asm(".global sub_08084BD0\n.thumb_set sub_08084BD0, StartCoInfoScreen_IDLE_08084BD1\n");
+asm(".global sub_08084BD0\n.thumb_set sub_08084BD0, CoInfoScreen_Idle\n");

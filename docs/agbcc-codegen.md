@@ -54602,7 +54602,7 @@ for the same address (+4).
 
 ## A caller's narrowing can be a cast, not the callee's parameter type (sub_08020EDC)
 
-sub_08020EDC (now `AddValueInRange`) sat from wave 49 as a "cross-TU
+sub_08020EDC (now `StampVisionDisc`) sat from wave 49 as a "cross-TU
 prototype contract". The permuter kept reaching past the draft only by
 widening the sixth parameter from `u8` to an int type. Wave 73 ruled that
 out: the matched caller sub_080210C8 truncates its `int a6` with

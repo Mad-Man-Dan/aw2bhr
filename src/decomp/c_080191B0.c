@@ -9,7 +9,7 @@
  */
 
 /*
- * MainMenu_080191B1 -- reset the gUnknown_0200C528 script system.
+ * ResetEventScriptsAndUiState -- reset the gUnknown_0200C528 script system.
  *
  * Clears all ten slots and the eight gUnknown_0200C508 script pointers,
  * re-initialises the subsystems that hang off them, sets gUnknown_03002F08's
@@ -25,7 +25,7 @@
  * recomputed every pass rather than being reduced to a running pointer. An int
  * counter tidies that up and the output no longer matches.
  */
-void MainMenu_080191B1(void)
+void ResetEventScriptsAndUiState(void)
 {
     s16 i;
 
@@ -49,30 +49,30 @@ void MainMenu_080191B1(void)
     CpuCopyAuto(gUnknown_0849958C, (void *)0x0600E000, 0x200);
 }
 
-asm(".global sub_080191B0\n.thumb_set sub_080191B0, MainMenu_080191B1\n");
+asm(".global sub_080191B0\n.thumb_set sub_080191B0, ResetEventScriptsAndUiState\n");
 
 extern void ResetMapSelectState(void);
-extern void MainMenu_08080F3D(void);
+extern void MainMenuCarousel_ResetSelection(void);
 extern void MainMenu_0803BBD5(void);
-extern void MainMenu2_08034839(void);
-extern void MainMenu2_0803D48D(void);
+extern void ClearSavingEnabled(void);
+extern void RefreshDesignRoomSlotDirectory(void);
 extern u8 GetMainMenuLock(void);
 extern void MainMenu2_0803BBA9(void);
 extern void StartIntroSequence(void);
 
 struct ProcCmd CONST_DATA ProcScr_MainMenu[] =
 {
-    PROC_CALL(MainMenu_080191B1),
+    PROC_CALL(ResetEventScriptsAndUiState),
     PROC_CALL(ResetMapSelectState),
-    PROC_CALL(MainMenu_08080F3D),
+    PROC_CALL(MainMenuCarousel_ResetSelection),
     PROC_CALL(MainMenu_0803BBD5),
     PROC_GOTO_SCR(ProcScr_MainMenu2),
 };
 
 struct ProcCmd CONST_DATA ProcScr_MainMenu2[] =
 {
-    PROC_CALL(MainMenu2_08034839),
-    PROC_CALL(MainMenu2_0803D48D),
+    PROC_CALL(ClearSavingEnabled),
+    PROC_CALL(RefreshDesignRoomSlotDirectory),
     PROC_START_CHILD_BLOCKING(ProcScr_MainMenuC1),
     PROC_GOTO_IF_NO(GetMainMenuLock, 0),
     PROC_1D(30),

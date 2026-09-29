@@ -46,7 +46,7 @@ asm(".global sub_08071E40\n.thumb_set sub_08071E40, FadeFromCommon_OnLoopUnused\
  * present because 2 does not fill the 2-bit field. ForceScreenBlack's `= 3` fills
  * it and agbcc drops the AND, which is the discriminator hardware.h's note on
  * this field already records. */
-void FadeToWhite_OnInit(struct Unk08071CF4 *proc)
+void FadeToWhite_OnInitUnused(struct Unk08071CF4 *proc)
 {
     FadeToBlack_OnInitUnused(proc);
 
@@ -56,13 +56,13 @@ void FadeToWhite_OnInit(struct Unk08071CF4 *proc)
     gUnknown_03002B28 = 0;
     gUnknown_03001FFC = 0;
 }
-asm(".global sub_08071E80\n.thumb_set sub_08071E80, FadeToWhite_OnInit\n");
+asm(".global sub_08071E80\n.thumb_set sub_08071E80, FadeToWhite_OnInitUnused\n");
 
-/* FadeToWhite_OnInit's twin over the other opener: FadeFromBlack_OnInitUnused instead of
+/* FadeToWhite_OnInitUnused's twin over the other opener: FadeFromBlack_OnInitUnused instead of
  * FadeToBlack_OnInitUnused, and BLDY seeded at 0x10 instead of 0 -- which is the fade-out
  * end state, matching FadeFromBlack_OnInitUnused's own 0x10/0x100 seeding. Everything else
  * is identical. */
-void FadeFromWhite_OnInit(struct Unk08071DB4 *proc)
+void FadeFromWhite_OnInitUnused(struct Unk08071DB4 *proc)
 {
     FadeFromBlack_OnInitUnused(proc);
 
@@ -72,4 +72,4 @@ void FadeFromWhite_OnInit(struct Unk08071DB4 *proc)
     gUnknown_03002B28 = 0;
     gUnknown_03001FFC = 0x10;
 }
-asm(".global sub_08071EB8\n.thumb_set sub_08071EB8, FadeFromWhite_OnInit\n");
+asm(".global sub_08071EB8\n.thumb_set sub_08071EB8, FadeFromWhite_OnInitUnused\n");

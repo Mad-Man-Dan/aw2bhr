@@ -4,11 +4,11 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08000CCC.
- * SetSelectedTile @ 0x08000CCC
+ * DesignRoomSelectItem @ 0x08000CCC
  */
 
 /*
- * SetSelectedTile -- make a1 the player's current selection and move the
+ * DesignRoomSelectItem -- make a1 the player's current selection and move the
  * on-screen pick ring to it.
  *
  * a1 is a terrain id in terrain mode, or a unit id with the army in bits 6-7
@@ -38,7 +38,7 @@
  *     different registers.
  */
 
-void SetSelectedTile(int a1)
+void DesignRoomSelectItem(int a1)
 {
     int a;
     int b;
@@ -78,4 +78,4 @@ void SetSelectedTile(int a1)
     RegisterDataMove(gUnknown_0808D8AC, (void *)0x06014D40, 0x8C << 3);
 }
 
-asm(".global sub_08000CCC\n.thumb_set sub_08000CCC, SetSelectedTile\n");
+asm(".global sub_08000CCC\n.thumb_set sub_08000CCC, DesignRoomSelectItem\n");

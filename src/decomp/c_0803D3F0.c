@@ -65,7 +65,7 @@ asm(".global sub_0803D3F0\n.thumb_set sub_0803D3F0, RebuildTerrainFromTiles\n");
  * which an `int` would not do, and `cmp r4,#0xb; bls` is the unsigned test
  * `i < 12` on that width. The result of each call is discarded, so nothing
  * here settles LoadDesignRoomSlotEntry's return type. */
-void MainMenu2_0803D48D(void)
+void RefreshDesignRoomSlotDirectory(void)
 {
     u8 i;
 
@@ -105,4 +105,4 @@ int LoadDesignRoomSlotEntry(u8 a)
 }
 asm(".global sub_0803D4A8\n.thumb_set sub_0803D4A8, LoadDesignRoomSlotEntry\n");
 
-asm(".global sub_0803D48C\n.thumb_set sub_0803D48C, MainMenu2_0803D48D\n");
+asm(".global sub_0803D48C\n.thumb_set sub_0803D48C, RefreshDesignRoomSlotDirectory\n");

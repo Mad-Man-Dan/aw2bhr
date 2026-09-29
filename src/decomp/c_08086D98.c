@@ -46,17 +46,17 @@ void MapSelectPreview_LoadMap(struct Unk86D98Proc *proc)
  * bit 2 comes out as `ldr` plus `lsls #0x1c; lsrs #0x1e`. Reading it as a mask
  * and a shift instead would be three instructions.
  *
- * WarRoomScroll_08086DD5 and MapSelectPreview_LoadPlaceholderPicture repeat the same address expression
+ * MapSelectPreview_RunOverlayRoutine4 and MapSelectPreview_LoadPlaceholderPicture repeat the same address expression
  * with a different consumer. */
-void WarRoomScroll_08086DB5(void)
+void MapSelectPreview_RunOverlayRoutine3(void)
 {
     sub_0801B6EC((void *)(0x06004000 + gUnknown_03001FE8.bits.chr_block * 0x4000));
 }
 
-/* WarRoomScroll_08086DB5 with sub_0801B6FC instead of sub_0801B6EC, and
+/* MapSelectPreview_RunOverlayRoutine3 with sub_0801B6FC instead of sub_0801B6EC, and
  * nothing else -- diffed against it rather than derived from it. See that
  * file for why the bitfield read is a word load. */
-void WarRoomScroll_08086DD5(void)
+void MapSelectPreview_RunOverlayRoutine4(void)
 {
     sub_0801B6FC((void *)(0x06004000 + gUnknown_03001FE8.bits.chr_block * 0x4000));
 }
@@ -75,7 +75,7 @@ void MapSelectPreview_FillTilemap(void)
     BG_EnableSyncBG1();
 }
 
-/* The third user of WarRoomScroll_08086DB5's address expression: unpack a
+/* The third user of MapSelectPreview_RunOverlayRoutine3's address expression: unpack a
  * blob into the tile block BG1 currently points at. Decompress takes the
  * destination second, so the address arithmetic lands in r1 here rather than
  * r0. */
@@ -87,6 +87,6 @@ void MapSelectPreview_LoadPlaceholderPicture(void)
 asm(".global sub_08086E2C\n.thumb_set sub_08086E2C, MapSelectPreview_LoadPlaceholderPicture\n");
 
 asm(".global sub_08086D98\n.thumb_set sub_08086D98, MapSelectPreview_LoadMap\n"
-    ".global sub_08086DB4\n.thumb_set sub_08086DB4, WarRoomScroll_08086DB5\n"
-    ".global sub_08086DD4\n.thumb_set sub_08086DD4, WarRoomScroll_08086DD5\n"
+    ".global sub_08086DB4\n.thumb_set sub_08086DB4, MapSelectPreview_RunOverlayRoutine3\n"
+    ".global sub_08086DD4\n.thumb_set sub_08086DD4, MapSelectPreview_RunOverlayRoutine4\n"
     ".global sub_08086DF4\n.thumb_set sub_08086DF4, MapSelectPreview_FillTilemap\n");

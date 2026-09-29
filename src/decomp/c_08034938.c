@@ -63,7 +63,7 @@ void MapState_CheckTurnLimit(void)
                 RecordArmyDefeat(i, 0x20);
         }
 
-        FinalizeBattleResult();
+        FinalizeMatchResult();
         gUnknown_030032D8 = 0x12;
     }
 }

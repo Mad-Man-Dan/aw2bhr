@@ -30,7 +30,7 @@ struct Unk80114A0Proc
  * differs, and agbcc's cross-jumping merges the tail from `movs r2,#0` onward
  * by itself. A ternary in the argument computes the flag first and shares the
  * setup, which is a different instruction stream. */
-void FadeLoadMap_IDLE_080114A1(struct Unk80114A0Proc *proc)
+void WipeFromBlack_Loop(struct Unk80114A0Proc *proc)
 {
     gUnknown_03002F3C += proc->unk64;
 
@@ -50,4 +50,4 @@ void FadeLoadMap_IDLE_080114A1(struct Unk80114A0Proc *proc)
     }
 }
 
-asm(".global sub_080114A0\n.thumb_set sub_080114A0, FadeLoadMap_IDLE_080114A1\n");
+asm(".global sub_080114A0\n.thumb_set sub_080114A0, WipeFromBlack_Loop\n");

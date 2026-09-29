@@ -24,10 +24,10 @@
  * would reach the same bytes without touching the callee, so this one site
  * proves nothing on its own. Retyped in c_08019260.c and re-verified there. */
 
-void BattleMaps_IDLE_08049929(ProcPtr proc)
+void ShopScreen_WaitMessageEnd(ProcPtr proc)
 {
     if (sub_08019260() == 0)
         Proc_Break(proc);
 }
 
-asm(".global sub_08049928\n.thumb_set sub_08049928, BattleMaps_IDLE_08049929\n");
+asm(".global sub_08049928\n.thumb_set sub_08049928, ShopScreen_WaitMessageEnd\n");

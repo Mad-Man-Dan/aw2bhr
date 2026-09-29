@@ -55,7 +55,7 @@ struct Unk80761C8
     /* 0x40 */ int unk40;
 };
 
-void WM_Listener_IDLE_0807614D(struct Unk807614C *proc)
+void WorldMapNationPanel_WatchLoop(struct Unk807614C *proc)
 {
     s16 ox;
     s16 oy;
@@ -83,7 +83,7 @@ void WM_Listener_IDLE_0807614D(struct Unk807614C *proc)
     }
 }
 
-void WM_Listener_IDLE_080761C9(struct Unk80761C8 *proc)
+void WorldMapNationPanel_SlideInLoop(struct Unk80761C8 *proc)
 {
     int n = gUnknown_08614458[proc->unk40];
 
@@ -114,5 +114,5 @@ void WM_Listener_IDLE_080761C9(struct Unk80761C8 *proc)
     }
 }
 
-asm(".global sub_080761C8\n.thumb_set sub_080761C8, WM_Listener_IDLE_080761C9\n"
-    ".global sub_0807614C\n.thumb_set sub_0807614C, WM_Listener_IDLE_0807614D\n");
+asm(".global sub_080761C8\n.thumb_set sub_080761C8, WorldMapNationPanel_SlideInLoop\n"
+    ".global sub_0807614C\n.thumb_set sub_0807614C, WorldMapNationPanel_WatchLoop\n");

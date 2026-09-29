@@ -38,16 +38,16 @@ void DifficultyStars_Init(struct Unk80750A4 * p)
 
 asm(".global sub_080750A4\n.thumb_set sub_080750A4, DifficultyStars_Init\n");
 
-extern void WM_MoveScope_IDLE_080750C1(void);
+extern void DifficultyStars_PopInLoop(void);
 extern void DifficultyStars_SpawnLoop(void);
-extern void WM_MoveScope_IDLE_08075249(void);
+extern void DifficultyStars_HoldLoop(void);
 
 struct ProcCmd CONST_DATA ProcScr_WM_MoveScope[] =
 {
     PROC_CALL(DifficultyStars_Init),
-    PROC_REPEAT(WM_MoveScope_IDLE_080750C1),
+    PROC_REPEAT(DifficultyStars_PopInLoop),
     PROC_REPEAT(DifficultyStars_SpawnLoop),
-    PROC_REPEAT(WM_MoveScope_IDLE_08075249),
+    PROC_REPEAT(DifficultyStars_HoldLoop),
     PROC_END,
 };
 

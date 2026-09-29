@@ -17,10 +17,10 @@
  * NOT the same object -- Proc_Find looks for gUnknown_08616A40 and Proc_Start
  * launches ProcScr_MainMenuC2 -- so this is a mutual exclusion between two
  * trees, not the usual "start it once" idiom. */
-void MainMenuC1_08081335(ProcPtr parent)
+void MainMenuCarousel_StartWheelProc(ProcPtr parent)
 {
     if (Proc_Find(gUnknown_08616A40) == 0)
         Proc_Start(ProcScr_MainMenuC2, parent);
 }
 
-asm(".global sub_08081334\n.thumb_set sub_08081334, MainMenuC1_08081335\n");
+asm(".global sub_08081334\n.thumb_set sub_08081334, MainMenuCarousel_StartWheelProc\n");

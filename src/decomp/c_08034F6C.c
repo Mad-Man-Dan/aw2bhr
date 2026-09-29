@@ -15,7 +15,7 @@
  */
 
 /* `int` and not `s8`: byte-identical here either way (the `lsls #0x18;
- * asrs #0x18` is the s8 member read), but MapMainIdle tests the result with a
+ * asrs #0x18` is the s8 member read), but RunMapStateMachine tests the result with a
  * bare `cmp r0, #0` and an s8 return would have narrowed it there first.
  * Retyped in wave 13 (A2); re-verified byte-for-byte. */
 int GetMapLock(void)

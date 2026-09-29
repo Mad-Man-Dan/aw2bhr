@@ -4137,7 +4137,7 @@ void sub_08028894(int, int);
 u8 sub_080288D8(u16);
 u8 sub_08028904(u16);
 /* sub_08028944 reports whether army `a` is still playable. sub_08028568 is
- * FinalizeBattleResult. */
+ * FinalizeMatchResult. */
 bool8 sub_08028944(u16);
 u8 sub_08028990(u16);
 u8 sub_080289BC(int);
@@ -4602,7 +4602,7 @@ void sub_080715F8(struct MusicPlayerInfo *, u16, u8);
  * The 0x0806D block: sub_0806CFC8 and sub_0806D050 draw OAM objects 0x43 and
  * 0x44 at (x, y), averaged with last frame's position; sub_0806DC50 draws both
  * for one gUnknown_08580934 object. sub_0806DCB8 is a copy of
- * HandleRulesMenuInput. struct Unk0806DD34 is completed privately in
+ * MatchSetupMoveRuleCursor. struct Unk0806DD34 is completed privately in
  * c_0806DCB8.c; the object is a struct Unk08580934_Obj seen through another
  * struct with the same offsets. */
 void sub_08071C84(int);
@@ -4783,7 +4783,7 @@ u8 *sub_080248E4(void);
 void sub_08074714(ProcPtr);
 
 /* Proc handlers; each takes its own proc. sub_08076298 is the war-map
- * listener's idle handler (WM_Listener_IDLE_08076299). sub_0807B2F8 draws a
+ * listener's idle handler (WorldMapNationPanel_SlideOutLoop). sub_0807B2F8 draws a
  * line of text and a number on BG0. sub_0807BCF0 runs every frame and calls
  * sub_0807BED8, which advances an affine BG animation. */
 void sub_08076298(ProcPtr);
@@ -4827,7 +4827,7 @@ void sub_08054B7C(void);
  * gUnknown_03002FA0, then clears the list; sub_08011B98 runs the callbacks on
  * gUnknown_03000000. sub_08019470 is the per-frame pump of the
  * gUnknown_0200C528 script list (in c_08019404.c). sub_0802FACC is the
- * per-frame link-cable update. sub_080345C8 is MapMainIdle, the per-frame tick
+ * per-frame link-cable update. sub_080345C8 is RunMapStateMachine, the per-frame tick
  * of the gUnknown_030032D8 state machine. */
 void sub_08011AD8(void);
 void sub_08011B98(void);
@@ -4944,7 +4944,7 @@ void sub_08020B88(s16, s16, s16, s16);
  * of (x, y); r == 0 touches only the centre. The sixth parameter must stay
  * `int`: the definition only matches with it narrowed inside the body. */
 void sub_08020EDC(s16, s16, s16, u8 *, int, int);
-void AddValueInRange(s16, s16, s16, u8 *, int, int);
+void StampVisionDisc(s16, s16, s16, u8 *, int, int);
 
 /* Callees of the 0x08028000-0x0802E000 blocks. sub_08012E4C buckets the low
  * five bits of gGameClock into 0, 1 or 2. */
@@ -4986,7 +4986,7 @@ int sub_0800A95C(int, int);
 int sub_08009538(int, int);
 void sub_0800A3D4(int, int);
 void sub_0800BB2C(int, int);
-/* sub_0800168C is IsTerrainWaterOrRiver. sub_0800BEB8 sets terrain 7 at
+/* sub_0800168C is IsTerrainNotWaterOrRiver. sub_0800BEB8 sets terrain 7 at
  * (x, y) when the cell is terrain 0x13 and sub_0800BCD0 says no.
  * sub_0800A6AC and sub_0800A884 return a table entry, negative when the cell
  * is rejected. */
@@ -5008,7 +5008,7 @@ void sub_08004CA0(void);
 void sub_08005F4C(void);
 
 /* sub_08003B8C is GenerateRandomMap (in src/design-editor.c). sub_08000CCC
- * is SetSelectedTile. */
+ * is DesignRoomSelectItem. */
 void sub_08003B8C(void);
 
 void sub_08000BF8(void);
@@ -5267,7 +5267,7 @@ int sub_080587FC(int);
 /* ---- The 0x0805D000-0x08062000 AI blocks ----
  * sub_080606D0, sub_08061868, sub_08061AC4, sub_08061B00 and sub_0805D438 are
  * arms of sub_0806171C's switch. sub_080606D0 is the AI turn's outer driver,
- * sub_08061868 is RunAiTurn, and sub_0805D438 runs one step of the current
+ * sub_08061868 is AiBeginTurn, and sub_0805D438 runs one step of the current
  * army's unit list. sub_08061178 is PickWeightedAiUnit. sub_080611D8 picks a
  * map cell for a unit of type gUnknown_030046C0.unk06, writes its x and y
  * through the pointer, and returns 1, or 0 when it found none. */
@@ -5429,7 +5429,7 @@ void sub_08061E80(struct Unk61E80 *);
  * byte. */
 bool8 sub_0802700C(int, int, int);
 
-/* sub_08061788 and sub_08061868 (RunAiTurn) are in c_0806171C.c.
+/* sub_08061788 and sub_08061868 (AiBeginTurn) are in c_0806171C.c.
  * sub_08061B00 steps a shared cursor through two ROM tables of functions and
  * calls the entries. sub_08061CF8 sums sub_08061DA8(n) over the set low four
  * bits of a flag byte. sub_08061868 and sub_08061B00 are declared with the

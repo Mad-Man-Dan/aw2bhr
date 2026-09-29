@@ -11,8 +11,8 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void CoDesignC1_IDLE_08088041(ProcPtr proc)
+void CoDesignRoot_Idle(ProcPtr proc)
 {
 }
 
-asm(".global sub_08088040\n.thumb_set sub_08088040, CoDesignC1_IDLE_08088041\n");
+asm(".global sub_08088040\n.thumb_set sub_08088040, CoDesignRoot_Idle\n");

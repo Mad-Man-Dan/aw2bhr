@@ -91,7 +91,7 @@ struct UnkF70Proc
  * +0x46 into the s16 working values at +0x2a and jump the script to label 0.
  * +0x58 is reloaded on every iteration because the `strh` through +0x2a may
  * alias it as far as the compiler can tell. */
-void MainMenu_PutSelectModeSprite_08072CAD(struct UnkCACProc *proc)
+void HeaderBanner_SnapIfTimerNegative(struct UnkCACProc *proc)
 {
     int i;
 
@@ -175,7 +175,7 @@ void HeaderBanner_PopInLoop(struct UnkCE4Proc *proc)
  * s16 at +0x2a to its u8 target at +0x46 over unk64 = 0..8, then on the frame
  * after the last one the targets are committed into +0x2a and the proc
  * breaks. Same sprite layout as HeaderBanner_HoldLoop. */
-void MainMenu_PutSelectModeSprite_IDLE_08072E71(struct UnkE70Proc *proc)
+void HeaderBanner_SlideToTargetLoop(struct UnkE70Proc *proc)
 {
     int i;
 
@@ -235,7 +235,7 @@ void HeaderBanner_HoldLoop(struct UnkF04Proc *proc)
  * as `movs #0x14; rsbs` (it does exactly that for Interpolate's third
  * argument above), and only the already-truncated 0xFFEC needs the pool word
  * the ROM has. */
-void MainMenu_PutSelectModeSprite_IDLE_08072F71(struct UnkF70Proc *proc)
+void HeaderBanner_FlyOutLoop(struct UnkF70Proc *proc)
 {
     int i;
     s32 v;
@@ -271,26 +271,26 @@ void MainMenu_PutSelectModeSprite_IDLE_08072F71(struct UnkF70Proc *proc)
     }
 }
 
-asm(".global sub_08072CAC\n.thumb_set sub_08072CAC, MainMenu_PutSelectModeSprite_08072CAD\n"
+asm(".global sub_08072CAC\n.thumb_set sub_08072CAC, HeaderBanner_SnapIfTimerNegative\n"
     ".global sub_08072CE4\n.thumb_set sub_08072CE4, HeaderBanner_PopInLoop\n"
-    ".global sub_08072E70\n.thumb_set sub_08072E70, MainMenu_PutSelectModeSprite_IDLE_08072E71\n"
+    ".global sub_08072E70\n.thumb_set sub_08072E70, HeaderBanner_SlideToTargetLoop\n"
     ".global sub_08072F04\n.thumb_set sub_08072F04, HeaderBanner_HoldLoop\n"
-    ".global sub_08072F70\n.thumb_set sub_08072F70, MainMenu_PutSelectModeSprite_IDLE_08072F71\n");
+    ".global sub_08072F70\n.thumb_set sub_08072F70, HeaderBanner_FlyOutLoop\n");
 
-extern void MainMenu_PutSelectModeSprite_IDLE_080730D1(void);
+extern void HeaderBanner_FlyInLoop(void);
 
 struct ProcCmd CONST_DATA ProcScr_MainMenuPutSelectModeSprite[] =
 {
     PROC_YIELD,
     PROC_END_DUPS,
-    PROC_CALL(MainMenu_PutSelectModeSprite_08072CAD),
+    PROC_CALL(HeaderBanner_SnapIfTimerNegative),
     PROC_REPEAT(HeaderBanner_PopInLoop),
-    PROC_REPEAT(MainMenu_PutSelectModeSprite_IDLE_08072E71),
+    PROC_REPEAT(HeaderBanner_SlideToTargetLoop),
 PROC_LABEL(0),
     PROC_REPEAT(HeaderBanner_HoldLoop),
-    PROC_REPEAT(MainMenu_PutSelectModeSprite_IDLE_08072F71),
+    PROC_REPEAT(HeaderBanner_FlyOutLoop),
     PROC_REPEAT(HeaderBanner_HoldLoop),
-    PROC_REPEAT(MainMenu_PutSelectModeSprite_IDLE_080730D1),
+    PROC_REPEAT(HeaderBanner_FlyInLoop),
     PROC_GOTO(0),
     PROC_END,
 };

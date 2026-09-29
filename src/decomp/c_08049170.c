@@ -17,9 +17,9 @@ struct Unk8049170
     /* 0x64 */ u16 unk64;
 };
 
-void BattleMaps_08049171(struct Unk8049170 *s)
+void ShopList_ResetRise(struct Unk8049170 *s)
 {
     s->unk64 = 0;
 }
 
-asm(".global sub_08049170\n.thumb_set sub_08049170, BattleMaps_08049171\n");
+asm(".global sub_08049170\n.thumb_set sub_08049170, ShopList_ResetRise\n");

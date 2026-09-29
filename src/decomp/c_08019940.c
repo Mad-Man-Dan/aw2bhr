@@ -9,7 +9,7 @@
 
 /* Run RecordArmyDefeat for every army 1..4 whose gPlayers[i].unk2a
  * differs from army `a`'s and which passes IsPlayerAliveAndActive, then close out with
- * FinalizeBattleResult and post mode 0x12.
+ * FinalizeMatchResult and post mode 0x12.
  *
  * gPlayers is a POINTER global, so the ROM's two `ldr`s are the
  * `-fforce-addr` `.rodata` word (0x0808E5B4, which holds 0x08499598) followed
@@ -31,7 +31,7 @@ void DefeatOtherTeamsAndEndMatch(u8 a, u8 b)
          && IsPlayerAliveAndActive(i))
             RecordArmyDefeat(i, b);
     }
-    FinalizeBattleResult();
+    FinalizeMatchResult();
     gUnknown_030032D8 = 0x12;
 }
 asm(".global sub_08019940\n.thumb_set sub_08019940, DefeatOtherTeamsAndEndMatch\n");

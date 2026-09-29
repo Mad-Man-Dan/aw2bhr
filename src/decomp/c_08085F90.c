@@ -11,8 +11,8 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void PreviewMap_IDLE_08085F91(ProcPtr proc)
+void MapSelect_Idle(ProcPtr proc)
 {
 }
 
-asm(".global sub_08085F90\n.thumb_set sub_08085F90, PreviewMap_IDLE_08085F91\n");
+asm(".global sub_08085F90\n.thumb_set sub_08085F90, MapSelect_Idle\n");

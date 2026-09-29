@@ -18,7 +18,7 @@ void RunWinLossCheck(void)
     if (IsOnlyOneTeamLeft())
     {
         MarkDefeatedArmies();
-        FinalizeBattleResult();
+        FinalizeMatchResult();
     }
     else
     {

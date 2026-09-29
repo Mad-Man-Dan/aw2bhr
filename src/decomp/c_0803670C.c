@@ -174,7 +174,7 @@ void MapMainLoopCallback(void)
         if (gUnknown_03003F3C != 0)
         {
             if (gUnknown_03003F3C == 1)
-                MapMainIdle();
+                RunMapStateMachine();
         }
 
         RunAllSlotScripts();

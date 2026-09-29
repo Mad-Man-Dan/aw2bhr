@@ -29,7 +29,7 @@ struct Unk80750C0
     /* 0x3a */ u16 unk3a;
 };
 
-void WM_MoveScope_IDLE_080750C1(struct Unk80750C0 *proc)
+void DifficultyStars_PopInLoop(struct Unk80750C0 *proc)
 {
     int t = Interpolate(4, 8, 0x100, proc->unk3a, 10);
 
@@ -51,4 +51,4 @@ void WM_MoveScope_IDLE_080750C1(struct Unk80750C0 *proc)
     proc->unk3a++;
 }
 
-asm(".global sub_080750C0\n.thumb_set sub_080750C0, WM_MoveScope_IDLE_080750C1\n");
+asm(".global sub_080750C0\n.thumb_set sub_080750C0, DifficultyStars_PopInLoop\n");

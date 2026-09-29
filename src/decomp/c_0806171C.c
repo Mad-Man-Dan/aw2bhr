@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0806171C.
- * sub_0806171C @ 0x0806171C, sub_08061788 @ 0x08061788, RunAiTurn @ 0x08061868
+ * sub_0806171C @ 0x0806171C, sub_08061788 @ 0x08061788, AiBeginTurn @ 0x08061868
  */
 
 /* The destination record is at 0x02029C54, which aw2bhr.lds does NOT name --
@@ -47,7 +47,7 @@ void AiDriverStep(void)
     switch ((s16)*(volatile u16 *)&gUnknown_03004780)
     {
     case 0:
-        RunAiTurn();
+        AiBeginTurn();
         break;
     case 1:
         AiStartNextPass();
@@ -106,7 +106,7 @@ asm(".global sub_08061788\n.thumb_set sub_08061788, AiLoadPersonality\n");
  * emits both pool `ldr`s first (0x030044D8's, then 0x03004770's), then the
  * single `movs r0,#0`, then the `str` and the `strb` in that order. Two
  * separate statements interleave the pool loads with their stores instead. */
-void RunAiTurn(void)
+void AiBeginTurn(void)
 {
     gFactoryUnitSchedule = IsHardCampaignMode()
         ? gUnknown_08615194[gPlaySt.mapID - 0x8a].factoryScriptHc
@@ -128,4 +128,4 @@ void RunAiTurn(void)
         sub_080607E8();
 }
 
-asm(".global sub_08061868\n.thumb_set sub_08061868, RunAiTurn\n");
+asm(".global sub_08061868\n.thumb_set sub_08061868, AiBeginTurn\n");

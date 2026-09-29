@@ -29,7 +29,7 @@ void sub_0800AF24(int x, int y)
 
 void sub_0800AF74(int x, int y)
 {
-    if (IsTerrainWaterOrRiver(x, y) == 0)
+    if (IsTerrainNotWaterOrRiver(x, y) == 0)
         SetTerrainAt(x, y, 1);
 
     SetTerrainAt(x, y, 3);

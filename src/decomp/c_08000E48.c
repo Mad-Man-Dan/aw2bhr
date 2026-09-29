@@ -96,7 +96,7 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     DesignRoomGetPreviousRingIndex();
     DesignRoomSetMode(0);
     sub_080152C0((s32)&gUnknown_084857AC[0x100], 0);
-    SetSelectedTile(0x28);
+    DesignRoomSelectItem(0x28);
     DesignRoomStartCoordBox();
     PlayMusic(0xD8);
 }

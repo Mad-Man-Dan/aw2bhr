@@ -21,11 +21,11 @@ struct Unk0806DD34
     /* 0x4b */ u8 unk4b;
 };
 
-/* Byte-identical twin of HandleRulesMenuInput -- SAME SOURCE, not a variant. The two
+/* Byte-identical twin of MatchSetupMoveRuleCursor -- SAME SOURCE, not a variant. The two
  * differ in asm/ only because each owns a private -fforce-addr .rodata word
  * for &gUnknown_08580934 and &gpKeySt (0x0816E1AC/0x0816E1B0 here,
  * 0x0816E158/0x0816E15C there); the ROM images of all four words are
- * 0x08580934 and 0x03002EE0. See HandleRulesMenuInput for the shape notes. */
+ * 0x08580934 and 0x03002EE0. See MatchSetupMoveRuleCursor for the shape notes. */
 void RulesScreenHandleMenuInput(void)
 {
     int i;

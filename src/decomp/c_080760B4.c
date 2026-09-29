@@ -31,7 +31,7 @@ struct Unk80760B4
     /* 0x40 */ int unk40;
 };
 
-void WM_Listener_080760B5(struct Unk80760B4 *proc)
+void WorldMapNationPanel_Init(struct Unk80760B4 *proc)
 {
     sub_0801F114();
     InitTilePool(1,
@@ -48,26 +48,26 @@ void WM_Listener_080760B5(struct Unk80760B4 *proc)
     proc->unk3c = 0;
 }
 
-asm(".global sub_080760B4\n.thumb_set sub_080760B4, WM_Listener_080760B5\n");
+asm(".global sub_080760B4\n.thumb_set sub_080760B4, WorldMapNationPanel_Init\n");
 
 extern struct ProcCmd WM_Listener_WHILE_EXISTS_08614314[];
-extern void WM_Listener_0807610D(void);
-extern void WM_Listener_IDLE_080761C9(void);
-extern void WM_Listener_IDLE_0807614D(void);
-extern void WM_Listener_IDLE_08076299(void);
+extern void WorldMapNationPanel_Setup(void);
+extern void WorldMapNationPanel_SlideInLoop(void);
+extern void WorldMapNationPanel_WatchLoop(void);
+extern void WorldMapNationPanel_SlideOutLoop(void);
 
 struct ProcCmd CONST_DATA ProcScr_WM_Listener[] =
 {
     PROC_2A,
     PROC_2A,
     PROC_YIELD,
-    PROC_CALL(WM_Listener_080760B5),
+    PROC_CALL(WorldMapNationPanel_Init),
 PROC_LABEL(0),
     PROC_WHILE_EXISTS(WM_Listener_WHILE_EXISTS_08614314),
-    PROC_CALL(WM_Listener_0807610D),
-    PROC_REPEAT(WM_Listener_IDLE_080761C9),
-    PROC_REPEAT(WM_Listener_IDLE_0807614D),
-    PROC_REPEAT(WM_Listener_IDLE_08076299),
+    PROC_CALL(WorldMapNationPanel_Setup),
+    PROC_REPEAT(WorldMapNationPanel_SlideInLoop),
+    PROC_REPEAT(WorldMapNationPanel_WatchLoop),
+    PROC_REPEAT(WorldMapNationPanel_SlideOutLoop),
     PROC_GOTO(0),
     PROC_END,
 };

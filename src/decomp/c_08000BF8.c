@@ -17,7 +17,7 @@
  * flag.
  *
  * DesignRoomPickUnderCursor below does the opposite: it plays sound 0x65 and makes whatever
- * is under the cursor the new selection (SetSelectedTile).
+ * is under the cursor the new selection (DesignRoomSelectItem).
  *
  * Why the C looks odd: this spelling does not change what the code does, but
  * the original compiler only produces identical output with it.
@@ -49,10 +49,10 @@ void DesignRoomPickUnderCursor(void)
     PlayMusicOrSfx2(0x65);
 
     if (gActiveMap->editMode == 0)
-        SetSelectedTile(gMap->terrain[
+        DesignRoomSelectItem(gMap->terrain[
             gActiveMap->cursorX
             + gMap->rowOffset[gActiveMap->cursorY]]);
     else
-        SetSelectedTile(GetUnitTypeAt(gActiveMap->cursorX, gActiveMap->cursorY));
+        DesignRoomSelectItem(GetUnitTypeAt(gActiveMap->cursorX, gActiveMap->cursorY));
 }
 asm(".global sub_08000C68\n.thumb_set sub_08000C68, DesignRoomPickUnderCursor\n");

@@ -27,7 +27,7 @@
  * gUnknown_0812A15C is a -fforce-addr address word holding &gUnknown_084C30F8,
  * not a global -- the same word as 0x0812A150/154/158. Four references across
  * a merge is what makes agbcc park &gUnknown_084C30F8 in r4 here. */
-void BattleMaps_IDLE_080490BD(ProcPtr proc)
+void ShopScreen_WaitGreetingThenSlide(ProcPtr proc)
 {
     u16 v;
 
@@ -60,4 +60,4 @@ void BattleMaps_IDLE_080490BD(ProcPtr proc)
     Proc_Break(proc);
 }
 
-asm(".global sub_080490BC\n.thumb_set sub_080490BC, BattleMaps_IDLE_080490BD\n");
+asm(".global sub_080490BC\n.thumb_set sub_080490BC, ShopScreen_WaitGreetingThenSlide\n");

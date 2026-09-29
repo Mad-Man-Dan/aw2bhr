@@ -11,8 +11,8 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void MainMenuC1_IDLE_08081359(void)
+void MainMenuCarousel_Idle(void)
 {
 }
 
-asm(".global sub_08081358\n.thumb_set sub_08081358, MainMenuC1_IDLE_08081359\n");
+asm(".global sub_08081358\n.thumb_set sub_08081358, MainMenuCarousel_Idle\n");

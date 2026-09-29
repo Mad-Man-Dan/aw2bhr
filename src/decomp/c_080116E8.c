@@ -16,7 +16,7 @@
  * 0x80 << 4 and 0x380 is 0xe0 << 2. Nothing in the source asks for that.
  *
  * The members do not share a destination class either:
- * StartCoInfoScreen_080116E9 and UnitInfoPanel_CopyPictureToVram blit to VRAM through
+ * LoadGlyphSpriteTiles and UnitInfoPanel_CopyPictureToVram blit to VRAM through
  * CpuCopyAuto, CopyHiOamShadowToOam pushes an OAM shadow to 0x07000080 through
  * CpuFastCopy -- a different callee, listed in `varies`. Both destinations
  * are bare address literals in the ROM's pool (`.4byte 0x06017800`, not a
@@ -25,9 +25,9 @@
  * Workflow section of docs/agbcc-codegen.md, where the pool word would have
  * carried a relocation. */
 
-void StartCoInfoScreen_080116E9(void)
+void LoadGlyphSpriteTiles(void)
 {
     CpuCopyAuto(gUnknown_080A1424, (void *)0x06017800, 0x800);
 }
 
-asm(".global sub_080116E8\n.thumb_set sub_080116E8, StartCoInfoScreen_080116E9\n");
+asm(".global sub_080116E8\n.thumb_set sub_080116E8, LoadGlyphSpriteTiles\n");

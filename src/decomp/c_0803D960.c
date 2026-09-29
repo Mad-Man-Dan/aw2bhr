@@ -21,11 +21,11 @@ struct UnkD960Proc
     /* 64 */ u16 unk64;
 };
 
-void BattleMaps_0803D961(ProcPtr parent)
+void StartProfileSaveScreen(ProcPtr parent)
 {
     struct UnkD960Proc *proc = Proc_StartBlocking(gUnknown_0849F5D0, parent);
 
     proc->unk64 = 6;
 }
 
-asm(".global sub_0803D960\n.thumb_set sub_0803D960, BattleMaps_0803D961\n");
+asm(".global sub_0803D960\n.thumb_set sub_0803D960, StartProfileSaveScreen\n");

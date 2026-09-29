@@ -47,7 +47,7 @@
  * exist and why a single struct array at ...A0 would relocate the second use
  * wrongly. */
 
-void BattleMaps_IDLE_08048FD9(ProcPtr proc)
+void ShopScreen_PickGreeting(ProcPtr proc)
 {
     u8 n;
     u8 i;
@@ -89,4 +89,4 @@ void BattleMaps_IDLE_08048FD9(ProcPtr proc)
     Proc_Break(proc);
 }
 
-asm(".global sub_08048FD8\n.thumb_set sub_08048FD8, BattleMaps_IDLE_08048FD9\n");
+asm(".global sub_08048FD8\n.thumb_set sub_08048FD8, ShopScreen_PickGreeting\n");

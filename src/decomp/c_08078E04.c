@@ -20,9 +20,9 @@
  * include/unknown-globals.h.
  */
 
-void EndCoSelect_08078E05(void)
+void EndScrollingBackdrop(void)
 {
     Proc_EndEach(gUnknown_08615CA0);
 }
 
-asm(".global sub_08078E04\n.thumb_set sub_08078E04, EndCoSelect_08078E05\n");
+asm(".global sub_08078E04\n.thumb_set sub_08078E04, EndScrollingBackdrop\n");

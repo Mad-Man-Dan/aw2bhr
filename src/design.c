@@ -194,7 +194,7 @@ int IsTerrainLand(int x, int y) {
 
 asm(".global sub_080015E4\n.thumb_set sub_080015E4, IsTerrainLand\n");
 
-int IsTerrainWater(int x, int y) {
+int IsTerrainNotWater(int x, int y) {
   struct Map *map = gMap;
   int v;
   int r;
@@ -209,9 +209,9 @@ int IsTerrainWater(int x, int y) {
   return r;
 }
 
-asm(".global sub_0800164C\n.thumb_set sub_0800164C, IsTerrainWater\n");
+asm(".global sub_0800164C\n.thumb_set sub_0800164C, IsTerrainNotWater\n");
 
-int IsTerrainWaterOrRiver(int x, int y) {
+int IsTerrainNotWaterOrRiver(int x, int y) {
   struct Map *map = gMap;
   int v;
   int r;
@@ -226,7 +226,7 @@ int IsTerrainWaterOrRiver(int x, int y) {
   return r;
 }
 
-asm(".global sub_0800168C\n.thumb_set sub_0800168C, IsTerrainWaterOrRiver\n");
+asm(".global sub_0800168C\n.thumb_set sub_0800168C, IsTerrainNotWaterOrRiver\n");
 
 int GetTileWithShadowAt(int x, int y) {
   struct Map *map = gMap;

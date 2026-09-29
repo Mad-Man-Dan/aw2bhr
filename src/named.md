@@ -125,3 +125,65 @@ labels. The `sub_XXXXXXXX` alias of each function is unchanged.
 | `0x0808A82C` | `CampaignIntro_IDLE_0808A82D` | `CampaignIntro_WaitForTextBoxes` |
 | `0x0808A844` | `CampaignIntro_IDLE_0808A845` | `CampaignIntro_WaitForButtonA` |
 | `0x0808A884` | `CampaignIntro_IDLE_0808A885` | `CampaignIntro_WaitForSkip` |
+
+## Renamed after reading the code (second review)
+
+These names (AW2E.lua labels or earlier house names) did not match what the
+matched C does, so the repo was renamed. `src/AW2E.lua` keeps the original
+labels. The `sub_XXXXXXXX` alias of each function is unchanged.
+
+| Address | Was | Now |
+| --- | --- | --- |
+| `0x08000ccc` | `SetSelectedTile` | `DesignRoomSelectItem` |
+| `0x0800164c` | `IsTerrainWater` | `IsTerrainNotWater` |
+| `0x0800168c` | `IsTerrainWaterOrRiver` | `IsTerrainNotWaterOrRiver` |
+| `0x08011298` | `SomeFade_08011299` | `WipeToBlack_Init` |
+| `0x0801137c` | `FadeLoadMap_0801137D` | `WipeFromBlack_Init` |
+| `0x080113ec` | `SomeFade_IDLE_080113ED` | `WipeToBlack_Loop` |
+| `0x080114a0` | `FadeLoadMap_IDLE_080114A1` | `WipeFromBlack_Loop` |
+| `0x0801153c` | `SomeFade_IDLE_0801153D` | `Wipe_End` |
+| `0x080116e8` | `StartCoInfoScreen_080116E9` | `LoadGlyphSpriteTiles` |
+| `0x08011b18` | `WM_ConfirmExit_08011B19` | `ClearVBlankHooks` |
+| `0x08014878` | `EndCoInfoScreen_08014879` | `EndAllTextBoxes` |
+| `0x080191b0` | `MainMenu_080191B1` | `ResetEventScriptsAndUiState` |
+| `0x08020edc` | `AddValueInRange` | `StampVisionDisc` |
+| `0x08028568` | `FinalizeBattleResult` | `FinalizeMatchResult` |
+| `0x080345c8` | `MapMainIdle` | `RunMapStateMachine` |
+| `0x08034838` | `MainMenu2_08034839` | `ClearSavingEnabled` |
+| `0x0803b83c` | `BattleMaps_0803B83D` | `ReturnToMainMenu` |
+| `0x0803d48c` | `MainMenu2_0803D48D` | `RefreshDesignRoomSlotDirectory` |
+| `0x0803d960` | `BattleMaps_0803D961` | `StartProfileSaveScreen` |
+| `0x08044b08` | `AnimateUnitCreation` | `StartUnitSparkleEffect` |
+| `0x08048fd8` | `BattleMaps_IDLE_08048FD9` | `ShopScreen_PickGreeting` |
+| `0x080490bc` | `BattleMaps_IDLE_080490BD` | `ShopScreen_WaitGreetingThenSlide` |
+| `0x08049170` | `BattleMaps_08049171` | `ShopList_ResetRise` |
+| `0x08049178` | `BattleMaps_IDLE_08049179` | `ShopList_RiseStep` |
+| `0x08049928` | `BattleMaps_IDLE_08049929` | `ShopScreen_WaitMessageEnd` |
+| `0x08049b14` | `BattleMaps_08049B15` | `StartShopDrawScript` |
+| `0x08049b28` | `BattleMaps_08049B29` | `ShopScreen_EndMessageScripts` |
+| `0x08049b70` | `BattleMaps_08049B71` | `ShopScreen_AddScrollBackgroundHook` |
+| `0x08049b80` | `BattleMaps_08049B81` | `ShopScreen_UpdateMainMenuLock` |
+| `0x08061868` | `RunAiTurn` | `AiBeginTurn` |
+| `0x08066bf4` | `HandleRulesMenuInput` | `MatchSetupMoveRuleCursor` |
+| `0x08071e80` | `FadeToWhite_OnInit` | `FadeToWhite_OnInitUnused` |
+| `0x08071eb8` | `FadeFromWhite_OnInit` | `FadeFromWhite_OnInitUnused` |
+| `0x08072cac` | `MainMenu_PutSelectModeSprite_08072CAD` | `HeaderBanner_SnapIfTimerNegative` |
+| `0x08072e70` | `MainMenu_PutSelectModeSprite_IDLE_08072E71` | `HeaderBanner_SlideToTargetLoop` |
+| `0x08072f70` | `MainMenu_PutSelectModeSprite_IDLE_08072F71` | `HeaderBanner_FlyOutLoop` |
+| `0x080730d0` | `MainMenu_PutSelectModeSprite_IDLE_080730D1` | `HeaderBanner_FlyInLoop` |
+| `0x080750c0` | `WM_MoveScope_IDLE_080750C1` | `DifficultyStars_PopInLoop` |
+| `0x08075248` | `WM_MoveScope_IDLE_08075249` | `DifficultyStars_HoldLoop` |
+| `0x080760b4` | `WM_Listener_080760B5` | `WorldMapNationPanel_Init` |
+| `0x0807610c` | `WM_Listener_0807610D` | `WorldMapNationPanel_Setup` |
+| `0x0807614c` | `WM_Listener_IDLE_0807614D` | `WorldMapNationPanel_WatchLoop` |
+| `0x080761c8` | `WM_Listener_IDLE_080761C9` | `WorldMapNationPanel_SlideInLoop` |
+| `0x08076298` | `WM_Listener_IDLE_08076299` | `WorldMapNationPanel_SlideOutLoop` |
+| `0x08078e04` | `EndCoSelect_08078E05` | `EndScrollingBackdrop` |
+| `0x08080f3c` | `MainMenu_08080F3D` | `MainMenuCarousel_ResetSelection` |
+| `0x08081334` | `MainMenuC1_08081335` | `MainMenuCarousel_StartWheelProc` |
+| `0x08081358` | `MainMenuC1_IDLE_08081359` | `MainMenuCarousel_Idle` |
+| `0x08084bd0` | `StartCoInfoScreen_IDLE_08084BD1` | `CoInfoScreen_Idle` |
+| `0x08085f90` | `PreviewMap_IDLE_08085F91` | `MapSelect_Idle` |
+| `0x08086db4` | `WarRoomScroll_08086DB5` | `MapSelectPreview_RunOverlayRoutine3` |
+| `0x08086dd4` | `WarRoomScroll_08086DD5` | `MapSelectPreview_RunOverlayRoutine4` |
+| `0x08088040` | `CoDesignC1_IDLE_08088041` | `CoDesignRoot_Idle` |

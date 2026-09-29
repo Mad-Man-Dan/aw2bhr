@@ -23,14 +23,14 @@ asm(".global sub_08078468\n.thumb_set sub_08078468, WM_ConfirmExit_08078469\n");
 
 extern void WM_ConfirmExit_08078959(void);
 extern bool8 IsAnyEventScriptRunning(void);
-extern void WM_ConfirmExit_08011B19(void);
+extern void ClearVBlankHooks(void);
 
 struct ProcCmd CONST_DATA ProcScr_WM_ConfirmExit[] =
 {
     PROC_CALL(WM_ConfirmExit_08078469),
     PROC_CALL(WM_ConfirmExit_08078959),
     PROC_WHILE(IsAnyEventScriptRunning),
-    PROC_CALL(WM_ConfirmExit_08011B19),
+    PROC_CALL(ClearVBlankHooks),
     PROC_END,
 };
 

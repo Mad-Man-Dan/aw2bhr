@@ -11,10 +11,10 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void MainMenu_08080F3D(void)
+void MainMenuCarousel_ResetSelection(void)
 {
     gUnknown_03005924 = 6;
     gUnknown_030058FC = 0;
 }
 
-asm(".global sub_08080F3C\n.thumb_set sub_08080F3C, MainMenu_08080F3D\n");
+asm(".global sub_08080F3C\n.thumb_set sub_08080F3C, MainMenuCarousel_ResetSelection\n");

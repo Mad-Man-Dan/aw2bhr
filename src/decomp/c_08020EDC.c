@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08020EDC.
- * AddValueInRange @ 0x08020EDC
+ * StampVisionDisc @ 0x08020EDC
  *
  * Not a Xenesis-documented name. The old sub_08020EDC symbol is kept as a
  * linker alias below so every other unit keeps resolving it unchanged.
@@ -33,7 +33,7 @@
  *   `buf[gMap->rowOffset[y] + x]`, row first, and the swept cell reads its
  *   row into a u16 `row` before the add.
  */
-void AddValueInRange(s16 x, s16 y, s16 r, u8 *buf, int delta, int flags)
+void StampVisionDisc(s16 x, s16 y, s16 r, u8 *buf, int delta, int flags)
 {
     u32 d;
     u8 f;
@@ -93,4 +93,4 @@ void AddValueInRange(s16 x, s16 y, s16 r, u8 *buf, int delta, int flags)
     }
 }
 
-asm(".global sub_08020EDC\n.thumb_set sub_08020EDC, AddValueInRange\n");
+asm(".global sub_08020EDC\n.thumb_set sub_08020EDC, StampVisionDisc\n");

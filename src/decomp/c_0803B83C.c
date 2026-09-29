@@ -19,7 +19,7 @@
  * this void, so the two `bl`s are sequential statements and not a nesting.
  * Proc_Start's result is discarded too. */
 
-void BattleMaps_0803B83D(void)
+void ReturnToMainMenu(void)
 {
     sub_0801537C(gUnknown_0849B048);
     Proc_Start(gUnknown_0849E7F8, PROC_TREE_3);
@@ -38,7 +38,7 @@ void sub_0803B858(void)
     Proc_Start(ProcScr_Link, PROC_TREE_3);
 }
 
-asm(".global sub_0803B83C\n.thumb_set sub_0803B83C, BattleMaps_0803B83D\n");
+asm(".global sub_0803B83C\n.thumb_set sub_0803B83C, ReturnToMainMenu\n");
 
 extern void ResetRulesAfterCampaignMap(void);
 

@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08066BF4.
- * HandleRulesMenuInput @ 0x08066BF4, RuleOption_ChangeValue @ 0x08066C70
+ * MatchSetupMoveRuleCursor @ 0x08066BF4, RuleOption_ChangeValue @ 0x08066C70
  */
 
 #include "hardware.h"
@@ -33,7 +33,7 @@
  *
  * The wrap is gated on `unk02 == held`, i.e. it only fires when the pressed
  * mask is exactly the held mask -- no other key down. */
-void HandleRulesMenuInput(void)
+void MatchSetupMoveRuleCursor(void)
 {
     int i;
 
@@ -74,7 +74,7 @@ void HandleRulesMenuInput(void)
     gUnknown_08580934->unk33 = i;
 }
 
-asm(".global sub_08066BF4\n.thumb_set sub_08066BF4, HandleRulesMenuInput\n");
+asm(".global sub_08066BF4\n.thumb_set sub_08066BF4, MatchSetupMoveRuleCursor\n");
 
 void RuleOption_ChangeValue(struct Unk08580934_Obj *p)
 {

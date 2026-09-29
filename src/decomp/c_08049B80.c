@@ -16,7 +16,7 @@
  * built with its own `adds`. The ROM shares one pool word for the constant and
  * bumps it (`ldr r2,=0x836; adds r1,r0,r2; adds r2,#1; adds r0,r0,r2`), which
  * is CSE on the displacement rather than anything in the source. */
-void BattleMaps_08049B81(void)
+void ShopScreen_UpdateMainMenuLock(void)
 {
     if (gUnknown_084C30F8->unk836 == gUnknown_084C30F8->unk837)
         UnlockMainMenu();
@@ -24,4 +24,4 @@ void BattleMaps_08049B81(void)
         LockMainMenu();
 }
 
-asm(".global sub_08049B80\n.thumb_set sub_08049B80, BattleMaps_08049B81\n");
+asm(".global sub_08049B80\n.thumb_set sub_08049B80, ShopScreen_UpdateMainMenuLock\n");

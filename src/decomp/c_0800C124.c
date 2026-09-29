@@ -17,7 +17,7 @@ void sub_0800C124(int x, int y)
 {
     struct ActiveMap *q;
 
-    if (IsTerrainWater(x, y))
+    if (IsTerrainNotWater(x, y))
     {
         if (sub_08008C34(x, y))
             return;

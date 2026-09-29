@@ -34,10 +34,10 @@
  * wave-14 F032 trap one shape up.
  */
 
-void SomeFade_IDLE_0801153D(ProcPtr proc)
+void Wipe_End(ProcPtr proc)
 {
     EndFadeScreenLines();
     Proc_Break(proc);
 }
 
-asm(".global sub_0801153C\n.thumb_set sub_0801153C, SomeFade_IDLE_0801153D\n");
+asm(".global sub_0801153C\n.thumb_set sub_0801153C, Wipe_End\n");

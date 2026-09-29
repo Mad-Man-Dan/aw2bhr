@@ -42,7 +42,7 @@ void CoPowerUnitSparkle_Loop(struct Unk452FC *proc)
         if (gPlayers[proc->unk2c].coActivationMode == 2)
             flag = 1;
 
-        AnimateUnitCreation(x, y, flag);
+        StartUnitSparkleEffect(x, y, flag);
         Proc_Break(proc);
     }
 }

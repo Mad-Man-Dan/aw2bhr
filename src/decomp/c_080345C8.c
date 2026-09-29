@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080345C8.
- * MapMainIdle @ 0x080345C8
+ * RunMapStateMachine @ 0x080345C8
  */
 
 /* The gUnknown_030032D8 state machine's per-frame tick.
@@ -26,7 +26,7 @@
  * `subs r0, #1`. The 19/16/18 order is likewise the source's: GCC lays case
  * bodies out in source order, and the ROM has 19's before 16's.
  */
-void MapMainIdle(void)
+void RunMapStateMachine(void)
 {
     u16 *const *state;
     int idle;
@@ -67,4 +67,4 @@ void MapMainIdle(void)
     }
 }
 
-asm(".global sub_080345C8\n.thumb_set sub_080345C8, MapMainIdle\n");
+asm(".global sub_080345C8\n.thumb_set sub_080345C8, RunMapStateMachine\n");

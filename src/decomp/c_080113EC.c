@@ -18,7 +18,7 @@ struct Unk80113EC
     /* 0x64 */ s16 unk64;
 };
 
-void SomeFade_IDLE_080113ED(struct Unk80113EC *proc)
+void WipeToBlack_Loop(struct Unk80113EC *proc)
 {
     gUnknown_03002F3C += proc->unk64;
 
@@ -43,4 +43,4 @@ void SomeFade_IDLE_080113ED(struct Unk80113EC *proc)
         gUnknown_03001408 = 0x140;
 }
 
-asm(".global sub_080113EC\n.thumb_set sub_080113EC, SomeFade_IDLE_080113ED\n");
+asm(".global sub_080113EC\n.thumb_set sub_080113EC, WipeToBlack_Loop\n");

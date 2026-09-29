@@ -146,7 +146,7 @@ int sub_0800A798(int x, int y)
 {
     int m;
 
-    if (IsTerrainWater(x, y) == 0)
+    if (IsTerrainNotWater(x, y) == 0)
         return -1;
 
     m = 0;

@@ -15,7 +15,7 @@ void MatchSetupHandleRulesStageInput(void)
 
     gUnknown_08580934->unk2a++;
 
-    HandleRulesMenuInput();
+    MatchSetupMoveRuleCursor();
     RuleOption_ChangeValue(gUnknown_08580934->unk54[gUnknown_08580934->unk33]);
     RuleOption_DrawArrows(gUnknown_08580934->unk33);
     MatchSetupHighlightSelectedRuleOption();

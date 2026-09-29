@@ -25,7 +25,7 @@ struct Unk8075248
     /* 0x3a */ u16 unk3a;
 };
 
-void WM_MoveScope_IDLE_08075249(struct Unk8075248 *proc)
+void DifficultyStars_HoldLoop(struct Unk8075248 *proc)
 {
     int d = gUnknown_0861436C[(proc->unk3a >> 3) & 3];
 
@@ -34,4 +34,4 @@ void WM_MoveScope_IDLE_08075249(struct Unk8075248 *proc)
     proc->unk3a++;
 }
 
-asm(".global sub_08075248\n.thumb_set sub_08075248, WM_MoveScope_IDLE_08075249\n");
+asm(".global sub_08075248\n.thumb_set sub_08075248, DifficultyStars_HoldLoop\n");

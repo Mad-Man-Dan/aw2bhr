@@ -24,9 +24,9 @@
  * sub_0801537C(const void *). Retyping it `const void *` needs one edit to
  * proc.c and a rebuild of that file to verify, which is why it was not done
  * here. */
-void BattleMaps_08049B15(void)
+void StartShopDrawScript(void)
 {
     sub_080152C0((s32)gUnknown_084C3128, 0);
 }
 
-asm(".global sub_08049B14\n.thumb_set sub_08049B14, BattleMaps_08049B15\n");
+asm(".global sub_08049B14\n.thumb_set sub_08049B14, StartShopDrawScript\n");

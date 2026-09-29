@@ -20,7 +20,7 @@ struct Unk801137CProc
 
 /* sub_08011298's twin: Proc_End instead of sub_080153B8 on the already-in-state
  * path, and the cursor seeded at 0x140 instead of 0. */
-void FadeLoadMap_0801137D(struct Unk801137CProc *proc)
+void WipeFromBlack_Init(struct Unk801137CProc *proc)
 {
     if (gUnknown_03002B5C == 0)
     {
@@ -37,4 +37,4 @@ void FadeLoadMap_0801137D(struct Unk801137CProc *proc)
     StartFadeScreenLines(gUnknown_0200B274, (void *)0x04000040, 1, 0xA240, FillWipeScanlineTable);
 }
 
-asm(".global sub_0801137C\n.thumb_set sub_0801137C, FadeLoadMap_0801137D\n");
+asm(".global sub_0801137C\n.thumb_set sub_0801137C, WipeFromBlack_Init\n");

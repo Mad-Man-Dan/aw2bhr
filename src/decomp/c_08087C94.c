@@ -154,7 +154,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
 asm(".global sub_08087C94\n.thumb_set sub_08087C94, CoDesignRoot_Init\n");
 
 extern void CoDesignRoot_StartEditor(void);
-extern void CoDesignC1_IDLE_08088041(void);
+extern void CoDesignRoot_Idle(void);
 
 struct ProcCmd CONST_DATA ProcScr_CoDesignC1[] =
 {
@@ -162,7 +162,7 @@ struct ProcCmd CONST_DATA ProcScr_CoDesignC1[] =
     PROC_CALL(CoDesignRoot_Init),
     PROC_1E(30),
     PROC_CALL(CoDesignRoot_StartEditor),
-    PROC_REPEAT(CoDesignC1_IDLE_08088041),
+    PROC_REPEAT(CoDesignRoot_Idle),
     PROC_END,
 };
 

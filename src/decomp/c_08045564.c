@@ -37,7 +37,7 @@ void CoPowerCreateUnits_SpawnUnit(struct Unk45564Proc *proc)
     if (gPlayers[gUnknown_030033EC].coActivationMode == 2)
         flag = 1;
 
-    AnimateUnitCreation(x, y, flag);
+    StartUnitSparkleEffect(x, y, flag);
     proc->unk2c++;
 }
 asm(".global sub_08045564\n.thumb_set sub_08045564, CoPowerCreateUnits_SpawnUnit\n");

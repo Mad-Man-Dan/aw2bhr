@@ -11,7 +11,7 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void WM_ConfirmExit_08011B19(void)
+void ClearVBlankHooks(void)
 {
     u8 i;
 
@@ -19,4 +19,4 @@ void WM_ConfirmExit_08011B19(void)
         gUnknown_03000000[i] = 0;
 }
 
-asm(".global sub_08011B18\n.thumb_set sub_08011B18, WM_ConfirmExit_08011B19\n");
+asm(".global sub_08011B18\n.thumb_set sub_08011B18, ClearVBlankHooks\n");

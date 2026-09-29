@@ -18,7 +18,7 @@ struct Unk8011298Proc
     /* 0x64 */ s16 unk64;
 };
 
-void SomeFade_08011299(struct Unk8011298Proc *proc)
+void WipeToBlack_Init(struct Unk8011298Proc *proc)
 {
     if (gUnknown_03002B5C == 1)
     {
@@ -35,4 +35,4 @@ void SomeFade_08011299(struct Unk8011298Proc *proc)
     StartFadeScreenLines(gUnknown_0200B274, (void *)0x04000040, 1, 0xA240, FillWipeScanlineTable);
 }
 
-asm(".global sub_08011298\n.thumb_set sub_08011298, SomeFade_08011299\n");
+asm(".global sub_08011298\n.thumb_set sub_08011298, WipeToBlack_Init\n");

@@ -59,7 +59,7 @@
  *   - the inner test is spelled with `||`, not `&&`. The ROM's unk08-only arm
  *     is the FALL-THROUGH and the ScrollCameraToKeepCellInView arm is forward past the pool;
  *     `if (cell != 0 && (unk01 & 8) == 0)` lays them out the other way round.
- *   - AnimateUnitCreation's first two arguments are bound to locals BEFORE the flag
+ *   - StartUnitSparkleEffect's first two arguments are bound to locals BEFORE the flag
  *     is computed. The ROM loads unk02/unk03 into r3/r4 (clobbering the unit
  *     pointer), then builds the flag in r5, then copies all three into r0-r2.
  *     Naming them at the call site instead loads them straight into r0/r1 and
@@ -135,7 +135,7 @@ void CoPowerUnitEffects_Loop(struct Unk08044610Proc *proc)
                 if (gPlayers[gUnknown_030033EC].coActivationMode == 2)
                     flag = 1;
 
-                AnimateUnitCreation(x, y, flag);
+                StartUnitSparkleEffect(x, y, flag);
 
                 proc->unk68++;
                 break;
