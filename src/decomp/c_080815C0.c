@@ -39,7 +39,7 @@ struct Unk80815C0
 };
 void sub_08084700(struct Unk80815C0 *);
 
-void MainMenuC2_IDLE_080815C1(struct Unk80815C0 *proc)
+void MainMenuCarouselWheel_TilesSlideInLoop(struct Unk80815C0 *proc)
 {
     int i;
     register int k asm("r5");
@@ -80,4 +80,4 @@ void MainMenuC2_IDLE_080815C1(struct Unk80815C0 *proc)
     sub_08084700(proc);
 }
 
-asm(".global sub_080815C0\n.thumb_set sub_080815C0, MainMenuC2_IDLE_080815C1\n");
+asm(".global sub_080815C0\n.thumb_set sub_080815C0, MainMenuCarouselWheel_TilesSlideInLoop\n");

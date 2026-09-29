@@ -27,7 +27,7 @@ struct Unk86D98Proc
 };
 #include "hardware.h"
 
-void WarRoomScroll_08086D99(struct Unk86D98Proc *proc)
+void MapSelectPreview_LoadMap(struct Unk86D98Proc *proc)
 {
     u8 *p;
     int i;
@@ -67,7 +67,7 @@ void WarRoomScroll_08086DD5(void)
  *
  * gUnknown_03003F68 is declared `void *`, so the two reads spell out the byte
  * view explicitly; 0x6200 is `movs #0xc4; lsls #7`. */
-void WarRoomScroll_08086DF5(void)
+void MapSelectPreview_FillTilemap(void)
 {
     sub_08037A20(gBG1TilemapBuffer, 0x6200);
     gUnknown_03005918 = ((u8 *)gUnknown_03003F68)[0];
@@ -85,7 +85,7 @@ void sub_08086E2C(void)
                (void *)(0x06004000 + gUnknown_03001FE8.bits.chr_block * 0x4000));
 }
 
-asm(".global sub_08086D98\n.thumb_set sub_08086D98, WarRoomScroll_08086D99\n"
+asm(".global sub_08086D98\n.thumb_set sub_08086D98, MapSelectPreview_LoadMap\n"
     ".global sub_08086DB4\n.thumb_set sub_08086DB4, WarRoomScroll_08086DB5\n"
     ".global sub_08086DD4\n.thumb_set sub_08086DD4, WarRoomScroll_08086DD5\n"
-    ".global sub_08086DF4\n.thumb_set sub_08086DF4, WarRoomScroll_08086DF5\n");
+    ".global sub_08086DF4\n.thumb_set sub_08086DF4, MapSelectPreview_FillTilemap\n");

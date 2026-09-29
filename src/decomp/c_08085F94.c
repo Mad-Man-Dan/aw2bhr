@@ -61,7 +61,7 @@ struct Unk8085F94Proc
     /* 0x5c */ int unk5c;
 };
 
-void PutMapPropertiesPreview_08085F95(struct Unk8085F94Proc *proc)
+void MapSelectList_Init(struct Unk8085F94Proc *proc)
 {
     struct Unk081D940C **pp;
     int kind;
@@ -99,17 +99,17 @@ void PutMapPropertiesPreview_08085F95(struct Unk8085F94Proc *proc)
     }
 }
 
-asm(".global sub_08085F94\n.thumb_set sub_08085F94, PutMapPropertiesPreview_08085F95\n");
+asm(".global sub_08085F94\n.thumb_set sub_08085F94, MapSelectList_Init\n");
 
-extern void PutMapPropertiesPreview_IDLE_08086059(void);
-extern void PutMapPropertiesPreview_IDLE_0808603D(void);
+extern void MapSelectList_DrawLoop(void);
+extern void MapSelectList_InputLoop(void);
 
 struct ProcCmd CONST_DATA ProcScr_PutMapPropertiesPreview[] =
 {
-    PROC_CALL(PutMapPropertiesPreview_08085F95),
-    PROC_REPEAT(PutMapPropertiesPreview_IDLE_08086059),
-    PROC_REPEAT(PutMapPropertiesPreview_IDLE_0808603D),
-    PROC_REPEAT(PutMapPropertiesPreview_IDLE_08086059),
+    PROC_CALL(MapSelectList_Init),
+    PROC_REPEAT(MapSelectList_DrawLoop),
+    PROC_REPEAT(MapSelectList_InputLoop),
+    PROC_REPEAT(MapSelectList_DrawLoop),
     PROC_END,
 };
 

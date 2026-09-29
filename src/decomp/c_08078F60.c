@@ -20,7 +20,7 @@
  *
  * This function was wave 23's test of the wave-21 "live CSE-able zero" rule:
  * `gUnknown_03002020 = 0;` is the statement immediately before the first raw
- * insert, which is the FadeFromBlack_OnInit shape the rule predicts must diverge. It
+ * insert, which is the FadeFromBlack_OnInitUnused shape the rule predicts must diverge. It
  * does not. BOTH spellings -- `.raw` and `*(u16 *)&gUnknown_030030E0` -- match
  * byte-for-byte. See the wave-23 section of docs/agbcc-codegen.md. */
 void sub_08078F60(void)

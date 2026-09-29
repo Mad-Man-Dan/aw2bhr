@@ -30,7 +30,7 @@ void StartCoDesign(void)
 asm(".global sub_0803B9D4\n.thumb_set sub_0803B9D4, StartCoDesign\n");
 
 extern void BattleMaps_0803B83D(void);
-extern void SoundRoom_0806F711(void);
+extern void StartSoundRoomBlocking(void);
 
 struct ProcCmd CONST_DATA ProcScr_CoDesign[] =
 {
@@ -41,7 +41,7 @@ struct ProcCmd CONST_DATA ProcScr_CoDesign[] =
 
 struct ProcCmd CONST_DATA ProcScr_SoundRoom[] =
 {
-    PROC_CALL(SoundRoom_0806F711),
+    PROC_CALL(StartSoundRoomBlocking),
     PROC_YIELD,
     PROC_CALL(BattleMaps_0803B83D),
     PROC_END,

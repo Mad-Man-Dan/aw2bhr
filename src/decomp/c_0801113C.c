@@ -13,7 +13,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* sub_080110A4's fade-DOWN twin, and the 0x08011 copy of FadeFromCommon_OnLoop: clamp
+/* sub_080110A4's fade-DOWN twin, and the 0x08011 copy of FadeFromCommon_OnLoopUnused: clamp
  * at 0 and publish `>> 8`. The floor test is the bare sign test
  * `lsls #0x10; cmp #0; bgt` -- no `asrs`, because only the sign bit matters. */
 struct Unk801113C
@@ -43,7 +43,7 @@ struct Unk801117C
     /* 0x38 */ void (*unk38)(void);
 };
 
-void DesignRoomFadeIn_IDLE_0801113D(struct Unk801113C *proc)
+void FadeFromCommon_OnLoop(struct Unk801113C *proc)
 {
     if (gUnknown_03001FFC == 0)
     {
@@ -70,5 +70,5 @@ void FadeScreenLines_IDLE_0801117D(struct Unk801117C *dma)
     dma->unk38();
 }
 
-asm(".global sub_0801113C\n.thumb_set sub_0801113C, DesignRoomFadeIn_IDLE_0801113D\n"
+asm(".global sub_0801113C\n.thumb_set sub_0801113C, FadeFromCommon_OnLoop\n"
     ".global sub_0801117C\n.thumb_set sub_0801117C, FadeScreenLines_IDLE_0801117D\n");

@@ -15,9 +15,9 @@
  * constant into a scalar global, no frame. gUnknown_03005940 is already
  * declared `int`. */
 
-void StartCoInfoScreen_080849BD(void)
+void CoInfoScreen_ResetPage(void)
 {
     gUnknown_03005940 = 0;
 }
 
-asm(".global sub_080849BC\n.thumb_set sub_080849BC, StartCoInfoScreen_080849BD\n");
+asm(".global sub_080849BC\n.thumb_set sub_080849BC, CoInfoScreen_ResetPage\n");

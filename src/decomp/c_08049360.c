@@ -14,7 +14,7 @@
 #include "proc.h"
 #include "hardware.h"
 
-/* BattleMaps_IDLE_08049361 @ 0x08049360, 1480 bytes, THUMB.
+/* ShopScreen_Loop @ 0x08049360, 1480 bytes, THUMB.
  *
  * The unit-list proc's per-frame state machine: a twelve-case switch on
  * gUnknown_084C30F8->unk834, ending in a common "redraw if the list is not
@@ -27,7 +27,7 @@
  * 0x00590005 and the function hands the ADDRESS to sub_0808B6E8 as a copy
  * source, so it is a data template and must be named -- see W56-G.
  */
-void BattleMaps_IDLE_08049361(ProcPtr proc)
+void ShopScreen_Loop(ProcPtr proc)
 {
     u16 steps[2];
     int flag = 0;
@@ -242,4 +242,4 @@ void BattleMaps_IDLE_08049361(ProcPtr proc)
                          + 0x39);
 }
 
-asm(".global sub_08049360\n.thumb_set sub_08049360, BattleMaps_IDLE_08049361\n");
+asm(".global sub_08049360\n.thumb_set sub_08049360, ShopScreen_Loop\n");

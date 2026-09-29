@@ -50,7 +50,7 @@ struct Unk87C94Proc
  *
  * sub_0807898C's ProcPtr parameter: see work/sub_0808A6CC/sub_0808A6CC.c. Here
  * it is invisible, because r0 already holds proc at the call. */
-void CoDesignC1_08087C95(struct Unk87C94Proc *proc)
+void CoDesignRoot_Init(struct Unk87C94Proc *proc)
 {
     int i;
     u16 zero;
@@ -151,17 +151,17 @@ void CoDesignC1_08087C95(struct Unk87C94Proc *proc)
     Proc_Start(ProcScr_PutFace, proc);
 }
 
-asm(".global sub_08087C94\n.thumb_set sub_08087C94, CoDesignC1_08087C95\n");
+asm(".global sub_08087C94\n.thumb_set sub_08087C94, CoDesignRoot_Init\n");
 
-extern void CoDesignC1_08088005(void);
+extern void CoDesignRoot_StartEditor(void);
 extern void CoDesignC1_IDLE_08088041(void);
 
 struct ProcCmd CONST_DATA ProcScr_CoDesignC1[] =
 {
     PROC_1D(30),
-    PROC_CALL(CoDesignC1_08087C95),
+    PROC_CALL(CoDesignRoot_Init),
     PROC_1E(30),
-    PROC_CALL(CoDesignC1_08088005),
+    PROC_CALL(CoDesignRoot_StartEditor),
     PROC_REPEAT(CoDesignC1_IDLE_08088041),
     PROC_END,
 };

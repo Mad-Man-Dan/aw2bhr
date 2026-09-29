@@ -35,7 +35,7 @@ struct Unk080878A8Proc
     /* 54 */ int unk54;
 };
 
-void PutEnemyCoMinimug_IDLE_080878A9(struct Unk080878A8Proc *proc)
+void EnemyCoMinimugs_Loop(struct Unk080878A8Proc *proc)
 {
     int n;
     int i;
@@ -72,4 +72,4 @@ void sub_08087938(void)
         LoadTilePoolGraphic(i + 0x6a);
 }
 
-asm(".global sub_080878A8\n.thumb_set sub_080878A8, PutEnemyCoMinimug_IDLE_080878A9\n");
+asm(".global sub_080878A8\n.thumb_set sub_080878A8, EnemyCoMinimugs_Loop\n");

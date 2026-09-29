@@ -34,7 +34,7 @@ void sub_080610D0(void)
     struct Unk802C57C pos;
     struct Unit *unit;
 
-    if (GetCoPriceMultiplier(gUnknown_030033EC, gUnknown_030046C0.unk06) * 10
+    if (GetUnitCostWithCoBonus(gUnknown_030033EC, gUnknown_030046C0.unk06) * 10
             <= gPlayers[gUnknown_030033EC].funds
         && gUnknown_03004674 <= 0x3f)
     {

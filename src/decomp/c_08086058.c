@@ -35,10 +35,10 @@
  * byte-for-byte identical. Re-verified with the new declaration in place.
  */
 
-void PutMapPropertiesPreview_IDLE_08086059(ProcPtr proc)
+void MapSelectList_DrawLoop(ProcPtr proc)
 {
     sub_0808606C(proc);
     MapSelectList_DrawFrame(proc);
 }
 
-asm(".global sub_08086058\n.thumb_set sub_08086058, PutMapPropertiesPreview_IDLE_08086059\n");
+asm(".global sub_08086058\n.thumb_set sub_08086058, MapSelectList_DrawLoop\n");

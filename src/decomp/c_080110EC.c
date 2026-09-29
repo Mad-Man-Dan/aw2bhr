@@ -22,7 +22,7 @@ struct Unk80110ECProc
 
 /* sub_08011054's fade-down twin: same body with the flag sense inverted and
  * the two seeds 0x10 / 0x1000 instead of 0 / 0. */
-void DesignRoomFadeIn_080110ED(struct Unk80110ECProc *proc)
+void FadeFromBlack_OnInit(struct Unk80110ECProc *proc)
 {
     if (gUnknown_03002B5C == 0)
     {
@@ -38,9 +38,9 @@ void DesignRoomFadeIn_080110ED(struct Unk80110ECProc *proc)
     proc->unk66 = 0x1000;
 }
 
-asm(".global sub_080110EC\n.thumb_set sub_080110EC, DesignRoomFadeIn_080110ED\n");
+asm(".global sub_080110EC\n.thumb_set sub_080110EC, FadeFromBlack_OnInit\n");
 
-extern void DesignRoomFadeIn_IDLE_0801113D(void);
+extern void FadeFromCommon_OnLoop(void);
 extern void FadeScreenLines_CB_080111AD(void);
 extern void FadeScreenLines_IDLE_0801117D(void);
 extern void SomeFade_08011299(void);
@@ -51,9 +51,9 @@ extern void FadeLoadMap_IDLE_080114A1(void);
 
 struct ProcCmd CONST_DATA ProcScr_DesignRoomFadeIn[] =
 {
-    PROC_CALL(DesignRoomFadeIn_080110ED),
+    PROC_CALL(FadeFromBlack_OnInit),
     PROC_YIELD,
-    PROC_REPEAT(DesignRoomFadeIn_IDLE_0801113D),
+    PROC_REPEAT(FadeFromCommon_OnLoop),
     PROC_END,
 };
 

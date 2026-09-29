@@ -26,7 +26,7 @@
  *    declaration order, and the ROM's are 0x18 (n) then 0x1c (i). Same lever
  *    orders best/score/bestN into 0xc/0x10/0x14.
  *  - the score term is `unk04_0 * (call / 10)`, field FIRST. gcc 2.x's
- *    preexpand_calls hoists the GetCoPriceMultiplier call out ahead of the whole
+ *    preexpand_calls hoists the GetUnitCostWithCoBonus call out ahead of the whole
  *    expression, so the field load lands between it and __divsi3 exactly as the
  *    ROM has it; writing `call / 10 * unk04_0` puts the load after the divide.
  *
@@ -82,9 +82,9 @@ u8 sub_0805C2DC(u16 a1, u8 a2)
                     if (e->hp <= 10)
                         continue;
                     if (AreArmiesOnSameTeam(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
-                        score -= e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10);
+                        score -= e->hp * (GetUnitCostWithCoBonus(gUnknown_030033EC, e->type) / 10);
                     else
-                        score += e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10);
+                        score += e->hp * (GetUnitCostWithCoBonus(gUnknown_030033EC, e->type) / 10);
                 }
             }
 
@@ -220,9 +220,9 @@ u8 sub_0805C720(u16 a1, u8 a2)
                     if (gUnknown_085D5ABC[e->type].minRange > 1)
                         mul = 2;
                     if (AreArmiesOnSameTeam(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
-                        score -= e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10) * mul;
+                        score -= e->hp * (GetUnitCostWithCoBonus(gUnknown_030033EC, e->type) / 10) * mul;
                     else
-                        score += e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10) * mul;
+                        score += e->hp * (GetUnitCostWithCoBonus(gUnknown_030033EC, e->type) / 10) * mul;
                 }
             }
 

@@ -18,7 +18,7 @@ struct Unk8084544
     u16 unk48;
 };
 
-void MainMenuC4_IDLE_08084545(struct Unk8084544 *proc)
+void MainMenuCarouselBg_Loop(struct Unk8084544 *proc)
 {
     if ((proc->unk48 & 1) == 0)
     {
@@ -30,11 +30,11 @@ void MainMenuC4_IDLE_08084545(struct Unk8084544 *proc)
     proc->unk48++;
 }
 
-asm(".global sub_08084544\n.thumb_set sub_08084544, MainMenuC4_IDLE_08084545\n");
+asm(".global sub_08084544\n.thumb_set sub_08084544, MainMenuCarouselBg_Loop\n");
 
 struct ProcCmd CONST_DATA ProcScr_MainMenuC4[] =
 {
-    PROC_REPEAT(MainMenuC4_IDLE_08084545),
+    PROC_REPEAT(MainMenuCarouselBg_Loop),
     PROC_END,
 };
 

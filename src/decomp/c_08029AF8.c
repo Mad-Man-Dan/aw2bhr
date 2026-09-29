@@ -124,7 +124,7 @@ int RepairUnit(struct Unit *p, u16 a2, u8 a3)
     int t;
 
     acc = 0;
-    v = GetCoPriceMultiplier(gUnknown_030033EC, p->type);
+    v = GetUnitCostWithCoBonus(gUnknown_030033EC, p->type);
 
     if (a2 != 0)
     {

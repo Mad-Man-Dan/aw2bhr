@@ -27,7 +27,7 @@ int sub_080457BC(void)
 
 int HasNoDeathRay(void)
 {
-    if (CountLivingInventionsOfType(5) == 0)
+    if (HasLivingInventionOfType(5) == 0)
         return 1;
 
     return 0;
@@ -37,7 +37,7 @@ asm(".global sub_080457D0\n.thumb_set sub_080457D0, HasNoDeathRay\n");
 
 int HasNoLaser(void)
 {
-    if (CountLivingInventionsOfType(1) == 0)
+    if (HasLivingInventionOfType(1) == 0)
         return 1;
 
     return 0;
@@ -47,7 +47,7 @@ asm(".global sub_080457E8\n.thumb_set sub_080457E8, HasNoLaser\n");
 
 int HasNoBlackCannon(void)
 {
-    if (CountLivingInventionsOfType(3) == 0)
+    if (HasLivingInventionOfType(3) == 0)
         return 1;
 
     return 0;
@@ -57,7 +57,7 @@ asm(".global sub_08045800\n.thumb_set sub_08045800, HasNoBlackCannon\n");
 
 int HasNoMinicannon(void)
 {
-    if (CountLivingInventionsOfType(4) == 0)
+    if (HasLivingInventionOfType(4) == 0)
         return 1;
 
     return 0;

@@ -1,6 +1,6 @@
 #include "global.h"
 
-void CalcDamage(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
+void SelectBattleWeapon(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
 {
     const struct UnitType *t;
     u16 army;
@@ -63,7 +63,7 @@ void CalcDamage(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
     }
 }
 
-asm(".global sub_08024ABC\n.thumb_set sub_08024ABC, CalcDamage\n");
+asm(".global sub_08024ABC\n.thumb_set sub_08024ABC, SelectBattleWeapon\n");
 
 void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
 {
@@ -234,9 +234,9 @@ void CalcBattleDamage(s16 a1, s16 a2, struct Unk802C57C *a3)
 
     d = dx + dy;
 
-    CalcDamage(gBattleAttacker,
+    SelectBattleWeapon(gBattleAttacker,
                  gBattleDefender, d, 1);
-    CalcDamage(gBattleDefender,
+    SelectBattleWeapon(gBattleDefender,
                  gBattleAttacker, d, 0);
     sub_08024C58(gBattleAttacker, 0, 1);
     sub_08024C58(gBattleDefender, 1, 1);

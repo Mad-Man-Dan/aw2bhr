@@ -17,7 +17,7 @@
  * i.e. `f(proc->unk50)`.
  *
  * The parameter is a Proc and this is PROVED, not assumed from the address:
- * the ROM holds `PROC_ONEND(WaitForLaser_CB_0801C781)` at 0x0848B5AC -- a proc-script command whose
+ * the ROM holds `PROC_ONEND(APProc_OnEnd)` at 0x0848B5AC -- a proc-script command whose
  * callback is exactly this function, so what arrives in r0 is the running
  * proc. All six members of the family check out this way (five PROC_ONEND, one
  * PROC_CALL). PROC_HEADER is 0x29 bytes and every offset the family reaches
@@ -31,19 +31,19 @@ struct Unk0801C780Proc
     /* 50 */ void *unk50;
 };
 
-void WaitForLaser_CB_0801C781(struct Unk0801C780Proc *proc)
+void APProc_OnEnd(struct Unk0801C780Proc *proc)
 {
     AP_Delete(proc->unk50);
 }
 
-asm(".global sub_0801C780\n.thumb_set sub_0801C780, WaitForLaser_CB_0801C781\n");
+asm(".global sub_0801C780\n.thumb_set sub_0801C780, APProc_OnEnd\n");
 
-extern void WaitForLaser_IDLE_0801C755(void);
+extern void APProc_OnUpdate(void);
 
 struct ProcCmd CONST_DATA ProcScr_WaitForLaser[] =
 {
-    PROC_ONEND(WaitForLaser_CB_0801C781),
-    PROC_REPEAT(WaitForLaser_IDLE_0801C755),
+    PROC_ONEND(APProc_OnEnd),
+    PROC_REPEAT(APProc_OnUpdate),
     PROC_END,
 };
 

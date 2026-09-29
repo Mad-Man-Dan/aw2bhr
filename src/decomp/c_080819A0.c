@@ -24,7 +24,7 @@ struct Unk80819A0
 };
 void sub_08084700(struct Unk80819A0 *);
 
-void MainMenuC2_IDLE_080819A1(struct Unk80819A0 *proc)
+void MainMenuCarouselWheel_LabelSlideInLoop(struct Unk80819A0 *proc)
 {
     int i;
 
@@ -102,4 +102,4 @@ void MainMenuC2_IDLE_080819A1(struct Unk80819A0 *proc)
     sub_08084700(proc);
 }
 
-asm(".global sub_080819A0\n.thumb_set sub_080819A0, MainMenuC2_IDLE_080819A1\n");
+asm(".global sub_080819A0\n.thumb_set sub_080819A0, MainMenuCarouselWheel_LabelSlideInLoop\n");

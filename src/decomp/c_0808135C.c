@@ -32,7 +32,7 @@ struct Unk808135C
 };
 void sub_08084600(struct Unk808135C *);
 
-void MainMenuC2_0808135D(struct Unk808135C *proc)
+void MainMenuCarouselWheel_Init(struct Unk808135C *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -126,21 +126,21 @@ void MainMenuC2_0808135D(struct Unk808135C *proc)
     }
 }
 
-asm(".global sub_0808135C\n.thumb_set sub_0808135C, MainMenuC2_0808135D\n");
+asm(".global sub_0808135C\n.thumb_set sub_0808135C, MainMenuCarouselWheel_Init\n");
 
-extern void MainMenuC2_IDLE_080815C1(void);
-extern void MainMenuC2_IDLE_0808177D(void);
-extern void MainMenuC2_IDLE_080819A1(void);
-extern void MainMenuC2_IDLE_08081D31(void);
+extern void MainMenuCarouselWheel_TilesSlideInLoop(void);
+extern void MainMenuCarouselWheel_CentreTilePopLoop(void);
+extern void MainMenuCarouselWheel_LabelSlideInLoop(void);
+extern void MainMenuCarouselWheel_InputLoop(void);
 
 struct ProcCmd CONST_DATA ProcScr_MainMenuC2[] =
 {
-    PROC_CALL(MainMenuC2_0808135D),
+    PROC_CALL(MainMenuCarouselWheel_Init),
     PROC_SLEEP(7),
-    PROC_REPEAT(MainMenuC2_IDLE_080815C1),
-    PROC_REPEAT(MainMenuC2_IDLE_0808177D),
-    PROC_REPEAT(MainMenuC2_IDLE_080819A1),
-    PROC_REPEAT(MainMenuC2_IDLE_08081D31),
+    PROC_REPEAT(MainMenuCarouselWheel_TilesSlideInLoop),
+    PROC_REPEAT(MainMenuCarouselWheel_CentreTilePopLoop),
+    PROC_REPEAT(MainMenuCarouselWheel_LabelSlideInLoop),
+    PROC_REPEAT(MainMenuCarouselWheel_InputLoop),
     PROC_END,
 };
 

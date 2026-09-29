@@ -86,7 +86,7 @@ extern u8 gUnknown_030013B0[];
 /* Named battle entry points; each is a linker alias for the sub_XXXXXXXX
  * symbol its .c file .thumb_sets, so the declarations in
  * include/unknown-functions.h stay and existing callers compile unchanged. */
-void CalcDamage(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d);
+void SelectBattleWeapon(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d);
 void CalcBattleDamage(s16 a1, s16 a2, struct Unk802C57C *a3);
 
 #endif /* GUARD_BATTLE_H */

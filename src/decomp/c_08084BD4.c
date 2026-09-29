@@ -29,7 +29,7 @@ struct UnkBD4Proc
     /* 66 */ s16 unk66;
 };
 
-void CoInfo_08084BD5(struct UnkBD4Proc *proc)
+void CoInfoScreen_Init(struct UnkBD4Proc *proc)
 {
     proc->unk64 = 0;
     proc->unk66 = gUnknown_030033EC;
@@ -41,13 +41,13 @@ void CoInfo_08084BD5(struct UnkBD4Proc *proc)
     sub_08043834(proc->unk66);
 }
 
-asm(".global sub_08084BD4\n.thumb_set sub_08084BD4, CoInfo_08084BD5\n");
+asm(".global sub_08084BD4\n.thumb_set sub_08084BD4, CoInfoScreen_Init\n");
 
 extern void sub_08084C14(void);
 
 struct ProcCmd CONST_DATA ProcScr_CoInfo[] =
 {
-    PROC_CALL(CoInfo_08084BD5),
+    PROC_CALL(CoInfoScreen_Init),
     PROC_REPEAT(sub_08084C14),
     PROC_END,
 };

@@ -72,7 +72,7 @@ struct Unk0808844CChild
  * docs/agbcc-codegen.md. */
 #define PAL_AT(base, i) ((u16 *)((i) * 2 + (int)(base)))
 
-void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
+void CoDesignEditor_Loop(struct Unk0808844C *proc)
 {
     int i;
 
@@ -306,4 +306,4 @@ void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
     }
 }
 
-asm(".global sub_0808844C\n.thumb_set sub_0808844C, CoDesignC2_IDLE_0808844D\n");
+asm(".global sub_0808844C\n.thumb_set sub_0808844C, CoDesignEditor_Loop\n");

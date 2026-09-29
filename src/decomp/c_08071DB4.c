@@ -41,7 +41,7 @@ struct Unk08071DB4
     /* 0x66 */ u16 unk66;
 };
 
-void FadeFromBlack_OnInit(struct Unk08071DB4 *proc)
+void FadeFromBlack_OnInitUnused(struct Unk08071DB4 *proc)
 {
     gUnknown_030030A4.bits.win0_enable_blend = 1;
     gUnknown_030030A4.bits.win1_enable_blend = 1;
@@ -61,4 +61,4 @@ void FadeFromBlack_OnInit(struct Unk08071DB4 *proc)
     proc->unk64 = 0x10;
     proc->unk66 = 0x100;
 }
-asm(".global sub_08071DB4\n.thumb_set sub_08071DB4, FadeFromBlack_OnInit\n");
+asm(".global sub_08071DB4\n.thumb_set sub_08071DB4, FadeFromBlack_OnInitUnused\n");

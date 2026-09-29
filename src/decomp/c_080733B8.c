@@ -13,9 +13,9 @@
 
 #include "proc.h"
 
-void EndCoSelect_080733B9(void)
+void EndHeaderBanner(void)
 {
     Proc_EndEach(ProcScr_MainMenuPutSelectModeSprite);
 }
 
-asm(".global sub_080733B8\n.thumb_set sub_080733B8, EndCoSelect_080733B9\n");
+asm(".global sub_080733B8\n.thumb_set sub_080733B8, EndHeaderBanner\n");

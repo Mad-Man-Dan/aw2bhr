@@ -56,7 +56,7 @@ void *BuyUnit(int a1, int a2, int a3)
     int cost;
     void *r;
 
-    cost = GetCoPriceMultiplier(gUnknown_030033EC, a3) * 10;
+    cost = GetUnitCostWithCoBonus(gUnknown_030033EC, a3) * 10;
 
     if (gPlayers[gUnknown_030033EC].funds < cost)
         return NULL;

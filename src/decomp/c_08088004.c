@@ -14,7 +14,7 @@
 #include "proc.h"
 #include "hardware.h"
 
-void CoDesignC1_08088005(ProcPtr proc)
+void CoDesignRoot_StartEditor(ProcPtr proc)
 {
     gUnknown_03005908 = 0;
     CoDesignEditor_DrawHelpText();
@@ -24,4 +24,4 @@ void CoDesignC1_08088005(ProcPtr proc)
     Proc_Start(ProcScr_CoDesignC2, proc);
 }
 
-asm(".global sub_08088004\n.thumb_set sub_08088004, CoDesignC1_08088005\n");
+asm(".global sub_08088004\n.thumb_set sub_08088004, CoDesignRoot_StartEditor\n");

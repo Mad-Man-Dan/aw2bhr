@@ -13,13 +13,13 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* FadeToCommon_OnLoop's 0x08011 twin: the same fade-up stepper one binary point
+/* FadeToCommon_OnLoopUnused's 0x08011 twin: the same fade-up stepper one binary point
  * further left -- clamp 0x1000 instead of 0x100, publish `>> 8` instead of
  * `>> 4`.
  *
  * The comparison LOOKS different and is not. 0xFFF does not fit an imm8, so
  * agbcc cannot sign-extend and compare; it leaves the value in the `lsls #0x10`
- * domain and compares against a pooled 0x0FFF0000 instead. FadeToCommon_OnLoop's
+ * domain and compares against a pooled 0x0FFF0000 instead. FadeToCommon_OnLoopUnused's
  * 0xFF does fit, so that one gets `asrs #0x10; cmp #0xff`. Same C, two
  * comparison idioms, picked by whether the constant is an imm8. */
 struct Unk80110A4
@@ -29,7 +29,7 @@ struct Unk80110A4
     /* 0x66 */ s16 unk66;
 };
 
-void FadePalBlack_IDLE_080110A5(struct Unk80110A4 *proc)
+void FadeToCommon_OnLoop(struct Unk80110A4 *proc)
 {
     if (gUnknown_03001FFC == 0x10)
     {
@@ -45,4 +45,4 @@ void FadePalBlack_IDLE_080110A5(struct Unk80110A4 *proc)
     gUnknown_03001FFC = proc->unk66 >> 8;
 }
 
-asm(".global sub_080110A4\n.thumb_set sub_080110A4, FadePalBlack_IDLE_080110A5\n");
+asm(".global sub_080110A4\n.thumb_set sub_080110A4, FadeToCommon_OnLoop\n");

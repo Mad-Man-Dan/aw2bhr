@@ -20,11 +20,11 @@
  * Wave 44 (W44-C) retyped sub_0808606C's parameter from `ProcPtr` to
  * `struct Unk8606CProc *`; ProcPtr is `void *`, so the argument converts
  * implicitly and this stays byte-for-byte identical. Re-verified. */
-void PutMapPropertiesPreview_IDLE_0808603D(ProcPtr proc)
+void MapSelectList_InputLoop(ProcPtr proc)
 {
     sub_0808606C(proc);
     MapSelectList_HandleInput(proc);
     MapSelectList_DrawFrame(proc);
 }
 
-asm(".global sub_0808603C\n.thumb_set sub_0808603C, PutMapPropertiesPreview_IDLE_0808603D\n");
+asm(".global sub_0808603C\n.thumb_set sub_0808603C, MapSelectList_InputLoop\n");

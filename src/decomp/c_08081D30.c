@@ -91,7 +91,7 @@ void sub_080824D4(struct Unk8081D30 *);
 void sub_08084700(struct Unk8081D30 *);
 void MainMenuCarousel_ShowOverwriteWarning(void);
 
-void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
+void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
 {
     int a;
     int b;
@@ -344,4 +344,4 @@ void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
         p->unk58 = 0;
 }
 
-asm(".global sub_08081D30\n.thumb_set sub_08081D30, MainMenuC2_IDLE_08081D31\n");
+asm(".global sub_08081D30\n.thumb_set sub_08081D30, MainMenuCarouselWheel_InputLoop\n");

@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08039188.
- * DrawMarkerSprites @ 0x08039188
+ * DrawMovePathArrow @ 0x08039188
  *
  * Not a Xenesis-documented name. The old sub_08039188 symbol is kept as a
  * linker alias below so every other unit keeps resolving it unchanged.
@@ -24,7 +24,7 @@
  * parameter, which is the conflict the park recorded. The draft's only other
  * change is the camera offsets read as gMap->scrollX / scrollY.
  */
-void DrawMarkerSprites(void)
+void DrawMovePathArrow(void)
 {
     s8 i;
     int x;
@@ -49,4 +49,4 @@ void DrawMarkerSprites(void)
     }
 }
 
-asm(".global sub_08039188\n.thumb_set sub_08039188, DrawMarkerSprites\n");
+asm(".global sub_08039188\n.thumb_set sub_08039188, DrawMovePathArrow\n");

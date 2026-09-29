@@ -16,9 +16,9 @@
 /* Sits immediately above the m4a/MP2K span, but takes its parent in r0 like
  * every other member of this family -- ordinary compiler output, not
  * m4a_asm.s. */
-void SoundRoom_0806F711(ProcPtr parent)
+void StartSoundRoomBlocking(ProcPtr parent)
 {
     Proc_StartBlocking(gUnknown_08582D74, parent);
 }
 
-asm(".global sub_0806F710\n.thumb_set sub_0806F710, SoundRoom_0806F711\n");
+asm(".global sub_0806F710\n.thumb_set sub_0806F710, StartSoundRoomBlocking\n");

@@ -23,9 +23,9 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void CampaignIntro_0808A821(void)
+void CampaignIntro_StartPrologueText(void)
 {
     CampaignIntro_ShowPrologueText();
 }
 
-asm(".global sub_0808A820\n.thumb_set sub_0808A820, CampaignIntro_0808A821\n");
+asm(".global sub_0808A820\n.thumb_set sub_0808A820, CampaignIntro_StartPrologueText\n");

@@ -82,7 +82,7 @@ void DrawDeploymentList(int a1)
 
         sub_080149C0(4, row, gBG0TilemapBuffer, buf, 0x8000, flag);
         sub_08014B0C(0xe, row, gBG0TilemapBuffer,
-                     GetCoPriceMultiplier(gUnknown_030033EC,
+                     GetUnitCostWithCoBonus(gUnknown_030033EC,
                                   gUnknown_02023830[((s16)base + i) * 4]) * 10,
                      0x8000, flag);
         sub_0802239C(gBG0TilemapBuffer, 2, row,

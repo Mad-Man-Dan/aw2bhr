@@ -52,7 +52,7 @@ struct Unk80880BC
  * this is a macro whose argument is evaluated twice. */
 #define SCALE(t, d) (Interpolate(0, 0x10, 0x100, (t), (d)) ? Interpolate(0, 0x10, 0x100, (t), (d)) : 2)
 
-void CoDesignC2_08088045(struct Unk08088044 *proc)
+void CoDesignEditor_Init(struct Unk08088044 *proc)
 {
     int i;
 
@@ -78,7 +78,7 @@ void CoDesignC2_08088045(struct Unk08088044 *proc)
     StartHeaderBanner(gUnknown_085802C0, gUnknown_0200FC50, 0x27c, 9, 0, 0, (int)proc);
 }
 
-void CoDesignC2_IDLE_080880BD(struct Unk80880BC * proc)
+void CoDesignEditor_IntroLoop(struct Unk80880BC * proc)
 {
     if (proc->unk4c <= 0x18)
     {
@@ -147,17 +147,17 @@ void CoDesignC2_IDLE_080880BD(struct Unk80880BC * proc)
     proc->unk3c--;
 }
 
-asm(".global sub_08088044\n.thumb_set sub_08088044, CoDesignC2_08088045\n"
-    ".global sub_080880BC\n.thumb_set sub_080880BC, CoDesignC2_IDLE_080880BD\n");
+asm(".global sub_08088044\n.thumb_set sub_08088044, CoDesignEditor_Init\n"
+    ".global sub_080880BC\n.thumb_set sub_080880BC, CoDesignEditor_IntroLoop\n");
 
-extern void CoDesignC2_IDLE_0808844D(void);
+extern void CoDesignEditor_Loop(void);
 
 struct ProcCmd CONST_DATA ProcScr_CoDesignC2[] =
 {
-    PROC_CALL(CoDesignC2_08088045),
+    PROC_CALL(CoDesignEditor_Init),
     PROC_SLEEP(64),
-    PROC_REPEAT(CoDesignC2_IDLE_080880BD),
-    PROC_REPEAT(CoDesignC2_IDLE_0808844D),
+    PROC_REPEAT(CoDesignEditor_IntroLoop),
+    PROC_REPEAT(CoDesignEditor_Loop),
     PROC_END,
 };
 

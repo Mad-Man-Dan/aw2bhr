@@ -17,7 +17,7 @@ struct Unk08087A10
     /* 0x54 */ int unk54;
 };
 
-void PreviewMapRecords_IDLE_08087A11(struct Unk08087A10 *proc)
+void PreviewMapRecords_Loop(struct Unk08087A10 *proc)
 {
     int v;
     int i;
@@ -49,4 +49,4 @@ void PreviewMapRecords_IDLE_08087A11(struct Unk08087A10 *proc)
     }
 }
 
-asm(".global sub_08087A10\n.thumb_set sub_08087A10, PreviewMapRecords_IDLE_08087A11\n");
+asm(".global sub_08087A10\n.thumb_set sub_08087A10, PreviewMapRecords_Loop\n");

@@ -27,10 +27,10 @@ void FadeSound_IDLE_0803B609(struct Unk3B608Proc *proc)
         Proc_Break(proc);
 }
 
-bool8 CampaignIntro_WHILE_0803B629(void)
+bool8 IsMusicFadeActive(void)
 {
     return Proc_Find(ProcScr_FadeSound) != 0;
 }
 
-asm(".global sub_0803B628\n.thumb_set sub_0803B628, CampaignIntro_WHILE_0803B629\n"
+asm(".global sub_0803B628\n.thumb_set sub_0803B628, IsMusicFadeActive\n"
     ".global sub_0803B608\n.thumb_set sub_0803B608, FadeSound_IDLE_0803B609\n");

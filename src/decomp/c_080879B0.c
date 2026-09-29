@@ -17,13 +17,13 @@ struct Unk080879D8
     /* 0x54 */ int unk54;
 };
 
-void PreviewMapRecords_CB_080879B1(void)
+void PreviewMapRecords_OnEnd(void)
 {
     sub_08012BC8(gBG2TilemapBuffer, 0xD, 4, 0x12, 0xC, 0);
     sub_08013B0C();
 }
 
-void PreviewMapRecords_080879D9(struct Unk080879D8 *proc)
+void PreviewMapRecords_Init(struct Unk080879D8 *proc)
 {
     DrawWindowBackground(0xD, 4, 0x12, 0xC, gBG2TilemapBuffer, 0);
     sub_08013B0C();
@@ -31,5 +31,5 @@ void PreviewMapRecords_080879D9(struct Unk080879D8 *proc)
     LoadMapRecordMinimugs(proc->unk54);
 }
 
-asm(".global sub_080879B0\n.thumb_set sub_080879B0, PreviewMapRecords_CB_080879B1\n"
-    ".global sub_080879D8\n.thumb_set sub_080879D8, PreviewMapRecords_080879D9\n");
+asm(".global sub_080879B0\n.thumb_set sub_080879B0, PreviewMapRecords_OnEnd\n"
+    ".global sub_080879D8\n.thumb_set sub_080879D8, PreviewMapRecords_Init\n");

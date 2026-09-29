@@ -74,7 +74,7 @@ struct Unk807519C
     /* 0x3c */ void *unk3c[10];
 };
 
-void WM_MoveScope_IDLE_0807519D(struct Unk807519C *proc)
+void DifficultyStars_SpawnLoop(struct Unk807519C *proc)
 {
     PutSprite(1, proc->unk34, proc->unk36, gUnknown_081CC4F0,
               gUnknown_0861433C[proc->unk38]);
@@ -128,4 +128,4 @@ void WM_MoveScope_IDLE_0807519D(struct Unk807519C *proc)
     proc->unk3a++;
 }
 
-asm(".global sub_0807519C\n.thumb_set sub_0807519C, WM_MoveScope_IDLE_0807519D\n");
+asm(".global sub_0807519C\n.thumb_set sub_0807519C, DifficultyStars_SpawnLoop\n");

@@ -23,7 +23,7 @@ struct Unk8011054Proc
 /* `gUnknown_030030E0.bits.effect = 3` is one bare `orrs #0xc0` and not the
  * read-mask-or a bitfield store usually costs: setting a field to ALL ONES
  * makes `(x & ~m) | m` fold to `x | m`. Same idiom as c_080039E4.c. */
-void FadePalBlack_08011055(struct Unk8011054Proc *proc)
+void FadeToBlack_OnInit(struct Unk8011054Proc *proc)
 {
     if (gUnknown_03002B5C == 1)
     {
@@ -39,4 +39,4 @@ void FadePalBlack_08011055(struct Unk8011054Proc *proc)
     proc->unk66 = 0;
 }
 
-asm(".global sub_08011054\n.thumb_set sub_08011054, FadePalBlack_08011055\n");
+asm(".global sub_08011054\n.thumb_set sub_08011054, FadeToBlack_OnInit\n");

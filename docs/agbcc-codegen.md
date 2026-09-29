@@ -54659,7 +54659,7 @@ time. Add statements to stop a hoist, share tails to allow one.
 
 ## Re-measure a park whose blocker was a callee's prototype (sub_08039188)
 
-sub_08039188 (now `DrawMarkerSprites`) was parked from wave 57 to wave 88 at
+sub_08039188 (now `DrawMovePathArrow`) was parked from wave 57 to wave 88 at
 +4. The recorded blockers were a cross-TU conflict over sub_08039140's
 narrow first parameter and an `ldrsb` fold. Since then sub_08039140 was
 promoted as an old-style (K&R) definition, and the header declares it

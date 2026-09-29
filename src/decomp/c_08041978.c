@@ -31,8 +31,8 @@
  * `gBattleAttacker->unit`. Both are the same runtime
  * value and both compile, but only gUnknown_030040D8 puts the five force-addr
  * words in the ROM's slots -- and it is what makes the two halves symmetric:
- * `GetCoPriceMultiplier(army1, gUnknown_030040D8->unk00)` against
- * `GetCoPriceMultiplier(army2, unit->type)`. The cast is the merge
+ * `GetUnitCostWithCoBonus(army1, gUnknown_030040D8->unk00)` against
+ * `GetUnitCostWithCoBonus(army2, unit->type)`. The cast is the merge
  * include/unknown-globals.h already records for gUnknown_08091364, which is
  * typed `struct Unit **` for exactly this reason. Spelling the head
  * through gUnknown_030013D0 instead cost 8 bytes and two pool words.
@@ -183,7 +183,7 @@ void StartUnitAttack(u8 a1, int a2)
         else
             t = 0;
 
-        c = GetCoPriceMultiplier(army1, gUnknown_030040D8->unk00);
+        c = GetUnitCostWithCoBonus(army1, gUnknown_030040D8->unk00);
 
         if (gBattleAttacker->remainingHp != 0)
         {
@@ -202,7 +202,7 @@ void StartUnitAttack(u8 a1, int a2)
         else
             t = 0;
 
-        c = GetCoPriceMultiplier(army2, unit->type);
+        c = GetUnitCostWithCoBonus(army2, unit->type);
 
         if (gBattleDefender->remainingHp != 0)
         {

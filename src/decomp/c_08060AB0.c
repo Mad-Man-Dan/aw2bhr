@@ -205,7 +205,7 @@ again:
             break;
         }
 
-        cost = GetCoPriceMultiplier(gUnknown_030033EC, sel) * 10;
+        cost = GetUnitCostWithCoBonus(gUnknown_030033EC, sel) * 10;
 
         if (CountBuildablePropertiesOfKind(k) == 0)
             goto again;

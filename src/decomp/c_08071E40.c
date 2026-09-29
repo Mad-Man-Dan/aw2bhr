@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* FadeToCommon_OnLoop's fade-DOWN twin: subtract instead of accumulate, clamp at 0
+/* FadeToCommon_OnLoopUnused's fade-DOWN twin: subtract instead of accumulate, clamp at 0
  * instead of 0x100, and end when BLDY has reached 0 instead of 0x10.
  *
  * The floor test is `lsls #0x10; cmp #0; bgt`, which is the sign test on the
@@ -21,7 +21,7 @@ struct Unk8071E40
     /* 0x66 */ s16 unk66;
 };
 
-void FadeFromCommon_OnLoop(struct Unk8071E40 *proc)
+void FadeFromCommon_OnLoopUnused(struct Unk8071E40 *proc)
 {
     if (gUnknown_03001FFC == 0)
     {
@@ -36,9 +36,9 @@ void FadeFromCommon_OnLoop(struct Unk8071E40 *proc)
 
     gUnknown_03001FFC = proc->unk66 >> 4;
 }
-asm(".global sub_08071E40\n.thumb_set sub_08071E40, FadeFromCommon_OnLoop\n");
+asm(".global sub_08071E40\n.thumb_set sub_08071E40, FadeFromCommon_OnLoopUnused\n");
 
-/* Opens the fade through FadeToBlack_OnInit (src/decomp/c_08071CF4.c), forwarding
+/* Opens the fade through FadeToBlack_OnInitUnused (src/decomp/c_08071CF4.c), forwarding
  * its own proc untouched, then overrides the blend effect to 2 and zeroes the
  * three coefficient shadows.
  *
@@ -48,7 +48,7 @@ asm(".global sub_08071E40\n.thumb_set sub_08071E40, FadeFromCommon_OnLoop\n");
  * this field already records. */
 void FadeToWhite_OnInit(struct Unk08071CF4 *proc)
 {
-    FadeToBlack_OnInit(proc);
+    FadeToBlack_OnInitUnused(proc);
 
     gUnknown_030030E0.bits.effect = 2;
 
@@ -58,13 +58,13 @@ void FadeToWhite_OnInit(struct Unk08071CF4 *proc)
 }
 asm(".global sub_08071E80\n.thumb_set sub_08071E80, FadeToWhite_OnInit\n");
 
-/* FadeToWhite_OnInit's twin over the other opener: FadeFromBlack_OnInit instead of
- * FadeToBlack_OnInit, and BLDY seeded at 0x10 instead of 0 -- which is the fade-out
- * end state, matching FadeFromBlack_OnInit's own 0x10/0x100 seeding. Everything else
+/* FadeToWhite_OnInit's twin over the other opener: FadeFromBlack_OnInitUnused instead of
+ * FadeToBlack_OnInitUnused, and BLDY seeded at 0x10 instead of 0 -- which is the fade-out
+ * end state, matching FadeFromBlack_OnInitUnused's own 0x10/0x100 seeding. Everything else
  * is identical. */
 void FadeFromWhite_OnInit(struct Unk08071DB4 *proc)
 {
-    FadeFromBlack_OnInit(proc);
+    FadeFromBlack_OnInitUnused(proc);
 
     gUnknown_030030E0.bits.effect = 2;
 

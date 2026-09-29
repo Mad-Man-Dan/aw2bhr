@@ -2106,7 +2106,7 @@ void sub_080745C0(void);
  * sub_0801F024 with a `(void *)` cast. It ignores what sub_0801F024 passes, so
  * the cast is correct. */
 void sub_08039188(void);
-void DrawMarkerSprites(void); /* sub_08039188; see src/decomp/c_08039188.c. */
+void DrawMovePathArrow(void); /* sub_08039188; see src/decomp/c_08039188.c. */
 
 /* Walks the byte-stream script at its first argument until a 1, calling
  * sub_0801B7C0(cursor, arg) on each opcode and advancing by

@@ -11,7 +11,7 @@
  * below so every other unit keeps resolving them unchanged.
  */
 
-void MainMenu_08085AF5(void)
+void ResetMapSelectState(void)
 {
     u8 *base;
     u8 *p;
@@ -42,4 +42,4 @@ void MainMenu_08085AF5(void)
     gUnknown_03005930 = z;
 }
 
-asm(".global sub_08085AF4\n.thumb_set sub_08085AF4, MainMenu_08085AF5\n");
+asm(".global sub_08085AF4\n.thumb_set sub_08085AF4, ResetMapSelectState\n");

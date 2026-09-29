@@ -27,7 +27,7 @@ struct Unk363D0Proc
     /* 0x48 */ void *unk48;
 };
 
-void SelectUnit_CB_080363D1(ProcPtr procArg)
+void MoveSlide_OnEnd(ProcPtr procArg)
 {
     struct Unk363D0Proc *proc = procArg;
 
@@ -36,14 +36,14 @@ void SelectUnit_CB_080363D1(ProcPtr procArg)
     gUnknown_03003124[proc->unk3a] = 0;
 }
 
-asm(".global sub_080363D0\n.thumb_set sub_080363D0, SelectUnit_CB_080363D1\n");
+asm(".global sub_080363D0\n.thumb_set sub_080363D0, MoveSlide_OnEnd\n");
 
-extern void SelectUnit_IDLE_08036385(void);
+extern void MoveSlide_Loop(void);
 
 struct ProcCmd CONST_DATA ProcScr_SelectUnit[] =
 {
-    PROC_ONEND(SelectUnit_CB_080363D1),
-    PROC_REPEAT(SelectUnit_IDLE_08036385),
+    PROC_ONEND(MoveSlide_OnEnd),
+    PROC_REPEAT(MoveSlide_Loop),
     PROC_BLOCK,
 };
 

@@ -28,7 +28,7 @@ Source: [`src/unit.c`](../../src/unit.c). These comments were moved verbatim fro
 
 ````c
 /*
- * GetCoPriceMultiplier, GetUnitMovementWithCoBonus, GetUnitFiringRangeWithCoBonus and GetUnitVisionWithCoBonus are named per
+ * GetUnitCostWithCoBonus, GetUnitMovementWithCoBonus, GetUnitFiringRangeWithCoBonus and GetUnitVisionWithCoBonus are named per
  * Xenesis's AW2 Subroutine List: "Gathers Price multipliers of CO",
  * "Collects Mov Range + CO Boosts", "Collects Max Firing Range + CO Boosts"
  * and "Gathers Vision Total of CO" respectively. GetUnitAttackWithCoBonus/GetUnitDefenceWithCoBonus
@@ -364,7 +364,7 @@ Source: [`src/unit.c`](../../src/unit.c). These comments were moved verbatim fro
  *
  * THREE parameters, not the two this was first promoted with. The third is
  * unused in this member's body, so the body cannot tell you -- the evidence is
- * the call site: GetCoPriceMultiplier (wave 26, byte-exact) materialises `adds r2, r5,
+ * the call site: GetUnitCostWithCoBonus (wave 26, byte-exact) materialises `adds r2, r5,
  * #0` immediately before the bl, which only an argument produces, and the
  * sibling GetCoRangeBonus takes and uses the same three. An unused trailing
  * parameter is byte-neutral here; re-verified with trymatch after the change. */
@@ -460,7 +460,7 @@ Source: [`src/unit.c`](../../src/unit.c). These comments were moved verbatim fro
 /* All four return `int`, not the u8/u16 they were first promoted with. The
  * bodies are bare ldrb/ldrh member loads and are byte-identical either way, so
  * the width was a body-side guess with no oracle. Wave 26 produced the first
- * promoted callers and they settle it: GetCoPriceMultiplier does `bl GetUnitBaseCost;
+ * promoted callers and they settle it: GetUnitCostWithCoBonus does `bl GetUnitBaseCost;
  * adds r6, r0, #0` and multiplies with r6 later -- no re-narrowing after the
  * bl with the value used, which a u16 return cannot produce (agbcc re-narrows
  * a narrow-returning callee's result at every call site). GetUnitMovementWithCoBonus,

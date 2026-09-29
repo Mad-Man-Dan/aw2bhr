@@ -48,7 +48,7 @@
  * same order, wrong registers) and is the first thing to try on this function.
  */
 
-void StartCoInfoScreen_080849C9(ProcPtr parent)
+void CoInfoScreen_LoadGraphics(ProcPtr parent)
 {
     int i;
     register ProcPtr savedParent asm("r9") = parent;
@@ -108,4 +108,4 @@ void StartCoInfoScreen_080849C9(ProcPtr parent)
     sub_08011B34((void *)sub_08043590);
 }
 
-asm(".global sub_080849C8\n.thumb_set sub_080849C8, StartCoInfoScreen_080849C9\n");
+asm(".global sub_080849C8\n.thumb_set sub_080849C8, CoInfoScreen_LoadGraphics\n");

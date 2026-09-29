@@ -46,7 +46,7 @@
  * is a third, also-wrong shape: it truncates at the INCREMENT instead.
  */
 
-void MainMenuC1_08081061(ProcPtr proc)
+void MainMenuCarousel_Init(ProcPtr proc)
 {
     int i;
 
@@ -141,7 +141,7 @@ void MainMenuC1_08081061(ProcPtr proc)
     }
 }
 
-asm(".global sub_08081060\n.thumb_set sub_08081060, MainMenuC1_08081061\n");
+asm(".global sub_08081060\n.thumb_set sub_08081060, MainMenuCarousel_Init\n");
 
 extern void MainMenuC1_08081335(void);
 extern void MainMenuC1_IDLE_08081359(void);
@@ -149,7 +149,7 @@ extern void MainMenuC1_IDLE_08081359(void);
 struct ProcCmd CONST_DATA ProcScr_MainMenuC1[] =
 {
     PROC_1D(30),
-    PROC_CALL(MainMenuC1_08081061),
+    PROC_CALL(MainMenuCarousel_Init),
     PROC_1E(30),
     PROC_CALL(MainMenuC1_08081335),
     PROC_SLEEP(6),

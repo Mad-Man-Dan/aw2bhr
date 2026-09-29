@@ -47,7 +47,7 @@ void MoveSlideState_Walk(struct Unk080362E0 *p)
 }
 asm(".global sub_080362E0\n.thumb_set sub_080362E0, MoveSlideState_Walk\n");
 
-void SelectUnit_IDLE_08036385(ProcPtr procArg)
+void MoveSlide_Loop(ProcPtr procArg)
 {
     struct Unk36384Proc *proc = procArg;
 
@@ -67,4 +67,4 @@ void SelectUnit_IDLE_08036385(ProcPtr procArg)
     sub_080359A4(proc);
 }
 
-asm(".global sub_08036384\n.thumb_set sub_08036384, SelectUnit_IDLE_08036385\n");
+asm(".global sub_08036384\n.thumb_set sub_08036384, MoveSlide_Loop\n");

@@ -25,12 +25,12 @@ void LoadMapData(u16 a1)
 
 asm(".global sub_080247A4\n.thumb_set sub_080247A4, LoadMapData\n");
 
-void WarRoomScroll_CB_0802481D(void)
+void FreeMapLoadBuffer(void)
 {
     sub_08014ED4(gUnknown_03003F68);
 }
 
-asm(".global sub_0802481C\n.thumb_set sub_0802481C, WarRoomScroll_CB_0802481D\n");
+asm(".global sub_0802481C\n.thumb_set sub_0802481C, FreeMapLoadBuffer\n");
 
 void sub_08024830(void)
 {

@@ -25,7 +25,7 @@ void BuildDeploymentList(u8 mask)
             if (id != 8 || IsNeotanksUnlocked(gUnknown_030033EC))
             {
                 if (gPlayers[gUnknown_030033EC].funds
-                        < GetCoPriceMultiplier(gUnknown_030033EC, id) * 10)
+                        < GetUnitCostWithCoBonus(gUnknown_030033EC, id) * 10)
                 {
                     u8 *p = &gUnknown_02023830[n * 4];
 

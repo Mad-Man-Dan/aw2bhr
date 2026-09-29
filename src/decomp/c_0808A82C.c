@@ -18,7 +18,7 @@
  * holds the proc at the `bl` only because nothing overwrote it, which is a
  * coincidence of the `adds r4, r0, #0` copy and not an argument. The bare
  * `cmp r0, #0` with no shift pair is what keeps the return `int`. */
-void CampaignIntro_IDLE_0808A82D(ProcPtr proc)
+void CampaignIntro_WaitForTextBoxes(ProcPtr proc)
 {
     if (sub_08014824() == 0)
         Proc_Break(proc);
@@ -27,7 +27,7 @@ void CampaignIntro_IDLE_0808A82D(ProcPtr proc)
 /* `ldrh r1, [r0, #4]` off gpKeySt is the `held` member, and bit 0 is A.
  * Six statements in the arm, all sequential: nothing between the `bl`s reads
  * r0, so none of them is nested inside another. */
-void CampaignIntro_IDLE_0808A845(ProcPtr proc)
+void CampaignIntro_WaitForButtonA(ProcPtr proc)
 {
     if (gpKeySt->pressed & 1)
     {
@@ -44,7 +44,7 @@ void CampaignIntro_IDLE_0808A845(ProcPtr proc)
  * into the gpKeySt test rather than branching past it, and both arms share one
  * pool word for the script. `lsls r0, r0, #0x18` after sub_08019260 is agbcc
  * re-narrowing its declared `bool8` return. Bit 3 of `held` is Start. */
-void CampaignIntro_IDLE_0808A885(ProcPtr proc)
+void CampaignIntro_WaitForSkip(ProcPtr proc)
 {
     if (!sub_08019260())
         Proc_Start(gUnknown_08617094, proc);
@@ -53,6 +53,6 @@ void CampaignIntro_IDLE_0808A885(ProcPtr proc)
         Proc_Start(gUnknown_08617094, proc);
 }
 
-asm(".global sub_0808A82C\n.thumb_set sub_0808A82C, CampaignIntro_IDLE_0808A82D\n"
-    ".global sub_0808A844\n.thumb_set sub_0808A844, CampaignIntro_IDLE_0808A845\n"
-    ".global sub_0808A884\n.thumb_set sub_0808A884, CampaignIntro_IDLE_0808A885\n");
+asm(".global sub_0808A82C\n.thumb_set sub_0808A82C, CampaignIntro_WaitForTextBoxes\n"
+    ".global sub_0808A844\n.thumb_set sub_0808A844, CampaignIntro_WaitForButtonA\n"
+    ".global sub_0808A884\n.thumb_set sub_0808A884, CampaignIntro_WaitForSkip\n");

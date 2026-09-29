@@ -7,7 +7,7 @@
  * sub_0802C9A4 @ 0x0802C9A4, sub_0802C9E8 @ 0x0802C9E8
  */
 
-/* An `if (...) return TRUE;` chain in CanShowSubMenuItem's layout: the merged
+/* An `if (...) return TRUE;` chain in UnitMenu_DiveUsability's layout: the merged
  * `movs r0, #1` sits after the pool.
  *
  * gPlayers is a POINTER to the 0x3c-byte records, so the index

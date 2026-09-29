@@ -46,7 +46,7 @@ struct Unk808177C
 };
 void sub_08084700(struct Unk808177C *);
 
-void MainMenuC2_IDLE_0808177D(struct Unk808177C *p)
+void MainMenuCarouselWheel_CentreTilePopLoop(struct Unk808177C *p)
 {
     int i;
 
@@ -95,4 +95,4 @@ void MainMenuC2_IDLE_0808177D(struct Unk808177C *p)
     sub_08084700(p);
 }
 
-asm(".global sub_0808177C\n.thumb_set sub_0808177C, MainMenuC2_IDLE_0808177D\n");
+asm(".global sub_0808177C\n.thumb_set sub_0808177C, MainMenuCarouselWheel_CentreTilePopLoop\n");

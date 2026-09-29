@@ -21,7 +21,7 @@ struct Unk808A3A0
     u16 unk48;
 };
 
-void PutFace_IDLE_0808A3A1(struct Unk808A3A0 *proc)
+void CoDesignBg_Loop(struct Unk808A3A0 *proc)
 {
     if ((proc->unk48 & 1) == 0)
     {
@@ -33,11 +33,11 @@ void PutFace_IDLE_0808A3A1(struct Unk808A3A0 *proc)
     proc->unk48++;
 }
 
-asm(".global sub_0808A3A0\n.thumb_set sub_0808A3A0, PutFace_IDLE_0808A3A1\n");
+asm(".global sub_0808A3A0\n.thumb_set sub_0808A3A0, CoDesignBg_Loop\n");
 
 struct ProcCmd CONST_DATA ProcScr_PutFace[] =
 {
-    PROC_REPEAT(PutFace_IDLE_0808A3A1),
+    PROC_REPEAT(CoDesignBg_Loop),
     PROC_END,
 };
 

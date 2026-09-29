@@ -81,7 +81,7 @@ int sub_08042C68(int a, int b)
     return 0;
 }
 
-int GetCoPriceMultiplier(int a, int b)
+int GetUnitCostWithCoBonus(int a, int b)
 {
     return Div(GetUnitBaseCost(b)
         * (GetCoCostBonus(gPlayers[a].co, gPlayers[a].coMode, b)
@@ -128,7 +128,7 @@ int GetUnitVisionWithCoBonus(int a, int b)
         return 1;
 }
 
-asm(".global sub_08042C9C\n.thumb_set sub_08042C9C, GetCoPriceMultiplier\n"
+asm(".global sub_08042C9C\n.thumb_set sub_08042C9C, GetUnitCostWithCoBonus\n"
     ".global sub_08042CD4\n.thumb_set sub_08042CD4, GetUnitAttackWithCoBonus\n"
     ".global sub_08042CF8\n.thumb_set sub_08042CF8, GetUnitDefenceWithCoBonus\n"
     ".global sub_08042D1C\n.thumb_set sub_08042D1C, GetUnitMovementWithCoBonus\n"

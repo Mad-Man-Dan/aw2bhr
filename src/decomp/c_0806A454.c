@@ -15,11 +15,11 @@
 
 /* Resets the sub_0806A054 ticket counter and starts the screen's proc on
  * tree 3. The Proc_Start result is discarded (`pop {r0}; bx r0`). */
-void MainMenu2_0806A455(void)
+void StartIntroSequence(void)
 {
     sub_0803B588();
     gUnknown_0202F204 = 0;
     Proc_Start(ProcScr_IntroT3, PROC_TREE_3);
 }
 
-asm(".global sub_0806A454\n.thumb_set sub_0806A454, MainMenu2_0806A455\n");
+asm(".global sub_0806A454\n.thumb_set sub_0806A454, StartIntroSequence\n");

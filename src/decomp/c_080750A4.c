@@ -25,7 +25,7 @@ struct Unk80750A4
  * a counter running 9..0 under `bge` is an ordinary ascending
  * `for (i = 0; i < 10; i++)` over unk_3c[]. Do not mirror the assembly.
  */
-void WM_MoveScope_080750A5(struct Unk80750A4 * p)
+void DifficultyStars_Init(struct Unk80750A4 * p)
 {
     int i;
 
@@ -36,17 +36,17 @@ void WM_MoveScope_080750A5(struct Unk80750A4 * p)
     p->unk_3a = 0;
 }
 
-asm(".global sub_080750A4\n.thumb_set sub_080750A4, WM_MoveScope_080750A5\n");
+asm(".global sub_080750A4\n.thumb_set sub_080750A4, DifficultyStars_Init\n");
 
 extern void WM_MoveScope_IDLE_080750C1(void);
-extern void WM_MoveScope_IDLE_0807519D(void);
+extern void DifficultyStars_SpawnLoop(void);
 extern void WM_MoveScope_IDLE_08075249(void);
 
 struct ProcCmd CONST_DATA ProcScr_WM_MoveScope[] =
 {
-    PROC_CALL(WM_MoveScope_080750A5),
+    PROC_CALL(DifficultyStars_Init),
     PROC_REPEAT(WM_MoveScope_IDLE_080750C1),
-    PROC_REPEAT(WM_MoveScope_IDLE_0807519D),
+    PROC_REPEAT(DifficultyStars_SpawnLoop),
     PROC_REPEAT(WM_MoveScope_IDLE_08075249),
     PROC_END,
 };

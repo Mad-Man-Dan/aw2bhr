@@ -38,7 +38,7 @@ int HasNoLaser(void);
 int HasNoBlackCannon(void);
 int HasNoMinicannon(void);
 int HasNoPipeSeams(void);
-bool8 CountLivingInventionsOfType(int a1);
+bool8 HasLivingInventionOfType(int a1);
 int CountUnitsOfType(int a1);
 bool8 ShouldPromptCountryName(void);
 

@@ -63,7 +63,7 @@ int APProc_Create(const void *a1, int a2, int a3, int a4, int a5, u16 a6)
 }
 asm(".global sub_0801C70C\n.thumb_set sub_0801C70C, APProc_Create\n");
 
-void WaitForLaser_IDLE_0801C755(struct Unk0801C754Proc *proc)
+void APProc_OnUpdate(struct Unk0801C754Proc *proc)
 {
     if (AP_Update(proc->unk50, proc->unk54, proc->unk58) == 0)
     {
@@ -72,4 +72,4 @@ void WaitForLaser_IDLE_0801C755(struct Unk0801C754Proc *proc)
     }
 }
 
-asm(".global sub_0801C754\n.thumb_set sub_0801C754, WaitForLaser_IDLE_0801C755\n");
+asm(".global sub_0801C754\n.thumb_set sub_0801C754, APProc_OnUpdate\n");
