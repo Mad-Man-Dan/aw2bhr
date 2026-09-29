@@ -55,10 +55,6 @@ void sub_0802AA78(void)
   u8 army;
   u16 t;
   int n2;
-  /* Why the C looks odd: yIndex and tblUnk04 just hold a constant index and a
-     table column base.  Writing the index and the base inline reads more
-     naturally but compiles to different register choices, so they are bound to
-     locals here to reproduce the original's code. */
   sub_0802B868();
   x = gUnknown_03003130.unk10;
   y = gUnknown_03003130.unk11;
@@ -124,7 +120,8 @@ void sub_0802AA78(void)
     }
     else
     {
-      q = (cx + ((struct Tbl49A2A6 *) gUnknown_0849A2A6)->unk02[((s16) sel) * 3]) + gUnknown_0849A284[6];
+      q = cx;
+      q = (q + ((struct Tbl49A2A6 *) gUnknown_0849A2A6)->unk02[((s16) sel) * 3]) + gUnknown_0849A284[6];
       sub_0802BAFC(q, cy + gUnknown_0849A284[7], (unit->hp != 0) ? ((s16) (Div(unit->hp - 1, 10) + 1)) : (0));
     }
     sub_0802BAFC((((struct Tbl49A2A6 *) gUnknown_0849A2A6)->unk02[((s16) sel) * 3] + cx) + gUnknown_0849A284[8], cy + gUnknown_0849A284[9], unit->fuel);
@@ -209,13 +206,14 @@ void sub_0802AA78(void)
   gUnknown_030030DC.bits.win0_enable_blend = 0;
   q = 0;
   obj = sub_0803DF54((s16) x, (s16) y);
+  zero = (s16) x;
   if (obj != 0)
   {
     q = obj->unk04;
   }
-  if (gUnknown_020288B4[((struct Map *) gUnknown_08499590)->rowOffset[(s16) y] + ((s16) x)] != 0)
+  if (gUnknown_020288B4[((struct Map *) gUnknown_08499590)->rowOffset[(s16) y] + zero] != 0)
   {
-    q = gUnknown_020288B4[((struct Map *) gUnknown_08499590)->rowOffset[(s16) y] + ((s16) x)];
+    q = gUnknown_020288B4[((struct Map *) gUnknown_08499590)->rowOffset[(s16) y] + zero];
   }
   if (((s16) q) != 0)
   {

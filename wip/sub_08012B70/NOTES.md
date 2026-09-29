@@ -51,3 +51,13 @@ pseudo that outlives the stack-parameter load); `dst += x; base = dst; base += y
 Mechanism of the tension: gcc only copies a parameter out of r0 when the pseudo is handed a callee-saved register
 by global-alloc, which needs a live range beyond one block; the row-base spellings shorten dst's range to the
 entry block. Not run through the permuter again (converged in wave 93).
+
+## wave 97 (W97-AA)
+Base unchanged (87.50%). Re-measured the W93 split form (`base` own local, `dst = base + i*0x20` reassigned per row) with
+`spellings.py`: 84 bytes (-4). Assembly (compile_probe): the dst prologue copy IS kept (`add r4, r0, #0`) but src stays in r1
+(no copy), base goes to r6 (callee-saved), w to r5, i r3, j r2. ROM: src r5 (copy), base r2 (scratch), i r1, j r3, w r6, h r7.
+So the ROM's residual is an ALLOCATION ORDER fact, not a missing copy source: src's r1 preference wins in ours because src is
+handed a register before `i` is; in the ROM `i` has taken r1 first, forcing src to a callee-saved copy, and base (long-lived
+but call-free) sits in scratch r2. A construct must raise i's allocno priority (floor_log2(refs)*refs/live_length) above src's,
+or lower src's, without changing instruction count. Not found in 3 further spellings (respell base as `dst = dst + x; base = ...`
+gives 88 bytes 44%: base to ip).

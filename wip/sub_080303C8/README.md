@@ -2,7 +2,7 @@
 
 0x080303C8, 428 bytes, THUMB, parked.
 
-Best score so far: 49.8% (best.c).
+Best score so far: 54.2%.
 
 ## What it does
 
@@ -28,7 +28,6 @@ Two small code patterns differ. At two places the original sets the volatile fie
 ## Files
 
 - `sub_080303C8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

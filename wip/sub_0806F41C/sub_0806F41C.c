@@ -85,12 +85,16 @@ void sub_0806F41C(struct Unk6F41CProc *proc)
     }
     else
     {
-        Proc_EndEach(gUnknown_08582CAC);
-        Proc_Start(gUnknown_08582CAC, proc);
-        fill = 0;
-        CpuFastSet(&fill, (void *)0x06000000, 0x01000010);
-        sub_08013C00();
-        Proc_Goto(proc, 1);
+        do
+        {
+            Proc_EndEach(gUnknown_08582CAC);
+            Proc_Start(gUnknown_08582CAC, proc);
+            fill = 0;
+            CpuFastSet(&fill, (void *)0x06000000, 0x01000010);
+            sub_08013C00();
+            Proc_Goto(proc, 1);
+        }
+        while (0);
     }
 
     sub_08013AEC();

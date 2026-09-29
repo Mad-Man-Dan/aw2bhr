@@ -55010,3 +55010,7 @@ drop to 160 bytes. What is left to try is making the innermost loop 27+ insns
 at loop time WITHOUT changing the final code (so the `mem/u N` for the `co[j]`
 read stays in the loop) while giving N a lower allocation priority than the
 ROM's three derived pointers.
+
+## One cell-address assignment in the loop condition feeds the code after the loop (sub_0804A760)
+
+When the ROM reloads a pointer global through its .rodata cell inside a loop and then reuses that one register for a switch after the loop, do not re-read the global bare after the loop. A second read gives cse a fresh pseudo it turns into a copy, and only some of the later uses are rewritten, so the function is 4 bytes long with an `adds rN, rM, #0` before the switch. Assign `gp = &g;` inside the loop's `while` condition and read the switch scrutinee and the case stores through `(*gp)`; gp then lives only from the condition to the end of the switch. A gp assigned in the loop arms instead is live across the whole loop and grows the frame. The arms that need a per-arm reload (to stop the hoist) then need their own pointer local, or they inherit the shared register. A local `z = 0;` written right after the first statement of a chain gives the zero its own pseudo defined early, which is where the ROM's early `movs rN, #0` comes from. Once the allocation is right, an `asm("rN")` pin that was only a costume can come off (its removal was the last 3 bytes).

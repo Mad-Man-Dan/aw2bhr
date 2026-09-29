@@ -105,3 +105,15 @@ Base: wave-92 draft (61.36%, 308 B). Now 82.79% size-exact, first diff still +0x
 - `{ u8 v = raw8; raw8 = v | 0x80; }` in the set arm (instead of `raw8 = raw8 | 0x80`) restores the ROM's `movs r2,#128; orrs r1,r2; strb` shape: 80.2 -> 82.8%. The same for the `& 0x7f` arm: 304 B, worse. `|=` unchanged.
 - Residual: proc in r6 / 0x7f mask in r5 (ROM has them swapped) and the copy of the pool address (`adds r3,r2,#0`) lands right after the load in the ROM but before the index computation here (the ROM loads through r2, the draft through r0). Permuter chain from this base, 900 s x1: NO-IMPROVEMENT.
 Proposed summary: left=register swap proc/mask (r5/r6) and where the pool-address copy is placed; tried=pool-word bind orders, arm store spellings, permuter.
+
+## wave 97 (W97-AA)
+Started from the wave-97 draft (82.79%); installed the levers.py chain-best change, cleaned: `do { } while (0)` around the six-statement
+else arm (proc restart / CpuFastSet / Proc_Goto). 82.79% -> 87.01%, size-exact, first difference +0x04 -> +0x41: the proc (r5) / 0x7f mask
+(r6) swap is GONE. wrongc: OK (400 seeds). Chain-best's dead `__typeof__ lv0` declaration was dropped (no effect). Snapshot of the
+previous file: `sub_0806F41C.w97aa-start.c`.
+Residual (40 bytes): (1) the ROM loads the table pointer into r2 and copies it to r3 AFTER the unk0d load (`ldr r2,=pool; ldr r1,[r2]; ...
+adds r3,r2,#0`); ours loads through r0 and copies right after the load; (2) the ROM builds `tbl+4` / `tbl+8` as separate adds before adding the
+scaled index for the Decompress unk04 and palette unk08 reads (`adds r1,r6,#4; adds r0,r0,r1; ldr r0,[r0]`); ours folds them into `ldr r0,[r0,#4]`.
+Five spellings of (2) (`*(u8 **)((u8 *)tbl + 4 + idx*16)`, index-first sum, either or both reads) are byte-identical to the plain member read:
+combine folds the constant into the load address whatever the source order. Proposed left: pool-address register (r2 vs r0) and the
+un-folded +4/+8 in the else arm.

@@ -18432,6 +18432,19 @@
   ]
  },
  {
+  "file": "src/decomp/c_0804A760.c",
+  "obj": "src/decomp/c_0804A760.o",
+  "addr_hex": "0x0804A760",
+  "functions": [
+   "sub_0804A760"
+  ],
+  "size": 920,
+  "rodata": [
+   "0x0812A284",
+   "0x0812A288"
+  ]
+ },
+ {
   "file": "src/decomp/c_0804AAF8.c",
   "obj": "src/decomp/c_0804AAF8.o",
   "addr_hex": "0x0804AAF8",

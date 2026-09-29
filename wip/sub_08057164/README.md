@@ -2,7 +2,7 @@
 
 0x08057164, 268 bytes, THUMB, parked.
 
-Best score so far: 26.9% (best.c).
+Best score so far: 32.5%.
 
 ## What it does
 
@@ -25,7 +25,6 @@ Make the compiler step one element index by 1 and scale it at each table read, a
 ## Files
 
 - `sub_08057164.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

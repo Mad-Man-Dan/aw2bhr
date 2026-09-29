@@ -67,3 +67,10 @@ loop.c hoists, and the two constants stay separate words. That needs the sum's d
 cse path; no spelling tried does both.
 Proposed summary tried: "inline / casted / u32 spellings of the VRAM address all fold to one constant word; copy-back
 step for j moves the guard but not the hoist".
+
+## wave 97 (W97-AA)
+Base unchanged (87.21%). Checked the twin lead: the ROM pool here has only three words (gUnknown_08090F30, 0x00006140, 0x06010000);
+neither 0x6140 nor 0x06010000 is a neighbour symbol (no asm/ symbol at 0x0601xxxx, VRAM is not a linked object), so the sub_08073228
+trick (name a second symbol at offset 0) has nothing to name. Re-read the diff: the whole residual is the ROM computing
+`j*0x100 + 0x6140` AFTER the zero-trip guard and reusing j's register (r4) for it (j+1 kept in r6 across), while ours computes it before the
+guard into r4 with j in r3. No new probes beyond W97-U's list.

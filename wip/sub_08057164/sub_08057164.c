@@ -63,37 +63,53 @@ struct Unk085D6A48Row
 
 void sub_08057164(int a, int b, u16 y)
 {
-    struct Unk02029A10 *e;
-    struct Unk085D6A48Row *rows;
-    u16 *tbl;
-    int i;
-    int idx;
-
-    e = gUnknown_02029A10[y].entries;
-    tbl = gUnknown_0855203C;
-    idx = a * 10 + y * 5;
-
-    for (i = 0; i <= 4; i++)
+  struct Unk02029A10 *e;
+  struct Unk085D6A48Row *rows;
+  u16 *tbl;
+  int i;
+  int idx;
+  int j;
+  e = gUnknown_02029A10[y].entries;
+  tbl = gUnknown_0855203C;
+  idx = (a * 10) + (y * 5);
+  j = idx;
+  for (i = 0; i <= 4; i++)
+  {
+    do
     {
-        rows = (struct Unk085D6A48Row *)gUnknown_085D6A48;
-        if (rows[gUnknown_03004582[y][0]].unk04 == 1)
+      rows = (struct Unk085D6A48Row *) gUnknown_085D6A48;
+      if (rows[gUnknown_03004582[y][0]].unk04 == 1)
+      {
+        if (y == gUnknown_0300450C)
         {
-            if (y == gUnknown_0300450C)
-                e[i].unk1a = tbl[idx + i];
-            else
-                e[i].unk1a = tbl[b * 10 + y * 5 + i];
+          e[i].unk1a = tbl[j];
         }
-        else if (rows[gUnknown_03004582[y][0]].unk10 == 1)
-            e[i].unk1a = gUnknown_08551F60[idx + i];
         else
-            e[i].unk1a = gUnknown_08551E84[idx + i];
-
-        e[i].unk00 = gUnknown_085521DC[y * 55 + a * 5 + i];
-        e[i].unk01 = gUnknown_085521DC[y * 55 + b * 5 + i];
-        e[i].unk02 = 0;
-        e[i].unk04 = 0;
-        e[i].unk06 = 0;
+        {
+          e[i].unk1a = tbl[((b * 10) + (y * 5)) + i];
+        }
+      }
+      else
+        if (rows[gUnknown_03004582[y][0]].unk10 == 1)
+      {
+        e[i].unk1a = gUnknown_08551F60[j];
+      }
+      else
+      {
+        e[i].unk1a = gUnknown_08551E84[j];
+      }
+      j++;
     }
+    while (0);
+    idx = a * 5;
+    idx = (y * 55) + idx;
+    e[i].unk00 = gUnknown_085521DC[idx + i];
+    e[i].unk01 = gUnknown_085521DC[((y * 55) + (b * 5)) + i];
+    e[i].unk02 = 0;
+    e[i].unk04 = 0;
+    e[i].unk06 = 0;
+  }
+
 }
 
 

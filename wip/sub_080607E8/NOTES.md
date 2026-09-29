@@ -146,3 +146,9 @@ Unresolved: what makes the ROM's `b` non-provable (value not from a ldrb+4 chain
 Proposed summary: does = spawns up to three factory units in a row at the map slot's row from the factory schedule.
 status = 54.65% draft, 8 bytes short. left = missing sign extension on the y argument, `unk09 = 0` uses the zero
 register instead of a literal. tried = see above plus waves 92/94; best.c is wrong C (clobbers band and i).
+
+## wave 97 (W97-Y)
+Base: draft (54.65%, -8). levers.py's 81.4% (`s8` copies of d at both uses) is WRONG: the third argument of sub_08025CC8 becomes 0xFFFFFF8B for d >= 0x80 (wrongc, confirmed by reading); no other lever beat the draft.
+Probes for the missing sign extension on b (`s16 bs = b` at the call, `s16 b`, `u16 b`, `(s16)(...)` on the assignment or at the call): all 164 bytes, the extension stays folded (nonzero_bits proves b fits); `s16 b` plus a separate `s16 bs; bs = b;` gives 168 at 30.8%. So the fold is not a copy-count or type issue on b.
+Permuter (3 links, 500 s each): the kept "improvements" (63.4%, 65.7%, size 172) are PADDING, not progress: `new_var = i <= 2; if (new_var) goto` and a do { } while (0) around the loop make agbcc emit `movs r0,#0 / movs r0,#1 / cmp r0,#0 / bne` at the loop end (visible in the diff), replacing the ROM's `ble`. Rejected; draft restored. A size-exact score on this function is a padding artefact until the tail `ble` is reproduced.
+Residual unchanged from W97-G: b's `lsls/asrs` before the call, `movs r0,#0` for unk09, and the sb/r9 band allocation.
