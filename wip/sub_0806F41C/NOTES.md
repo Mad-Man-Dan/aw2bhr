@@ -97,3 +97,11 @@ with, and `w92-perm-keep.c` is the permuter's untidied output.
 
 plus gDispIo, gUnknown_08582AF4, gUnknown_03002B6C, gUnknown_08582CAC,
 gUnknown_08499578 and 0x01000010.
+
+## wave 97
+
+Base: wave-92 draft (61.36%, 308 B). Now 82.79% size-exact, first diff still +0x4 (r5/r6 swap); snapshot `sub_0806F41C.w97-perm1-start.c`.
+- The wave-92 draft's pool word for `gUnknown_0816E808` was the compiler's `.rodata` force-addr word (double load). Fix: read the table into a bare local first (`t = gUnknown_0816E808;`, used for the first `unk0d` test), THEN bind `pp = &gUnknown_0816E808;` and take the later table pointer as `tbl = *pp`. The pool word becomes the plain `=gUnknown_0816E808` (61.4 -> 80.2%). Binding pp BEFORE the first read (or at the top) instead: 304 B / 11% (frame grows); binding after but reading `tbl = *pp` vs `*(pp = &..)`: unchanged.
+- `{ u8 v = raw8; raw8 = v | 0x80; }` in the set arm (instead of `raw8 = raw8 | 0x80`) restores the ROM's `movs r2,#128; orrs r1,r2; strb` shape: 80.2 -> 82.8%. The same for the `& 0x7f` arm: 304 B, worse. `|=` unchanged.
+- Residual: proc in r6 / 0x7f mask in r5 (ROM has them swapped) and the copy of the pool address (`adds r3,r2,#0`) lands right after the load in the ROM but before the index computation here (the ROM loads through r2, the draft through r0). Permuter chain from this base, 900 s x1: NO-IMPROVEMENT.
+Proposed summary: left=register swap proc/mask (r5/r6) and where the pool-address copy is placed; tried=pool-word bind orders, arm store spellings, permuter.

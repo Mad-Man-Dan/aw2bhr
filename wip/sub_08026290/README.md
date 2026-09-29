@@ -2,7 +2,7 @@
 
 0x08026290, 176 bytes, THUMB, parked.
 
-Best score so far: 28.8%, +8 bytes.
+Best score so far: 28.8%, +8 bytes (best.c).
 
 ## What it does
 
@@ -27,6 +27,8 @@ The original reaches gPlaySt through a compiler-made address word once, before t
 ## Files
 
 - `sub_08026290.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history

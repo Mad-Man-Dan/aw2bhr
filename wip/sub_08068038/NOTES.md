@@ -86,3 +86,9 @@ Base: existing draft (176/172, +4, 35.8%), kept as `sub_08068038.w95-start.c`. R
 - Chained permuter: run 1 (900 s) 35.8 -> 41.3, run 2 NO-IMPROVEMENT.
 - Residual: str spill vs a2*32 spill and where &cursor lives (frame/reg allocation only; instruction multiset now close).
 Proposed summary: does=renders a string glyph by glyph; status=size-exact, allocation differs; left=ROM keeps str on the stack, a2*32 in sb, table in sl and &cursor in r8 for the whole function; tried=binding table/cursor addresses (all reads: too small; mixed: size-exact).
+
+## wave 97
+
+Base: wave-95 draft (41.28%, 172 B), kept as `sub_08068038.w97-start.c`. No movement.
+- Also binding the sentinel `[12].data` read to the table local: 180 B (+8), 19.4%. Also binding the matching `.data` read: 164 B (-8), 27.9%. Cursor pointer local bound after the first store: byte-identical. `off = a2 * 32` as a user local (before the loop or inside): 38.9% / 41.3%.
+- Classified the residual from the disassembly: the candidate reaches the cursor through a `.rodata` force-addr word for the pre-loop store (`ldr r1,=word; ldr r0,[r1]; str r6,[r0]`), the ROM uses a plain pool word and then holds the address in r8 (`mov r3,r8; ldr r5,[r3]`). Same split as the wave-96 note; unsolved. The ROM also spills `str` to the stack and holds `a2*32` in r9, opposite to the candidate.

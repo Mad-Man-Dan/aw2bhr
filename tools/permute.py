@@ -265,6 +265,11 @@ def base_score(pdir):
     A failure here is a harness problem -- unparseable base.c, a broken
     compile.sh -- and is worth separating from "the search found nothing",
     because the two look identical from the outside.
+
+    Scored with --stack-diffs, the way run() searches. Without it the scorer
+    turns every sp offset into `addr(sp)`, so a draft whose only residual is
+    two swapped spill slots (sub_08037A78, sub_0802AA78) scored 0 here and the
+    run ended as BASE-SCORES-ZERO before a single mutation was tried.
     """
     rel = os.path.relpath(pdir, awlib.REPO).replace(os.sep, "/")
     # --debug writes debug_source.c and debug_compiled_object.o into the working
@@ -272,7 +277,7 @@ def base_score(pdir):
     # Makefile's source discovery (see the comment on C_SRCS). Move them into
     # the permuter directory, where they are still available and harmless.
     rc, so, se = agbenv.run(
-        "python3 tools/permuter_entry.py %s --debug; rc=$?\n"
+        "python3 tools/permuter_entry.py %s --debug --stack-diffs; rc=$?\n"
         "mv -f debug_source.c debug_compiled_object.o %s/ 2>/dev/null\n"
         "exit $rc" % (shq(rel), shq(rel)),
         timeout=300)
@@ -553,6 +558,17 @@ def improves(pct, size, best_pct, best_size):
     return pct > best_pct
 
 
+def _wrongc_reason(name, base_path, cand_path):
+    """Why tools/wrongc.py rejects `cand_path` against the run's starting draft
+    (a semantic change: volatile, a clobbered counter, a lost call, a different
+    result under differential testing), or None."""
+    try:
+        import wrongc
+        return wrongc.rejects(name, cand_path, base_path)
+    except Exception:
+        return None
+
+
 def verify(rec, pdir, keep_all):
     """Run the best candidates past trymatch and keep the first that matches.
 
@@ -594,6 +610,9 @@ def verify(rec, pdir, keep_all):
     # Locals the draft itself might read before setting; a candidate may not
     # add to them (agbenv.uninitialized_reads).
     base_uninit = set(agbenv.uninitialized_reads(csrc, fn=name, profile=PROFILE))
+    # wrongc.py compares each kept candidate with the draft as the run found it.
+    wrongc_base = os.path.join(pdir, "wrongc-base.c")
+    awlib.write_text(wrongc_base, "".join(orig))
     if base_pct is None:
         print("  draft does not compile or cannot be scored; improvements "
               "cannot be judged, so the original will be restored as before.")
@@ -648,6 +667,10 @@ def verify(rec, pdir, keep_all):
                             print("      WARNING: it may read %s before setting it;"
                                   " the bytes match but the C is wrong -- fix the"
                                   " source before promoting." % ", ".join(bad))
+                        why = _wrongc_reason(name, wrongc_base, csrc)
+                        if why:
+                            print("      WARNING: wrongc.py says this changes what the function"
+                                  " does (%s); the bytes match but check the C." % why)
                     return 0, "MATCH", "%s form, permuter output %s" % (label, rel)
                 # Not a match, but it may still be an IMPROVEMENT, and until
                 # 2026-08-29 that was thrown away: the finally block restored
@@ -669,6 +692,11 @@ def verify(rec, pdir, keep_all):
                         _restore(snap)
                         print("             not kept: reads %s before setting it"
                               % ", ".join(bad))
+                        break
+                    why = _wrongc_reason(name, wrongc_base, csrc)
+                    if why:
+                        _restore(snap)
+                        print("             not kept: wrong C (tools/wrongc.py): %s" % why)
                         break
                     best_pct, best_lines, best_label = pct, lines, rel
                     best_size = r.get("size")

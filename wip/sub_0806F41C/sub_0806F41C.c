@@ -42,6 +42,8 @@ void sub_0806F41C(struct Unk6F41CProc *proc)
     struct Unk0816E808Entry *tbl;
     int flag;
     int fill;
+    struct Unk0816E808Entry **pp;
+    struct Unk0816E808Entry *t;
 
     SetWinEnable(0, 0, 0);
     sub_08012358();
@@ -52,16 +54,18 @@ void sub_0806F41C(struct Unk6F41CProc *proc)
     Proc_EndEach(gUnknown_08582AF4);
     sub_0806E210(proc->unk38, proc);
 
-    if (gUnknown_0816E808[proc->unk38].unk0d == 1)
+    t = gUnknown_0816E808;
+    pp = &gUnknown_0816E808;
+    if (t[proc->unk38].unk0d == 1)
     {
-        gUnknown_03002B6C.raw8 = gUnknown_03002B6C.raw8 | 0x80;
+        { u8 v = gUnknown_03002B6C.raw8; gUnknown_03002B6C.raw8 = v | 0x80; }
     }
     else
     {
         gUnknown_03002B6C.raw8 &= 0x7f;
     }
 
-    tbl = gUnknown_0816E808;
+    tbl = *pp;
 
     if ((tbl[proc->unk38].unk0e == 0) || flag)
     {

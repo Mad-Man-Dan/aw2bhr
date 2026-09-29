@@ -1,0 +1,11 @@
+## wave 97
+
+Base: `w94b-simode-words.c` (the honest 32-bit-halves draft, 30.92% because it is 4 bytes short; `sub_0801ECE8.c` is left as the size-exact DImode draft, 58.55%, saved as `sub_0801ECE8.w97-start.c`). `best.c` is the old DImode family and the two `.wrongc` files stay wrong.
+
+Why the 32-bit-halves form is the right family, measured from the disassembly: the ROM masks only the LOW word (`0xFFFFDFFF`, `0xFFFFEFFF` are its only two pool words besides the two addresses) and stores the HIGH word unchanged (`str r6,[r0,#0x10]`). The DImode draft materialises the mask's all-ones upper half as a register and then reuses it for the `== -1` compare (`cmp r0,r6`), which is why it has five pool words to the ROM's four.
+
+Residual of the halves form (4 bytes short): the ROM keeps low half / high half in r5 / r6 and the record-array base in r8; ours puts the base in r5 and the high half in sl. Reading `-da .greg`: the base pseudo (3 refs over 24 insns) outranks the two half pseudos (2 refs over 19 insns each), so it gets the low register. The ROM ranks them the other way round. No respelling of the read order (six orders), of the mask (`lo &= a; lo &= b`, one expression, a `u32` copy) or of the store order changed one byte; reading and masking `a5` in place through `((int *)&a5)[k]` forces the argument to memory and is far worse (6 of 76 halfwords).
+
+Permuter run 1 (900 s x 2) 30.92 -> 76.32%, size-exact, REJECTED: it duplicates `unk02 = a3;` after the `unk04` store. The duplicated store survives to the object as a second `strh r2,[r0,#2]`, i.e. the extra 4 bytes are padding, not the ROM's missing `movs r1,#4`. Kept as `sub_0801ECE8.w97-perm1-out-PADDED.c`. Its useful signal: adding a reference that costs a store changes which pseudos get the low registers, so the real lever is a way to add one use of the base pseudo without emitting code.
+
+Proposed summary: does = as before; status = "152 bytes, 4 bytes short, honest 32-bit halves"; left = "the original keeps the base address in a high register and both template halves in low ones; ours does the opposite, which costs the ROM's `movs r1,#4` / `add r8,r1` pair"; tried = the orders above, in-place `&a5` access, and the padded permuter form.

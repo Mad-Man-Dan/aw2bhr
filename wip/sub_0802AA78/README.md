@@ -2,7 +2,7 @@
 
 0x0802AA78, 2356 bytes, THUMB, parked.
 
-Best score so far: 98.0% (best.c).
+Best score so far: 98.2%.
 
 ## What it does
 
@@ -27,7 +27,6 @@ Two spots remain. In one if/else pair the original loads two tables in the oppos
 ## Files
 
 - `sub_0802AA78.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

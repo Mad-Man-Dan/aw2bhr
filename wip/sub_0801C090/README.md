@@ -2,7 +2,7 @@
 
 0x0801C090, 360 bytes, THUMB, parked.
 
-Best score so far: 79.4%.
+Best score so far: 90.6%.
 
 ## What it does
 

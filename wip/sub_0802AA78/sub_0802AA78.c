@@ -45,7 +45,7 @@ void sub_0802AA78(void)
   s16 *tblUnk04;
   s16 q;
   u16 x;
-  u16 y;
+  s16 y;
   s16 cx;
   int cy;
   int v;

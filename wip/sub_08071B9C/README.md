@@ -29,6 +29,7 @@ In four of the six mask steps (red and green of each colour) the original loads 
 
 - `sub_08071B9C.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history

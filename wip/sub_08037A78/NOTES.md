@@ -165,3 +165,24 @@ needs a LOWER priority than the row pointer. The permuter cannot see this (its t
 "starting point already scores 0" at 97.4%). Next: raise the row pointer's ref count or shorten the outer map's live
 range (e.g. reload it from `gUnknown_08499590` instead of a held copy in one of its three uses).
 Proposed summary: status 98.1% size-exact, only spill-slot numbering differs; left: swap of two spill slots between the outer map pointer and the row pointer.
+
+## wave 97
+
+Base: wave-96 draft (98.13%, size-exact), unchanged (`sub_08037A78.w97-start.c`). No improvement.
+
+Mechanism SETTLED with `-da` (tools/rtldump.py --flags=-da): reload gives spill slots in ASCENDING PSEUDO NUMBER,
+lowest pseudo at the lowest offset. Draft: [sp,#4] = pseudo 24 (`outerMap`, 2nd declared local), [sp,#8] = 29
+(`cellRow`, 7th local), [sp,#12] = 51 (the row pointer `p + 0x417a + y*2`, an EXPAND-time temp created inside the
+`v = ...` statement), [sp,#16] = 153 (y+1, a later temp). The ROM has row pointer < cellRow < outerMap, i.e. the
+row-pointer temp is numbered BELOW the `map+0x12` value and the outer map. Pre-registration held (slots follow
+pseudo number, not declaration position or priority).
+Consequence: every user local has a pseudo number below every expand-time temp, so no declaration order can put
+the row temp (51) below `cellRow` (29) or `outerMap` (24). Measured (build/probe/w97e.py, one unit, 20 variants):
+- moving `outerMap` after any local: outer and cellRow swap slots (outer #8, cellRow #4), row stays #12. Never #12/#8/#4.
+- making the row pointer a named local declared first (`rowIdx = &p->unk417a[y]`): frame grows to 0x18, +8 bytes.
+- inlining `cellRow` (`p->unk12[...]`): loses the separate `map+0x12` slot, frame 0x10, -4 bytes.
+- declaring `cellRow` in the inner block after a `col` temp (`u16/int col = ...`): frame 0x10 (same loss).
+- dropping `outerMap` (using `map`, or re-reading gUnknown_08499590 at the bottom test or the inner guard): frame 0x08-0x10.
+So the ROM's `map+0x12` and outer-map values are NOT plain user locals; they look like compiler temps made after
+the row temp (cse/gcse copies). What lever creates a hoisted `map + 0x12` temp without a user variable is unfound.
+Proposed summary: status 98.13% size-exact, only the three spill-slot numbers differ; left: row pointer must own the lowest slot, `map+0x12` next, outer map third; tried: all declaration orders (slot order follows pseudo number, user locals always below temps), row pointer as a local (+8), cellRow inlined (-4), outerMap dropped (frame shrinks).

@@ -34,3 +34,13 @@ movement chart bound, then indexed), `(gUnknown_085D583C + b)->defense`. All the
 pattern. Kept file `.w95-perm3-out.c` only as evidence; the permuter was killed during run 4. The `+ 0x50`
 order residual is therefore still open; the permuter's own answer for it (a stored constant) is not the ROM's.
 Residual as before: the first ternary's layout (+0x1e), the row-address registers.
+
+## wave 97
+Base: sub_08046A84.c (66.82%, size-exact 672, first diff +0x1e). `best.c` (83.33%) is WRONG C: it adds `volatile int new_var3` for the `+ 0x50` (frame `sub sp,#20` vs ROM `#16`), rejected again; the "valid twin" of that form is the `x = ... + 0x50` bind already in the draft (no other twin found).
+Tested the first conditional's layout (ROM: `cmp #6; beq X6(out of line); cmp #8; bne C; X8 inline; b join; X6; C`), each compiled in place:
+- `b != 6 ? (b==8 ? X8 : C) : X6`, `b==6 ? X6 : (b!=8 ? C : X8)`, `b != 8 ? (b==6 ? X6 : C) : X8`: all -16 bytes (~14%): merges the per-arm address adds.
+- `b==8 ? X8 : (b==6 ? X6 : C)`: 672, 66.7%, same layout with the tests swapped (8 first) -- not the ROM either.
+- pointer-of-record ternary `(...? &A[i] : ...)->unk08`, and if/else statements assigning a `const struct Unk085D583C *rec` (three arm orders): all -24 bytes (~12-15%): once the arms yield a record pointer, the `+8` and the index scaling are hoisted to the join.
+- struct-valued ternary `(b==6 ? A[i] : ...).unk08`: identical to the draft (66.82%).
+Mechanism: the ROM keeps `adds r2,#8; adds r0,r0,r2` INSIDE each arm and loads at the join, so the arms are `.unk08` addresses of different tables, not records; no spelling that merges the record keeps that. The 6-first, 8-inline order is not reachable by reordering the ternary (tests follow source order and the first-tested arm is emitted inline). Open.
+Proposed summary: does = draws the unit-detail window; status = size-exact, 66.8%; left = first ternary layout (6 arm out of line) and row-address registers in the two loops; tried = ternary/if arm orders and polarities, record-pointer merge (shrinks 24 B), volatile constant (wrong).

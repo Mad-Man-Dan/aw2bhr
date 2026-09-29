@@ -89,3 +89,7 @@ the source can separate them, and the axis wave 43 named as "untried" (give
 `a2 - 5` a second reader, or compute it on a path the masking does not share)
 is not reachable without changing what the function computes. **This is a
 codegen park, not a derivation failure.**
+
+## wave 97
+Base: sub_08049944.c (== best.c, 92.22%, size-exact, first diff +0x22), unchanged.
+Re-measured; the parked description holds (14 bytes: extra `adds r3,r6,#0` from the a1 split, and r3 vs r2 as the stack-constant scratch). Probes: (a) no split (plain `a1`) -> a1/a4 swap returns (a1 in r5, a4 in r6), i.e. the split is what fixes the swap; (b) same with `0` as the sixth arg of the zero arm -> identical swap. Two probes, nothing new; stopped per budget. Proposed left: "a1/a4 register pair only fixable with a split that costs one copy; ROM has none."

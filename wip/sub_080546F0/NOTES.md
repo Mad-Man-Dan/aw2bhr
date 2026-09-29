@@ -15,3 +15,9 @@ Only hand probes, no permuter (not size-exact; permuter reserved for the size-ex
 
 Proposed summary: status +8 bytes, 26.6%; left unchanged (the ROM keeps the shared counter in r7 and
 the sl/sb/r8 pointer set differs); tried gains: counter types (six spellings), byte-zero temp / volatile store.
+
+## wave 97 (W97-G)
+
+Not worked beyond re-reading the diff (budget spent on earlier functions). Observed: the first difference is the
+final `gUnknown_02029664 = 0` byte store, where the ROM loads the address into r1 and makes a fresh `movs r0,#0`
+(the halfword-zero register was dead by then), and the frame is 84 vs ROM 72. No probes run; draft unchanged (26.59%, +8).

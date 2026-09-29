@@ -2,7 +2,7 @@
 
 0x0807B7BC, 156 bytes, THUMB, parked.
 
-Best score so far: 59.0% (best.c).
+Best score so far: 66.7%.
 
 ## What it does
 
@@ -27,7 +27,6 @@ Reinstate the `do { } while (0)` around the whole outer loop body (148 bytes, tw
 ## Files
 
 - `sub_0807B7BC.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

@@ -17,6 +17,7 @@ void sub_0801C090(s32 x, s32 y, void *template, s32 tileOffset)
   u16 *dst;
   u32 count;
   u32 remaining;
+  int attr0Hi;
   u16 attr0;
   u16 attr1;
   u16 sourceAttr0;
@@ -30,17 +31,26 @@ void sub_0801C090(s32 x, s32 y, void *template, s32 tileOffset)
     if (x & 0x1000)
     {
       u16 negWidth;
+      s32 neg;
+      s32 sum;
+      u16 hi;
       attr1 = ((struct SpriteTemplateEntry *) src)->attr1;
       remaining = ((((u32) (attr1 >> 14)) * 4) + (((u32) ((sourceAttr0 = ((struct SpriteTemplateEntry *) src)->attr0) >> 14)) * 16)) + ((u32) gUnknown_0848B56C);
       negWidth = -(*((s16 *) remaining));
       remaining = 0x1ff & attr1;
       if (attr1 & 0x100)
       {
-        remaining |= 0xffffff00 & 0xffff;
+        remaining |= 0xffffff00;
+        remaining = (u16) remaining;
       }
-      attr0 = ((y | sourceAttr0) & (~0xff)) | ((sourceAttr0 + y) & 0xff);
-      remaining = ((s32) (-(remaining << 16))) >> 16;
-      attr1 = ((x | attr1) & (~0x1ff)) | (((remaining + x) + ((s16) negWidth)) & 0x1ff);
+      neg = -(remaining << 16);
+      attr0Hi = (y | sourceAttr0) & (~0xff);
+      attr0 = attr0Hi | ((sourceAttr0 + y) & 0xff);
+      hi = (x | attr1) & (~0x1ff);
+      sum = (neg >> 16) + x;
+      sum += (s16) negWidth;
+      remaining = sum;
+      attr1 = hi | (remaining & 0x1ff);
     }
     else
     {

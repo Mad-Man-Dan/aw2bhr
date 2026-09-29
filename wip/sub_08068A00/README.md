@@ -2,7 +2,7 @@
 
 0x08068A00, 196 bytes, THUMB, parked.
 
-Best score so far: 25.5%, -20 bytes.
+Best score so far: 44.9%.
 
 ## What it does
 
@@ -28,6 +28,7 @@ The ROM's tree implies the original switch had more case values than the nine it
 ## Files
 
 - `sub_08068A00.c`: the current draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history

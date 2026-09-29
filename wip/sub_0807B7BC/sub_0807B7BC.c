@@ -82,12 +82,60 @@
  * axis is UNTRIED, not ruled out. */
 u16 sub_0807B7BC(u8 *str, u16 *outTotal, u8 *outWidths, int tile, void *a5)
 {
+  int new_var6;
   void *new_var2;
+  int new_var4;
+  int new_var5;
   int new_var;
   struct Unk08616194 *g;
   int count;
-  int total;
+  u16 total;
+  u8 new_var3;
+  u8 *nx;
+  int new_var7;
   total = 0;
   count = 0;
- do { new_var2 = (void *) 0; new_var = 0; while ((*str) != new_var) { do { for (g = gUnknown_08616194; g->unk00 != new_var; g++) { if (g->unk00 == (*str)) { Decompress(g->unk04, (void *) (0x06010000 + ((tile & 0x3ff) << 5))); total += g->unk08; if (outWidths != ((void *) 0)) { outWidths[count + 1] = g->unk08; } tile += 8; count++; break; } } str++; } while (0); } if (outTotal != new_var2) { *outTotal = total; } return count; } while (0);
+  do
+  {
+    new_var2 = (void *) 0;
+    new_var = 0;
+    while ((*str) != new_var)
+    {
+      do
+      {
+        nx = str + 1;
+        new_var4 = 4;
+        new_var5 = 0x06010000;
+        for (g = gUnknown_08616194; g->unk00 != 0; g++)
+        {
+          new_var3 = *str;
+          new_var6 = tile & 0x3ff;
+          new_var6 = new_var6 << 1;
+          if (new_var3 == g->unk00)
+          {
+            Decompress(g->unk04, (void *) (new_var5 + (new_var6 << new_var4)));
+            total += g->unk08;
+            if (outWidths != ((void *) 0))
+            {
+              outWidths[count + 1] = g->unk08;
+            }
+            new_var7 = 8;
+            tile += new_var7;
+            count++;
+            break;
+          }
+        }
+
+        str = nx;
+      }
+      while (0);
+    }
+
+    if (outTotal != new_var2)
+    {
+      *outTotal = total;
+    }
+    return count;
+  }
+  while (0);
 }

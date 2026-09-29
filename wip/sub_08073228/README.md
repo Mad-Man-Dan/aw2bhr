@@ -2,7 +2,7 @@
 
 0x08073228, 220 bytes, THUMB, parked.
 
-Best score so far: 81.7%, +4 bytes (best.c).
+Best score so far: 82.3%.
 
 ## What it does
 
@@ -29,7 +29,6 @@ The original has a leftover copy of the table offset at the top of the search lo
 ## Files
 
 - `sub_08073228.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

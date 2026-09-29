@@ -231,3 +231,23 @@ check_dbra_loop wrote the counter) and in every spelling measured here it is
 reduced in the first. That is a question about `loop.c`'s reduction threshold
 across the two passes, not about register allocation, which is why an
 allocation search cannot reach it.
+
+## wave 97
+
+Base: the 99.42% draft (`sub_0807E980.w97-start.c`), restored as the final source. It is unchanged.
+
+New finding on the residual (the `movs r6,#7` position): making the SOURCE pointer a walking local
+(`u8 *src = &gUnknown_0200FC50[i * 0x100]; ... src += 0x400;` inside the `for (j...)` body, declared in a block around the loop,
+with the destination left as the `(0x06015000 + i*0x800) + new_var` giv) moves `movs r6,#7` to the ROM's place:
+after the source init and BEFORE the pool load of 0x06015000 and the destination sum. Reason: the source is then an
+ordinary biv whose init is an original insn in source order, the loop counter's `j = 0` (rewritten to 7 by check_dbra_loop)
+follows it, and only the destination giv init is emitted afterwards at loop start. This CONFIRMS the wave-90 reading that the
+order is the ROM's giv/biv split, and shows the lever is which of the two pointers is a biv. The variant
+(`sub_0807E980.q1.c`, increments in the order `new_var += 0x100; src += 0x400;`, which matches the ROM's step order) is
+size-exact but scores 97.21% (first diff +0x364): the two increment constants take r2/r3 instead of r0/r1, and the
+preheader is ordered `lsls r0,#8; add r4; add r0,r5,#1; mov r8; lsls r0,#0xb; movs r6,#7; ldr; adds` where the ROM has
+`adds r3,r5,#1; mov r8,r3; lsls r1,#0xb; lsls r0,#8; mov r2,sl; adds r4; movs r6,#7; ldr; adds`. So the trade is now
+between ONE misplaced constant and a shuffled preheader plus two register numbers. Making both pointers walkers (w1-w4 in
+build/probe/w97j.py) costs 12 bytes (an extra register). A 900 s permuter chain from q1 (2 threads): NO-IMPROVEMENT: the text score fell from 2160 to 1280, but every candidate that was verified scored below q1 (best 93.1%, others 80-92%), so nothing was adopted.
+Pre-registration (this batch): none for this function. Proposed summary: unchanged 99.42%; add to `tried`: source pointer as a
+walking local (moves the counter init to the ROM's place but shuffles the preheader and constant registers, 97.2%).

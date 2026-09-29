@@ -8,7 +8,7 @@
  *   what keeps the pool word. Both halves are load-bearing.
  *
  *   pa = &gUnknown_0816DB08;                 <- creates the cross-block pseudo
- *   if (p->unk04_0 < (*gUnknown_0816DB08)[3])  <- BARE, block-local pseudo
+ *   if (p->unk04_0 < (*(*(pa = &gUnknown_0816DB08)))[3])  <- BARE, block-local pseudo
  *   ...
  *   if (q >= (*(*pa))[2])                     <- the later use, via the local
  *
@@ -193,15 +193,14 @@ void sub_08061DCC(struct Unk8061DCC *p)
     u8 **volatile *pa;
     struct UnitType *volatile *pb;
 
-    pa = &gUnknown_0816DB08;
-    if (p->unk04_0 < (*gUnknown_0816DB08)[3])
+    if (p->unk04_0 < (*(*(pa = &gUnknown_0816DB08)))[3])
     {
         p->unk09_0 = 2;
         return;
     }
 
     pb = &gUnknown_0816DB0C;
-    if (gUnknown_0816DB0C[p->unk00].maxAmmo == 0 || p->unk04_7 != 0)
+    if ((*pb)[p->unk00].maxAmmo == 0 || p->unk04_7 != 0)
     {
         u8 q = 100 * p->unk06_0 / (*pb)[(((u32)p->unk00 << 24) & 0xff000000) >> 24].maxFuel;
 

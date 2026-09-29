@@ -177,6 +177,8 @@ void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
   int k;
   const u8 *p;
   short acc;
+  const struct Unk08614024 *new_var2;
+  int new_var;
   int c;
   const u8 *glyph;
   j = 0;
@@ -185,25 +187,27 @@ void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
   while (((const u8 *) a1)[i] != 0)
   {
     j = j * 8;
+    new_var = 8;
     k = j;
     p = ((const u8 *) gUnknown_08614024) + k;
+    new_var2 = gUnknown_08614024;
     _search:
     if (((const u8 *) a1)[i] == (*p))
     {
       goto _found;
     }
 
-    k += 8;
-    p += 8;
+    k += new_var;
+    p += new_var;
     j++;
     goto _search;
     _found:
     glyph = ((const u8 *) a2) + (j * 0x100);
-    CpuFastSet(glyph, (void *) ((j = (i * 0x100) + 0x06010000) + (a3 * 0x20)), 0x40);
 
+    CpuFastSet(glyph, (void *) ((j = 0x06010000 + (i * 0x100)) + (a3 * 0x20)), 0x40);
     ((struct Unk73228Proc *) a4)->unk2a[i] = (i * 0x10) + 4;
     ((struct Unk73228Proc *) a4)->unk46[i] = acc;
-    acc = acc + (*((int *) ((((u8 *) gUnknown_08614024) + k) + 4)));
+    acc = acc + (*((int *) ((((u8 *) new_var2) + k) + 4)));
     i++;
     j = 0;
   }

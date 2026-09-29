@@ -2,7 +2,7 @@
 
 0x0801ECE8, 152 bytes, THUMB, parked.
 
-Best score so far: 58.5%.
+Best score so far: 76.3% (best.c).
 
 ## What it does
 
@@ -29,6 +29,8 @@ In the w94b-simode-words.c form, give the template's high word the last spare lo
 ## Files
 
 - `sub_0801ECE8.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history

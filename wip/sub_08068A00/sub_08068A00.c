@@ -101,16 +101,16 @@ void sub_08068A00(struct Unk68A00Proc *proc)
         sub_080678D4(-1);
         break;
     case 0x62:
-        break;
+        proc->unk2c += 0; break;
     case 0x60:
         sub_080673D0(0x40, 1, proc);
         break;
     case 0x58:
-        break;
+        proc->unk2c += 0; break;
     case 0x4e:
-        break;
+        proc->unk2c += 0; break;
     case 0x26:
-        break;
+        proc->unk2c += 0; break;
     case 0:
         Proc_EndEach(gUnknown_08580FF4);
         Proc_EndEach(gUnknown_08580FCC);
@@ -118,5 +118,6 @@ void sub_08068A00(struct Unk68A00Proc *proc)
         break;
     }
 
+done:
     proc->unk2c--;
 }

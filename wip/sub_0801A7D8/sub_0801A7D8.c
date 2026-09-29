@@ -62,6 +62,7 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
   int slot;
   int i;
   int j;
+  struct SaveSector *new_var;
   int length;
   int total;
   u8 checksum;
@@ -95,7 +96,11 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
       {
         u8 oldSlot = freeSlots[i];
         freeSlots[i] = freeSlots[j];
-        freeSlots[j] = oldSlot;
+        do
+        {
+          freeSlots[j] = oldSlot;
+        }
+        while (0);
       }
     }
 
@@ -124,7 +129,7 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
     }
 
     retryCount = 0;
-    for (segment = segmentCount - 1; segment >= 0;)
+    for (segment = segmentCount - 1; (segment ^ 0) >= 0;)
     {
       switch (retryCount)
       {
@@ -161,7 +166,6 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
         gUnknown_02002000[i] |= 0xff;
       }
 
-      lastByte = 0xfff;
       (*((struct SaveSector *) gUnknown_02002000)).signature = 0x73726132;
       if (gUnknown_0200CC38.unk40[slot] == 0x55)
       {
@@ -176,10 +180,10 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
       zero = 0;
       i = 0xf;
       (*((struct SaveSector *) gUnknown_02002000)).version = i;
-      (*((struct SaveSector *) gUnknown_02002000)).checksum = zero;
+      (*(new_var = (struct SaveSector *) gUnknown_02002000)).checksum = zero;
       (*((struct SaveSector *) gUnknown_02002000)).checksumInverse = 0xff;
       (*((struct SaveSector *) gUnknown_02002000)).generation = gUnknown_0200CD08;
-      (*((struct SaveSector *) gUnknown_02002000)).segmentTag = ((segment * 16) + segmentCount) - 1;
+      (*((struct SaveSector *) gUnknown_02002000)).segmentTag = ((segment * 16) + segmentCount) + (-1);
       (*((struct SaveSector *) gUnknown_02002000)).saveId = id;
       (*((struct SaveSector *) gUnknown_02002000)).dataOffset = offsets[segment];
       for (i = 0; i < 16; i++)
@@ -211,7 +215,11 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
             }
             else
             {
-              (*((struct SaveSector *) gUnknown_02002000)).slotOwners[i] = gUnknown_0200CC38.unk00[i];
+              do
+              {
+                (*((struct SaveSector *) gUnknown_02002000)).slotOwners[i] = gUnknown_0200CC38.unk00[i];
+              }
+              while (0);
             }
           }
 
@@ -235,6 +243,7 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
       (*((struct SaveSector *) gUnknown_02002000)).checksumInverse = ~checksum;
       preservedFlags = 0;
       sub_0801B618(slot, (int) (&(*((struct SaveSector *) gUnknown_02002000))));
+      lastByte = 0xfff;
       if (sub_0801B648(slot, (int) (&(*((struct SaveSector *) gUnknown_02002000)))) == 0)
       {
         j = slot;

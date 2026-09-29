@@ -2,7 +2,7 @@
 
 0x0807F434, 240 bytes, THUMB, parked.
 
-Best score so far: 17.7%, +8 bytes.
+Best score so far: 94.2%.
 
 ## What it does
 
@@ -27,6 +27,7 @@ Find a way to write the second loop so `i + 1` is not one shared expression comp
 ## Files
 
 - `sub_0807F434.c`: the current draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history

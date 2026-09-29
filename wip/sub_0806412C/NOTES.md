@@ -116,3 +116,28 @@ candidate better than the starting point, so the chain is closed here rather
 than truncated by budget. The draft is byte-identical to the pre-run copy
 (`sub_0806412C.pre-run1.c`). The residual is the two facts already recorded in
 `data/parked.json`.
+
+## wave 97 (W97-G)
+
+Base: drafts.py named best.c (90.95%). Its second loop was written `(i + 1) <= (5 + 1)`. **Moved to 97.0% size-exact
+(7 of 232 bytes differ, first difference +0x71)** by respelling that loop as the ROM's own shape: the next index
+is computed FIRST and assigned back at the bottom, so the counter and the row pointer can share a register:
+
+    for (i = 0; i <= 5; ) { int k = i + 1; entries = gUnknown_0202F110; base = (u8 *)entries;
+                            q = base + 2 + i * 8; ...copy loop...; i = k; }
+
+That removed the `adds r3,r1,#1` reorder and the `cmp r0,#6` shape (90.95% -> 96.1%); binding the base as a `u8 *`
+and adding the 2 as its own term (`base + 2 + i * 8`) gave the last point (96.1 -> 97.0).
+Reading the file: the `v8 = a8 * 0x1000` sits inside the inner loop (same value each pass, kept from the permuter
+base; hoisting it was not re-tested); `i = 4; ...[i].unk00 = a5` is the same 96% file's costume. wrongc.py: OK (400 seeds).
+Permuter (900 s, 22,738 it, from the 96.1% file): no improvement.
+
+Residual (7 bytes): the ROM makes `entries + 2` a loop-invariant of its own (`ldr r0,=g; adds r4,r0,#2`, then
+`lsls r0,r1,#3; adds r1,r0,r4`); ours adds the 2 after the shift (`adds r0,#2`). Every spelling that makes the +2 a
+separate statement (`base += 2`, `base = base + 2`, `(u8 *)entries + 2` bound) is folded by cse into a
+`gUnknown_0202F110+0x2` pool word (60.8%, seven pool words) -- two states only: folded pool word, or +2 after the
+shift. `2 + base + i * 8` is byte-identical to `base + 2 + i * 8`.
+
+Proposed summary: does = fills the eight 3-word vectors from the ROM table scaled to 20.12, the six 4-byte rows,
+then stores the eight arguments. status = 97.0% size-exact. left = `+2` of the row base is added after the index
+shift instead of hoisted with the base. tried = loop-shape respelling (moved), base binds (above), permuter.

@@ -73,32 +73,40 @@ struct Unk0807F434
 
 void sub_0807F434(struct Unk0807F434 *proc)
 {
-    int i;
-    int j;
-    int k;
-    u8 *p;
+  int i;
+  int j;
+  int k;
+  u8 *p;
+  int nv;
+  int x;
+  int *new_var;
+  for (i = 0; i < sub_0803BD14(); i++)
+  {
+    new_var = &i;
+    gUnknown_030058D4[i] = gUnknown_030058E0[i];
+    sub_08043B14(gUnknown_030058D4[i], ((*new_var) * 12) + 0x3c0);
+  }
 
-    for (i = 0; i < sub_0803BD14(); i++)
+  for (i = 0; i < sub_0803BD14(); i++)
+  {
+    if (i != 2)
     {
-        gUnknown_030058D4[i] = gUnknown_030058E0[i];
-        sub_08043B14(gUnknown_030058D4[i], i * 12 + 0x3c0);
+      sub_08043BA4(gUnknown_030058D4[i], DivRem(i, 2) * 320, -(~i));
+    }
+  }
+
+  Decompress(gUnknown_08234B10, gUnknown_0200FC50);
+  for (j = 0; j <= 3; j++)
+  {
+    for (k = 0, nv = 0; k <= 7; k++)
+    {
+      CpuFastSet(&gUnknown_0200FC50[(j * 0x100) + (k * 0x400)], (void *) ((0x06015000 + (j * 0x800)) + nv), 0x40);
+      nv += 0x100;
     }
 
-    for (i = 0; i < sub_0803BD14(); i++)
-    {
-        if (i != 2)
-            sub_08043BA4(gUnknown_030058D4[i], DivRem(i, 2) * 320, i + 1);
-    }
+  }
 
-    Decompress(gUnknown_08234B10, p = gUnknown_0200FC50);
-
-    for (j = 0; j <= 3; j++)
-    {
-        for (k = 0; k <= 7; k++)
-            CpuFastSet(p + j * 0x100 + k * 0x400,
-                (void *)(0x06015000 + j * 0x800 + k * 0x100), 0x40);
-    }
-
-    ApplyPaletteExt(gUnknown_082352DC, 0x280, 0x20);
-    proc->unk4c = 0;
+  j = 0;
+  ApplyPaletteExt(gUnknown_082352DC, 0x280, 0x20);
+  proc->unk4c = j;
 }

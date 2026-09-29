@@ -145,32 +145,24 @@
  * so `j < n + 1`, not an unsigned `j <= n`. The retry test is `j != n + 1`. */
 void sub_08026290(void)
 {
-    u8 n;
-    u8 i;
-    u8 j;
-    u8 v;
-
+    u8 n; u8 i; u8 j; u8 v; u8 *ai; u8 *co; u8 *ci;
     n = sub_0802490C(gPlaySt.mapID);
-
     for (i = 1; i <= n; i++)
     {
         if (gPlaySt.aiControlled[i] == 0)
         {
             gPlaySt.aiControlled[i] = 2;
-
+            ci = &gPlaySt.co[i];
             do
             {
                 v = sub_08026254();
-
                 for (j = 1; j < n + 1; j++)
                 {
-                    if (i != j && gPlaySt.aiControlled[j] != 0
-                        && gPlaySt.co[j] == v)
+                    if (i != j && gPlaySt.aiControlled[j] != 0 && gPlaySt.co[j] == v)
                         break;
                 }
             } while (j != n + 1);
-
-            gPlaySt.co[i] = v;
+            *ci = v;
         }
     }
 }

@@ -447,6 +447,17 @@ def cmd_score(args):
     return 0 if r["state"] == "MATCH" else 1
 
 
+def _wrongc_note(fn, cand, draft):
+    """What tools/wrongc.py's pattern rules (no compile) say `cand` adds or
+    changes relative to the draft that would make it wrong C, else ''."""
+    try:
+        import wrongc
+        return wrongc.rejects(fn, cand, draft, emu=False,
+                              only=wrongc.STRICT_RULES) or ""
+    except Exception:
+        return ""
+
+
 def cmd_bases(args):
     fn = args.fn
     wd = os.path.join(WORK, fn)
@@ -495,6 +506,13 @@ def cmd_bases(args):
             extra = sorted(set(agbenv.uninitialized_reads(p, fn=fn)) - draft_uninit)
             if extra:
                 notes.append("reads before set: " + ", ".join(extra))
+        if os.path.abspath(p) != os.path.abspath(draft_path):
+            if re.search(r"wrong", label, re.I):
+                notes.append("wrong C: file is labelled wrong")
+            elif not is_blob(data) and os.path.exists(draft_path):
+                why = _wrongc_note(fn, p, draft_path)
+                if why:
+                    notes.append("wrong C: " + why)
         b = build(fn, rel(p), "base-" + label.replace("/", "_"))
         r = score(fn, b)
         rows.append((label, r, notes, data))
@@ -535,7 +553,7 @@ def cmd_bases(args):
     usable = [row for row in rows
               if row[1]["state"] in ("MATCH", "MISMATCH")
               and "header-expanded" not in row[2]
-              and not any(n.startswith("reads before set") for n in row[2])]
+              and not any(n.startswith(("reads before set", "wrong C")) for n in row[2])]
     if not usable:
         print("NO USABLE BASE: nothing here compiles as a readable draft. "
               "Rebuild from the assembly or port a pre-rename source "

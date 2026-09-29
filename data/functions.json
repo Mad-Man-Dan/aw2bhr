@@ -31323,23 +31323,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code-0801D390.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "Writes a 2x2 block of background tilemap entries for one army: a per-army base tile plus a graphic from sub_080261A4 on top, and status tiles chosen by flags below. Two of the army slots are drawn mirrored. What the picture shows (probably a unit icon with status marks) is not confirmed.",
-    "status": "Compiles to the right size (560 bytes) with 99.1% of bytes identical; 4 bytes differ. Spelling the two `t + r` sums differently stops the compiler computing the sum once and keeping it live across the calls. What is left: at one store the original adds r and t before adding 0x402, and every spelling that gets that order back makes the two sums identical again, so the compiler shares them.",
-    "left": "Three register choices are tied together: the original keeps a2 in a register instead of on the stack, keeps 0x400 in its own register, and gives t and r the opposite registers to ours. The permuter has no recorded run on this draft and is the next thing to try.",
-    "tried": [
-     "Swapping the declaration order of t and r: identical output.",
-     "Holding 0x400 in an ordinary local: the compiler folds it back into constants; no change.",
-     "Pinning that local to the register the original uses: the constant is now set up once and shared, as in the original, but a2 is still stored on the stack and another value moves register."
-    ]
-   },
-   "note": "PARKED Wave 71 at 552/560 (-8), 39.5%. Fixed-r8 base binding correctly groups repeated 0x400 uses, but a2 still spills instead of occupying sl, leaving the frame and t/r allocation wrong. Declaration order and ordinary scalar base locals are byte-neutral.",
-   "wave95": "Base: sub_0802216C.w95-start.c (39.5%, size -8, `register int base asm(\"r8\")` pin). Draft now has the pin removed (plain `int base;`, permuter-compatible); NOT scored or permuted this wave (permuter slot was used up by sub_0801C01C and sub_08022BB8's hand work). ROM detail read: a5..a8 and a3 are spilled at [sp,#0..#0x10] (five slots), a2 in sl, a4 in sb, 0x400 set in r8 at the start of the a3==0/0x80 arm. Next step: chained permuter run from the unpinned draft (never run on this function).",
-   "wave96": "Base: sub_0802216C.w96-start.c (the unpinned draft, 25.0%, size-12; best.c is the same source with `register int base asm(\"r8\")`, whose 39% is the pin, so it was not used). Final source rewritten in plain style (comment replaced); bytes identical to the spellings below.\n\nResult: 25.00% size-12 -> 97.3% size-exact, first difference +0x8a, 15 bytes differ. NOT matched.\n\nWhat moved it (in order of effect):\n1. The `t + r + 0x402` / `t + r + base` pair. Both sums were spelled `t + r`, so gcse computed it once in the first arm and reused it at the end of the chain (`adds r4,r5,r6` kept live in r4 across the calls). That live value is what forced a2 into a stack slot and pushed 0x400 and a3>>6 into the wrong hi registers. Spelling ONE of the two sums differently (`t + (r + 0x402)`) stops the reuse: 212 differing instruction lines -> 102, frame 0x18 -> 0x14, a2 back in sl. Any non-identical spelling of either sum does the same; commuting alone (`r + t` on both) does not. The wave 65 \"temp for 0x400\" and the wave 71 pin were chasing a symptom of this reuse.\n2. Else arm: `dst[1] = t + (r + 1)`, `dst[0x20] = t + (r + 2)`, `dst[0x21] = t + (r + 3)` (constant added to r inside the parentheses). These reproduce the ROM's `adds r0,r5,#K; adds r0,r6,r0` exactly; the source association picks which register gets the constant first.\n3. `a6 + (u16)(t + 0x6C)` in both arms (found by the permuter as `a6 + inline_fn(t)` with `inline int inline_fn(u16 x) { return x + 0x6C; }`). The value is unchanged (t is u16 and the store truncates), the u16 conversion of the sum makes the ROM's order: dst+0x42 address first, then the value, and a6 loaded last. A plain `inline` helper also emitted an out-of-line copy of itself; the cast has neither problem.\n4. `dst[1] = r + t + base` (r first) in the first arm.\n\nLeft (three places, all in the a3 == 0 / 0x80 arm):\n* the ROM computes `(r+1)+t` BEFORE materialising 0x400 in r8 (`adds; adds; movs #0x80; lsls; mov r8`), this draft materialises first. Tried `dst[0] = X + (base = 0x400)`, `(base = 0x400) + X`, and `X + 0x400` with `base = 0x400` after: none moves it (the last one is +5 instructions).\n* dst[1]: the ROM sums `adds r0,r6,r5` (r first) and this compiles to `adds r0,r5,r6`; every spelling of `r + t` in that expression, including narrowed forms, gives t first here.\n* the 0x402 site: ROM is (r+t) then a pool-loaded 0x402; the only spellings that avoid reusing dst[1]'s sum give (t+0x402)+r. A 10 x 10 joint search of association and `(u16)` placement over the two sites found nothing better.\nUntested reading: the operand order in the ROM looks like r has the LOWER pseudo number than t (t is assigned before the call that makes r, so it cannot be a declaration matter; declaration order was byte-neutral again here). A source form that creates r's pseudo before t's, without moving the call, is the open question.\nA copy `u16 u = t;` taken after `r` (to give the sums a higher-numbered operand) makes it much worse (raw 116 vs 8): u gets its own register.\n\nPre-registered \"two variables\" hypothesis for this park: refuted for the mechanism given (the missing bytes are not copies); the size gap was spill/reload traffic caused by ONE value (`t + r`) shared across blocks, i.e. the opposite, too FEW distinct values.\n\nProposed summary: does = writes a 2 x 2 block of tilemap entries; status = 97.3% identical, size exact; left = operand order of three sums in the a3 == 0 or 0x80 arm and where the 0x400 constant is loaded; tried = `t + r` spellings, u16 conversions, copy of t, base assignment position.\n\n### wave 96, later update (permuter)\nA 600 s chain from the 97.3% file dropped the `base` local: writing the literal `+ 0x400` in the three sums keeps the bytes and the ROM's r8 constant still appears. FINAL: 99.11%, size-exact, first difference +0x140, 4 bytes differ: only the dst[0x21] sum in the a3 == 0 / 0x80 arm (ROM `(r+t)` then pool 0x402; this compiles `(t+0x402)+r`). Every spelling that produces `(r+t)+0x402` is 22 instructions worse, because it is again the same `r + t` that dst[1] computed and gcse reuses it (the ROM does not reuse it). A further 500 s permuter run found nothing. Source is work/sub_0802216C/sub_0802216C.c (plain C, no `base` local, no helper function).\n\n### wave 96, final round (lead's hypothesis: keep `t + r + 0x402`, respell the `+ 0x400` site)\nTested 10 spellings of dst[1] (`t + (r + 0x400)`, `0x400 + t + r`, `r + (t + 0x400)`, `(t + 0x400) + r`, `(r + 0x400) + t`, `(u16)` forms, ...) against `t + r + 0x402` and `r + t + 0x402`. Result: the dst[0x21] site then matches the ROM, but every dst[1] respelling loses the ROM's `(r + t)` then `add r0, r8` and emits `mov r3, r8; adds r0,r5,r3; adds r0,r6,r0` instead (raw diff 70 lines vs 4 for the file kept). Keeping dst[1] as `r + t + 0x400` with `t + r + 0x402` is the sharing case again (22 lines). Bringing back an `int base` local for dst[1] (and 0x20 / 0x00 in any subset) is also the sharing case (24 lines). So the two sites are coupled: the ROM's dst[1] and dst[0x21] both need `(r + t)` first, and no spelling found yields both without gcse reusing it. Kept: 99.11%, 4 bytes."
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,
@@ -75748,46 +75734,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code-0801D390.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "Draws a list of sprites: for each army 1..sub_080248F8() that is not defeated, draws sprite (team colour + 0x3d) at x 8 and y = army * 16 + 0x30 with sub_0801F34C, then draws two fixed sprites (2 and 0xa9).",
-    "status": "Reports the right size (104 bytes), but that is a coincidence: the code is one instruction (2 bytes) short and literal-pool alignment padding makes up the difference. 70 of 104 bytes differ (32.7% line up).",
-    "left": "The original computes `i << 4` twice; our compiler reuses the first result for the y argument. Every spelling that stops the reuse costs more than 2 bytes, so the one idea left is a wider source context (a macro or inline boundary shared with neighbouring functions), which cannot be tested from inside this function.",
-    "tried": [
-     "Ten plain rewrites of the y value and loop body (`i * 16 + 0x30`, `i << 4`, `(i - 1) * 16 + 0x40`, a temporary, if/else, continue, switch, an element pointer): all byte-identical.",
-     "`(u16)` casts or a u16 temporary for y: they stop the reuse but add 4 bytes.",
-     "A volatile copy of i for the second use: stops the reuse and gives the original's instructions there, but costs a stack slot, a register and memory traffic.",
-     "A `static inline` helper for the y value or the record index: byte-neutral.",
-     "An `int zero` local passed as the last two arguments (worse), or the defeated flag read into a local (neutral).",
-     "The automatic permuter, about 22,000 tries: nothing better.",
-     "All seven compiler profiles: identical result."
-    ]
-   },
-   "bytes": 104,
-   "best": "Reports `size: match` at 104 bytes and 32.7% identical, first difference at +0x6. Re-verified wave 73 (W73-C), unchanged since wave 37.",
-   "remaining_diff": "ONE INSTRUCTION. The ROM computes `i << 4` TWICE because its first copy is clobbered in place by its own `subs r0, r0, r4`, while agbcc's 3-operand `sub r0, r2, r4` leaves the shift alive in r2 for cse_insn to substitute. cse_insn fired in BOTH builds; the original's copy simply had nothing to substitute. So this is a register-allocation difference, not a CSE-failure and not a statement-shape one.",
-   "why_it_is_close": "Everything else matches: the loop shape, the *0x3c synthesis, the argument grouping and both trailing calls.",
-   "axes_ruled_out": [
-    "IT IS NOT SIZE-EXACT, AND ANY SCREEN KEYED ON `size: match` IS MIS-INCLUDING IT. The candidate is 2 bytes of CODE shorter and gets exactly 2 bytes back as literal-pool alignment padding. Wave 58 (W58-D) flagged this and wave 73 re-confirmed it. Treat it as a missing-instruction case, never as an allocation case.",
-    "Wave 37 (W37-P3): TEN source shapes, all byte-identical -- `i * 16 + 0x30`, `i << 4`, `0x30 + i * 16`, `(i - 1) * 16 + 0x40`, `y = i * 16; ... y + 0x30`, `if (...) call;`, `if (... != 0) continue; call;`, if/else both ways, `switch (unk14) { case 0: }`, and the element bound as `p = &gUnknown_08499598[i]` or `p = gUnknown_08499598`. None puts a CODE_LABEL between the two shifts, which is the only thing that would end the CSE extended basic block.",
-    "Wave 37 (W37-P3): the `(u16)` forms -- `(u16)(i * 16 + 0x30)` and a `u16 y` temporary. These DO break the CSE because HImode arithmetic is a different RTL expression, but they pay `lsl #16; lsr #16` for it: +4 bytes for a 2-byte problem. This also settles that the third parameter of sub_0801F34C is NOT narrow.",
-    "Wave 37 (W37-P3): `u16 i` is right -- the bottom `bls` needs shorten_compare on two unsigned narrow operands; `int i` gives `ble` and `u8 i` truncates the increment at 24 bits rather than the ROM's 16.",
-    "Wave 43 (W43-H): decomp-permuter, 22,157 iterations, 4 threads, 300 s -- nothing. The candidate is a strictly BETTER allocation than the ROM's and the permuter's variants are all well-allocated too, so the search space does not contain the original's answer.",
-    "Wave 43 (W43-J): the zero-cost-pressure lever (`int zero = 0;` bound before the loop and passed as arguments 4 and 5) costs a register rather than nothing -- r5 is burned for the whole function and the push list grows to {r4, r5, lr}. Strictly worse.",
-    "Wave 43 (W43-J): reading unk14 into a local and passing it as the fifth argument -- neutral on the residual. Worth recording that it reproduces the ROM's `str r1,[sp]` EXPLICITLY where the shipped body gets the same bytes only via gcc's knowledge that r1 == 0 on that path, so it is the likelier original spelling; not shipped because it is not an improvement.",
-    "Wave 43 (W43-J): adding a live range cannot UN-SUBSTITUTE a CSE. That lever closed three slot-wrong siblings in the same batch and cannot reach this one, which is one instruction the ROM has and the candidate does not. Do not try it again.",
-    "WAVE 81 (W81-C): temporary-profile sweep on the unchanged draft -- default, no-force, o1, o1-no-force, old-agbcc and old-agbcc-no-force ALL report identical 104-byte size-exact / 32.7% / 70 differing bytes. The toolchain axis had never been named in this entry; it is now measured and closed."
-   ],
-   "settled_by_this_attempt": [
-    "Wave 43 (W43-H) re-framed wave 37's diagnosis and the re-framing is the durable part: this is NOT 'why did cse_insn not fire', it is 'which register did the shift land in'. That is why all ten source shapes produced identical code -- they were the wrong axis."
-   ],
-   "note": "Wave 73 (W73-C). DOCUMENTED DEAD END, and the class is the doc's own: the permuter is useless on a residual of one extra instruction, and so is the live-range lever. Three waves (37, 43 W43-H, 43 W43-J) have each concluded the same thing by different routes. The only untested reading is a WIDER SOURCE CONTEXT -- this function sharing a translation unit or an inline boundary with a neighbour -- which is not reachable from inside the function. Do not spend a wave's budget re-measuring in-function spellings.",
-   "wave86": "WAVE 86 (W86-E, vocabulary-twin axis): twin sub_080853B0 (src/decomp/c_080853B0.c) is a SAME-VOCABULARY NEIGHBOUR, not a shape twin. Its distinguishing construct (counter from 0 with the record indexed [i + 1]) is refuted by this function's own assembly: both scaled indices read the SAME register (`lsls r0,r4,#4` feeding the *0x3c synthesis and `lsls r2,r4,#4` feeding `adds r2,#0x30`), the increment block is the counter itself with `movs r4,#1` at entry -- record index and position index are ONE variable starting at 1, exactly as drafted. The twin's two scaled indices derive from DIFFERENT values, so its build never had a shared i<<4 and cannot exhibit the residual: a twin that does not contain the residual's construct cannot supply a solved instance of it. 0 probes, 0 try_match, draft unchanged; the wave-73 'documented dead end' and the 'NOT size-exact -- 2 bytes of code short plus 2 of pool padding' warnings both stand.",
-   "wave89": "WAVE 89 (W89-C, then W89-H's diagnostic): the wave-88 levers are REFUTED and the class is closed for them -- both occurrences of `i << 4` sit in ONE basic block with no `bl` between them (so the static-inline helper is deleted outright, measured byte-neutral) and the value never arrives through memory, which is the only thing volatile or the helper acts on. BUT THE AXIS IS LIVE, AND A THREE-WAVE-OLD FRAMING IS WRONG: W43-H's re-framing ('not whether cse fired, but which register the shift landed in') was used to declare ten source shapes the wrong axis. Forcing the second occurrence to be unavailable makes agbcc emit the ROM's OWN destructive `lsl r0,r4,#4 / sub r0,r0,r4` with no other change -- the register is DOWNSTREAM of the CSE. What is still needed is a FREE way to break the CSE: the (u16) forms break it but cost +4 for a 2-byte problem, and the fifth splitter does not apply (its reachable set is address computations with a narrow VARIABLE operand, and on a bare narrow read combine folds the mask INTO the load). General diagnostic born here, now a doc chapter: before calling a residual 'an allocation difference beside a CSE', KILL THE CSE in a probe however expensively and look at the registers -- if they fall into place you have one fact and a live axis. Run it BOTH ways: it confirmed a live axis here and killed a dead one on sub_08035170. Evidence: work/sub_08045FC8/W89-notes.md.",
-   "wave89_permuter_blocked": "WAVE89 PERMUTER-BLOCKED: this draft currently carries a wave-88-style `static inline` helper written with `__inline__`/`__typeof__`, which PYCPARSER REJECTS -- permute.py reports 'could not score the starting point', which is a SYNTAX ERROR, not a result. So no permuter run on the CURRENT draft has ever actually executed, and any permuter negative recorded against a draft carrying the helper is void. `static inline` plus the explicit struct tag is BYTE-IDENTICAL and parses (W89-F, measured). Re-spell before recording any permuter verdict here."
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,
@@ -102913,25 +102862,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code-0801D390.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "Per-frame draw of a scrolling group of sprites for a proc. The group's y is half the proc's halfword counter unk44: it draws unk48 sprites from the codes in unk2f[], one sprite at x 0x3a, up to three icons 16 pixels apart from x 0x6a for the unk2c[] entries that are not -1, and one sprite from the 16-byte table gUnknown_085816F0[unk4c], each only when its y is on screen. Then it decrements the counter and calls Proc_Break once y is below -0x7c.",
-    "status": "Compiles 8 bytes short of 360, 41.9% of bytes in place. The difference is in the third loop (the three icons): the ROM holds x shifted left 16 bits, computed once per pass and shared by the 0x1ff mask and the increment, which frees a register for the 0x1ff constant and gives it an 8-byte stack frame instead of the draft's 4.",
-    "left": "Find a spelling where the value masked with 0x1ff is a 16-bit truncation the compiler cannot prove unnecessary, so that it computes the shifted x once and shares it between the mask and the increment.",
-    "tried": [
-     "u16 x with `x & 0x1ff`, int x with u16 casts, and an extra `x = (u16)x` in the loop: the compiler drops the truncation; no change (352 bytes).",
-     "s16 x: the increment then uses a signed shift, which is wrong.",
-     "No mask at all: 344 bytes (16 short), so the mask is real.",
-     "The truncation written as an explicit shift pair: 348 bytes; computing x from i with no running value: 348 bytes.",
-     "`x += 0x10` moved into the for-increment: byte-identical.",
-     "A wide running value plus a separate u16 copy: gets the 8-byte frame but not the shared shifted value; the other way round keeps the 4-byte frame."
-    ]
-   },
-   "note": "PARKED Wave 78 at 352/360 (-8), 41.9%. Separate narrow snapshots and live wide accumulators recover either the eight-byte frame pressure or the shifted truncation sequence, never both. Residual is the third-loop PRE and mask/preheader allocation.",
-   "wave95": "Base: existing draft (352/360, -8, 41.9%). Pre-registered hypothesis (wave-94 chapter: the running x must be something the compiler cannot bound) NOT settled in its favour.\n- Fold-proof mask on the mask operand, `(((u32)x << 16) & 0xffff0000) >> 16) & 0x1ff` with `u16 x`: 348 (-12), 41.4%. Folds like the earlier spellings (combine discharges it, then the shift pair is gone, nothing is shared with the increment).\n- `u32 x` with the increment written as the shift pair `x = ((x << 16) + 0x100000) >> 16` and the mask operand `((x << 16) >> 16) & 0x1ff`: 348 (-12), 43.1% (higher score only because the size moved; first difference still +0xa).\n- Mechanism: x's two defs (0x6a and the truncated increment) let nonzero_bits prove x <= 0xffff, so any truncation of x in the mask is deleted by combine; the ROM's shared `lsls r5,r1,#16` therefore needs a definition of x that is NOT single-range, and none is available from the constants in this loop.\nProposed summary left: loop 3 keeps x<<16 once per pass in the ROM; every spelling that keeps the truncation lets combine delete it. Not permuter-run (size -8)."
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,
@@ -113139,55 +113072,9 @@
   "mode": "THUMB",
   "directive": "thumb_func_start",
   "src": "code-0806CFC8.s",
-  "status": "parked",
+  "status": "matched",
   "asm_resident_reason": null,
-  "parked_reason": {
-   "summary": {
-    "does": "Copies a w-by-h block of tilemap entries into a 32-wide BG tilemap at (x, y), adding `base` to each entry and clipping to the 32x32 map. When `flip` is set it mirrors the block left to right and toggles each entry's horizontal-flip bit.",
-    "status": "Now compiles to the right size (216 bytes) where it used to be 12 too long, with 56.9% of bytes in place. The flipped loop no longer builds stepping pointers the original does not have. What is left is one stack slot: this build keeps three local values on the stack where the original keeps two, and that shifts the registers everywhere.",
-    "left": "In the flipped loop the compiler turns both the source and the destination address into pointers that step each iteration (two extra stack slots, and x loses its register), where the original recomputes both addresses every time. The untried idea is to keep one more value live inside that inner loop so the compiler declines to do this, as the matched sub_0806B120 did by turning two stores into bitfield stores.",
-    "tried": [
-     "Four other spellings of the source index: all compile the same way.",
-     "The destination as one folded index: wrong for both loops; separate row and column terms are kept.",
-     "Reusing the src parameter instead of the local copy p: the local is right, it puts the load where the original has it.",
-     "`int flip` instead of `u8 flip`: u8 is right.",
-     "One loop nest with the flip test inside: the original has two nests.",
-     "Writing `w - (ix + 1)` explicitly: still makes both stepping pointers and also moves x out of its register; worse.",
-     "Keeping extra pointers live across the two halves: no change, or a bigger stack frame.",
-     "Automatic permuter, 300 seconds x 4 threads: no match (the 57% best.c it left is unreadable output, not this draft)."
-    ]
-   },
-   "bytes": 216,
-   "best": "56.94% -- 216 bytes, SIZE-EXACT (was 17.54% at +12 at wave 93 start)",
-   "remaining_diff": "ONE FACT: agbcc strength-reduces both pointers in the FLIPPED arm -- `subs r2,#2` walking the source backwards and `adds r3,#2` walking the destination forwards, plus two extra frame slots for their hoisted initial values, which is where the +12 bytes and the spill of `x` out of r7 come from -- where the ROM recomputes BOTH addresses from scratch every iteration and reduces nothing. The ROM's flipped inner loop hoists only `lsls r3,r5,#6` (iy*64) and the 0x400 constant, and its only induction variable is `ix` itself.",
-   "why_it_is_close": "Everything else is byte-exact and must be kept: the UNFLIPPED arm (which the ROM DOES reduce, and which this reproduces instruction for instruction), the prologue, the frame holding map at [sp] and p at [sp,#4], both clip tests, and the register map (ip = w, sl = y, base in sb).",
-   "axes_ruled_out": [
-    "THE ROM'S OWN TWO ARMS ARE THE PROOF THAT SPELLING IS NOT THE VARIABLE: they index the same map with the same clip tests and differ only in whether the compiler reduced. Do not spend attempts on index spellings.",
-    "Source index spelling: `src[iy*0x20 + (w-ix-1)]`, `*(src + (w-ix-1) + iy*0x20)`, `src[iy*0x20 + w - ix - 1]` and `*(p + (w - (ix+1)))` all strength-reduce identically.",
-    "Destination spelling: `map[(y+iy)*0x20 + (x+ix)]` folds the index and scales it once (`lsl #5; add; lsl #1`) and is wrong for BOTH arms; `*(map + (x+ix) + (y+iy)*0x20)` gives the ROM's two separate scalings (`lsls #6` for the row, `lsls #1` for the column). This one WAS worth bytes and is kept.",
-    "`p` as a separate local seeded from `src` versus reassigning the `src` parameter. The local is right: it puts p's ldr/str after the promoted-mode conversion group, exactly where the ROM has it, and the same change closed the siblings sub_080727C0 and sub_0807286C.",
-    "`u8 flip` versus `int flip`. The lone `lsls r0,r0,#0x18` in the conversion group is the u8 parameter's PROMOTE_MODE extension with the `lsr` dropped by combine, so u8 is right.",
-    "Two separate loop nests versus one nest with the flip test inside. The ROM has two nests (the `beq` is above both).",
-    "Wave 57 (W57-D): `w - (ix + 1)` spelled explicitly in place of `w - ix - 1`. Still reduces both pointers AND additionally spills `x` out of r7 into [sp,#0xc], so strictly worse. Note what this means for READING the ROM: its `adds r4,r2,#1` at the top of the flipped inner body, shared between the source index and the loop increment, is a CONSEQUENCE of the giv not being reduced, not a cause of it. Do not try to reproduce that sharing from the source.",
-    "Wave 72 (W72-F): CROSS-ARM POINTER LIVENESS. Keeping the original src parameter live for the unflipped arm is byte-neutral -- the flipped arm still reduces both pointer GIVs and keeps the 16-byte frame. Distinct q/out locals used only by the later arm increase the frame to 20 bytes WITHOUT suppressing either giv.",
-    "decomp-permuter: 300 s, 4 threads, no byte match."
-   ],
-   "settled_by_this_attempt": [
-    "The function blits a w-by-h block of tilemap entries into a 32-wide BG tilemap at (x,y), adding `base` to each entry and clipping to the 32x32 screen block; `flip` mirrors horizontally, which also toggles each entry's HFLIP bit (0x400).",
-    "loop.c discards a giv when `lifetime * threshold * benefit < insn_count`. Nothing reachable from C addresses that comparison directly, and no spelling probed has moved it."
-   ],
-   "note": "Wave 73 (W73-C). The open lever is register PRESSURE, not spelling -- the ROM's flipped arm reads like a loop strength_reduce declined to reduce because too much was already live. Wave 72 ruled out the cross-arm form of that; what remains untried is pressure INSIDE the flipped inner loop itself. Compare sub_0806B120, matched in wave 73, where switching two stores to bitfields added exactly one live constant and that alone stopped strength_reduce from making an element address a pointer giv -- the same mechanism, in the direction this function needs.",
-   "wave93": {
-    "result": "17.54% at +12 bytes -> 56.94% SIZE-EXACT, first difference stays +0xa",
-    "base_adopted": "best.c/recovered.c (56.94%), audited as equivalent C and adopted. Its only change is a volatile int temporary in the flipped arm's store holding ix (renamed new_var -> col); the source index still uses ix, so the same cell gets the same value, and volatile on a local nothing else touches adds no observable behaviour.",
-    "mechanism": "The volatile read forces the value to memory and back, which defeats exactly the strength reduction this park was about -- the first thing that has ever moved this function. It is the right MECHANISM and the wrong CONSTRUCT, and the frame proves it: ROM sub sp, #8 (map at [sp], p at [sp,#4]) against the candidate's sub sp, #12. A volatile local is an addressable object so it costs a third slot, and the ROM has no third stack object at all. The size still comes out exact because the one new slot replaces the two the hoisted giv inits needed.",
-    "six_spellings_measured": "plain int col temp 17.54% at +12 and BYTE-IDENTICAL to writing no temp; u16 *d bound in its own statement 17.54% at +12 and also byte-identical; 8-bit fold-proof mask on the destination index 18.64% at +4 with NO local; the same mask on both indices 19.64% at +8; u16 ix 10.19% at the EXACT size but with a 4-byte frame because it drops p off the stack; u16 ix and u16 iy 11.82% at +4.",
-    "what_this_rules_out": "An ordinary local is not a splitter here -- agbcc coalesces it away and reduces exactly as before. Only volatile defeats the reduction, and it cannot do so without adding a frame object. Size-exact is reachable two ways and neither frame is right: the volatile form is one slot long and u16 ix is one slot short. The fold-proof mask is the only partial splitter that needs no local (+12 to +4 on the destination index alone, and applied to the source index as well it costs 4 bytes back), and it is where the next attempt should start.",
-    "permuter": "900 s x 4 threads from the 56.94% base: no candidate matched or improved, draft restored unchanged.",
-    "generalised": "docs/agbcc-codegen.md now carries a chapter on reading the frame-slot count as a spelling lever, measured here and on sub_0801FAC4 in opposite directions.",
-    "residual": "216/216, 123 of 216 bytes differ, first difference +0xa. One extra frame slot (12 against 8) and the register renumbering that follows from it, which is also why the previously byte-exact unflipped arm now differs."
-   }
-  },
+  "parked_reason": null,
   "named": false,
   "kind": "game",
   "trivial": false,

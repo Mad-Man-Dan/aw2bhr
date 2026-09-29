@@ -39,3 +39,15 @@ prologue copies are mutually exclusive in every spelling measured. agbcc will
 always leave exactly one of the two parameters in its incoming register. The
 draft (fused dst/base, both copies, 43 instructions, size-exact 87.5%) is
 unchanged and is still the best file.
+
+## wave 97 (W97-L)
+Base unchanged (87.50%, size-exact, only register numbers differ). Read sub_080726E8's copy-back step (lever 3):
+it does not apply -- this function has no strength-reduction residual, the instruction stream is already 1:1.
+Separate-row-base spellings compiled through spellings.py (all keep the row base in its own pseudo):
+`base = dst + x + y*0x20`, `dst = dst + x; base = dst + y*0x20`, `d2 = dst` copy, `dst = base` after -- size-exact but
+46.59% (the base goes to ip, dst stays in r0, so the ROM's prologue `adds r4, r0, #0` is missing: dst is never a
+pseudo that outlives the stack-parameter load); `dst += x; base = dst; base += y*0x20` and `do { base = dst + ...
+} while (0)` are 4 bytes short (14.77%). Nothing gives dst a prologue copy without making it the row base.
+Mechanism of the tension: gcc only copies a parameter out of r0 when the pseudo is handed a callee-saved register
+by global-alloc, which needs a live range beyond one block; the row-base spellings shorten dst's range to the
+entry block. Not run through the permuter again (converged in wave 93).

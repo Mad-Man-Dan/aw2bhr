@@ -1,0 +1,540 @@
+{
+ "wrong": [
+  {
+   "fn": "sub_0801A718",
+   "cand": "sub_0801A718/wrong-best.c.wrongc.c",
+   "base": "sub_0801A718/base-sub_0801A718.w97-start.c",
+   "similarity": 0.72,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 398
+  },
+  {
+   "fn": "sub_0801A718",
+   "cand": "sub_0801A718/wrong-w93-perm1-8333.c.wrongc.c",
+   "base": "sub_0801A718/base-sub_0801A718.w97-start.c",
+   "similarity": 0.72,
+   "pattern": [
+    "unreachable"
+   ],
+   "emu": "uninit",
+   "emu_ndiff": 0,
+   "emu_ok": 398
+  },
+  {
+   "fn": "sub_0801A718",
+   "cand": "sub_0801A718/wrong-w94-perm2-8864.c.wrongc.c",
+   "base": "sub_0801A718/base-w93-base-7955.c",
+   "similarity": 0.64,
+   "pattern": [
+    "uninit-textual"
+   ],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 398
+  },
+  {
+   "fn": "sub_0801C01C",
+   "cand": "sub_0801C01C/wrong-sub_0801C01C.w95-perm2-out-WRONG.c",
+   "base": "sub_0801C01C/base-sub_0801C01C.w97-perm1-start.c",
+   "similarity": 0.7,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 86,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0801D390",
+   "cand": "sub_0801D390/wrong-w93-perm1-5619.c.wrongc.c",
+   "base": "sub_0801D390/base-best.c",
+   "similarity": 0.95,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 337
+  },
+  {
+   "fn": "sub_0801ECE8",
+   "cand": "sub_0801ECE8/wrong-best.c.wrongc.c",
+   "base": "sub_0801ECE8/base-w86-start.c",
+   "similarity": 0.59,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 339,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0801ECE8",
+   "cand": "sub_0801ECE8/wrong-w94b-perm1-hi-zeroed.c.wrongc.c",
+   "base": "sub_0801ECE8/base-w86-start.c",
+   "similarity": 0.59,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 339,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0801F234",
+   "cand": "sub_0801F234/wrong-sub_0801F234.w96-perm1-WRONG.c",
+   "base": "sub_0801F234/base-w89-start.c",
+   "similarity": 0.55,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 391,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0801FAC4",
+   "cand": "sub_0801FAC4/wrong-best.c.wrongc.c",
+   "base": "sub_0801FAC4/base-best.c",
+   "similarity": 0.77,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 12,
+   "emu_ok": 384
+  },
+  {
+   "fn": "sub_0801FAC4",
+   "cand": "sub_0801FAC4/wrong-best.c.wrongc2.c",
+   "base": "sub_0801FAC4/base-best.c",
+   "similarity": 0.81,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 4,
+   "emu_ok": 387
+  },
+  {
+   "fn": "sub_0801FAC4",
+   "cand": "sub_0801FAC4/wrong-sub_0801FAC4.w96-perm1-WRONG.c",
+   "base": "sub_0801FAC4/base-w93-base-4556.c",
+   "similarity": 0.52,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 10,
+   "emu_ok": 386
+  },
+  {
+   "fn": "sub_0801FAC4",
+   "cand": "sub_0801FAC4/wrong-vesly-best.c.wrongc.c",
+   "base": "sub_0801FAC4/base-best.c",
+   "similarity": 0.77,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 12,
+   "emu_ok": 384
+  },
+  {
+   "fn": "sub_0801FAC4",
+   "cand": "sub_0801FAC4/wrong-w93-perm1-6185.c.wrongc.c",
+   "base": "sub_0801FAC4/base-best.c",
+   "similarity": 0.81,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 4,
+   "emu_ok": 387
+  },
+  {
+   "fn": "sub_08020754",
+   "cand": "sub_08020754/wrong-best.c.wrongc.c",
+   "base": "sub_08020754/base-sub_08020754.w93-start.c",
+   "similarity": 0.44,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 44
+  },
+  {
+   "fn": "sub_08020754",
+   "cand": "sub_08020754/wrong-vesly-best.c.wrongc.c",
+   "base": "sub_08020754/base-sub_08020754.w93-start.c",
+   "similarity": 0.44,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 44
+  },
+  {
+   "fn": "sub_08022618",
+   "cand": "sub_08022618/wrong-recovered.c.wrongc.c",
+   "base": "sub_08022618/base-perm-w91-q1.c",
+   "similarity": 0.83,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 20,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_08022618",
+   "cand": "sub_08022618/wrong-vesly-best.c.wrongc.c",
+   "base": "sub_08022618/base-perm-w91-q1.c",
+   "similarity": 0.36,
+   "pattern": [
+    "uninit-textual"
+   ],
+   "emu": "differs",
+   "emu_ndiff": 13,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-best.c.wrongc.c",
+   "base": "sub_0802F6A0/base-w92-faithful.c",
+   "similarity": 0.64,
+   "pattern": [
+    "unreachable"
+   ],
+   "emu": "differs",
+   "emu_ndiff": 52,
+   "emu_ok": 205
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-permA-92-wrongc.c",
+   "base": "sub_0802F6A0/base-vD96.c",
+   "similarity": 0.96,
+   "pattern": [
+    "loop-nested"
+   ],
+   "emu": "differs",
+   "emu_ndiff": 18,
+   "emu_ok": 207
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-permB-80-wrongc.c",
+   "base": "sub_0802F6A0/base-vF96.c",
+   "similarity": 0.94,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 16,
+   "emu_ok": 207
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-sub_0802F6A0.w92-start.c.wrongc.c",
+   "base": "sub_0802F6A0/base-w92-faithful.c",
+   "similarity": 0.67,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 68,
+   "emu_ok": 212
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-vesly-sub_0802F6A0.c.wrongc.c",
+   "base": "sub_0802F6A0/base-w92-faithful.c",
+   "similarity": 0.67,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 68,
+   "emu_ok": 205
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-wave74-pre-chain.c.wrongc.c",
+   "base": "sub_0802F6A0/base-w92-faithful.c",
+   "similarity": 0.66,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 70,
+   "emu_ok": 221
+  },
+  {
+   "fn": "sub_0802F6A0",
+   "cand": "sub_0802F6A0/wrong-wave74-pre-permute.c.wrongc.c",
+   "base": "sub_0802F6A0/base-w92-faithful.c",
+   "similarity": 0.68,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 68,
+   "emu_ok": 212
+  },
+  {
+   "fn": "sub_080303C8",
+   "cand": "sub_080303C8/wrong-best.c.wrongc.c",
+   "base": "sub_080303C8/base-vesly-sub_080303C8.c",
+   "similarity": 0.83,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_080303C8",
+   "cand": "sub_080303C8/wrong-vesly-best.c.wrongc.c",
+   "base": "sub_080303C8/base-vesly-sub_080303C8.c",
+   "similarity": 0.83,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0803CFA4",
+   "cand": "sub_0803CFA4/wrong-best.c.wrongc.c",
+   "base": "sub_0803CFA4/base-sub_0803CFA4.w93-start.c",
+   "similarity": 0.8,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 38
+  },
+  {
+   "fn": "sub_0803CFA4",
+   "cand": "sub_0803CFA4/wrong-w94b-perm1-k-dropped.c.wrongc.c",
+   "base": "sub_0803CFA4/base-sub_0803CFA4.w93-start.c",
+   "similarity": 0.78,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 39
+  },
+  {
+   "fn": "sub_0804CA98",
+   "cand": "sub_0804CA98/wrong-sub_0804CA98.w96-perm1-WRONG-volatile.c",
+   "base": "sub_0804CA98/base-sub_0804CA98.w96-perm1-start.c",
+   "similarity": 0.44,
+   "pattern": [
+    "volatile"
+   ],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0805634C",
+   "cand": "sub_0805634C/wrong-sub_0805634C.w96-perm3-volatile.c.wrongc.c",
+   "base": "sub_0805634C/base-sub_0805634C.w96-perm3-start.c",
+   "similarity": 0.76,
+   "pattern": [
+    "volatile"
+   ],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 64
+  },
+  {
+   "fn": "sub_08057164",
+   "cand": "sub_08057164/wrong-best.c.wrongc.c",
+   "base": "sub_08057164/base-best.c",
+   "similarity": 0.62,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 319,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_08057164",
+   "cand": "sub_08057164/wrong-sub_08057164.w96-perm1-idx0-clobber.c.wrongc.c",
+   "base": "sub_08057164/base-sub_08057164.w96-perm1-start.c",
+   "similarity": 0.51,
+   "pattern": [
+    "loop-const"
+   ],
+   "emu": "differs",
+   "emu_ndiff": 345,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_08057164",
+   "cand": "sub_08057164/wrong-w94b-perm1-idx-clobber.c.wrongc.c",
+   "base": "sub_08057164/base-best.c",
+   "similarity": 0.62,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 319,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_08057BDC",
+   "cand": "sub_08057BDC/wrong-best.c.wrongc.c",
+   "base": "sub_08057BDC/base-sub_08057BDC.w93-start.c",
+   "similarity": 0.85,
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_0805D344",
+   "cand": "sub_0805D344/wrong-sub_0805D344.w95-WRONG-80.c",
+   "base": "sub_0805D344/base-sub_0805D344.w96-start.c",
+   "similarity": 0.91,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 72,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_080607E8",
+   "cand": "sub_080607E8/wrong-vesly-best.c.wrongc.c",
+   "base": "sub_080607E8/base-sub_080607E8.w92-start.c",
+   "similarity": 0.49,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 124,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_080607E8",
+   "cand": "sub_080607E8/wrong-vesly-sub_080607E8.c.wrongc.c",
+   "base": "sub_080607E8/base-sub_080607E8.w92-start.c",
+   "similarity": 0.72,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 124,
+   "emu_ok": 400
+  },
+  {
+   "fn": "sub_080607E8",
+   "cand": "sub_080607E8/wrong-w94-perm1-7965.c.wrongc.c",
+   "base": "sub_080607E8/base-sub_080607E8.w92-start.c",
+   "similarity": 0.74,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 47,
+   "emu_ok": 150
+  },
+  {
+   "fn": "sub_08074AD0",
+   "cand": "sub_08074AD0/wrong-best.c.wrongc.c",
+   "base": "sub_08074AD0/base-sub_08074AD0.w93-start.c",
+   "similarity": 0.88,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 75,
+   "emu_ok": 75
+  },
+  {
+   "fn": "sub_0807B7BC",
+   "cand": "sub_0807B7BC/wrong-sub_0807B7BC.w95-WRONG-58.c",
+   "base": "sub_0807B7BC/base-vT.c",
+   "similarity": 0.84,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 79,
+   "emu_ok": 157
+  },
+  {
+   "fn": "sub_0807B7BC",
+   "cand": "sub_0807B7BC/wrong-sub_0807B7BC.w95-WRONG-59.c",
+   "base": "sub_0807B7BC/base-vT.c",
+   "similarity": 0.69,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 78,
+   "emu_ok": 153
+  },
+  {
+   "fn": "sub_0807E980",
+   "cand": "sub_0807E980/wrong-w92-ptr-perm1.c.wrongc.c",
+   "base": "sub_0807E980/base-w93f-ptr-fixed.c",
+   "similarity": 0.92,
+   "pattern": [],
+   "emu": "differs",
+   "emu_ndiff": 25,
+   "emu_ok": 69
+  },
+  {
+   "fn": "sub_08046A84",
+   "cand": "sub_08046A84/wrong-sub_08046A84.w95-perm3-out.c",
+   "base": "sub_08046A84/base-sub_08046A84.w95-perm3-start.c",
+   "similarity": 0.83,
+   "pattern": [
+    "volatile"
+   ],
+   "emu": "uninit",
+   "emu_ndiff": 0,
+   "emu_ok": 391
+  }
+ ],
+ "good": [
+  {
+   "fn": "sub_0801C01C",
+   "cand": "sub_0801C01C/good-sub_0801C01C.w95-perm1-out.c",
+   "base": "sub_0801C01C/base-sub_0801C01C.w95-perm1-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_0802216C",
+   "cand": "sub_0802216C/good-sub_0802216C.w96-perm1-out.c",
+   "base": "sub_0802216C/base-sub_0802216C.w96-perm1-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_080364F4",
+   "cand": "sub_080364F4/good-sub_080364F4.w95-perm1-out.c",
+   "base": "sub_080364F4/base-sub_080364F4.w95-perm1-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_080364F4",
+   "cand": "sub_080364F4/good-sub_080364F4.w95-perm2-out.c",
+   "base": "sub_080364F4/base-sub_080364F4.w95-perm2-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_080364F4",
+   "cand": "sub_080364F4/good-sub_080364F4.w95-perm3-out.c",
+   "base": "sub_080364F4/base-sub_080364F4.w95-perm3-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_08037A78",
+   "cand": "sub_08037A78/good-sub_08037A78.w95-perm1-out.c",
+   "base": "sub_08037A78/base-sub_08037A78.w95-perm1-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_08037A78",
+   "cand": "sub_08037A78/good-sub_08037A78.w95-perm2-out.c",
+   "base": "sub_08037A78/base-sub_08037A78.w95-perm2-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_08037A78",
+   "cand": "sub_08037A78/good-sub_08037A78.w95-perm3-out.c",
+   "base": "sub_08037A78/base-sub_08037A78.w95-perm3-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_08046A84",
+   "cand": "sub_08046A84/good-sub_08046A84.w95-perm1-out.c",
+   "base": "sub_08046A84/base-sub_08046A84.w95-perm1-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  },
+  {
+   "fn": "sub_08046A84",
+   "cand": "sub_08046A84/good-sub_08046A84.w95-perm2-out.c",
+   "base": "sub_08046A84/base-sub_08046A84.w95-perm2-start.c",
+   "pattern": [],
+   "emu": "same",
+   "emu_ndiff": 0
+  }
+ ],
+ "_comment": "Benchmark for tools/wrongc.py --self-test. 'wrong' = files a wave labelled wrong C (NOTES.md), each with the nearest sibling draft as base; 'good' = permuter outputs a wave read and adopted. Nine 'wrong' files are not wrong in behaviour (identity inline helper, padding, going the wrong way) or need a path the random inputs never take; they stay as the honest denominator. floor = what the tool must still reach; measured 2026-09-29: 34 of 43 flagged (9 by patterns, 31 by the emulator), 0 of 10 good flagged.",
+ "floor": {
+  "pattern": 9,
+  "any": 32,
+  "good_flagged_max": 0
+ }
+}

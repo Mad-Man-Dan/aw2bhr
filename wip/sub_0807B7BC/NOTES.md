@@ -95,3 +95,21 @@ Base: the `do { } while (0)` around the whole outer body (148, -8, 5.8%), kept a
 RESULT: SIZE-EXACT (156), 51.3%, first difference +0xa. Draft = `sub_0807B7BC.w95-perm3-start.c` = current `sub_0807B7BC.c`. Permuter chain (600 s each): 5.8 -> 46.8 -> 51.3 (both semantically identical to the start, checked by reading). What it changed: `total` is `int` (the u16 store at the end truncates identically), a variable `new_var = 0` stands for the zero in the two `!= 0` loop tests, `new_var2 = 0` stands for the NULL test on outTotal, and the return sits inside the `do { } while (0)`. Runs 3 and 4 (58.3, 59.0) were WRONG C: `new_var = tile;` is written inside the glyph loop over the very variable used as the zero constant. Kept as `.w95-WRONG-58.c` / `.w95-WRONG-59.c`. Rewriting that step with a distinct temp (`tc = tile`) is 51.3%, the same as before it, so the improvement was the clobber.
 The park's "one register short" is gone: the wrapper plus zero-variable form saves the third high register; what is left is register choice (str in r5 not r4, etc.) inside a size-exact body.
 Lever 1: does not transfer as a source form (copies fold away); the permuter's zero-variable is the working equivalent. Comments in the draft are the permuter's, not to be promoted as is.
+
+## wave 97
+
+best.c is WRONG C (wrongc: `new_var = tile` inside the glyph loop, the same clobber as the wave-95 WRONG files); not used.
+Base: the size-exact 51.28% draft (w97-start). Rewriting from scratch with the wave-96/97 levers:
+* `u16 total` as the ROM has it (per-iteration `lsls/lsrs` into a hi register) and a copy-back step
+  (`nx = str + 1` at the top of the outer body, `str = nx` at the bottom) put in front of the wrapper draft: 25%, frame 8.
+* Removing the permuter's zero variable only in the inner `for` test (`g->unk00 != 0`) while keeping it in the outer `while`
+  and for the outTotal test, plus u16 total and the nx copy-back: **size-exact 156, 57.05%** (was 51.28); kept as e3 below if the
+  draft file is that version. Removing the zero variable from all three tests: 152/144 and worse.
+* `total = count = 0;` / `count = total = 0;`: byte-identical.
+Residual on the 57% form: the ROM keeps `str+1` in r6 and spills only `count` ([sp] = count); we keep `count` in r7, `tile`
+in r6 and spill `nx` in r3 across the Decompress call (frame 8 vs 4), and the zero variable still occupies `sl`.
+
+Update (end of wave 97): permuter from the 57.05% form: 57.05 -> 66.03 -> 66.67, size-exact 156, first diff +0xc. Both runs are
+valid C (read): `tile & 0x3ff` / `<< 1` / `<< 4` split into temporaries, `0x06010000` and `4` and `8` held in ints, `*str` read
+into a u8 before the compare, `nx = str + 1` inside the do-block. Names are still `new_var*`; the residual is unchanged in kind
+(callee-saved assignment: the ROM keeps `str+1` in a low register and spills only `count`). Draft file is the 66.67% form.

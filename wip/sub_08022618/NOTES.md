@@ -85,3 +85,14 @@ at 55.00 and 60.25 respectively.
 Residual is still pure allocation and still size-exact; first difference +0xc.
 The `.rodata` pool words are not part of it -- trymatch resolves the
 candidate's own two-word pool against the ROM's 0x080909A8 / 0x080909AC.
+
+## wave 97 (W97-L)
+Base: existing draft (61.25%, size-exact), restored as the final file. The draft aliases `x` into the unit-id
+variable (`id = x`); the ROM has x in r5 and y in r4 as their own u16 pseudos (x is re-passed to sub_080225CC and
+added into the row index), the id is a separate u16 loaded via `lsls #16; lsrs #16` with the zero test on the shifted
+value, and (s16)id is a separate `lsls r6,r7,#16` copy used for both sub_0802571C's argument and the unit index.
+Tried: x/y separate with `u16 id` (10.75%, -4), with the draft's `flags = (id = ...)` s16 spelling (56.00%, size-exact,
+first diff +0xC), `int id` (53%, adds a frame). The ax/by doubled values sit in sl/sb from the start in the ROM
+(x, y, id and the id copy fill r4-r7 first); in every separate-x spelling ax/by take r4/r5 and x goes to r8.
+Permuter chained once from the 56.00% spelling: 59.75% (kept as sub_08022618.w97L-perm1.c, not adopted: below the draft).
+Proposed summary tried: + "x and y as own variables (the ROM's shape) and a u16/int id".

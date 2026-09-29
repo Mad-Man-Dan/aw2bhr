@@ -2,7 +2,7 @@
 
 0x08061DCC, 136 bytes, THUMB, parked.
 
-Best score so far: 27.2%.
+Best score so far: 32.4%.
 
 ## What it does
 

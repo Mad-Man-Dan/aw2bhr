@@ -32,3 +32,12 @@ Recomputing lets the compiler strength-reduce and then drop the spills that
 give this function its 0x20 frame and its whole stack-slot map -- which is the
 part of the draft that is already byte-exact. The dead copy has to come from
 something that does not relieve register pressure.
+
+## wave 97
+
+Base: the wave-93 draft (76.36%). Hand probes: `c = a1[i]` bound before `j = j*8`, after it, and re-bound inside the search loop:
+before/after -> 216 B (-4), 25% / 23.6% (frame 0x1c); re-bound inside the loop -> folded back to the plain draft (76.36%).
+Permuter (2 runs of 900 s, `--current`): run 1 76.36 -> **82.27%, size-exact 220**, first diff +0x36; run 2 no improvement.
+What run 1 changed (read, semantically identical): the search stride is held in a local (`new_var = 8;` `k += new_var; p += new_var;`),
+the table base is bound to `new_var2 = gUnknown_08614024` after the loop entry and used for the `+4` advance read, and the VRAM base is
+written `0x06010000 + (i * 0x100)`. Names should become `stride` / `tbl` when someone promotes it. The draft file is the 82.27% form.

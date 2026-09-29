@@ -27,3 +27,25 @@ next use. It moves 5 bytes; the W80 residual is otherwise unchanged:
 
 W83-D's zero-trip do/while promotion and the seven-profile sweep stay ruled
 out (see the parked entry).
+
+## wave 97 (W97-G)
+
+Base: `sub_08054C5C.c` (== w90-perm1-934.c), 93.39% size-exact, first diff +0x13. Unchanged.
+
+Pre-registered hypothesis (a shared side/other-side index recomputed by the ROM) did NOT hold: the whole residual is
+in the setup loop preheader (nothing after +0x13 differs except register names from the r6/r7 swap), not in the
+call groups.
+
+Probes (trymatch):
+- Drop the `t = i` copy (index `i` directly) while KEEPING `i = d[side ^ 1]` as the 4th argument: 560/560
+  size-exact but 75.5%. Preheader gets `movs rN,#0` for the counter in r7 (ROM r6), keeps `adds r0,#2` for sp+10,
+  and the tail argument costs `ldrh r7; adds r3,r7,#0` (ROM loads straight into r3). So the `i =` reuse is what
+  makes the no-copy form size-exact, but it adds a copy the ROM does not have.
+- No-copy without `i =`: 568/560 (+8), 16%. With `u = d[side^1]` instead of `i =`: 568, 16.4%. Only reuse of the
+  dead loop counter keeps the size; a fresh pseudo does not.
+Conclusion: unchanged allocno-order residual (counter reg, sp+10 derivation, A48/A52 in r9). No new lever.
+
+Proposed summary: does = builds per-side setup tables for two sides, then runs the setup chain for the active side
+and the other side if they differ. status = 93.4% size-exact, all differences in the loop preheader register
+assignment. left = counter in r7 not r6, sp+10 derived off sp+8, wrong table base in r9. tried = see above plus
+waves 78-90.

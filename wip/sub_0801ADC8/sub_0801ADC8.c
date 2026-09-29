@@ -56,10 +56,10 @@ void sub_0801ADC8(void)
 {
   int erased;
   int i;
+  int new_var;
   int k;
   int len;
   int v;
-  volatile unsigned long keptFlags;
   sub_0801B598(gUnknown_0200CC30, (void (**)(void)) gUnknown_0200CC34);
   gUnknown_0200CD08 = 0;
   ((void (*)(void)) gUnknown_0200CC28)();
@@ -78,10 +78,12 @@ void sub_0801ADC8(void)
     v = 0;
     for (i = 0; i < 0x10; i++)
     {
-      keptFlags = gUnknown_0200CC38.unk20[i] | 8;
       if ((gUnknown_0200CC38.unk20[i] & 0x10) != 0)
       {
-        gUnknown_0200CC38.unk20[i] = (keptFlags | v) & 0xef;
+        gUnknown_0200CC38.unk20[i] = gUnknown_0200CC38.unk20[i] | 8;
+        gUnknown_0200CC38.unk20[i] = gUnknown_0200CC38.unk20[i];
+        new_var = (gUnknown_0200CC38.unk20[i] | v) & 0xef;
+        gUnknown_0200CC38.unk20[i] = new_var;
       }
     }
 

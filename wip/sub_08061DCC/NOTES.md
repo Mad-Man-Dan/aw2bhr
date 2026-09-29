@@ -145,3 +145,22 @@ the candidate's SIZE has to be judged on its first-difference offset and on
 which instructions it added, never on the percentage.** All three of these
 functions are short of the ROM, which is exactly the condition that makes the
 metric unreliable.
+
+## wave 97 (W97-G)
+
+Base: draft (27.21%). Moved to **32.4% size-exact, first difference +0x9** (was +0x4) by removing the early
+`pa = &gUnknown_0816DB08;` / `pb = &gUnknown_0816DB0C;` statements and binding them at the first use:
+`if (p->unk04_0 < (*(*(pa = &gUnknown_0816DB08)))[3])` and `pb = &gUnknown_0816DB0C;` right before the ammo test.
+The bitfield load and shift now come first as in the ROM.
+
+Residual: the ROM keeps the pool address in r2 for the first read and copies it to r6 AFTER that read
+(`adds r6, r2, #0`); the draft copies first and reads through r6. Three respellings (comma-bind after, bind
+in a `+ (pa = ..., 0)` term, bind at the start of the second block) all scored worse (25.7%, 27.2%, 19.9%).
+Second half: ROM loads the unit id once into r2 and holds a copy in r3, multiplies by a fresh `movs #0x5c` each
+time; draft shares the 92 constant in r5. Binding the id to a u8 local (`[id]` in both places) drops to 128/136
+(-8); the fold-proof mask form on the local is byte-identical to the current 32.4%. So the fold-proof mask stays.
+No wrong C: pa/pb are pointers to the volatile pointer objects (no local slot, frame unchanged).
+
+Proposed summary: does = raises byte 9's 3-bit field to 2 when the unit's HP is below the first threshold; to 1
+when ammo is used and HP is not full-fuel proportional. status = 32.4% size-exact. left = address copy order
+(r6 copy after first read) and the 92 multiplier shared instead of rematerialised. tried = see above + waves 37-92.

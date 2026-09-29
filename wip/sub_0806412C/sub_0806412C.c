@@ -100,6 +100,7 @@ void sub_0806412C(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u16 a6, u16 a7, u16 a8
   const u8 *tbl;
   int *dst;
   u8 *q;
+  u8 *base;
   int v7;
   struct Unk0202F110Entry *entries;
   int v8;
@@ -121,15 +122,17 @@ void sub_0806412C(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u16 a6, u16 a7, u16 a8
 
   }
 
-  for (i = 0; (i + 1) <= (5 + 1); i++)
+  for (i = 0; i <= 5; )
   {
+    int k = i + 1;
     entries = gUnknown_0202F110;
-    q = entries[i].unk02;
+    base = (u8 *)entries;
+    q = base + 2 + i * 8;
     for (j = 3; j >= 0; j--)
     {
       *(q++) = *(tbl++);
     }
-
+    i = k;
   }
 
   gUnknown_0202F110[0].unk00 = a1;

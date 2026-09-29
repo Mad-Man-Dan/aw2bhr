@@ -73,99 +73,99 @@ struct Unk85D6A48Row /* 0x18 */
 
 void sub_080560A4(u16 a, u16 b, u16 c, u16 d, u16 e)
 {
-    struct Unk85D6A48Row *rows;
-    u16 *p;
-    const u16 *q;
-    u16 n;
-    u16 i;
-    u16 j;
-    u16 t;
-    u16 new_var;
-
-    n = 0;
-
-    if (a == 0)
-        return;
-
-    rows = (struct Unk85D6A48Row *)gUnknown_085D6A48;
-
-    if (rows[gUnknown_03004580[b][1]].unk04 == 1)
+  struct Unk85D6A48Row *rows;
+  u16 *p;
+  const u16 *q;
+  u16 n;
+  u16 i;
+  u16 j;
+  u16 t;
+  u16 new_var;
+  n = 0;
+  if (a == 0)
+  {
+    return;
+  }
+  rows = (struct Unk85D6A48Row *) gUnknown_085D6A48;
+  if (rows[gUnknown_03004580[b][1]].unk04 == 1)
+  {
+    for (i = 0; i < 5; i++)
     {
-        for (i = 0; i < 5; i++)
+      gUnknown_0202980A[b][n] = gUnknown_085521B4[b][i][0];
+      j = a - 1;
+      n++;
+      if (n == a)
+      {
+        gUnknown_0202980A[b][j] = gUnknown_08552148[b];
+        break;
+      }
+    }
+
+  }
+  else
+  {
+    for (i = 0; i < 5; i++)
+    {
+      t = gUnknown_0855218C[b][i][0];
+      if (gUnknown_02029A10[b].entries[t].unk01 != gUnknown_02029A10[b].entries[t].unk00)
+      {
+        gUnknown_0202980A[b][n] = t;
+        gUnknown_02029C14[b][t] = 2;
+        n++;
+      }
+    }
+
+    if (a > n)
+    {
+      for (j = 0; j < 5; j++)
+      {
+        t = gUnknown_0855218C[b][j][0];
+        if (gUnknown_02029C14[b][t] != 0)
         {
-            gUnknown_0202980A[b][n] = gUnknown_085521B4[b][i][0];
-            n++;
-
-            if (n == a)
-            {
-                gUnknown_0202980A[b][a - 1] = gUnknown_08552148[b];
-                break;
-            }
+          gUnknown_02029C14[b][t] = 0;
         }
-    }
-    else
-    {
-        for (i = 0; i < 5; i++)
+        else
         {
-            t = gUnknown_0855218C[b][i][0];
-
-            if (gUnknown_02029A10[b].entries[t].unk01
-                != gUnknown_02029A10[b].entries[t].unk00)
-            {
-                gUnknown_0202980A[b][n] = t;
-                gUnknown_02029C14[b][t] = 2;
-                n++;
-            }
+          q = gUnknown_08554A00[(b * 5) + t];
+          gUnknown_02029A10[b].entries[t].x = q[200];
+          gUnknown_02029A10[b].entries[t].y = q[201];
+          gUnknown_02029C14[b][t] = 1;
+          gUnknown_0202980A[b][n] = t;
+          n++;
+          if (n == a)
+          {
+            break;
+          }
         }
+      }
 
-        if (n < a)
-        {
-            for (j = 0; j < 5; j++)
-            {
-                t = gUnknown_0855218C[b][j][0];
-
-                if (gUnknown_02029C14[b][t] != 0)
-                {
-                    gUnknown_02029C14[b][t] = 0;
-                }
-                else
-                {
-                    q = gUnknown_08554A00[b * 5 + t];
-                    gUnknown_02029A10[b].entries[t].x = q[200];
-                    gUnknown_02029A10[b].entries[t].y = q[201];
-                    gUnknown_02029C14[b][t] = 1;
-                    gUnknown_0202980A[b][n] = t;
-                    n++;
-
-                    if (n == a)
-                        break;
-                }
-            }
-        }
     }
-
-    if (n > a)
-    {
-        for (i = 0; i < a; i++)
-            *((u16 *)((b * 0x6c) + (i * 2) + (char *)gUnknown_02029816)) = 1;
-
-        new_var = (u16)(i - 1);
-        gUnknown_02029808[b].unk0e[new_var] += n - a;
-    }
-    else
-    {
-        for (i = 0; i < a; i++)
-            *((u16 *)((b * 0x6c) + (i * 2) + (char *)gUnknown_02029816)) = 1;
-    }
-
-    p = gUnknown_08551E64[gUnknown_030045A0[gUnknown_0300450C]];
-
+  }
+  if (n > a)
+  {
     for (i = 0; i < a; i++)
-        gUnknown_02029822[b][i] =
-            p[gUnknown_08551E7C[b * 2 + gUnknown_0300450C] * 5 + i]
-            + gUnknown_08551D2A[gUnknown_030045A0[b ^ 1]][0];
+    {
+      *((u16 *) (((b * 0x6c) + (i * 2)) + ((char *) gUnknown_02029816))) = 1;
+    }
 
-    sub_08056638(b);
+    new_var = (u16) (i - 1);
+    gUnknown_02029808[b].unk0e[new_var] += n - a;
+  }
+  else
+  {
+    for (i = 0; i < a; i++)
+    {
+      *((u16 *) (((b * 0x6c) + (i * 2)) + ((char *) gUnknown_02029816))) = 1;
+    }
+
+  }
+  p = gUnknown_08551E64[gUnknown_030045A0[gUnknown_0300450C]];
+  for (i = 0; i < a; i++)
+  {
+    gUnknown_02029822[b][i] = p[(gUnknown_08551E7C[(b * 2) + gUnknown_0300450C] * 5) + i] + gUnknown_08551D2A[gUnknown_030045A0[b ^ 1]][0];
+  }
+
+  sub_08056638(b);
 }
 
 

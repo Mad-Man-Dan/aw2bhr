@@ -54804,3 +54804,104 @@ A cell VALUE loaded eagerly and held (sub_0804CA98): declare the cell as an
 top and the second array's `b94 = gUnknown_08136064;` inside the guarded block.
 That reproduces the ROM's `ldr rA,=cell; ldr rB,[rA]; mov sl,rB` pair and its
 position; the array base is then spilled unless enough registers stay free.
+
+## A SHARED `i << 4` IS UN-SHARED BY SPELLING THE OTHER USE AS `(i * 2 + c) * 8` (wave 97)
+
+`sub_08045FC8` needed the ROM's recomputed `i << 4`: the player-record scale
+`i * 0x3c` (`((i << 4) - i) << 2`) and the row position `i * 16 + 0x30` shared one
+shift, so the record scale kept a 3-operand `lsl r2,r4,#4; sub r0,r2,r4` and the
+position reused r2. Writing the position as `(i * 2 + 6) * 8` matched the function
+byte for byte: same value, but the shifted factor is `i * 2 + 6`, which is a
+different rtx, so cse has nothing to share and combine leaves `lsls r2,r4,#4;
+adds r2,#0x30` after it. Neighbours that do NOT work: `i * 8 * 2 + 0x30`,
+`(i << 3) * 2 + 0x30`, `i * 4 * 4 + 0x30`, `i * 16 + 6 * 8` (combine folds them back
+to `i << 4` before cse sees a difference: 32.7%); `(i + 3) * 16` and `(i * 16) | 0x30`
+get close (96.2% / 94.2%) but put the add before the shift or use `orr`. Rule: keep
+an ADD inside the factor that is multiplied by a power of two. Try it on any park
+where the ROM computes one scaled index twice.
+
+## TOOLS FOR THE PERMUTER'S WRONG C, AND FOR COMPARING SPELLINGS (wave 97)
+
+`python tools/wrongc.py <fn> <candidate.c> [--base FILE]` prints `OK` or one
+`WRONG:` / `WARN:` line per finding and exits 1 on any WRONG. The base is the file
+the candidate came from when the name says so (`X-permK-out.c` -> `X-permK-start.c`),
+else `work/<fn>/<fn>.c`. `--no-emu` runs the pattern rules only (instant). Two layers:
+
+- **Pattern rules** over a pycparser parse of the function text (no compile, header-
+  expanded permuter output is fine). WRONG: `volatile` added, callee multiset
+  changed (a helper defined in the same file, e.g. `inline_fn`, is transparent),
+  a wide type used as an index, a base variable assigned a constant or stepped
+  inside an expression in a loop, a local assigned and never read, a scalar
+  local whose first use in the source is a read, statements after a `return`.
+  WARN only (they fire on ordinary respellings): operators, integer literals,
+  parameters, call order, a call moving across a store, `x += 0;` padding.
+- **Differential testing** (`tools/wrongc_emu.py`). Both versions are compiled with
+  the project pipeline and run in a small Thumb interpreter on the same seeded
+  inputs (typed arguments, constants the code compares against, a total
+  pseudo-random memory, every callee stubbed and logged with its prototype's
+  arguments, `__divsi3` and friends real). Compared: call log, non-frame bytes
+  written, memory at each call, return value. `behaviour` = they differ;
+  `uninit-dynamic` = the candidate's result changes when only the garbage in
+  registers and frame it never set is changed (a read before set on a path the
+  compiler's warning cannot see). Register allocation, frame layout, `volatile`
+  slots and spills are invisible to it, which is the point. It reports how much of
+  the function the inputs reached; a `same` at 40% is weak.
+
+**Benchmark** (`python tools/wrongc.py --self-test`, corpus in `tools/wrongc_corpus/`,
+about 70 s warm): 43 files a wave labelled wrong (the 42 `*wrong*` files plus
+sub_08046A84's volatile run) against the sibling draft they resemble most.
+Flagged 34 (79%): 9 by patterns, 31 by the emulator (6 of them as `uninit-dynamic`).
+Per WRONG rule, hits on those 43: behaviour 29, uninit-dynamic 6, volatile 3,
+uninit-textual 2, unreachable 2, loop-const 1, loop-nested 1. The 9 not flagged are
+not wrong in behaviour (an identity `inline_fn`, `+= 0` padding, "correct C going
+the wrong way", a longer-but-worse best.c) or need a path the random inputs never
+take (sub_0801D390's read across two switch arms, sub_0803CFA4's `k -> 0` in one
+arm): counting only the wrong-in-behaviour files, 34 of 37. Good set: the 10
+permuter outputs waves 95-96 read and adopted: 0 flagged WRONG (WARN-tier
+rules fire on them: literals 5, operators 3, shifts 2). Emulator soundness, same
+source compiled by two compilers (o1 / old-agbcc / default vs configured; 100
+parked drafts, 213 comparisons): 203 same, 4 not run (never terminates),
+3 differ: one undefined-behaviour case (a local array indexed out of range, whose
+neighbour depends on frame layout), one difference on 1 run in 100 that was not
+explained, and one real agbcc difference (old-agbcc skips the `& 0xFF` after `u8 ++`). So expect roughly 1 in 70 verdicts to be a false
+WRONG, always with a concrete seed and the differing byte or argument to read.
+Synthetic mutants (7 kinds, 115 mutants of 40 promoted functions): 83% flagged.
+
+Wiring: `permute.py` refuses to keep an improvement wrongc.py rejects (against the
+draft as the run found it; log line `not kept: wrong C (tools/wrongc.py): ...`) and
+warns on a MATCH that it rejects. `drafts.py bases` tags such files
+`[wrong C: ...]` (pattern rules volatile / loop-const / wide-type /
+uninit-textual only, plus any file whose name contains "wrong") and never
+names one as the base.
+
+`python tools/spellings.py <fn> a.c b.c ...` (or `<fn> f.c --variants 0,1,2` for
+`#if VARIANT == n` blocks) builds each spelling with the project path into
+`build/drafts/` and prints size vs the ROM, byte match, first difference, and the
+`sub sp` / `push` lists next to the ROM's; `--one-unit` compiles all spellings as
+`V_0..V_n` in one unit for a quick frame and size screen. It writes nothing in work/.
+
+`permute.py` scored its starting point WITHOUT `--stack-diffs` (the search itself
+used it), so a draft whose only residual was swapped spill slots printed
+`base score 0` and ended as BASE-SCORES-ZERO before searching: sub_08037A78 now
+scores 36 at the start (measured on a copy) and the search runs.
+
+## A running u16 coordinate: try `s16` before deeper shift-pair spellings (wave 97, sub_0806AB9C)
+
+A loop-carried `u16 x` whose increment and `x & mask` both truncate lets combine prove x fits in 16 bits and delete the
+truncation the ROM shares between the mask and the increment (`lsls #16` once, used twice). Declaring the variable `s16`
+kept it (360 B, byte-exact). Cheap to test whenever the ROM shows a shared `lsls #16` per pass and every u16/int/u32
+spelling was too short.
+
+## An empty `case N: break;` arm is pruned; `case N: x += 0; break;` on the switched field is not (wave 97, sub_08068A00)
+
+Size-exact only; the tree is still rooted by the nine-node rule (index 4). Ranges count 2 in balance_case_nodes and move the root left.
+
+## A COPY-BACK LOOP STEP (`ix = nx;`) STOPS STRENGTH REDUCTION WITHOUT A FRAME OBJECT (wave 97)
+
+`sub_080726E8` matched: the flipped inner loop strength-reduced two pointers where the ROM re-derives both
+addresses each pass. `volatile` fixed it at the price of a third frame slot. The clean spelling is
+`nx = ix + 1;` at the top of the body and `ix = nx;` at the bottom: loop.c only treats `ix = ix + const` as a
+basic induction variable, so no giv is derived from `ix` and the frame is the ROM's. The ROM's shared
+`adds r4, r2, #1` is exactly this temp. Two follow-ups: write the source index as `*((p + (w - nx)) + (iy * 0x20))`
+so `iy*0x20` stays a separate term (the folded `p[iy*0x20 + w - nx]` loses the hoisted row scale), and assign a
+`ux = x + ix;` before `nx` to fix the order of the two adds in the block head.
