@@ -7,7 +7,8 @@
  * sub_08057D44 @ 0x08057D44
  */
 
-u32 sub_08057D44(int a1, int a2)
+u32 GetFigurePositionTable(int a1, int a2)
 {
     return gUnknown_08555450[a2][a1];
 }
+asm(".global sub_08057D44\n.thumb_set sub_08057D44, GetFigurePositionTable\n");

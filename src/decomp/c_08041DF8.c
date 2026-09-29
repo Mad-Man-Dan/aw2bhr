@@ -29,9 +29,9 @@ void UnitAttack_CommitMove(struct Unk41DF8Proc *proc)
 {
     u8 *p;
 
-    sub_0802C57C();
+    BackupUnitStartPosition();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
 
     if (proc->unk64 != 0)
     {

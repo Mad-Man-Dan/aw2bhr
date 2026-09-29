@@ -10,7 +10,7 @@
 /* MATCHED, wave 43 (W43-I), first attempt.
  *
  * Walks the byte script gUnknown_084997C8 selects with
- * gUnknown_0849D89C->unk04->unk00 and draws one sub_0803AAC0 row per entry
+ * gUnknown_0849D89C->unk04->unk00 and draws one UnitInfoPanel_DrawIconPair row per entry
  * pair. 0x07 terminates; 0x06 is a break that resets the row counter to 4 and
  * advances by ONE byte instead of two.
  *
@@ -73,7 +73,7 @@ void sub_0803AB3C(void)
                     e = -1;
             }
 
-            sub_0803AAC0(k, c, d, e);
+            UnitInfoPanel_DrawIconPair(k, c, d, e);
             i += 2;
             k++;
         }

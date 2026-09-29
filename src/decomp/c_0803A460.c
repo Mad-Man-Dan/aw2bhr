@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0803A460.
- * sub_0803A460 @ 0x0803A460
+ * UnitInfoPanel_Init @ 0x0803A460
  */
 
 /* MATCHED, and the first of a byte-identical pair with TerrainInfoWindow_OnEnd. Clears
@@ -20,7 +20,7 @@
  * THE SECOND CALL IS `DisableWindow0AndResetMapLayers(0, 0, 0, 0)`, and finding that is worth more
  * than this function: DisableWindow0AndResetMapLayers was promoted as `void (void)` and takes FOUR
  * parameters. See the correction in include/unknown-functions.h. */
-void sub_0803A460(void)
+void UnitInfoPanel_Init(void)
 {
     s16 i;
 
@@ -32,3 +32,4 @@ void sub_0803A460(void)
     RedrawUnitLayer();
     RedrawUnitIconLayer();
 }
+asm(".global sub_0803A460\n.thumb_set sub_0803A460, UnitInfoPanel_Init\n");

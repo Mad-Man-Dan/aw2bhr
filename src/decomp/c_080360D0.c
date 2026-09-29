@@ -53,7 +53,7 @@ void RunMoveSlideCommand(ProcPtr procArg)
             PlayMoveSlideStopSfx(proc);
             proc->unk35 = 5;
             sub_08027278(proc->unk42 >> 4, proc->unk44 >> 4);
-            sub_0803B4DC(0x7d);
+            PlayMusicOrSfx2(0x7d);
             if (gPlaySt.savingEnabled != 0
                 && gUnknown_030032D8 != 0x13
                 && (u8)sub_0805C974() == 0)

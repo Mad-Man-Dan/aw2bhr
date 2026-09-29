@@ -29,5 +29,5 @@ void sub_080755F0(void)
     gUnknown_030030E0.bits.target1_enable_bd = 0;
     gUnknown_030030E0.bits.target2_enable_bd = 1;
 
-    sub_0803B4DC(0x1DF);
+    PlayMusicOrSfx2(0x1DF);
 }

@@ -18,12 +18,12 @@
  *
  * `pop {r1}; bx r1` makes this value-returning; every caller discards it, so
  * `int` is the weakest fit. The `lsls #0x18; lsrs #0x18` before each `cmp` is
- * agbcc re-narrowing sub_0803CCB8's declared bool8. */
+ * agbcc re-narrowing LoadDesignRoomName's declared bool8. */
 int sub_08004E44(void)
 {
-    if (sub_0803CCB8(0, gDesignRoomName) != 1
-     && sub_0803CCB8(1, gDesignRoomName) != 1
-     && sub_0803CCB8(2, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(0, gDesignRoomName) != 1
+     && LoadDesignRoomName(1, gDesignRoomName) != 1
+     && LoadDesignRoomName(2, gDesignRoomName) != 1)
         return 2;
 
     return 0;

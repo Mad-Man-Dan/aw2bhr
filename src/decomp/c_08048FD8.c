@@ -19,7 +19,7 @@
  * NEEDS ITS POOL WORD PLACED. The data/promoted.json entry must carry
  *   "rodata": ["0x0812A158"]
  * then re-run tools/split_rodata.py and tools/gen_lds.py. The word holds
- * &gUnknown_084C30F8, exactly as sub_08048850's 0x0812A144 does.
+ * &gUnknown_084C30F8, exactly as RenderShopListBuffer's 0x0812A144 does.
  *
  * Picks the next script to run. unk839 starts as gUnknown_0200C420.unk0f; if
  * that is above 1 it either forces 2 (when unk836 is clear) or walks the
@@ -54,7 +54,7 @@ void BattleMaps_IDLE_08048FD9(ProcPtr proc)
 
     n = 1;
 
-    if (sub_08048F10() != 0)
+    if (ShopScreen_StepOffsetToZero() != 0)
         return;
 
     gUnknown_084C30F8->unk839 = gUnknown_0200C420.unk0f;

@@ -18,6 +18,6 @@ void CoPowerDamageHeal_ApplyWeather(struct Unk452A8 *p)
     if (p->unk2f != 0xff)
         ChangeGameWeather(p->unk2f);
 
-    sub_08039F58();
+    ApplyCoPowerStatus();
 }
 asm(".global sub_080452A8\n.thumb_set sub_080452A8, CoPowerDamageHeal_ApplyWeather\n");

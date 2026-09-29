@@ -9,7 +9,7 @@
 
 /* Scans gUnknown_02028360 for the first record whose rectangle contains
  * (a, b), stopping at the first record whose unk02_6 kind field is zero --
- * the same 0x3C0 mask sub_0803DE68 clears and struct Unk02028360's comment
+ * the same 0x3C0 mask ResetInventionRecords clears and struct Unk02028360's comment
  * already records. The loop test is `ldrh` + `and 0x3C0` with no shift, which
  * is how agbcc tests a bitfield against zero; the rectangle's own fields are
  * read as bitfields and get the canonical extract pairs instead

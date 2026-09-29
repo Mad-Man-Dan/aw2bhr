@@ -15,7 +15,7 @@
  * id up to 0xB3 that is not unlocked yet is drawn as the gUnknown_084C3F50
  * placeholder label, anything else as its name. The last argument to
  * PutTextScriptImmediate is 1 when the map's bit in gUnknown_02028030.unk30 (tested by
- * sub_0803CB24) is clear.
+ * HasMapBeenPlayed) is clear.
  *
  * In game mode 2 the rows start at top + 5 and DrawWarRoomRanks draws the rest of
  * the screen. Otherwise a header from gUnknown_08499CE4 goes on row 5, the rows
@@ -53,7 +53,7 @@ void DrawMapList(int first, int count, int top)
         for (i = 0; i < count; i++)
         {
             {
-                u8 bit = sub_0803CB24(gUnknown_02027F74.unk04[first + i]);
+                u8 bit = HasMapBeenPlayed(gUnknown_02027F74.unk04[first + i]);
                 unflagged = 1;
                 if (bit != 0)
                     unflagged = 0;
@@ -91,7 +91,7 @@ void DrawMapList(int first, int count, int top)
         for (i = 0; i < count; i++)
         {
             {
-                u8 bit = sub_0803CB24(gUnknown_02027F74.unk04[first + i]);
+                u8 bit = HasMapBeenPlayed(gUnknown_02027F74.unk04[first + i]);
                 unflagged = 1;
                 if (bit != 0)
                     unflagged = 0;

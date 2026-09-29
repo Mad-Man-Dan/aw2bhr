@@ -13,11 +13,12 @@ struct Unk32D38Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_08032D38(struct Unk32D38Proc *proc)
+void LinkMapPick_Loop(struct Unk32D38Proc *proc)
 {
     if (proc->unk58 == 0)
     {
-        sub_08032A00();
-        sub_08032950();
+        LinkMapPick_Draw();
+        LinkMapPick_HandleInput();
     }
 }
+asm(".global sub_08032D38\n.thumb_set sub_08032D38, LinkMapPick_Loop\n");

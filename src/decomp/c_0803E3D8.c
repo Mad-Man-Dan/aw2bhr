@@ -69,7 +69,7 @@ void SpawnInventionRecords(void)
                 AddMinicannonInventionRecord(x, y, a, b, 3);
                 break;
             case TERRAIN_VOLCANO:
-                sub_0803E1B0(x, y, 4, 4, 2, 1);
+                AddVolcanoInventionRecord(x, y, 4, 4, 2, 1);
                 break;
             case TERRAIN_CANNON_N:
                 AddCannonInventionRecord(x, y, 3, 3, a, 2, 1);
@@ -78,10 +78,10 @@ void SpawnInventionRecords(void)
                 AddCannonInventionRecord(x, y, 3, 3, a, b, 0);
                 break;
             case TERRAIN_FACTORY:
-                sub_0803E310(x, y, 3, 4, 1, 1);
+                AddFactoryInventionRecord(x, y, 3, 4, 1, 1);
                 break;
             case TERRAIN_BLOCKED:
-                sub_0803E108(x, y, 4, 4);
+                AddBlockedInventionRecord(x, y, 4, 4);
                 break;
             case TERRAIN_DEATHRAY:
                 AddDeathRayInventionRecord(x, y, 3, 3, 7, 7);

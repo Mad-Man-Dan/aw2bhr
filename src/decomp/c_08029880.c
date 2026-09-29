@@ -24,7 +24,7 @@ void DropCellPicker_Finish(void)
     {
         RebuildMapUnitLayers();
 
-        if (!sub_0802CBC8())
+        if (!UnitMenu_DropFirstUsability())
         {
             gUnknown_030033E4.unk00 = gUnknown_03003100.pos.unk00;
             gUnknown_030033E4.unk02 = gUnknown_03003100.pos.unk02;

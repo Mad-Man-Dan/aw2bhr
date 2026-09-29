@@ -37,7 +37,7 @@
  * unknown-functions.h is taken from this definition, not from a call site,
  * which is why the widths are firm. */
 
-void sub_08048850(u16 a1, u16 a2)
+void RenderShopListBuffer(u16 a1, u16 a2)
 {
     u16 i;
 
@@ -48,3 +48,4 @@ void sub_08048850(u16 a1, u16 a2)
         DrawShopItemRow(0, i * 2 + 2, gUnknown_084C30F8->unk032,
             gUnknown_02028E1C[a2 + i], 3);
 }
+asm(".global sub_08048850\n.thumb_set sub_08048850, RenderShopListBuffer\n");

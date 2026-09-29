@@ -17,7 +17,7 @@ struct Unk2C480Proc
     /* 0x20 */ u32 unk20;
 };
 
-void sub_0802C480(struct Unk2C480Proc *proc)
+void MinimapScreen_OnEnd(struct Unk2C480Proc *proc)
 {
     u32 v = proc->unk20;
 
@@ -29,3 +29,4 @@ void sub_0802C480(struct Unk2C480Proc *proc)
 
     gUnknown_03003334 = 0;
 }
+asm(".global sub_0802C480\n.thumb_set sub_0802C480, MinimapScreen_OnEnd\n");

@@ -101,7 +101,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
         else if (p->unk1f == (p->unk20 - 1))
             p->unk20 = p->unk1f;
 
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->repeated & DPAD_DOWN)
@@ -128,7 +128,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
                 p->unk20 = v;
         }
 
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->repeated & L_BUTTON)
@@ -150,7 +150,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
             p->unk20 -= 6;
         }
 
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->repeated & R_BUTTON)
@@ -172,7 +172,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
             p->unk20 += 6;
         }
 
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->repeated & DPAD_LEFT)
@@ -183,7 +183,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
             p->unk1e--;
 
         changed = 1;
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->repeated & DPAD_RIGHT)
@@ -194,7 +194,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
             p->unk1e++;
 
         changed = 1;
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->pressed & (SELECT_BUTTON | START_BUTTON))
@@ -204,7 +204,7 @@ void UnitList_HandleInput(struct Unk08047B98 *p)
 
         gUnknown_02028E18 = (gUnknown_02028E18 + 1) & 1;
         changed = 1;
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (changed == 1)

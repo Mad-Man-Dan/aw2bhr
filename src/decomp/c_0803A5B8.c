@@ -7,7 +7,7 @@
  * sub_0803A5B8 @ 0x0803A5B8
  */
 
-void sub_0803A5B8(void)
+void UnitClassInfo_DrawSelectionBrackets(void)
 {
     u8 d;
     u8 c;
@@ -29,3 +29,4 @@ void sub_0803A5B8(void)
     }
     DrawCornerBracketSprites(a + gUnknown_0849D89C->unk00, b, c, d);
 }
+asm(".global sub_0803A5B8\n.thumb_set sub_0803A5B8, UnitClassInfo_DrawSelectionBrackets\n");

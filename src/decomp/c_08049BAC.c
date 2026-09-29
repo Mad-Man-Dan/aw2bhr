@@ -7,7 +7,7 @@
  * sub_08049BAC @ 0x08049BAC
  */
 
-void sub_08049BAC(void)
+void ShopScreen_ScrollBackgroundHook(void)
 {
     if (gGameClock & 1)
     {
@@ -15,3 +15,4 @@ void sub_08049BAC(void)
         gUnknown_03002000--;
     }
 }
+asm(".global sub_08049BAC\n.thumb_set sub_08049BAC, ShopScreen_ScrollBackgroundHook\n");

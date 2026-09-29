@@ -54,9 +54,9 @@ void MapState_TurnHandoverPrompt(void)
     RebuildMapUnitLayers2();
     AiBuildInterestLists();
     if (ShouldPromptCountryName())
-        sub_0802BFBC();
+        StartScreenRevealWipeLocked();
     sub_08034C8C();
-    sub_0803B5E8();
+    FadeOutMusicDefault();
     gUnknown_030032D8 = 4;
 }
 asm(".global sub_08034AF8\n.thumb_set sub_08034AF8, MapState_TurnHandoverPrompt\n");

@@ -12,13 +12,13 @@
 /* "Play song id, unless sound is suppressed": when gPlaySt.unk0c is
  * set the id goes to PlayMusic and actually starts; otherwise it is only
  * PARKED in gUnknown_030005C8 with the requested slot gUnknown_030005CA blanked
- * to 0xFFFF, which is precisely the state sub_0803B640 next door later drains
+ * to 0xFFFF, which is precisely the state ReplayPendingMusic next door later drains
  * by replaying gUnknown_030005C8 through PlayMusic.
  *
  * The `u16` is a LOCAL and the parameter is `int`. Both readings -- `int a`
  * with `u16 v = a`, and a bare `u16` parameter -- are byte-identical here and
  * were probed as such, so the body cannot settle it; the CALLERS can, and they
- * say `int`: all four (sub_0803B660, PlayArmyCoMusic, PlayCoPowerMusic, PlaySuperCoPowerMusic)
+ * say `int`: all four (ReplayPendingMusicIfEnabled, PlayArmyCoMusic, PlayCoPowerMusic, PlaySuperCoPowerMusic)
  * are still assembly, but the (s16) cast below is only reachable with a
  * non-`u16` parameter -- with `u16` the cast would fold away and the ROM's
  * `lsls #0x10; asrs #0x10` in front of the `bl` would be a zero-extending

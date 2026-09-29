@@ -20,8 +20,9 @@ struct Unk3EB84Proc
  * operand of anything -- `ldrsh` has no immediate-offset form, which is also
  * why the base gets `adds r0, #0x4c` first.
  */
-void sub_0803EB84(struct Unk3EB84Proc *proc)
+void InventionFire_EndWhenDone(struct Unk3EB84Proc *proc)
 {
     if (proc->unk4c == gUnknown_03003F40)
         Proc_End(proc);
 }
+asm(".global sub_0803EB84\n.thumb_set sub_0803EB84, InventionFire_EndWhenDone\n");

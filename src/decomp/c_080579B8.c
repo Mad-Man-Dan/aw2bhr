@@ -22,7 +22,7 @@ struct Unk085D6A48Row
     /* 0x04 */ u8 filler_04[0x14];
 };
 
-void sub_080579B8(u16 *dst)
+void DrawBothSideHud(u16 *dst)
 {
     struct Unk085D6A48Row *rows;
     int pos;
@@ -35,8 +35,9 @@ void sub_080579B8(u16 *dst)
         idx = rows[gUnknown_03004580[i][1]].unk02 * 2 + i;
         pos = i << 19;
         sub_080576D4(dst, idx, (struct Unk8057Pos *)&pos);
-        sub_0805772C(dst, idx, (struct Unk8057Pos *)&pos);
-        sub_080577E4(dst, idx, (struct Unk8057Pos *)&pos);
+        DrawHpGaugeStrip(dst, idx, (struct Unk8057Pos *)&pos);
+        DrawHpNumber(dst, idx, (struct Unk8057Pos *)&pos);
         sub_08057860(dst, idx, (struct Unk8057Pos *)&pos);
     }
 }
+asm(".global sub_080579B8\n.thumb_set sub_080579B8, DrawBothSideHud\n");

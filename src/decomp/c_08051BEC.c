@@ -55,7 +55,7 @@ void DeathHandler_Tank(u16 a, u16 b)
         f);
 
     SetSlotSpriteFlicker(gUnknown_02029808[a].unk24[b], 1);
-    sub_080504A8(a, 0x10);
+    PlayFigureDestroySfx(a, 0x10);
 
     e = gUnknown_08553B10[a];
 

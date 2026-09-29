@@ -26,7 +26,7 @@
  *
  * gUnknown_03001FBC is named three times and loaded once (`ldrsh` through the
  * register-offset form), which is CSE and not a local. */
-void sub_0804B2A8(void)
+void FigureSprite_Loop(void)
 {
     u16 g;
     u16 s;
@@ -46,6 +46,7 @@ void sub_0804B2A8(void)
                      gUnknown_02029A10[g].entries[s].x - *q1, y - *q2);
     }
 }
+asm(".global sub_0804B2A8\n.thumb_set sub_0804B2A8, FigureSprite_Loop\n");
 
 /* The per-frame step of one side's shake/bounce animation. It bumps the
  * record's counter, decides whether the animation is over, then adds this
@@ -68,7 +69,7 @@ void sub_0804B2A8(void)
  * gUnknown_08136030 in the disassembly is agbcc's own -fforce-addr address
  * constant for gUnknown_02029690 (baserom.gba has 0x02029690 in that word), so
  * the array is named directly and the pool word is placed by the build. */
-void sub_0804B330(u16 a)
+void StepPanelScrollDriver(u16 a)
 {
     u16 i;
     u16 d;
@@ -106,3 +107,4 @@ void sub_0804B330(u16 a)
     *q1 = *q1 + d + p[i];
     *q2 += p[i + 0x28];
 }
+asm(".global sub_0804B330\n.thumb_set sub_0804B330, StepPanelScrollDriver\n");

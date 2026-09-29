@@ -12,7 +12,7 @@
  * written twice here and emitted once. gUnknown_03001FF8 being volatile costs
  * nothing on a plain store. */
 
-void sub_08039F58(void)
+void ApplyCoPowerStatus(void)
 {
     gUnknown_03001FF8 = 0;
     gUnknown_03001418 = 0;
@@ -20,3 +20,4 @@ void sub_08039F58(void)
     SetPlayerCoPowerStatus(gUnknown_030033EC);
     RebuildMapUnitLayers2();
 }
+asm(".global sub_08039F58\n.thumb_set sub_08039F58, ApplyCoPowerStatus\n");

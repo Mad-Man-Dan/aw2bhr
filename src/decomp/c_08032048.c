@@ -29,7 +29,7 @@
  * minus 180, i.e. int arithmetic that can go negative, hence the SIGNED
  * __divsi3 / __modsi3 rather than their unsigned twins. */
 
-void sub_08032048(void)
+void LinkDecodeSharedMapId(void)
 {
     gUnknown_03003F1C = gUnknown_030044C4 = 0;
 
@@ -37,3 +37,4 @@ void sub_08032048(void)
     gUnknown_0849B060->unk08 = (gPlaySt.mapID - 0xb4) % 3;
     gUnknown_0849B060->unk09 = (gPlaySt.mapID - 0xb4) / 3;
 }
+asm(".global sub_08032048\n.thumb_set sub_08032048, LinkDecodeSharedMapId\n");

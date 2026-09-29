@@ -7,7 +7,7 @@
  * sub_0802CC40 @ 0x0802CC40
  */
 
-int sub_0802CC40(void)
+int UnitMenu_SupplyUsability(void)
 {
     if (!UnitMenu_JoinUsability())
         return 1;
@@ -26,3 +26,4 @@ int sub_0802CC40(void)
 
     return 1;
 }
+asm(".global sub_0802CC40\n.thumb_set sub_0802CC40, UnitMenu_SupplyUsability\n");

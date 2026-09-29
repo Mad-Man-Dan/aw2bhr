@@ -16,7 +16,7 @@
  */
 
 
-/* The stop half of sub_080338C0's Proc_Start. */
+/* The stop half of LinkC4_SetCursorRow's Proc_Start. */
 
 void sub_08035010(void)
 {

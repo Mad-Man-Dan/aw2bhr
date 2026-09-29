@@ -4,67 +4,71 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0803C354.
- * sub_0803C354 @ 0x0803C354, sub_0803C37C @ 0x0803C37C, sub_0803C3A4 @ 0x0803C3A4, sub_0803C3CC @ 0x0803C3CC, ShopAvail_MapNotOwned @ 0x0803C3F4, sub_0803C40C @ 0x0803C40C, sub_0803C434 @ 0x0803C434, sub_0803C45C @ 0x0803C45C, sub_0803C474 @ 0x0803C474, sub_0803C48C @ 0x0803C48C, ShopAvail_CoNeedsFlag24 @ 0x0803C4B4, ShopAvail_CoNeedsFlag25 @ 0x0803C4DC, ShopAvail_CoNeedsFlag26 @ 0x0803C504, ShopAvail_CoNeedsRank @ 0x0803C52C, ShopAvail_CoNeedsRank3 @ 0x0803C574, ShopAvail_CoNeedsRank4 @ 0x0803C580, ShopAvail_CoNeedsRank5 @ 0x0803C58C, ShopAvail_CoNeedsFlag21 @ 0x0803C598, ShopAvail_CoNeedsFlag22 @ 0x0803C5C0, sub_0803C5E8 @ 0x0803C5E8, sub_0803C614 @ 0x0803C614, sub_0803C620 @ 0x0803C620, sub_0803C62C @ 0x0803C62C, sub_0803C638 @ 0x0803C638, sub_0803C644 @ 0x0803C644
+ * ShopAvail_MapNeedsCategory5 @ 0x0803C354, ShopAvail_MapNeedsCategory7 @ 0x0803C37C, ShopAvail_MapNeedsCategory2 @ 0x0803C3A4, ShopAvail_MapNeedsCategory3 @ 0x0803C3CC, ShopAvail_MapNotOwned @ 0x0803C3F4, sub_0803C40C @ 0x0803C40C, sub_0803C434 @ 0x0803C434, ShopAvail_CategoryNotUnlocked @ 0x0803C45C, ShopAvail_CoNotUnlocked @ 0x0803C474, ShopAvail_CoNeedsFlag23 @ 0x0803C48C, ShopAvail_CoNeedsFlag24 @ 0x0803C4B4, ShopAvail_CoNeedsFlag25 @ 0x0803C4DC, ShopAvail_CoNeedsFlag26 @ 0x0803C504, ShopAvail_CoNeedsRank @ 0x0803C52C, ShopAvail_CoNeedsRank3 @ 0x0803C574, ShopAvail_CoNeedsRank4 @ 0x0803C580, ShopAvail_CoNeedsRank5 @ 0x0803C58C, ShopAvail_CoNeedsFlag21 @ 0x0803C598, ShopAvail_CoNeedsFlag22 @ 0x0803C5C0, ShopAvail_CoNeedsUnlocked @ 0x0803C5E8, ShopAvail_CoNeedsUnlocked2 @ 0x0803C614, ShopAvail_CoNeedsUnlocked3 @ 0x0803C620, ShopAvail_CoNeedsUnlocked4 @ 0x0803C62C, ShopAvail_CoNeedsUnlocked5 @ 0x0803C638, ShopAvail_CoNeedsUnlocked6 @ 0x0803C644
  */
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C354(u32 id)
+int ShopAvail_MapNeedsCategory5(u32 id)
 {
     if (IsCampaignMapUnlockedByMapData(id))
         return -1;
-    if (!sub_0803CA9C(5))
+    if (!IsMapCategoryUnlocked(5))
         return 0;
     return 1;
 }
+asm(".global sub_0803C354\n.thumb_set sub_0803C354, ShopAvail_MapNeedsCategory5\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C37C(u32 id)
+int ShopAvail_MapNeedsCategory7(u32 id)
 {
     if (IsCampaignMapUnlockedByMapData(id))
         return -1;
-    if (!sub_0803CA9C(7))
+    if (!IsMapCategoryUnlocked(7))
         return 0;
     return 1;
 }
+asm(".global sub_0803C37C\n.thumb_set sub_0803C37C, ShopAvail_MapNeedsCategory7\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C3A4(u32 id)
+int ShopAvail_MapNeedsCategory2(u32 id)
 {
     if (IsCampaignMapUnlockedByMapData(id))
         return -1;
-    if (!sub_0803CA9C(2))
+    if (!IsMapCategoryUnlocked(2))
         return 0;
     return 1;
 }
+asm(".global sub_0803C3A4\n.thumb_set sub_0803C3A4, ShopAvail_MapNeedsCategory2\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C3CC(u32 id)
+int ShopAvail_MapNeedsCategory3(u32 id)
 {
     if (IsCampaignMapUnlockedByMapData(id))
         return -1;
-    if (!sub_0803CA9C(3))
+    if (!IsMapCategoryUnlocked(3))
         return 0;
     return 1;
 }
+asm(".global sub_0803C3CC\n.thumb_set sub_0803C3CC, ShopAvail_MapNeedsCategory3\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -77,7 +81,7 @@ int ShopAvail_MapNotOwned(u32 id)
 asm(".global sub_0803C3F4\n.thumb_set sub_0803C3F4, ShopAvail_MapNotOwned\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -91,7 +95,7 @@ int sub_0803C40C(void)
 }
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -105,35 +109,37 @@ int sub_0803C434(void)
 }
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C45C(u32 id)
+int ShopAvail_CategoryNotUnlocked(u32 id)
 {
-    if (sub_0803CA9C(id))
+    if (IsMapCategoryUnlocked(id))
         return -1;
     return 1;
 }
+asm(".global sub_0803C45C\n.thumb_set sub_0803C45C, ShopAvail_CategoryNotUnlocked\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C474(u32 id)
+int ShopAvail_CoNotUnlocked(u32 id)
 {
     if ((u8)IsCoUnlocked(id))
         return -1;
     return 1;
 }
+asm(".global sub_0803C474\n.thumb_set sub_0803C474, ShopAvail_CoNotUnlocked\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
-int sub_0803C48C(u32 id)
+int ShopAvail_CoNeedsFlag23(u32 id)
 {
     if ((u8)IsCoUnlocked(id))
         return -1;
@@ -141,9 +147,10 @@ int sub_0803C48C(u32 id)
         return 0;
     return 1;
 }
+asm(".global sub_0803C48C\n.thumb_set sub_0803C48C, ShopAvail_CoNeedsFlag23\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -158,7 +165,7 @@ int ShopAvail_CoNeedsFlag24(u32 id)
 asm(".global sub_0803C4B4\n.thumb_set sub_0803C4B4, ShopAvail_CoNeedsFlag24\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -173,7 +180,7 @@ int ShopAvail_CoNeedsFlag25(u32 id)
 asm(".global sub_0803C4DC\n.thumb_set sub_0803C4DC, ShopAvail_CoNeedsFlag25\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -257,7 +264,7 @@ int ShopAvail_CoNeedsRank5(u32 id)
 asm(".global sub_0803C58C\n.thumb_set sub_0803C58C, ShopAvail_CoNeedsRank5\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -272,7 +279,7 @@ int ShopAvail_CoNeedsFlag21(u32 id)
 asm(".global sub_0803C598\n.thumb_set sub_0803C598, ShopAvail_CoNeedsFlag21\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
- * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
+ * 1 (satisfied) or 0 (not yet). See the comment on IsMapCategoryUnlocked in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
 
@@ -299,7 +306,7 @@ int ShopAvail_CoNeedsFlag22(u32 id)
  * return 0;` swaps those two blocks and misses at the same length.
  */
 
-int sub_0803C5E8(u32 id)
+int ShopAvail_CoNeedsUnlocked(u32 id)
 {
     if (sub_0803CAD4(id))
         return -1;
@@ -309,55 +316,61 @@ int sub_0803C5E8(u32 id)
 
     return 1;
 }
+asm(".global sub_0803C5E8\n.thumb_set sub_0803C5E8, ShopAvail_CoNeedsUnlocked\n");
 
 /* `return sub_0803C5E8(id);` -- one of five byte-identical forwarders at
  * 0x0803C614/620/62C/638/644. Nothing sets up an argument register, so the
  * incoming r0 is passed through unchanged, and `pop {r1}; bx r1` says the
  * result is returned rather than discarded. */
 
-int sub_0803C614(u32 id)
+int ShopAvail_CoNeedsUnlocked2(u32 id)
 {
     return sub_0803C5E8(id);
 }
+asm(".global sub_0803C614\n.thumb_set sub_0803C614, ShopAvail_CoNeedsUnlocked2\n");
 
 /* `return sub_0803C5E8(id);` -- one of five byte-identical forwarders at
  * 0x0803C614/620/62C/638/644. Nothing sets up an argument register, so the
  * incoming r0 is passed through unchanged, and `pop {r1}; bx r1` says the
  * result is returned rather than discarded. */
 
-int sub_0803C620(u32 id)
+int ShopAvail_CoNeedsUnlocked3(u32 id)
 {
     return sub_0803C5E8(id);
 }
+asm(".global sub_0803C620\n.thumb_set sub_0803C620, ShopAvail_CoNeedsUnlocked3\n");
 
 /* `return sub_0803C5E8(id);` -- one of five byte-identical forwarders at
  * 0x0803C614/620/62C/638/644. Nothing sets up an argument register, so the
  * incoming r0 is passed through unchanged, and `pop {r1}; bx r1` says the
  * result is returned rather than discarded. */
 
-int sub_0803C62C(u32 id)
+int ShopAvail_CoNeedsUnlocked4(u32 id)
 {
     return sub_0803C5E8(id);
 }
+asm(".global sub_0803C62C\n.thumb_set sub_0803C62C, ShopAvail_CoNeedsUnlocked4\n");
 
 /* `return sub_0803C5E8(id);` -- one of five byte-identical forwarders at
  * 0x0803C614/620/62C/638/644. Nothing sets up an argument register, so the
  * incoming r0 is passed through unchanged, and `pop {r1}; bx r1` says the
  * result is returned rather than discarded. */
 
-int sub_0803C638(u32 id)
+int ShopAvail_CoNeedsUnlocked5(u32 id)
 {
     return sub_0803C5E8(id);
 }
+asm(".global sub_0803C638\n.thumb_set sub_0803C638, ShopAvail_CoNeedsUnlocked5\n");
 
 /* `return sub_0803C5E8(id);` -- one of five byte-identical forwarders at
  * 0x0803C614/620/62C/638/644. Nothing sets up an argument register, so the
  * incoming r0 is passed through unchanged, and `pop {r1}; bx r1` says the
  * result is returned rather than discarded. */
 
-int sub_0803C644(u32 id)
+int ShopAvail_CoNeedsUnlocked6(u32 id)
 {
     return sub_0803C5E8(id);
 }
+asm(".global sub_0803C644\n.thumb_set sub_0803C644, ShopAvail_CoNeedsUnlocked6\n");
 
 asm(".global sub_0803C5C0\n.thumb_set sub_0803C5C0, ShopAvail_CoNeedsFlag22\n");

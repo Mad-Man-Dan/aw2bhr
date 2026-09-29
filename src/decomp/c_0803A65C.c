@@ -11,7 +11,7 @@
  * include/unknown-globals.h; it is a real ROM pointer word, so each statement
  * re-reads it and the two reads inside the DrawWindowBackgroundOnBg2 argument list share
  * one. */
-void sub_0803A65C(void)
+void UnitClassInfo_Init(void)
 {
     gUnknown_0849D89C->unk09 = 0;
     gUnknown_0849D89C->unk0a = 0xff;
@@ -20,3 +20,4 @@ void sub_0803A65C(void)
     DrawWindowBackgroundOnBg2(gUnknown_0849D89C->unk02, gUnknown_0849D89C->unk03, 0x10, 0xa);
     sub_08013AD4(2);
 }
+asm(".global sub_0803A65C\n.thumb_set sub_0803A65C, UnitClassInfo_Init\n");

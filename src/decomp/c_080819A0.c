@@ -43,7 +43,7 @@ void MainMenuCarouselWheel_LabelSlideInLoop(struct Unk80819A0 *proc)
 
     if (gUnknown_0861696C[DivRem(gUnknown_03005934 + 2, 6)] == 0)
     {
-        if (sub_0803BC7C() == 0)
+        if (GetCampaignSaveFlag() == 0)
             PutSprite(3, proc->unk34 + 0x60, 0x48, gUnknown_08615C04, 0xAA98);
         else
             PutSprite(3, proc->unk34 + 0x60, 0x48, gUnknown_08615C04,
@@ -54,7 +54,7 @@ void MainMenuCarouselWheel_LabelSlideInLoop(struct Unk80819A0 *proc)
     }
     else if (gUnknown_0861696C[DivRem(gUnknown_03005934 + 2, 6)] == 1)
     {
-        if (sub_0803BC88() == 0)
+        if (GetVersusSaveFlag() == 0)
             PutSprite(3, proc->unk34 + 0x60, 0x48, gUnknown_08615C04, 0xBA98);
         else
             PutSprite(3, proc->unk34 + 0x60, 0x48, gUnknown_08615C04,
@@ -65,7 +65,7 @@ void MainMenuCarouselWheel_LabelSlideInLoop(struct Unk80819A0 *proc)
     }
     else if (gUnknown_0861696C[DivRem(gUnknown_03005934 + 2, 6)] == 5)
     {
-        if (sub_0803BC94() == 0)
+        if (GetWarRoomSaveFlag() == 0)
             PutSprite(3, proc->unk34 + 0x60, 0x48, gUnknown_08615C04, 0xCA98);
         else
             PutSprite(3, proc->unk34 + 0x60, 0x48, gUnknown_08615C04,

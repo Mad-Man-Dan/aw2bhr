@@ -7,7 +7,7 @@
  * sub_0804C4A8 @ 0x0804C4A8
  */
 
-void sub_0804C4A8(u16 a)
+void SpawnSubmarineFigure(u16 a)
 {
     u16 t;
     u16 u;
@@ -28,3 +28,4 @@ void sub_0804C4A8(u16 a)
     gUnknown_02029668[a][4] = sub_08015410(gUnknown_0855333C, 1,
         gUnknown_08557680[t][2], gUnknown_08557680[t][1], n);
 }
+asm(".global sub_0804C4A8\n.thumb_set sub_0804C4A8, SpawnSubmarineFigure\n");

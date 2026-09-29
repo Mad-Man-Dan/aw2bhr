@@ -41,7 +41,7 @@ void LinkC2_080339B1(struct Unk339B0Proc *proc)
 
     SetupBackgrounds(gUnknown_0849D16C);
     InitTextTileCache(0x70);
-    sub_08033930();
+    LinkScreenSetupMessageWindow();
     ClearBg0Tilemap();
     ClearBg1Tilemap();
     ClearBg2Tilemap();

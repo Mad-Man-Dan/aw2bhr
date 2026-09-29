@@ -7,7 +7,7 @@
  * sub_0803B35C @ 0x0803B35C, sub_0803B37C @ 0x0803B37C, sub_0803B3B0 @ 0x0803B3B0
  */
 
-/* The setter twin of sub_0803B350 (src/decomp/c_0803B350.c), one slot along:
+/* The setter twin of SetSoundMasterVolume (src/decomp/c_0803B350.c), one slot along:
  * park the new value in gUnknown_030005CE, then push it to the m4a mixer as
  * MPlayVolumeControl's (MPlayVolumeControl) volume, with 0xFFFF as the track mask.
  *
@@ -31,7 +31,7 @@ asm(".global sub_0803B35C\n.thumb_set sub_0803B35C, SetMusicVolume\n");
 
 /* The sound-subsystem reset: set both mixer knobs to 0x100, re-run
  * m4aSoundInit (m4aSoundInit), and blank the current/requested song id pair to
- * the 0xFFFF sentinel that PlayMusic and sub_0803B640 test against.
+ * the 0xFFFF sentinel that PlayMusic and ReplayPendingMusic test against.
  *
  * `movs r4,#0x80; lsls r4,r4,#1` is a PLAIN constant 0x100, not wave 23's
  * named-constant-local: the shift is minimal (0x100 is not an imm8) and both
@@ -40,15 +40,16 @@ asm(".global sub_0803B35C\n.thumb_set sub_0803B35C, SetMusicVolume\n");
  * adds r1,r2,#0` is one CSEd literal reaching two stores, not two literals.
  * `pop {r4}; pop {r0}; bx r0` -> void. */
 
-void sub_0803B37C(void)
+void InitSoundSystem(void)
 {
-    sub_0803B350(0x100);
+    SetSoundMasterVolume(0x100);
     SetMusicVolume(0x100);
     m4aSoundInit();
 
     gUnknown_030005C8 = 0xFFFF;
     gUnknown_030005CA = 0xFFFF;
 }
+asm(".global sub_0803B37C\n.thumb_set sub_0803B37C, InitSoundSystem\n");
 
 /* One statement: index the twelve-word ROM table gUnknown_080910FC and hand the
  * entry to SoundMode_rev01 (m4aSoundMode), so this is "select sound mode preset
@@ -60,7 +61,8 @@ void sub_0803B37C(void)
  * register, and PROMOTE_MODE would have put a shift pair in front of it for a
  * u8/u16. `pop {r0}; bx r0` -> void. */
 
-void sub_0803B3B0(int a)
+void SetSoundModeByIndex(int a)
 {
     SoundMode_rev01(gUnknown_080910FC[a]);
 }
+asm(".global sub_0803B3B0\n.thumb_set sub_0803B3B0, SetSoundModeByIndex\n");

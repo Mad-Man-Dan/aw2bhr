@@ -66,14 +66,14 @@ void sub_080665D4(void)
             int y = obj->unk2a;
 
             sub_08066580(i, x + 8, y + 0x10);
-            sub_0803B4DC(0x71);
+            PlayMusicOrSfx2(0x71);
             return;
         }
 
         if ((s8)gUnknown_08580934->unk70[i] == 1 && (keys[i].pressed & 2))
         {
             sub_080665BC(i);
-            sub_0803B4DC(0x66);
+            PlayMusicOrSfx2(0x66);
             return;
         }
     }
@@ -105,14 +105,14 @@ void sub_0806666C(void)
             int y = obj->unk2a + (gUnknown_08580934->unk11[i] << 2);
 
             sub_08066580(i, x + 1, y + 8);
-            sub_0803B4DC(0x71);
+            PlayMusicOrSfx2(0x71);
             return;
         }
 
         if ((s8)gUnknown_08580934->unk70[i] == 1 && (keys[i].pressed & 2))
         {
             sub_080665BC(i);
-            sub_0803B4DC(0x66);
+            PlayMusicOrSfx2(0x66);
             return;
         }
     }

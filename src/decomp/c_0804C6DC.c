@@ -14,7 +14,7 @@
  *
  * Twin of LanderPart_Init: the two differ in exactly one immediate (the tile base,
  * 0x50 vs 0x80) and one pool symbol (the continuation), which is the same pair
- * of discriminators sub_0804D928/sub_0804E3B4 turn on. Same three spellings as
+ * of discriminators CruiserPart2_Init/BattleshipPart2_Init turn on. Same three spellings as
  * those two -- `pal`/`prio` bound to locals so the bitfield store does not
  * narrow the table `ldrh` to `ldrb`, `* 0x100` rather than `<< 8`, and both
  * globals of the priority index read directly so the `lsl #16; lsr #15` pair

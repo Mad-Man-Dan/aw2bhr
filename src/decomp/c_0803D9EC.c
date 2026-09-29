@@ -14,8 +14,9 @@ struct Unk803D9EC
     /* 0x20 */ u16 unk20;
 };
 
-void sub_0803D9EC(struct Unk803D9EC *p)
+void DebugArmyEditor_Init(struct Unk803D9EC *p)
 {
     p->unk1e = gUnknown_030033EC;
     p->unk20 = 1;
 }
+asm(".global sub_0803D9EC\n.thumb_set sub_0803D9EC, DebugArmyEditor_Init\n");

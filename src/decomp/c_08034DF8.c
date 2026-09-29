@@ -27,7 +27,7 @@ void sub_08034DF8(void)
     if (FindSlotScript((s32)gUnknown_0849A00C) == -1)
     {
         PlayArmyCoMusic(gUnknown_030033EC);
-        sub_0802BB98();
+        InitCursorInfoPanelPosition();
         StartPendingWeatherChange();
         gUnknown_030032D8 = 7;
     }

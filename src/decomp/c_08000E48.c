@@ -56,7 +56,7 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     AdvanceToNextActiveArmy();
     sub_08000DF8(a);
     ClearAllUnits();
-    sub_0803DE68();
+    ResetInventionRecords();
     StartArmyTurn2();
     RebuildMapUnitLayers();
     sub_08023348();

@@ -124,7 +124,7 @@ void MarkAttackableCellsInRange(s16 x, s16 y, s16 r, s16 v)
             if (xx >= gMap->width)
                 continue;
 
-            u = sub_0803DF54(xx, yy);
+            u = FindLivingInventionTargetAt(xx, yy);
             m = gUnknown_020288B4[gMap->rowOffset[yy] + xx];
             n = 0;
             if (u != NULL)

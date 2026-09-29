@@ -12,7 +12,7 @@ void MapState_PrepareTurnHandover(void)
     u8 v;
 
     if (ShouldPromptCountryName())
-        sub_0802BFA8();
+        StartScreenCoverWipeLocked();
 
     SetMapLayersDefault();
 

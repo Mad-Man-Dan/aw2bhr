@@ -60,11 +60,11 @@ void DeploymentScreen_Loop(void)
     {
         if ((tbl = (struct Unk2023830 *)gUnknown_02023830)[ent->unk20].unk01 == 2)
         {
-            sub_0803B4DC(0x68);
+            PlayMusicOrSfx2(0x68);
             return;
         }
 
-        sub_0803B4DC(0x65);
+        PlayMusicOrSfx2(0x65);
 
         if (FindFreeUnitSlot() == NULL)
         {
@@ -86,13 +86,13 @@ void DeploymentScreen_Loop(void)
     }
 
     if (gpKeySt->pressed & 2)
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
 
     if (gpKeySt->pressed & 3)
     {
         ClearSlotScriptCallback(gUnknown_03001FBC);
-        sub_0802D76C();
-        sub_0803A59C();
+        ClearDeploymentListArea();
+        EndUnitInfoPanelScripts();
         return;
     }
 
@@ -106,7 +106,7 @@ void DeploymentScreen_Loop(void)
         {
             ent->unk20 = v + 1;
             sub_0802D9B8(ent);
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
     }
 
@@ -120,7 +120,7 @@ void DeploymentScreen_Loop(void)
         {
             ent->unk20 = v - 1;
             sub_0802D9B8(ent);
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
     }
 

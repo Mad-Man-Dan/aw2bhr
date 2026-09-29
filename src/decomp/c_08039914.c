@@ -21,8 +21,9 @@
  * narrowed, exactly as in the exemplar -- an int-returning predicate emits a
  * bare `cmp r0, #0`. */
 
-void sub_08039914(ProcPtr proc)
+void BlockingCoSpeech_Wait2(ProcPtr proc)
 {
     if (IsCoSpeechScriptRunning() == 0)
         Proc_Break(proc);
 }
+asm(".global sub_08039914\n.thumb_set sub_08039914, BlockingCoSpeech_Wait2\n");

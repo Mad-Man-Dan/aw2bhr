@@ -48,7 +48,8 @@ asm(".global sub_0802C280\n.thumb_set sub_0802C280, StartSaveConfirmScript\n");
  * unconditionally and `pop {r0}; bx r0` discards it, so this is void.
  */
 
-void sub_0802C290(void)
+void EndSaveConfirmScript(void)
 {
     EndEventScript(gUnknown_0849A8F0);
 }
+asm(".global sub_0802C290\n.thumb_set sub_0802C290, EndSaveConfirmScript\n");

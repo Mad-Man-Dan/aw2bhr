@@ -21,7 +21,7 @@ void TeamBadgeExitDown_Loop(struct Unk08580934_Obj *obj)
     if (obj->unk2a > 0xA0)
     {
         gUnknown_08580934->unk2d--;
-        sub_08030178();
+        LinkRestartKeySync();
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

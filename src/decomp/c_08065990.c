@@ -66,9 +66,9 @@ void MatchSetupScreen_Init(void)
     Decompress(gUnknown_0822F9AC, gBG3TilemapBuffer);
     ApplyPaletteExt(gUnknown_082344CC, 0x20, 0xa0);
     BG_EnableSyncBG3();
-    sub_0802D5A0((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 8);
+    LoadWindowFrameGraphics((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 8);
     DrawWindowBackgroundOnBg2(0, 0x10, 0x1e, 4);
-    sub_0802D5CC(0, 3);
+    ApplyWindowFramePalette(0, 3);
     Decompress(sub_0801F49C(), (void *)0x06015200);
     MatchSetupInitState();
     sub_080152EC(gUnknown_08580CB4, 3);

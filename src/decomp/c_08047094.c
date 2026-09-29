@@ -7,7 +7,7 @@
  * TerrainInfoWindow_OnEnd @ 0x08047094
  */
 
-/* MATCHED. Byte-for-byte the same function as sub_0803A460 -- identical
+/* MATCHED. Byte-for-byte the same function as UnitInfoPanel_Init -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
 void TerrainInfoWindow_OnEnd(void)

@@ -10,19 +10,19 @@
 #include "proc.h"
 #include "hardware.h"
 
-void sub_08033030(ProcPtr proc)
+void LinkMapPick_WaitForPress(ProcPtr proc)
 {
     u8 v[0x34];
 
     if (gpKeySt->pressed & 2)
-        sub_0803B4DC(0x68);
+        PlayMusicOrSfx2(0x68);
 
     if ((gpKeySt->pressed & 9)
      && Proc_Find(gUnknown_0849B688) == NULL
      && Proc_Find(gUnknown_0849B670) == NULL)
     {
         if (gUnknown_0849B060->unk09 == gUnknown_0849B018->unk06
-         || sub_0803CCB8((u8)gUnknown_0849B060->unk04, v) != 1)
+         || LoadDesignRoomName((u8)gUnknown_0849B060->unk04, v) != 1)
         {
             LockMainMenu();
             Proc_Goto(proc, 0xb);
@@ -33,14 +33,15 @@ void sub_08033030(ProcPtr proc)
         }
     }
 }
+asm(".global sub_08033030\n.thumb_set sub_08033030, LinkMapPick_WaitForPress\n");
 
-void sub_080330C0(ProcPtr proc)
+void LinkMapPick_Finish(ProcPtr proc)
 {
-    sub_0803B4DC(0x71);
+    PlayMusicOrSfx2(0x71);
 
     if (GetMainMenuLock())
     {
-        sub_08032D60();
+        EndLinkMapPick();
         Proc_EndEach(gUnknown_0849B688);
         Proc_EndEach(gUnknown_0849B670);
         gUnknown_0849B060->unk08 = gUnknown_0849B060->unk04;
@@ -51,3 +52,4 @@ void sub_080330C0(ProcPtr proc)
         Proc_Goto(proc, 0xa);
     }
 }
+asm(".global sub_080330C0\n.thumb_set sub_080330C0, LinkMapPick_Finish\n");

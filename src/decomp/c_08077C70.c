@@ -25,7 +25,7 @@ void sub_08077C70(struct Unk77C70Proc *proc)
     if (gpKeySt->pressed != 0)
     {
         proc->unk44 = 0;
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         Proc_Break(proc);
     }
 }

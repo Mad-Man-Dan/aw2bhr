@@ -46,7 +46,7 @@ static inline u32 set_prio(u32 raw, u32 val)
     return u.raw;
 }
 
-void sub_0804B180(void)
+void FigureSprite_Init(void)
 {
     struct UnkVec v;
 
@@ -64,3 +64,4 @@ void sub_0804B180(void)
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk04,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
 }
+asm(".global sub_0804B180\n.thumb_set sub_0804B180, FigureSprite_Init\n");

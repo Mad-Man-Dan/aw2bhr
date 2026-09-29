@@ -14,7 +14,7 @@
  *
  * The reload of gUnknown_0849D89C between the `strb` and the `str` is aliasing:
  * the byte store could have hit the pointer word itself. */
-void sub_0803A9C8(u8 a)
+void StartDeploymentUnitInfo(u8 a)
 {
     InitUnit(&gUnknown_03004100, a);
     sub_080152EC(gUnknown_0849E280, 0);
@@ -22,3 +22,4 @@ void sub_0803A9C8(u8 a)
     gUnknown_0849D89C->unk04 = &gUnknown_03004100;
     gUnknown_0849D89C->unk08 = gUnknown_030033EC;
 }
+asm(".global sub_0803A9C8\n.thumb_set sub_0803A9C8, StartDeploymentUnitInfo\n");

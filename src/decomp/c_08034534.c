@@ -39,7 +39,7 @@ void RemoteTurn_UpdateCursorAndCamera(void)
     HandleMoveCameraWithMapCursor(4);
 
     if (gpKeySt->pressed & 2)
-        sub_0802FA64();
+        SioSendPingPacket();
 
     SetInfoBoxMode(3);
 }

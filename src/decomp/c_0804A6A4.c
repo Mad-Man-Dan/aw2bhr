@@ -9,7 +9,7 @@
 
 /* Clears every live entry of gUnknown_030044E0->unk2c. The bound is
  * `unk5f + 1`, an int expression, which is why the compare is SIGNED
- * (`bge`/`blt`) where sub_0804A6D8's u8-against-u8 bound next door goes
+ * (`bge`/`blt`) where NameEntry_Confirm's u8-against-u8 bound next door goes
  * through shorten_compare and comes out unsigned. */
 void NameEntry_ClearBuffer(void)
 {
@@ -35,8 +35,8 @@ asm(".global sub_0804A6A4\n.thumb_set sub_0804A6A4, NameEntry_ClearBuffer\n");
  * neighbour in this block -- NameEntry_SlideIn_Step, LoadBattleBackdropArt, sub_0804BAC4,
  * RedrawNameEntryText -- pops it into r0. agbcc keeps r0 clear at the epilogue when it
  * holds a return value. Both arms end in a void call, so nothing supplies one
- * and the value is whatever sub_0803B4DC left; that is what the original did. */
-int sub_0804A6D8(void)
+ * and the value is whatever PlayMusicOrSfx2 left; that is what the original did. */
+int NameEntry_Confirm(void)
 {
     u8 count;
     u8 i;
@@ -55,12 +55,13 @@ int sub_0804A6D8(void)
     {
         gUnknown_030044E0->unk63 = 2;
         StartEventScript(gUnknown_084C398C);
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
     }
     else
     {
         gUnknown_030044E0->unk63 = 1;
-        sub_0804AE10();
-        sub_0803B4DC(0x68);
+        NameEntry_StartPromptMessage();
+        PlayMusicOrSfx2(0x68);
     }
 }
+asm(".global sub_0804A6D8\n.thumb_set sub_0804A6D8, NameEntry_Confirm\n");

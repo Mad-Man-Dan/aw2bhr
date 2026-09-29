@@ -8,13 +8,13 @@
  */
 
 /* sub_080848FC's shape run twice back to back over two disjoint id ranges
- * against sub_0803CB24's bitset. The two loops are not symmetric in the
+ * against HasMapBeenPlayed's bitset. The two loops are not symmetric in the
  * assembly -- the first reaches the shared `movs r0, #0` with `beq` and the
  * second skips it with `bne` -- because jump.c cross-jumped the two identical
  * `return FALSE;` tails onto the second one, which is where the block happened
  * to land. Nothing in the source distinguishes them.
  *
- * The `lsls r0, r0, #0x18` at both call sites is what re-typed sub_0803CB24's
+ * The `lsls r0, r0, #0x18` at both call sites is what re-typed HasMapBeenPlayed's
  * return from `int` to `u8`; see include/unknown-functions.h. */
 
 bool8 sub_08084938(void)
@@ -22,10 +22,10 @@ bool8 sub_08084938(void)
     int i;
 
     for (i = 1; i <= 0x6b; i++)
-        if (!sub_0803CB24(i))
+        if (!HasMapBeenPlayed(i))
             return FALSE;
     for (i = 0x6c; i <= 0x89; i++)
-        if (!sub_0803CB24(i))
+        if (!HasMapBeenPlayed(i))
             return FALSE;
     return TRUE;
 }

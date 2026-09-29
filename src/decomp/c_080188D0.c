@@ -30,7 +30,7 @@ bool8 EventOp_ApplyFramePaletteForArmy(s16 a)
             v = 5;
         else
             v = gPlayers[(s16)p->unk08].teamColor;
-        sub_0802D5CC(v - 1, gUnknown_03002F08.unk00);
+        ApplyWindowFramePalette(v - 1, gUnknown_03002F08.unk00);
     }
     gUnknown_0200C528[a].unk04++;
     return TRUE;

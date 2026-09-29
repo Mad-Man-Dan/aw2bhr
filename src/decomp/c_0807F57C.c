@@ -22,7 +22,7 @@
  *
  * WHAT CLOSED IT -- the bounded contract change, not a spelling:
  *   1. include/unknown-functions.h: `u8 IsCoUnlocked(u32)` -> `int` (that
- *      symbol only; sub_0803CA9C and the rest of the bit-reader family stay u8)
+ *      symbol only; IsMapCategoryUnlocked and the rest of the bit-reader family stay u8)
  *   2. src/decomp/c_0803CA9C.c: the definition retyped to `int`, BYTE-UNCHANGED
  *      -- it returns `(1 << (id & 7)) & *p`, whose nonzero_bits are provably
  *      <= 0xff, so no narrowing is emitted at either width. That is the body
@@ -31,8 +31,8 @@
  *      sites in c_0803C354.c and one in c_08043CA0.c.
  *
  * ALL THIRTEEN affected functions verify byte-for-byte by exit code
- * (sub_0803C474/C48C/C4B4/C4DC/C504/C52C/C598/C5C0/C5E8, BuildUnlockedCoList,
- * sub_0803CA9C, IsCoUnlocked, and this one); proto_check is clean. Details in
+ * (ShopAvail_CoNotUnlocked/C48C/C4B4/C4DC/C504/C52C/C598/C5C0/C5E8, BuildUnlockedCoList,
+ * IsMapCategoryUnlocked, IsCoUnlocked, and this one); proto_check is clean. Details in
  * work/BuildWarRoomCoSelectGroupList/W88-notes.md.
  *
  * THE RULE: `(u8)f(x)` and an implicit u8 return emit the SAME narrowing, so a

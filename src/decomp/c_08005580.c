@@ -11,5 +11,5 @@ void sub_08005580(void)
 {
     InitTextTileCache(0x70);
     PopMenu();
-    sub_0803B4DC(0x66);
+    PlayMusicOrSfx2(0x66);
 }

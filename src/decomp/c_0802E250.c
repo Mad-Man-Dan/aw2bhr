@@ -9,18 +9,18 @@
 
 #include "hardware.h"
 
-/* Two statements, no arguments to the second. sub_0802C2B4's own prologue
+/* Two statements, no arguments to the second. OpenMinimap's own prologue
  * reads no argument register, so r0 still holding 0x76 at the second bl is a
  * leftover, not a hidden parameter. */
 void MapCursor_OnPressStart(void)
 {
-    sub_0803B4DC(0x76);
-    sub_0802C2B4();
+    PlayMusicOrSfx2(0x76);
+    OpenMinimap();
 }
 asm(".global sub_0802E250\n.thumb_set sub_0802E250, MapCursor_OnPressStart\n");
 
 /* A four-call teardown. IsMapCursorSettled returns u8 and the result is discarded
- * here -- sub_0802E278 next door is this function with 8 instead of 4 and the
+ * here -- MapCursorState_UnitsTranslucent next door is this function with 8 instead of 4 and the
  * result actually tested, which is what fixes the return type. */
 void sub_0802E260(void)
 {
@@ -39,7 +39,7 @@ void sub_0802E260(void)
  *
  * The `lsls #0x10; lsrs #0x10` after the `ands` is the u16 local's own
  * truncation of the int the mask promotes to. */
-void sub_0802E278(void)
+void MapCursorState_UnitsTranslucent(void)
 {
     u16 k;
 
@@ -58,3 +58,4 @@ void sub_0802E278(void)
         }
     }
 }
+asm(".global sub_0802E278\n.thumb_set sub_0802E278, MapCursorState_UnitsTranslucent\n");

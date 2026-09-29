@@ -10,7 +10,7 @@
 #include "proc.h"
 #include "hardware.h"
 
-/* sub_0803227C's wrap-around twin: same left/right slot stepper, but the index
+/* LinkPlayerCursor_HandleInput's wrap-around twin: same left/right slot stepper, but the index
  * wraps with `& 3` instead of an explicit bounds pair, it records the direction
  * in unk10, and a changed slot restarts the gUnknown_0849B688 proc.
  *
@@ -27,10 +27,10 @@
  *   so nothing re-extends it; s16 costs `lsls #0x10; asrs #0x10` on every step.
  *
  * The final test compares the two MEMBERS (`unk06 != unk04`), not member
- * against `i` -- that is why both sides get `lsls #0x10` where sub_0803227C,
+ * against `i` -- that is why both sides get `lsls #0x10` where LinkPlayerCursor_HandleInput,
  * comparing against its own local, shifts only one. */
 
-void sub_08032950(void)
+void LinkMapPick_HandleInput(void)
 {
     u16 i;
 
@@ -65,9 +65,10 @@ void sub_08032950(void)
         Proc_EndEach(gUnknown_0849B688);
         Proc_EndEach(gUnknown_0849B670);
         Proc_Start(gUnknown_0849B688, 0);
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 }
+asm(".global sub_08032950\n.thumb_set sub_08032950, LinkMapPick_HandleInput\n");
 
 /* The local `u8 *v[3]` initialiser makes agbcc emit FOUR .rodata objects: the
  * three one-character string literals and then the 12-byte template it block-
@@ -93,7 +94,7 @@ void sub_08032950(void)
  * self-reference on the section base it has already computed. The C below is
  * unchanged from the draft that was reported as a near-miss.
  */
-void sub_08032A00(void)
+void LinkMapPick_Draw(void)
 {
     u8 *v[3] = { (u8 *)"1", (u8 *)"2", (u8 *)"3" };
 
@@ -115,3 +116,4 @@ void sub_08032A00(void)
     gUnknown_03002F18 = 0xFFD4;
     gUnknown_03002B34 = gUnknown_0849B060->unk0e - 0x60;
 }
+asm(".global sub_08032A00\n.thumb_set sub_08032A00, LinkMapPick_Draw\n");

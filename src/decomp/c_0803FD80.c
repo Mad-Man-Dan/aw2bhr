@@ -7,7 +7,7 @@
  * sub_0803FD80 @ 0x0803FD80
  */
 
-void sub_0803FD80(int a1, int a2)
+void LoadInventionGraphics(int a1, int a2)
 {
     u8 *src;
 
@@ -30,3 +30,4 @@ void sub_0803FD80(int a1, int a2)
     if (src != NULL)
         Decompress(src, (void *)(0x06010000 + (((a2 + 0xE8) & 0x3FF) << 5)));
 }
+asm(".global sub_0803FD80\n.thumb_set sub_0803FD80, LoadInventionGraphics\n");

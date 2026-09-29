@@ -226,12 +226,12 @@ void StartUnitAttack(u8 a1, int a2)
 
         if (v != 0)
         {
-            sub_0802DCA4();
+            ResetDisplayEffects();
             ((struct Unk41978Proc *)Proc_Start(gUnknown_0849FEF8, PROC_TREE_3))->unk64 = b;
         }
         else
         {
-            sub_0802DCA4();
+            ResetDisplayEffects();
             ((struct Unk41978Proc *)Proc_Start(gUnknown_0849FFB0, PROC_TREE_3))->unk64 = b;
         }
     }

@@ -19,7 +19,7 @@
  * draft referenced any filler. Keep the drafts in sync; sync_work.py
  * reintroduces whatever the drafts say. */
 
-void sub_0802BC80(void)
+void DrawDayAndFundsBarByCursor(void)
 {
     u16 x;
     s16 v;
@@ -33,5 +33,6 @@ void sub_0802BC80(void)
     else
         v = gUnknown_08090A98[0];
 
-    sub_0802BBDC(v);
+    DrawDayAndFundsBar(v);
 }
+asm(".global sub_0802BC80\n.thumb_set sub_0802BC80, DrawDayAndFundsBarByCursor\n");

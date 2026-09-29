@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Copies sub_0803D73C's proc field into the script record StartEventScript
+/* Copies StartSaveScreen's proc field into the script record StartEventScript
  * installs. The `adds r4,#0x64` before the `ldrh` is not a choice: 0x64 is past
  * the `ldrh` immediate's range. */
 struct UnkD8C0Proc
@@ -20,15 +20,17 @@ struct UnkD8C0Proc
 
 /* Two tests, one `&&`: both `bne`s land on the same PlayMusic arm. The
  * `lsls #0x18; cmp #0` on IsPlayer1TeamAlive's result is the bool8 truth test. */
-void sub_0803D88C(ProcPtr proc)
+void SaveScreen_SkipIfPlayerDead(ProcPtr proc)
 {
     if (gPlaySt.gameMode == 1 && !IsPlayer1TeamAlive())
         Proc_GotoScript(proc, gUnknown_0849F388);
     else
         PlayMusic(0xcd);
 }
+asm(".global sub_0803D88C\n.thumb_set sub_0803D88C, SaveScreen_SkipIfPlayerDead\n");
 
-void sub_0803D8C0(struct UnkD8C0Proc *proc)
+void SaveScreen_StartMessage(struct UnkD8C0Proc *proc)
 {
     StartEventScript(gUnknown_0849F3A8)->unk10 = proc->unk64;
 }
+asm(".global sub_0803D8C0\n.thumb_set sub_0803D8C0, SaveScreen_StartMessage\n");

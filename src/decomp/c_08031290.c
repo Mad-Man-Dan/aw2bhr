@@ -12,7 +12,8 @@
  * emits stack arguments before register ones, then groups the register loads
  * by operand class. */
 
-void sub_08031290(void)
+void LinkStartPrompt_Loop(void)
 {
     DrawOamObject(0x4f, 0x8c, 0x70, 0, 0);
 }
+asm(".global sub_08031290\n.thumb_set sub_08031290, LinkStartPrompt_Loop\n");

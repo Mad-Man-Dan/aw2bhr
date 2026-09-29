@@ -20,7 +20,7 @@
  *   state 0:   count the timer down, then go to state 50.
  *   state 50:  set the two view-offset globals to -40 and -60, fall into 60.
  *   state 60:  once the fade level is past 5, start the screen with
- *              sub_0803CE28 and go to state 70.
+ *              DrawDesignRoomMapPreview and go to state 70.
  *   state 70:  run the screen each frame; A, B or START arms a 10-frame timer
  *              and goes to state 80.
  *   state 80:  when the timer runs out, close the screen, blank the 15 x 10
@@ -44,7 +44,7 @@ void sub_08000694(void)
         DesignRoomHideCoordBox();
         gActiveMap->stateTimer = 2;
         sub_080039D0();
-        sub_0803B4DC(0x76);
+        PlayMusicOrSfx2(0x76);
     }
 
     switch (gActiveMap->state)
@@ -69,7 +69,7 @@ void sub_08000694(void)
         if (blend > 5)
         {
             gActiveMap->state = 70;
-            sub_0803CE28(0, 0);
+            DrawDesignRoomMapPreview(0, 0);
         }
         break;
     }
@@ -89,11 +89,11 @@ void sub_08000694(void)
         if (--gActiveMap->stateTimer < 0)
         {
             gActiveMap->state = 90;
-            sub_0803CEAC();
+            EndMapPreviewEffects();
             FillTilemapRect(gBG0TilemapBuffer, 0, 0, 15, 10, 0);
             BG_EnableSyncBG0();
             sub_080039BC();
-            sub_0803B4DC(0x66);
+            PlayMusicOrSfx2(0x66);
         }
         break;
 

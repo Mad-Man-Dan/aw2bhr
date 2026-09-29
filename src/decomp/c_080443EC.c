@@ -9,8 +9,8 @@
 
 void CoPowerOlafBlizzard(void)
 {
-    sub_0803B4DC(0x23);
+    PlayMusicOrSfx2(0x23);
     ChangeGameWeather(1);
-    sub_08039F58();
+    ApplyCoPowerStatus();
 }
 asm(".global sub_080443EC\n.thumb_set sub_080443EC, CoPowerOlafBlizzard\n");

@@ -19,10 +19,11 @@
  * pool between the two arms, exactly as the ROM has it. Two spellings of one
  * comparison, and only one of them is this function. */
 
-int sub_0802D33C(void)
+int GetOptionHelpWindowX(void)
 {
     if (FindSlotRunningScript(gUnknown_0848A42C)->unk48 > 0xF)
         return 0x10;
 
     return 1;
 }
+asm(".global sub_0802D33C\n.thumb_set sub_0802D33C, GetOptionHelpWindowX\n");

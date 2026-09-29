@@ -32,11 +32,11 @@ void SpawnSideFigures(u16 side)
     if (row[2] == 1)
     {
         if (row[0] == 6)
-            sub_0804C488(side);
+            SpawnWholeFigure2(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x13)
             SpawnWholeFigure(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x10)
-            sub_0804C498(side);
+            SpawnWholeFigure3(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x14)
             sub_0804DB14(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x15)
@@ -44,7 +44,7 @@ void SpawnSideFigures(u16 side)
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x16)
             SpawnLanderFigure(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x17)
-            sub_0804C4A8(side);
+            SpawnSubmarineFigure(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x11)
             sub_0804C578(side);
         CopyFigureSheetToVram(side);

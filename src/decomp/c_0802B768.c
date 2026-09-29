@@ -9,7 +9,7 @@
  */
 
 /* gUnknown_03003130 is referenced ONCE here and gets an ordinary inline pool
- * word; sub_0802B768 and sub_0802B7E8 reference it repeatedly and get the
+ * word; SlideCursorInfoPanelToSide1 and SlideCursorInfoPanelToSide0 reference it repeatedly and get the
  * -fforce-addr .rodata indirection instead. Same function shape, same type,
  * same global -- reference count is the whole difference (W35-D's trigger,
  * replicated). */
@@ -24,7 +24,7 @@
  * draft referenced any filler. Keep the drafts in sync; sync_work.py
  * reintroduces whatever the drafts say. */
 
-/* The mirror of sub_0802B7E8: same two `x - (x - K) / 2` easings, opposite
+/* The mirror of SlideCursorInfoPanelToSide0: same two `x - (x - K) / 2` easings, opposite
  * bounds. gUnknown_08090BB8 is an agbcc -fforce-addr address word, not a
  * global -- the ROM word at 0x08090BB8 holds 0x03003130 -- so naming
  * gUnknown_03003130 directly reproduces the read and its reload after every
@@ -36,11 +36,11 @@
  * Both inner tests put the CONSTANT arm first (`<=` then the divide in the
  * else). Written the other way round the instructions are identical but the
  * two arms swap around the branch. */
-void sub_0802B768(void)
+void SlideCursorInfoPanelToSide1(void)
 {
     u16 v;
 
-    v = -gUnknown_0849A2A0[sub_0802B6C8(gUnknown_03003130.unk10,
+    v = -gUnknown_0849A2A0[GetCursorInfoPanelSizeClass(gUnknown_03003130.unk10,
                                         gUnknown_03003130.unk11)];
 
     if (gUnknown_03003130.unk0c <= 3)
@@ -62,12 +62,13 @@ void sub_0802B768(void)
             gUnknown_03003130.unk0c =
                 gUnknown_03003130.unk0c - (gUnknown_03003130.unk0c - 0x94) / 2;
 
-        sub_0802B750();
+        LatchCursorInfoPanelCell();
     }
 
     if (gUnknown_03003130.unk0c == 0x94)
-        sub_0802B750();
+        LatchCursorInfoPanelCell();
 }
+asm(".global sub_0802B768\n.thumb_set sub_0802B768, SlideCursorInfoPanelToSide1\n");
 
 /* gUnknown_08090BBC is an agbcc -fforce-addr address word, not a global: the
  * ROM word at 0x08090BBC holds 0x03003130, so naming gUnknown_03003130
@@ -78,11 +79,11 @@ void sub_0802B768(void)
  * `x - (x - K) / 2` appears three times here and is a SIGNED divide by two,
  * not `>> 1` -- the `lsrs #0x1f; adds` pair before the `asrs` is gcc's sign
  * bias. Writing the shift emits different code. */
-void sub_0802B7E8(void)
+void SlideCursorInfoPanelToSide0(void)
 {
     u16 v;
 
-    v = gUnknown_0849A2A0[sub_0802B6C8(gUnknown_03003130.unk10,
+    v = gUnknown_0849A2A0[GetCursorInfoPanelSizeClass(gUnknown_03003130.unk10,
                                        gUnknown_03003130.unk11)] + 0x98;
 
     if (gUnknown_03003130.unk0c > 0x93)
@@ -104,14 +105,15 @@ void sub_0802B7E8(void)
             gUnknown_03003130.unk0c =
                 gUnknown_03003130.unk0c - (gUnknown_03003130.unk0c - 3) / 2;
 
-        sub_0802B750();
+        LatchCursorInfoPanelCell();
     }
 
     if (gUnknown_03003130.unk0c == 3)
-        sub_0802B750();
+        LatchCursorInfoPanelCell();
 }
+asm(".global sub_0802B7E8\n.thumb_set sub_0802B7E8, SlideCursorInfoPanelToSide0\n");
 
-void sub_0802B868(void)
+void UpdateCursorInfoPanelSlide(void)
 {
     u16 x;
 
@@ -121,24 +123,26 @@ void sub_0802B868(void)
               - gMap->scrollY) > 0x20)
     {
         if ((s16)x > 0x7f)
-            sub_0802B7E8();
+            SlideCursorInfoPanelToSide0();
         else
-            sub_0802B768();
+            SlideCursorInfoPanelToSide1();
     }
     else if (gUnknown_03003130.unk08 == 1)
-        sub_0802B768();
+        SlideCursorInfoPanelToSide1();
     else
-        sub_0802B7E8();
+        SlideCursorInfoPanelToSide0();
 }
+asm(".global sub_0802B868\n.thumb_set sub_0802B868, UpdateCursorInfoPanelSlide\n");
 
 /* a3 is u16 and `a3 * 4` is written INLINE at both uses. The ROM's split
  * `lsls r4, #0x10` in the prologue and `lsrs r4, #0xe` twelve instructions
  * later is PROMOTE_MODE's entry zero-extension with its second half sunk to
  * the use and fused with the `<< 2`. Binding `t = (u16)a3 * 4;` to a local
  * keeps the pair adjacent and moves the shift out of the argument setup. */
-void sub_0802B8C4(s16 a1, s16 a2, u16 a3)
+void DrawCursorInfoCargoSlotIcon(s16 a1, s16 a2, u16 a3)
 {
     PutOamHi(a1, a2 | 0x400, gUnknown_0849A22C[1], (a3 * 4) | 0xf000);
     RegisterDataMove((void *)gUnknown_0810E9E0,
                  (void *)(0x06010000 + ((a3 * 4 + 0x1DA) & 0x3ff) * 0x20), 0x80);
 }
+asm(".global sub_0802B8C4\n.thumb_set sub_0802B8C4, DrawCursorInfoCargoSlotIcon\n");

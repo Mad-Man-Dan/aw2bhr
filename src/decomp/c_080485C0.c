@@ -7,7 +7,8 @@
  * sub_080485C0 @ 0x080485C0
  */
 
-u8 sub_080485C0(void)
+u8 ShopMessage_Always(void)
 {
     return 1;
 }
+asm(".global sub_080485C0\n.thumb_set sub_080485C0, ShopMessage_Always\n");

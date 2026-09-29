@@ -22,8 +22,9 @@
  * proc-starter table in docs/agbcc-codegen.md distinguishes by r1 being
  * WRITTEN rather than left alone. Proc_Start returns the proc; `pop {r0}` says
  * this discards it. */
-void sub_0803B8A0(void)
+void StartMainMenuAfterProgressLoad(void)
 {
     ReloadProgressFromProfile();
     Proc_Start(ProcScr_MainMenu, PROC_TREE_3);
 }
+asm(".global sub_0803B8A0\n.thumb_set sub_0803B8A0, StartMainMenuAfterProgressLoad\n");

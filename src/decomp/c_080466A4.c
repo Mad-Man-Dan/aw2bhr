@@ -16,7 +16,7 @@
  * inside the taken arm -- same length, different bytes.
  *
  * `bls` on the first test makes unk58 unsigned. */
-void sub_080466A4(void)
+void IntelStatus_StepPhase(void)
 {
     u8 a;
     u8 b;
@@ -32,3 +32,4 @@ void sub_080466A4(void)
     else
         gUnknown_084C1430->unk59 = b - 1;
 }
+asm(".global sub_080466A4\n.thumb_set sub_080466A4, IntelStatus_StepPhase\n");

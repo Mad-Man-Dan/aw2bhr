@@ -17,7 +17,7 @@ struct Unk08056F8CRec
     /* 0x0a */ u16 unk0a;
 };
 
-void sub_08056F8C(void *a1)
+void DrawTileBlockFlippableB(void *a1)
 {
     struct Unk08056F8CRec *p = a1;
     u16 chr;
@@ -32,7 +32,7 @@ void sub_08056F8C(void *a1)
         {
             for (x = p->unk02; x > 0; x--)
             {
-                sub_0805701C(chr, p->unk06 + x + (y << 5), p->unk08, 1);
+                PutTileEntryB(chr, p->unk06 + x + (y << 5), p->unk08, 1);
                 chr++;
             }
         }
@@ -43,9 +43,10 @@ void sub_08056F8C(void *a1)
         {
             for (x = 0; x < p->unk02; x++)
             {
-                sub_0805701C(chr, p->unk06 + x + (y << 5), p->unk08, 0);
+                PutTileEntryB(chr, p->unk06 + x + (y << 5), p->unk08, 0);
                 chr++;
             }
         }
     }
 }
+asm(".global sub_08056F8C\n.thumb_set sub_08056F8C, DrawTileBlockFlippableB\n");

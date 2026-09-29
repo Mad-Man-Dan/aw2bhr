@@ -13,8 +13,9 @@
  * about applies to MapMainIdle only, where the address is live across a
  * switch; here it dies inside one statement. */
 
-void sub_0802E2BC(void)
+void StartUnitsTranslucentPeek(void)
 {
     SetMapLayersUnitsTranslucent();
     gUnknown_03003334 = 8;
 }
+asm(".global sub_0802E2BC\n.thumb_set sub_0802E2BC, StartUnitsTranslucentPeek\n");

@@ -37,7 +37,7 @@ asm(".global sub_08004818\n.thumb_set sub_08004818, DesignRoomMenu_EnterPaintMod
 
 void sub_08004824(void)
 {
-    sub_0803B4DC(0x66);
+    PlayMusicOrSfx2(0x66);
     DesignRoomSetMode(1);
 }
 
@@ -63,7 +63,7 @@ asm(".global sub_0800484C\n.thumb_set sub_0800484C, DesignRoomMenu_CloseToMainMe
 void DesignRoomOpenMainMenu(void)
 {
     PopMenu();
-    sub_0803B4DC(0x66);
+    PlayMusicOrSfx2(0x66);
     gActiveMap->mode = 3;
     sub_08004C5C();
 }
@@ -106,7 +106,7 @@ void DesignRoomStartNameEntry(void)
         i++;
     } while (i <= 0x12);
 
-    sub_0804B10C((int)q, 8);
+    StartNameEntryMode1((int)q, 8);
 }
 asm(".global sub_080048D4\n.thumb_set sub_080048D4, DesignRoomStartNameEntry\n");
 

@@ -26,12 +26,12 @@
  * choice -- the body returns literal 0/1, so `int` is byte-identical and
  * bool8 is not proved. */
 
-bool8 sub_0802C6CC(void)
+bool8 OptionsMenu_NoVisualUsability(void)
 {
-    if (sub_0802C62C() == TRUE)
+    if (IsLinkGame() == TRUE)
         return TRUE;
 
-    if (sub_0802C660())
+    if (IsMapCategoryZero())
         return TRUE;
 
     if (gPlaySt.animOpts != 0)
@@ -39,6 +39,7 @@ bool8 sub_0802C6CC(void)
 
     return FALSE;
 }
+asm(".global sub_0802C6CC\n.thumb_set sub_0802C6CC, OptionsMenu_NoVisualUsability\n");
 
 /* Family F046: four copies of one predicate whose whole difference is the
  * constant gPlaySt.unk09 is compared against (0, 1, 2, 3) -- the
@@ -59,12 +60,12 @@ bool8 sub_0802C6CC(void)
  * choice -- the body returns literal 0/1, so `int` is byte-identical and
  * bool8 is not proved. */
 
-bool8 sub_0802C6FC(void)
+bool8 OptionsMenu_VisualAUsability(void)
 {
-    if (sub_0802C62C() == TRUE)
+    if (IsLinkGame() == TRUE)
         return TRUE;
 
-    if (sub_0802C660())
+    if (IsMapCategoryZero())
         return TRUE;
 
     if (gPlaySt.animOpts != 1)
@@ -72,6 +73,7 @@ bool8 sub_0802C6FC(void)
 
     return FALSE;
 }
+asm(".global sub_0802C6FC\n.thumb_set sub_0802C6FC, OptionsMenu_VisualAUsability\n");
 
 /* Family F046: four copies of one predicate whose whole difference is the
  * constant gPlaySt.unk09 is compared against (0, 1, 2, 3) -- the
@@ -92,12 +94,12 @@ bool8 sub_0802C6FC(void)
  * choice -- the body returns literal 0/1, so `int` is byte-identical and
  * bool8 is not proved. */
 
-bool8 sub_0802C72C(void)
+bool8 OptionsMenu_VisualBUsability(void)
 {
-    if (sub_0802C62C() == TRUE)
+    if (IsLinkGame() == TRUE)
         return TRUE;
 
-    if (sub_0802C660())
+    if (IsMapCategoryZero())
         return TRUE;
 
     if (gPlaySt.animOpts != 2)
@@ -105,6 +107,7 @@ bool8 sub_0802C72C(void)
 
     return FALSE;
 }
+asm(".global sub_0802C72C\n.thumb_set sub_0802C72C, OptionsMenu_VisualBUsability\n");
 
 /* Family F046: four copies of one predicate whose whole difference is the
  * constant gPlaySt.unk09 is compared against (0, 1, 2, 3) -- the
@@ -125,12 +128,12 @@ bool8 sub_0802C72C(void)
  * choice -- the body returns literal 0/1, so `int` is byte-identical and
  * bool8 is not proved. */
 
-bool8 sub_0802C75C(void)
+bool8 OptionsMenu_VisualCUsability(void)
 {
-    if (sub_0802C62C() == TRUE)
+    if (IsLinkGame() == TRUE)
         return TRUE;
 
-    if (sub_0802C660())
+    if (IsMapCategoryZero())
         return TRUE;
 
     if (gPlaySt.animOpts != 3)
@@ -138,3 +141,4 @@ bool8 sub_0802C75C(void)
 
     return FALSE;
 }
+asm(".global sub_0802C75C\n.thumb_set sub_0802C75C, OptionsMenu_VisualCUsability\n");

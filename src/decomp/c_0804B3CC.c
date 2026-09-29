@@ -25,8 +25,9 @@
  * rather than carried over from the representative.
  */
 
-void sub_0804B3CC(void)
+void StepPanelBounceBothSides(void)
 {
     StepPanelBounce(0);
     StepPanelBounce(1);
 }
+asm(".global sub_0804B3CC\n.thumb_set sub_0804B3CC, StepPanelBounceBothSides\n");

@@ -25,7 +25,7 @@ struct Unk2BE28
     /* 0x00 */ u8 filler_00[0x1e];
     /* 0x1e */ s16 unk1e;
 };
-/* The opening twin of sub_0802BE28: same Decompress into the char base block
+/* The opening twin of ScreenCoverWipe_Init: same Decompress into the char base block
  * the BGCNT shadow selects (`gUnknown_03002B6C.bits.chr_block << 14`, bits 3:2)
  * and the same fifteen-column paint, but it does not clear the two scroll
  * globals and it paints at the far end of the phase range (6) with the flip
@@ -59,12 +59,12 @@ struct Unk2BEC4
     /* 0x0c */ u8 filler_0c[0x1e - 0x0c];
     /* 0x1e */ s16 unk1e;
 };
-/* The opening counterpart of sub_0802BEC4: same per-frame column repaint and
+/* The opening counterpart of ScreenCoverWipe_Loop: same per-frame column repaint and
  * same unk1e advance, but the phase runs the other way -- it starts at
  * `6 - unk1e` and rises -- and the flip flag is 0. The two loop tests are `<=`
- * here where sub_0802BEC4 has `<`, which is the `bgt` / `bge` difference.
+ * here where ScreenCoverWipe_Loop has `<`, which is the `bgt` / `bge` difference.
  *
- * `phase` is `s16` for the same reason as in sub_0802BEC4: PROMOTE_MODE stores
+ * `phase` is `s16` for the same reason as in ScreenCoverWipe_Loop: PROMOTE_MODE stores
  * it zero-extended (`lsrs r6, r0, #0x10`) and sign-extends it at the call
  * (`lsls #0x10; asrs #0x10`), and keeping it in that shifted representation is
  * what turns `phase++` into `(phase << 16) + 0x10000 >> 16` rather than a plain
@@ -95,9 +95,9 @@ struct Unk2BF20
  * gUnknown_0849A3B8 is named honestly and the two-level chain reproduces on its
  * own -- agbcc parks its address in this unit's .rodata, which is the ROM word
  * at 0x08090BC8 that gen_lds.py calls gUnknown_08090BC8. That word and
- * gUnknown_08090BCC (sub_0802BD54's) BOTH hold 0x0849A3B8: they are two
+ * gUnknown_08090BCC (DrawSpriteNumberFont2's) BOTH hold 0x0849A3B8: they are two
  * -fforce-addr words for one symbol, not two different tables. */
-void sub_0802BCF0(u16 x, u16 y, u32 value)
+void DrawSpriteNumberFont1(u16 x, u16 y, u32 value)
 {
     for (;;)
     {
@@ -108,12 +108,13 @@ void sub_0802BCF0(u16 x, u16 y, u32 value)
         x -= 7;
     }
 }
+asm(".global sub_0802BCF0\n.thumb_set sub_0802BCF0, DrawSpriteNumberFont1\n");
 
-/* sub_0802BCF0's twin: the same right-to-left decimal renderer, differing only
+/* DrawSpriteNumberFont1's twin: the same right-to-left decimal renderer, differing only
  * in that the glyph id is offset by 0x10 (a second digit font in the same
  * gUnknown_0849A3B8 table). See c_0802BCF0.c for the `return`-not-`break` rule
  * and for the two -fforce-addr words that both hold 0x0849A3B8. */
-void sub_0802BD54(u16 x, u16 y, u32 value)
+void DrawSpriteNumberFont2(u16 x, u16 y, u32 value)
 {
     for (;;)
     {
@@ -124,6 +125,7 @@ void sub_0802BD54(u16 x, u16 y, u32 value)
         x -= 7;
     }
 }
+asm(".global sub_0802BD54\n.thumb_set sub_0802BD54, DrawSpriteNumberFont2\n");
 
 /* Paints one column of the wipe transition: a 2x2 tile block per row over ten
  * rows of the gBG0TilemapBuffer tilemap, `col * 4` bytes in and 0x80 bytes down
@@ -145,7 +147,7 @@ void sub_0802BD54(u16 x, u16 y, u32 value)
  * The pool word is 0xFFFF82B0, i.e. the constant is NEGATIVE as a 32-bit value;
  * `+ 0x82B0` emits a positive word and does not match. Whether the original
  * wrote `- 0x7D50` or `(s16)0x82B0` is not recoverable. */
-void sub_0802BDBC(u8 col, s16 phase, u16 w)
+void SetScreenWipeColumn(u8 col, s16 phase, u16 w)
 {
     u16 *p;
     u16 base;
@@ -166,8 +168,9 @@ void sub_0802BDBC(u8 col, s16 phase, u16 w)
         p += 0x40;
     }
 }
+asm(".global sub_0802BDBC\n.thumb_set sub_0802BDBC, SetScreenWipeColumn\n");
 
-void sub_0802BE28(struct Unk2BE28 *p)
+void ScreenCoverWipe_Init(struct Unk2BE28 *p)
 {
     u8 col;
 
@@ -175,46 +178,50 @@ void sub_0802BE28(struct Unk2BE28 *p)
     gUnknown_03001FF8 = 0;
     Decompress(gUnknown_0810BDC0, (void *)(0x06005600 + (gUnknown_03002B6C.bits.chr_block << 14)));
     for (col = 0; col <= 0xE; col++)
-        sub_0802BDBC(col, 0, 1);
+        SetScreenWipeColumn(col, 0, 1);
     p->unk1e = 0;
 }
+asm(".global sub_0802BE28\n.thumb_set sub_0802BE28, ScreenCoverWipe_Init\n");
 
-void sub_0802BE80(struct Unk2BE80 *p)
+void ScreenRevealWipe_Init(struct Unk2BE80 *p)
 {
     u8 col;
 
     Decompress(gUnknown_0810BDC0, (void *)(0x06005600 + (gUnknown_03002B6C.bits.chr_block << 14)));
     for (col = 0; col <= 0xE; col++)
-        sub_0802BDBC(col, 6, 0);
+        SetScreenWipeColumn(col, 6, 0);
     p->unk1e = 0;
 }
+asm(".global sub_0802BE80\n.thumb_set sub_0802BE80, ScreenRevealWipe_Init\n");
 
-void sub_0802BEC4(struct Unk2BEC4 *p)
+void ScreenCoverWipe_Loop(struct Unk2BEC4 *p)
 {
     u8 col;
     s16 phase;
 
     phase = p->unk1e;
     for (col = 0; col < p->unk1e && col <= 0xE; col++)
-        sub_0802BDBC(col, phase--, 1);
+        SetScreenWipeColumn(col, phase--, 1);
     BG_EnableSyncBG0();
     if (p->unk1e == 0x15)
         p->unk08 = 0;
     else
         p->unk1e++;
 }
+asm(".global sub_0802BEC4\n.thumb_set sub_0802BEC4, ScreenCoverWipe_Loop\n");
 
-void sub_0802BF20(struct Unk2BF20 *p)
+void ScreenRevealWipe_Loop(struct Unk2BF20 *p)
 {
     u8 col;
     s16 phase;
 
     phase = 6 - p->unk1e;
     for (col = 0; col <= p->unk1e && col <= 0xE; col++)
-        sub_0802BDBC(col, phase++, 0);
+        SetScreenWipeColumn(col, phase++, 0);
     BG_EnableSyncBG0();
     if (p->unk1e == 0x15)
         p->unk08 = 0;
     else
         p->unk1e++;
 }
+asm(".global sub_0802BF20\n.thumb_set sub_0802BF20, ScreenRevealWipe_Loop\n");

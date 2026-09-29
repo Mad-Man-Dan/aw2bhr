@@ -61,7 +61,7 @@ asm(".global sub_080412F4\n.thumb_set sub_080412F4, CaptureAnimCountUp_Loop\n");
  * after it; `adds r4, #0x4c` is the strh displacement limit again. */
 void CaptureAnimCountDown_Init(struct Unk41334Proc *proc)
 {
-    sub_0803B4DC(0x6F);
+    PlayMusicOrSfx2(0x6F);
     proc->unk4c = 0x12;
 }
 asm(".global sub_08041334\n.thumb_set sub_08041334, CaptureAnimCountDown_Init\n");

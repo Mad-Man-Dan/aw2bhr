@@ -8,7 +8,7 @@
  */
 
 /* sub_0807A8F4's neighbour: same guard on the same predicate, but it plays a
- * sound instead of calling sub_0803B3C8. The two differ in the guarded call and
+ * sound instead of calling SetSoundMixerChannelCount8. The two differ in the guarded call and
  * nothing else. */
 void sub_0807AA6C(void)
 {

@@ -10,7 +10,7 @@
 /* Rebuilds the OBJ attributes of the sprite belonging to the current
  * gUnknown_03001470 slot, then arms a continuation.
  *
- * Twin of sub_0804E3B4, which differs only in the tile base (0xc0 vs 0x60) and
+ * Twin of BattleshipPart2_Init, which differs only in the tile base (0xc0 vs 0x60) and
  * the continuation symbol. See "Large functions" in docs/agbcc-codegen.md for
  * the three source spellings this function turns on:
  *   - `pal = tbl[...]; oam.paletteNum = pal;` -- a bitfield store narrows a
@@ -22,7 +22,7 @@
  *     local lets combine drop the `lsl #16; lsr #16` zero-extension.
  */
 
-void sub_0804D928(void)
+void CruiserPart2_Init(void)
 {
     struct OamData oam;
     u16 pal;
@@ -42,3 +42,4 @@ void sub_0804D928(void)
     SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     SetSlotSpriteHook(gUnknown_03001FBC, (u32)CruiserPart2_StreamHook);
 }
+asm(".global sub_0804D928\n.thumb_set sub_0804D928, CruiserPart2_Init\n");

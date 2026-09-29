@@ -7,14 +7,14 @@
  * sub_0802F504 @ 0x0802F504, sub_0802F534 @ 0x0802F534
  */
 
-/* Counts how many of the four sub_0802F480 bits are set and returns the count
+/* Counts how many of the four SioIsPlayerSending bits are set and returns the count
  * as s8.
  *
  * NOT a bitfield: `lsls r5,#0x18 / movs r1,#0x80 / lsls r1,#0x11 / adds /
  * lsrs r5,#0x18` is `n++` on an s8 LOCAL with combine folding the add into the
  * value's own sign-extension, so the increment happens in the high byte and
  * `0x80 << 0x11` is 1 << 24, i.e. plus ONE. Written plainly it reproduces. */
-s8 sub_0802F504(void)
+s8 SioCountSendingPlayers(void)
 {
     s8 n;
     int i;
@@ -22,13 +22,14 @@ s8 sub_0802F504(void)
     n = 0;
     for (i = 0; i <= 3; i++)
     {
-        if (sub_0802F480(i) == 1)
+        if (SioIsPlayerSending(i) == 1)
             n++;
     }
     return n;
 }
+asm(".global sub_0802F504\n.thumb_set sub_0802F504, SioCountSendingPlayers\n");
 
-/* sub_0802F504's twin over sub_0802F460's bit array, but the counter is the
+/* SioCountSendingPlayers's twin over SioIsPlayerLinked's bit array, but the counter is the
  * record's own unk07 rather than a local, so every step is a real store.
  *
  * The discarded `ldrb` before each `strb` is the VOLATILE tell this repo has
@@ -39,7 +40,7 @@ s8 sub_0802F504(void)
  *
  * The `lsls #0x18; asrs #0x18` on the way out is the s8 return converting the
  * u8 member, not evidence the member is signed. */
-s8 sub_0802F534(void)
+s8 SioCountLinkedPlayers(void)
 {
     int i;
 
@@ -47,9 +48,10 @@ s8 sub_0802F534(void)
 
     for (i = 0; i <= 3; i++)
     {
-        if (sub_0802F460(i) == 1)
+        if (SioIsPlayerLinked(i) == 1)
             gUnknown_0849B018->unk07++;
     }
 
     return gUnknown_0849B018->unk07;
 }
+asm(".global sub_0802F534\n.thumb_set sub_0802F534, SioCountLinkedPlayers\n");

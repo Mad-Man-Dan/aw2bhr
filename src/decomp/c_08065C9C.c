@@ -51,7 +51,7 @@ void MatchSetupMoveArmyCursor(int a1)
     }
 
     if (gUnknown_08580934->unk32 != v)
-        sub_0803B4DC(0x64);
+        PlayMusicOrSfx2(0x64);
 
     gUnknown_08580934->unk32 = v;
 }

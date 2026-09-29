@@ -11,7 +11,7 @@
  * EventOp_SetFramePalette -- script command: repaint a palette from the current node.
  *
  * Skipped while gUnknown_03002514 is 1. The node's .unk08 is a palette number,
- * standing in as 5 when it is 0; sub_0802D5CC gets that number less one, and
+ * standing in as 5 when it is 0; ApplyWindowFramePalette gets that number less one, and
  * gUnknown_03002F08.unk00. The cursor then steps one node on and TRUE comes
  * back, so the dispatcher runs the next command in the same frame.
  * EventOp_ApplyFramePaletteForArmy next door does the same repaint, but reaches its stand-in value
@@ -36,7 +36,7 @@ bool8 EventOp_SetFramePalette(s16 a)
       v = w;
     }
     gUnknown_0200C528[a].unk04->unk08 += 0;
-    sub_0802D5CC(v - 1, gUnknown_03002F08.unk00);
+    ApplyWindowFramePalette(v - 1, gUnknown_03002F08.unk00);
   }
   gUnknown_0200C528[a].unk04++;
   return 1;

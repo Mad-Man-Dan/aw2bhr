@@ -46,7 +46,7 @@ void sub_08000BF8(void)
 
 void DesignRoomPickUnderCursor(void)
 {
-    sub_0803B4DC(0x65);
+    PlayMusicOrSfx2(0x65);
 
     if (gActiveMap->editMode == 0)
         SetSelectedTile(gMap->terrain[

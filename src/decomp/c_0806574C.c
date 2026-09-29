@@ -8,7 +8,7 @@
  */
 
 /* Session setup: seeds the gUnknown_08580934 header, rebuilds the per-slot
- * tables and clears the cursor state, then hands off to sub_0803BFBC and
+ * tables and clears the cursor state, then hands off to FillMatchSettingsRecord and
  * MatchSetupPackRuleIndices.
  *
  * gUnknown_0816E108 is agbcc's own -fforce-addr word holding &gUnknown_08580934
@@ -29,7 +29,7 @@ void MatchSetupInitState(void)
     gUnknown_08580934->unk2c = gUnknown_0202F200;
     gUnknown_08580934->unk24 = gPlaySt.savingEnabled;
     gUnknown_08580934->unk25 = gUnknown_08580934->unk24 ? SioGetSelfId() : -1;
-    sub_0803BFBC(gUnknown_08580934);
+    FillMatchSettingsRecord(gUnknown_08580934);
     MatchSetupPackRuleIndices();
 
     for (i = 0; i < gUnknown_08580934->unk08; i++)

@@ -42,7 +42,7 @@ void BattleAnimSceneBody_Loop(void)
         gUnknown_03004544 = 0;
     }
 
-    sub_08053520(0);
-    sub_08053520(1);
+    StepRepeatedShotAndHitSfx(0);
+    StepRepeatedShotAndHitSfx(1);
 }
 asm(".global sub_080534A0\n.thumb_set sub_080534A0, BattleAnimSceneBody_Loop\n");

@@ -14,10 +14,10 @@ void UnitMenu_Load(void)
 {
     LockUnitSelection();
     CloseTopMenu();
-    sub_0802C57C();
+    BackupUnitStartPosition();
     LoadUnitIntoTransport();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
 
     if (gPlaySt.savingEnabled != 0)
         SendActionCommand(7, gUnknown_03003F38, 0, 0);

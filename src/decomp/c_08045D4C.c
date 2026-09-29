@@ -8,7 +8,7 @@
  * sub_08045D4C @ 0x08045D4C
  */
 
-int sub_08045D4C(void)
+int MapEventCond_SelectedUnitBesideTeamColor1Vs3(void)
 {
     int x;
     int y;
@@ -67,3 +67,4 @@ int sub_08045D4C(void)
 
     return 0;
 }
+asm(".global sub_08045D4C\n.thumb_set sub_08045D4C, MapEventCond_SelectedUnitBesideTeamColor1Vs3\n");

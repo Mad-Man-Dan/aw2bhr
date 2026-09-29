@@ -56,7 +56,7 @@ void SupplyAnimation_Loop(struct Unk29C38Proc *proc)
 
     EndSupplyIconEffect();
     EndSlotScriptAt(gUnknown_03001FBC);
-    sub_0803B4DC(0x6c);
+    PlayMusicOrSfx2(0x6c);
 }
 asm(".global sub_08029C38\n.thumb_set sub_08029C38, SupplyAnimation_Loop\n");
 

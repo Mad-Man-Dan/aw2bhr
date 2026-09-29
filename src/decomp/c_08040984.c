@@ -14,7 +14,7 @@ struct Unk40984Proc
     /* 66 */ s16 unk66;
 };
 
-/* MATCHED. Byte-for-byte the same function as sub_0803F1D8 -- identical
+/* MATCHED. Byte-for-byte the same function as CannonFire_ScrollToTarget -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
 void SiloFire_ScrollToSilo(struct Unk40984Proc *p)

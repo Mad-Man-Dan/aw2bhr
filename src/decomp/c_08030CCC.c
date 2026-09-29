@@ -7,11 +7,11 @@
  * sub_08030CCC @ 0x08030CCC
  */
 
-void sub_08030CCC(void)
+void LinkPollHandshake(void)
 {
     u8 v;
 
-    v = sub_08030D1C();
+    v = LinkPollSelfId();
     if (v == 1)
     {
         gUnknown_0849B018->unk1e = 0;
@@ -22,3 +22,4 @@ void sub_08030CCC(void)
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }
+asm(".global sub_08030CCC\n.thumb_set sub_08030CCC, LinkPollHandshake\n");

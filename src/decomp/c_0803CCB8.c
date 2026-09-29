@@ -14,7 +14,7 @@
  * the cast form gets that backwards. Same instructions, different allocation.
  *
  * unk13 == 0xff is the empty-slot test struct Unk020280C0 already documents. */
-bool8 sub_0803CCB8(int id, u8 *dst)
+bool8 LoadDesignRoomName(int id, u8 *dst)
 {
     u8 i = id;
 
@@ -23,3 +23,4 @@ bool8 sub_0803CCB8(int id, u8 *dst)
     CopyString(dst, gUnknown_020280C0[i].unk02);
     return 1;
 }
+asm(".global sub_0803CCB8\n.thumb_set sub_0803CCB8, LoadDesignRoomName\n");

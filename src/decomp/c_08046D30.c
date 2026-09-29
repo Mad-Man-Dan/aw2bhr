@@ -18,8 +18,8 @@ void TerrainInfoInput_Loop(void)
     case 1:
         if (gpKeySt->pressed & DPAD_DOWN)
         {
-            sub_0803B4DC(0x67);
-            sub_080468D4(gUnknown_02028DD5);
+            PlayMusicOrSfx2(0x67);
+            ClearTerrainInfoMoveCosts(gUnknown_02028DD5);
             gUnknown_02028DD4 = 2;
             sub_08014878();
             StartTextBoxViaRecord((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
@@ -30,7 +30,7 @@ void TerrainInfoInput_Loop(void)
     case 2:
         if (gpKeySt->pressed & DPAD_UP)
         {
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
             FillTilemapRect(gBG0TilemapBuffer, (gUnknown_02028DD5 >> 3) + 1, 0xb, 0xc, 8, 0);
             DrawTerrainInfoMoveCosts(gUnknown_02028DD5, gUnknown_02028DD6);
             gUnknown_02028DD4 = 1;
@@ -44,7 +44,7 @@ void TerrainInfoInput_Loop(void)
         sub_08014878();
         EndTerrainInfoWindowScript();
         ClearSlotScriptCallback(gUnknown_03001FBC);
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
     }
 }
 asm(".global sub_08046D30\n.thumb_set sub_08046D30, TerrainInfoInput_Loop\n");
@@ -126,6 +126,6 @@ void TerrainInfoWindow_Init(void)
     }
 
     SetMapLayerPrioritiesDefault();
-    sub_0803B4DC(0x65);
+    PlayMusicOrSfx2(0x65);
 }
 asm(".global sub_08046E48\n.thumb_set sub_08046E48, TerrainInfoWindow_Init\n");

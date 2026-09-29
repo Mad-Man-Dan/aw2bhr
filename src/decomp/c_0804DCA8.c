@@ -53,7 +53,7 @@ void BattleshipFigure_Init(void)
 
     do
     {
-        pos = (struct UnkPosPair *)sub_08057D44(
+        pos = (struct UnkPosPair *)GetFigurePositionTable(
             gUnknown_085D6A48[(meta = gUnknown_03004580,
                 gUnknown_03004582[gUnknown_0300453C][0])][0],
             gUnknown_03004580[gUnknown_0300453C][3]);

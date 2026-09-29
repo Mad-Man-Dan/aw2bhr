@@ -17,7 +17,7 @@
  *
  * The key is read at gpKeySt->held, offset 0, not `held` at +4. */
 
-void sub_0802DFC8(void)
+void MapCursorState_RangeWhileBHeld(void)
 {
     u16 v;
 
@@ -37,3 +37,4 @@ void sub_0802DFC8(void)
         gUnknown_03003334 = v;
     }
 }
+asm(".global sub_0802DFC8\n.thumb_set sub_0802DFC8, MapCursorState_RangeWhileBHeld\n");

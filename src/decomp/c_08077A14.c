@@ -61,7 +61,7 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
     for (i = 0; i < 4; i++)
         gPlayers[i + 1].teamColor = gUnknown_085C77A0[proc->unk34].unk40[i];
 
-    sub_0803D6D0();
+    SnapshotTeamColorsFromPlayers();
     sub_0801B6EC((void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)));
     sub_0801B6FC((void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)));
     FillMapPreviewTilemap(gUnknown_08551A04 + 0x100, 0x4080);

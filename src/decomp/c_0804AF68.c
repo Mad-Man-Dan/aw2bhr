@@ -22,12 +22,13 @@ void sub_0804AF68(void)
  * single `||` produces and not two separate ifs.
  *
  * unk5c is reached as `adds r0, #0x5c; ldrb` -- the ldrb displacement limit of
- * 31, not an address being taken. The neighbour sub_0804AFB0 spells the same
+ * 31, not an address being taken. The neighbour NameEntry_SetFlagIfMode1 spells the same
  * byte `unk2c[0x30]`; the field name is used here because the header's own
- * evidence for unk5c (sub_0804B0CC / sub_0804B10C write 0 and 1 into it) makes
+ * evidence for unk5c (StartNameEntryMode0 / StartNameEntryMode1 write 0 and 1 into it) makes
  * it a discriminator rather than an array element. Byte-identical either way. */
-void sub_0804AF88(void)
+void NameEntry_SetSkipFlagIfModeOrFlag(void)
 {
     if (gUnknown_02028E48 != 0 || gUnknown_030044E0->unk5c != 0)
         gUnknown_03002F1C = 1;
 }
+asm(".global sub_0804AF88\n.thumb_set sub_0804AF88, NameEntry_SetSkipFlagIfModeOrFlag\n");

@@ -17,12 +17,13 @@ struct Unk338C0Proc
     /* 38 */ int unk38;
 };
 
-void sub_080338C0(int a)
+void LinkC4_SetCursorRow(int a)
 {
     struct Unk338C0Proc *proc = Proc_Find(gUnknown_0849BB50);
 
     proc->unk38 = a * 32 + 0x2e;
 }
+asm(".global sub_080338C0\n.thumb_set sub_080338C0, LinkC4_SetCursorRow\n");
 
 void sub_080338DC(void)
 {

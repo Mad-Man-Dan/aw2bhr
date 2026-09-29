@@ -53,7 +53,7 @@ struct Unk08049C38Proc
     /* 0x29 */ u8 unk29;
 };
 
-void sub_08049C38(struct Unk08049C38Proc *proc)
+void DefeatFlow_BannerPiece_Step(struct Unk08049C38Proc *proc)
 {
     switch (proc->unk24)
     {
@@ -120,3 +120,4 @@ void sub_08049C38(struct Unk08049C38Proc *proc)
     PutOamHi(proc->unk1e, (gUnknown_084C3240->unk20 - proc->unk26) & 0xff,
                  gUnknown_0848B698, (proc->unk22 << 4) + 0x31ca);
 }
+asm(".global sub_08049C38\n.thumb_set sub_08049C38, DefeatFlow_BannerPiece_Step\n");

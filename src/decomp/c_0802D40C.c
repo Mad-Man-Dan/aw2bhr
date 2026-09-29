@@ -36,12 +36,12 @@
  * 0xC9A..0xC9D. Each is >255, so agbcc has no `movs #imm8` for it and the pool
  * word is forced by the value alone -- no symbol and no type is involved. The
  * four differ ONLY in that word, which is why they cannot say anything about
- * sub_0802D35C's parameter width; see its comment in unknown-functions.h.
+ * ShowOptionHelpText's parameter width; see its comment in unknown-functions.h.
  */
 
 void OptionsMenu_HelpVisualA(void)
 {
-    sub_0802D35C(0xC9A);
+    ShowOptionHelpText(0xC9A);
 }
 asm(".global sub_0802D40C\n.thumb_set sub_0802D40C, OptionsMenu_HelpVisualA\n");
 
@@ -49,7 +49,7 @@ asm(".global sub_0802D40C\n.thumb_set sub_0802D40C, OptionsMenu_HelpVisualA\n");
 
 void OptionsMenu_HelpVisualB(void)
 {
-    sub_0802D35C(0xC9B);
+    ShowOptionHelpText(0xC9B);
 }
 asm(".global sub_0802D41C\n.thumb_set sub_0802D41C, OptionsMenu_HelpVisualB\n");
 
@@ -57,7 +57,7 @@ asm(".global sub_0802D41C\n.thumb_set sub_0802D41C, OptionsMenu_HelpVisualB\n");
 
 void OptionsMenu_HelpVisualC(void)
 {
-    sub_0802D35C(0xC9C);
+    ShowOptionHelpText(0xC9C);
 }
 asm(".global sub_0802D42C\n.thumb_set sub_0802D42C, OptionsMenu_HelpVisualC\n");
 
@@ -65,7 +65,7 @@ asm(".global sub_0802D42C\n.thumb_set sub_0802D42C, OptionsMenu_HelpVisualC\n");
 
 void OptionsMenu_HelpNoVisual(void)
 {
-    sub_0802D35C(0xC9D);
+    ShowOptionHelpText(0xC9D);
 }
 asm(".global sub_0802D43C\n.thumb_set sub_0802D43C, OptionsMenu_HelpNoVisual\n");
 
@@ -81,7 +81,8 @@ asm(".global sub_0802D43C\n.thumb_set sub_0802D43C, OptionsMenu_HelpNoVisual\n")
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0802D44C(void)
+void ClearOptionHelpWindow2(void)
 {
-    sub_0802D3B0();
+    ClearOptionHelpWindow();
 }
+asm(".global sub_0802D44C\n.thumb_set sub_0802D44C, ClearOptionHelpWindow2\n");

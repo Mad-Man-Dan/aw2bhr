@@ -15,17 +15,17 @@
  * base, and unk1d is already named on the struct. gUnknown_030033EC indexes it
  * directly as a u16, no narrowing.
  *
- * sub_0802C9E8 next door is the same three tests reordered and with the middle
+ * UnitMenu_CaptureUsability next door is the same three tests reordered and with the middle
  * one's sense flipped -- not a duplicate, despite identical size, call count
  * and data_refs.
  */
 
-bool8 sub_0802C9A4(void)
+bool8 UnitMenu_CaptureSamiUsability(void)
 {
     if (gPlaySt.coAbilities == 0)
         return TRUE;
 
-    if (sub_0802C958())
+    if (UnitMenu_CaptureSharedUsability())
         return TRUE;
 
     if (gPlayers[gUnknown_030033EC].co != 4)
@@ -33,20 +33,21 @@ bool8 sub_0802C9A4(void)
 
     return FALSE;
 }
+asm(".global sub_0802C9A4\n.thumb_set sub_0802C9A4, UnitMenu_CaptureSamiUsability\n");
 
-/* sub_0802C9A4's three tests reordered, and NOT a duplicate of it despite
+/* UnitMenu_CaptureSamiUsability's three tests reordered, and NOT a duplicate of it despite
  * identical size, call count and data_refs -- the batch-by-locality warning in
  * the wave brief, met in practice.
  *
- * sub_0802C958 moves to the front and keeps its `return TRUE`, while the unk08
+ * UnitMenu_CaptureSharedUsability moves to the front and keeps its `return TRUE`, while the unk08
  * guard flips to `return FALSE` and the unk1d test flips to `== 4`. The layout
- * follows: `movs r0, #0` is the block before the pool here, where sub_0802C9A4
+ * follows: `movs r0, #0` is the block before the pool here, where UnitMenu_CaptureSamiUsability
  * has `movs r0, #1` there. Two `return FALSE` sites merge into that block.
  */
 
-bool8 sub_0802C9E8(void)
+bool8 UnitMenu_CaptureUsability(void)
 {
-    if (sub_0802C958())
+    if (UnitMenu_CaptureSharedUsability())
         return TRUE;
 
     if (gPlaySt.coAbilities == 0)
@@ -57,3 +58,4 @@ bool8 sub_0802C9E8(void)
 
     return FALSE;
 }
+asm(".global sub_0802C9E8\n.thumb_set sub_0802C9E8, UnitMenu_CaptureUsability\n");

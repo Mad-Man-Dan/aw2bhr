@@ -7,7 +7,7 @@
  * sub_0803CAD4 @ 0x0803CAD4
  */
 
-u8 sub_0803CAD4(u32 id)
+u8 IsCoSelectable(u32 id)
 {
     struct Unk02028030 *s = &gUnknown_02028030;
     u32 idx = id >> 3;
@@ -16,3 +16,4 @@ u8 sub_0803CAD4(u32 id)
 
     return (1 << (id & 7)) & *p;
 }
+asm(".global sub_0803CAD4\n.thumb_set sub_0803CAD4, IsCoSelectable\n");

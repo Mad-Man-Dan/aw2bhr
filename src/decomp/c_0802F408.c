@@ -27,7 +27,7 @@
  * so the spelling that reads `<= 0xa` first produces `bls` over the TRUE block
  * where the ROM has `bhi` over the FALSE one. Writing the test the other way
  * round is what puts them back. */
-bool8 sub_0802F408(void)
+bool8 SioIsConnectionAlive(void)
 {
     u16 v;
 
@@ -44,3 +44,4 @@ bool8 sub_0802F408(void)
     else
         return TRUE;
 }
+asm(".global sub_0802F408\n.thumb_set sub_0802F408, SioIsConnectionAlive\n");

@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-/* Family F032, and byte-identical to sub_08039914 -- same nullary bool8
+/* Family F032, and byte-identical to BlockingCoSpeech_Wait2 -- same nullary bool8
  * predicate, same break. See the note there on why IsCoSpeechScriptRunning takes no
  * argument despite the untouched r0. */
 

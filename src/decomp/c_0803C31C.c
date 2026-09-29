@@ -7,12 +7,14 @@
  * sub_0803C31C @ 0x0803C31C, sub_0803C320 @ 0x0803C320
  */
 
-int sub_0803C31C(void)
+int ReturnOne(void)
 {
     return 1;
 }
+asm(".global sub_0803C31C\n.thumb_set sub_0803C31C, ReturnOne\n");
 
-int sub_0803C320(void)
+int ReturnZero2(void)
 {
     return 0;
 }
+asm(".global sub_0803C320\n.thumb_set sub_0803C320, ReturnZero2\n");

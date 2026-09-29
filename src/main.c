@@ -52,8 +52,8 @@ void InitGameSystems(void)
     InitMapFloodHandler();
     EnableVBlankInterrupt();
     FlushLCDControl();
-    sub_0803B37C();
-    sub_0803B688();
+    InitSoundSystem();
+    InitSoundMode();
     LinkShutdown();
     sub_08085AF4();
     ResetMainMenuCarouselState(0);
@@ -172,7 +172,7 @@ void CheckSoftResetCombo(void)
     if ((keys & 0xf) == 0xf)
     {
         if (gUnknown_02028E41[0] != 0xaa || gUnknown_02028E41[1] != 0x55)
-            sub_0804A010();
+            SetLanguageSignature();
 
         ClearWorkRamAndSoftReset();
     }
@@ -252,7 +252,7 @@ void StartBattleAnimScene(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7, u8 a8
     gUnknown_03004528[1] = gUnknown_02027F68;
     gUnknown_03004520 = a16;
 
-    sub_080546BC();
+    SetBattleAnimFlagsForGame();
 
     gUnknown_03004504.bit0 = 1;
     gUnknown_03004504.bit1 = 0;

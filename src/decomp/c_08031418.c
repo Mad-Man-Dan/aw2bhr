@@ -16,7 +16,8 @@ struct Unk31418Proc
     /* 58 */ u32 unk58;
 };
 
-void sub_08031418(ProcPtr parent)
+void StartLinkLobbySlots(ProcPtr parent)
 {
     ((struct Unk31418Proc *)Proc_Start(gUnknown_0849B284, parent))->unk58 = 0;
 }
+asm(".global sub_08031418\n.thumb_set sub_08031418, StartLinkLobbySlots\n");

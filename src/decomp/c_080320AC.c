@@ -16,7 +16,7 @@ void sub_080320AC(void)
  * halfword store's constant into a register that survives the pool `ldr` in
  * between; it is not a fourth store. */
 
-void sub_080320CC(void)
+void LinkSendLeavePacket(void)
 {
     gUnknown_0202575C.unk00 = 0xa8;
     gUnknown_0202575C.unk01 = gUnknown_0849B018->unk06;
@@ -24,3 +24,4 @@ void sub_080320CC(void)
 
     sub_0802F588(&gUnknown_0202575C, 4);
 }
+asm(".global sub_080320CC\n.thumb_set sub_080320CC, LinkSendLeavePacket\n");

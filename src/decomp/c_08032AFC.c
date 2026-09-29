@@ -13,7 +13,7 @@
  * relative of sub_0806EA88 (src/decomp/c_0806EA28.c) and sub_0806BA6C. The
  * 0x20 that DISPCNT's win0 bit needs is CSEd into r5 and reused both as the
  * top edge's value and as the second shadow's blend bit. */
-void sub_08032AFC(void)
+void LinkMapPick_SetupWindow(void)
 {
     gDispIo.disp_ct.win0_enable = 1;
 
@@ -36,3 +36,4 @@ void sub_08032AFC(void)
     gUnknown_030030DC.bits.win0_enable_obj = 1;
     gUnknown_030030DC.bits.win0_enable_blend = 1;
 }
+asm(".global sub_08032AFC\n.thumb_set sub_08032AFC, LinkMapPick_SetupWindow\n");

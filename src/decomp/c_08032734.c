@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-void sub_08032734(void)
+void LinkMapPickSlideIn_Init(void)
 {
     gUnknown_0849B060->unk0a = 15;
 
@@ -22,8 +22,9 @@ void sub_08032734(void)
     gUnknown_03002F18 = 0xFFD4;
     gUnknown_03002B34 = gUnknown_0849B060->unk0e - 0x60;
 }
+asm(".global sub_08032734\n.thumb_set sub_08032734, LinkMapPickSlideIn_Init\n");
 
-void sub_08032788(ProcPtr proc)
+void LinkMapPickSlideIn_Loop(ProcPtr proc)
 {
     gUnknown_0849B060->unk0a--;
 
@@ -38,12 +39,13 @@ void sub_08032788(ProcPtr proc)
 
     if (gUnknown_0849B060->unk0a == 0)
     {
-        sub_0803B4DC(0x76);
+        PlayMusicOrSfx2(0x76);
         Proc_Break(proc);
     }
 }
+asm(".global sub_08032788\n.thumb_set sub_08032788, LinkMapPickSlideIn_Loop\n");
 
-void sub_080327FC(void)
+void LinkMapPickSlideOut_Init(void)
 {
     gUnknown_0849B060->unk0a = 0;
 
@@ -56,8 +58,9 @@ void sub_080327FC(void)
     gUnknown_03002F18 = 0xFFD4;
     gUnknown_03002B34 = gUnknown_0849B060->unk0e - 0x60;
 }
+asm(".global sub_080327FC\n.thumb_set sub_080327FC, LinkMapPickSlideOut_Init\n");
 
-void sub_08032850(ProcPtr proc)
+void LinkMapPickSlideOut_Loop(ProcPtr proc)
 {
     gUnknown_0849B060->unk0a++;
 
@@ -73,3 +76,4 @@ void sub_08032850(ProcPtr proc)
     if (gUnknown_0849B060->unk0a == 0xf)
         Proc_Break(proc);
 }
+asm(".global sub_08032850\n.thumb_set sub_08032850, LinkMapPickSlideOut_Loop\n");

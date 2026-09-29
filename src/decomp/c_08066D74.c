@@ -39,7 +39,7 @@ void MatchSetupHandleRulesStageInput(void)
         sub_080733B8();
         sub_08064B68(2);
         gUnknown_08580934->unk30 = 1;
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
 
         if (gUnknown_08580934->unk08 == 2)
         {

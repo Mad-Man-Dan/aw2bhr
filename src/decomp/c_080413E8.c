@@ -47,7 +47,7 @@
  * `ldrsb rD,[rB,rI]` for a genuine `s8 *`, and the ROM has
  * `adds rD,rB,rI; ldrb; lsls #24; asrs #24`.
  *
- * c_08020984.c is this function's near-twin -- same sub_0803DF54 /
+ * c_08020984.c is this function's near-twin -- same FindLivingInventionTargetAt /
  * gUnknown_020288B4 / unk02_6 / AreUnitsOnSameTeam / CalcAttackOutcome sequence over the
  * same map -- and settled the unk18 and unk02_6 spellings. */
 
@@ -70,7 +70,7 @@ int BuildAttackTargetList(void)
             if ((s8)gUnknown_03003340[y][x] < 0)
                 continue;
 
-            unit = sub_0803DF54(x, y);
+            unit = FindLivingInventionTargetAt(x, y);
             t = gUnknown_020288B4[MAP->rowOffset[y] + x];
 
             v = 0;

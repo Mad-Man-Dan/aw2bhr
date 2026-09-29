@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0803B9AC(void)
+void StartShopScreen2(void)
 {
     StartShopScreen();
 }
+asm(".global sub_0803B9AC\n.thumb_set sub_0803B9AC, StartShopScreen2\n");

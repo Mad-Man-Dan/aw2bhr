@@ -7,8 +7,9 @@
  * sub_08045FA4 @ 0x08045FA4
  */
 
-void sub_08045FA4(void)
+void MapEventFx_ShakeScreenWithSfx23(void)
 {
     StartScreenShake(2, 0x8c, 0);
-    sub_0803B4DC(0x23);
+    PlayMusicOrSfx2(0x23);
 }
+asm(".global sub_08045FA4\n.thumb_set sub_08045FA4, MapEventFx_ShakeScreenWithSfx23\n");

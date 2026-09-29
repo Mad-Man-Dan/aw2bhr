@@ -185,7 +185,7 @@ void DesignRoomMode_Paint(void)
         if (r == 6)
         {
             if (gpKeySt->pressed & 1)
-                sub_0803B4DC(0x68);
+                PlayMusicOrSfx2(0x68);
 
             gActiveMap->cursorIdleFrames++;
             gActiveMap->cursorIdleTimer = 0xc;
@@ -215,9 +215,9 @@ void DesignRoomMode_Paint(void)
         DesignRoomSetMode(5);
 
     if (gActiveMap->soundId != 0)
-        sub_0803B4DC(gActiveMap->soundId);
+        PlayMusicOrSfx2(gActiveMap->soundId);
     else if (v != 0)
-        sub_0803B4DC((s16)v);
+        PlayMusicOrSfx2((s16)v);
 
     if (gActiveMap->inputDelay > 0)
     {

@@ -16,7 +16,7 @@ void sub_08064EF8(struct Unk08580934_Obj *obj)
     if (obj->unk26 == 0)
     {
         gUnknown_08580934->unk2d--;
-        sub_08030178();
+        LinkRestartKeySync();
         ClearSlotScriptCallback(gUnknown_03001FBC);
         obj->unk2a = 0x20;
     }
@@ -33,7 +33,7 @@ void sub_08064F54(struct Unk08580934_Obj *obj)
     if (obj->unk26 == 0)
     {
         gUnknown_08580934->unk2d--;
-        sub_08030178();
+        LinkRestartKeySync();
         ClearSlotScriptCallback(gUnknown_03001FBC);
         obj->unk2a = 0x34;
     }

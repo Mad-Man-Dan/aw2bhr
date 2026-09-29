@@ -19,7 +19,7 @@ struct Unk6F6A0Proc
     /* 29 */ STRUCT_PAD(0x29, 0x58);
     /* 58 */ s32 unk58;
 };
-/* sub_0803B5E8 is declared void (void) and the ROM passes nothing: r0 still
+/* FadeOutMusicDefault is declared void (void) and the ROM passes nothing: r0 still
  * holds proc at the bl only because it arrived there. The adds r4, r0, #0 is
  * the save of proc across the call, not argument setup.
  *
@@ -65,7 +65,7 @@ void sub_0806F6A0(struct Unk6F6A0Proc *proc)
 
 void sub_0806F6C4(struct Unk6F6C4Proc *proc)
 {
-    sub_0803B5E8();
+    FadeOutMusicDefault();
     proc->unk64 = 0;
 }
 

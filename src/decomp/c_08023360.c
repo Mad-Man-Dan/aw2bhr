@@ -48,7 +48,7 @@ void LoadGameplayGraphics(int a)
     ApplyPalette((u16 *)(gUnknown_0810E6E0 + (gPlayers[3].teamColor - 1) * 0x20), 14);
     ApplyPalette((u16 *)(gUnknown_0810E6E0 + (gPlayers[4].teamColor - 1) * 0x20), 15);
 
-    sub_0803F80C(8);
+    LoadArmyObjPalettes(8);
     sub_0802D2EC();
 
     ApplyPalette(gUnknown_0809163C, 18);

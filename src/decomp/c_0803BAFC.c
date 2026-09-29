@@ -7,9 +7,9 @@
  * sub_0803BAFC @ 0x0803BAFC, sub_0803BB14 @ 0x0803BB14, sub_0803BB2C @ 0x0803BB2C
  */
 
-/* F081 -- `sub_0803BB74` returns 1 or 2 and this asks whether it is 2.
+/* F081 -- `MainMenuVersus_Usability` returns 1 or 2 and this asks whether it is 2.
  *
- * It is NOT `return sub_0803BB74() == 2;`. That spelling is a byte shorter: agbcc
+ * It is NOT `return MainMenuVersus_Usability() == 2;`. That spelling is a byte shorter: agbcc
  * expands a returned comparison through do_store_flag, which presets the false
  * value in a scratch register and conditionally overwrites it (`mov r1,#0;
  * ... bne; mov r1,#1; add r0,r1,#0`) with no unconditional branch. The
@@ -19,19 +19,20 @@
  *
  * The `lsls #0x18; lsrs #0x18` between the `bl` and the `cmp` is agbcc
  * re-narrowing a callee declared to return u8; it is not a cast in this
- * function. See the note on sub_0803BB74 in include/unknown-functions.h.
+ * function. See the note on MainMenuVersus_Usability in include/unknown-functions.h.
  */
-int sub_0803BAFC(void)
+int MainMenuVersus_ContinueUsability(void)
 {
-    if (sub_0803BB74() == 2)
+    if (MainMenuVersus_Usability() == 2)
         return 1;
     else
         return 0;
 }
+asm(".global sub_0803BAFC\n.thumb_set sub_0803BAFC, MainMenuVersus_ContinueUsability\n");
 
-/* F081 -- `sub_0803BB44` returns 1 or 2 and this asks whether it is 2.
+/* F081 -- `MainMenuCampaign_Usability` returns 1 or 2 and this asks whether it is 2.
  *
- * It is NOT `return sub_0803BB44() == 2;`. That spelling is a byte shorter: agbcc
+ * It is NOT `return MainMenuCampaign_Usability() == 2;`. That spelling is a byte shorter: agbcc
  * expands a returned comparison through do_store_flag, which presets the false
  * value in a scratch register and conditionally overwrites it (`mov r1,#0;
  * ... bne; mov r1,#1; add r0,r1,#0`) with no unconditional branch. The
@@ -41,19 +42,20 @@ int sub_0803BAFC(void)
  *
  * The `lsls #0x18; lsrs #0x18` between the `bl` and the `cmp` is agbcc
  * re-narrowing a callee declared to return u8; it is not a cast in this
- * function. See the note on sub_0803BB44 in include/unknown-functions.h.
+ * function. See the note on MainMenuCampaign_Usability in include/unknown-functions.h.
  */
-int sub_0803BB14(void)
+int MainMenuCampaign_ContinueUsability(void)
 {
-    if (sub_0803BB44() == 2)
+    if (MainMenuCampaign_Usability() == 2)
         return 1;
     else
         return 0;
 }
+asm(".global sub_0803BB14\n.thumb_set sub_0803BB14, MainMenuCampaign_ContinueUsability\n");
 
-/* F081 -- `sub_0803BB5C` returns 1 or 2 and this asks whether it is 2.
+/* F081 -- `MainMenuWarRoom_Usability` returns 1 or 2 and this asks whether it is 2.
  *
- * It is NOT `return sub_0803BB5C() == 2;`. That spelling is a byte shorter: agbcc
+ * It is NOT `return MainMenuWarRoom_Usability() == 2;`. That spelling is a byte shorter: agbcc
  * expands a returned comparison through do_store_flag, which presets the false
  * value in a scratch register and conditionally overwrites it (`mov r1,#0;
  * ... bne; mov r1,#1; add r0,r1,#0`) with no unconditional branch. The
@@ -63,12 +65,13 @@ int sub_0803BB14(void)
  *
  * The `lsls #0x18; lsrs #0x18` between the `bl` and the `cmp` is agbcc
  * re-narrowing a callee declared to return u8; it is not a cast in this
- * function. See the note on sub_0803BB5C in include/unknown-functions.h.
+ * function. See the note on MainMenuWarRoom_Usability in include/unknown-functions.h.
  */
-int sub_0803BB2C(void)
+int MainMenuWarRoom_ContinueUsability(void)
 {
-    if (sub_0803BB5C() == 2)
+    if (MainMenuWarRoom_Usability() == 2)
         return 1;
     else
         return 0;
 }
+asm(".global sub_0803BB2C\n.thumb_set sub_0803BB2C, MainMenuWarRoom_ContinueUsability\n");

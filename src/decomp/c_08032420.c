@@ -11,14 +11,15 @@
 
 /* `lsls #2; adds; lsls #0x13; asrs #0x10` is `x * 40` narrowed to s16: the x5
  * strength reduction with the x8 folded into the s16 cast's left shift. The
- * cast is sub_08032340's declared s16 parameters doing the narrowing, not a
+ * cast is LinkPlayerCursor_Draw's declared s16 parameters doing the narrowing, not a
  * cast in the source. */
 
-void sub_08032420(ProcPtr proc)
+void LinkPlayerCursor_Loop(ProcPtr proc)
 {
-    sub_0803227C();
+    LinkPlayerCursor_HandleInput();
 
-    sub_08032340(proc,
+    LinkPlayerCursor_Draw(proc,
         gUnknown_0849B060->unk04 * 40,
         gUnknown_0849B060->unk06 * 40);
 }
+asm(".global sub_08032420\n.thumb_set sub_08032420, LinkPlayerCursor_Loop\n");

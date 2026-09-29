@@ -9,7 +9,7 @@
 
 void EndOfGame_Finish(void)
 {
-    sub_0803CA28(gPlaySt.mapID, 1);
+    SetMapPlayed(gPlaySt.mapID, 1);
 
     switch (gPlaySt.gameMode)
     {

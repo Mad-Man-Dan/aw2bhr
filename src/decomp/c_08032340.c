@@ -14,7 +14,7 @@ struct Unk32340Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_08032340(ProcPtr procArg, s16 a, s16 b)
+void LinkPlayerCursor_Draw(ProcPtr procArg, s16 a, s16 b)
 {
     struct Unk32340Proc *proc = procArg;
     s16 v = a;
@@ -38,3 +38,4 @@ void sub_08032340(ProcPtr procArg, s16 a, s16 b)
 
     proc->unk58 = (proc->unk58 + 1) & 0x1f;
 }
+asm(".global sub_08032340\n.thumb_set sub_08032340, LinkPlayerCursor_Draw\n");

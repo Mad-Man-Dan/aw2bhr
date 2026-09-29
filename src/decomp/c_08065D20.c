@@ -58,7 +58,7 @@ void MatchSetupToggleController(void)
                 gUnknown_08580934->unk09[0] = 1;
         }
 
-        sub_0803B4DC(0x64);
+        PlayMusicOrSfx2(0x64);
     }
 }
 asm(".global sub_08065D20\n.thumb_set sub_08065D20, MatchSetupToggleController\n");

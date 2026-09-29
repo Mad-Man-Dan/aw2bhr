@@ -27,9 +27,9 @@ struct Unk41E48Proc
 
 void InventionAttack_CommitMove(struct Unk41E48Proc *proc)
 {
-    sub_0802C57C();
+    BackupUnitStartPosition();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
 
     if (proc->unk64 != 0 && gPlaySt.savingEnabled != 0)
         SendActionCommand(5, gUnknown_03003F38, proc->unk2c, proc->unk30);

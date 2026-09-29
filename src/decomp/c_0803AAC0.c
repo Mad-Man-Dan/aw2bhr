@@ -11,7 +11,7 @@
  * r3 (0, 0xd or -1) and this body never touches it. An unreferenced trailing
  * parameter costs no instructions, so adding it left this file byte-identical.
  * Wave 43, W43-I. */
-void sub_0803AAC0(u8 a1, u8 a2, u8 a3, s8 a4)
+void UnitInfoPanel_DrawIconPair(u8 a1, u8 a2, u8 a3, s8 a4)
 {
     int x;
     int t;
@@ -25,3 +25,4 @@ void sub_0803AAC0(u8 a1, u8 a2, u8 a3, s8 a4)
                  gUnknown_0849D89C->unk00 + gUnknown_0849E2F8[a1 * 2] + 1,
                  gUnknown_0849E2F8[a1 * 2 + 1], 0, 0);
 }
+asm(".global sub_0803AAC0\n.thumb_set sub_0803AAC0, UnitInfoPanel_DrawIconPair\n");

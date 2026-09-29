@@ -13,7 +13,8 @@ struct Unk080311D0 /* >= 0x5c */
     /* 0x58 */ u32 unk58;
 };
 
-void sub_080311D0(struct Unk080311D0 *p)
+void LinkStartPrompt_Init(struct Unk080311D0 *p)
 {
     p->unk58 = 0;
 }
+asm(".global sub_080311D0\n.thumb_set sub_080311D0, LinkStartPrompt_Init\n");

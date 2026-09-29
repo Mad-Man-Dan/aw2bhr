@@ -30,7 +30,7 @@ u8 BuildMapListForCategory(u8 a1)
 
     v = sub_08026340();
     if (gPlaySt.gameMode != 2 && gPlaySt.gameMode != 4
-        && sub_0803CA9C(a1) == 0)
+        && IsMapCategoryUnlocked(a1) == 0)
         return 0;
 
     count = 0;

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 /*
- * sub_08071918 -- debug hook: with L held, a fresh press of B calls sub_0803DDF4.
+ * sub_08071918 -- debug hook: with L held, a fresh press of B calls StartDebugArmyEditor.
  *
  * gpKeySt->held is the held-key mask (0x200 is L) and gpKeySt->pressed the
  * newly-pressed mask (2 is B). The four parameters are never read; the callers
@@ -34,5 +34,5 @@ asm(".global sub_08071918\n.thumb_set sub_08071918, sub_08071920 - 8\n");
 void sub_08071920(void *a, int b, int c, int d)
 {
     if ((gpKeySt->held & 0x200) && (gpKeySt->pressed & 2))
-        sub_0803DDF4();
+        StartDebugArmyEditor();
 }

@@ -122,7 +122,7 @@ void MissileHitEffect_Loop(void)
   gUnknown_020298E0[side].unk4e[slot] += ((s16) gUnknown_020298E0[side].unk6c[slot]) >> 8;
   new_var = gUnknown_03001470[gUnknown_03001FBC].unk28;
   SetEffectScreenPosition(side, gUnknown_03001FBC, (*(&gUnknown_02029924[side][slot])) + new_var, gUnknown_020298E0[side].unk4e[slot]);
-  sub_080513FC(side, slot, gUnknown_03001FBC);
+  RaiseHitDoneStageFlag(side, slot, gUnknown_03001FBC);
 }
 
 asm(".global sub_080517BC\n.thumb_set sub_080517BC, MissileHitEffect_Loop\n");

@@ -23,7 +23,7 @@ void DropCellPicker_SelectNext(void)
             (v = gUnknown_03001470[gUnknown_03001FBC].unk20) * 5]) == 0);
 
     if (old != v)
-        sub_0803B4DC(0x6a);
+        PlayMusicOrSfx2(0x6a);
 }
 asm(".global sub_080294FC\n.thumb_set sub_080294FC, DropCellPicker_SelectNext\n");
 
@@ -43,6 +43,6 @@ void DropCellPicker_SelectPrevious(void)
             (v = gUnknown_03001470[gUnknown_03001FBC].unk20) * 5]) == 0);
 
     if (old != v)
-        sub_0803B4DC(0x6a);
+        PlayMusicOrSfx2(0x6a);
 }
 asm(".global sub_08029570\n.thumb_set sub_08029570, DropCellPicker_SelectPrevious\n");

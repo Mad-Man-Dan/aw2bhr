@@ -13,15 +13,15 @@
  * The prototype `void (int, int)` was already fixed by the promoted caller
  * EventOp_SetCampaignFlag and this definition agrees with it: neither parameter is
  * narrowed here. The `lsls #0x18; lsrs #0x18` on the value before the first
- * two calls is sub_0803C9D4's and sub_0803CA00's `u8` showing through, and its
- * absence before the third is sub_0803CB40's `int`. */
+ * two calls is SetCampaignFlagBank2's and SetCampaignFlagBank1's `u8` showing through, and its
+ * absence before the third is SetCampaignFlagBank0's `int`. */
 void SetCampaignCompletionFlag(int id, int value)
 {
     if (id >= 0x60 && id <= 0x9f)
-        sub_0803C9D4(id - 0x60, value);
+        SetCampaignFlagBank2(id - 0x60, value);
     else if (id >= 0x20 && id <= 0x5f)
-        sub_0803CA00(id - 0x20, value);
+        SetCampaignFlagBank1(id - 0x20, value);
     else if ((u32)id <= 0x1f)
-        sub_0803CB40(id, value);
+        SetCampaignFlagBank0(id, value);
 }
 asm(".global sub_0803CBA0\n.thumb_set sub_0803CBA0, SetCampaignCompletionFlag\n");

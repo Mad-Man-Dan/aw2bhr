@@ -17,7 +17,7 @@
 bool8 EventOp_SetFramePaletteSlot15(s16 a)
 {
     gUnknown_03002F08.unk00 = 0xf;
-    sub_0802D5CC(gPlayers[gUnknown_030033EC].teamColor - 1, gUnknown_03002F08.unk00);
+    ApplyWindowFramePalette(gPlayers[gUnknown_030033EC].teamColor - 1, gUnknown_03002F08.unk00);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }

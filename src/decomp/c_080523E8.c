@@ -8,7 +8,7 @@
  */
 
 /* MATCHED -- wave 80 (W80-B), byte-exact, relocs match. Same lever as
- * sub_08052718 / DeathHandler_Bomb: a dead `k = b * 2;` after
+ * DeathHandler_Explosion / DeathHandler_Bomb: a dead `k = b * 2;` after
  * `gUnknown_0300451C = b;` with the plain subscript kept everywhere. This is
  * what the wave-73 note's "comma at a different depth" was reaching for,
  * except it is not a comma at all: the reference is created by a statement
@@ -44,6 +44,6 @@ void DeathHandler_Splash(u16 a, u16 b, int c)
     SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], t);
     SetSlotSpriteScaleY(gUnknown_02029808[a].unk24[b], 0x100);
 
-    sub_08052818(a, b);
+    DeathHandler_CommonTail(a, b);
 }
 asm(".global sub_080523E8\n.thumb_set sub_080523E8, DeathHandler_Splash\n");

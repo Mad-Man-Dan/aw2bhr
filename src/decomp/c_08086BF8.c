@@ -47,7 +47,7 @@ void DrawMapListFirstTwoRows(u32 a1, int a2, int a3)
 
     for (i = 0; i < a2; i++)
     {
-        t = sub_0803CB24(gUnknown_02027F74.unk04[a1 + i]);
+        t = HasMapBeenPlayed(gUnknown_02027F74.unk04[a1 + i]);
         flag = 1;
         if (t)
             flag = 0;
@@ -101,7 +101,7 @@ void DrawMapListRowsFromThird(u32 a1, int a2, int a3)
   {
     for (i = 2; i < a2; i++)
     {
-      t = sub_0803CB24(gUnknown_02027F74.unk04[a1 + i]);
+      t = HasMapBeenPlayed(gUnknown_02027F74.unk04[a1 + i]);
       flag = 1;
       if (t)
       {

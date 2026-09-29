@@ -31,7 +31,7 @@ void sub_080393CC(void)
         ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 
-/* The parameterised twin of src/decomp/c_0803B264.c's sub_0803B2BC: identical
+/* The parameterised twin of src/decomp/c_0803B264.c's StartSpinningSlotSprite: identical
  * seven-callee sprite install, with the OBJ attribute's tile field and the
  * sprite's y taken from arguments instead of literals.
  *

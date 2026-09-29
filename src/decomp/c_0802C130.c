@@ -15,10 +15,11 @@
  * clean.
  */
 
-void sub_0802C130(void)
+void StartQuitToMainMenuScript(void)
 {
     sub_080152EC(gUnknown_0849A4A0, 0);
 }
+asm(".global sub_0802C130\n.thumb_set sub_0802C130, StartQuitToMainMenuScript\n");
 
 /* Installs one gUnknown_0200C528 list script. StartEventScript returns the slot it
  * allocated, and `pop {r0}; bx r0` here discards it -- so this is void and the
@@ -26,7 +27,8 @@ void sub_0802C130(void)
  * hence `const u8 []` and a clean pool word.
  */
 
-void sub_0802C144(void)
+void StartQuitToMainMenuConfirmScript(void)
 {
     StartEventScript(gUnknown_0849A520);
 }
+asm(".global sub_0802C144\n.thumb_set sub_0802C144, StartQuitToMainMenuConfirmScript\n");

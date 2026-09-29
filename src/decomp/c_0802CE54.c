@@ -20,8 +20,8 @@
  * THE FIRST PARAMETER IS NOT PROVED. A dead leading parameter is invisible,
  * and `void *` is chosen only because these functions are callback slots
  * (+0x14 and +0x18) of the 0x20-byte records at gUnknown_0849AC60 /
- * gUnknown_0849ABC0. The sibling slots do not settle it either: sub_0802C604
- * (+0x04) and sub_0802C65C both ignore r0 as well.
+ * gUnknown_0849ABC0. The sibling slots do not settle it either: OptionsMenu_DeleteUsability
+ * (+0x04) and OptionsMenu_YieldUsability both ignore r0 as well.
  *
  * The two `bl`s are two statements: the second callee never reads r0 before
  * writing it, so a nest is not expressible in C. */
@@ -29,6 +29,6 @@ void OptionsMenu_ExitMap(void *a, u8 b)
 {
     gUnknown_030044A0 = b;
     CloseTopMenu();
-    sub_0802C144();
+    StartQuitToMainMenuConfirmScript();
 }
 asm(".global sub_0802CE54\n.thumb_set sub_0802CE54, OptionsMenu_ExitMap\n");

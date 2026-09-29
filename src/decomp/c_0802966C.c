@@ -57,7 +57,7 @@ void DropCellPicker_Loop(void)
         gUnknown_03003110[1] =
             gUnknown_0849A06C[gUnknown_03001470[gUnknown_03001FBC].unk20 * 5 + 4];
 
-        r = sub_0802E7C8((s16)gUnknown_03003100.pos.unk00,
+        r = TruncatePathAtHiddenEnemy((s16)gUnknown_03003100.pos.unk00,
                          (s16)gUnknown_03003100.pos.unk02, gUnknown_03003110, -1);
 
         if (r == 1)

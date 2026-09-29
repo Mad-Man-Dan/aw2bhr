@@ -68,7 +68,7 @@ void sub_08057A80(u16 *dst)
  *    statement.
  */
 
-void sub_08057AE8(void)
+void InitBattleHud(void)
 {
     int i;
     int d;
@@ -88,6 +88,7 @@ void sub_08057AE8(void)
         gUnknown_030005E0[i] = ((s16)d << 16) / ((s16)((s16)d / 5) + 20);
     }
 
-    sub_080579B8(gBG0TilemapBuffer);
+    DrawBothSideHud(gBG0TilemapBuffer);
     sub_08057A80(gBG0TilemapBuffer);
 }
+asm(".global sub_08057AE8\n.thumb_set sub_08057AE8, InitBattleHud\n");

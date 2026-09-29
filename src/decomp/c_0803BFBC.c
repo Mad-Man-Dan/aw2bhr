@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0803BFBC.
- * sub_0803BFBC @ 0x0803BFBC
+ * FillMatchSettingsRecord @ 0x0803BFBC
  */
 
 /* WAVE 87 (W87-E): **MATCHED**, 536/536 (`configured`). Parked waves 50, 62,
@@ -60,7 +60,7 @@
  * `do { d->unk08 = GetLoadedMapArmyCount(); d->unk15 = 0; } while (0);` wrapper that
  * puts d in r5 and &d->unk11 in r6. Do not tidy the wrapper away. */
 
-void sub_0803BFBC(void *a1)
+void FillMatchSettingsRecord(void *a1)
 {
   struct Unk08580934 *d = a1;
   int v;
@@ -185,3 +185,4 @@ void sub_0803BFBC(void *a1)
     LoadMapAndCountProperties(&d->unk15, &d->unk16);
   }
 }
+asm(".global sub_0803BFBC\n.thumb_set sub_0803BFBC, FillMatchSettingsRecord\n");

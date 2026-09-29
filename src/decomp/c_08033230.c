@@ -48,7 +48,7 @@ struct Unk33230Proc
     /* 0x64 */ s16 unk64;
 };
 
-void sub_08033230(struct Unk33230Proc *proc)
+void LinkMultiboot_PollClients(struct Unk33230Proc *proc)
 {
     int i;
 
@@ -123,3 +123,4 @@ void sub_08033230(struct Unk33230Proc *proc)
     if (proc->unk64 != 1)
         MultiBootMain(gUnknown_03003F70);
 }
+asm(".global sub_08033230\n.thumb_set sub_08033230, LinkMultiboot_PollClients\n");

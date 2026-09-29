@@ -22,10 +22,11 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_080470DC(void)
+void TerrainInfoInput_Finish(void)
 {
     InitTextTileCache(0);
 }
+asm(".global sub_080470DC\n.thumb_set sub_080470DC, TerrainInfoInput_Finish\n");
 
 /* Stop half of ShowTerrainInfoWindow's sub_080152EC. */
 

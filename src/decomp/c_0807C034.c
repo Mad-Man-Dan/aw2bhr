@@ -52,7 +52,7 @@ void sub_0807C034(void *arg)
                          i * 8 + 0x80);
 
             if (proc->unk66 == i * 10 && Proc_Find(gUnknown_08616570) == 0)
-                sub_0803B4DC(0x1CD);
+                PlayMusicOrSfx2(0x1CD);
         }
         else if (proc->unk66 >= i * 10 + 10)
         {

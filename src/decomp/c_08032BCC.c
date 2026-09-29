@@ -28,7 +28,7 @@ struct Unk08032BCCProc
     /* 0x58 */ int unk58;
 };
 
-void sub_08032BCC(struct Unk08032BCCProc *proc)
+void LinkMapPick_Init(struct Unk08032BCCProc *proc)
 {
     int i;
     u8 *p;
@@ -54,9 +54,9 @@ void sub_08032BCC(struct Unk08032BCCProc *proc)
 
     for (; i < 3; i++)
     {
-        if (sub_0803CCB8((u8)i, buf) == 1)
+        if (LoadDesignRoomName((u8)i, buf) == 1)
         {
-            sub_08031B6C(p, buf);
+            CopyNameString16(p, buf);
             gUnknown_0300449C[i]++;
             gUnknown_0849B060->unk0c++;
         }
@@ -80,17 +80,18 @@ void sub_08032BCC(struct Unk08032BCCProc *proc)
     }
 
     gUnknown_0849B060->unk10 = 1;
-    sub_08032A00();
+    LinkMapPick_Draw();
     gUnknown_0849B060->unk10 = 0;
     gUnknown_0849B060->unk0e = 0;
-    sub_08032AFC();
-    sub_080328EC();
+    LinkMapPick_SetupWindow();
+    LinkMapPick_DrawPreview();
     gUnknown_0849B060->unk0a = 0;
 
     Proc_Start(gUnknown_0849B670, 0);
 
     SetVCountCompareLine(0);
-    SetVCountInterruptHandler((int)sub_08032B84);
+    SetVCountInterruptHandler((int)LinkMapPick_OnVCountTop);
 
     proc->unk58 = 0;
 }
+asm(".global sub_08032BCC\n.thumb_set sub_08032BCC, LinkMapPick_Init\n");

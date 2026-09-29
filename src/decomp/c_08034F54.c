@@ -16,7 +16,7 @@ void UnlockUnitSelection(void)
     gGameLock.unitSelection = 0;
 }
 
-/* u8 and not int: sub_0802E6C0 and sub_0802E278 re-narrow the result with
+/* u8 and not int: MapCursorState_UnitMenuOpen and MapCursorState_UnitsTranslucent re-narrow the result with
  * `lsls #0x18` before testing it, and the body is a single `ldrb`. */
 u8 GetUnitSelectionLock(void)
 {

@@ -19,7 +19,7 @@
  * (-fforce-addr), which is why the ROM shows a double ldr and a
  * gUnknown_0812A154 pool symbol; that word holds &gUnknown_084C30F8 and the
  * split build places it. */
-u16 sub_08048F10(void)
+u16 ShopScreen_StepOffsetToZero(void)
 {
     if (gUnknown_084C30F8->unk832 < 0)
         gUnknown_084C30F8->unk832 += 8;
@@ -28,3 +28,4 @@ u16 sub_08048F10(void)
 
     return gUnknown_084C30F8->unk832;
 }
+asm(".global sub_08048F10\n.thumb_set sub_08048F10, ShopScreen_StepOffsetToZero\n");

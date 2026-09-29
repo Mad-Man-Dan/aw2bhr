@@ -120,7 +120,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
 
                 p->unk4c = 0;
                 p->unk4e = p->unk4e - 1;
-                sub_0803B4DC(0x67);
+                PlayMusicOrSfx2(0x67);
                 gUnknown_03005920 = 0;
             }
             else if (gpKeySt->repeated & DPAD_DOWN)
@@ -132,7 +132,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
 
                 p->unk4c = 0;
                 p->unk4e = p->unk4e + 1;
-                sub_0803B4DC(0x67);
+                PlayMusicOrSfx2(0x67);
                 gUnknown_03005920 = 0;
             }
             else if (gpKeySt->pressed & (A_BUTTON | DPAD_RIGHT))
@@ -150,7 +150,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                             gUnknown_030033FC = 9;
 
                         gUnknown_03005934 = p->unk52;
-                        sub_0803B4DC(0x71);
+                        PlayMusicOrSfx2(0x71);
                         Proc_Start(gUnknown_08616A68, p);
                         LockMainMenu();
                     }
@@ -163,19 +163,19 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                     p->unk4c = 0;
                     p->unk4e = p->unk4e + 1;
 
-                    if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0 && sub_0803BC7C() == 0)
+                    if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0 && GetCampaignSaveFlag() == 0)
                         p->unk66 = 7;
 
-                    if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1 && sub_0803BC88() == 0)
+                    if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1 && GetVersusSaveFlag() == 0)
                         p->unk66 = 7;
 
-                    if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5 && sub_0803BC94() == 0)
+                    if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5 && GetWarRoomSaveFlag() == 0)
                         p->unk66 = 7;
 
                     if (gpKeySt->pressed & 1)
-                        sub_0803B4DC(0x71);
+                        PlayMusicOrSfx2(0x71);
                     else if (gpKeySt->pressed & DPAD_RIGHT)
-                        sub_0803B4DC(0x67);
+                        PlayMusicOrSfx2(0x67);
                 }
             }
             else if (gpKeySt->pressed & 2)
@@ -185,7 +185,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                 gUnknown_03005934 = p->unk52;
                 gUnknown_03005924 = p->unk66;
                 Proc_Start(gUnknown_08616A68, p);
-                sub_0803B4DC(0x66);
+                PlayMusicOrSfx2(0x66);
                 UnlockMainMenu();
             }
         }
@@ -198,15 +198,15 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                 else
                     p->unk66 = p->unk66 - 1;
 
-                if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0 && sub_0803BC7C() == 0)
+                if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0 && GetCampaignSaveFlag() == 0)
                     p->unk66 = 7;
-                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1 && sub_0803BC88() == 0)
+                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1 && GetVersusSaveFlag() == 0)
                     p->unk66 = 7;
-                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5 && sub_0803BC94() == 0)
+                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5 && GetWarRoomSaveFlag() == 0)
                     p->unk66 = 7;
                 else
                 {
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
                     gUnknown_03005920 = 0;
                 }
             }
@@ -217,15 +217,15 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                 else
                     p->unk66 = p->unk66 + 1;
 
-                if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0 && sub_0803BC7C() == 0)
+                if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0 && GetCampaignSaveFlag() == 0)
                     p->unk66 = 7;
-                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1 && sub_0803BC88() == 0)
+                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1 && GetVersusSaveFlag() == 0)
                     p->unk66 = 7;
-                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5 && sub_0803BC94() == 0)
+                else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5 && GetWarRoomSaveFlag() == 0)
                     p->unk66 = 7;
                 else
                 {
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
                     gUnknown_03005920 = 0;
                 }
             }
@@ -243,7 +243,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                     {
                         gUnknown_030033FC = 1;
 
-                        if (sub_0803BC7C() != 0)
+                        if (GetCampaignSaveFlag() != 0)
                             MainMenuCarousel_ShowOverwriteWarning();
                     }
                 }
@@ -257,7 +257,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                     {
                         gUnknown_030033FC = 3;
 
-                        if (sub_0803BC88() != 0)
+                        if (GetVersusSaveFlag() != 0)
                             MainMenuCarousel_ShowOverwriteWarning();
                     }
                 }
@@ -271,7 +271,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                     {
                         gUnknown_030033FC = 5;
 
-                        if (sub_0803BC94() != 0)
+                        if (GetWarRoomSaveFlag() != 0)
                             MainMenuCarousel_ShowOverwriteWarning();
                     }
                 }
@@ -285,7 +285,7 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
 
                 gUnknown_03005934 = p->unk52;
                 gUnknown_03005924 = p->unk66;
-                sub_0803B4DC(0x71);
+                PlayMusicOrSfx2(0x71);
                 Proc_Start(gUnknown_08616A68, p);
                 LockMainMenu();
             }
@@ -296,9 +296,9 @@ void MainMenuCarouselWheel_InputLoop(struct Unk8081D30 *p)
                 p->unk4e = p->unk4e + 1;
 
                 if (gpKeySt->pressed & 2)
-                    sub_0803B4DC(0x66);
+                    PlayMusicOrSfx2(0x66);
                 else if (gpKeySt->pressed & DPAD_LEFT)
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
             }
         }
 

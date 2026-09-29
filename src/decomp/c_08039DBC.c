@@ -39,7 +39,7 @@ struct Unk39DBCProc
     /* 0x2e */ u16 unk2e;
 };
 
-void sub_08039DBC(struct Unk39DBCProc *proc)
+void SparkleEffect_StepFrames(struct Unk39DBCProc *proc)
 {
     switch (proc->unk2e)
     {
@@ -72,3 +72,4 @@ void sub_08039DBC(struct Unk39DBCProc *proc)
 
     proc->unk2e++;
 }
+asm(".global sub_08039DBC\n.thumb_set sub_08039DBC, SparkleEffect_StepFrames\n");

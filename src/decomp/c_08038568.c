@@ -13,11 +13,11 @@ void EndOfGame_FinishVersusMap(void)
 
     if (gPlaySt.savingEnabled == 0)
     {
-        sub_0803D73C(GetSuspendIdForGameMode(gPlaySt.gameMode), sub_0803B8B8);
+        StartSaveScreen(GetSuspendIdForGameMode(gPlaySt.gameMode), MainMenuVersus_NewGame);
     }
     else
     {
-        sub_0803BCB8();
+        RestoreCampaignFlags();
         StartMainMenu();
         LinkShutdown();
     }

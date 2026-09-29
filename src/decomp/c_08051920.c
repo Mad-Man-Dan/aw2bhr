@@ -7,7 +7,7 @@
  * sub_08051920 @ 0x08051920
  */
 
-/* sub_080513FC's counterpart on the OTHER side (`a ^ 1`) and with the screen
+/* RaiseHitDoneStageFlag's counterpart on the OTHER side (`a ^ 1`) and with the screen
  * test inverted: it raises the same redraw bit when the opposite side's entry
  * is idle and this side is NOT the one on screen, then stops the proc the
  * caller names.

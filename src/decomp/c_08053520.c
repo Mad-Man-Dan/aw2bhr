@@ -49,7 +49,7 @@
  *
  * Both guards are `>= g[a1] + 1` on a u8 member, which is what gives the
  * SIGNED `blt` -- the `+ 1` makes the right-hand side plain int. */
-void sub_08053520(u16 a1)
+void StepRepeatedShotAndHitSfx(u16 a1)
 {
     if (gUnknown_020296B0[a1].unk1b >= gUnknown_030045A4[a1] + 1)
     {
@@ -67,3 +67,4 @@ void sub_08053520(u16 a1)
         gUnknown_020298E0[a1].unk8d = 0;
     }
 }
+asm(".global sub_08053520\n.thumb_set sub_08053520, StepRepeatedShotAndHitSfx\n");

@@ -9,13 +9,15 @@
 
 #include "proc.h"
 
-void sub_08032454(ProcPtr parent)
+void StartLinkPlayerCursor(ProcPtr parent)
 {
     Proc_Start(gUnknown_0849B62C, parent);
 }
+asm(".global sub_08032454\n.thumb_set sub_08032454, StartLinkPlayerCursor\n");
 
-void sub_08032468(void)
+void EndLinkPlayerCursor(void)
 {
     Proc_EndEach(gUnknown_0849B62C);
     gUnknown_0849B060->unk02 = 3;
 }
+asm(".global sub_08032468\n.thumb_set sub_08032468, EndLinkPlayerCursor\n");

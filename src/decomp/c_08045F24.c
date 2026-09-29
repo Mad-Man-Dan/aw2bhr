@@ -9,14 +9,15 @@
 
 #include "proc.h"
 
-void sub_08045F24(void)
+void MapEventFx_Sfx1C7WithFlash(void)
 {
-    sub_0803B4DC(0x1c7);
+    PlayMusicOrSfx2(0x1c7);
     StartWhiteFlash(0x14, 0x64, 0x3c, 0);
 }
+asm(".global sub_08045F24\n.thumb_set sub_08045F24, MapEventFx_Sfx1C7WithFlash\n");
 
 void sub_08045F40(void)
 {
-    sub_0803B4DC(0x1e1);
+    PlayMusicOrSfx2(0x1e1);
     Proc_Start(gUnknown_084B7628, PROC_TREE_3);
 }

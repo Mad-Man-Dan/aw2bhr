@@ -12,7 +12,7 @@
 bool8 EventOp_EnableMiniPanel(s16 a)
 {
     gPlaySt.dispMiniPanel = 1;
-    sub_0802DCA4();
+    ResetDisplayEffects();
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
@@ -21,7 +21,7 @@ asm(".global sub_080187C8\n.thumb_set sub_080187C8, EventOp_EnableMiniPanel\n");
 bool8 EventOp_DisableMiniPanel(s16 a)
 {
     gPlaySt.dispMiniPanel = 0;
-    sub_0802DCA4();
+    ResetDisplayEffects();
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }

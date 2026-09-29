@@ -7,7 +7,7 @@
  * sub_0802CE70 @ 0x0802CE70
  */
 
-/* sub_0802C7DC's sibling: the same u8 second argument stashed in the word
+/* OptionsMenu_Delete's sibling: the same u8 second argument stashed in the word
  * global gUnknown_030044A0 (the word `str` is what keeps PROMOTE_MODE's shift
  * pair live), then a two-argument call instead of a halfword store.
  *

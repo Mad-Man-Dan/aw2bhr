@@ -17,15 +17,16 @@ struct UnkF1F4Proc
     /* 6a */ s16 unk6a;
 };
 
-void sub_0803F1F4(struct UnkF1F4Proc *proc)
+void CannonFire_StartImpact(struct UnkF1F4Proc *proc)
 {
-    APProc_Create(sub_0803F128(proc->unk6a),
+    APProc_Create(GetCannonFireSpriteData(proc->unk6a),
                  proc->unk64 * 16 - gMap->scrollX + 8,
                  proc->unk66 * 16 - gMap->scrollY + 0x10,
                  0x31CA,
                  sub_0803F27C(proc->unk68) + 2,
                  0);
-    sub_0803B4DC(0x1C3);
+    PlayMusicOrSfx2(0x1C3);
     StartScreenShake(1, 0x14, proc);
     StartWhiteFlash(2, 0, 1, proc);
 }
+asm(".global sub_0803F1F4\n.thumb_set sub_0803F1F4, CannonFire_StartImpact\n");

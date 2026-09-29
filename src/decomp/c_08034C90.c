@@ -7,7 +7,7 @@
  * sub_08034C90 @ 0x08034C90, sub_08034CA4 @ 0x08034CA4
  */
 
-/* Family F077, second member -- see sub_0802E2BC. This is the function
+/* Family F077, second member -- see StartUnitsTranslucentPeek. This is the function
  * unknown-globals.h names as the counter-example that proves 0x08090D88 is a
  * compiler pool word and not a global: it writes gUnknown_030032D8 by naming
  * the symbol directly, as here. */
@@ -19,7 +19,7 @@ void MapState_StartFuelUpkeep(void)
 }
 asm(".global sub_08034C90\n.thumb_set sub_08034C90, MapState_StartFuelUpkeep\n");
 
-/* Family F077, third member -- see sub_0802E2BC. */
+/* Family F077, third member -- see StartUnitsTranslucentPeek. */
 
 void MapState_StartTurnStartSupply(void)
 {

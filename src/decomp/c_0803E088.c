@@ -23,7 +23,7 @@ struct Unk3E01C
     /* 0x07 */ u8 unk07;
 };
 
-void *sub_0803E088(int a1, int a2, int a3, int a4, int a5, int a6,
+void *AddInventionRecordExt(int a1, int a2, int a3, int a4, int a5, int a6,
                    int a7, int a8, int a9, int a10)
 {
     struct Unk3E01C *p = AddInventionRecord(a1, a2, a3, a4, a5, a6);
@@ -36,3 +36,4 @@ void *sub_0803E088(int a1, int a2, int a3, int a4, int a5, int a6,
 
     return p;
 }
+asm(".global sub_0803E088\n.thumb_set sub_0803E088, AddInventionRecordExt\n");

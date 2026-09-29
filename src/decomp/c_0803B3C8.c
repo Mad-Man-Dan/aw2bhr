@@ -10,10 +10,11 @@
 /* `SetSoundMixerChannelCount(8)`: the incoming r0 is overwritten by `movs r0, #8` before the
  * call, so this takes no argument. `pop {r0}; bx r0` -> void. */
 
-void sub_0803B3C8(void)
+void SetSoundMixerChannelCount8(void)
 {
     SetSoundMixerChannelCount(8);
 }
+asm(".global sub_0803B3C8\n.thumb_set sub_0803B3C8, SetSoundMixerChannelCount8\n");
 
 /* m4aSoundMode(n << 8) -- the SOUND_MODE_MAXCHN field, so "use n mixer
  * channels". `int` and not a narrow type: the argument reaches the `bl` through

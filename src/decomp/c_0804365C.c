@@ -10,7 +10,7 @@
 /* `t -= gUnknown_03004080 - 1;` written in ONE expression reassociates to
  * `(t + 1) - g`, which is not the ROM; the statement boundary is what stops
  * agbcc's fold() (W35-A). The two `ldr rA,=0x1FF; adds rB,rA,#0; ands rC,rB`
- * triplets that used to be one instruction short in each arm are sub_0802BD54's
+ * triplets that used to be one instruction short in each arm are DrawSpriteNumberFont2's
  * u16 parameters -- see the retyped declaration in unknown-functions.h. */
 void DrawDaysRemaining(int x, int y)
 {
@@ -31,9 +31,9 @@ void DrawDaysRemaining(int x, int y)
     PutSprite(0, x, y, gUnknown_084A0024, 0x1042);
 
     if (t > 9)
-        sub_0802BD54((x - 0xa) & 0x1ff, y, t);
+        DrawSpriteNumberFont2((x - 0xa) & 0x1ff, y, t);
     else
-        sub_0802BD54((x - 0xf) & 0x1ff, y, t);
+        DrawSpriteNumberFont2((x - 0xf) & 0x1ff, y, t);
 }
 
 asm(".global sub_0804365C\n.thumb_set sub_0804365C, DrawDaysRemaining\n");
@@ -47,7 +47,7 @@ void DrawArmyCoPanel(int x, int y, int pid)
     if (gPlaySt.fog != 0 && (gPlayers[pid].turnState & 2) == 0)
         PutAsciiStringSprites((x + 0x34) & 0x1ff, y + 3, gUnknown_0809136C);
     else
-        sub_0802BD54((x + 0x34) & 0x1ff, y + 3, gPlayers[pid].funds);
+        DrawSpriteNumberFont2((x + 0x34) & 0x1ff, y + 3, gPlayers[pid].funds);
 
     PutSprite(0, x, y, gUnknown_084A0032, 0x7000);
     PutSprite(0, x, y, gUnknown_084A003A, 0xe03a);
@@ -67,9 +67,9 @@ void DrawArmyCoPanel(int x, int y, int pid)
     if (AdvanceCoPowerReadyAnnouncement(pid))
     {
         if ((u8)IsSuperCoPowerReady(pid))
-            sub_0803B4DC(0x1e0);
+            PlayMusicOrSfx2(0x1e0);
         else
-            sub_0803B4DC(0x75);
+            PlayMusicOrSfx2(0x75);
     }
 }
 asm(".global sub_080436DC\n.thumb_set sub_080436DC, DrawArmyCoPanel\n");

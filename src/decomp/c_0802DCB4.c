@@ -41,7 +41,7 @@ void MapCursorIdle(void)
                     + gUnknown_030033E4.unk00] != 0)
             {
                 InitTextTileCache(0);
-                sub_0803A8F0(&gUnits[
+                ShowUnitClassInfoWindow(&gUnits[
                     gMap->unit[
                         gMap->rowOffset[gUnknown_030033E4.unk02]
                         + gUnknown_030033E4.unk00]]);
@@ -49,7 +49,7 @@ void MapCursorIdle(void)
             }
 
             InitTextTileCache(0);
-            ShowTerrainInfoWindow(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
+            ShowTerrainInfoWindow(GetTerrainTypeAt(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
             return;
         }
 
@@ -64,7 +64,7 @@ void MapCursorIdle(void)
 
                 if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
                 {
-                    sub_0802DCA4();
+                    ResetDisplayEffects();
                     return;
                 }
             }

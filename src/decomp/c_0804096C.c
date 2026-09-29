@@ -8,8 +8,8 @@
  */
 
 /* Family F072, second member -- see RecountPropertiesIncomeAndAiFacilities. The bracketing here is
- * legible: sub_0802C57C saves gUnknown_03003F24.pos into gUnknown_030044A4 and
- * sub_0802C594 puts it back, so the two middle calls run with the position
+ * legible: BackupUnitStartPosition saves gUnknown_03003F24.pos into gUnknown_030044A4 and
+ * RestoreUnitStartPosition puts it back, so the two middle calls run with the position
  * stashed. */
 
 /* Wave 34 integration: takes a ProcPtr. The sole call site spends
@@ -19,9 +19,9 @@
  * definition stays byte-for-byte identical. */
 void CommitSiloLaunchMove(ProcPtr proc)
 {
-    sub_0802C57C();
+    BackupUnitStartPosition();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
     LockUnitSelection();
 }
 asm(".global sub_0804096C\n.thumb_set sub_0804096C, CommitSiloLaunchMove\n");

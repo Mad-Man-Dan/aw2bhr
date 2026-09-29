@@ -20,13 +20,13 @@ void PlayCaptureCompleteSound(int a, int b)
     if (gPlayers[a].aiControlled == 1)
     {
         if ((b & 0x1F) == 8)
-            sub_0803B4DC(0x83);
+            PlayMusicOrSfx2(0x83);
         else
-            sub_0803B4DC(0x1D9);
+            PlayMusicOrSfx2(0x1D9);
     }
     else
     {
-        sub_0803B4DC(0x1DA);
+        PlayMusicOrSfx2(0x1DA);
     }
 }
 asm(".global sub_08041258\n.thumb_set sub_08041258, PlayCaptureCompleteSound\n");

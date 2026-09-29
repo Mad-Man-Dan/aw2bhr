@@ -12,7 +12,7 @@
  *
  * The second test reuses the value the `|= 0x10` just produced rather than
  * reloading -- ordinary CSE across a plain (non-volatile) byte. */
-void sub_08053820(void)
+void StepStageFlags(void)
 {
     if ((gUnknown_02029664 & 3) == 1)
     {
@@ -28,3 +28,4 @@ void sub_08053820(void)
         gUnknown_02029664 |= 0x80;
     }
 }
+asm(".global sub_08053820\n.thumb_set sub_08053820, StepStageFlags\n");

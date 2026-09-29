@@ -46,7 +46,7 @@
  * not `= 0` because the ROM stores the register, which is what the source
  * variable compiles to. */
 
-void sub_08030234(void)
+void LinkApplyKeySyncToKeySts(void)
 {
     struct Unk03002090 *p;
     s16 buf[4];
@@ -62,7 +62,7 @@ void sub_08030234(void)
     for (i = 0; i < 4; i++)
     {
         buf[i] = 0;
-        if (sub_0802F460(i))
+        if (SioIsPlayerLinked(i))
         {
             if (gUnknown_0849B01C->unk208[i] == 0xFFFF
              || gUnknown_0849B01C->unk208[i] == 0x5FFF
@@ -77,7 +77,7 @@ void sub_08030234(void)
     p = (struct Unk03002090 *)&gUnknown_03002040;
     for (i = 0; i < 4; i++)
     {
-        if (sub_0802F460(i))
+        if (SioIsPlayerLinked(i))
         {
             if (nBad == 0)
             {
@@ -103,3 +103,4 @@ zero:
     for (i = 0; i < 4; i++)
         RefreshKeyStFromKeys(&((struct Unk03002090 *)&gUnknown_03002040)[i], buf[i]);
 }
+asm(".global sub_08030234\n.thumb_set sub_08030234, LinkApplyKeySyncToKeySts\n");

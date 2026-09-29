@@ -9,7 +9,7 @@
 
 /* Hands back a size pair for a mode id. Two separate `if`s, not `else if`:
  * the second `cmp r2, #4` is the fallthrough of the first block rather than
- * being branched over. Both out-params are words -- sub_0803F140 reads its two
+ * being branched over. Both out-params are words -- CannonFire_StartMuzzleEffect reads its two
  * stack slots back with `ldr`.
  */
 void sub_0803F29C(int *a, int *b, int c)

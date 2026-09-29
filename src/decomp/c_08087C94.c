@@ -103,7 +103,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
         (void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x06000000));
     Decompress(gUnknown_0823456C, gBG1TilemapBuffer);
     BG_EnableSyncBG1();
-    sub_0802D5CC(0, 0);
+    ApplyWindowFramePalette(0, 0);
 
     Decompress(gUnknown_082346D0, gUnknown_0200FC50);
 

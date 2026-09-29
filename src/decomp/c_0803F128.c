@@ -7,14 +7,14 @@
  * sub_0803F128 @ 0x0803F128
  */
 
-/* Picks one of two ROM blobs off a mode id; sub_0803F110 immediately above is
+/* Picks one of two ROM blobs off a mode id; GetCannonFireTileGraphic immediately above is
  * the same shape over a different pair. Two `beq`s with the default falling
  * into case 3's own block is a switch whose `case 3:` and `default:` share one
  * arm -- writing them as two separate `return gUnknown_0810A3E8;` statements
  * emits the block twice (with its pool word twice) rather than cross-jumping,
  * and is eight bytes longer.
  */
-const u16 *sub_0803F128(int a)
+const u16 *GetCannonFireSpriteData(int a)
 {
     switch (a)
     {
@@ -26,3 +26,4 @@ const u16 *sub_0803F128(int a)
         return gUnknown_0810AFC8;
     }
 }
+asm(".global sub_0803F128\n.thumb_set sub_0803F128, GetCannonFireSpriteData\n");

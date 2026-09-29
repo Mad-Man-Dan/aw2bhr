@@ -7,7 +7,7 @@
  * sub_0803CB74 @ 0x0803CB74, sub_0803CB8C @ 0x0803CB8C
  */
 
-int sub_0803CB74(int id)
+int IsCampaignFlagBank0Set(int id)
 {
     u8 *b = gUnknown_030033F4;
     int idx = id >> 3;
@@ -15,8 +15,9 @@ int sub_0803CB74(int id)
 
     return (1 << id) & *p;
 }
+asm(".global sub_0803CB74\n.thumb_set sub_0803CB74, IsCampaignFlagBank0Set\n");
 
-void sub_0803CB8C(void)
+void ClearCampaignFlagBank0(void)
 {
     u8 *base;
     u8 *p;
@@ -30,3 +31,4 @@ void sub_0803CB8C(void)
         *p-- = v;
     while ((int)p >= (int)base);
 }
+asm(".global sub_0803CB8C\n.thumb_set sub_0803CB8C, ClearCampaignFlagBank0\n");

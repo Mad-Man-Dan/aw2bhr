@@ -28,6 +28,6 @@ void TankHitEffect_Loop(void)
         && (r = gUnknown_085D6A48[gUnknown_03004580[a][1]])[1] == 1)
         EndSlotScriptAt(gUnknown_03001FBC);
 
-    sub_080513FC(a, b, gUnknown_03001FBC);
+    RaiseHitDoneStageFlag(a, b, gUnknown_03001FBC);
 }
 asm(".global sub_0805131C\n.thumb_set sub_0805131C, TankHitEffect_Loop\n");

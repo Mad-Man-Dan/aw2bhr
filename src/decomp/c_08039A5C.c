@@ -38,7 +38,7 @@ struct Unk39ACCProc
  * mask plus a shift, and the `+ 0x10` happens BEFORE the scaling. Both 0x3FF
  * and 0x06010000 are CSEd into callee-saved registers across the two
  * Decompress calls, which is what forces r8 to be pushed. */
-void sub_08039A5C(void *src, void *pal, u16 a, u16 b)
+void LoadSparkleGraphics(void *src, void *pal, u16 a, u16 b)
 {
     gUnknown_030043F8 = 0;
 
@@ -46,8 +46,9 @@ void sub_08039A5C(void *src, void *pal, u16 a, u16 b)
     ApplyPaletteExt(pal, (u16)((b + 0x10) * 0x20), 0x20);
     Decompress(gUnknown_080A534C, (void *)(((a + 0xc0) & 0x3ff) * 0x20 + 0x06010000));
 }
+asm(".global sub_08039A5C\n.thumb_set sub_08039A5C, LoadSparkleGraphics\n");
 
-void sub_08039ACC(u16 a, u16 b, u16 c, int d)
+void StartSparkleAtTile(u16 a, u16 b, u16 c, int d)
 {
     struct Unk39ACCProc *proc;
 
@@ -61,7 +62,7 @@ void sub_08039ACC(u16 a, u16 b, u16 c, int d)
     else
         proc = Proc_Start(gUnknown_0849D84C, PROC_TREE_3);
 
-    sub_0803B4DC(gUnknown_084A0090[gPlayers[gUnknown_030033EC].co]
+    PlayMusicOrSfx2(gUnknown_084A0090[gPlayers[gUnknown_030033EC].co]
                      .power[d].sound[gUnknown_030043F8]);
 
     proc->unk29 = a;
@@ -70,3 +71,4 @@ void sub_08039ACC(u16 a, u16 b, u16 c, int d)
     proc->unk2e = 0;
     proc->unk30 = 0;
 }
+asm(".global sub_08039ACC\n.thumb_set sub_08039ACC, StartSparkleAtTile\n");

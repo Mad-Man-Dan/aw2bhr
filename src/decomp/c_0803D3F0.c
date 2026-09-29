@@ -60,17 +60,17 @@ void RebuildTerrainFromTiles(void)
 }
 asm(".global sub_0803D3F0\n.thumb_set sub_0803D3F0, RebuildTerrainFromTiles\n");
 
-/* Drives sub_0803D4A8 over slots 0..11. The counter is `u8`: it is
+/* Drives LoadDesignRoomSlotEntry over slots 0..11. The counter is `u8`: it is
  * re-narrowed (`adds r0,r4,#1; lsls #0x18; lsrs #0x18`) on every increment,
  * which an `int` would not do, and `cmp r4,#0xb; bls` is the unsigned test
  * `i < 12` on that width. The result of each call is discarded, so nothing
- * here settles sub_0803D4A8's return type. */
+ * here settles LoadDesignRoomSlotEntry's return type. */
 void MainMenu2_0803D48D(void)
 {
     u8 i;
 
     for (i = 0; i < 12; i++)
-        sub_0803D4A8(i);
+        LoadDesignRoomSlotEntry(i);
 }
 
 /* `p` must be bound BEFORE the guard, not at first use: the ROM loads
@@ -84,7 +84,7 @@ void MainMenu2_0803D48D(void)
  * immediately after the two branches (`bhi` and `beq` both jumping over it),
  * which is the ROM's block order. The `&&` spelling emits the success path
  * first and the failure path last. */
-int sub_0803D4A8(u8 a)
+int LoadDesignRoomSlotEntry(u8 a)
 {
     struct Rec *p = (struct Rec *)gUnknown_02000000;
     u8 b;
@@ -103,5 +103,6 @@ int sub_0803D4A8(u8 a)
         gUnknown_020280C0[a].filler_14[i] = p->unk4C4[i];
     return 1;
 }
+asm(".global sub_0803D4A8\n.thumb_set sub_0803D4A8, LoadDesignRoomSlotEntry\n");
 
 asm(".global sub_0803D48C\n.thumb_set sub_0803D48C, MainMenu2_0803D48D\n");

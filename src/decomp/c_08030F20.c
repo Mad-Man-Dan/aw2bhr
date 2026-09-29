@@ -19,7 +19,7 @@
  * `|0x10` (target2 OBJ) then `|8` (target2 BG3), so OBJ is written BEFORE BG3
  * in the source even though its bit is higher. Writing them the other way round
  * swaps the two `movs`. */
-void sub_08030F20(void)
+void LinkScreenSetupBlend(void)
 {
     SetDefaultColorEffects();
     gUnknown_030030E0.bits.effect = 1;
@@ -29,3 +29,4 @@ void sub_08030F20(void)
     gUnknown_03002020 = 0xF;
     gUnknown_03002B28 = 6;
 }
+asm(".global sub_08030F20\n.thumb_set sub_08030F20, LinkScreenSetupBlend\n");

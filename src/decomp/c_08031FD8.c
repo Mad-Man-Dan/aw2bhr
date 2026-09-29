@@ -14,9 +14,9 @@
  * groups of three (`i * 3 + j`), which is where the `* 84` giv comes from; the
  * 0x33 is unk20's 0x20 plus unk13's 0x13, folded. gUnknown_0300449C[i]++ emits
  * a second, entirely dead `ldrb` between the `adds #1` and the `strb` -- the
- * volatile tell, and the same global sub_08031948 clears in the same 0..3 army
+ * volatile tell, and the same global LinkMapListExchange_Start clears in the same 0..3 army
  * loop. */
-void sub_08031FD8(ProcPtr proc)
+void LinkCountSharedMaps(ProcPtr proc)
 {
     int i;
     int j;
@@ -26,7 +26,7 @@ void sub_08031FD8(ProcPtr proc)
 
     for (i = 0; i < 4; i++)
     {
-        if (sub_0802F460(i))
+        if (SioIsPlayerLinked(i))
         {
             for (j = 0; j < 3; j++)
             {
@@ -42,3 +42,4 @@ void sub_08031FD8(ProcPtr proc)
     if (count != 0)
         Proc_Goto(proc, 0);
 }
+asm(".global sub_08031FD8\n.thumb_set sub_08031FD8, LinkCountSharedMaps\n");

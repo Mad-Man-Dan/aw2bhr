@@ -37,6 +37,6 @@ void StartCoPowerAnimation(int a)
     b0 = p[0x1c];
     b1 = p[0x1d];
 
-    sub_08039A5C(GetCoPowerAnimation(b0), GetCoPowerAnimationPalette(b1), 0x1ca, 5);
+    LoadSparkleGraphics(GetCoPowerAnimation(b0), GetCoPowerAnimationPalette(b1), 0x1ca, 5);
 }
 asm(".global sub_08044AB8\n.thumb_set sub_08044AB8, StartCoPowerAnimation\n");

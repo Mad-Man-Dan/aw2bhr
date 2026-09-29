@@ -15,7 +15,7 @@ struct Unk32DA0Proc
     /* 0x2c */ int unk2c;
 };
 
-void sub_08032DA0(struct Unk32DA0Proc *proc)
+void LinkConfirmDialog_Open(struct Unk32DA0Proc *proc)
 {
     int t = Interpolate(4, 0x10, 0x100, proc->unk2c, 0x10);
 
@@ -39,3 +39,4 @@ void sub_08032DA0(struct Unk32DA0Proc *proc)
         proc->unk2c++;
     }
 }
+asm(".global sub_08032DA0\n.thumb_set sub_08032DA0, LinkConfirmDialog_Open\n");

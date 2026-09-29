@@ -7,19 +7,20 @@
  * sub_0802C16C @ 0x0802C16C, sub_0802C184 @ 0x0802C184
  */
 
-/* Two bare statements. sub_0802C154 takes `int` (the promoted definition in
+/* Two bare statements. MarkPlayerYielded takes `int` (the promoted definition in
  * src/decomp/c_0802C154.c), so the u16 gUnknown_030033EC arrives as a plain
- * `ldrh` with no narrowing -- contrast sub_0802C118, whose callee takes u8 and
+ * `ldrh` with no narrowing -- contrast QuitToMainMenu, whose callee takes u8 and
  * gets an `ldrb` out of the same global. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C16C(void)
+void ApplyYieldCommand(void)
 {
-    sub_0802C154(gUnknown_030033EC);
+    MarkPlayerYielded(gUnknown_030033EC);
     ParkMapState();
 }
+asm(".global sub_0802C16C\n.thumb_set sub_0802C16C, ApplyYieldCommand\n");
 
-/* sub_0802C16C's sibling: the same sub_0802C154(gUnknown_030033EC) opener, then
+/* ApplyYieldCommand's sibling: the same MarkPlayerYielded(gUnknown_030033EC) opener, then
  * a guarded four-argument call instead of a bare one.
  *
  * `adds r0, #0x32; ldrb r0, [r0]` rather than `ldrb r0, [r0, #0x32]` is not a
@@ -32,10 +33,11 @@ void sub_0802C16C(void)
  * nothing extra for literal zeroes. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C184(void)
+void YieldCurrentArmy(void)
 {
-    sub_0802C154(gUnknown_030033EC);
+    MarkPlayerYielded(gUnknown_030033EC);
 
     if (gPlaySt.savingEnabled != 0)
         SendActionCommand(0x13, 0, 0, 0);
 }
+asm(".global sub_0802C184\n.thumb_set sub_0802C184, YieldCurrentArmy\n");

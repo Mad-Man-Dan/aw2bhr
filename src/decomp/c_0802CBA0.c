@@ -8,7 +8,7 @@
  */
 
 /* The cursor-position predicate the whole 0x0802CB-0x0802CD cluster is built
- * on. UnitMenu_DiveUsability, UnitMenu_RiseUsability, sub_0802CBC8 and sub_0802CC04 all call it.
+ * on. UnitMenu_DiveUsability, UnitMenu_RiseUsability, UnitMenu_DropFirstUsability and UnitMenu_DropSecondUsability all call it.
  *
  * `movs r2,#0; ldrsh r0,[r1,r2]` and `movs r2,#2; ldrsh r1,[r1,r2]` is the
  * s16-OBJECT tell, and it is why union Unk802C57CBuf gained a signed view: the
@@ -19,7 +19,7 @@
  *
  * `lsls #0x18; lsrs #0x18; cmp #1` is IsBoardableTransportAt's bool8 return kept for a
  * compare against a non-zero constant. The THEN arm is `return FALSE` and it
- * sits after the pool, so this is the sub_0802C5F0 spelling.
+ * sits after the pool, so this is the IntelMenu_RulesUsability spelling.
  */
 
 bool8 UnitMenu_LoadUsability(void)
@@ -41,7 +41,7 @@ asm(".global sub_0802CBA0\n.thumb_set sub_0802CBA0, UnitMenu_LoadUsability\n");
  * `adds r7, r0, #0`, then `ldrb r4, [r7]` -- struct Unk030040D8's unk00).
  */
 
-bool8 sub_0802CBC8(void)
+bool8 UnitMenu_DropFirstUsability(void)
 {
     if (!UnitMenu_LoadUsability()
         || CanDropFirstCargoAt(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
@@ -49,14 +49,15 @@ bool8 sub_0802CBC8(void)
 
     return FALSE;
 }
+asm(".global sub_0802CBC8\n.thumb_set sub_0802CBC8, UnitMenu_DropFirstUsability\n");
 
-/* sub_0802CBC8's twin: byte-identical apart from the callee, CanDropSecondCargoAt
+/* UnitMenu_DropFirstUsability's twin: byte-identical apart from the callee, CanDropSecondCargoAt
  * instead of CanDropFirstCargoAt. The two callees are themselves near-duplicates --
  * same prologue, same 0x5c-stride gUnknown_085D5ABC lookup, differing only in
  * which byte of the leading pointer they forward (+7 vs +8).
  */
 
-bool8 sub_0802CC04(void)
+bool8 UnitMenu_DropSecondUsability(void)
 {
     if (!UnitMenu_LoadUsability()
         || CanDropSecondCargoAt(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
@@ -64,3 +65,4 @@ bool8 sub_0802CC04(void)
 
     return FALSE;
 }
+asm(".global sub_0802CC04\n.thumb_set sub_0802CC04, UnitMenu_DropSecondUsability\n");

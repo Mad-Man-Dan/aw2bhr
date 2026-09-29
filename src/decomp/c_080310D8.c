@@ -34,7 +34,7 @@ void sub_080310D8(void)
     gUnknown_0849B018->unk00 = 1;
     gUnknown_0849B060->unk02 = 1;
 
-    sub_08031018();
+    LinkLobbyLoadGraphics();
 }
 
 /* sub_080310D8 with mode 3. See that function for why unk00 is volatile and
@@ -57,7 +57,7 @@ void sub_08031128(void)
     gUnknown_0849B018->unk00 = 3;
     gUnknown_0849B060->unk02 = 1;
 
-    sub_08031018();
+    LinkLobbyLoadGraphics();
 }
 
 /* sub_080310D8 with mode 2. See that function for why unk00 is volatile and
@@ -79,5 +79,5 @@ void sub_0803117C(void)
     gUnknown_0849B018->unk00 = 2;
     gUnknown_0849B060->unk02 = 1;
 
-    sub_08031018();
+    LinkLobbyLoadGraphics();
 }

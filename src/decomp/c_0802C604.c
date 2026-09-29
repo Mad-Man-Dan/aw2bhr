@@ -11,7 +11,7 @@
  *
  * trymatch reports `+2` and simultaneously `bytes: 0 of 38 differ (100.0%
  * identical)` with `relocs: match`. The whole of the residual is a trailing
- * `.short 0x0000`: sub_0802C604 is 38 bytes, THUMB code ending 2 mod 4 leaves
+ * `.short 0x0000`: OptionsMenu_DeleteUsability is 38 bytes, THUMB code ending 2 mod 4 leaves
  * `.text` short of its four-byte section alignment, and trymatch reads the
  * section with `objcopy --only-section=.text`, so the pad is inside the window
  * it compares. Nothing writable in C moves it.
@@ -19,7 +19,7 @@
  * The ROM spends those two bytes the same way. baserom.gba at 0x0802C62A reads
  * `00 00`, and data/asm-resident.json already records sub_0802C62A as "the
  * 0x0000 the assembler emits for `.align 2, 0` ahead of the 4-aligned
- * sub_0802C62C". So this file reproduces 0x0802C604..0x0802C62B -- all forty
+ * IsLinkGame". So this file reproduces 0x0802C604..0x0802C62B -- all forty
  * bytes, byte for byte. Promoting it must drop that 2-byte stub from asm/ as
  * well, which promote.py has never had to do: no matched function in the tree
  * has size % 4 == 2. See the wave-24 chapter in docs/agbcc-codegen.md.
@@ -45,7 +45,7 @@
  * narrow-returning callee.
  */
 
-bool8 sub_0802C604(void)
+bool8 OptionsMenu_DeleteUsability(void)
 {
     if (gPlaySt.gameMode == 1)
     {
@@ -60,3 +60,4 @@ bool8 sub_0802C604(void)
 
     return FALSE;
 }
+asm(".global sub_0802C604\n.thumb_set sub_0802C604, OptionsMenu_DeleteUsability\n");

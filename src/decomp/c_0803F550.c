@@ -14,7 +14,7 @@
  * Initialising them at the declaration hoists both subtractions above
  * Decompress; leaving them inline in the call puts the descriptor first and
  * interleaves each mask with its own subtraction (which is what its twin
- * sub_0803F2F4 does, and that one is inline for exactly that reason). */
+ * VolcanoFire_StartEruption does, and that one is inline for exactly that reason). */
 struct UnkF550Sub
 {
     /* 0x00 */ u8 filler_00[0x24];
@@ -32,7 +32,7 @@ struct UnkF550Proc
     /* 0x30 */ int unk30;
 };
 
-void sub_0803F550(struct UnkF550Proc *proc)
+void DeathRayFire_StartBeam(struct UnkF550Proc *proc)
 {
     int x;
     int y;
@@ -46,3 +46,4 @@ void sub_0803F550(struct UnkF550Proc *proc)
     ((struct UnkF550Ret *)APProc_Create(gUnknown_081183EC, (x + 0x18) & 0x1FF,
                                        (y + 0x4E) & 0xFF, 0x31CA, 0, 0))->unk50->unk24 = gUnknown_0200FC50;
 }
+asm(".global sub_0803F550\n.thumb_set sub_0803F550, DeathRayFire_StartBeam\n");

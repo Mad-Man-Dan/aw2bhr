@@ -26,10 +26,11 @@ struct Unk39EC8Proc
     /* 0x34 */ struct Unk0801C210 *unk34;
 };
 
-void sub_08039EC8(struct Unk39EC8Proc *proc)
+void SparkleEffect_UpdateApAnim(struct Unk39EC8Proc *proc)
 {
     if (AP_Update(proc->unk34,
                      ((proc->unk29 << 4) - gMap->scrollX + 8) & 0x1ff,
                      ((proc->unk2a << 4) - gMap->scrollY + 8) & 0xff) == 0)
         Proc_Break(proc);
 }
+asm(".global sub_08039EC8\n.thumb_set sub_08039EC8, SparkleEffect_UpdateApAnim\n");

@@ -63,7 +63,7 @@ void DeathHandler_Air(u16 a, u16 b)
         gUnknown_02029808[a].unk58[gUnknown_02029808[a].unk2e],
         f);
 
-    sub_080504A8(a, 0x10);
+    PlayFigureDestroySfx(a, 0x10);
 
     e = gUnknown_08553B14[a];
 

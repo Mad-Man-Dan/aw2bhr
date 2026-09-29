@@ -12,7 +12,7 @@
  * its usual three-step form (src/decomp/c_08001158.c), against the +0x12 unit
  * plane and the gUnknown_03003100 cursor. Read UNSIGNED -- both halves come
  * back with a plain `ldrh`, which is the union's `pos` view and not `spos`. */
-bool8 sub_0802C8BC(void)
+bool8 UnitMenu_WaitUsability(void)
 {
     int off;
 
@@ -23,3 +23,4 @@ bool8 sub_0802C8BC(void)
 
     return TRUE;
 }
+asm(".global sub_0802C8BC\n.thumb_set sub_0802C8BC, UnitMenu_WaitUsability\n");

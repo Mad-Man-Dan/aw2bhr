@@ -106,19 +106,19 @@ void MainMenuCarouselWheel_Init(struct Unk808135C *proc)
         switch (gUnknown_0861696C[DivRem(proc->unk52 + 2, 6)])
         {
         case 0:
-            if (sub_0803BC7C() == 0)
+            if (GetCampaignSaveFlag() == 0)
                 proc->unk66 = 7;
 
             break;
 
         case 1:
-            if (sub_0803BC88() == 0)
+            if (GetVersusSaveFlag() == 0)
                 proc->unk66 = 7;
 
             break;
 
         case 5:
-            if (sub_0803BC94() == 0)
+            if (GetWarRoomSaveFlag() == 0)
                 proc->unk66 = 7;
 
             break;

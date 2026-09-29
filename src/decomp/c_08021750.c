@@ -27,14 +27,14 @@
  *
  * The parameter is an int, not a pointer: `adds r0,#0x4c` runs on it before the
  * `lsls #0x18; lsrs #0x18`, and that truncation is the conversion to
- * sub_0803CF3C's already-promoted `u8` first parameter. */
+ * LoadSavedMapRecordWithUnits's already-promoted `u8` first parameter. */
 void LoadSavedMapIntoGMap(int a)
 {
     int x;
     int y;
     u16 t;
 
-    sub_0803CF3C((u8)(a + 0x4c), (int)gMap->unk421a);
+    LoadSavedMapRecordWithUnits((u8)(a + 0x4c), (int)gMap->unk421a);
 
     gMap->scrollX = 0;
     gMap->scrollY = 0;

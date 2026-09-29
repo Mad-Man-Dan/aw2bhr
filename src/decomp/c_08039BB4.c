@@ -23,7 +23,7 @@ struct Unk39BB4Proc
 /* All three parameters are `int`: each is saved across the `bl` with a bare
  * `adds rN, rM, #0` and no PROMOTE_MODE narrowing, which a u8 or u16 parameter
  * would have carried. */
-void sub_08039BB4(int a, int b, int c)
+void StartSparkleZoom(int a, int b, int c)
 {
     struct Unk39BB4Proc *proc = Proc_Start(gUnknown_0849D82C, PROC_TREE_3);
 
@@ -31,3 +31,4 @@ void sub_08039BB4(int a, int b, int c)
     proc->unk2a = b;
     proc->unk2c = c;
 }
+asm(".global sub_08039BB4\n.thumb_set sub_08039BB4, StartSparkleZoom\n");

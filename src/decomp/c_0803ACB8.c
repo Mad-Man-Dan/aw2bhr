@@ -12,10 +12,11 @@
  * the two calls, so nothing can survive from the first one. `pop {r0}` is the
  * void epilogue.
  *
- * gUnknown_0849E600 is a gUnknown_03001470 script blob -- sub_0803ACD0 next
+ * gUnknown_0849E600 is a gUnknown_03001470 script blob -- IsDebugFlagControlActive next
  * door is its matching `FindSlotScript(script) != -1` liveness predicate. */
-void sub_0803ACB8(void)
+void StartDebugFlagControl(void)
 {
     sub_080116E8();
     sub_080152EC(gUnknown_0849E600, 0);
 }
+asm(".global sub_0803ACB8\n.thumb_set sub_0803ACB8, StartDebugFlagControl\n");

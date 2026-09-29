@@ -61,7 +61,7 @@ void sub_08075F44(void *proc)
     CpuFastSet(&zero, gUnknown_08551A00 + 0x140, 0x01000040);
 
     t = gUnknown_081CC4F8[v];
-    sub_0802D5CC(t, 0);
+    ApplyWindowFramePalette(t, 0);
     sub_080718F8(gUnknown_08551A04 + 0x140, gUnknown_081D22C4, 0x360);
     EnablePaletteSync();
     InitTextTileCache(0x340);

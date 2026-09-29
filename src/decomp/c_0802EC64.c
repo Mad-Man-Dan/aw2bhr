@@ -12,10 +12,11 @@
  * reload away and comes out two instructions shorter.
  */
 
-void sub_0802EC64(void)
+void SioStepSendDelay(void)
 {
     gUnknown_03000578++;
 
     if (gUnknown_08090C44[gUnknown_03000578] == 0)
         gUnknown_03000578 = 0;
 }
+asm(".global sub_0802EC64\n.thumb_set sub_0802EC64, SioStepSendDelay\n");

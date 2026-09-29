@@ -24,7 +24,7 @@
  * The dead `ldrb` in front of the short loops' and the last loop's stores is
  * the volatile tell; the record array at +0x20 carries none and is not
  * volatile. See the type comments in include/unknown-globals.h. */
-void sub_0802F28C(void)
+void LinkClearMapListAndNames(void)
 {
     int i;
     int j;
@@ -59,3 +59,4 @@ void sub_0802F28C(void)
             gUnknown_020257E4[i][j] = 0;
     }
 }
+asm(".global sub_0802F28C\n.thumb_set sub_0802F28C, LinkClearMapListAndNames\n");

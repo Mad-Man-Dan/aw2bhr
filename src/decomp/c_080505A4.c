@@ -27,7 +27,7 @@ struct Unk85D6A48Row /* 0x18 */
     /* 0x16 */ u8 filler_16[0x02];
 };
 
-void sub_080505A4(u16 a1, u16 a2)
+void SpawnThirdEffectAndProjectile(u16 a1, u16 a2)
 {
     struct Unk85D6A48Row *tbl;
     u16 t;
@@ -54,3 +54,4 @@ void sub_080505A4(u16 a1, u16 a2)
                          gUnknown_02029710[a1].unk08, n);
     }
 }
+asm(".global sub_080505A4\n.thumb_set sub_080505A4, SpawnThirdEffectAndProjectile\n");

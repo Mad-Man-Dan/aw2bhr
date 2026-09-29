@@ -15,7 +15,7 @@ void StartSoundRoom(void)
 }
 asm(".global sub_0803B9EC\n.thumb_set sub_0803B9EC, StartSoundRoom\n");
 
-/* Same shape as sub_0803B8C4 (unk01 = 3) and sub_0803BADC (unk01 = 1). */
+/* Same shape as sub_0803B8C4 (unk01 = 3) and StartCampaignAfterMap (unk01 = 1). */
 void StartWarRoom(void)
 {
     gPlaySt.gameMode = 2;

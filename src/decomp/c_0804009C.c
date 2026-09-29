@@ -32,23 +32,23 @@ void ExplosionEffect_StartSoundAndScreenFx(struct Unk4009CProc *proc)
     switch (proc->unk54)
     {
     case -1:
-        sub_0803B4DC(0x1D5);
+        PlayMusicOrSfx2(0x1D5);
         StartScreenShake(2, 0x5A, proc->unk14);
         StartWhiteFlash(0x5A, 0xF, 0x1E, proc->unk14);
         return;
     case -2:
-        sub_0803B4DC(0x1D5);
+        PlayMusicOrSfx2(0x1D5);
         StartScreenShake(2, 0xA0, proc->unk14);
         StartWhiteFlash(0xA0, 0x1E, 0x32, proc->unk14);
         return;
     case -3:
-        sub_0803B4DC(0x1E2);
+        PlayMusicOrSfx2(0x1E2);
         StartScreenShake(1, 0x14, proc->unk14);
         StartWhiteFlash(4, 0, 2, proc->unk14);
         break;
     }
 
-    sub_0803B4DC(0x10);
+    PlayMusicOrSfx2(0x10);
     StartScreenShake(1, 0x14, proc->unk14);
 
     if (gPlaySt.gameMode != 5)

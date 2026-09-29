@@ -27,7 +27,7 @@
  * shifted giv and gcc rebuilds one from the other (`ldr/adds #2/str`) --
  * either way there is a second induction variable the ROM does not have. */
 
-void sub_080314A4(s16 a)
+void LinkLobbyDrawPlayerRows(s16 a)
 {
     int i;
     u16 buf[5];
@@ -41,7 +41,7 @@ void sub_080314A4(s16 a)
     {
         FillTilemapRect(gBG0TilemapBuffer, 0xe, 2 * i + 6, 8, 2, 0);
 
-        if (a == 0 || sub_0802F460(i))
+        if (a == 0 || SioIsPlayerLinked(i))
         {
             if (gUnknown_0849B018->unk0a[i] <= 4)
             {
@@ -68,3 +68,4 @@ void sub_080314A4(s16 a)
 
     BG_EnableSyncBG0();
 }
+asm(".global sub_080314A4\n.thumb_set sub_080314A4, LinkLobbyDrawPlayerRows\n");

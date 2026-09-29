@@ -13,9 +13,10 @@
  * works on r0 in place, before any copy.
  *
  * The `u8` return is forced by the trailing shift pair together with
- * sub_0803CDBC's declared `int` return: if both were `int` there would be no
+ * DrawDesignRoomSlotPreview's declared `int` return: if both were `int` there would be no
  * pair at all, and the pair is here. */
-u8 sub_0803CE84(int a)
+u8 DrawDesignRoomSlotPreviewAtOrigin(int a)
 {
-    return sub_0803CDBC(0, 0, (u8)a);
+    return DrawDesignRoomSlotPreview(0, 0, (u8)a);
 }
+asm(".global sub_0803CE84\n.thumb_set sub_0803CE84, DrawDesignRoomSlotPreviewAtOrigin\n");

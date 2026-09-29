@@ -84,7 +84,7 @@ void LinkC2_IDLE_08034131(struct Unk34130Proc *proc)
     if (gpKeySt->pressed & 2)
     {
         UnlockMainMenu();
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         Proc_Goto(proc, 2);
     }
     else if (child->unk37 == 0)
@@ -93,7 +93,7 @@ void LinkC2_IDLE_08034131(struct Unk34130Proc *proc)
         {
             gUnknown_0849B060->unk0d = n;
             Proc_EndEach(gUnknown_0849BB50);
-            sub_0803B4DC(0x71);
+            PlayMusicOrSfx2(0x71);
             Proc_Break(child);
             Proc_Break(proc);
         }
@@ -121,8 +121,8 @@ void LinkC2_IDLE_08034131(struct Unk34130Proc *proc)
                 child->unk30[child->unk36] = 1;
                 child->unk37 = 1;
 
-                sub_080338C0(n);
-                sub_0803B4DC(0x64);
+                LinkC4_SetCursorRow(n);
+                PlayMusicOrSfx2(0x64);
                 Proc_Goto(child, 0);
             }
         }

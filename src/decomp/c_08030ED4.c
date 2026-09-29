@@ -11,7 +11,7 @@
 
 void LinkShutdown(void)
 {
-    sub_0802F348();
+    LinkResetState();
     REG_RCNT = 0;
     REG_SIOCNT = 0;
     SetIRQHandler(7, 0);

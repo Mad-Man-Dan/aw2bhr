@@ -16,7 +16,7 @@ struct Unk080570C4Rec
     /* 0x08 */ u16 unk08;
 };
 
-void sub_080570C4(void *a1)
+void DrawTileBlockA(void *a1)
 {
     struct Unk080570C4Rec *p = a1;
     u16 chr;
@@ -29,8 +29,9 @@ void sub_080570C4(void *a1)
     {
         for (x = 0; x < p->unk02; x++)
         {
-            sub_08057110(chr, p->unk06 + x + (y << 5), p->unk08, 0);
+            PutTileEntryA(chr, p->unk06 + x + (y << 5), p->unk08, 0);
             chr++;
         }
     }
 }
+asm(".global sub_080570C4\n.thumb_set sub_080570C4, DrawTileBlockA\n");

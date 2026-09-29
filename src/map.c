@@ -43,7 +43,7 @@ void ReloadGameplayPalettes(void)
     ApplyPaletteExt((u16 *)(gUnknown_0810E6E0 + (gPlayers[4].teamColor - 1) * 0x20),
                     0x1E0, 0x20);
 
-    sub_0803F80C(8);
+    LoadArmyObjPalettes(8);
     sub_0802D2EC();
 
     ApplyPaletteExt(gUnknown_0809163C, 0x240, 0x20);
@@ -72,7 +72,7 @@ asm(".global sub_080248F8\n.thumb_set sub_080248F8, GetLoadedMapArmyCount\n");
 u8 GetMapArmyCount(u16 a1)
 {
     if ((u16)(a1 - 0xB4) <= 0xB)
-        return sub_0803CD14(a1 + 0x4C);
+        return GetDesignRoomSlotArmyCount(a1 + 0x4C);
 
     return gUnknown_085C77A0[a1].unk18;
 }
@@ -81,7 +81,7 @@ asm(".global sub_0802490C\n.thumb_set sub_0802490C, GetMapArmyCount\n");
 u8 *GetMapName(u16 a1)
 {
     if ((u16)(a1 - 0xB4) <= 0xB)
-        return sub_0803CCEC(a1 + 0x4C);
+        return GetDesignRoomSlotName(a1 + 0x4C);
 
     return gTextTable[gUnknown_085C77A0[a1].nameIndex];
 }

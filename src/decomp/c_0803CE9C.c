@@ -8,10 +8,11 @@
  */
 
 /* Family F068, third member. The family is defined by shape, not by callee:
- * this one calls sub_0803CE28 rather than DefeatOtherTeamsAndEndMatch, and `varies` lists
+ * this one calls DrawDesignRoomMapPreview rather than DefeatOtherTeamsAndEndMatch, and `varies` lists
  * both the callee and both immediates. */
 
-void sub_0803CE9C(void)
+void DrawDesignRoomMapPreviewAtOrigin(void)
 {
-    sub_0803CE28(0, 0);
+    DrawDesignRoomMapPreview(0, 0);
 }
+asm(".global sub_0803CE9C\n.thumb_set sub_0803CE9C, DrawDesignRoomMapPreviewAtOrigin\n");

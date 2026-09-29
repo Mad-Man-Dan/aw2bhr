@@ -24,19 +24,19 @@ void RunMapCursorState(void)
         break;
 
     case 3:
-        sub_0802E698();
+        MapCursorState_OpenUnitMenu();
         break;
 
     case 4:
-        sub_0802E6C0();
+        MapCursorState_UnitMenuOpen();
         break;
 
     case 5:
-        sub_0802E6F8();
+        MapCursorState_Ambushed();
         break;
 
     case 6:
-        sub_0802DFC8();
+        MapCursorState_RangeWhileBHeld();
         break;
 
     case 7:
@@ -44,7 +44,7 @@ void RunMapCursorState(void)
         break;
 
     case 8:
-        sub_0802E278();
+        MapCursorState_UnitsTranslucent();
         break;
     }
 }

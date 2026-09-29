@@ -12,7 +12,7 @@
 void sub_08074384(void)
 {
     gUnknown_03002F08.unk00 = 0xf;
-    sub_0802D5CC(gPlayers[gUnknown_030033EC].teamColor - 1, 0xf);
+    ApplyWindowFramePalette(gPlayers[gUnknown_030033EC].teamColor - 1, 0xf);
 }
 
 /* The proc pointer is only used for Proc_Break; the `bl sub_08019260` reads r0

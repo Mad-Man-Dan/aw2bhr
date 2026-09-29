@@ -51,7 +51,7 @@ void MapCursorState_ChooseDestination(void)
     RebuildMapUnitLayers();
     HideRangeOverlay();
     gUnknown_03003334 = v;
-    sub_0803B4DC(0x66);
+    PlayMusicOrSfx2(0x66);
 }
 asm(".global sub_0802DE1C\n.thumb_set sub_0802DE1C, MapCursorState_ChooseDestination\n");
 
@@ -71,7 +71,7 @@ void MapCursorState_DeleteUnit(void)
 
     if (gpKeySt->pressed & 2)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         gUnknown_03003334 = 0;
         return;
     }

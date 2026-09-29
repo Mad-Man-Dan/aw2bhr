@@ -30,7 +30,7 @@
  */
 bool8 EventOp_FadeOutMusic(s16 a)
 {
-    sub_0803B5E8();
+    FadeOutMusicDefault();
 
     gUnknown_0200C528[a].unk04++;
 

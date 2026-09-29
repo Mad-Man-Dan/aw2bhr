@@ -13,7 +13,7 @@
  * The tens digit is an `int` with an explicit `(u16)` cast, not a `u16` local.
  * A u16 local makes gcc keep a second copy of it across the four calls -- an
  * extra `adds r5,r4,#0` and an extra pushed register, four bytes over. */
-void sub_08031C58(void)
+void LinkDrawTransferPercent(void)
 {
     int n;
 
@@ -29,3 +29,4 @@ void sub_08031C58(void)
 
     PutOamHi(0xbe, 0x38, gUnknown_084C1466, 0x5010);
 }
+asm(".global sub_08031C58\n.thumb_set sub_08031C58, LinkDrawTransferPercent\n");

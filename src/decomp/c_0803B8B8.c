@@ -15,7 +15,8 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_0803B8B8(void)
+void MainMenuVersus_NewGame(void)
 {
-    sub_0803B930(4);
+    StartNewVersus(4);
 }
+asm(".global sub_0803B8B8\n.thumb_set sub_0803B8B8, MainMenuVersus_NewGame\n");

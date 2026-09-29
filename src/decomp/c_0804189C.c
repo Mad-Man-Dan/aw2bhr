@@ -9,7 +9,7 @@
  */
 
 #include "proc.h"
-/* The tail StartAttackOnInventionAt falls into when sub_0803DF54 finds no entry: it decays
+/* The tail StartAttackOnInventionAt falls into when FindLivingInventionTargetAt finds no entry: it decays
  * the cell plane's own counter at (x, y) instead of an entry's unk04, then
  * starts the same 0x0849FE78 proc with unk4c NULL and the two coordinates
  * stored.
@@ -76,7 +76,7 @@ void StartAttackOnPipeSeamAt(int a1, int a2, int a3)
     gUnknown_020288B4[
         gMap->rowOffset[a2] + a1] = v;
 
-    sub_0802DCA4();
+    ResetDisplayEffects();
 
     proc = Proc_Start(gUnknown_0849FE78, PROC_TREE_3);
     proc->unk2c = a1;

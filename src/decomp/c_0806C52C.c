@@ -65,5 +65,5 @@ void sub_0806C52C(struct Unk0806C52CProc *proc)
     }
 
     SetBgScrollShadow(0, 0, 0);
-    sub_0803B3C8();
+    SetSoundMixerChannelCount8();
 }

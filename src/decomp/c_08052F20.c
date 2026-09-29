@@ -12,10 +12,10 @@
 
 void BattleAnimParamMenu_Init(void)
 {
-    sub_0803B588();
+    StopAllMusic();
     sub_080546F0();
     ResetBattleAnimParams();
-    sub_08057270();
+    SetUpBattleAnimDisplay();
     sub_080116E8();
 }
 asm(".global sub_08052F20\n.thumb_set sub_08052F20, BattleAnimParamMenu_Init\n");

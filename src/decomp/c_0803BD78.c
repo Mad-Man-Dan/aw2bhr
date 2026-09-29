@@ -39,7 +39,7 @@ void sub_0803BD78(void)
  * already proved by EventOp_SetArmyAiControlled's variable index, and a constant index folds
  * to the same displacement a separate scalar field would give, so this does
  * not disturb that model. */
-void sub_0803BDBC(void)
+void Versus_InitPlayState(void)
 {
     u8 saved = gPlaySt.bgmOn;
 
@@ -56,3 +56,4 @@ void sub_0803BDBC(void)
     gPlaySt.randomWeatherOn = 1;
     gPlaySt.unk00 = 1;
 }
+asm(".global sub_0803BDBC\n.thumb_set sub_0803BDBC, Versus_InitPlayState\n");

@@ -19,7 +19,7 @@
  *    the same semantics and all three emit the same `ldrh`, but only the `int`
  *    temp produces the ROM's `ldr r2,=0x3FF; adds r0,r2,#0; ands r1,r0` --
  *    the bare expression and a `u16` temp both drop the register copy and come
- *    out two bytes short. Same discriminator as the matched sub_0804D928,
+ *    out two bytes short. Same discriminator as the matched CruiserPart2_Init,
  *    whose value arrives from arithmetic rather than a load.
  *
  *  - gUnknown_08552D80 and gUnknown_085D7E28 are STRUCT arrays, not `u16

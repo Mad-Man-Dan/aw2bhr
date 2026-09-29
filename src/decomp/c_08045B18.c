@@ -7,10 +7,11 @@
  * sub_08045B18 @ 0x08045B18
  */
 
-int sub_08045B18(void)
+int MapEventCond_Army1CoPowerUsedOnce(void)
 {
     if (GetCoPowerUseCount(1) == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_08045B18\n.thumb_set sub_08045B18, MapEventCond_Army1CoPowerUsedOnce\n");

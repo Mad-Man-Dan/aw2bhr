@@ -10,7 +10,7 @@
 #include "proc.h"
 #include "hardware.h"
 
-void sub_08032134(ProcPtr proc)
+void LinkLobby_ResetIfConnectionLost(ProcPtr proc)
 {
     if (gUnknown_0849B018->unk04 == 7)
     {
@@ -24,11 +24,12 @@ void sub_08032134(ProcPtr proc)
         gUnknown_0849B018->unk1d = 0;
         gUnknown_0849B018->unk1e = 0;
 
-        sub_0802F23C();
+        LinkResetKeySync();
         SioResetBuffers();
-        sub_0802F28C();
+        LinkClearMapListAndNames();
 
         REG_RCNT = 0x8000;
         Proc_Goto(proc, 2);
     }
 }
+asm(".global sub_08032134\n.thumb_set sub_08032134, LinkLobby_ResetIfConnectionLost\n");

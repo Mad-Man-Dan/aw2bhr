@@ -15,7 +15,7 @@
  * The `lsls #0x18; asrs #0x18` before the compare is unk06's own s8 width, not
  * a narrowing of SioPollingMsg's int return -- the `strb` above it truncates and
  * needs no shifts. */
-int sub_08030D1C(void)
+int LinkPollSelfId(void)
 {
     gUnknown_0849B018->unk06 = SioPollingMsg();
 
@@ -24,6 +24,7 @@ int sub_08030D1C(void)
 
     return 1;
 }
+asm(".global sub_08030D1C\n.thumb_set sub_08030D1C, LinkPollSelfId\n");
 
 /* SioSend16 takes the ADDRESS of gGameClock, not its value: the ROM
  * loads the pool word straight into r0 with no `ldr r0, [r0]` after it.
@@ -33,10 +34,11 @@ int sub_08030D1C(void)
  * agbcc reuses it rather than re-materialising the constant. Dropping the
  * argument would compile too, and identically, which is exactly why the
  * declared arity is what settles it. */
-void sub_08030D4C(void)
+void LinkMarkConnected(void)
 {
     gUnknown_0849B018->unk04 = 5;
     gPlaySt.savingEnabled = 1;
     SioSend16((u16 *)&gGameClock, 1);
     ClearSlotScriptCallback(gUnknown_03001FBC);
 }
+asm(".global sub_08030D4C\n.thumb_set sub_08030D4C, LinkMarkConnected\n");

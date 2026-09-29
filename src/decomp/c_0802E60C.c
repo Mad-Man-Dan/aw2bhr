@@ -11,7 +11,7 @@ void ConfirmUnitDestination(s16 a1, s16 a2)
 {
     if (!IsValidMoveDestination(a1, a2))
     {
-        sub_0803B4DC(0x68);
+        PlayMusicOrSfx2(0x68);
         return;
     }
 
@@ -30,7 +30,7 @@ void ConfirmUnitDestination(s16 a1, s16 a2)
 
     EncodeMovePathDirections();
 
-    if ((u8)sub_0802E7C8(gUnknown_03003F24.spos.unk00, gUnknown_03003F24.spos.unk02,
+    if ((u8)TruncatePathAtHiddenEnemy(gUnknown_03003F24.spos.unk00, gUnknown_03003F24.spos.unk02,
             gUnknown_03003110, 4) == 1)
         gUnknown_03003334 = 5;
 

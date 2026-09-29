@@ -11,7 +11,7 @@
 
 void CoPowerHachi(ProcPtr parent)
 {
-    sub_0803B4DC(502);
+    PlayMusicOrSfx2(502);
     StartCoPowerWhiteFlash(parent);
 }
 asm(".global sub_0804483C\n.thumb_set sub_0804483C, CoPowerHachi\n");

@@ -12,7 +12,7 @@
  * IS the narrowing, and r4 is then used sign-extended everywhere. Declaring the
  * local `s8` makes agbcc truncate with `lsls; lsrs` into the local and
  * sign-extend again at each read, four bytes longer. */
-void sub_0803D92C(void)
+void SaveScreenCampaign_StartMessage(void)
 {
     int v;
 
@@ -22,3 +22,4 @@ void sub_0803D92C(void)
     if (IsPlayer1TeamAlive())
         StartEventScript(gUnknown_0849F3A8)->unk10 = v;
 }
+asm(".global sub_0803D92C\n.thumb_set sub_0803D92C, SaveScreenCampaign_StartMessage\n");

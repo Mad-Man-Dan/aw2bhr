@@ -102,7 +102,7 @@ void StartFigureThirdScript(u16 a1, u16 a2)
          && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
             sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                          gUnknown_02029BA8[a1].unk10);
-        sub_080505A4(a1, a2);
+        SpawnThirdEffectAndProjectile(a1, a2);
         t = gUnknown_03004580[a1][1];
         if (t == 0xf || t == 0x12 || t == 3)
         {
@@ -136,7 +136,7 @@ asm(".global sub_080543E0\n.thumb_set sub_080543E0, StartWholeFigureThirdScript\
  * row and unk0c its timestamp row, both walked by the shared unk16 cursor --
  * the same pair gUnknown_020296B0 spells as unk0c / unk1e, with the two offsets
  * swapped. See StepThirdEffectTimeline for why `tbl` and `row` are locals; both
- * assignments sit after the sub_08057BCC call because that is where the ROM
+ * assignments sit after the StartBattleHudHpCounter call because that is where the ROM
  * loads the three pool words. */
 void StepHitTimeline(u16 a1)
 {
@@ -149,7 +149,7 @@ void StepHitTimeline(u16 a1)
         void (*const *tbl)(u16, u16);
         u16 *row;
 
-        sub_08057BCC(a1);
+        StartBattleHudHpCounter(a1);
         tbl = gUnknown_0855374C;
         row = gUnknown_085D6A48[gUnknown_03004580[a1][1]];
         tbl[row[2]](a1, cmd);

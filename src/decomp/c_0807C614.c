@@ -126,7 +126,7 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
 
     LoadBg1WindowFrame(1);
 
-    sub_0802D5CC(gUnknown_03005958[proc->unk58], 8);
+    ApplyWindowFramePalette(gUnknown_03005958[proc->unk58], 8);
 
     v = sub_0807F8E4();
 

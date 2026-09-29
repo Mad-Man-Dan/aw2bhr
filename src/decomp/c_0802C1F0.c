@@ -7,8 +7,9 @@
  * sub_0802C1F0 @ 0x0802C1F0
  */
 
-void sub_0802C1F0(const u8 *src, u8 *dst, int size)
+void CopyBytes(const u8 *src, u8 *dst, int size)
 {
     while (size--)
         *dst++ = *src++;
 }
+asm(".global sub_0802C1F0\n.thumb_set sub_0802C1F0, CopyBytes\n");

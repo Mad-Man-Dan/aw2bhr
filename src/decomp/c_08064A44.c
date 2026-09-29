@@ -65,6 +65,6 @@ void MatchSetupSpawnRuleOptions(void)
     g->unk54[4]->unk4b = g->unk16 - g->unk15 + 2;
 
     StartHeaderBanner(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xF, 1, 1, 3);
-    sub_08030178();
+    LinkRestartKeySync();
 }
 asm(".global sub_08064A44\n.thumb_set sub_08064A44, MatchSetupSpawnRuleOptions\n");

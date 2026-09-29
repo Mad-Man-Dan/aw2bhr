@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_08032D4C(ProcPtr parent)
+void StartLinkMapPick(ProcPtr parent)
 {
     Proc_Start(gUnknown_0849B6B0, parent);
 }
+asm(".global sub_08032D4C\n.thumb_set sub_08032D4C, StartLinkMapPick\n");

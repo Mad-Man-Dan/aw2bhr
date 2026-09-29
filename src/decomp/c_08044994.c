@@ -45,6 +45,6 @@ void CoPowerMeteor_ApplyDamage(struct Unk8044994 *proc)
         DamageUnitAtCellCopy(col, row + 2, proc->unk64);
     }
 
-    sub_08039F58();
+    ApplyCoPowerStatus();
 }
 asm(".global sub_08044994\n.thumb_set sub_08044994, CoPowerMeteor_ApplyDamage\n");

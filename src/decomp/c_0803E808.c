@@ -28,9 +28,9 @@
  *    loses three shift pairs; declaring them `u16` is what puts the pairs where
  *    the ROM has them.
  *  - `(u16)a5` at sub_0801FAC4's third argument is a real narrowing in the
- *    source: the two sub_0803E7C0/E7E4 calls above it use a5 un-narrowed, so it
+ *    source: the two GetCannonFireCellOffsetX/E7E4 calls above it use a5 un-narrowed, so it
  *    cannot be a parameter declaration.
- *  - sub_0803E7C0/sub_0803E7E4 return `void *` per their promoted definition,
+ *  - GetCannonFireCellOffsetX/GetCannonFireCellOffsetY return `void *` per their promoted definition,
  *    and here the results are ADDED to cell coordinates. The `(int)` casts are
  *    what that costs. This is evidence that struct Unk0849F688's two word
  *    members are integer deltas rather than pointers, but the existing type is
@@ -59,8 +59,8 @@ void PickBestInventionTarget(int a1, int a2, int a3, int a4, int a5)
     bestT = 0;
     SetWorkingMapPlane(MAP->move);
     FillMovementMap(0xff);
-    x = a1 + (int)sub_0803E7C0(a4, a5);
-    y = a2 + (int)sub_0803E7E4(a4, a5);
+    x = a1 + (int)GetCannonFireCellOffsetX(a4, a5);
+    y = a2 + (int)GetCannonFireCellOffsetY(a4, a5);
     sub_0801FAC4(x, y, (u16)a5, gUnknown_0849F6B8[a4][0], bestT);
     for (j = 0; j < MAP->height; j++)
     {

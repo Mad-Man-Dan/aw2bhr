@@ -12,12 +12,13 @@
  * `int` is the weakest type that fits and the return type is NOT proved: the
  * body materialises a literal 0, which is byte-identical for int, bool8 and
  * every narrower type, and nothing in the ROM calls this to re-narrow the
- * result. Its neighbour sub_0802C660 is a declared bool8 predicate, so a stub
+ * result. Its neighbour IsMapCategoryZero is a declared bool8 predicate, so a stub
  * "always false" is the likely reading, but that is a guess and is recorded as
  * one.
  */
 
-int sub_0802C65C(void)
+int OptionsMenu_YieldUsability(void)
 {
     return 0;
 }
+asm(".global sub_0802C65C\n.thumb_set sub_0802C65C, OptionsMenu_YieldUsability\n");

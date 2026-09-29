@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* The same three fields sub_08039BB4 writes when it starts this proc, read
+/* The same three fields StartSparkleZoom writes when it starts this proc, read
  * back and re-issued with the y bumped by 0xC0. +0x29 and +0x2a each need a
  * runtime `adds` because `ldrb`'s displacement stops at 31; agbcc reuses the
  * first address with `adds r1, #1` for the second, exactly as
@@ -22,7 +22,8 @@ struct Unk39DA0Proc
     /* 0x2c */ u16 unk2c;
 };
 
-void sub_08039DA0(struct Unk39DA0Proc *proc)
+void SparkleEffect_StartZoom(struct Unk39DA0Proc *proc)
 {
-    sub_08039BB4(proc->unk29, proc->unk2a, proc->unk2c + 0xc0);
+    StartSparkleZoom(proc->unk29, proc->unk2a, proc->unk2c + 0xc0);
 }
+asm(".global sub_08039DA0\n.thumb_set sub_08039DA0, SparkleEffect_StartZoom\n");

@@ -9,8 +9,8 @@
  */
 
 #include "proc.h"
-/* The proc sub_0803F4C8 also runs on: +0x50 holds the AP_Create handle and
- * +0x54/+0x58 are the screen-space x/y that sub_0803F4C8 converts back to
+/* The proc VolcanoRock_WaitImpact also runs on: +0x50 holds the AP_Create handle and
+ * +0x54/+0x58 are the screen-space x/y that VolcanoRock_WaitImpact converts back to
  * camera-relative coordinates. */
 struct UnkF400Proc
 {
@@ -27,7 +27,7 @@ struct UnkF400Proc
  * `movs r2, #6; ldrsh r1, [r1, r2]` is a SIGNED halfword at a constant
  * displacement -- Thumb has no immediate-offset ldrsh, so the register-offset
  * form is how agbcc spells `*(s16 *)(p + 6)`, not an array index. */
-void sub_0803F400(struct UnkF400Proc *proc)
+void VolcanoRock_Init(struct UnkF400Proc *proc)
 {
     struct Unk0801C210 *sprite = AP_Create(gUnknown_081171EC, 1, 1);
 
@@ -37,3 +37,4 @@ void sub_0803F400(struct UnkF400Proc *proc)
 
     sprite->unk22 = 0x51CA;
 }
+asm(".global sub_0803F400\n.thumb_set sub_0803F400, VolcanoRock_Init\n");

@@ -25,7 +25,7 @@
  * table's entries for 4 and 6 point at the default, which needs no case label of
  * its own -- 5 cases across 7 slots is dense enough for expand_end_case to take
  * the table. Bodies come out in source order 3, 5, 8, 2, 7, and jump.c merges
- * cases 3 and 5 onto one sub_0803F908 tail and merges case 3's `unk04 == 0` arm
+ * cases 3 and 5 onto one PutMapObjectSprite tail and merges case 3's `unk04 == 0` arm
  * into case 5's; both are cross-jumping, not shared source.
  *
  * `goto next` rather than `continue`: the guards sit above a switch whose arms
@@ -58,7 +58,7 @@ void DrawInventionSprites(int a1, int a2, int a3, int a4)
                 t = gUnknown_0849FA08;
             else
                 t = gUnknown_0849FA22;
-            sub_0803F908(p->unk00, p->unk01, t, GetArmyByTeamColor(5), 0);
+            PutMapObjectSprite(p->unk00, p->unk01, t, GetArmyByTeamColor(5), 0);
             break;
         case 5:
             if (p->unk04 == 0)
@@ -67,16 +67,16 @@ void DrawInventionSprites(int a1, int a2, int a3, int a4)
                 t = gUnknown_0849FA78;
             else
                 t = gUnknown_0849FA5E;
-            sub_0803F908(p->unk00, p->unk01, t, GetArmyByTeamColor(5), 0);
+            PutMapObjectSprite(p->unk00, p->unk01, t, GetArmyByTeamColor(5), 0);
             break;
         case 8:
-            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA56, GetArmyByTeamColor(5), 0);
+            PutMapObjectSprite(p->unk00, p->unk01, gUnknown_0849FA56, GetArmyByTeamColor(5), 0);
             break;
         case 2:
-            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA56, -1, 0);
+            PutMapObjectSprite(p->unk00, p->unk01, gUnknown_0849FA56, -1, 0);
             break;
         case 7:
-            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA9A, GetArmyByTeamColor(5), 0);
+            PutMapObjectSprite(p->unk00, p->unk01, gUnknown_0849FA9A, GetArmyByTeamColor(5), 0);
             break;
         }
     next:

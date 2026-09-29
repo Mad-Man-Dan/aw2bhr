@@ -10,15 +10,15 @@
 #include "proc.h"
 
 /* The tree-3 starter for ProcScr_Campaign, mode 1 -- the fourth member of the
- * sub_0803B8C4 / StartWarRoom / sub_0803BADC family.
+ * sub_0803B8C4 / StartWarRoom / StartCampaignAfterMap family.
  *
  * The two SetHardCampaignFlag calls are an if/else and NOT a ternary: a ternary
  * computes one constant and falls into a shared tail, whereas this has two
  * separate `bl`s. sub_080846F4's u8 return is tested with a bare `lsls #24`
  * and no `lsrs`, which is all a zero test needs. */
-void sub_0803BA4C(void)
+void MainMenuCampaign_NewGame(void)
 {
-    sub_0803BA1C();
+    ClearCampaignFlags60To9F();
     if (sub_080846F4() != 0)
         SetHardCampaignFlag(1);
     else
@@ -27,3 +27,4 @@ void sub_0803BA4C(void)
     gPlaySt.gameMode = 1;
     Proc_Start(ProcScr_Campaign, PROC_TREE_3);
 }
+asm(".global sub_0803BA4C\n.thumb_set sub_0803BA4C, MainMenuCampaign_NewGame\n");

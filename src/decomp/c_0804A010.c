@@ -7,10 +7,11 @@
  * sub_0804A010 @ 0x0804A010
  */
 
-void sub_0804A010(void)
+void SetLanguageSignature(void)
 {
     gUnknown_02028E41[0] = 0xa5;
     gUnknown_02028E41[1] = 0x5a;
     gUnknown_02028E41[2] = 0xc3;
     gUnknown_02028E41[3] = 0x3c;
 }
+asm(".global sub_0804A010\n.thumb_set sub_0804A010, SetLanguageSignature\n");

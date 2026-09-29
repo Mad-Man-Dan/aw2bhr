@@ -69,7 +69,7 @@ void EndOfGame_FinishCampaignMap(void)
     }
     else
     {
-        sub_0803BADC();
+        StartCampaignAfterMap();
     }
 }
 asm(".global sub_08038484\n.thumb_set sub_08038484, EndOfGame_FinishCampaignMap\n");

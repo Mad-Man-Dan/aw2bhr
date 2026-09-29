@@ -63,5 +63,5 @@ void sub_080246B4(void)
     }
 
     sub_0803F8E0(0x48, Div(gGameClock, 20) % 4);
-    sub_0803FE50(0x48, gGameClock);
+    AnimateVolcanoTiles(0x48, gGameClock);
 }

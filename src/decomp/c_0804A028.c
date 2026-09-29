@@ -7,7 +7,8 @@
  * sub_0804A028 @ 0x0804A028
  */
 
-void sub_0804A028(void)
+void LanguageSelect_StartCursorScript(void)
 {
     sub_080152EC(gUnknown_084C3824, 0);
 }
+asm(".global sub_0804A028\n.thumb_set sub_0804A028, LanguageSelect_StartCursorScript\n");

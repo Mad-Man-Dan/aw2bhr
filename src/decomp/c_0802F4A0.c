@@ -16,7 +16,7 @@
  * access kills agbcc's CSE of every other MEM), so the pointer is bound to a
  * local -- and bound AFTER the loop, because the loop's own volatile reads are
  * what stop the two loads being merged into one. */
-bool8 sub_0802F4A0(void)
+bool8 SioAreAllLinkedPlayersStatus5(void)
 {
     struct Unk0849B018 *p;
     int count;
@@ -40,3 +40,4 @@ bool8 sub_0802F4A0(void)
 
     return FALSE;
 }
+asm(".global sub_0802F4A0\n.thumb_set sub_0802F4A0, SioAreAllLinkedPlayersStatus5\n");

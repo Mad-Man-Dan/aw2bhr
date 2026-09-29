@@ -19,7 +19,7 @@
  * called "why does the longer-ranged allocno win the lo register" was never
  * an allocation question: it was which operand of the sum local_alloc ties.
  * Wave-77 measurements that still stand: declaration order of j/k is
- * byte-neutral; gUnknown_0855371C is an animation descriptor; sub_08052818
+ * byte-neutral; gUnknown_0855371C is an animation descriptor; DeathHandler_CommonTail
  * narrows both u16 parameters in place; `e` is a local. See
  * docs/agbcc-codegen.md, "A DEAD `k = i * S;` statement is a hoist lever". */
 void DeathHandler_Bomb(u16 a, u16 b)
@@ -40,7 +40,7 @@ void DeathHandler_Bomb(u16 a, u16 b)
         0);
 
     SetSlotSpriteFlicker(gUnknown_02029808[a].unk24[b], 1);
-    sub_080504A8(a, 0x23);
+    PlayFigureDestroySfx(a, 0x23);
 
     e = gUnknown_08553B10[a];
 
@@ -51,6 +51,6 @@ void DeathHandler_Bomb(u16 a, u16 b)
 
     gUnknown_02028E5C[a][0] = 1;
 
-    sub_08052818(a, b);
+    DeathHandler_CommonTail(a, b);
 }
 asm(".global sub_08052BBC\n.thumb_set sub_08052BBC, DeathHandler_Bomb\n");

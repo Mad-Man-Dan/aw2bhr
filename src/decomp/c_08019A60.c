@@ -69,9 +69,9 @@ void Menu_HandleButtons(void *arg)
         if (sub_08074410(P->unk20[tbl[new_var]].unk00, 0) == 0)
         {
             if (P->unk24[tbl[*idx]] & 2)
-                sub_0803B4DC(0x68);
+                PlayMusicOrSfx2(0x68);
             else
-                sub_0803B4DC(0x65);
+                PlayMusicOrSfx2(0x65);
 
             fn = P->unk20[tbl[*idx]].unk14;
 
@@ -91,7 +91,7 @@ void Menu_HandleButtons(void *arg)
             fn(P->unk31[P->unk42], P->unk42,
                P->unk24[P->unk31[P->unk42]]);
 
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
     }
 }
 asm(".global sub_08019A60\n.thumb_set sub_08019A60, Menu_HandleButtons\n");

@@ -15,7 +15,8 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_0803B5E8(void)
+void FadeOutMusicDefault(void)
 {
     FadeOutMusic(2);
 }
+asm(".global sub_0803B5E8\n.thumb_set sub_0803B5E8, FadeOutMusicDefault\n");

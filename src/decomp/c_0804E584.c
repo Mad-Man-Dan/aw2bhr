@@ -9,11 +9,11 @@
 
 #include "hardware.h"
 /* Third member of the CruiserFigure_Init / BattleshipFigure_Init family (both matched, both
- * 600 B) -- same subsystem, same `pos` reseed out of sub_08057D44, same
+ * 600 B) -- same subsystem, same `pos` reseed out of GetFigurePositionTable, same
  * `entry->x - *ox` tail. The two levers that closed those two do NOT transfer,
  * and that was measured rather than assumed (see docs/agbcc-codegen.md):
  * the wave-17 `(meta = gUnknown_03004580, ...)` comma anchor is BYTE-NEUTRAL
- * here, and the zero-trip `do { } while (0)` around the sub_08057D44 call is a
+ * here, and the zero-trip `do { } while (0)` around the GetFigurePositionTable call is a
  * REGRESSION. What does transfer is the `(e1 = &pos[..][..])->x` binding pair,
  * which is worth 3 instructions and takes the draft from 124 differing
  * instruction lines to 21.
@@ -30,7 +30,7 @@
  * rounds had failed on it, and it is the same "bind at the right depth" family
  * as the two levers above -- here the depth is the result, not an operand.
  *
- * `pos` rows are 40 bytes because sub_08057D44 hands back a 2-D view:
+ * `pos` rows are 40 bytes because GetFigurePositionTable hands back a 2-D view:
  * `pos[gUnknown_03004580[i][5]][i * 5 + j]` of 4-byte (x, y) pairs, the shape
  * data/parked.json records for sub_0804FA2C. The gUnknown_03004504 guard is
  * wave 19's nested-bitfield rule -- two separate mask tests, not an `&&`.
@@ -43,7 +43,7 @@ struct UnkPosPair
     u16 x;
     u16 y;
 };
-void sub_0804BFC0(u16, u16, s16);
+void SetFigureObjAttrs(u16, u16, s16);
 
 void GroundFigure_Init(void)
 {
@@ -58,9 +58,9 @@ void GroundFigure_Init(void)
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
 
-    sub_0804BFC0(gUnknown_0300453C, gUnknown_0300451C, gUnknown_03001FBC);
+    SetFigureObjAttrs(gUnknown_0300453C, gUnknown_0300451C, gUnknown_03001FBC);
 
-    pos = (struct UnkPosPair (*)[10])sub_08057D44(
+    pos = (struct UnkPosPair (*)[10])GetFigurePositionTable(
         gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]][0],
         gUnknown_03004580[gUnknown_0300453C][3]);
 

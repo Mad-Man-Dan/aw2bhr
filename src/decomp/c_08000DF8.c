@@ -15,7 +15,7 @@
  * the map's scroll and camera position and calls GenerateRandomMap, so a
  * non-zero a1 keeps the map that is already loaded. Either way it then moves
  * both cursors (gUnknown_030033E4, gUnknown_030033E0) to 0,0 and calls
- * sub_0802BB98.
+ * InitCursorInfoPanelPosition.
  *
  * Why the C looks odd: this spelling does not change what the code does, but
  * the original compiler only produces identical output with it.
@@ -47,5 +47,5 @@ void sub_08000DF8(int a1)
     gUnknown_030033E4.unk02 = 0;
     gUnknown_030033E0.unk00 = 0;
     gUnknown_030033E0.unk02 = 0;
-    sub_0802BB98();
+    InitCursorInfoPanelPosition();
 }

@@ -12,7 +12,7 @@
  * apart: agbcc's PROMOTE_MODE narrows a parameter of either signedness with
  * `lsls #0x10; lsrs #0x10`, and `strh` and `<< 4` are both sign-blind. The
  * evidence is on the caller side, which did not exist in C until wave 31 --
- * sub_0802E698 and sub_0802E6F8 pass gUnknown_03003100.spos.unk00/.unk02
+ * MapCursorState_OpenUnitMenu and MapCursorState_Ambushed pass gUnknown_03003100.spos.unk00/.unk02
  * through with `ldrsh` and no zero-extension, which a u16 parameter would have
  * forced. See the declaration comment in include/unknown-functions.h. */
 void SetMapCursorPosition(s16 x, s16 y)

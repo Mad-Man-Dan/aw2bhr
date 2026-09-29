@@ -8,7 +8,7 @@
  */
 
 /* The setter for the gUnknown_030033F4 bit block that the promoted
- * sub_0803CB74 reads, and it shares that function's two oddities: the index is
+ * IsCampaignFlagBank0Set reads, and it shares that function's two oddities: the index is
  * `id >> 3` with an ARITHMETIC shift (so `int`, not unsigned), and the shift
  * count is the WHOLE id rather than `id & 7`.
  *
@@ -17,10 +17,11 @@
  * in both branches. Hoisting it to a local computes it once and drops the
  * second pool word (measured). The shared `strb r0, [r2]` tail is gcc's
  * cross-jumping of the two identical stores, not a ternary. */
-void sub_0803CB40(int id, int set)
+void SetCampaignFlagBank0(int id, int set)
 {
     if (set)
         gUnknown_030033F4[id >> 3] |= 1 << id;
     else
         gUnknown_030033F4[id >> 3] &= ~(1 << id);
 }
+asm(".global sub_0803CB40\n.thumb_set sub_0803CB40, SetCampaignFlagBank0\n");

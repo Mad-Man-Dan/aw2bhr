@@ -24,7 +24,7 @@ void sub_08064660(struct Unk08580934_Obj *obj)
     if ((u16)(obj->unk2a + 0x20) > 0xC0)
     {
         gUnknown_08580934->unk2d--;
-        sub_08030178();
+        LinkRestartKeySync();
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

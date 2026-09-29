@@ -55,7 +55,7 @@ void SupplyAnimation_Init(struct Unk29BF0Obj *p)
             p->unk2c = 1;
     }
 
-    sub_0803B4DC(0x6B);
+    PlayMusicOrSfx2(0x6B);
 }
 asm(".global sub_08029BF0\n.thumb_set sub_08029BF0, SupplyAnimation_Init\n");
 

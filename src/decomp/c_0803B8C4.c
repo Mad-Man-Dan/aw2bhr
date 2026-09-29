@@ -15,8 +15,8 @@ void sub_0803B8C4(void)
     Proc_Start(ProcScr_Versus, PROC_TREE_3);
 }
 
-extern void sub_0803BDBC(void);
-extern void sub_0803BE60(void);
+extern void Versus_InitPlayState(void);
+extern void Versus_InitArmyRoster(void);
 extern u8 GetMainMenuLock(void);
 extern void Versus_ResetCoPickIndex(void);
 extern void BuildUnlockedCoCarousel(void);
@@ -29,8 +29,8 @@ extern void Versus_AssignRandomCos(void);
 extern void EndBg3AutoScroll(void);
 extern void sub_080364F4(void);
 
-#define Versus_0803BDBD sub_0803BDBC
-#define Versus_0803BE61 sub_0803BE60
+#define Versus_0803BDBD Versus_InitPlayState
+#define Versus_0803BE61 Versus_InitArmyRoster
 #define Versus_0803BEF9 Versus_ResetCoPickIndex
 #define Versus_08043D5D BuildUnlockedCoCarousel
 #define Versus_0803BFA5 sub_0803BFA4

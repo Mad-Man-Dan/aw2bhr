@@ -8,7 +8,7 @@
  */
 
 /* Fills a {u16, u16} pair out of a mode id in 2..8. void, not int: its caller
- * sub_0803E108 allocates the pair on its own stack and re-reads both halves
+ * AddBlockedInventionRecord allocates the pair on its own stack and re-reads both halves
  * with `ldrh` after the `bl`, never touching r0.
  *
  * The three tails cross-jump automatically, so the only thing the source has
@@ -19,12 +19,12 @@
  * Wave 31: the out-parameter was `u16 *` here, which was a body-side spelling
  * -- writing two halfwords at +0 and +2 is the same code either way, so this
  * file had no oracle for it. `struct Unk02028360Pos *` is the settled model:
- * wave 29 established the struct from sub_0803DF54, where the array spelling
+ * wave 29 established the struct from FindLivingInventionTargetAt, where the array spelling
  * measurably differs (it recomputes `sp + 2` into a scratch instead of reading
  * `ldrh r0,[r6,#2]`), and GetInventionTargetCell already takes it. Byte-for-byte
  * unchanged by the retype -- re-verified.
  */
-void sub_0803DF98(int a, struct Unk02028360Pos *out)
+void GetInventionOriginOffset(int a, struct Unk02028360Pos *out)
 {
     switch (a)
     {
@@ -47,3 +47,4 @@ void sub_0803DF98(int a, struct Unk02028360Pos *out)
         break;
     }
 }
+asm(".global sub_0803DF98\n.thumb_set sub_0803DF98, GetInventionOriginOffset\n");

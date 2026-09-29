@@ -12,6 +12,6 @@ void PayForCoPower(int a1, int a2)
     IncrementCoPowerUseCount(a1);
     SpendCoPowerCharge(a1, a2);
     gPlayers[a1].unk24 = 0;
-    sub_08039634(a1, a2);
+    StartCoPowerSequence(a1, a2);
 }
 asm(".global sub_0804438C\n.thumb_set sub_0804438C, PayForCoPower\n");

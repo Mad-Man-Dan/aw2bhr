@@ -19,13 +19,13 @@
 
 
 /* The insert half of the gUnknown_03000000 callback list, where RemoveMapPreviewPaletteHook
- * above is a remove. sub_08049BAC is already promoted as void(void) in
+ * above is a remove. ShopScreen_ScrollBackgroundHook is already promoted as void(void) in
  * src/decomp/c_08049BAC.c.
  */
 
 void BattleMaps_08049B71(void)
 {
-    AddVBlankHook((void *)sub_08049BAC);
+    AddVBlankHook((void *)ShopScreen_ScrollBackgroundHook);
 }
 
 asm(".global sub_08049B70\n.thumb_set sub_08049B70, BattleMaps_08049B71\n");

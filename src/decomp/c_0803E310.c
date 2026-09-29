@@ -7,10 +7,11 @@
  * sub_0803E310 @ 0x0803E310
  */
 
-void sub_0803E310(int a1, int a2, int a3, int a4, int a5, int a6)
+void AddFactoryInventionRecord(int a1, int a2, int a3, int a4, int a5, int a6)
 {
     struct Unk02028360Pos pos;
 
-    sub_0803DF98(7, &pos);
-    sub_0803E088(a1 - pos.unk00, a2 - pos.unk02, 3, 4, 7, 0, a5, a6, 0, 0);
+    GetInventionOriginOffset(7, &pos);
+    AddInventionRecordExt(a1 - pos.unk00, a2 - pos.unk02, 3, 4, 7, 0, a5, a6, 0, 0);
 }
+asm(".global sub_0803E310\n.thumb_set sub_0803E310, AddFactoryInventionRecord\n");

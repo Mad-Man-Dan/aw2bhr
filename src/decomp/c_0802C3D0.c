@@ -10,7 +10,7 @@
 
 #include "hardware.h"
 
-void sub_0802C3D0(void)
+void MinimapScreen_Loop(void)
 {
     HandleMoveMapCursor();
     MoveMapCursorFromHeldKeys();
@@ -25,6 +25,7 @@ void sub_0802C3D0(void)
     if (!(gpKeySt->pressed & (A_BUTTON | B_BUTTON | START_BUTTON)))
         return;
 
-    sub_0803B4DC(0x66);
+    PlayMusicOrSfx2(0x66);
     ClearSlotScriptCallback(gUnknown_03001FBC);
 }
+asm(".global sub_0802C3D0\n.thumb_set sub_0802C3D0, MinimapScreen_Loop\n");

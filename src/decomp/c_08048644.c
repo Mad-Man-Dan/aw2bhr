@@ -7,7 +7,7 @@
  * sub_08048644 @ 0x08048644
  */
 
-void sub_08048644(u16 a1, u16 a2)
+void ShopScreen_DrawCursorSprites(u16 a1, u16 a2)
 {
     int i;
 
@@ -33,3 +33,4 @@ void sub_08048644(u16 a1, u16 a2)
         ApplyPaletteExt((u16 *)((u8 *)gUnknown_08239F84 + i), 0x298, 2);
     }
 }
+asm(".global sub_08048644\n.thumb_set sub_08048644, ShopScreen_DrawCursorSprites\n");

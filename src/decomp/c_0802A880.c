@@ -7,13 +7,14 @@
  * sub_0802A880 @ 0x0802A880, GetTerrainNamePalette @ 0x0802A8AC
  */
 
-const u8 * sub_0802A880(int a, int b)
+const u8 * GetTerrainPictureGraphic(int a, int b)
 {
     if (a == 8)
         return gUnknown_08104464[((b + 0x1e) * 8) & 0x3ff];
 
     return gUnknown_08104464[((a - 1) * 8) & 0x3ff];
 }
+asm(".global sub_0802A880\n.thumb_set sub_0802A880, GetTerrainPictureGraphic\n");
 
 /* The `b += 8` has to sit INSIDE the subscript. Written as
  * `gUnknown_08106864[b + 8]` the constant folds into the relocation

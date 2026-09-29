@@ -8,14 +8,14 @@
  * sub_0802A8DC @ 0x0802A8DC
  */
 
-void sub_0802A8DC(int a1, int a2, int a3, int a4, int a5)
+void DrawMapCursorInfoTerrain(int a1, int a2, int a3, int a4, int a5)
 {
     int t;
     int k;
     int m;
     int n;
 
-    t = sub_0803EED4(a1, a2);
+    t = GetTerrainTypeAt(a1, a2);
     k = t & 0x1f;
     m = GetCellOwnerTeamColor(t);
     n = GetCellCountry(t);
@@ -31,7 +31,7 @@ void sub_0802A8DC(int a1, int a2, int a3, int a4, int a5)
             gMap->rowOffset[a2] + a1] == 0 && k != 8)
         m = 0;
 
-    RegisterDataMove((void *)sub_0802A880(k, n), (void *)0x06013CC0, 0x100);
+    RegisterDataMove((void *)GetTerrainPictureGraphic(k, n), (void *)0x06013CC0, 0x100);
     ApplyPaletteExt((u16 *)GetTerrainNamePalette(k, m), 0x2c0, 0x20);
 
     PutOamHi((a3 + gUnknown_0849A2A6[a5 * 3] + gUnknown_0849A284[0x12]) & 0x1ff,
@@ -39,3 +39,4 @@ void sub_0802A8DC(int a1, int a2, int a3, int a4, int a5)
                  (void *)gUnknown_0849A1F0,
                  0x61e6);
 }
+asm(".global sub_0802A8DC\n.thumb_set sub_0802A8DC, DrawMapCursorInfoTerrain\n");

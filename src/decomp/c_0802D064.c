@@ -25,10 +25,10 @@ void UnitMenu_Capture(void)
 {
     LockUnitSelection();
     CloseTopMenu();
-    sub_0802C57C();
+    BackupUnitStartPosition();
     ApplyCaptureProgress();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
 
     if (gPlaySt.savingEnabled != 0)
         SendActionCommand(3, gUnknown_03003F38, 0, 0);

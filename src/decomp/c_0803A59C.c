@@ -12,8 +12,9 @@
  * src/decomp/c_08044924.c is the matched exemplar.
  * Same callee, two different blobs; both results discarded, so sub_0801537C's
  * `s8` return costs nothing here. */
-void sub_0803A59C(void)
+void EndUnitInfoPanelScripts(void)
 {
     sub_0801537C(gUnknown_0849E240);
     sub_0801537C(gUnknown_0849E280);
 }
+asm(".global sub_0803A59C\n.thumb_set sub_0803A59C, EndUnitInfoPanelScripts\n");

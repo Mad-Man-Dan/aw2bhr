@@ -49,11 +49,11 @@ void LoadBattleAnimScene(void)
     if (gUnknown_03004504.bit0)
     {
         if (gUnknown_03004504.bit1)
-            sub_08057AE8();
+            InitBattleHud();
     }
     else
     {
-        sub_08057AE8();
+        InitBattleHud();
     }
     LoadFigures();
     CpuFastSet(gUnknown_08551A04, (void *)0x06002800, 0x200);

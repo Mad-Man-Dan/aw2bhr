@@ -19,8 +19,8 @@
  * the ROM's operand order falls out. Declared plain `u8` the read reuses the
  * address register and costs exactly those 3 bytes.
  *
- * The five promoted STOREs (sub_08030584, sub_08031948, sub_08032048,
- * sub_08032698, sub_08033030) were all re-verified with the qualifier on and
+ * The five promoted STOREs (LinkStartKeySyncMode, LinkMapListExchange_Start, LinkDecodeSharedMapId,
+ * LinkStartMapTransfer, LinkMapPick_WaitForPress) were all re-verified with the qualifier on and
  * are unchanged -- `x = 0;` on a volatile u8 whose value is discarded is a
  * bare `strb` either way. That is why five waves of writers never decided it,
  * and the header comment beside gUnknown_030044C4 says as much. This
@@ -39,7 +39,7 @@
  *   "rodata": ["0x08090D0C"]
  * in this function's data/promoted.json entry. */
 
-int sub_080319AC(void)
+int LinkWaitMapListBlocks(void)
 {
     int r;
 
@@ -68,3 +68,4 @@ int sub_080319AC(void)
 
     return r;
 }
+asm(".global sub_080319AC\n.thumb_set sub_080319AC, LinkWaitMapListBlocks\n");

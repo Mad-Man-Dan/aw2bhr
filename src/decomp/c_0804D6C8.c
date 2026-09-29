@@ -28,7 +28,7 @@
  * before any use -- so it is present in the signature and unused. The
  * destination base is a bare VRAM literal, not a symbol.
  */
-void sub_0804D6C8(u16 a, int unused, u16 c)
+void CopyFigurePose400(u16 a, int unused, u16 c)
 {
     u16 src = c * 0x400;
     u16 dest = a * 0x2000;
@@ -36,3 +36,4 @@ void sub_0804D6C8(u16 a, int unused, u16 c)
     RegisterDataMove((u8 *)gUnknown_02029BA8[a].unk18[0] + src,
                  (void *)(0x06010000 + dest), 0x400);
 }
+asm(".global sub_0804D6C8\n.thumb_set sub_0804D6C8, CopyFigurePose400\n");

@@ -14,7 +14,7 @@ void OptionsMenu_ToggleMusic(void)
     switch (gPlaySt.bgmOn)
     {
     case 0:
-        sub_0803B5E8();
+        FadeOutMusicDefault();
         break;
 
     case 1:

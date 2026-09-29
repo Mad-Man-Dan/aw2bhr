@@ -9,10 +9,11 @@
 
 /* The `if`/`return` pair is load-bearing: `return gUnknown_0200C420.unk04 != 0;`
  * drops the `movs r0, #0` block entirely and comes out four bytes short. */
-int sub_0803BB90(void)
+int MainMenu_BattleMapsUsability(void)
 {
     if (gUnknown_0200C420.unk04 != 0)
         return 1;
 
     return 0;
 }
+asm(".global sub_0803BB90\n.thumb_set sub_0803BB90, MainMenu_BattleMapsUsability\n");

@@ -8,7 +8,7 @@
  * sub_0803EF70 @ 0x0803EF70
  */
 
-/* The same proc as the matched sub_0803EF44 (src/decomp/c_0803EF44.c) starts:
+/* The same proc as the matched StartLaserFire (src/decomp/c_0803EF44.c) starts:
  * unk2c/unk30 are the cell coordinates, scaled by 16 and shifted by the camera
  * pair at gUnknown_08499590 + 4 / + 6, then offset by four fixed sprite
  * positions and wrapped to the 0x1ff / 0xff OAM ranges. The 0x1000 in the second
@@ -20,12 +20,12 @@ struct Unk3EF70Proc
     /* 30 */ int unk30;
 };
 
-void sub_0803EF70(struct Unk3EF70Proc *proc)
+void LaserFire_StartEffects(struct Unk3EF70Proc *proc)
 {
     int x;
     int y;
 
-    sub_0803B4DC(0x1c9);
+    PlayMusicOrSfx2(0x1c9);
     Decompress(gUnknown_08113BE0, (void *)0x06013940);
     Decompress(gUnknown_081143D0, (void *)0x06014940);
     ApplyPaletteExt(gUnknown_08114E34, 0x260, 0x40);
@@ -40,3 +40,4 @@ void sub_0803EF70(struct Unk3EF70Proc *proc)
     APProc_Create(gUnknown_08114740, (x + gUnknown_0849F820[3]) & 0x1ff,
                  (y + gUnknown_0849F828[3]) & 0xff, 0x324a, 1, 0);
 }
+asm(".global sub_0803EF70\n.thumb_set sub_0803EF70, LaserFire_StartEffects\n");

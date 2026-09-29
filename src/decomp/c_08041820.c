@@ -21,7 +21,7 @@ struct Unk41820Proc
 void StartAttackOnInventionAt(int a1, int a2, int a3)
 {
     u8 c = a3;
-    struct Unk02028360 *ent = sub_0803DF54(a1, a2);
+    struct Unk02028360 *ent = FindLivingInventionTargetAt(a1, a2);
     struct Unk41820Proc *proc;
     u8 *st;
     u8 *lim;
@@ -46,7 +46,7 @@ void StartAttackOnInventionAt(int a1, int a2, int a3)
     else
         ent->unk04 = hp - lim[0x14];
 
-    sub_0802DCA4();
+    ResetDisplayEffects();
 
     proc = Proc_Start(gUnknown_0849FE78, PROC_TREE_3);
     proc->unk54 = gUnknown_030040D8;

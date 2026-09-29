@@ -12,10 +12,11 @@
  * statements, not a `?:` selecting the message id, which would have loaded
  * unk00 once. */
 
-void sub_080326FC(void)
+void LinkShowMapTransferMessage(void)
 {
     if (gUnknown_0849B060->unk09 == gUnknown_0849B018->unk06)
         gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 6, 2);
     else
         gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 7, 2);
 }
+asm(".global sub_080326FC\n.thumb_set sub_080326FC, LinkShowMapTransferMessage\n");

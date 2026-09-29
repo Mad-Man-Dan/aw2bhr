@@ -16,7 +16,7 @@ struct Unk3D6FC
     /* 0x4c4 */ u8 unk4c4[5];
 };
 
-void sub_0803D6B8(void)
+void ResetTeamColorSnapshot(void)
 {
     u8 *base;
     u8 *p;
@@ -33,19 +33,22 @@ void sub_0803D6B8(void)
         i--;
     } while (i >= 0);
 }
+asm(".global sub_0803D6B8\n.thumb_set sub_0803D6B8, ResetTeamColorSnapshot\n");
 
-void sub_0803D6D0(void)
+void SnapshotTeamColorsFromPlayers(void)
 {
     int i;
 
     for (i = 0; i < 5; i++)
         gUnknown_030040F8[i] = gPlayers[i].teamColor;
 }
+asm(".global sub_0803D6D0\n.thumb_set sub_0803D6D0, SnapshotTeamColorsFromPlayers\n");
 
-void sub_0803D6FC(struct Unk3D6FC *s)
+void SnapshotTeamColorsFromRecord(struct Unk3D6FC *s)
 {
     int i;
 
     for (i = 0; i < 5; i++)
         gUnknown_030040F8[i] = s->unk4c4[i];
 }
+asm(".global sub_0803D6FC\n.thumb_set sub_0803D6FC, SnapshotTeamColorsFromRecord\n");

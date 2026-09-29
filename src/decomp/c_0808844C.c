@@ -92,7 +92,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     proc->unk4e = -1;
                     LoadCoFace(FRAME(proc->unk52), (void *)0x06013D80, 0x15);
                     LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
                 }
                 else if (gpKeySt->repeated & DPAD_RIGHT)
                 {
@@ -107,7 +107,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     proc->unk4e = 1;
                     LoadCoFace(FRAME(proc->unk52 + 2), (void *)0x06013D80, 0x15);
                     LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
                 }
                 else if ((gpKeySt->repeated & DPAD_UP) && (int)gUnknown_03005944 > 1)
                 {
@@ -121,9 +121,9 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     for (i = 0; i < proc->unk58; i++)
                         proc->unk5c += gUnknown_03005948[i];
                     proc->unk60 = -1;
-                    sub_0802D5CC(gUnknown_03005958[proc->unk58], 8);
+                    ApplyWindowFramePalette(gUnknown_03005958[proc->unk58], 8);
                     LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
                 }
                 else if ((gpKeySt->repeated & DPAD_DOWN) && (int)gUnknown_03005944 > 1)
                 {
@@ -137,23 +137,23 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     for (i = 0; i < proc->unk58; i++)
                         proc->unk5c += gUnknown_03005948[i];
                     proc->unk60 = 1;
-                    sub_0802D5CC(gUnknown_03005958[proc->unk58], 8);
+                    ApplyWindowFramePalette(gUnknown_03005958[proc->unk58], 8);
                     LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
-                    sub_0803B4DC(0x67);
+                    PlayMusicOrSfx2(0x67);
                 }
                 else if (gpKeySt->pressed & 1)
                 {
                     gUnknown_03005908 = 3;
-                    sub_0802D5CC(gUnknown_03005958[proc->unk58], 1);
+                    ApplyWindowFramePalette(gUnknown_03005958[proc->unk58], 1);
                     proc->unk4c = 0;
                     gUnknown_03005964 = GetLoadedCoPalette(FRAME(proc->unk52));
-                    sub_0803B4DC(0x71);
+                    PlayMusicOrSfx2(0x71);
                 }
                 else if (gpKeySt->pressed & 2)
                 {
                     gUnknown_03005908 = -1;
                     ((struct Unk0808844CChild *)Proc_Start(gUnknown_08616E64, PROC_TREE_3))->unk64 = proc->unk64;
-                    sub_0803B4DC(0x66);
+                    PlayMusicOrSfx2(0x66);
                 }
             }
 
@@ -214,7 +214,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     gUnknown_03005964 = gUnknown_03005964 - 1;
 
                 LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
-                sub_0803B4DC(0x64);
+                PlayMusicOrSfx2(0x64);
             }
             else if (gpKeySt->repeated & DPAD_RIGHT)
             {
@@ -224,7 +224,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     gUnknown_03005964 = gUnknown_03005964 + 1;
 
                 LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
-                sub_0803B4DC(0x64);
+                PlayMusicOrSfx2(0x64);
             }
             else if (gpKeySt->pressed & DPAD_UP)
             {
@@ -232,7 +232,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                 {
                     gUnknown_03005964 = gUnknown_03005964 - 4;
                     LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
-                    sub_0803B4DC(0x64);
+                    PlayMusicOrSfx2(0x64);
                 }
             }
             else if (gpKeySt->pressed & DPAD_DOWN)
@@ -241,21 +241,21 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                 {
                     gUnknown_03005964 = gUnknown_03005964 + 4;
                     LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
-                    sub_0803B4DC(0x64);
+                    PlayMusicOrSfx2(0x64);
                 }
             }
             else if (gpKeySt->pressed & 1)
             {
                 gUnknown_03005908 = 5;
                 proc->unk4c = 0;
-                sub_0803B4DC(0x71);
+                PlayMusicOrSfx2(0x71);
             }
             else if (gpKeySt->pressed & 2)
             {
                 gUnknown_03005908 = 4;
                 LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, GetLoadedCoPalette(FRAME(proc->unk52)));
                 proc->unk4c = 0;
-                sub_0803B4DC(0x66);
+                PlayMusicOrSfx2(0x66);
             }
         }
         else if (gUnknown_03005908 == 2)
@@ -263,7 +263,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
             if (gpKeySt->pressed & 1)
             {
                 proc->unk64 = 1;
-                sub_0803B4DC(0x71);
+                PlayMusicOrSfx2(0x71);
                 SetLoadedCoPalette(FRAME(proc->unk52), gUnknown_03005964);
                 LoadCoFace(FRAME(proc->unk52), (void *)0x06013000, 0x12);
                 Proc_Start(gUnknown_08616EDC, proc);
@@ -272,7 +272,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
             {
                 gUnknown_03005908 = 6;
                 proc->unk4c = 0;
-                sub_0803B4DC(0x66);
+                PlayMusicOrSfx2(0x66);
             }
         }
     }

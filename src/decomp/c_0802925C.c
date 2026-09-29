@@ -66,7 +66,7 @@ void TargetPickList_Loop(struct Unk2925CProc *proc)
     }
 
     if (old != proc->unk64)
-        sub_0803B4DC(0x77);
+        PlayMusicOrSfx2(0x77);
 
     p = GetAttackTargetRecord(proc->unk64);
 
@@ -77,7 +77,7 @@ void TargetPickList_Loop(struct Unk2925CProc *proc)
 
     if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
     {
-        sub_0802DCA4();
+        ResetDisplayEffects();
         return;
     }
 

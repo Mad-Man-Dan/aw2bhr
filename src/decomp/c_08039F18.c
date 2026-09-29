@@ -12,7 +12,7 @@
  * on the base rather than a folded displacement is the `g[i].member` hoist for
  * a word access on an array global.
  *
- * The result is a NUL-terminated string: the only caller, sub_080396F4, hands
+ * The result is a NUL-terminated string: the only caller, CoPowerIntro_FadeInLoop, hands
  * it straight to StartCoPowerNameBanner, which copies bytes until the first zero. */
 u8 *GetArmyCoPowerName(int a)
 {

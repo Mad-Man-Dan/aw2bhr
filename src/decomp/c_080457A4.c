@@ -17,13 +17,14 @@ int sub_080457A4(void)
     return Proc_Find(gUnknown_084A0A3C) != 0;
 }
 
-int sub_080457BC(void)
+int IsTwoOptionChoiceFirst(void)
 {
     if (gUnknown_03002EE4 != 0)
         return 0;
 
     return 1;
 }
+asm(".global sub_080457BC\n.thumb_set sub_080457BC, IsTwoOptionChoiceFirst\n");
 
 int HasNoDeathRay(void)
 {

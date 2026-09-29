@@ -11,7 +11,7 @@
  * gUnknown_02025564.unk20[] and struct Unk020280C0 are the same layout -- same
  * 0x11-byte name string at +0x02, same 0xff "empty" flag at +0x13 -- and this
  * function copies twelve of them wholesale, so the original source plainly had
- * ONE type for both. The two tags are left exactly as they are (sub_0802F28C
+ * ONE type for both. The two tags are left exactly as they are (LinkClearMapListAndNames
  * reads unk00/unk01/unk14/unk19/unk1a, which only Unk02025584 declares), and
  * the cast lives here instead.
  *
@@ -22,7 +22,7 @@
  * constant, loaded in a single `ldr`. Left as a plain rvalue the source shares
  * loop 1's `gUnknown_02025564` word and adds 0x20 at run time
  * (`ldr r0,=g; adds r4,r0,#0; adds r4,#0x20`), which is what the ROM does and
- * the same shape sub_0802F28C's own +0x20 loop produces. Two instructions
+ * the same shape LinkClearMapListAndNames's own +0x20 loop produces. Two instructions
  * longer in .text, one word shorter in the pool -- IDENTICAL SIZE either way,
  * so only the byte diff shows it and a size check never would.
  *
@@ -30,7 +30,7 @@
  * struct: unk00/unk02/unk05 are volatile, so loops 1-3 keep the `base + i`
  * form, while the non-volatile unk20 lets loop 4 strength-reduce to a pair of
  * pointer cursors. */
-void sub_08031A9C(void)
+void LinkStoreMapList(void)
 {
     int i;
 
@@ -49,3 +49,4 @@ void sub_08031A9C(void)
             *(struct Unk02025584 *)&gUnknown_020280C0[i] = gUnknown_02025564.unk20[i];
     }
 }
+asm(".global sub_08031A9C\n.thumb_set sub_08031A9C, LinkStoreMapList\n");

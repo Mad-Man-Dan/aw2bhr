@@ -61,7 +61,7 @@ void IntroT0_IDLE_08067565(struct Unk67564Proc *proc)
     }
     else if (gpKeySt->pressed & 9)
     {
-        sub_0803B5E8();
+        FadeOutMusicDefault();
         proc->unk64 = 1;
         Proc_Break(proc);
     }

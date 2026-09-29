@@ -9,8 +9,9 @@
 
 #include "proc.h"
 
-void sub_08032090(ProcPtr proc)
+void LinkGotoIfStandardMap(ProcPtr proc)
 {
     if (gPlaySt.mapID < 0xb4)
         Proc_Goto(proc, 1);
 }
+asm(".global sub_08032090\n.thumb_set sub_08032090, LinkGotoIfStandardMap\n");

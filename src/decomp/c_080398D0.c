@@ -26,7 +26,7 @@ u8 ShowRandomCoPowerQuote(ProcPtr procPtr)
 {
     struct Unk398D0Proc *proc = procPtr;
 
-    sub_080397F4(gUnknown_085D3DD0[gPlayers[proc->unk54].co]
+    ShowCoQuote(gUnknown_085D3DD0[gPlayers[proc->unk54].co]
                      .copQuote[GetNextRandomNumber() % 6]);
 
     return 0;

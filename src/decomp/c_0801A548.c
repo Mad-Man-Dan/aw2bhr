@@ -18,9 +18,9 @@
 void ApplyArmyWindowFramePalette(u16 a1)
 {
     if (a1 == 0)
-        sub_0802D5CC(0, 8);
+        ApplyWindowFramePalette(0, 8);
     else
-        sub_0802D5CC(gPlayers[a1].teamColor - 1, 8);
+        ApplyWindowFramePalette(gPlayers[a1].teamColor - 1, 8);
 }
 asm(".global sub_0801A548\n.thumb_set sub_0801A548, ApplyArmyWindowFramePalette\n");
 
@@ -43,7 +43,7 @@ asm(".global sub_0801A57C\n.thumb_set sub_0801A57C, LoadArmyObjPalette\n");
  * destination at 0x06006C00 inside whichever block BG1 is using. */
 void LoadBg1WindowFrame(u16 a1)
 {
-    sub_0802D5B8((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00));
+    DecompressWindowFrameTiles((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00));
     ApplyArmyWindowFramePalette(a1);
 }
 asm(".global sub_0801A5B0\n.thumb_set sub_0801A5B0, LoadBg1WindowFrame\n");
@@ -52,6 +52,6 @@ asm(".global sub_0801A5B0\n.thumb_set sub_0801A5B0, LoadBg1WindowFrame\n");
  * variant instead. */
 void LoadBg1WindowFrameDefaultPalette(void)
 {
-    sub_0802D5A0((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00), 0, 8);
+    LoadWindowFrameGraphics((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00), 0, 8);
 }
 asm(".global sub_0801A5E0\n.thumb_set sub_0801A5E0, LoadBg1WindowFrameDefaultPalette\n");

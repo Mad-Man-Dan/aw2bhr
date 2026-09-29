@@ -29,7 +29,7 @@
  *     u8 + u8 * 8, so 0..2295, and gcc's nonzero_bits on the short proves it
  *     non-negative. The old draft reached the same instruction with
  *     `(u32)(a + gUnknown_084C211C[n * 2] * 8) / 8`; both are unsigned shifts
- *     with no round-toward-zero bias, unlike sub_080468D4's signed divide on
+ *     with no round-toward-zero bias, unlike ClearTerrainInfoMoveCosts's signed divide on
  *     the same table.
  *
  * The movement-cost row is the chain c_08038848.c and c_0801F888.c already

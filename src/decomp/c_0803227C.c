@@ -13,7 +13,7 @@
 /* Steps the army-slot cursor left/right over gUnknown_0300449C, skipping empty
  * slots, and bumps unk0a when the slot actually changed.
  *
- * `sub_0802F534` returns s8 (src/decomp/c_0802F504.c) yet the call site narrows
+ * `SioCountLinkedPlayers` returns s8 (src/decomp/c_0802F504.c) yet the call site narrows
  * `lsls #0x18; lsrs #0x18` -- that is PROMOTE_MODE holding the s8 pseudo
  * zero-extended, and every READ of it re-extends signed (`lsls #0x18; asrs`).
  * It is not a u8 return.
@@ -24,13 +24,13 @@
  * of that word for free. The `-0x10000` pool word and the LICM-hoisted
  * `((s8)n << 16) - 0x10000` preheader are the loop optimiser's, not source. */
 
-void sub_0803227C(void)
+void LinkPlayerCursor_HandleInput(void)
 {
     s16 i;
     s8 n;
 
     i = gUnknown_0849B060->unk04;
-    n = sub_0802F534();
+    n = SioCountLinkedPlayers();
 
     if (gpKeySt->pressed & DPAD_LEFT)
     {
@@ -58,8 +58,9 @@ void sub_0803227C(void)
     gUnknown_0849B060->unk04 = i;
 
     if (gUnknown_0849B060->unk06 != i)
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
 
     if (gUnknown_0849B060->unk04 != gUnknown_0849B060->unk06)
         gUnknown_0849B060->unk0a = (gUnknown_0849B060->unk0a + 1) & 1;
 }
+asm(".global sub_0803227C\n.thumb_set sub_0803227C, LinkPlayerCursor_HandleInput\n");

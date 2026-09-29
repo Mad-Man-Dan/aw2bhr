@@ -27,7 +27,7 @@ bool8 UnitMenu_JoinUsability(void)
 }
 asm(".global sub_0802C8F8\n.thumb_set sub_0802C8F8, UnitMenu_JoinUsability\n");
 
-bool8 sub_0802C958(void)
+bool8 UnitMenu_CaptureSharedUsability(void)
 {
     if (!UnitMenu_JoinUsability())
         return TRUE;
@@ -43,3 +43,4 @@ bool8 sub_0802C958(void)
 
     return TRUE;
 }
+asm(".global sub_0802C958\n.thumb_set sub_0802C958, UnitMenu_CaptureSharedUsability\n");

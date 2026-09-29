@@ -17,7 +17,7 @@
  * tree 3. The Proc_Start result is discarded (`pop {r0}; bx r0`). */
 void StartIntroSequence(void)
 {
-    sub_0803B588();
+    StopAllMusic();
     gUnknown_0202F204 = 0;
     Proc_Start(ProcScr_IntroT3, PROC_TREE_3);
 }

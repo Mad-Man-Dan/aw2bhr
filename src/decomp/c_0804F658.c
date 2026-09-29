@@ -54,7 +54,7 @@ void FlyerFigure_Init(void)
     prio = gUnknown_085523A4[gUnknown_0300453C ^ gUnknown_0300450C];
     oam.priority = prio;
     SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    pos = (struct UnkPosPair (*)[10])sub_08057D44(
+    pos = (struct UnkPosPair (*)[10])GetFigurePositionTable(
         gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]][0],
         gUnknown_03004580[gUnknown_0300453C][3]);
     v = gUnknown_085644E0[gUnknown_0300453C][gUnknown_0300450C];

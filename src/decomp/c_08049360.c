@@ -37,7 +37,7 @@ void ShopScreen_Loop(ProcPtr proc)
 
     if (gUnknown_084C30F8->unk83c != 0)
     {
-        if (sub_08048F10() != 0)
+        if (ShopScreen_StepOffsetToZero() != 0)
             return;
         ShopScreen_StartMessage(gUnknown_084C30E8[0]);
         gUnknown_084C30F8->unk834 = 0xb;
@@ -58,7 +58,7 @@ void ShopScreen_Loop(ProcPtr proc)
         else
         {
             if ((gpKeySt->unk0c & 2) != 0)
-                sub_080485F8();
+                ShopScreen_EndMessage();
             if (sub_08019260())
                 break;
             flag = 1;
@@ -77,7 +77,7 @@ void ShopScreen_Loop(ProcPtr proc)
         break;
 
     case 1:
-        if (sub_08048F10() != 0)
+        if (ShopScreen_StepOffsetToZero() != 0)
             break;
         ShopScreen_StartMessage(
             gUnknown_0849EDB0[gUnknown_02028E1C[gUnknown_084C30F8->unk01e]]
@@ -88,7 +88,7 @@ void ShopScreen_Loop(ProcPtr proc)
     case 2:
         if ((gpKeySt->unk0c & 2) != 0)
         {
-            sub_080485F8();
+            ShopScreen_EndMessage();
             gUnknown_084C30F8->unk834 = 8;
             break;
         }
@@ -132,7 +132,7 @@ void ShopScreen_Loop(ProcPtr proc)
         break;
 
     case 4:
-        sub_0803B4DC(0x6b);
+        PlayMusicOrSfx2(0x6b);
         gUnknown_084C30F8->unk834++;
         /* fallthrough */
     case 5:
@@ -151,7 +151,7 @@ void ShopScreen_Loop(ProcPtr proc)
                 gUnknown_0849EDB0[gUnknown_02028E1C[gUnknown_084C30F8->unk01e]]
                     .unk04);
             FillTilemapRect(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, 0);
-            sub_0803B4DC(0x6c);
+            PlayMusicOrSfx2(0x6c);
             gUnknown_084C30F8->unk834++;
         }
         gUnknown_084C30F8->unk835 = 1;
@@ -159,7 +159,7 @@ void ShopScreen_Loop(ProcPtr proc)
         break;
 
     case 6:
-        if (sub_08048EC4() != 0)
+        if (ShopScreen_StepOffsetToMinus38() != 0)
             break;
         if (gUnknown_084C30F8->unk83b != 0)
         {
@@ -186,7 +186,7 @@ void ShopScreen_Loop(ProcPtr proc)
                 if (gUnknown_084C30F8->unk01e >= gUnknown_084C30F8->unk836)
                     gUnknown_084C30F8->unk01e--;
                 gUnknown_084C30F8->unk030 = 1;
-                sub_080488E0();
+                ShopList_StepScroll();
                 gUnknown_084C30F8->unk834++;
                 break;
             }
@@ -197,21 +197,21 @@ void ShopScreen_Loop(ProcPtr proc)
 
     case 7:
         if ((gpKeySt->unk0c & 2) != 0)
-            sub_080485F8();
+            ShopScreen_EndMessage();
         if (sub_08019260())
             break;
         gUnknown_084C30F8->unk834 = 8;
         break;
 
     case 8:
-        if (sub_08048EC4() != 0)
+        if (ShopScreen_StepOffsetToMinus38() != 0)
             break;
         RedrawSelectedShopRow();
         gUnknown_084C30F8->unk834 = 0;
         break;
 
     case 9:
-        if (sub_08048F10() != 0)
+        if (ShopScreen_StepOffsetToZero() != 0)
             break;
         ShopScreen_StartMessage(gUnknown_084C3048);
         gUnknown_084C30F8->unk834 = 0;
@@ -220,7 +220,7 @@ void ShopScreen_Loop(ProcPtr proc)
     case 10:
         if (gUnknown_084C30F8->unk836 == gUnknown_084C30F8->unk837)
         {
-            if (sub_08048F10() != 0)
+            if (ShopScreen_StepOffsetToZero() != 0)
                 break;
             gUnknown_084C30F8->unk83a = gGameClock & 3;
             ShopScreen_StartMessage(gUnknown_084C30E8[gUnknown_084C30F8->unk83a]);
@@ -236,7 +236,7 @@ void ShopScreen_Loop(ProcPtr proc)
     }
 
     if (gUnknown_084C30F8->unk836 != 0)
-        sub_08048644(2,
+        ShopScreen_DrawCursorSprites(2,
                      (gUnknown_084C30F8->unk01e - gUnknown_084C30F8->unk020)
                              * 16
                          + 0x39);

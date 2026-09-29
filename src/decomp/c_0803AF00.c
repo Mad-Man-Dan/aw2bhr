@@ -32,7 +32,7 @@ void DebugEdit_Apply(struct Unk0803ACF0 *p)
         p->unk2a = p->unk28;
     gUnknown_0200C420.unk04 = p->unk2a;
     if (p->unk2c != 0)
-        sub_0803C890();
+        GrantAllShopItems();
     if (p->unk2e == 0)
     {
         gUnknown_0200C420.unk09 = 0;

@@ -26,10 +26,10 @@
  *     subs r5, r1, r0   ...   adds r2, r5, #0
  * The candidate computes them straight into r1 and r2, which is two
  * instructions shorter. Binding them to `int` locals -- the lever that fixed
- * exactly this shape in sub_0803F550 this wave -- does NOT reintroduce the
+ * exactly this shape in DeathRayFire_StartBeam this wave -- does NOT reintroduce the
  * copies here (measured, both spellings): with only one call in the function
  * there is no reason for agbcc to keep them anywhere but the argument
- * registers, whereas in sub_0803F550 the two calls ahead of the use forced it.
+ * registers, whereas in DeathRayFire_StartBeam the two calls ahead of the use forced it.
  *
  * So the ROM must be keeping both coordinates live across something this model
  * does not have. Most likely they are computed BEFORE the `oam2` if/else rather
@@ -56,7 +56,7 @@
  * The FIFTH parameter went the other way -- the header said `int`, the ROM's
  * own prologue does `ldr [sp,#0x18]; lsls #0x18; lsrs #0x18`, which is a
  * sub-word parameter's conversion and nothing else. Header corrected to u8. */
-void sub_0803F908(int x, int y, const u8 *obj, int a4, u8 a5)
+void PutMapObjectSprite(int x, int y, const u8 *obj, int a4, u8 a5)
 {
     int oam2;
 
@@ -79,3 +79,4 @@ void sub_0803F908(int x, int y, const u8 *obj, int a4, u8 a5)
 
     PutSprite(4, x, y, (u16 *)obj, oam2 + 0x48);
 }
+asm(".global sub_0803F908\n.thumb_set sub_0803F908, PutMapObjectSprite\n");

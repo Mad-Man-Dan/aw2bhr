@@ -11,7 +11,7 @@
  * only while FindInventionOfKind reports a live record. The `(a2 & 0x18) >> 3` index
  * is an ARITHMETIC shift, so the expression is `int` rather than unsigned; the
  * 10-bit masks and the `<< 5` are 32-byte tiles. */
-void sub_0803FE50(int a1, int a2)
+void AnimateVolcanoTiles(int a1, int a2)
 {
     int t;
 
@@ -28,3 +28,4 @@ void sub_0803FE50(int a1, int a2)
         }
     }
 }
+asm(".global sub_0803FE50\n.thumb_set sub_0803FE50, AnimateVolcanoTiles\n");

@@ -121,7 +121,7 @@ void TextBox_Loop(struct Unk08014074 *s)
                 sub_080143EC(s, sub_08013D4C(s));
 
             if (s->unk38 != 0)
-                sub_0803B4DC(0x70);
+                PlayMusicOrSfx2(0x70);
 
             s->unk20++;
             break;

@@ -7,9 +7,9 @@
  * sub_080328EC @ 0x080328EC
  */
 
-void sub_080328EC(void)
+void LinkMapPick_DrawPreview(void)
 {
-    if (sub_0803CD2C(0x200, gUnknown_0849B060->unk04) == 0)
+    if (DrawDesignRoomSlotPreviewBg1(0x200, gUnknown_0849B060->unk04) == 0)
     {
         FillTilemapRect(gBG1TilemapBuffer, 0, 0, 0x20, 0x14, 0);
 
@@ -19,3 +19,4 @@ void sub_080328EC(void)
         BG_EnableSyncBG1();
     }
 }
+asm(".global sub_080328EC\n.thumb_set sub_080328EC, LinkMapPick_DrawPreview\n");

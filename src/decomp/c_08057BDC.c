@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08057BDC -- per-frame update of the two-side display.
+ * StepBattleHud -- per-frame update of the two-side display.
  *
  * For the first eight frames (gUnknown_03004508 counts them) it slides a
  * widening slice of tiles from gUnknown_08551A04 into the two tilemap buffers
@@ -18,7 +18,7 @@
  * After that, each side whose shown value gUnknown_02029B78 has not reached
  * its target gUnknown_02029B7C has its fixed-point accumulator
  * gUnknown_030005D8 stepped by gUnknown_030005E0, the top 16 bits become the
- * new shown value, and the side is redrawn by sub_0805772C and sub_080577E4.
+ * new shown value, and the side is redrawn by DrawHpGaugeStrip and DrawHpNumber.
  *
  * The two row-table lookups use different spellings on purpose and both are
  * right: the first loop reads gUnknown_03004580[i][1] and the second reads
@@ -47,7 +47,7 @@ struct Unk085D6A48Row
     /* 0x04 */ u8 filler_04[0x14];
 };
 
-void sub_08057BDC(void)
+void StepBattleHud(void)
 {
     struct Unk085D6A48Row *rows;
     struct Unk085D6A48Row *rows2;
@@ -92,9 +92,10 @@ void sub_08057BDC(void)
             gUnknown_02029B78[i] = (u32)gUnknown_030005D8[i] >> 16;
             idx = rows2[sel[i][0]].unk02 * 2 + i;
             p = &gUnknown_08553A18[idx];
-            sub_0805772C(gUnknown_08551A04, idx, (struct Unk8057Pos *)p);
+            DrawHpGaugeStrip(gUnknown_08551A04, idx, (struct Unk8057Pos *)p);
             do { } while (0);
-            sub_080577E4(gUnknown_08551A04, idx, (struct Unk8057Pos *)p);
+            DrawHpNumber(gUnknown_08551A04, idx, (struct Unk8057Pos *)p);
         }
     }
 }
+asm(".global sub_08057BDC\n.thumb_set sub_08057BDC, StepBattleHud\n");

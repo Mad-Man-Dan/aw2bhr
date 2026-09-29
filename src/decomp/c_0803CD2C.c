@@ -20,11 +20,11 @@
  *     Its one caller (src/decomp/c_080328EC.c) passes the constant 0x200.
  *   - SetLoadedMapBlob takes `void *`. It was declared `void (void)` while its own
  *     promoted definition in src/decomp/c_08037B84.c has taken a pointer since
- *     it landed; this function and sub_0803CDBC / sub_0803CE28 all materialise
- *     the argument. Fixing it is what let sub_0803CDBC and sub_0803CE28 match.
+ *     it landed; this function and DrawDesignRoomSlotPreview / DrawDesignRoomMapPreview all materialise
+ *     the argument. Fixing it is what let DrawDesignRoomSlotPreview and DrawDesignRoomMapPreview match.
  *   - `p = gUnknown_02000000;` bound before the guard, not named at each call:
  *     the ROM loads that pool word ABOVE the `bne`, which no in-expression
- *     spelling reproduces. The same lever matched sub_0803CDBC and sub_0803CE28.
+ *     spelling reproduces. The same lever matched DrawDesignRoomSlotPreview and DrawDesignRoomMapPreview.
  *
  * THE WHOLE REMAINING DIFF IS THE SAVE/RESTORE PAIR AROUND DrawMapPreviewToBg, and it
  * is which of the two values gets the high register:
@@ -42,7 +42,7 @@
  *
  * RULED OUT with try_match and compile_probe:
  *   - declaring the locals in reverse order (u8 *p; u16 s2; u16 s1;). This is
- *     the lever that fixed sub_0803A5B8's register pair this wave, and it does
+ *     the lever that fixed UnitClassInfo_DrawSelectionBrackets's register pair this wave, and it does
  *     nothing here -- so it moves LOCALS, not compiler-created address pseudos.
  *   - u16 *g1 = &gUnknown_03001418; s1 = *g1; ... *g1 = s1;  is byte-identical
  *     to this draft, so the address pseudo already exists and the choice is
@@ -54,7 +54,7 @@
  * and check its other readers before believing a match that comes out of it,
  * since a wrong `volatile` is byte-neutral almost everywhere else.
  */
-u8 sub_0803CD2C(u16 a1, u8 a2)
+u8 DrawDesignRoomSlotPreviewBg1(u16 a1, u8 a2)
 {
     u16 s1;
     u16 s2;
@@ -65,7 +65,7 @@ u8 sub_0803CD2C(u16 a1, u8 a2)
         return 0;
     ReadSaveSlot(a2 + 5, p);
     SetLoadedMapBlob(p);
-    sub_0803D6FC((struct Unk3D6FC *)p);
+    SnapshotTeamColorsFromRecord((struct Unk3D6FC *)p);
     s1 = gUnknown_03001418;
     s2 = gUnknown_03001FF8;
     DrawMapPreviewToBg((void *)(0x06000000 + gUnknown_03001FE8.bits.chr_block * 0x4000),
@@ -74,3 +74,4 @@ u8 sub_0803CD2C(u16 a1, u8 a2)
     gUnknown_03001FF8 = s2;
     return 1;
 }
+asm(".global sub_0803CD2C\n.thumb_set sub_0803CD2C, DrawDesignRoomSlotPreviewBg1\n");

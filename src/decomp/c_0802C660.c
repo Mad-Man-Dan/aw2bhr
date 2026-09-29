@@ -7,10 +7,11 @@
  * sub_0802C660 @ 0x0802C660
  */
 
-bool8 sub_0802C660(void)
+bool8 IsMapCategoryZero(void)
 {
     if (gUnknown_085C77A0[gPlaySt.mapID].category == 0)
         return TRUE;
 
     return FALSE;
 }
+asm(".global sub_0802C660\n.thumb_set sub_0802C660, IsMapCategoryZero\n");

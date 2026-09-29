@@ -41,7 +41,7 @@
  * Everything else about this function is settled and correct: the command
  * record, the 0xA9 opcode, the tag 4, the volatile double read of unk06 (both
  * `ldrb [rN,#6]` reproduced exactly), and the pool order. */
-void sub_0802FA64(void)
+void SioSendPingPacket(void)
 {
   u8 *p;
   gUnknown_0202575C.unk00 = 0xA9;
@@ -50,3 +50,4 @@ void sub_0802FA64(void)
   gUnknown_0202575C.unk02 = p[0x3E];
   sub_0802F588(&gUnknown_0202575C, 4);
 }
+asm(".global sub_0802FA64\n.thumb_set sub_0802FA64, SioSendPingPacket\n");

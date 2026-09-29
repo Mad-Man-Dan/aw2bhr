@@ -12,8 +12,8 @@
  * (3..0, so the lowest-numbered live slot wins), then clears the proc's counter.
  *
  * `i` is a plain int: the s8 conversion `lsls #0x18; asrs #0x18` in front of
- * sub_0802F460 is that callee's declared s8 parameter, not a cast in the source
- * (same reading as sub_0802F504/sub_0802F534's own loops), and the
+ * SioIsPlayerLinked is that callee's declared s8 parameter, not a cast in the source
+ * (same reading as SioCountSendingPlayers/SioCountLinkedPlayers's own loops), and the
  * gUnknown_0300449C index needs no shift at all. */
 
 struct Unk080323D4Proc /* >= 0x5c */
@@ -22,7 +22,7 @@ struct Unk080323D4Proc /* >= 0x5c */
     /* 0x58 */ u32 unk58;
 };
 
-void sub_080323D4(struct Unk080323D4Proc *proc)
+void LinkPlayerCursor_Init(struct Unk080323D4Proc *proc)
 {
     int i;
 
@@ -30,7 +30,7 @@ void sub_080323D4(struct Unk080323D4Proc *proc)
 
     for (i = 3; i >= 0; i--)
     {
-        if (sub_0802F460(i) && gUnknown_0300449C[i] != 0)
+        if (SioIsPlayerLinked(i) && gUnknown_0300449C[i] != 0)
         {
             gUnknown_0849B060->unk06 = i;
             gUnknown_0849B060->unk04 = i;
@@ -39,3 +39,4 @@ void sub_080323D4(struct Unk080323D4Proc *proc)
 
     proc->unk58 = 0;
 }
+asm(".global sub_080323D4\n.thumb_set sub_080323D4, LinkPlayerCursor_Init\n");

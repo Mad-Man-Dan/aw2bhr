@@ -62,7 +62,7 @@ void LoadUnitIntoTransport(void)
     {
     case 1:
     case 2:
-        sub_0803B4DC(0x4f);
+        PlayMusicOrSfx2(0x4f);
         break;
     }
 }

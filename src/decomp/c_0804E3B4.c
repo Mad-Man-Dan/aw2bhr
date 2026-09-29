@@ -7,12 +7,12 @@
  * sub_0804E3B4 @ 0x0804E3B4
  */
 
-/* Twin of sub_0804D928 -- byte-identical apart from the tile base (0xc0 here,
+/* Twin of CruiserPart2_Init -- byte-identical apart from the tile base (0xc0 here,
  * 0x60 there) and the continuation symbol. See that function's comment and the
  * "Large functions" section of docs/agbcc-codegen.md.
  */
 
-void sub_0804E3B4(void)
+void BattleshipPart2_Init(void)
 {
     struct OamData oam;
     u16 pal;
@@ -32,3 +32,4 @@ void sub_0804E3B4(void)
     SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     SetSlotSpriteHook(gUnknown_03001FBC, (u32)BattleshipPart2_StreamHook);
 }
+asm(".global sub_0804E3B4\n.thumb_set sub_0804E3B4, BattleshipPart2_Init\n");

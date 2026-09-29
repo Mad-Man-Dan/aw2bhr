@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0803CEAC(void)
+void EndMapPreviewEffects(void)
 {
     HideMapPreview();
 }
+asm(".global sub_0803CEAC\n.thumb_set sub_0803CEAC, EndMapPreviewEffects\n");

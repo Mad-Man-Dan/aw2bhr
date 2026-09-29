@@ -99,22 +99,22 @@ void NameEntry_HandleInput(void)
     case 8:
         ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e = 0xe;
         gUnknown_030044E0->unk20 = 5;
-        sub_0804A6D8();
+        NameEntry_Confirm();
         return;
     case 1:
         switch (t)
         {
         case 0x23:
-            sub_0804A6D8();
+            NameEntry_Confirm();
             return;
         default:
             if (gUnknown_030044E0->unk65 + 1 + gUnknown_084C36E4[t] > gUnknown_030044E0->unk60
              || gUnknown_030044E0->unk5d > gUnknown_030044E0->unk5f - 1)
             {
-                sub_0803B4DC(0x68);
+                PlayMusicOrSfx2(0x68);
                 return;
             }
-            sub_0803B4DC(0x65);
+            PlayMusicOrSfx2(0x65);
             NameEntry_TypeChar();
             RedrawNameEntryText(0);
             gUnknown_030044E0->unk5d++;
@@ -128,7 +128,7 @@ void NameEntry_HandleInput(void)
             gUnknown_030044E0->unk67 = z;
             return;
         case 0x24:
-            sub_0803B4DC(0x65);
+            PlayMusicOrSfx2(0x65);
             gUnknown_030044E0->unk63 = 3;
             RedrawNameEntryText(0);
             StartEventScript(gUnknown_084C3A5C);
@@ -139,10 +139,10 @@ void NameEntry_HandleInput(void)
                 gUnknown_030044E0->unk5d--;
                 NameEntry_DeleteChar();
                 RedrawNameEntryText(0);
-                sub_0803B4DC(0x66);
+                PlayMusicOrSfx2(0x66);
                 return;
             }
-            sub_0803B4DC(0x68);
+            PlayMusicOrSfx2(0x68);
             return;
         }
     case 2:
@@ -151,7 +151,7 @@ void NameEntry_HandleInput(void)
             gUnknown_030044E0->unk5d--;
             NameEntry_DeleteChar();
             RedrawNameEntryText(0);
-            sub_0803B4DC(0x66);
+            PlayMusicOrSfx2(0x66);
         }
         return;
     }
@@ -254,7 +254,7 @@ after_key_loop:
         }
         gUnknown_030044E0->unk22 = 0x1e;
         gUnknown_030044E0->unk24 = 7;
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 }
 asm(".global sub_0804A760\n.thumb_set sub_0804A760, NameEntry_HandleInput\n");

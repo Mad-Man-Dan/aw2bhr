@@ -12,7 +12,7 @@
 /* sub_0806B9CC @ 0x0806B9CC, 160 bytes, THUMB. No prototype existed;
  * declared in include/unknown-functions.h. Sets the win1_* group on
  * gUnknown_030030A4 and the win0_* group on gUnknown_030030DC (same
- * shape as sub_08033930's shadow writes, mirrored bg0), stores the
+ * shape as LinkScreenSetupMessageWindow's shadow writes, mirrored bg0), stores the
  * four byte parameters, then sets win1_enable_blend on both shadows
  * and gDispIo.disp_ct.win1_enable.
  */

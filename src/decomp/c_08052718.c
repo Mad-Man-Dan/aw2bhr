@@ -29,7 +29,7 @@
  * +0x24 into a tail pool word). Everything else is as earlier waves recorded:
  * `a ^ 1`, `e` a local, 0x100 as movs/lsls, the control-flow merge being why
  * this twin has the .rodata word and DeathHandler_Bomb does not. */
-void sub_08052718(u16 a, u16 b)
+void DeathHandler_Explosion(u16 a, u16 b)
 {
     u16 e;
     int k;
@@ -47,9 +47,9 @@ void sub_08052718(u16 a, u16 b)
     SetSlotSpriteFlicker(gUnknown_02029808[a].unk24[b], 1);
 
     if (gUnknown_03004580[a ^ 1][1] == 0x14)
-        sub_080504A8(a, 0x23);
+        PlayFigureDestroySfx(a, 0x23);
     else
-        sub_080504A8(a, 0x10);
+        PlayFigureDestroySfx(a, 0x10);
 
     e = gUnknown_08553B14[a];
 
@@ -58,5 +58,6 @@ void sub_08052718(u16 a, u16 b)
     SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], e);
     SetSlotSpriteScaleY(gUnknown_02029808[a].unk24[b], 0x100);
 
-    sub_08052818(a, b);
+    DeathHandler_CommonTail(a, b);
 }
+asm(".global sub_08052718\n.thumb_set sub_08052718, DeathHandler_Explosion\n");

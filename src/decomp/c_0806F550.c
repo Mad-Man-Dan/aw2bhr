@@ -34,7 +34,7 @@ void sub_0806F550(struct Unk0806F550Proc *proc)
 
     if (gpKeySt->pressed & 2)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         gUnknown_0202F2D8 = proc->unk38;
         Proc_Break(proc);
     }

@@ -18,9 +18,9 @@
 void sub_0806E11C(void)
 {
     if (gUnknown_0202F2C8 != 0)
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
     else
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
 
     sub_0806D34C();
     sub_0806D620();

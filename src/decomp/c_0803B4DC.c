@@ -33,7 +33,8 @@
  * src/proc.c passes an `s16` dataImm, which rules out `u16`.
  */
 
-void sub_0803B4DC(int a)
+void PlayMusicOrSfx2(int a)
 {
     PlayMusicOrSfx(a);
 }
+asm(".global sub_0803B4DC\n.thumb_set sub_0803B4DC, PlayMusicOrSfx2\n");

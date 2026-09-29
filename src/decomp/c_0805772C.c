@@ -38,7 +38,7 @@ struct Unk8057Pos
     /* 0x02 */ u16 y;
 };
 
-void sub_0805772C(u16 *dst, int i, struct Unk8057Pos *pos)
+void DrawHpGaugeStrip(u16 *dst, int i, struct Unk8057Pos *pos)
 {
     u8 *src;
     int v;
@@ -68,3 +68,4 @@ void sub_0805772C(u16 *dst, int i, struct Unk8057Pos *pos)
             *(dst + off + k) = src[k] + gUnknown_08562124[par] * 0x1000;
     }
 }
+asm(".global sub_0805772C\n.thumb_set sub_0805772C, DrawHpGaugeStrip\n");

@@ -20,7 +20,8 @@
  * the branching four-block form from the Control-flow table in
  * docs/agbcc-codegen.md and is four bytes longer.
  */
-bool8 sub_0803ACD0(void)
+bool8 IsDebugFlagControlActive(void)
 {
     return FindSlotScript((s32)gUnknown_0849E600) != -1;
 }
+asm(".global sub_0803ACD0\n.thumb_set sub_0803ACD0, IsDebugFlagControlActive\n");

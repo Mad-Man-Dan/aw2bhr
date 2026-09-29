@@ -8,7 +8,7 @@
  */
 
 /* Four teardown calls and a counter reset. Same non-Proc object as
- * sub_0802C390 and sub_0802C450 -- +0x1e is inside PROC_HEADER's proc_next, so
+ * MinimapScreen_FadeIn and MinimapScreen_FadeOut -- +0x1e is inside PROC_HEADER's proc_next, so
  * the prefix is filler. The pointer survives four calls in r4, which is the
  * only reason this function saves a register at all.
  */
@@ -19,19 +19,19 @@ struct Unk2C430Proc
     /* 0x1e */ s16 unk1e;
 };
 #include "hardware.h"
-/* sub_0802C390's countdown twin on the same non-Proc object: publish
+/* MinimapScreen_FadeIn's countdown twin on the same non-Proc object: publish
  * proc->unk1e to the blend coefficient, and either finish or decrement.
  *
- * As in sub_0802C390 the member is read three times with no local binding it.
+ * As in MinimapScreen_FadeIn the member is read three times with no local binding it.
  * That is what puts the `ldr` of &gUnknown_03001FFC ahead of the `ldrh`, and
  * what makes the `- 1` come off the raw halfword in r1 rather than off a
  * sign-extended copy.
  *
  * `lsls #0x10; cmp #0` with no `asrs` between them is the s16 `== 0` test: only
  * the low 16 bits decide equality, so agbcc drops the sign extension it would
- * need for the ordered compare sub_0802C390 does. A u16 member is byte-
+ * need for the ordered compare MinimapScreen_FadeIn does. A u16 member is byte-
  * identical here and is NOT proved by this function -- the signedness comes
- * from sub_0802C390's arithmetic `asrs #0x11` on the same field.
+ * from MinimapScreen_FadeIn's arithmetic `asrs #0x11` on the same field.
  *
  * gUnknown_03001FFC is volatile, so the store is not forwarded into the
  * compare; see the note in include/hardware.h.
@@ -43,7 +43,7 @@ struct Unk2C450Proc
     /* 0x1e */ s16 unk1e;
 };
 
-void sub_0802C430(struct Unk2C430Proc *proc)
+void MinimapScreen_BeginFadeOut(struct Unk2C430Proc *proc)
 {
     RebuildMapUnitLayers2();
     ClearBg0Tilemap();
@@ -51,8 +51,9 @@ void sub_0802C430(struct Unk2C430Proc *proc)
     HideMapPreview();
     proc->unk1e = 6;
 }
+asm(".global sub_0802C430\n.thumb_set sub_0802C430, MinimapScreen_BeginFadeOut\n");
 
-void sub_0802C450(struct Unk2C450Proc *proc)
+void MinimapScreen_FadeOut(struct Unk2C450Proc *proc)
 {
     gUnknown_03001FFC = proc->unk1e;
 
@@ -66,3 +67,4 @@ void sub_0802C450(struct Unk2C450Proc *proc)
         proc->unk1e = proc->unk1e - 1;
     }
 }
+asm(".global sub_0802C450\n.thumb_set sub_0802C450, MinimapScreen_FadeOut\n");

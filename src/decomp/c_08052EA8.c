@@ -11,7 +11,7 @@
  * exit path, so the whole tail after sub_080152C0 is a `while (1)` body.
  * sub_080152C0's first parameter is declared s32, so the ProcCmd table needs
  * the usual cast at the call. */
-void sub_08052EA8(void)
+void BattleAnimFrameDriver(void)
 {
     sub_0808BBA4();
     ResetDisplayState();
@@ -30,3 +30,4 @@ void sub_08052EA8(void)
         TickSpriteScripts();
     }
 }
+asm(".global sub_08052EA8\n.thumb_set sub_08052EA8, BattleAnimFrameDriver\n");

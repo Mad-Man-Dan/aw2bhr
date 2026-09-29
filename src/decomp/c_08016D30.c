@@ -49,7 +49,7 @@ void LoadSuspendSave(u16 a)
         ReadSaveSlot(a, gUnknown_02000000);
         RestoreBattleSaveState();
         if ((u8)(gPlaySt.mapID + 0x4c) <= 0xb)
-            sub_0803CF04(3, (int)gMap->unk421a);
+            LoadSavedMapRecordIntoGMap(3, (int)gMap->unk421a);
         RebuildTerrainPlaneFromTiles();
     }
 }

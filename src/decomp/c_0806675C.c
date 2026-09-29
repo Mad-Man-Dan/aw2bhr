@@ -45,7 +45,7 @@ void sub_0806675C(struct Unk6675CProc *proc)
     {
         ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_08580934->unk2d--;
-        sub_08030178();
+        LinkRestartKeySync();
     }
 }
 
@@ -56,7 +56,7 @@ void sub_08066808(struct Unk66808Proc *proc)
 
     if (proc->unk26 == 3)
     {
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
         sub_080654E8();
         MatchSetupSpawnRuleOptions();
         gUnknown_08580934->unk30 = 0;
@@ -66,6 +66,6 @@ void sub_08066808(struct Unk66808Proc *proc)
     {
         ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_08580934->unk2d--;
-        sub_08030178();
+        LinkRestartKeySync();
     }
 }

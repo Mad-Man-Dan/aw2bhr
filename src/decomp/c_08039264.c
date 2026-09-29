@@ -15,7 +15,7 @@
  * The odd one out: the pool word is a FUNCTION address, not a global, and the
  * second callee is RunOrQueueDrawCallback -- so this is the wave-12 F002 body with a
  * leading `bl`. Third member of the RunOrQueueDrawCallback callback set after
- * sub_0802BCD8 and sub_0803A53C, and sub_08039188 is the same kind of body
+ * ShowDayAndFundsBar and sub_0803A53C, and sub_08039188 is the same kind of body
  * they register: void(void), ignoring whatever RunOrQueueDrawCallback hands it.
  * The `(void *)` cast is that family's house convention and is what makes the
  * pool word relocate against the symbol rather than become a plain constant.

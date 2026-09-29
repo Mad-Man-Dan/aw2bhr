@@ -28,7 +28,7 @@
  * their last use sits inside a nested `if`.
  *
  * `unk1c` is new, and it is typed by an independent pair rather than by this
- * read alone: sub_08052818 writes the same field `movs r0,#1; strh r0,[r4,#0x1c]`.
+ * read alone: DeathHandler_CommonTail writes the same field `movs r0,#1; strh r0,[r4,#0x1c]`.
  */
 void SplashEffect_Loop(void)
 {

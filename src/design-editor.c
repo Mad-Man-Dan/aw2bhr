@@ -11,7 +11,7 @@ void sub_08003640(void)
     sub_0808B6E8(v, gUnknown_0808D77C, 4);
     for (i = 0; i < 4; i++)
     {
-        RegisterDataMove((void *)(sub_0802A880(v[i], 0) + 0x40),
+        RegisterDataMove((void *)(GetTerrainPictureGraphic(v[i], 0) + 0x40),
                      (void *)(gUnknown_08485C9C[i + 1] * 32 + 0x06010000), 0xC0);
         RegisterDataMove(gUnknown_08485A2C,
                      (void *)(gUnknown_08485C9C[i + 1] * 32 + 0x060100C0), 0x40);
@@ -80,8 +80,8 @@ void DesignRoomDrawCoordBox(void)
     DrawOamObject(0x91, t, 0xE, 0, 0);
     DrawOamObject(0x90, t, 0x18, 0, 0);
     t = (x + 0x18) & 0x1FF;
-    sub_0802BD54(t, 0xE, gActiveMap->cursorX + 1);
-    sub_0802BD54(t, 0x18, gActiveMap->cursorY + 1);
+    DrawSpriteNumberFont2(t, 0xE, gActiveMap->cursorX + 1);
+    DrawSpriteNumberFont2(t, 0x18, gActiveMap->cursorY + 1);
 }
 asm(".global sub_08003814\n.thumb_set sub_08003814, DesignRoomDrawCoordBox\n");
 

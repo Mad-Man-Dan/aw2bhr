@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_080573F0(void)
+void EnableBattleAnimWindowLayers(void)
 {
     gUnknown_030030A4.bits.win0_enable_bg2 = 1;
     gUnknown_030030A4.bits.win0_enable_obj = 1;
@@ -18,8 +18,9 @@ void sub_080573F0(void)
     gUnknown_030030A4.bits.win1_enable_obj = 1;
     gUnknown_030030A4.bits.win1_enable_blend = 1;
 }
+asm(".global sub_080573F0\n.thumb_set sub_080573F0, EnableBattleAnimWindowLayers\n");
 
-void sub_0805741C(u16 a)
+void SetBg2Bg3ControlBySide(u16 a)
 {
     /* The BG3 shadow is written through a scalar cast, not through
      * gUnknown_030030B4.raw: an aggregate-member destination swaps the
@@ -31,3 +32,4 @@ void sub_0805741C(u16 a)
     *(u16 *)&gUnknown_030030B4 = gUnknown_085538AE[a ^ 1] | 0x608;
     *(u16 *)&gUnknown_0300251C = gUnknown_085538AE[a] | 0x70C;
 }
+asm(".global sub_0805741C\n.thumb_set sub_0805741C, SetBg2Bg3ControlBySide\n");

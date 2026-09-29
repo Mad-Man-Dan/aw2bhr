@@ -15,7 +15,8 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_08046D24(void)
+void TerrainInfoInput_Init(void)
 {
     StepMapCursorAndDraw(2);
 }
+asm(".global sub_08046D24\n.thumb_set sub_08046D24, TerrainInfoInput_Init\n");

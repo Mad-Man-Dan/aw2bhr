@@ -63,7 +63,7 @@ void DesignRoomHelp_Loop(void)
             FillTilemapRect(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
             BG_EnableSyncBG0();
             sub_08005F1C();
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
         break;
     case 0xA:
@@ -79,7 +79,7 @@ void DesignRoomHelp_Loop(void)
             FillTilemapRect(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
             BG_EnableSyncBG0();
             sub_08005F1C();
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
         DrawOamObject(0x35, 0x28, 0x421, 0, 0);
         DrawOamObject(0x36, 0x28, 0x431, 0, 0);

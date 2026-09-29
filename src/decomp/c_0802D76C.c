@@ -18,7 +18,7 @@
  *
  * The tilemap pointer is re-`ldr`ed inside the inner loop because the store
  * through it may alias the pointer variable; that is free, not a spelling. */
-void sub_0802D76C(void)
+void ClearDeploymentListArea(void)
 {
     s16 x;
     s16 y;
@@ -31,3 +31,4 @@ void sub_0802D76C(void)
 
     BG_EnableSyncBG0();
 }
+asm(".global sub_0802D76C\n.thumb_set sub_0802D76C, ClearDeploymentListArea\n");

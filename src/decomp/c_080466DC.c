@@ -19,7 +19,7 @@
  * walks -- unk50 sits in the same record as its unk58/unk59. */
 void IntelStatus_Loop(void)
 {
-    sub_080466A4();
+    IntelStatus_StepPhase();
 
     if (gUnknown_084C1430->unk50 != 0)
     {
@@ -31,7 +31,7 @@ void IntelStatus_Loop(void)
     else if (gpKeySt->pressed & 3)
     {
         sub_08014878();
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         ClearSlotScriptCallback(gUnknown_03001FBC);
 
         if (gpKeySt->pressed & 2)
@@ -41,6 +41,6 @@ void IntelStatus_Loop(void)
     }
 
     if (gUnknown_084C1430->unk50 == 0)
-        sub_08045FC8();
+        DrawIntelStatusArmyIcons();
 }
 asm(".global sub_080466DC\n.thumb_set sub_080466DC, IntelStatus_Loop\n");

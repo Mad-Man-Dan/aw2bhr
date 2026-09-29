@@ -9,7 +9,8 @@
 
 #include "hardware.h"
 
-void sub_08049EE4(void)
+void DefeatFlow_HideDisplay(void)
 {
     SetDispEnable(0, 0, 0, 0, 0);
 }
+asm(".global sub_08049EE4\n.thumb_set sub_08049EE4, DefeatFlow_HideDisplay\n");

@@ -88,7 +88,7 @@ void SubmarineFigure_Loop(void)
   {
     if (gUnknown_020296B0[side].unk0c[gUnknown_020296B0[side].unk18] != 0xff)
     {
-      sub_080505A4(side, gUnknown_020296B0[side].unk18);
+      SpawnThirdEffectAndProjectile(side, gUnknown_020296B0[side].unk18);
       gUnknown_02029A10[side].entries[slot].unk1e++;
       off = (((gUnknown_020296B0[side].unk1a & 1) * 2) + ((gUnknown_03004580[side][2] - 1) * 4)) + (gUnknown_03004580[side][1] * 24);
       sub_0803B48C(*((const s16 *) (((const u8 *) new_var) + off)));

@@ -41,7 +41,7 @@ struct Unk33678Proc
  * The record pointer is bound to a NAMED local. Left as `gUnknown_0849B018->`
  * at each use the body is identical, but the two pool words come out in the
  * other order and the gate store is emitted before the pointer load. */
-void sub_08033638(void)
+void SioBigReceive_Init(void)
 {
     struct Unk0849B018 *p = gUnknown_0849B018;
 
@@ -52,8 +52,9 @@ void sub_08033638(void)
 
     SioResetBuffers();
 }
+asm(".global sub_08033638\n.thumb_set sub_08033638, SioBigReceive_Init\n");
 
-void sub_08033678(struct Unk33678Proc *proc)
+void SioBigReceive_ReadHeader(struct Unk33678Proc *proc)
 {
     int v;
 
@@ -66,3 +67,4 @@ void sub_08033678(struct Unk33678Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08033678\n.thumb_set sub_08033678, SioBigReceive_ReadHeader\n");

@@ -43,12 +43,12 @@ void UnitList_Loop(struct Unk0804769C *p)
                 break;
         }
         p->unk28 = sel;
-        sub_0803B4DC(0x65);
+        PlayMusicOrSfx2(0x65);
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
     else if (gpKeySt->pressed & 2)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_03002F1C = 1;
     }

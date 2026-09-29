@@ -7,7 +7,7 @@
  * sub_08031018 @ 0x08031018
  */
 
-void sub_08031018(void)
+void LinkLobbyLoadGraphics(void)
 {
     CopyToPaletteBufferNoSync(gUnknown_081D3E48, 0x300, 0x20);
     CopyToPaletteBufferNoSync(gUnknown_081D3E48, 0x320, 0x20);
@@ -32,3 +32,4 @@ void sub_08031018(void)
     gUnknown_0849B018->unk1e = 0x10;
     gUnknown_0849B060->unk00 = 0x13;
 }
+asm(".global sub_08031018\n.thumb_set sub_08031018, LinkLobbyLoadGraphics\n");

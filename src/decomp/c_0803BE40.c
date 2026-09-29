@@ -12,7 +12,7 @@
 /* Three statements: CloseTopMenu (whose `int` result is discarded -- nothing
  * re-narrows it and `pop {r0}` makes this void), then start the
  * gUnknown_0849BC98 proc on tree 3 through sub_0803433C, then raise
- * gUnknown_03002F1C. That last flag is the same one sub_0803B0EC sets, so the
+ * gUnknown_03002F1C. That last flag is the same one DebugEntry_Init sets, so the
  * two are alternative entries into the same request.
  * `pop {r0}; bx r0` -> void. */
 

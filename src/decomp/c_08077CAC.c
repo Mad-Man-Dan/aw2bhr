@@ -111,7 +111,7 @@ void sub_08077CAC(struct Unk8077CAC *proc)
     if (proc->unk44 > 4)
     {
         proc->unk44 = zero_saved;
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         SetDefaultColorEffects();
         SetDifficultyStarsPalette(2);
         SetWorldMapScopePalette(2);

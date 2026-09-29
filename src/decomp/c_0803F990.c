@@ -9,7 +9,7 @@
 
 #include "map.h"
 static inline u8 flags(int f) { return f; }
-void sub_0803F990(void) {
+void DrawMapObjectSprites(void) {
   int k;
   int h;
   s16 cy;
@@ -39,60 +39,60 @@ void sub_0803F990(void) {
     k = MAP_OBJ_ARMY(gProperty[i].flags);
     switch (MAP_OBJ_TERRAIN(gProperty[i].flags)) {
     case TERRAIN_CITY:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F990, k, 1);
       break;
     case TERRAIN_BASE:
       if (gMap->unk234A[gMap->rowOffset[gProperty[i].y] +
                         gProperty[i].x] != 0)
-        sub_0803F908(gProperty[i].x, gProperty[i].y,
+        PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                      gUnknown_0849FAB0[k], k, 1);
       else
-        sub_0803F908(gProperty[i].x, gProperty[i].y,
+        PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                      gUnknown_0849FAB0[0], 0, 1);
       break;
     case TERRAIN_AIRPORT:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F998, k, 1);
       break;
     case TERRAIN_PORT:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9A0, k, 1);
       break;
     case TERRAIN_HQ:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849FAC4[k], k, 1);
       break;
     case TERRAIN_LAB:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9A8, k, 1);
       break;
     case TERRAIN_SILO:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9B0, k, 1);
       break;
     case TERRAIN_SILO_USED:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9B8, k, 1);
       break;
     case TERRAIN_MINICANNON_S:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9D0, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_MINICANNON_N:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9D8, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_MINICANNON_W:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9C0, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_MINICANNON_E:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9C8, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_LASER:
-      sub_0803F908(gProperty[i].x, gProperty[i].y,
+      PutMapObjectSprite(gProperty[i].x, gProperty[i].y,
                    gUnknown_0849F9E0, GetArmyByTeamColor(5), 0);
       break;
     case 0xFF:
@@ -100,3 +100,4 @@ void sub_0803F990(void) {
     }
   }
 }
+asm(".global sub_0803F990\n.thumb_set sub_0803F990, DrawMapObjectSprites\n");

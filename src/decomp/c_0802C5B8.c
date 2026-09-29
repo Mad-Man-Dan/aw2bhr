@@ -20,17 +20,18 @@
  * THE FIRST PARAMETER IS NOT PROVED. A dead leading parameter is invisible,
  * and `void *` is chosen only because these functions are callback slots
  * (+0x14 and +0x18) of the 0x20-byte records at gUnknown_0849AC60 /
- * gUnknown_0849ABC0. The sibling slots do not settle it either: sub_0802C604
- * (+0x04) and sub_0802C65C both ignore r0 as well.
+ * gUnknown_0849ABC0. The sibling slots do not settle it either: OptionsMenu_DeleteUsability
+ * (+0x04) and OptionsMenu_YieldUsability both ignore r0 as well.
  *
  * The two `bl`s are two statements: the second callee never reads r0 before
  * writing it, so a nest is not expressible in C. */
-void sub_0802C5B8(void *a, u8 b)
+void OptionsMenu_OnCancel(void *a, u8 b)
 {
     gUnknown_030044A0 = b;
     CloseTopMenu();
-    sub_0802D4A0();
+    ReopenParentMenuAndLock();
 }
+asm(".global sub_0802C5B8\n.thumb_set sub_0802C5B8, OptionsMenu_OnCancel\n");
 
 /* Family F045: `push {lr}; lsls r1,#0x18; lsrs r1,#0x18; ldr r0,=g;
  * str r1,[r0]; bl CloseTopMenu; bl <second>; pop {r0}; bx r0`.
@@ -45,14 +46,15 @@ void sub_0802C5B8(void *a, u8 b)
  * THE FIRST PARAMETER IS NOT PROVED. A dead leading parameter is invisible,
  * and `void *` is chosen only because these functions are callback slots
  * (+0x14 and +0x18) of the 0x20-byte records at gUnknown_0849AC60 /
- * gUnknown_0849ABC0. The sibling slots do not settle it either: sub_0802C604
- * (+0x04) and sub_0802C65C both ignore r0 as well.
+ * gUnknown_0849ABC0. The sibling slots do not settle it either: OptionsMenu_DeleteUsability
+ * (+0x04) and OptionsMenu_YieldUsability both ignore r0 as well.
  *
  * The two `bl`s are two statements: the second callee never reads r0 before
  * writing it, so a nest is not expressible in C. */
-void sub_0802C5D4(void *a, u8 b)
+void IntelMenu_OnCancel(void *a, u8 b)
 {
     gUnknown_030040F0 = b;
     CloseTopMenu();
-    sub_0802D4A0();
+    ReopenParentMenuAndLock();
 }
+asm(".global sub_0802C5D4\n.thumb_set sub_0802C5D4, IntelMenu_OnCancel\n");

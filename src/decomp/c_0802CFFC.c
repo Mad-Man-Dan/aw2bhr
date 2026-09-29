@@ -23,9 +23,9 @@ void UnitMenu_Wait(void)
 {
     LockUnitSelection();
     CloseTopMenu();
-    sub_0802C57C();
+    BackupUnitStartPosition();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
 
     if (gPlaySt.savingEnabled != 0)
     {

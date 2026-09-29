@@ -14,10 +14,11 @@
  * takes an `int` and the value has to be widened before the `bl`.
  *
  * Sequential `bl`s with nothing between them carry no nesting signal, and
- * sub_0802D76C reads no argument register, so these are two statements. */
+ * ClearDeploymentListArea reads no argument register, so these are two statements. */
 
-void sub_0802D99C(s16 a1)
+void RedrawDeploymentList(s16 a1)
 {
-    sub_0802D76C();
+    ClearDeploymentListArea();
     DrawDeploymentList(a1);
 }
+asm(".global sub_0802D99C\n.thumb_set sub_0802D99C, RedrawDeploymentList\n");

@@ -33,7 +33,7 @@ void CoSelect_IDLE_0807ED91(struct Unk807ED90 *proc)
         proc->unk2c = Interpolate(1, 0xf8, 0, proc->unk4c, 0x30);
 
         if (proc->unk4c == 0x30)
-            sub_0803B4DC(0x78);
+            PlayMusicOrSfx2(0x78);
     }
     else if (proc->unk4c <= 0x34)
         proc->unk2c = Interpolate(0, 0, 0x10, proc->unk4c - 0x30, 4);

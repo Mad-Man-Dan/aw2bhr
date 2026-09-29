@@ -7,7 +7,7 @@
  * sub_08031A24 @ 0x08031A24
  */
 
-int sub_08031A24(void)
+int LinkWaitMapListAcks(void)
 {
     int r;
 
@@ -36,3 +36,4 @@ int sub_08031A24(void)
 
     return r;
 }
+asm(".global sub_08031A24\n.thumb_set sub_08031A24, LinkWaitMapListAcks\n");

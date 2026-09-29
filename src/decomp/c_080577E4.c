@@ -13,7 +13,7 @@ struct Unk8057Pos
     /* 0x02 */ u16 y;
 };
 
-void sub_080577E4(u16 *dst, int i, struct Unk8057Pos *pos)
+void DrawHpNumber(u16 *dst, int i, struct Unk8057Pos *pos)
 {
     int j = i & 1;
     int k = (gUnknown_02029B78[j] + 9) / 10;
@@ -23,3 +23,4 @@ void sub_080577E4(u16 *dst, int i, struct Unk8057Pos *pos)
                  gUnknown_08553AD8[k],
                  (u16)(gUnknown_08562124[j] * 0x1000));
 }
+asm(".global sub_080577E4\n.thumb_set sub_080577E4, DrawHpNumber\n");

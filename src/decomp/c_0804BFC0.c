@@ -52,7 +52,7 @@ struct Unk85D6A48Row
     /* 0x14 */ u8 filler_14[4];
 };
 
-void sub_0804BFC0(u16 a, u16 b, s16 c)
+void SetFigureObjAttrs(u16 a, u16 b, s16 c)
 {
     struct OamData oam;
     struct Unk85D6A48Row *rows;
@@ -77,3 +77,4 @@ void sub_0804BFC0(u16 a, u16 b, s16 c)
 
     SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 }
+asm(".global sub_0804BFC0\n.thumb_set sub_0804BFC0, SetFigureObjAttrs\n");

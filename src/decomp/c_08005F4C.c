@@ -84,7 +84,7 @@ void DesignRoomMode_Ring(void)
         DesignRoomBuildRing(gActiveMap->editMode, -1);
         DesignRoomHideTilePanel();
         DesignRoomHideCoordBox();
-        sub_0803B4DC(0x65);
+        PlayMusicOrSfx2(0x65);
         DesignRoomSaveSelection();
         break;
 
@@ -192,7 +192,7 @@ void DesignRoomMode_Ring(void)
             gDesignRing[i].itemId = gUnknown_0200B224[slot].unk00;
             gDesignRing[i].spriteSlot = i;
             gDesignRing[i].flags |= 9;
-            sub_0803B4DC(100);
+            PlayMusicOrSfx2(100);
         }
         else if (gpKeySt->held & DPAD_LEFT)
         {
@@ -213,7 +213,7 @@ void DesignRoomMode_Ring(void)
             gDesignRing[i].itemId = gUnknown_0200B224[slot].unk00;
             gDesignRing[i].spriteSlot = i;
             gDesignRing[i].flags |= 9;
-            sub_0803B4DC(100);
+            PlayMusicOrSfx2(100);
         }
 
         if (gActiveMap->editMode == 0)
@@ -367,7 +367,7 @@ void DesignRoomMode_Ring(void)
         break;
 
     case 0x3C:
-        sub_0803B4DC((gActiveMap->flags & 0x20) ? 0x66 : 0x65);
+        PlayMusicOrSfx2((gActiveMap->flags & 0x20) ? 0x66 : 0x65);
         for (i = 0; i < count; i++)
             gDesignRing[i].flags &= ~1;
         gActiveMap->flags &= ~0x10;
@@ -525,7 +525,7 @@ void DesignRoomMode_Ring(void)
         break;
 
     case 0x66:
-        sub_0803B4DC(0x65);
+        PlayMusicOrSfx2(0x65);
         gActiveMap->state = 4;
         DesignRoomBuildItemList(gActiveMap->editMode,
                      gActiveMap->editMode == 0 ? gActiveMap->propertyArmy
@@ -566,14 +566,14 @@ void DesignRoomMode_Ring(void)
                 kind++;
                 if (kind > 4)
                     kind = 0;
-                sub_0803B4DC(100);
+                PlayMusicOrSfx2(100);
             }
             else if (gpKeySt->repeated & DPAD_DOWN)
             {
                 kind--;
                 if (kind < 0)
                     kind = 4;
-                sub_0803B4DC(100);
+                PlayMusicOrSfx2(100);
             }
             gActiveMap->selectionAnimKind = kind;
             for (i = 0; i < 10; i++)
@@ -599,14 +599,14 @@ void DesignRoomMode_Ring(void)
                 kind++;
                 if (kind > 4)
                     kind = 1;
-                sub_0803B4DC(100);
+                PlayMusicOrSfx2(100);
             }
             else if (gpKeySt->repeated & DPAD_DOWN)
             {
                 kind--;
                 if (kind < 1)
                     kind = 4;
-                sub_0803B4DC(100);
+                PlayMusicOrSfx2(100);
             }
             gActiveMap->selectionAnimKind = kind;
             for (i = 0; i < 10; i++)

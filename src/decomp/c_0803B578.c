@@ -51,7 +51,7 @@ struct UnkB578Proc
  * The `lsls #0x10; lsrs #0x10` further down IS PROMOTE_MODE, but at the CALL,
  * not at entry: m4aMPlayFadeOut's second parameter is `u16`, and the pair lands
  * after gUnknown_03005AE0 is already in r0, i.e. inside the argument setup --
- * the "conversion at a use" shape, same as sub_0803B4DC's.
+ * the "conversion at a use" shape, same as PlayMusicOrSfx2's.
  * `a = 2` is a plain default for a zero argument and reuses r4, so it is an
  * assignment to the parameter and not a second local.
  * `pop {r4}; pop {r0}; bx r0` -> void. */
@@ -76,11 +76,12 @@ asm(".global sub_0803B578\n.thumb_set sub_0803B578, PlayMusicAfterFade_PlayMusic
  * of. `ldr r2,=0xFFFF; adds r0,r2,#0` is the ordinary materialisation of a
  * literal too wide for `movs`. `pop {r0}; bx r0` -> void. */
 
-void sub_0803B588(void)
+void StopAllMusic(void)
 {
     gUnknown_030005CA = 0xFFFF;
     m4aMPlayAllStop();
 }
+asm(".global sub_0803B588\n.thumb_set sub_0803B588, StopAllMusic\n");
 
 void FadeOutMusic(int a)
 {

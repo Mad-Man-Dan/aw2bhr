@@ -26,7 +26,7 @@ void FigureTileHook_Ship(s16 a, u16 *p)
         && a == gUnknown_02029A10[side].entries[slot].unk18)
     {
         gUnknown_03001470[a].unk28 = d;
-        sub_0804E100(side, slot, e);
+        CopyFigurePose800(side, slot, e);
     }
 }
 asm(".global sub_0804E050\n.thumb_set sub_0804E050, FigureTileHook_Ship\n");

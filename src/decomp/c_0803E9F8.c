@@ -33,8 +33,8 @@ int MarkInventionFireArea(struct Unk0803E9F8 *p, u8 *a2, u8 a3, u8 a4)
         MapSetCross(p->unk00, p->unk01, a4);
         return 1;
     case 3:
-        sub_0801FAC4((u16)(p->unk00 + (int)sub_0803E7C0(p->unk02_6, p->unk02_e)),
-                     (u16)(p->unk01 + (int)sub_0803E7E4(p->unk02_6, p->unk02_e)),
+        sub_0801FAC4((u16)(p->unk00 + (int)GetCannonFireCellOffsetX(p->unk02_6, p->unk02_e)),
+                     (u16)(p->unk01 + (int)GetCannonFireCellOffsetY(p->unk02_6, p->unk02_e)),
                      p->unk02_e, 0xa, a4);
         return 1;
     case 4:

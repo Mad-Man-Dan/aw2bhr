@@ -19,6 +19,6 @@ void StartMapPreviewPalette(int a)
     gUnknown_0300057C = a;
     ApplyPaletteExt(gUnknown_081253F0, (u16)(a * 0x20), 0x20);
     AddVBlankHook((void *)AnimateMapPreviewPalette);
-    sub_0803D6B8();
+    ResetTeamColorSnapshot();
 }
 asm(".global sub_08037750\n.thumb_set sub_08037750, StartMapPreviewPalette\n");

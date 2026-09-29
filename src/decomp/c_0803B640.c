@@ -18,13 +18,14 @@
  * disappears, so the cast is in the original source.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B640(void)
+void ReplayPendingMusic(void)
 {
     if (gUnknown_030005C8 != 0xFFFF)
         PlayMusic((s16)gUnknown_030005C8);
 }
+asm(".global sub_0803B640\n.thumb_set sub_0803B640, ReplayPendingMusic\n");
 
-/* Byte-for-byte the same function as sub_0803B640 (src/decomp/c_0803B640.c)
+/* Byte-for-byte the same function as ReplayPendingMusic (src/decomp/c_0803B640.c)
  * with PlayMusicIfEnabled in place of PlayMusic -- the two are the "restart the
  * parked song" pair, one going through the suppression check and one straight
  * to the player. Everything in the c_0803B640 note applies verbatim: the
@@ -34,11 +35,12 @@ void sub_0803B640(void)
  * cast and agbcc re-uses the halfword already sitting in r1.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B660(void)
+void ReplayPendingMusicIfEnabled(void)
 {
     if (gUnknown_030005C8 != 0xFFFF)
         PlayMusicIfEnabled((s16)gUnknown_030005C8);
 }
+asm(".global sub_0803B660\n.thumb_set sub_0803B660, ReplayPendingMusicIfEnabled\n");
 
 /* A do-nothing stub: the whole body is `bx lr`, padded to 4 bytes by the
  * `.align 2, 0` behind it. Nothing about the signature is recoverable;
@@ -60,15 +62,16 @@ void sub_0803B684(void)
 }
 
 /* Two statements, both into the m4a forwarder run: select sound-mode preset 3
- * out of gUnknown_080910FC (sub_0803B3B0) and then re-apply the mixer channel
- * count (sub_0803B3C8, which is `SetSoundMixerChannelCount(8)`). The `movs r0, #3` is
+ * out of gUnknown_080910FC (SetSoundModeByIndex) and then re-apply the mixer channel
+ * count (SetSoundMixerChannelCount8, which is `SetSoundMixerChannelCount(8)`). The `movs r0, #3` is
  * consumed by the first call and the second takes no argument, so the two `bl`s
- * are sequential statements and not a nesting -- sub_0803B3C8 is declared
+ * are sequential statements and not a nesting -- SetSoundMixerChannelCount8 is declared
  * void(void) and writes r0 before reading it.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B688(void)
+void InitSoundMode(void)
 {
-    sub_0803B3B0(3);
-    sub_0803B3C8();
+    SetSoundModeByIndex(3);
+    SetSoundMixerChannelCount8();
 }
+asm(".global sub_0803B688\n.thumb_set sub_0803B688, InitSoundMode\n");

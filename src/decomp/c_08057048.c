@@ -7,7 +7,7 @@
  * sub_08057048 @ 0x08057048
  */
 
-/* sub_08057048 @ 0x08057048.
+/* DrawTileBlock4x4A @ 0x08057048.
  *
  * WAVE 37 (W37-J3): un-parked. The wave-33 note in docs/agbcc-codegen.md said
  * this needed gUnknown_085D6A48 retyped in the header; it does not. The
@@ -16,7 +16,7 @@
  * when bound in a statement of its own. Creating the pseudo INSIDE the
  * subscript with a comma operator gives the displacement AND the ROM's
  * outermost-first pool order (085538A2, 085D6A48, 03004580) at once. The same
- * lever closed sub_08056EEC, which reads the same column of the same table.
+ * lever closed DrawTileBlock5x5B, which reads the same column of the same table.
  */
 
 struct Unk8057048
@@ -35,7 +35,7 @@ struct Unk85D6A48Row /* 0x18 */
     /* 0x04 */ u8 filler_04[0x18 - 0x04];
 };
 
-void sub_08057048(u16 a1, u16 a2)
+void DrawTileBlock4x4A(u16 a1, u16 a2)
 {
     struct Unk85D6A48Row *tbl;
     struct Unk8057048 s;
@@ -48,6 +48,7 @@ void sub_08057048(u16 a1, u16 a2)
          tbl)[gUnknown_03004580[a2][1]].unk02 * 2 + a2];
     s.unk08 = 0;
     s.unk0a = 0;
-    sub_080570C4(&s);
+    DrawTileBlockA(&s);
     gUnknown_03004534 = 1;
 }
+asm(".global sub_08057048\n.thumb_set sub_08057048, DrawTileBlock4x4A\n");

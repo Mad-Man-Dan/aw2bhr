@@ -7,14 +7,16 @@
  * sub_0802C57C @ 0x0802C57C, sub_0802C594 @ 0x0802C594
  */
 
-void sub_0802C57C(void)
+void BackupUnitStartPosition(void)
 {
     gUnknown_030044A4.unk00 = gUnknown_03003F24.pos.unk00;
     gUnknown_030044A4.unk02 = gUnknown_03003F24.pos.unk02;
 }
+asm(".global sub_0802C57C\n.thumb_set sub_0802C57C, BackupUnitStartPosition\n");
 
-void sub_0802C594(void)
+void RestoreUnitStartPosition(void)
 {
     gUnknown_03003F24.pos.unk00 = gUnknown_030044A4.unk00;
     gUnknown_03003F24.pos.unk02 = gUnknown_030044A4.unk02;
 }
+asm(".global sub_0802C594\n.thumb_set sub_0802C594, RestoreUnitStartPosition\n");

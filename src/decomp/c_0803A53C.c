@@ -8,7 +8,7 @@
  */
 
 /* F002 shape, third callee: `RunOrQueueDrawCallback(fn, K)`. The pool word holds a
- * FUNCTION address, not a global -- sub_0803A07C is a void(void) body, and
+ * FUNCTION address, not a global -- UnitInfoPanel_DrawPictureAndFuel is a void(void) body, and
  * RunOrQueueDrawCallback either calls it straight away or queues it. The `(void *)` cast
  * is the QueueVBlankCallback / AddVBlankHook house convention for handing a function to
  * a `void *` parameter in C89, and it is what makes the pool word relocate
@@ -17,5 +17,5 @@
  * is itself void (`pop {r0}`). */
 void sub_0803A53C(void)
 {
-    RunOrQueueDrawCallback((void *)sub_0803A07C, 1);
+    RunOrQueueDrawCallback((void *)UnitInfoPanel_DrawPictureAndFuel, 1);
 }

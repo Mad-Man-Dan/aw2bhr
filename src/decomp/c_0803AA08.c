@@ -8,7 +8,7 @@
  */
 
 /* src/decomp/c_0803AA78.c's other twin, and the only structural difference is
- * what the two sub_0803A190 / sub_0803A2BC calls are handed: sub_0803AA78
+ * what the two UnitInfoPanel_LoadPictureDrawMoveAndVision / sub_0803A2BC calls are handed: RefreshDeploymentUnitInfo
  * passes &gUnknown_03004100 itself, this one passes the unk18 word of the
  * gUnknown_03001470 slot that FindSlotScript just found.
  *
@@ -27,7 +27,7 @@ void sub_0803AA08(u8 a)
 
     gUnknown_0849D89C->unk04 = &gUnknown_03004100;
 
-    sub_0803A190(gUnknown_0849D89C->unk00,
+    UnitInfoPanel_LoadPictureDrawMoveAndVision(gUnknown_0849D89C->unk00,
         (struct Unit *)gUnknown_03001470[slot].unk18);
     sub_0803A2BC(gUnknown_0849D89C->unk00,
         (struct Unit *)gUnknown_03001470[slot].unk18);

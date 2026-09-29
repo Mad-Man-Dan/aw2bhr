@@ -7,7 +7,7 @@
  * sub_08057270 @ 0x08057270
  */
 
-/* sub_08057270 @ 0x08057270 */
+/* SetUpBattleAnimDisplay @ 0x08057270 */
 
 #include "hardware.h"
 
@@ -28,12 +28,12 @@
  * tell. The two `orrs` per byte of gUnknown_030030A4 are separate 1-bit field
  * writes; a scalar `|= 3` would fold to one.
  */
-void sub_08057270(void)
+void SetUpBattleAnimDisplay(void)
 {
     *(u16 *)&gDispIo.disp_ct = 0x7F60;
     *(u16 *)&gUnknown_03002B6C = 0x400;
     *(u16 *)&gUnknown_03001FE8 = 0x505;
-    sub_0805741C(gUnknown_0300450C);
+    SetBg2Bg3ControlBySide(gUnknown_0300450C);
 
     if (!gUnknown_03004504.bit0)
     {
@@ -91,13 +91,14 @@ void sub_08057270(void)
         }
         else
         {
-            sub_080573F0();
+            EnableBattleAnimWindowLayers();
         }
     }
     else
     {
-        sub_080573F0();
+        EnableBattleAnimWindowLayers();
     }
 
     FlushLCDControl();
 }
+asm(".global sub_08057270\n.thumb_set sub_08057270, SetUpBattleAnimDisplay\n");

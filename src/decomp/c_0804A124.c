@@ -15,7 +15,7 @@
  * indirection is exactly the "you need one more `*` than the ROM" tell for a
  * force-addr word. The honest spelling emits the pool word by itself. That
  * declaration has been retired from include/unknown-globals.h. */
-void sub_0804A124(void)
+void StartIntroOrLanguageSelect(void)
 {
     gUnknown_02028E40 = gUnknown_0200C420.unk08 >> 6;
 
@@ -28,7 +28,8 @@ void sub_0804A124(void)
     {
         gUnknown_02028E41[0] = 0;
         gUnknown_02028E41[1] = 0;
-        sub_0803B588();
+        StopAllMusic();
         sub_080152EC(gUnknown_084C383C, 0);
     }
 }
+asm(".global sub_0804A124\n.thumb_set sub_0804A124, StartIntroOrLanguageSelect\n");

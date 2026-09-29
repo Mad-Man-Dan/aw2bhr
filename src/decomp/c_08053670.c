@@ -28,7 +28,7 @@
  *   - The parameter is u16 (PROMOTE_MODE `lsls #0x10; lsrs #0x10` at entry) and
  *     the record stride is 0x6c, so the subscript is gUnknown_02029808[a].
  *   - The +0 index is re-read at each of the three subscripts because the
- *     sub_08057BCC call kills it; the two fetches after the call share one
+ *     StartBattleHudHpCounter call kills it; the two fetches after the call share one
  *     reload. That is CSE being blocked, not three reads in the source.
  *   - The guard is `x + y <= 0xfe` on the SUM (`adds; cmp #0xfe; bgt`), not two
  *     separate bounds tests.
@@ -41,7 +41,7 @@ void StepDeathTimelineBody(u16 a)
     if (gUnknown_03004508
         == gUnknown_02029808[a].unk1a[gUnknown_02029808[a].unk00])
     {
-        sub_08057BCC(a);
+        StartBattleHudHpCounter(a);
 
         x = gUnknown_02029808[a].unk02[gUnknown_02029808[a].unk00];
         y = gUnknown_02029808[a].unk0e[gUnknown_02029808[a].unk00];

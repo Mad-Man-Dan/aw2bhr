@@ -23,7 +23,7 @@ struct Unk49B6B0Proc
     /* 58 */ int unk58;
 };
 
-void sub_08032E88(struct Unk32E88Proc *proc)
+void LinkConfirmDialog_Loop(struct Unk32E88Proc *proc)
 {
     int denom = 0x180 - (((proc->unk2c - 0x10) * (proc->unk2c - 0x10)) >> 1);
     int flag = proc->unk29 != 0;
@@ -66,3 +66,4 @@ void sub_08032E88(struct Unk32E88Proc *proc)
         proc->unk2c = (proc->unk2c + 1) & 0x1f;
     }
 }
+asm(".global sub_08032E88\n.thumb_set sub_08032E88, LinkConfirmDialog_Loop\n");

@@ -8,7 +8,7 @@
  */
 
 /* The same frame-entry shape as c_0802CFFC.c -- open with LockUnitSelection and
- * CloseTopMenu, close with the sub_0802C57C / CommitUnitMove / sub_0802C594
+ * CloseTopMenu, close with the BackupUnitStartPosition / CommitUnitMove / RestoreUnitStartPosition
  * bracket -- with a different middle and one extra call (sub_08042998) in the
  * tail.
  *
@@ -45,9 +45,9 @@ void UnitMenu_Join(void)
             SendActionCommand(0xa, gUnknown_03003F38, 0, 0);
     }
 
-    sub_0802C57C();
+    BackupUnitStartPosition();
     sub_08042998();
     CommitUnitMove();
-    sub_0802C594();
+    RestoreUnitStartPosition();
 }
 asm(".global sub_0802D0F4\n.thumb_set sub_0802D0F4, UnitMenu_Join\n");

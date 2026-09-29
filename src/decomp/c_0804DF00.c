@@ -32,7 +32,7 @@ void BattleshipFigure_Loop(void)
     {
         if (gUnknown_020296B0[side].unk0c[gUnknown_020296B0[side].unk18] != 0xff)
         {
-            sub_080505A4(side, gUnknown_02029A10[side].entries[slot].unk1e);
+            SpawnThirdEffectAndProjectile(side, gUnknown_02029A10[side].entries[slot].unk1e);
             gUnknown_02029A10[side].entries[slot].unk1e++;
             PlayMusicOrSfx(gUnknown_085D6C88[gUnknown_03004580[side][1]]
                              .unk0c[gUnknown_03004580[side][2] - 1]

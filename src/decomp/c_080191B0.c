@@ -37,7 +37,7 @@ void MainMenu_080191B1(void)
     for (i = 0; i < 8; i++)
         gUnknown_0200C508[i] = NULL;
 
-    sub_0803CB8C();
+    ClearCampaignFlagBank0();
     gUnknown_03002EF0 = 0;
     gUnknown_03001404 = 0;
     ResumeEventScripts();

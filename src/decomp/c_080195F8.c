@@ -15,7 +15,7 @@
  * between this and a candidate that is otherwise instruction-exact. Both arms
  * end in the same commit-and-return block, so agbcc reverses a condition
  * written the natural way round -- the same reordering that decided
- * sub_0802F408 and IsNeotanksUnlocked this wave. Spelling the test to match the
+ * SioIsConnectionAlive and IsNeotanksUnlocked this wave. Spelling the test to match the
  * ROM's `beq` puts the `== 1` arm inline where the ROM has it.
  *
  * `gUnknown_0808E5A8` is agbcc's -fforce-addr address constant for gpKeySt
@@ -43,7 +43,7 @@ void ChoiceBox_Loop(void *proc)
         {
             p->unk1e = 0;
             ChoiceBox_DrawCursor(p);
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
             return;
         }
     }
@@ -51,7 +51,7 @@ void ChoiceBox_Loop(void *proc)
     {
         p->unk1e = 1;
         ChoiceBox_DrawCursor(p);
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
         return;
     }
 
@@ -61,7 +61,7 @@ void ChoiceBox_Loop(void *proc)
         ClearTilemapRect23x4(p->unk28);
         p->unk2c();
         ClearSlotScriptCallback(gUnknown_03001FBC);
-        sub_0803B4DC(0x65);
+        PlayMusicOrSfx2(0x65);
     }
 }
 asm(".global sub_080195F8\n.thumb_set sub_080195F8, ChoiceBox_Loop\n");

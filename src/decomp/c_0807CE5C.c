@@ -48,7 +48,7 @@ struct Unk807CE5C
     /* 0x6a */ u16 unk6a;
 };
 /* Promoted but undeclared; signatures taken from src/decomp/, not derived. */
-void sub_0803BCDC(u8 *);
+void SetArmyCoIdsFromList(u8 *);
 int sub_0807F618(void);
 void sub_0807D860(struct Unk807CE5C *);
 void sub_0807D918(struct Unk807CE5C *);
@@ -83,7 +83,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
             LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
             LoadCoFace(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013D80, 0x15);
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
         else if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_RIGHT))
         {
@@ -102,7 +102,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
             LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
             LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013D80, 0x15);
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
         else if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_UP) && (int)gUnknown_03005944 > 1 && gUnknown_030059C0[p->unk64] != 0)
         {
@@ -132,8 +132,8 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
             p->unk60 = -1;
 
             LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
-            sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
-            sub_0803B4DC(0x67);
+            ApplyWindowFramePalette(gUnknown_03005958[p->unk58], 8);
+            PlayMusicOrSfx2(0x67);
         }
         else if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_DOWN) && (int)gUnknown_03005944 > 1 && gUnknown_030059C0[p->unk64] != 0)
         {
@@ -162,9 +162,9 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
             p->unk60 = 1;
 
-            sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
+            ApplyWindowFramePalette(gUnknown_03005958[p->unk58], 8);
             LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
-            sub_0803B4DC(0x67);
+            PlayMusicOrSfx2(0x67);
         }
         else if (gpKeySt->pressed & 1)
         {
@@ -172,12 +172,12 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
             {
                 p->unk4c = 0;
                 p->unk6a = 0;
-                sub_0803BCDC(gUnknown_030058D4);
+                SetArmyCoIdsFromList(gUnknown_030058D4);
                 LockMainMenu();
                 Proc_Start(gUnknown_08616690, p);
                 sub_080733A0(0x10);
                 Proc_Break(p);
-                sub_0803B4DC(0x71);
+                PlayMusicOrSfx2(0x71);
             }
 
             if ((u8)IsCoSelectionUnique((struct Unk807D800 *)p))
@@ -223,16 +223,16 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
                     p->unk60 = 1;
 
                     LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
-                    sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
+                    ApplyWindowFramePalette(gUnknown_03005958[p->unk58], 8);
                 }
 
-                sub_0803B4DC(0x71);
+                PlayMusicOrSfx2(0x71);
             }
         }
         else if (gpKeySt->pressed & 2)
         {
             if (Proc_Find(gUnknown_086166A8) == 0)
-                sub_0803B4DC(0x66);
+                PlayMusicOrSfx2(0x66);
 
             if (p->unk64 != 0)
             {
@@ -267,7 +267,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
                     p->unk60 = -1;
 
                     LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
-                    sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
+                    ApplyWindowFramePalette(gUnknown_03005958[p->unk58], 8);
                 }
             }
             else

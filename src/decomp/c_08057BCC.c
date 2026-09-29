@@ -7,7 +7,8 @@
  * sub_08057BCC @ 0x08057BCC
  */
 
-void sub_08057BCC(int i)
+void StartBattleHudHpCounter(int i)
 {
     gUnknown_030005E8[i] = 1;
 }
+asm(".global sub_08057BCC\n.thumb_set sub_08057BCC, StartBattleHudHpCounter\n");

@@ -13,10 +13,11 @@
  * `const u8 []` blob with no cast; a plain `void *` would discard the const and
  * -Werror turns that into an error. src/decomp/c_0802BF80.c is the matched
  * exemplar for this shape. */
-void sub_0803DDF4(void)
+void StartDebugArmyEditor(void)
 {
     sub_080152EC(gUnknown_0849F628, 0);
 }
+asm(".global sub_0803DDF4\n.thumb_set sub_0803DDF4, StartDebugArmyEditor\n");
 
 /* Family F001 forwarder, 12 bytes:
  *     push {lr}
@@ -32,5 +33,5 @@ void sub_0803DDF4(void)
  */
 void sub_0803DE08(void)
 {
-    sub_0803C890();
+    GrantAllShopItems();
 }

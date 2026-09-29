@@ -7,7 +7,7 @@
  * sub_08031B6C @ 0x08031B6C
  */
 
-void sub_08031B6C(u8 *dst, u8 *src)
+void CopyNameString16(u8 *dst, u8 *src)
 {
     int i;
 
@@ -16,3 +16,4 @@ void sub_08031B6C(u8 *dst, u8 *src)
 
     *dst = 0;
 }
+asm(".global sub_08031B6C\n.thumb_set sub_08031B6C, CopyNameString16\n");

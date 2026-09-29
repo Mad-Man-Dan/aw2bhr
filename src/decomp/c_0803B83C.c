@@ -25,7 +25,7 @@ void BattleMaps_0803B83D(void)
     Proc_Start(gUnknown_0849E7F8, PROC_TREE_3);
 }
 
-/* Three statements, all results discarded: sub_0803BCA0, then sub_08085AF4,
+/* Three statements, all results discarded: BackupCampaignFlags, then sub_08085AF4,
  * then start the ProcScr_Link proc on tree 3. The first two are both
  * declared void(void) already and neither reads r0, so the run of `bl`s is
  * three statements rather than any nesting.
@@ -33,7 +33,7 @@ void BattleMaps_0803B83D(void)
 
 void sub_0803B858(void)
 {
-    sub_0803BCA0();
+    BackupCampaignFlags();
     sub_08085AF4();
     Proc_Start(ProcScr_Link, PROC_TREE_3);
 }

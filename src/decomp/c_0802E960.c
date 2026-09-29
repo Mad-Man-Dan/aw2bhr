@@ -13,7 +13,7 @@
 void OnMain_SioError(void)
 {
     SetupBackgrounds(gUnknown_0849D16C);
-    sub_0803B37C();
+    InitSoundSystem();
     Proc_Init();
     InitSlotScripts();
 

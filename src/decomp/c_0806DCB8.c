@@ -61,7 +61,7 @@ void RulesScreenHandleMenuInput(void)
     if (i != gUnknown_08580934->unk33)
     {
         gUnknown_08580934->unk2a = 0;
-        sub_0803B4DC(0x64);
+        PlayMusicOrSfx2(0x64);
     }
 
     gUnknown_08580934->unk33 = i;
@@ -106,6 +106,6 @@ void RulesScreenRuleOption_ChangeValue(struct Unk0806DD34 *p)
     }
 
     if (p->unk49 != p->unk48)
-        sub_0803B4DC(0x64);
+        PlayMusicOrSfx2(0x64);
 }
 asm(".global sub_0806DD34\n.thumb_set sub_0806DD34, RulesScreenRuleOption_ChangeValue\n");

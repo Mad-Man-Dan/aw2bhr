@@ -46,10 +46,10 @@ void StartSubmarineDiveEffect(int a1)
         return;
 
     if (a1 == 0)
-        sub_0803B4DC(0x37);
+        PlayMusicOrSfx2(0x37);
 
     if (a1 == 1)
-        sub_0803B4DC(0x36);
+        PlayMusicOrSfx2(0x36);
 
     Decompress((u8 *)gUnknown_081248F8, (void *)0x06013940);
     ApplyPaletteExt((u16 *)gUnknown_08125190, 0x260, 0x20);

@@ -7,7 +7,7 @@
  * sub_080307E0 @ 0x080307E0
  */
 
-struct Unk08090CD8Entry *sub_080307E0(int *a1)
+struct Unk08090CD8Entry *SioPeekPendingSend(int *a1)
 {
     struct Unk0849B018 *ptr = gUnknown_0849B018;
     struct Unk08090CD8Entry *result;
@@ -23,3 +23,4 @@ struct Unk08090CD8Entry *sub_080307E0(int *a1)
     }
     return result;
 }
+asm(".global sub_080307E0\n.thumb_set sub_080307E0, SioPeekPendingSend\n");

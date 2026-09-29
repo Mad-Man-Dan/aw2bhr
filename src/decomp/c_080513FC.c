@@ -15,10 +15,11 @@
  * `lsls #0x10; lsrs #0x10` before the `cmp #1`, which is a `(u16)` cast at this
  * use and not evidence about its return type -- the note on that function in
  * include/unknown-functions.h already settles the type from its own body. */
-void sub_080513FC(u16 a, u16 b, s16 c)
+void RaiseHitDoneStageFlag(u16 a, u16 b, s16 c)
 {
     if ((u16)sub_080156C4(c) == 1
         && gUnknown_02029A10[a].entries[b].unk1a == 0
         && a == gUnknown_0300450C)
         gUnknown_02029664 |= 0x40;
 }
+asm(".global sub_080513FC\n.thumb_set sub_080513FC, RaiseHitDoneStageFlag\n");

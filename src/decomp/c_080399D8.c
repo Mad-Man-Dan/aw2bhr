@@ -14,8 +14,9 @@ struct UnkP399D8
     /* 0x30 */ u32 unk30;
 };
 
-void sub_080399D8(struct UnkP399D8 *a)
+void CoPowerPanel_ScrollLoop(struct UnkP399D8 *a)
 {
     gUnknown_03001FF8 += a->unk2c;
     gUnknown_03001418 += a->unk30;
 }
+asm(".global sub_080399D8\n.thumb_set sub_080399D8, CoPowerPanel_ScrollLoop\n");

@@ -79,7 +79,7 @@ void SuperCoPowerName_LettersFlyInLoop(struct Unk8080794 *proc)
         else if (proc->unk4c >= i * 8 + 0xc)
         {
             if (proc->unk4c == i * 8 + 0xc)
-                sub_0803B4DC(0x1dd);
+                PlayMusicOrSfx2(0x1dd);
 
             PutSprite(0, gUnknown_030058D0 + gUnknown_030059A0[i], 0x40, gUnknown_0848B6E6,
                       i * 8 + 0x30a);

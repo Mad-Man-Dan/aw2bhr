@@ -43,15 +43,15 @@ bool8 sub_080848D8(void)
 }
 
 /* The call variant of sub_080848B4's shape: every id 0..0x12 must pass
- * sub_0803CAD4's bitset test. The bare `lsls r0, r0, #0x18` truth test is
- * sub_0803CAD4's declared `u8` return, not a cast. */
+ * IsCoSelectable's bitset test. The bare `lsls r0, r0, #0x18` truth test is
+ * IsCoSelectable's declared `u8` return, not a cast. */
 
 bool8 sub_080848FC(void)
 {
     int i;
 
     for (i = 0; i <= 0x12; i++)
-        if (!sub_0803CAD4(i))
+        if (!IsCoSelectable(i))
             return FALSE;
     return TRUE;
 }

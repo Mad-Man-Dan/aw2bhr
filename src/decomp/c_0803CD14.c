@@ -7,7 +7,8 @@
  * sub_0803CD14 @ 0x0803CD14
  */
 
-int sub_0803CD14(u8 id)
+int GetDesignRoomSlotArmyCount(u8 id)
 {
     return gUnknown_020280C0[id].unk13;
 }
+asm(".global sub_0803CD14\n.thumb_set sub_0803CD14, GetDesignRoomSlotArmyCount\n");

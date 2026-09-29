@@ -13,7 +13,7 @@
  * rather than a reading.
  */
 
-void sub_0802CF48(int a1, int a2, u8 a3)
+void IntelMenu_Unit(int a1, int a2, u8 a3)
 {
     if (!(a3 & 2))
     {
@@ -23,6 +23,7 @@ void sub_0802CF48(int a1, int a2, u8 a3)
         StartUnitListScreen();
     }
 }
+asm(".global sub_0802CF48\n.thumb_set sub_0802CF48, IntelMenu_Unit\n");
 
 /* Two teardown calls, then a guarded hand-off of gPlaySt.unk2e.
  *
@@ -30,9 +31,9 @@ void sub_0802CF48(int a1, int a2, u8 a3)
  * rather than an `ldrb` displacement, because 0x2e and 0x32 are both past
  * `ldrb`'s 5-bit offset field. That is addressing, NOT the member-array tell --
  * the `adds` lands on a fresh copy of the base each time, not on the base
- * register itself. sub_0802C184 reads unk32 the same way.
+ * register itself. YieldCurrentArmy reads unk32 the same way.
  *
- * unk32 is the same guard sub_0802C184 and sub_08042998 test, so this is the
+ * unk32 is the same guard YieldCurrentArmy and sub_08042998 test, so this is the
  * third independent reader of it, and unk2e is the payload it gates.
  */
 
@@ -65,7 +66,7 @@ asm(".global sub_0802CF6C\n.thumb_set sub_0802CF6C, MapMenu_End\n");
  * merge is agbcc cross-jumping the two stores, not a conditional expression.
  */
 
-void sub_0802CF94(void)
+void CycleWeather(void)
 {
     if (gPlaySt.weather > 1)
         gPlaySt.weather = 0;
@@ -74,9 +75,10 @@ void sub_0802CF94(void)
 
     ApplyWeatherPalette(gPlaySt.weather);
 }
+asm(".global sub_0802CF94\n.thumb_set sub_0802CF94, CycleWeather\n");
 
 /* A three-argument callback that acts only when bit 1 of its third argument is
- * clear. sub_0802CF48, sub_0802CD28, sub_0802CD54 and sub_0802CD78 in this same
+ * clear. IntelMenu_Unit, MapMenu_Co, IntelMenu_Status and IntelMenu_Rules in this same
  * block share the shape.
  *
  * The third parameter is u8 and this is the clean case of the wave-21 rule:
@@ -100,7 +102,7 @@ void MapMenu_Save(int a1, int a2, u8 a3)
 }
 asm(".global sub_0802CFC0\n.thumb_set sub_0802CFC0, MapMenu_Save\n");
 
-/* sub_0802C1D0's twin, one block down: the same
+/* WriteSuspendSaveForCurrentMode's twin, one block down: the same
  * `GetSuspendIdForGameMode(gPlaySt.gameMode)` result handed to a u16-taking
  * sub_08016Dxx entry, with the fused `lsls #0x18; asrs #8; lsrs #0x10` s8-to-u16
  * conversion between the two `bl`s. LoadSuspendSave's own prologue
@@ -112,8 +114,9 @@ asm(".global sub_0802CFC0\n.thumb_set sub_0802CFC0, MapMenu_Save\n");
  * whose int result is discarded. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802CFDC(void)
+void LoadSuspendSaveForCurrentMode(void)
 {
     CloseTopMenu();
     LoadSuspendSave(GetSuspendIdForGameMode(gPlaySt.gameMode));
 }
+asm(".global sub_0802CFDC\n.thumb_set sub_0802CFDC, LoadSuspendSaveForCurrentMode\n");

@@ -26,6 +26,6 @@ void StartDefeatFlow(ProcPtr parent)
 {
     ResetWindowShadows();
     SetDefaultColorEffects();
-    sub_08049F08(1, parent);
+    StartDefeatFlowProc(1, parent);
 }
 asm(".global sub_08037FB4\n.thumb_set sub_08037FB4, StartDefeatFlow\n");

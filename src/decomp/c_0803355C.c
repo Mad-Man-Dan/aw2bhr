@@ -29,7 +29,7 @@ struct Unk335CCProc
     /* 0x2f */ u8 unk2f;
 };
 
-void sub_0803355C(struct Unk3355CProc *proc)
+void SioBigSend_Init(struct Unk3355CProc *proc)
 {
     struct Unk0849B018 *p = gUnknown_0849B018;
 
@@ -49,8 +49,9 @@ void sub_0803355C(struct Unk3355CProc *proc)
 
     gUnknown_030044D8 = 1;
 }
+asm(".global sub_0803355C\n.thumb_set sub_0803355C, SioBigSend_Init\n");
 
-void sub_080335CC(struct Unk335CCProc *proc)
+void SioBigSend_Loop(struct Unk335CCProc *proc)
 {
     u8 t;
 
@@ -75,3 +76,4 @@ void sub_080335CC(struct Unk335CCProc *proc)
             Proc_Break(proc);
     }
 }
+asm(".global sub_080335CC\n.thumb_set sub_080335CC, SioBigSend_Loop\n");

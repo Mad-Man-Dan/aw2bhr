@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-void sub_0802C4F0(ProcPtr proc)
+void AttackTargetSelect_Resolve(ProcPtr proc)
 {
     struct Unk03003338 *p;
 
@@ -34,3 +34,4 @@ void sub_0802C4F0(ProcPtr proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0802C4F0\n.thumb_set sub_0802C4F0, AttackTargetSelect_Resolve\n");

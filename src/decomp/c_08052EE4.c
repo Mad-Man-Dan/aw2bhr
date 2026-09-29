@@ -25,7 +25,7 @@
  * a set is byte-identical for a bitfield and a scalar OR alike, so this
  * function cannot discriminate either. */
 
-void sub_08052EE4(void)
+void BattleAnimEnableVBlank(void)
 {
     gUnknown_030020B4.bits.vblank_int_enable = 1;
 
@@ -34,3 +34,4 @@ void sub_08052EE4(void)
 
     FlushDisplayRegisters();
 }
+asm(".global sub_08052EE4\n.thumb_set sub_08052EE4, BattleAnimEnableVBlank\n");

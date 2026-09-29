@@ -47,32 +47,34 @@ asm(".global sub_080397CC\n.thumb_set sub_080397CC, CoPowerSequence_PlayMusic\n"
 /* Two statements, not a nest: r0 is overwritten by the pool `ldr` between the
  * calls, so nothing survives from LoadCursorSpriteGraphics. */
 
-void sub_080397DC(void)
+void CoPowerSequence_RestoreMapGraphics(void)
 {
     LoadCursorSpriteGraphics();
     LoadBg1WindowFrame(gUnknown_030033EC);
 }
+asm(".global sub_080397DC\n.thumb_set sub_080397DC, CoPowerSequence_RestoreMapGraphics\n");
 
 /* The record for the current army -- gUnknown_030033EC indexes
  * gPlayers[] at stride 0x3c -- supplies StartCoSpeechScript's terrain byte.
  * The entry `lsls #0x10; lsrs #0x10` is the u16 parameter's own declaration:
  * StartCoSpeechScript's first parameter is u16 too, so nothing narrows it again. */
 
-void sub_080397F4(u16 a)
+void ShowCoQuote(u16 a)
 {
     StartCoSpeechScript(a, gPlayers[gUnknown_030033EC].co, 0);
 }
+asm(".global sub_080397F4\n.thumb_set sub_080397F4, ShowCoQuote\n");
 
-/* In mode 1 the scripted line (sub_08039850) is tried first and the random
+/* In mode 1 the scripted line (TryShowScriptedCoPowerQuote) is tried first and the random
  * line (ShowRandomCoPowerQuote) is the fallback; in every other mode the random line is
- * all there is. `lsls r0, r0, #0x18` before the `cmp` is sub_08039850's u8
+ * all there is. `lsls r0, r0, #0x18` before the `cmp` is TryShowScriptedCoPowerQuote's u8
  * return being re-narrowed at the call site. */
 
-void sub_08039820(ProcPtr proc)
+void CoPowerSequence_ShowQuote(ProcPtr proc)
 {
     if (gPlaySt.gameMode == 1)
     {
-        if (sub_08039850(proc) == 0)
+        if (TryShowScriptedCoPowerQuote(proc) == 0)
             ShowRandomCoPowerQuote(proc);
     }
     else
@@ -80,3 +82,4 @@ void sub_08039820(ProcPtr proc)
         ShowRandomCoPowerQuote(proc);
     }
 }
+asm(".global sub_08039820\n.thumb_set sub_08039820, CoPowerSequence_ShowQuote\n");

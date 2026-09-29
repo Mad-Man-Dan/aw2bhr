@@ -7,7 +7,7 @@
  * sub_0803E7C0 @ 0x0803E7C0, sub_0803E7E4 @ 0x0803E7E4
  */
 
-void *sub_0803E7C0(int a1, int a2)
+void *GetCannonFireCellOffsetX(int a1, int a2)
 {
     const struct Unk0849F688 *p;
 
@@ -23,8 +23,9 @@ void *sub_0803E7C0(int a1, int a2)
     }
     return p[a2].unk00;
 }
+asm(".global sub_0803E7C0\n.thumb_set sub_0803E7C0, GetCannonFireCellOffsetX\n");
 
-void *sub_0803E7E4(int a1, int a2)
+void *GetCannonFireCellOffsetY(int a1, int a2)
 {
     const struct Unk0849F688 *p;
 
@@ -40,3 +41,4 @@ void *sub_0803E7E4(int a1, int a2)
     }
     return p[a2].unk04;
 }
+asm(".global sub_0803E7E4\n.thumb_set sub_0803E7E4, GetCannonFireCellOffsetY\n");

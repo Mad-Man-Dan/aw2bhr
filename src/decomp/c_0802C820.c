@@ -17,28 +17,30 @@
  *
  * The test reads FALSE-first: the branch jumps to `movs r0, #0` and that block
  * sits after the pool, so `return FALSE` is the THEN arm and `return TRUE` the
- * fallthrough. That is the sub_0802C5F0 / sub_0802C684 spelling, not the
+ * fallthrough. That is the IntelMenu_RulesUsability / OptionsMenu_ExitMapUsability spelling, not the
  * sub_0802C69C one.
  */
 
-bool8 sub_0802C820(void)
+bool8 MapMenu_PowerUsability(void)
 {
     if (gPlaySt.coPowersEnabled & IsCoPowerAvailable(gUnknown_030033EC))
         return FALSE;
 
     return TRUE;
 }
+asm(".global sub_0802C820\n.thumb_set sub_0802C820, MapMenu_PowerUsability\n");
 
-/* sub_0802C820's twin: byte-identical apart from the callee, IsSuperCoPowerReady
+/* MapMenu_PowerUsability's twin: byte-identical apart from the callee, IsSuperCoPowerReady
  * instead of IsCoPowerAvailable. Both callees open `adds r5, r0, #0` with no masking
  * (so `int` parameter) and both results feed the `ands` with no re-narrowing
- * (so `int` return). See sub_0802C820 for the branch-sense reading.
+ * (so `int` return). See MapMenu_PowerUsability for the branch-sense reading.
  */
 
-bool8 sub_0802C848(void)
+bool8 MapMenu_SuperPowerUsability(void)
 {
     if (gPlaySt.coPowersEnabled & IsSuperCoPowerReady(gUnknown_030033EC))
         return FALSE;
 
     return TRUE;
 }
+asm(".global sub_0802C848\n.thumb_set sub_0802C848, MapMenu_SuperPowerUsability\n");

@@ -7,7 +7,7 @@
  * sub_0804B8BC @ 0x0804B8BC
  */
 
-void sub_0804B8BC(u16 a, u16 b)
+void InitPanelScrollDrivers(u16 a, u16 b)
 {
     int c;
     u16 i;
@@ -65,3 +65,4 @@ void sub_0804B8BC(u16 a, u16 b)
     if (gUnknown_085D6A48[gUnknown_03004580[1][1]][0] == 0xe)
         gUnknown_02029690[1].unk04 = gUnknown_08555720;
 }
+asm(".global sub_0804B8BC\n.thumb_set sub_0804B8BC, InitPanelScrollDrivers\n");

@@ -7,24 +7,25 @@
  * sub_080535E0 @ 0x080535E0
  */
 
-/* sub_08057BDC is called from BOTH arms, and that is the source and not a
- * codegen artefact: the ROM contains two separate `bl sub_08057BDC`. Written as
+/* StepBattleHud is called from BOTH arms, and that is the source and not a
+ * codegen artefact: the ROM contains two separate `bl StepBattleHud`. Written as
  * one test (`if (!bit0 || bit1)`) there would be a single call site.
  *
  * The flag byte is loaded ONCE and both masks are applied to that register --
  * ordinary CSE, since nothing intervenes. */
-void sub_080535E0(void)
+void StepBattleHudAndPanelScroll(void)
 {
     if (gUnknown_03004504.bit0)
     {
         if (gUnknown_03004504.bit1)
-            sub_08057BDC();
+            StepBattleHud();
     }
     else
     {
-        sub_08057BDC();
+        StepBattleHud();
     }
 
-    sub_0804B330(0);
-    sub_0804B330(1);
+    StepPanelScrollDriver(0);
+    StepPanelScrollDriver(1);
 }
+asm(".global sub_080535E0\n.thumb_set sub_080535E0, StepBattleHudAndPanelScroll\n");

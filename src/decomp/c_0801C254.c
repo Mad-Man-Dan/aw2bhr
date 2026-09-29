@@ -13,7 +13,7 @@
  * `if`s would have put the early-out past the body.
  *
  * The declaration carries THREE parameters while this body touches only r0.
- * That is not a mistake to fix: it was derived in wave 29 from sub_0803F4C8,
+ * That is not a mistake to fix: it was derived in wave 29 from VolcanoRock_WaitImpact,
  * which materialises r1 and r2 before the `bl` and is already promoted. An
  * argument a body never reads costs no instruction, so the body is the weaker
  * evidence here; dropping the two would break the split build, which a

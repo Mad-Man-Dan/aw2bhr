@@ -73,9 +73,9 @@ void ShopList_HandleInput(void)
             }
         }
 
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
-    sub_080488E0();
+    ShopList_StepScroll();
 }
 asm(".global sub_08048F4C\n.thumb_set sub_08048F4C, ShopList_HandleInput\n");

@@ -85,15 +85,15 @@ void DebugArmyEditor_Loop(struct Unk3D9FC *proc)
     PutAsciiStringSprites(8, 0x38, "TURN");
     PutAsciiStringSprites(8, 0x40, "COLOR");
 
-    sub_0802BD54(0x50, 0x00, GetMapArmyCount(gPlaySt.mapID));
-    sub_0802BD54(0x40, 0x00, proc->unk1E);
+    DrawSpriteNumberFont2(0x50, 0x00, GetMapArmyCount(gPlaySt.mapID));
+    DrawSpriteNumberFont2(0x40, 0x00, proc->unk1E);
     PutAsciiStringSprites(0x40, 0x08, sCtrl[gPlayers[army].aiControlled]);
-    sub_0802BD54(0x68, 0x10, gPlayers[army].funds);
-    sub_0802BD54(0x68, 0x18, gPlayers[army].coCharge);
+    DrawSpriteNumberFont2(0x68, 0x10, gPlayers[army].funds);
+    DrawSpriteNumberFont2(0x68, 0x18, gPlayers[army].coCharge);
     PutAsciiStringSprites(0x40, 0x20, sCoNames[gPlayers[army].co]);
-    sub_0802BD54(0x68, 0x28, gPlayers[army].team);
+    DrawSpriteNumberFont2(0x68, 0x28, gPlayers[army].team);
     PutAsciiStringSprites(0x50, 0x30, sOnOff[gPlaySt.fog]);
-    sub_0802BD54(0x40, 0x38, gUnknown_03004080);
+    DrawSpriteNumberFont2(0x40, 0x38, gUnknown_03004080);
     PutAsciiStringSprites(0x40, 0x40, sColors[gPlayers[army].teamColor]);
     PutAsciiStringSprites(0, proc->unk20 * 8, "/");
 

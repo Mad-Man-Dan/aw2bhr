@@ -7,7 +7,7 @@
  * sub_0804C400 @ 0x0804C400
  */
 
-/* The position table sub_08057D44 hands back is addressed with EXPLICIT BYTE
+/* The position table GetFigurePositionTable hands back is addressed with EXPLICIT BYTE
  * arithmetic, and the exact parenthesisation is load-bearing -- three separate
  * spellings of the same address each moved one instruction:
  *
@@ -32,7 +32,7 @@ void SpawnWholeFigure(u16 a)
 
     StartWholeFigureSlot(a, gUnknown_08552148[a]);
 
-    p = sub_08057D44(gUnknown_085D6A48[gUnknown_03004580[a][1]][0],
+    p = GetFigurePositionTable(gUnknown_085D6A48[gUnknown_03004580[a][1]][0],
         gUnknown_03004580[a][3]);
 
     for (i = 0; i < 5; i++)

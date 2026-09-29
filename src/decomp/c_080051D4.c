@@ -17,7 +17,7 @@
 
 void sub_080051D4(void)
 {
-    sub_0803B4DC(0x85);
+    PlayMusicOrSfx2(0x85);
 }
 
 /* Family F003 (data/families.json): 34 twelve-byte forwarders shaped
@@ -30,5 +30,5 @@ void sub_080051D4(void)
 
 void sub_080051E0(void)
 {
-    sub_0803B4DC(0x86);
+    PlayMusicOrSfx2(0x86);
 }

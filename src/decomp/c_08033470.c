@@ -15,7 +15,7 @@ struct Unk33470Proc
     /* 0x64 */ s16 unk64;
 };
 
-void sub_08033470(struct Unk33470Proc *proc)
+void LinkMultiboot_SendImageThenBoot(struct Unk33470Proc *proc)
 {
     vu32 *dma;
     u32 fill;
@@ -59,3 +59,4 @@ void sub_08033470(struct Unk33470Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08033470\n.thumb_set sub_08033470, LinkMultiboot_SendImageThenBoot\n");

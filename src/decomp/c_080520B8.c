@@ -34,7 +34,7 @@ void SpawnDebrisEffect(u16 a, u16 b)
             gUnknown_02029808[a].unk44[gUnknown_02029808[a].unk2e],
             gUnknown_02029808[a].unk58[gUnknown_02029808[a].unk2e],
             f);
-        sub_080504A8(a, 0x10);
+        PlayFigureDestroySfx(a, 0x10);
     }
 }
 asm(".global sub_080520B8\n.thumb_set sub_080520B8, SpawnDebrisEffect\n");

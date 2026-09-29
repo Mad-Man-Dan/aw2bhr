@@ -36,7 +36,7 @@ asm(".global sub_080154C4\n.thumb_set sub_080154C4, SetSlotSpriteHidden\n");
 
 /* SetSlotSpriteHidden one bit along -- see the comment there. The bit is 13 of the
  * first attribute word, i.e. `struct OamData`'s `bpp`, NOT `vFlip`: vFlip is
- * bit 29 and lives in byte 3, where sub_0804D928/sub_0804E3B4 write it.
+ * bit 29 and lives in byte 3, where CruiserPart2_Init/BattleshipPart2_Init write it.
  */
 void SetSlotSpriteFlicker(s16 a, u8 b)
 {

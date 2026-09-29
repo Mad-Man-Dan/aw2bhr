@@ -58,7 +58,7 @@
  * `y * 32 + x`.
  */
 
-void sub_080488E0(void)
+void ShopList_StepScroll(void)
 {
     u16 n;
     u16 v;
@@ -85,7 +85,7 @@ void sub_080488E0(void)
         break;
     }
 
-    sub_08048850(n, v);
+    RenderShopListBuffer(n, v);
 
     for (y = 2; y <= 7; y += 2)
     {
@@ -100,3 +100,4 @@ void sub_080488E0(void)
 
     BG_EnableSyncBG0();
 }
+asm(".global sub_080488E0\n.thumb_set sub_080488E0, ShopList_StepScroll\n");

@@ -16,12 +16,13 @@
  */
 
 
-/* Like sub_08031CE4: gUnknown_0849B304 has no starter in the ROM, so its
+/* Like EndLinkTransferPercent: gUnknown_0849B304 has no starter in the ROM, so its
  * ProcCmd typing rests on Proc_EndEach's prototype and on the blob being a
  * whole number of 8-byte commands (0xC8 = 25).
  */
 
-void sub_080320F4(void)
+void EndLinkLeaveProc(void)
 {
     Proc_EndEach(gUnknown_0849B304);
 }
+asm(".global sub_080320F4\n.thumb_set sub_080320F4, EndLinkLeaveProc\n");

@@ -102,7 +102,7 @@ struct Unk3376CProc
     /* 0x2f */ u8 unk2f;
 };
 
-void sub_080336BC(struct Unk336BCProc *proc)
+void SioBigReceive_Loop(struct Unk336BCProc *proc)
 {
     int i;
 
@@ -133,6 +133,7 @@ void sub_080336BC(struct Unk336BCProc *proc)
     if (proc->unk2c >= proc->unk2a)
         Proc_Break(proc);
 }
+asm(".global sub_080336BC\n.thumb_set sub_080336BC, SioBigReceive_Loop\n");
 
 int StartSioBigSend(u32 a, u32 b, int c, u8 d, ProcPtr parent)
 {

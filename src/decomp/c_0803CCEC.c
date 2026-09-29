@@ -10,7 +10,7 @@
 /* A member of the 0x0803Cxxx family only by address -- it is not a bit
  * accessor. It hands out the name string of slot `a`, substituting the ROM
  * fallback gUnknown_0849F320 when the slot is empty (unk13 == 0xff), which is
- * the same emptiness test sub_0803CCB8 makes before copying the name out.
+ * the same emptiness test LoadDesignRoomName makes before copying the name out.
  *
  * The parameter is `u8`: the `lsl #24; lsr #24` at entry is parameter
  * narrowing at the point of use, and an `int` index emits nothing there.
@@ -18,10 +18,11 @@
  * into the pool word, which is what an aggregate member offset always does --
  * see the pool-fold table in docs/agbcc-codegen.md.
  */
-u8 *sub_0803CCEC(u8 a)
+u8 *GetDesignRoomSlotName(u8 a)
 {
     if (gUnknown_020280C0[a].unk13 == 0xff)
         return gUnknown_0849F320;
 
     return gUnknown_020280C0[a].unk02;
 }
+asm(".global sub_0803CCEC\n.thumb_set sub_0803CCEC, GetDesignRoomSlotName\n");

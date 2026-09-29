@@ -99,7 +99,7 @@ void BattleMaps_IDLE_08049179(struct Unk8049178 *proc)
     {
     case 0:
         gUnknown_084C30F8->unk838++;
-        sub_08048850(0, 0);
+        RenderShopListBuffer(0, 0);
         break;
 
     case 2:
@@ -127,7 +127,7 @@ void BattleMaps_IDLE_08049179(struct Unk8049178 *proc)
         Proc_Break(proc);
 }
 
-void sub_08049264(struct Unk8049264 *proc)
+void ShopList_CollapseStep(struct Unk8049264 *proc)
 {
     u8 row;
     u8 col;
@@ -150,5 +150,6 @@ void sub_08049264(struct Unk8049264 *proc)
 
     proc->unk1e++;
 }
+asm(".global sub_08049264\n.thumb_set sub_08049264, ShopList_CollapseStep\n");
 
 asm(".global sub_08049178\n.thumb_set sub_08049178, BattleMaps_IDLE_08049179\n");

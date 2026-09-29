@@ -34,7 +34,7 @@ void sub_0806D850(void)
     int n;
 
     gUnknown_08580934->unk2c = gUnknown_0202F2C8;
-    sub_0803BFBC(gUnknown_08580934);
+    FillMatchSettingsRecord(gUnknown_08580934);
     RulesScreenPackRuleIndices();
 
     n = gUnknown_08580934->unk08;

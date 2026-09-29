@@ -15,7 +15,7 @@ struct Unk080311D8
     /* 0x58 */ int unk58;
 };
 
-void sub_080311D8(struct Unk080311D8 *proc)
+void LinkStartPrompt_Grow(struct Unk080311D8 *proc)
 {
     s32 t;
 
@@ -34,3 +34,4 @@ void sub_080311D8(struct Unk080311D8 *proc)
     else
         proc->unk58++;
 }
+asm(".global sub_080311D8\n.thumb_set sub_080311D8, LinkStartPrompt_Grow\n");

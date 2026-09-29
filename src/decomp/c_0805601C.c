@@ -18,7 +18,7 @@
  * `*(gUnknown_085D6A48[X] + 3)` moves the +6 into the POOL WORD
  * (`.word gUnknown_085D6A48+0x6`) and frees a register, dropping r7 from the
  * push. Binding the base to the local is what gives the displacement AND keeps
- * the bare pool word loaded first. See the note in sub_08056EEC, where the same
+ * the bare pool word loaded first. See the note in DrawTileBlock5x5B, where the same
  * table needs the comma-operator form of the same anchor.
  */
 struct Unk85D6A48Row /* 0x18 */

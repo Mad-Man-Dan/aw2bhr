@@ -54,15 +54,15 @@ void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
 
     if (held & 8)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         proc->unk44->unk48 = 1;
-        sub_0803B5E8();
+        FadeOutMusicDefault();
         Proc_Goto(proc, 3);
         Proc_Break(proc);
     }
     else if (held & 4)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         gUnknown_0202F2CC = proc->unk2c;
         gUnknown_0202F2D0 = proc->unk30;
         gUnknown_0202F2D4 = proc->unk34;
@@ -71,7 +71,7 @@ void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
     }
     else if ((held & 1) && gUnknown_08582764[proc->unk30].unk02 != proc->unk2c)
     {
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
         proc->unk3c->unk48 = 1;
         sub_0806EB28(proc);
 
@@ -89,7 +89,7 @@ void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
     }
     else if ((held & 2) && proc->unk2c != 0)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         proc->unk40->unk48 = 1;
         p = Proc_StartBlocking(gUnknown_08582E54, proc);
         p->unk58 = -1;

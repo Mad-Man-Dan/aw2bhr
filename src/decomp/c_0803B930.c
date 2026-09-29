@@ -34,7 +34,7 @@
  * sit AFTER the loop-entry guard `cmp r2,r3; bhi`, not before it.
  */
 
-void sub_0803B930(u8 a)
+void StartNewVersus(u8 a)
 {
     u8 i;
 
@@ -54,3 +54,4 @@ void sub_0803B930(u8 a)
 
     sub_0803B8C4();
 }
+asm(".global sub_0803B930\n.thumb_set sub_0803B930, StartNewVersus\n");

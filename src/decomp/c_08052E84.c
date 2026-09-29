@@ -21,7 +21,7 @@
  * The two register writes share one pool word and an `adds r0, #4`: agbcc CSEs
  * the second absolute address against the first.
  */
-void sub_08052E84(void)
+void BattleAnimHBlank_ScrollByScanline(void)
 {
     u16 vcount = REG_VCOUNT & 0xff;
 
@@ -31,3 +31,4 @@ void sub_08052E84(void)
         REG_BG1HOFS = vcount >> 1;
     }
 }
+asm(".global sub_08052E84\n.thumb_set sub_08052E84, BattleAnimHBlank_ScrollByScanline\n");

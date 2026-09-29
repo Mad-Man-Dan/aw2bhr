@@ -99,7 +99,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
 
     StartHeaderBanner(gUnknown_085802CC, gUnknown_0200FC50, 0, 0, 1, 1, (int)proc);
 
-    sub_0802D5A0((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 0);
+    LoadWindowFrameGraphics((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 0);
 
     if (gPlaySt.gameMode == 2)
     {
@@ -118,10 +118,10 @@ void sub_08085B30(struct Unk8085B30 *proc)
 
     ApplyPaletteExt(gUnknown_084892EC, 0x220, 0x20);
 
-    sub_0803F6BC(6, 0, (void *)0x06010A00, 1);
-    sub_0803F6BC(0xe, 0, (void *)0x06010B00, 1);
-    sub_0803F6BC(0xa, 0, (void *)0x06010C00, 1);
-    sub_0803F6BC(0xb, 0, (void *)0x06010D00, 1);
+    LoadTerrainObjTiles(6, 0, (void *)0x06010A00, 1);
+    LoadTerrainObjTiles(0xe, 0, (void *)0x06010B00, 1);
+    LoadTerrainObjTiles(0xa, 0, (void *)0x06010C00, 1);
+    LoadTerrainObjTiles(0xb, 0, (void *)0x06010D00, 1);
 
     ApplyPaletteExt((u16 *)sub_0802A8AC(6, 0), 0x240, 0x20);
 

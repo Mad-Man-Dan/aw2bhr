@@ -25,7 +25,7 @@
  * pool words, in first-reference order (payload first), where one base plus
  * a displacement would have emitted a single word. */
 
-void sub_08030D84(void)
+void LinkSendHelloPacket(void)
 {
     int i;
 
@@ -45,6 +45,7 @@ void sub_08030D84(void)
         gUnknown_0849B018->unk1e = 0;
     }
 }
+asm(".global sub_08030D84\n.thumb_set sub_08030D84, LinkSendHelloPacket\n");
 
 /* MATCHED (wave 42, W42-K), byte-for-byte with `relocs: match` -- no pool
  * word to place. gUnknown_0849B018 is referenced ONCE here and a single
@@ -65,7 +66,7 @@ void sub_08030D84(void)
  * real code the original wrote -- it just is not what this one wrote.
  *
  * `int i`, not s8: the `lsl #0x18; asr #0x18` in front of the `bl` is
- * sub_0802F460's own s8 parameter, not a cast in the source, and the loop
+ * SioIsPlayerLinked's own s8 parameter, not a cast in the source, and the loop
  * increment carries no narrowing at all.
  *
  * The tail is unk38[unk06 + 1] -- a variable index on a 0x38 base, biased by
@@ -77,7 +78,7 @@ void LinkAssignArmyControllers(void)
 
     for (i = 0; i <= 3; i++)
     {
-        if (sub_0802F460(i) == 1)
+        if (SioIsPlayerLinked(i) == 1)
             gUnknown_03003FF8[i + 1] = i + 3;
         else
             gUnknown_03003FF8[i + 1] = 0;
@@ -103,7 +104,7 @@ asm(".global sub_08030DEC\n.thumb_set sub_08030DEC, LinkAssignArmyControllers\n"
  * That is the volatile on unk1ab0/unk1ab2/unk1ab3/unk1ab4 doing its work and
  * none of it is authored; do not try to spell those loads. */
 
-void sub_08030E40(void)
+void LinkRecordSessionInfo(void)
 {
     int i;
     bool8 r;
@@ -114,7 +115,7 @@ void sub_08030E40(void)
 
     for (i = 0; i <= 3; i++)
     {
-        r = sub_0802F460(i);
+        r = SioIsPlayerLinked(i);
 
         if (r == 1)
         {
@@ -125,3 +126,4 @@ void sub_08030E40(void)
 
     gUnknown_0849B018->unk1ab0 = gGameClock;
 }
+asm(".global sub_08030E40\n.thumb_set sub_08030E40, LinkRecordSessionInfo\n");

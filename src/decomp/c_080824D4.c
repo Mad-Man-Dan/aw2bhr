@@ -295,7 +295,7 @@ void MainMenuCarouselWheel_DrawRotation(struct Unk8082660 *p)
             if (p->unk4c == 0xE)
             {
                 p->unk5c = 0;
-                sub_0803B4DC(0x67);
+                PlayMusicOrSfx2(0x67);
                 gUnknown_03005920 = 0;
             }
 

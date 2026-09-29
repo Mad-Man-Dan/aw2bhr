@@ -10,7 +10,7 @@
 /* Draws the army list: for each army 1..GetLoadedMapArmyCount() that is not defeated,
  * its team-colour sprite (teamColor + 0x3d) at x 8, y 0x30 + 16 * army; then
  * two fixed sprites. */
-void sub_08045FC8(void)
+void DrawIntelStatusArmyIcons(void)
 {
     u16 i;
 
@@ -25,3 +25,4 @@ void sub_08045FC8(void)
     sub_0801F34C(2, 8, 0x10, 0, 0);
     sub_0801F34C(0xa9, 0x5f, 0x30, 0, 0);
 }
+asm(".global sub_08045FC8\n.thumb_set sub_08045FC8, DrawIntelStatusArmyIcons\n");

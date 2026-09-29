@@ -17,10 +17,11 @@ struct UnkF3E4Proc
 };
 
 /* `adds r1, r2, #0` before the bl -- the parent is the third parameter. */
-void sub_0803F3E4(int a, int b, ProcPtr parent)
+void StartVolcanoRock(int a, int b, ProcPtr parent)
 {
     struct UnkF3E4Proc *proc = Proc_Start(gUnknown_0849F918, parent);
 
     proc->unk2c = a;
     proc->unk30 = b;
 }
+asm(".global sub_0803F3E4\n.thumb_set sub_0803F3E4, StartVolcanoRock\n");

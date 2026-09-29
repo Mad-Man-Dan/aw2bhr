@@ -77,7 +77,7 @@ void AiExecutorDispatchAction(void)
         AiExecuteDestroyUnit();
         break;
     case 0x13:
-        sub_0802C16C();
+        ApplyYieldCommand();
         break;
     case 0x14:
         AiExecutorCheckMissileTargetVisible();

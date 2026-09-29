@@ -22,11 +22,11 @@
  * `void(ProcPtr parent)` in its promoted definition src/decomp/c_08034308.c,
  * where it is `Proc_StartBlocking(gUnknown_0849B8B8, parent)`. So the constant
  * is PROC_TREE_3 -- byte-identical to a bare 3, but the honest spelling.
- * sub_0803BCA0 is nullary (it loads r0 from a pool word) and void.
+ * BackupCampaignFlags is nullary (it loads r0 from a pool word) and void.
  */
 
 void sub_0803B890(void)
 {
-    sub_0803BCA0();
+    BackupCampaignFlags();
     sub_08034308(PROC_TREE_3);
 }

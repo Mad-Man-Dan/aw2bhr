@@ -19,7 +19,7 @@
 void sub_0805316C(ProcPtr proc)
 {
     RunBattleAnimStepHandler();
-    sub_0804B3CC();
+    StepPanelBounceBothSides();
 
     if (++gUnknown_03004508 == 0x12C)
         Proc_Break(proc);

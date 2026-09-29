@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* Starts the gUnknown_0849BB50 proc unless one is already running, and seeds it
- * with the same `a * 32 + 0x2e` that the promoted sub_080338C0 writes to +0x38
+ * with the same `a * 32 + 0x2e` that the promoted LinkC4_SetCursorRow writes to +0x38
  * of the very same proc -- so the two agree on both the expression and the
  * field.
  *
@@ -33,7 +33,7 @@ struct Unk3388CProc
     /* 58 */ ProcPtr unk58;
 };
 
-void sub_0803388C(int a, ProcPtr parent)
+void LinkC4_StartCursorProc(int a, ProcPtr parent)
 {
     const struct ProcCmd *script = gUnknown_0849BB50;
     ProcPtr found = Proc_Find(script);
@@ -47,3 +47,4 @@ void sub_0803388C(int a, ProcPtr parent)
         proc->unk58 = found;
     }
 }
+asm(".global sub_0803388C\n.thumb_set sub_0803388C, LinkC4_StartCursorProc\n");

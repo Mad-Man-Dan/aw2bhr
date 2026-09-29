@@ -18,7 +18,7 @@
  * un-swapped, and it is also what splits the literal pool in two the way the
  * ROM does: three words before the copy block, two after `bx lr`. */
 
-int sub_08031B30(void)
+int LinkWaitReadyBarrier(void)
 {
     gUnknown_0849B01C->unk06 = 0x9abc;
 
@@ -32,3 +32,4 @@ int sub_08031B30(void)
 
     return 1;
 }
+asm(".global sub_08031B30\n.thumb_set sub_08031B30, LinkWaitReadyBarrier\n");

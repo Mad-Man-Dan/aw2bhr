@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_0803B788(void)
+void StartMusicPauseFade(void)
 {
     Proc_Start(gUnknown_0849E7B8, PROC_TREE_3);
 }
+asm(".global sub_0803B788\n.thumb_set sub_0803B788, StartMusicPauseFade\n");

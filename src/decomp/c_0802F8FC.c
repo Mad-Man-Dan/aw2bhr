@@ -96,7 +96,7 @@ asm(".global sub_0802F8FC\n.thumb_set sub_0802F8FC, SioSend16\n");
  * scan givs land in r1/r2 instead of the ROM's r2/r5, and with the compare
  * written the other way round agbcc emits `cmp r0, r1` for the ROM's
  * `cmp r1, r0`. */
-int sub_0802F9BC(int a1, u16 *dst)
+int SioReadWordRow(int a1, u16 *dst)
 {
   volatile u16 *p;
   int i;
@@ -130,3 +130,4 @@ int sub_0802F9BC(int a1, u16 *dst)
 
   return 5;
 }
+asm(".global sub_0802F9BC\n.thumb_set sub_0802F9BC, SioReadWordRow\n");

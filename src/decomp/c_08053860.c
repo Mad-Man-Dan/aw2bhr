@@ -26,7 +26,7 @@
 
 void MovePanelsForward(void)
 {
-    sub_0805741C(gUnknown_08551E7C[gUnknown_0300450C]);
+    SetBg2Bg3ControlBySide(gUnknown_08551E7C[gUnknown_0300450C]);
 
     SetSlotSpritePriority(gUnknown_02029A10[0].entries[0].unk18, PAL0);
     SetSlotSpritePriority(gUnknown_02029A10[0].entries[1].unk18, PAL0);
@@ -76,7 +76,7 @@ asm(".global sub_08053860\n.thumb_set sub_08053860, MovePanelsForward\n");
 
 void MovePanelsBack(void)
 {
-    sub_0805741C(gUnknown_0300450C);
+    SetBg2Bg3ControlBySide(gUnknown_0300450C);
     gUnknown_030045B0 = 1;
 
     SetSlotSpritePriority(gUnknown_02029A10[0].entries[0].unk18, PAL1);

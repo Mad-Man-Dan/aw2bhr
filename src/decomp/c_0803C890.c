@@ -16,11 +16,11 @@
  *
  * `i` is a u8 -- the `lsl #0x18; lsr #0x18` on the increment -- so the row
  * offset `i * 0x18` is recomputed from scratch each iteration instead of
- * becoming a giv. Same loop as sub_0803C670's last one, which has no gate and
+ * becoming a giv. Same loop as ResetCampaignUnlocks's last one, which has no gate and
  * therefore one spare register, and so hoists `base + 0x10` where this one
  * does not. */
 
-void sub_0803C890(void)
+void GrantAllShopItems(void)
 {
     u8 i;
 
@@ -30,3 +30,4 @@ void sub_0803C890(void)
             gUnknown_0849EDB0[i].unk0c(gUnknown_0849EDB0[i].unk10, 1);
     }
 }
+asm(".global sub_0803C890\n.thumb_set sub_0803C890, GrantAllShopItems\n");

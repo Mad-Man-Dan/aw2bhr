@@ -21,7 +21,7 @@
  */
 
 
-/* Forwards into sub_0803B4DC, which is the F066 member above and is already
+/* Forwards into PlayMusicOrSfx2, which is the F066 member above and is already
  * declared `void(int)`, so -- as in FreeSpriteScript2 -- the narrowing has to be
  * spelled. This function has no callers anywhere in asm/ or src/, so nothing
  * constrains its own parameter and `s16` with no cast would be byte-identical.
@@ -29,6 +29,6 @@
 
 void PlaySeFunc(int a)
 {
-    sub_0803B4DC((s16)a);
+    PlayMusicOrSfx2((s16)a);
 }
 asm(".global sub_08072BBC\n.thumb_set sub_08072BBC, PlaySeFunc\n");

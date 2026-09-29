@@ -15,7 +15,7 @@
  *
  * gUnknown_03001FBC is s16 and ClearSlotScriptCallback takes u8, so the `ldrb` is the
  * prototype's conversion reading the low half. */
-void sub_0804AE20(void)
+void NameEntry_WaitPromptStep(void)
 {
     if (sub_08019260() == 0)
     {
@@ -23,3 +23,4 @@ void sub_0804AE20(void)
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }
+asm(".global sub_0804AE20\n.thumb_set sub_0804AE20, NameEntry_WaitPromptStep\n");

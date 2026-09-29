@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_0802EA5C(struct Unk030040C0 *a1)
+void SioRegisterIrq(struct Unk030040C0 *a1)
 {
     gUnknown_02023894 = 0;
     gUnknown_03003F6C = (struct Unk03003F6C *)a1;
@@ -31,3 +31,4 @@ void sub_0802EA5C(struct Unk030040C0 *a1)
 
     gUnknown_0300055C = 0xf0;
 }
+asm(".global sub_0802EA5C\n.thumb_set sub_0802EA5C, SioRegisterIrq\n");

@@ -9,15 +9,16 @@
 
 #include "proc.h"
 
-void sub_08034290(void)
+void LinkC3_EndScreenProcs(void)
 {
     Proc_EndEach(gUnknown_0849BB80);
     Proc_EndEach(ProcScr_PutFace);
     Proc_EndEach(gUnknown_0849BB68);
     SetVCountInterruptHandler(0);
 }
+asm(".global sub_08034290\n.thumb_set sub_08034290, LinkC3_EndScreenProcs\n");
 
-/* sub_08034290 without the leading gUnknown_0849BB80 teardown. */
+/* LinkC3_EndScreenProcs without the leading gUnknown_0849BB80 teardown. */
 void sub_080342BC(void)
 {
     Proc_EndEach(ProcScr_PutFace);

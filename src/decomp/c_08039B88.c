@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-/* sub_080321A8's predicate, returned instead of acted on: 1 when either
+/* LinkWaitMapTransferProcs's predicate, returned instead of acted on: 1 when either
  * script has a live instance. The `movs r0,#0` arm sits INLINE and the `movs
  * r0,#1` out of line, which is the `!= 0` spelling of the test -- writing it
  * as `Proc_Find(a) != 0 || Proc_Find(b) != 0` swaps the two blocks, because

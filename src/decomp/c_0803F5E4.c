@@ -7,7 +7,7 @@
  * sub_0803F5E4 @ 0x0803F5E4
  */
 
-void sub_0803F5E4(int a1, int a2)
+void LoadMapObjectGraphics(int a1, int a2)
 {
     u8 *src;
     u8 *table;
@@ -31,5 +31,6 @@ void sub_0803F5E4(int a1, int a2)
                (void *)(0x06010000 + (((a2 + 0x6C) & 0x3FF) << 5)), 0x40);
     CpuFastSet(table + ((((GetPlayerCoCountry(4) - 1) << 3) & 0x3FF) << 5),
                (void *)(0x06010000 + (((a2 + 0x74) & 0x3FF) << 5)), 0x40);
-    sub_0803FD80(a1, a2);
+    LoadInventionGraphics(a1, a2);
 }
+asm(".global sub_0803F5E4\n.thumb_set sub_0803F5E4, LoadMapObjectGraphics\n");

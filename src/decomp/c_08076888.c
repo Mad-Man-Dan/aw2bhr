@@ -121,7 +121,7 @@ void sub_08076888(ProcPtr proc)
     else
         ApplyPaletteExt(gUnknown_081D20CC, 0x220, 0x20);
 
-    sub_0802D5A0((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00),
+    LoadWindowFrameGraphics((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00),
                  0, 0);
 
     d = 0;

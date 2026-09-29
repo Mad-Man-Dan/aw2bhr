@@ -16,9 +16,10 @@
  */
 
 
-/* The stop half of sub_08032D4C's Proc_Start. */
+/* The stop half of StartLinkMapPick's Proc_Start. */
 
-void sub_08032D60(void)
+void EndLinkMapPick(void)
 {
     Proc_EndEach(gUnknown_0849B6B0);
 }
+asm(".global sub_08032D60\n.thumb_set sub_08032D60, EndLinkMapPick\n");

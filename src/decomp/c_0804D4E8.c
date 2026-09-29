@@ -23,7 +23,7 @@ void CruiserFigure_Loop(void)
     {
         if (gUnknown_020296B0[c].unk0c[gUnknown_020296B0[c].unk18] != 0xff)
         {
-            sub_080505A4(c, gUnknown_02029A10[c].entries[e].unk1e);
+            SpawnThirdEffectAndProjectile(c, gUnknown_02029A10[c].entries[e].unk1e);
             gUnknown_02029A10[c].entries[e].unk1e++;
             PlayMusicOrSfx(gUnknown_085D6C88[gUnknown_03004580[c][1]]
                                           .unk0c[gUnknown_03004580[c][2] - 1]
@@ -75,9 +75,9 @@ void FigureTileHook_Cruiser(s16 a, u16 *p)
         gUnknown_03001470[a].unk28 = d;
 
         if (e > 10)
-            sub_0804D6FC(g, h, e);
+            CopyFigurePose400Upper(g, h, e);
         else
-            sub_0804D6C8(g, h, e);
+            CopyFigurePose400(g, h, e);
     }
 }
 asm(".global sub_0804D5D8\n.thumb_set sub_0804D5D8, FigureTileHook_Cruiser\n");

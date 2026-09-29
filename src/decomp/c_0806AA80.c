@@ -32,7 +32,7 @@ void sub_0806AA80(int a1, int a2)
     int dx;
     int dy;
 
-    sub_0803B4DC(0xC5);
+    PlayMusicOrSfx2(0xC5);
     proc = Proc_Start(gUnknown_0858168C, PROC_TREE_3);
 
     x = a1 * 16;

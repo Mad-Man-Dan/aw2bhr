@@ -19,7 +19,7 @@ struct Unk807BCF0
 void sub_0807BCF0(ProcPtr proc)
 {
     if (((struct Unk807BCF0 *)proc)->unk34 == 0)
-        sub_0803B4DC(0x1CF);
+        PlayMusicOrSfx2(0x1CF);
 
     sub_0807BED8(proc);
 

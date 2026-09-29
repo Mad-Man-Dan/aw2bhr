@@ -21,7 +21,7 @@ void sub_08029868(u8 a)
     {
     case 1:
     case 2:
-        sub_0803B4DC(0x50);
+        PlayMusicOrSfx2(0x50);
         break;
     }
 }

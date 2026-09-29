@@ -32,7 +32,7 @@ void MatchSetupCycleCo(int a1, u16 a2, u8 a3)
     if (v != gUnknown_08580934->unk1c[a1])
     {
         if (a3 != 0)
-            sub_0803B4DC(0x64);
+            PlayMusicOrSfx2(0x64);
 
         LoadCoFace(gUnknown_08580934->unk18[v],
                      (void *)(0x06010000 + (((a1 * 36 + 400) & 0x3ff) << 5)),

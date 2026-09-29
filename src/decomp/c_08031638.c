@@ -10,14 +10,14 @@
 #include "hardware.h"
 #include "proc.h"
 
-void sub_08031638(ProcPtr proc)
+void LinkLobby_Loop(ProcPtr proc)
 {
     int n;
     int i;
 
     n = 0;
 
-    if (sub_0802F534() > 1 && sub_0802F504() > 1 && sub_0802F4A0() == 1
+    if (SioCountLinkedPlayers() > 1 && SioCountSendingPlayers() > 1 && SioAreAllLinkedPlayersStatus5() == 1
         && gUnknown_0849B018->unk06 == 0)
         gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 2, 2);
     else
@@ -29,7 +29,7 @@ void sub_08031638(ProcPtr proc)
             n++;
     }
 
-    if (!sub_0802F408() || gUnknown_0849B018->unk1a > 0x3c || n != 0)
+    if (!SioIsConnectionAlive() || gUnknown_0849B018->unk1a > 0x3c || n != 0)
     {
         gUnknown_0849B018->unk04 = 7;
         Proc_Break(proc);
@@ -43,9 +43,9 @@ void sub_08031638(ProcPtr proc)
     }
 
     if (gpKeySt->pressed & 2)
-        sub_0803B4DC(0x68);
+        PlayMusicOrSfx2(0x68);
 
-    if (sub_0802F4A0() == 1 && gUnknown_0849B018->unk06 == 0
+    if (SioAreAllLinkedPlayersStatus5() == 1 && gUnknown_0849B018->unk06 == 0
         && (gpKeySt->pressed & 9))
     {
         gUnknown_0300410C = gUnknown_030040CC;
@@ -59,13 +59,13 @@ void sub_08031638(ProcPtr proc)
         gUnknown_03004400[0] = 0xff;
         LinkQueueCommand((u8 *)gUnknown_03004400);
 
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
         Proc_EndEach(gUnknown_0849B1A0);
 
         Proc_Goto(proc, 1);
     }
     else if (LinkReceiveCommand((void *)gUnknown_03004400, 0) != -1
-             && sub_0802F460(gUnknown_0849B018->unk06) == 1
+             && SioIsPlayerLinked(gUnknown_0849B018->unk06) == 1
              && gUnknown_03004400[0] == 0xff)
     {
         gUnknown_0300410C = gUnknown_030040CC;
@@ -78,12 +78,13 @@ void sub_08031638(ProcPtr proc)
 
         gUnknown_0849B060->unk02 = 2;
 
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
 
         Proc_Goto(proc, 1);
     }
     else
     {
-        sub_08030D84();
+        LinkSendHelloPacket();
     }
 }
+asm(".global sub_08031638\n.thumb_set sub_08031638, LinkLobby_Loop\n");

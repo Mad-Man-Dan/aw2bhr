@@ -7,10 +7,11 @@
  * sub_0802C7FC @ 0x0802C7FC
  */
 
-bool8 sub_0802C7FC(void)
+bool8 IntelMenu_TermsUsability(void)
 {
     if (gUnknown_085C77A0[gPlaySt.mapID].unk08 != 0)
         return FALSE;
 
     return TRUE;
 }
+asm(".global sub_0802C7FC\n.thumb_set sub_0802C7FC, IntelMenu_TermsUsability\n");

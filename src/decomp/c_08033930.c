@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* sub_08033930 @ 0x08033930, 128 bytes, THUMB.
+/* LinkScreenSetupMessageWindow @ 0x08033930, 128 bytes, THUMB.
  * Signature below is DECLARED in include/unknown-functions.h -- it is authoritative.
  * The compiler sees that header too, so a definition that
  * disagrees will not compile.
@@ -19,7 +19,7 @@
  * bare win1_enable OR -- only win0_enable/win1_enable/objwin_enable
  * are touched at gDispIo, bg0_enable is untouched here.
  */
-void sub_08033930(void)
+void LinkScreenSetupMessageWindow(void)
 {
     gUnknown_030030A4.bits.win1_enable_bg0 = 1;
     gUnknown_030030A4.bits.win1_enable_bg1 = 0;
@@ -40,3 +40,4 @@ void sub_08033930(void)
 
     SetWinEnable(0, 1, 0);
 }
+asm(".global sub_08033930\n.thumb_set sub_08033930, LinkScreenSetupMessageWindow\n");

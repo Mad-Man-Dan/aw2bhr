@@ -63,7 +63,7 @@
 
 struct Unk0803E9F8;
 void SetMapLayersRangeBehindUnits(void);
-void sub_0802E2BC(void);
+void StartUnitsTranslucentPeek(void);
 void PaintUnitAttackRange(s16, s16, struct Unit *);
 int MarkInventionFireArea(struct Unk0803E9F8 *, u8 *, u8, u8);
 int IsDirectFireUnitArmed(struct Unit *);
@@ -94,7 +94,7 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
         if (gMap->unit[
                 gMap->rowOffset[y] + x] == 0)
         {
-            sub_0802E2BC();
+            StartUnitsTranslucentPeek();
             return 1;
         }
 
@@ -103,7 +103,7 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
 
         if (a == 0 && b == 0)
         {
-            sub_0803B4DC(0x68);
+            PlayMusicOrSfx2(0x68);
             return 0;
         }
 
@@ -142,7 +142,7 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
 
     ShowRangeOverlay((u16)x, (u16)y, 1);
     gUnknown_03003334 = 6;
-    sub_0803B4DC(0x69);
+    PlayMusicOrSfx2(0x69);
     return 1;
 }
 asm(".global sub_0802E2D0\n.thumb_set sub_0802E2D0, MapCursor_OnPressB\n");

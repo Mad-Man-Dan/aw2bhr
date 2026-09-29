@@ -17,7 +17,7 @@
 void CoPowerColinGoldRush(ProcPtr parent)
 {
     AddPlayerFunds(gUnknown_030033EC, gPlayers[gUnknown_030033EC].funds >> 1);
-    sub_0803B4DC(0x1F6);
+    PlayMusicOrSfx2(0x1F6);
     StartCoPowerWhiteFlash(parent);
 }
 asm(".global sub_08044804\n.thumb_set sub_08044804, CoPowerColinGoldRush\n");

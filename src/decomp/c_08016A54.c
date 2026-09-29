@@ -26,7 +26,7 @@ void ResetProfileToDefaults(void)
     gUnknown_0200C420.unk0f = 0;
     for (i = 0; i <= 0x12; i++)
         SetLoadedCoPalette(i, 0);
-    sub_0803BA1C();
+    ClearCampaignFlags60To9F();
     gUnknown_0200C420.unk10 = 0;
     gUnknown_0200C420.unk12 = 0;
     for (i = 0; i <= 0x1d; i++) {
@@ -43,7 +43,7 @@ void ResetProfileToDefaults(void)
             gUnknown_0200C2D0[i].unk00[j].unk00_14 = 0;
         }
     }
-    sub_0803C670();
+    ResetCampaignUnlocks();
     gUnknown_0200C420.unk08 = 0;
 }
 asm(".global sub_08016A54\n.thumb_set sub_08016A54, ResetProfileToDefaults\n");

@@ -64,7 +64,7 @@ asm(".global sub_0801348C\n.thumb_set sub_0801348C, RefreshKeyStFromKeys\n");
 /* The once-per-frame key poll. Normally reads the pad, but when
  * gPlaySt.unk32 selects the replay mode AND IsLinkKeySyncMode reports 1
  * the mask comes out of the replay stream instead (sub_080303C8) and
- * sub_08030234 advances it.
+ * LinkApplyKeySyncToKeySts advances it.
  *
  * `v` is a u16 local, not two separate calls to RefreshKeyStFromKeys: the ROM's TWO
  * copies of the 0x3ff pool word (`adds r0,r2,#0; adds r4,r0,#0`) before the
@@ -79,7 +79,7 @@ void RefreshKeySt(void)
     if (gPlaySt.savingEnabled != 0 && IsLinkKeySyncMode() == 1)
     {
         v = sub_080303C8();
-        sub_08030234();
+        LinkApplyKeySyncToKeySts();
     }
     else
     {

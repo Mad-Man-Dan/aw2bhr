@@ -10,10 +10,10 @@
 /*
  * DesignRoomShowSlotPreview0 -- put save slot 0's name box on screen, or take it down.
  *
- * sub_0803CCB8 is asked about slot 0, with gDesignRoomName. Either way
- * sub_0803CEAC runs and the 0xF x 0xA tile window at (0xE, 4) of BG0 is
+ * LoadDesignRoomName is asked about slot 0, with gDesignRoomName. Either way
+ * EndMapPreviewEffects runs and the 0xF x 0xA tile window at (0xE, 4) of BG0 is
  * blanked. If the answer was not 1 the window is then flagged for copying to
- * VRAM and nothing more happens; if it was 1, sub_0803CDBC draws slot 0 into
+ * VRAM and nothing more happens; if it was 1, DrawDesignRoomSlotPreview draws slot 0 into
  * the window and the two view-offset globals are zeroed instead.
  *
  * The three parameters are never read here. They are known from the only
@@ -30,17 +30,17 @@
  */
 void DesignRoomShowSlotPreview0(int a, int b, int c)
 {
-    if (sub_0803CCB8(0, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(0, gDesignRoomName) != 1)
     {
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
         BG_EnableSyncBG0();
     }
     else
     {
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
-        sub_0803CDBC(0xE, 4, 0);
+        DrawDesignRoomSlotPreview(0xE, 4, 0);
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;
     }
@@ -50,17 +50,17 @@ asm(".global sub_080055B8\n.thumb_set sub_080055B8, DesignRoomShowSlotPreview0\n
 /* DesignRoomShowSlotPreview1 -- the same as DesignRoomShowSlotPreview0, for save slot 1. */
 void DesignRoomShowSlotPreview1(int a, int b, int c)
 {
-    if (sub_0803CCB8(1, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(1, gDesignRoomName) != 1)
     {
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
         BG_EnableSyncBG0();
     }
     else
     {
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
-        sub_0803CDBC(0xE, 4, 1);
+        DrawDesignRoomSlotPreview(0xE, 4, 1);
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;
     }
@@ -70,17 +70,17 @@ asm(".global sub_08005634\n.thumb_set sub_08005634, DesignRoomShowSlotPreview1\n
 /* DesignRoomShowSlotPreview2 -- the same as DesignRoomShowSlotPreview0, for save slot 2. */
 void DesignRoomShowSlotPreview2(int a, int b, int c)
 {
-    if (sub_0803CCB8(2, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(2, gDesignRoomName) != 1)
     {
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
         BG_EnableSyncBG0();
     }
     else
     {
-        sub_0803CEAC();
+        EndMapPreviewEffects();
         FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
-        sub_0803CDBC(0xE, 4, 2);
+        DrawDesignRoomSlotPreview(0xE, 4, 2);
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;
     }

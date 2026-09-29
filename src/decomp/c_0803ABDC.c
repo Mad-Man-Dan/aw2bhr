@@ -23,7 +23,7 @@ void DebugFlagControl_Loop(struct Unk0803ABDC *p)
         i = 1;
     PutAsciiStringSprites(0, 0, gUnknown_08090F94);
     PutAsciiStringSprites(0, 8, gUnknown_08090FA4);
-    sub_0802BD54(0x28, 8, p->unk1e);
+    DrawSpriteNumberFont2(0x28, 8, p->unk1e);
     PutAsciiStringSprites(0x38, 8, gUnknown_0849E5F8[i]);
     if ((gpKeySt->pressed & 3) != 0)
     {
@@ -31,9 +31,9 @@ void DebugFlagControl_Loop(struct Unk0803ABDC *p)
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
     else if ((gpKeySt->pressed & DPAD_LEFT) != 0)
-        sub_0803CA00(p->unk1e, 0);
+        SetCampaignFlagBank1(p->unk1e, 0);
     else if ((gpKeySt->pressed & DPAD_RIGHT) != 0)
-        sub_0803CA00(p->unk1e, 1);
+        SetCampaignFlagBank1(p->unk1e, 1);
     else
     {
         if ((gpKeySt->repeated & DPAD_UP) != 0 && p->unk1e > 0x20)

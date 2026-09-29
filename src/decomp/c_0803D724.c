@@ -11,7 +11,7 @@
 /* The proc's own two fields; the rest is struct Proc.
  * NOTE for whoever maintains include/unknown-globals.h: the comment on
  * gUnknown_0849F330 credits this Proc_Start to "sub_0803D75C". There is no such
- * function -- 0x0803D75C is a LABEL inside sub_0803D73C, whose extent is
+ * function -- 0x0803D75C is a LABEL inside StartSaveScreen, whose extent is
  * 0x0803D73C..0x0803D770. */
 struct UnkD73CProc
 {
@@ -25,13 +25,14 @@ struct UnkD73CProc
 /* The entry `lsls #0x18; lsrs #0x18` is a declared `u8` parameter; the second
  * pair `lsls #0x18; asrs #0x18` is the conversion to SetSuspendFlag's `s8`
  * first parameter, not a second narrowing of this one. */
-void sub_0803D724(u8 a)
+void ClearSuspendFlag(u8 a)
 {
     if (a != 0)
         SetSuspendFlag(a, 0);
 }
+asm(".global sub_0803D724\n.thumb_set sub_0803D724, ClearSuspendFlag\n");
 
-void sub_0803D73C(u8 a, void (*f)(void))
+void StartSaveScreen(u8 a, void (*f)(void))
 {
     struct UnkD73CProc *proc;
 
@@ -42,3 +43,4 @@ void sub_0803D73C(u8 a, void (*f)(void))
     proc->unk64 = a;
     proc->unk4c = f;
 }
+asm(".global sub_0803D73C\n.thumb_set sub_0803D73C, StartSaveScreen\n");

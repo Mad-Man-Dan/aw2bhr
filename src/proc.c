@@ -964,7 +964,7 @@ bool8 ProcCmd_1C_0801D0C8(ProcPtr proc)
 {
     struct Proc * p = ((struct Proc *)proc);
 
-    sub_0803B4DC(p->proc_scrUnk->dataImm);
+    PlayMusicOrSfx2(p->proc_scrUnk->dataImm);
     p->proc_scrUnk++;
 
     return TRUE;

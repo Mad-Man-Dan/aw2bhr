@@ -24,7 +24,7 @@ void InitGameSettings(void)
     gUnknown_030033E0.unk00 = 0;
     gUnknown_030033E0.unk02 = 0;
 
-    sub_0802BB98();
+    InitCursorInfoPanelPosition();
 
     gUnknown_030040F0 = 0;
     gUnknown_030044A0 = 0;
@@ -42,7 +42,7 @@ void InitGameSettings(void)
     gUnknown_030030F8 = 0;
 
     ClearAllUnits();
-    sub_0803DE68();
+    ResetInventionRecords();
 }
 
 asm(".global sub_0802150C\n.thumb_set sub_0802150C, InitGameSettings\n");

@@ -7,7 +7,8 @@
  * sub_0802C154 @ 0x0802C154
  */
 
-void sub_0802C154(int a1)
+void MarkPlayerYielded(int a1)
 {
     gPlayers[a1].unk31 = 1;
 }
+asm(".global sub_0802C154\n.thumb_set sub_0802C154, MarkPlayerYielded\n");

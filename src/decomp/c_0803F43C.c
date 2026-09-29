@@ -20,7 +20,7 @@ struct UnkF43CProc
     /* 58 */ int unk58;
 };
 
-void sub_0803F43C(struct UnkF43CProc *proc)
+void VolcanoRock_Fall(struct UnkF43CProc *proc)
 {
     AP_Update(proc->unk50,
                  (proc->unk54 - gMap->scrollX) & 0x1FF,
@@ -36,8 +36,9 @@ void sub_0803F43C(struct UnkF43CProc *proc)
         proc->unk50 = sprite;
         sprite->unk22 = 0x51CA;
         AP_SwitchAnimation(proc->unk50, 1);
-        sub_0803B4DC(0x1D4);
+        PlayMusicOrSfx2(0x1D4);
         StartScreenShake(0, 8, 0);
         Proc_Break(proc);
     }
 }
+asm(".global sub_0803F43C\n.thumb_set sub_0803F43C, VolcanoRock_Fall\n");

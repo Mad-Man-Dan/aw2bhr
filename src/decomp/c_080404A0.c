@@ -48,6 +48,6 @@ void SiloMissileLaunch_Init(struct Unk404A0Proc *proc)
     AP_SwitchAnimation(proc->unk50, 1);
     proc->unk50->unk22 = proc->unk4a;
 
-    sub_0803B4DC(0x1C6);
+    PlayMusicOrSfx2(0x1C6);
 }
 asm(".global sub_080404A0\n.thumb_set sub_080404A0, SiloMissileLaunch_Init\n");

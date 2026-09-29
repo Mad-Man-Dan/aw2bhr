@@ -52,7 +52,7 @@ void ApplySiloDamage(struct Unk40640Proc *proc)
                  proc->unk54 - gMap->scrollX,
                  proc->unk58 - gMap->scrollY,
                  proc->unk4a, 3, 1);
-    sub_0803B4DC(0x1C7);
+    PlayMusicOrSfx2(0x1C7);
 }
 
 asm(".global sub_08040640\n.thumb_set sub_08040640, ApplySiloDamage\n");

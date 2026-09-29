@@ -27,7 +27,7 @@ asm(".global sub_08016104\n.thumb_set sub_08016104, SlotOp_PlayMusic\n");
  */
 bool8 SlotOp_PlaySfx(u8 a)
 {
-    sub_0803B4DC(((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    PlayMusicOrSfx2(((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return FALSE;
 }

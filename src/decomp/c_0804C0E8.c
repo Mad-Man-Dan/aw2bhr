@@ -18,7 +18,7 @@
  */
 
 
-/* Same one-callee-twice shape as sub_0804B3CC, over sub_0804FF44. */
+/* Same one-callee-twice shape as StepPanelBounceBothSides, over sub_0804FF44. */
 
 void sub_0804C0E8(void)
 {

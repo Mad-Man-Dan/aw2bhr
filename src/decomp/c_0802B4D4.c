@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-void sub_0802B4D4(s16 a1, s16 a2, s16 a3)
+void DrawArmyCaptureCounters(s16 a1, s16 a2, s16 a3)
 {
     s8 i;
     s8 acc;
@@ -61,3 +61,4 @@ void sub_0802B4D4(s16 a1, s16 a2, s16 a3)
         }
     }
 }
+asm(".global sub_0802B4D4\n.thumb_set sub_0802B4D4, DrawArmyCaptureCounters\n");

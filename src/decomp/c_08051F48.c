@@ -7,6 +7,7 @@
  * sub_08051F48 @ 0x08051F48
  */
 
-void sub_08051F48(void)
+void SmokeEffect_Loop(void)
 {
 }
+asm(".global sub_08051F48\n.thumb_set sub_08051F48, SmokeEffect_Loop\n");

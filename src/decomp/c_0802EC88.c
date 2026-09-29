@@ -26,5 +26,5 @@ void sub_0802EC88(u16 a1, u16 a2, u16 a3, u16 a4)
         n++;
 
     if (n > 0)
-        sub_0802EC64();
+        SioStepSendDelay();
 }

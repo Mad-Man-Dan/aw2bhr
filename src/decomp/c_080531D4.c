@@ -34,7 +34,7 @@ void BattleAnimScene_Init(void)
     sub_080152C0((int)gUnknown_08553820, 0);
     gUnknown_0300453C = 0;
     gUnknown_0300451C = 0;
-    sub_08057270();
+    SetUpBattleAnimDisplay();
     sub_0804BA4C();
 
     if (gUnknown_03004504.bit0)
@@ -50,19 +50,19 @@ asm(".global sub_080531D4\n.thumb_set sub_080531D4, BattleAnimScene_Init\n");
 
 /* The counter bump appears TWICE in the ROM, once per arm, and that is the
  * source: written as one test with a combined predicate there would be a single
- * `ldrh; adds #1; strh`. Same shape as the doubled `bl sub_08057BDC` in
+ * `ldrh; adds #1; strh`. Same shape as the doubled `bl StepBattleHud` in
  * src/decomp/c_080535E0.c, the neighbour this block is derived from. */
 void BattleAnimScene_Loop(ProcPtr proc)
 {
     RunBattleAnimStepHandler();
-    sub_080535E0();
+    StepBattleHudAndPanelScroll();
     RegisterDataMove(gUnknown_08551A04, (void *)0x06002800, 0x800);
 
     if (gUnknown_03004508 == 0x12c)
         Proc_Break(proc);
 
-    sub_0804B3CC();
-    sub_08053820();
+    StepPanelBounceBothSides();
+    StepStageFlags();
 
     if (gUnknown_03004504.bit0)
     {

@@ -17,10 +17,11 @@
  * a pool constant, so this call site cannot discriminate the parameter width.
  */
 
-void sub_08045F08(void)
+void PlayMusic19D(void)
 {
     PlayMusic(0x19D);
 }
+asm(".global sub_08045F08\n.thumb_set sub_08045F08, PlayMusic19D\n");
 
 /* Family F003 (data/families.json): 34 twelve-byte forwarders shaped
  * `push {lr}; movs r0,#K; bl S; pop {r0}; bx r0`, i.e. one call with one
@@ -30,7 +31,8 @@ void sub_08045F08(void)
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_08045F18(void)
+void SetMusicVolumeC0(void)
 {
     SetMusicVolume(0xC0);
 }
+asm(".global sub_08045F18\n.thumb_set sub_08045F18, SetMusicVolumeC0\n");

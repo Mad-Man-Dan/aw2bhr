@@ -20,7 +20,7 @@ struct UnkF2B8Proc
 
 /* r1 is never written before the bl, so the parent is this wrapper's own
  * fourth parameter arriving via r3. */
-void sub_0803F2B8(int a, int b, int c, ProcPtr parent)
+void StartVolcanoFire(int a, int b, int c, ProcPtr parent)
 {
     struct UnkF2B8Proc *proc = Proc_StartBlocking(gUnknown_0849F888, parent);
 
@@ -28,3 +28,4 @@ void sub_0803F2B8(int a, int b, int c, ProcPtr parent)
     proc->unk30 = b;
     proc->unk4c = c;
 }
+asm(".global sub_0803F2B8\n.thumb_set sub_0803F2B8, StartVolcanoFire\n");

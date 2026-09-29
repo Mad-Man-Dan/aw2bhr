@@ -15,8 +15,9 @@ struct UnkP3B698
     /* 0x64 */ u16 unk64;
 };
 
-void sub_0803B698(struct UnkP3B698 *proc)
+void MusicDuck_Init(struct UnkP3B698 *proc)
 {
     proc->unk64 = 0;
     proc->unk54 = 0x80;
 }
+asm(".global sub_0803B698\n.thumb_set sub_0803B698, MusicDuck_Init\n");

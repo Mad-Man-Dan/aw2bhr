@@ -38,7 +38,7 @@
  * that opens the second loop; the second loop's `movs r2,#0` then kills n,
  * which is safe because n is not read again. */
 
-void sub_0803BE60(void)
+void Versus_InitArmyRoster(void)
 {
     u8 i;
     u8 n;
@@ -57,3 +57,4 @@ void sub_0803BE60(void)
         gPlaySt.propertyFunds = 1000;
     }
 }
+asm(".global sub_0803BE60\n.thumb_set sub_0803BE60, Versus_InitArmyRoster\n");

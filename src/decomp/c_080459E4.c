@@ -9,7 +9,7 @@
 
 /* Counts the current army's units that are either at zero HP or whose displayed
  * HP `Div(hp - 1, 10) + 1` is 9 or less, and reports whether there is at least
- * one.  Same scan as sub_08045924 over `(u16)gUnknown_084995FE[army] + 1 ..
+ * one.  Same scan as MapEventCond_CurrentArmyHasNoUnitWithFuel over `(u16)gUnknown_084995FE[army] + 1 ..
  * + 0x32`.
  *
  * gUnknown_0812A0F4 is NOT a global: the ROM word at 0x0812A0F4 contains
@@ -17,7 +17,7 @@
  * &gUnknown_03003F2C, created because the army index is read on both sides of
  * the loop's merge (once in the preheader, once in the recomputed bound).  The
  * honest spelling names gUnknown_03003F2C and lets the build place the word --
- * sub_08045924, which reads it once, gets a plain `ldr =sym` instead.
+ * MapEventCond_CurrentArmyHasNoUnitWithFuel, which reads it once, gets a plain `ldr =sym` instead.
  *
  * The element MUST be bound to a local.  Spelling `gUnits[i]` inline
  * three times rematerialises &gUnits from the inline pool inside the
@@ -76,7 +76,7 @@ asm(".global sub_080459E4\n.thumb_set sub_080459E4, MapEventCond_CurrentArmyHasI
  * The unk00 tests are two separate `if`s -- `!= 0 && == 0x13` would be folded to
  * one compare.  `Div` clobbers memory, so nothing in the body is hoisted and the
  * loop bound is recomputed every iteration. */
-bool8 sub_08045A78(void)
+bool8 MapEventCond_TwoPlusBattleCoptersAnyInjured(void)
 {
     struct Unit *unit;
     int i;
@@ -108,3 +108,4 @@ bool8 sub_08045A78(void)
 
     return FALSE;
 }
+asm(".global sub_08045A78\n.thumb_set sub_08045A78, MapEventCond_TwoPlusBattleCoptersAnyInjured\n");

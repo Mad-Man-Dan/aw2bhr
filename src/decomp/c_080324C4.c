@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_080324C4(int a1, int a2, u8 a3)
+void LinkScreenInit(int a1, int a2, u8 a3)
 {
     int i;
     int zero;
@@ -22,7 +22,7 @@ void sub_080324C4(int a1, int a2, u8 a3)
     BG_EnableSyncBG1();
     BG_EnableSyncBG2();
     BG_EnableSyncBG3();
-    sub_08034290();
+    LinkC3_EndScreenProcs();
     sub_080733B8();
 
     SetBgScrollShadow(0, 0xFFD0, 8);
@@ -61,7 +61,7 @@ void sub_080324C4(int a1, int a2, u8 a3)
     if (a2 == -1)
     {
         SetBgScrollShadow(0, 0, 0);
-        sub_0802D5CC(0, 3);
+        ApplyWindowFramePalette(0, 3);
         Decompress(gUnknown_081D2660, (void *)0x06006280);
         sub_08032484(gBG0TilemapBuffer + 0x221);
     }
@@ -71,3 +71,4 @@ void sub_080324C4(int a1, int a2, u8 a3)
         gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, a2, 2);
     }
 }
+asm(".global sub_080324C4\n.thumb_set sub_080324C4, LinkScreenInit\n");

@@ -11,7 +11,7 @@
 /* Installs the palette for the proc's slot, then picks one of four (unk2c,
  * unk30) travel offsets from the slot's unk14 tag and kicks off the matching
  * scroll. Cases 0 and 1 share their tail call and agbcc cross-jumps them into
- * one `bl sub_080399F8`; cases 2 and 3 keep their own, which is the compiler's
+ * one `bl LoadCoPowerPanelTiles`; cases 2 and 3 keep their own, which is the compiler's
  * choice and not a source-level difference -- all four arms are written the
  * same way here.
  *
@@ -27,7 +27,7 @@ struct Unk39948Proc
     /* 0x54 */ int unk54;
 };
 
-void sub_08039948(struct Unk39948Proc *proc)
+void CoPowerPanel_Init(struct Unk39948Proc *proc)
 {
     int i;
 
@@ -41,13 +41,13 @@ void sub_08039948(struct Unk39948Proc *proc)
     case 0:
         proc->unk2c = 0x18;
         proc->unk30 = 0;
-        sub_080399F8(0x2b0, 8);
+        LoadCoPowerPanelTiles(0x2b0, 8);
         break;
 
     case 1:
         proc->unk2c = -0x18;
         proc->unk30 = 0;
-        sub_080399F8(0x2b0, 8);
+        LoadCoPowerPanelTiles(0x2b0, 8);
         break;
 
     case 2:
@@ -63,3 +63,4 @@ void sub_08039948(struct Unk39948Proc *proc)
         break;
     }
 }
+asm(".global sub_08039948\n.thumb_set sub_08039948, CoPowerPanel_Init\n");

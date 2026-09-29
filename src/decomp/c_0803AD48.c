@@ -44,7 +44,7 @@ void DebugEdit_Loop(struct Unk0803AD48 *p)
     PutAsciiStringSprites(0, 0, gUnknown_0809105C);
     for (i = 0; i <= 8; i++) {
         PutAsciiStringSprites(0, i * 8 + 8, gUnknown_08090FB0[i]);
-        sub_0802BD54(0x68, i * 8 + 8, p->unk20[i]);
+        DrawSpriteNumberFont2(0x68, i * 8 + 8, p->unk20[i]);
     }
     PutAsciiStringSprites(0, p->unk1e * 8 + 8, gUnknown_08091064);
     if (gpKeySt->pressed & 1) {
@@ -71,8 +71,8 @@ void DebugEdit_Loop(struct Unk0803AD48 *p)
     if (gpKeySt->pressed & L_BUTTON) {
         for (i = 0; i <= 8; i++)
             p->unk20[i] = 0;
-        sub_0803C670();
-        sub_0803BA1C();
+        ResetCampaignUnlocks();
+        ClearCampaignFlags60To9F();
     }
     if (gpKeySt->repeated & DPAD_RIGHT) {
         if (gUnknown_08091038[p->unk1e] - gUnknown_0809104A[p->unk1e] < p->unk20[p->unk1e])

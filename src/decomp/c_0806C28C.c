@@ -36,7 +36,7 @@ void sub_0806C28C(struct Unk806C28C *proc)
         gUnknown_085816F0[proc->unk58].unk08, 0x1090);
 
     if (proc->unk5c == 8)
-        sub_0803B4DC(0x79);
+        PlayMusicOrSfx2(0x79);
 
     if (proc->unk5c > 0xf)
     {

@@ -28,7 +28,7 @@ struct Unk08049BECProc
     /* 0x28 */ u8 unk28;
 };
 
-void sub_08049BEC(struct Unk08049BECProc *proc)
+void DefeatFlow_BannerPiece_Init(struct Unk08049BECProc *proc)
 {
     proc->unk22 = gUnknown_02028E3D;
     proc->unk1e = proc->unk22 * 0x20 + 0x38;
@@ -43,3 +43,4 @@ void sub_08049BEC(struct Unk08049BECProc *proc)
 
     proc->unk24 = 0;
 }
+asm(".global sub_08049BEC\n.thumb_set sub_08049BEC, DefeatFlow_BannerPiece_Init\n");

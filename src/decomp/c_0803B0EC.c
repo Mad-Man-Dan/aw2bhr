@@ -19,7 +19,7 @@
  * the `lsls` write the SAME register. Both tells are absent.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B0EC(void)
+void DebugEntry_Init(void)
 {
     sub_080116E8();
 
@@ -29,6 +29,7 @@ void sub_0803B0EC(void)
         gUnknown_03002F1C = 1;
     }
 }
+asm(".global sub_0803B0EC\n.thumb_set sub_0803B0EC, DebugEntry_Init\n");
 
 /* The parameter is `struct Unk03001470 *` and that is forced rather than
  * chosen: the else arm forwards the incoming register UNCHANGED
@@ -43,7 +44,7 @@ void sub_0803B0EC(void)
  * for ClearSlotScriptCallback's declared `u8` parameter, folded into the load.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B118(struct Unk03001470 *a)
+void DebugEntry_Loop(struct Unk03001470 *a)
 {
     if (gpKeySt->held & 4)
     {
@@ -58,3 +59,4 @@ void sub_0803B118(struct Unk03001470 *a)
         sub_080153B8(a);
     }
 }
+asm(".global sub_0803B118\n.thumb_set sub_0803B118, DebugEntry_Loop\n");

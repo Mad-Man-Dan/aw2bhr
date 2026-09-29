@@ -7,9 +7,10 @@
  * sub_08048558 @ 0x08048558
  */
 
-void sub_08048558(void)
+void ClearBg0AndRebuildUnitLayers(void)
 {
     RebuildMapUnitLayers2();
     ClearBg0Tilemap();
     BG_EnableSyncBG0();
 }
+asm(".global sub_08048558\n.thumb_set sub_08048558, ClearBg0AndRebuildUnitLayers\n");

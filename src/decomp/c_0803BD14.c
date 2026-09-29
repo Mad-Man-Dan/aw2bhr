@@ -7,7 +7,7 @@
  * sub_0803BD14 @ 0x0803BD14
  */
 
-/* Returns int: the caller sub_0803BCDC keeps the result in a register and
+/* Returns int: the caller SetArmyCoIdsFromList keeps the result in a register and
  * compares it signed (`cmp r1, r3; bge` / `blt`) with no narrowing.
  *
  * `adds r2, #0x3c` on the base rather than a folded displacement is the

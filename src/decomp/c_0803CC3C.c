@@ -28,7 +28,7 @@ u8 sub_0803CC3C(u16 a)
  * `lsls #0x18; lsrs #0x18` after the `bl` is agbcc re-narrowing a u8-returning
  * callee, not a cast here -- 0xff is GetMapArmyCount's empty-slot sentinel and
  * the same one gUnknown_020280C0.unk13 uses. */
-int sub_0803CC64(u16 a)
+int IsMapArmyCountValid(u16 a)
 {
     u8 v = GetMapArmyCount(a);
 
@@ -36,3 +36,4 @@ int sub_0803CC64(u16 a)
         return 0;
     return 1;
 }
+asm(".global sub_0803CC64\n.thumb_set sub_0803CC64, IsMapArmyCountValid\n");

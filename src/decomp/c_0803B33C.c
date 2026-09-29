@@ -14,7 +14,7 @@
  */
 
 
-/* Stop half of sub_0803B2BC, a long builder that also names this symbol.
+/* Stop half of StartSpinningSlotSprite, a long builder that also names this symbol.
  * Seven functions in this batch call sub_0801537C with seven different ROM
  * blobs; between them they pin the parameter as an opaque pointer to script
  * data and not to any one object's type.

@@ -16,10 +16,11 @@ struct Unk39634Proc
     /* 58 */ int unk58;
 };
 
-void sub_08039634(int a, int b)
+void StartCoPowerSequence(int a, int b)
 {
     struct Unk39634Proc *proc = Proc_Start(gUnknown_0849D77C, PROC_TREE_3);
 
     proc->unk54 = a;
     proc->unk58 = b;
 }
+asm(".global sub_08039634\n.thumb_set sub_08039634, StartCoPowerSequence\n");

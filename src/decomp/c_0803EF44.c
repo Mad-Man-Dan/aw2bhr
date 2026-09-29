@@ -15,7 +15,7 @@ struct Proc3EF44
     int unk_30;
 };
 
-void sub_0803EF44(int a1, int a2, ProcPtr parent)
+void StartLaserFire(int a1, int a2, ProcPtr parent)
 {
     struct Proc3EF44 *proc = Proc_StartBlocking(gUnknown_0849F7F0, parent);
 
@@ -23,3 +23,4 @@ void sub_0803EF44(int a1, int a2, ProcPtr parent)
     proc->unk_30 = a2;
     ScrollCameraToCenterCell(a1, a2);
 }
+asm(".global sub_0803EF44\n.thumb_set sub_0803EF44, StartLaserFire\n");

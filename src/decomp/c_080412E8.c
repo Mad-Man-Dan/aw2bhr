@@ -17,6 +17,6 @@
 
 void CaptureAnimCountUp_PlaySound(void)
 {
-    sub_0803B4DC(0x6E);
+    PlayMusicOrSfx2(0x6E);
 }
 asm(".global sub_080412E8\n.thumb_set sub_080412E8, CaptureAnimCountUp_PlaySound\n");

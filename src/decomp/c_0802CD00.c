@@ -14,12 +14,13 @@
  * of them reads r0-r3 before writing it) and all three end `pop {r0}`, i.e.
  * void, so there is no value to nest. src/decomp/c_08048558.c is the matched
  * exemplar of the same shape. */
-void sub_0802CD00(void)
+void MapMenu_Options(void)
 {
     PushMenu();
     CloseTopMenu();
     OpenOptionsMenu();
 }
+asm(".global sub_0802CD00\n.thumb_set sub_0802CD00, MapMenu_Options\n");
 
 /* F018: `push {lr}; bl a; bl b; bl c; pop {r0}; bx r0`.
  * THREE INDEPENDENT STATEMENTS, not a nest. Nothing moves r0 between the `bl`s,
@@ -28,9 +29,10 @@ void sub_0802CD00(void)
  * of them reads r0-r3 before writing it) and all three end `pop {r0}`, i.e.
  * void, so there is no value to nest. src/decomp/c_08048558.c is the matched
  * exemplar of the same shape. */
-void sub_0802CD14(void)
+void MapMenu_Intel(void)
 {
     PushMenu();
     CloseTopMenu();
     OpenIntelMenu();
 }
+asm(".global sub_0802CD14\n.thumb_set sub_0802CD14, MapMenu_Intel\n");

@@ -16,9 +16,10 @@
  */
 
 
-/* The stop half of sub_08031418's Proc_Start. */
+/* The stop half of StartLinkLobbySlots's Proc_Start. */
 
-void sub_08031430(void)
+void EndLinkLobbySlots(void)
 {
     Proc_EndEach(gUnknown_0849B284);
 }
+asm(".global sub_08031430\n.thumb_set sub_08031430, EndLinkLobbySlots\n");

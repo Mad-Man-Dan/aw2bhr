@@ -14,7 +14,7 @@
  * Every result is discarded and the epilogue is `pop {r0}; bx r0`, the void
  * spelling. unk850's type comes from EndEventScript's `const u8 *`, the same
  * argument that types it in src/decomp/c_080485DC.c. */
-void sub_080485F8(void)
+void ShopScreen_EndMessage(void)
 {
     SetChoiceResult(1);
     FillTilemapRect(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, 0);
@@ -22,3 +22,4 @@ void sub_080485F8(void)
     sub_0801537C(gUnknown_08489530);
     EndEventScript(gUnknown_084C30F8->unk850);
 }
+asm(".global sub_080485F8\n.thumb_set sub_080485F8, ShopScreen_EndMessage\n");

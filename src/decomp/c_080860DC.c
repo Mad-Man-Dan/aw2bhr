@@ -26,7 +26,7 @@
  *    the signed HImode operand (`ldrsh`); the shift is narrowed to `ldrh`.
  *  - `*(u16 *)&p->unk4e = w;` with `w = 0xFFFF;` in an int local, in both
  *    arms, so the shared `strh` cross-jumps.
- *  - the `size = 2; sub_080876B4(); sub_0803B4DC(0x67)` tail written out at
+ *  - the `size = 2; sub_080876B4(); PlayMusicOrSfx2(0x67)` tail written out at
  *    the end of both of the first two arms, not once after the if-chain.
  * Promotion needs "rodata": ["0x081D9410", "0x081D9414", "0x081D9418",
  * "0x081D941C", "0x081D9420"]. */
@@ -107,7 +107,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         *(u16 *)&p->unk4e = w;
         gUnknown_03001FE8.bits.size = 2;
         sub_080876B4();
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
         return;
     }
     else if (gpKeySt->repeated & 0x80)
@@ -160,7 +160,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         *(u16 *)&p->unk4e = 1;
         gUnknown_03001FE8.bits.size = 2;
         sub_080876B4();
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
         return;
     }
     else if ((gpKeySt->pressed & 1) && p->unk4e == 0
@@ -177,7 +177,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
 
         SetMapId(gUnknown_02027F74.unk04[p->unk58]);
         sub_0803BD54();
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
         RemoveMapPreviewPaletteHook();
         Proc_Start(gUnknown_08616CCC, p);
         p->unk4e = 1;
@@ -188,7 +188,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
     else if ((gpKeySt->pressed & 2) && Proc_Find(gUnknown_084892C4) == 0
              && Proc_Find(gUnknown_08616CCC) == 0)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         sub_0803BD60();
         RemoveMapPreviewPaletteHook();
         Proc_Start(gUnknown_08616CCC, p);
@@ -205,9 +205,9 @@ void MapSelectList_HandleInput(ProcPtr procp)
         gUnknown_0200C420.unk0c = 1 - gUnknown_0200C420.unk0c;
 
         if (gUnknown_0200C420.unk0c != 0)
-            sub_0803B4DC(0x65);
+            PlayMusicOrSfx2(0x65);
         else
-            sub_0803B4DC(0x66);
+            PlayMusicOrSfx2(0x66);
 
         ToggleMapRecordsPanel(p->unk58, p);
         return;
@@ -249,7 +249,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         p->unk52 = 0xFFFF;
         gUnknown_03001FE8.bits.size = 1;
         sub_080876B4();
-        sub_0803B4DC(0x76);
+        PlayMusicOrSfx2(0x76);
         return;
     }
     else if (gpKeySt->pressed & 0x110)
@@ -289,7 +289,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         p->unk52 = 1;
         gUnknown_03001FE8.bits.size = 1;
         sub_080876B4();
-        sub_0803B4DC(0x76);
+        PlayMusicOrSfx2(0x76);
     }
 }
 asm(".global sub_080860DC\n.thumb_set sub_080860DC, MapSelectList_HandleInput\n");

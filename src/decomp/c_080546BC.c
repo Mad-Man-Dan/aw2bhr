@@ -7,7 +7,7 @@
  * sub_080546BC @ 0x080546BC
  */
 
-void sub_080546BC(void)
+void SetBattleAnimFlagsForGame(void)
 {
     gUnknown_03004504.bit0 = 0;
     gUnknown_03004504.bit1 = 1;
@@ -18,3 +18,4 @@ void sub_080546BC(void)
     gUnknown_03004504.bit6 = 1;
     gUnknown_03004504.unk02 = 0xffff;
 }
+asm(".global sub_080546BC\n.thumb_set sub_080546BC, SetBattleAnimFlagsForGame\n");

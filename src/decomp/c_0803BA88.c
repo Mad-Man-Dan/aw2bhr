@@ -19,7 +19,7 @@
  * same else block.
  *
  * `movs r1,#3` is PROC_TREE_3, not a bare integer. */
-void sub_0803BA88(void)
+void MainMenuCampaign_Continue(void)
 {
     u8 v;
 
@@ -38,3 +38,4 @@ void sub_0803BA88(void)
         Proc_Start(gUnknown_0849EB7C, PROC_TREE_3);
     }
 }
+asm(".global sub_0803BA88\n.thumb_set sub_0803BA88, MainMenuCampaign_Continue\n");

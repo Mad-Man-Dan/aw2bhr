@@ -7,10 +7,10 @@
  * sub_08056EEC @ 0x08056EEC
  */
 
-/* sub_08056EEC @ 0x08056EEC */
+/* DrawTileBlock5x5B @ 0x08056EEC */
 
 /* Fills a six-halfword record on its own stack and hands the address to
- * sub_08056F8C -- the same shape sub_08057048 hands to sub_080570C4, and the
+ * DrawTileBlockFlippableB -- the same shape DrawTileBlock4x4A hands to DrawTileBlockA, and the
  * same two ROM tables indexed the same two ways.
  *
  * The second argument is never read; arity 3 comes from the r2 narrowing, and
@@ -18,7 +18,7 @@
  * at the use), i.e. `gUnknown_08553864[c]` on a u16 c -- a net left shift of
  * one, not a mask.
  *
- * gUnknown_085D6A48's column 1 is the case sub_08057048 is parked on, and the
+ * gUnknown_085D6A48's column 1 is the case DrawTileBlock4x4A is parked on, and the
  * COMMA-OPERATOR anchor closes it. The ROM wants both the `ldrh [r1, #2]`
  * displacement and the three pool words loaded outermost-first (08553878,
  * 085D6A48, 03004580, with 08553878 in the callee-saved r5 that pays for
@@ -48,7 +48,7 @@ struct Unk56EEC
     /* 0x0a */ u16 unk0a;
 };
 
-void sub_08056EEC(u16 a, u16 b, u16 c)
+void DrawTileBlock5x5B(u16 a, u16 b, u16 c)
 {
     struct Unk85D6A48Row *rows;
     struct Unk56EEC s;
@@ -61,6 +61,7 @@ void sub_08056EEC(u16 a, u16 b, u16 c)
          rows)[gUnknown_03004580[a][1]].unk02 * 2 + a];
     s.unk08 = gUnknown_08553888[a];
     s.unk0a = gUnknown_08553884[a];
-    sub_08056F8C(&s);
+    DrawTileBlockFlippableB(&s);
     gUnknown_03004534 = 1;
 }
+asm(".global sub_08056EEC\n.thumb_set sub_08056EEC, DrawTileBlock5x5B\n");

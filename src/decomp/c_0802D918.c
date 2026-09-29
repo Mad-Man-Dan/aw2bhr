@@ -25,8 +25,8 @@ void DeploymentScreen_Init(void)
     DrawWindowBackgroundOnBg2(1, 4, 0xf, 0x10);
     DrawDeploymentList(0);
     SetMapCursorDisplayPosition(8, 0x28);
-    sub_0803B4DC(0x65);
-    sub_0803A9C8(gUnknown_02023830[0]);
+    PlayMusicOrSfx2(0x65);
+    StartDeploymentUnitInfo(gUnknown_02023830[0]);
     SetInfoBoxMode(1);
 }
 asm(".global sub_0802D918\n.thumb_set sub_0802D918, DeploymentScreen_Init\n");

@@ -18,7 +18,7 @@
  * The `lsls #0x10; lsrs #0x10` in front of `cmp r0,#0xdc` is the ++ result
  * re-narrowed: gUnknown_084C3240->unk2c is `u16`, cse keeps the incremented
  * value in the register and the compare is unsigned (`bls`). */
-void sub_08049E50(ProcPtr proc)
+void DefeatFlow_WaitStep(ProcPtr proc)
 {
     int flag;
 
@@ -38,3 +38,4 @@ void sub_08049E50(ProcPtr proc)
             Proc_Break(proc);
     }
 }
+asm(".global sub_08049E50\n.thumb_set sub_08049E50, DefeatFlow_WaitStep\n");

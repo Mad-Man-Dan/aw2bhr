@@ -62,7 +62,7 @@ u8 IsOnlyOneTeamLeft(void)
                     if (i != j && IsPlayerAliveAndActive(j) && AreArmiesOnSameTeam(i, j) && !buf[j])
                     {
                         buf[i] = 0;
-                        sub_0802C154(i);
+                        MarkPlayerYielded(i);
                     }
                 }
             }

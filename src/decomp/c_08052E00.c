@@ -7,6 +7,7 @@
  * sub_08052E00 @ 0x08052E00
  */
 
-void sub_08052E00(void)
+void BombEffect_Loop(void)
 {
 }
+asm(".global sub_08052E00\n.thumb_set sub_08052E00, BombEffect_Loop\n");

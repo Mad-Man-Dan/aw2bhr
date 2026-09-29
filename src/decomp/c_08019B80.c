@@ -52,7 +52,7 @@ u8 Menu_MoveCursorFromDpad(void *arg)
         }
         Q->unk42--;
         hit = 1;
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (gpKeySt->repeated & DPAD_DOWN)
@@ -65,7 +65,7 @@ u8 Menu_MoveCursorFromDpad(void *arg)
         }
         Q->unk42++;
         hit = 1;
-        sub_0803B4DC(0x67);
+        PlayMusicOrSfx2(0x67);
     }
 
     if (hit == 1)

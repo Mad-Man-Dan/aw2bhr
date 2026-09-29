@@ -8,7 +8,7 @@
  * sub_0802D5E8 @ 0x0802D5E8
  */
 
-void sub_0802D5E8(s16 a1, s16 a2)
+void OpenDeploymentScreen(s16 a1, s16 a2)
 {
     int off;
     int v;
@@ -38,3 +38,4 @@ void sub_0802D5E8(s16 a1, s16 a2)
     sub_080152C0((s32)gUnknown_0849AFE8, 0);
     IncrementMapLock();
 }
+asm(".global sub_0802D5E8\n.thumb_set sub_0802D5E8, OpenDeploymentScreen\n");

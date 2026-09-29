@@ -55,7 +55,7 @@ void sub_08077790(ProcPtr proc)
     {
         sub_08014878();
         sub_080733A0(5);
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         Proc_Break(proc);
     }
     else if (!sub_08014824())
@@ -63,7 +63,7 @@ void sub_08077790(ProcPtr proc)
         if (gpKeySt->pressed & 1)
         {
             sub_08014878();
-            sub_0803B4DC(0x1CE);
+            PlayMusicOrSfx2(0x1CE);
             Proc_Goto(proc, 1);
         }
         else if (gpKeySt->pressed & R_BUTTON)

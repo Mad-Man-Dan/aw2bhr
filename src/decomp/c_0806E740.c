@@ -80,7 +80,7 @@ void sub_0806E780(struct Unk6E780Proc *proc)
 
     pal &= -(proc->unk34 != 0);
 
-    sub_0803B4DC(0x67);
+    PlayMusicOrSfx2(0x67);
     FillTilemapRect(gBG0TilemapBuffer, pal, 0x10, 0x10, 2, 0);
     BG_EnableSyncBG0();
 }

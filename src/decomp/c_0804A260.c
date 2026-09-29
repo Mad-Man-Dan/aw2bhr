@@ -88,7 +88,7 @@ void NameEntry_Init(void)
     gUnknown_030044E0->unk64 = 0;
     gUnknown_030044E0->unk66 = 0;
     LoadBg1WindowFrame(0);
-    sub_0802D5CC(0, 8);
+    ApplyWindowFramePalette(0, 8);
     LoadCursorSpriteGraphics();
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);
     gUnknown_03002B6C.bits.size = 1;

@@ -30,7 +30,7 @@
  * pair -- `((x * 0x20) & 0xffff)` or a shift would each need three.
  */
 
-void sub_0803F80C(int a1)
+void LoadArmyObjPalettes(int a1)
 {
     u16 (*pal)[16];
     int i;
@@ -41,6 +41,7 @@ void sub_0803F80C(int a1)
     for (i = 1; i < 5; i++)
         ApplyPaletteExt(pal[gPlayers[i].teamColor], (u16)((a1 + 0x10 + i) * 0x20), 0x20);
 }
+asm(".global sub_0803F80C\n.thumb_set sub_0803F80C, LoadArmyObjPalettes\n");
 
 /* MATCHED (wave 49, W49-C), first attempt. 96/96 bytes, relocs match.
  *

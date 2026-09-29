@@ -40,7 +40,7 @@
  * Hoisting `cur` above the loop inverts that choice and costs a -fforce-addr
  * .rodata address constant the ROM does not have.
  */
-int sub_0802E7C8(int a1, int a2, void *a3, int a4)
+int TruncatePathAtHiddenEnemy(int a1, int a2, void *a3, int a4)
 {
     s8 *p;
     u16 x;
@@ -94,3 +94,4 @@ int sub_0802E7C8(int a1, int a2, void *a3, int a4)
 
     return 0;
 }
+asm(".global sub_0802E7C8\n.thumb_set sub_0802E7C8, TruncatePathAtHiddenEnemy\n");

@@ -14,9 +14,10 @@
  * reads as `(u32)v << 13 >> 16`, which is `v / 8` truncated to 16 bits. The
  * truncation is FillTilemapRect's u16 parameter fusing with the divide, so no cast
  * belongs in the source. */
-void sub_080468D4(int x)
+void ClearTerrainInfoMoveCosts(int x)
 {
     FillTilemapRect(gBG0TilemapBuffer, (x + gUnknown_084C211C[0] * 8) / 8,
                  gUnknown_084C211C[1], 8, 8, 0);
     BG_EnableSyncBG0();
 }
+asm(".global sub_080468D4\n.thumb_set sub_080468D4, ClearTerrainInfoMoveCosts\n");

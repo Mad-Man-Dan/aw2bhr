@@ -19,7 +19,7 @@
  *    same pseudo as the first region's f, so it is global-by-flow and lands
  *    in r6 in both places; the addends in THIS order (the address is expanded
  *    first, then k * 5, then the load -- the ROM's instruction order); k is
- *    its own global pseudo (r4) and is what sub_080505A4 receives. The
+ *    its own global pseudo (r4) and is what SpawnThirdEffectAndProjectile receives. The
  *    draft's `u16 n` and `(f = k) * 5` were two pseudos where the ROM has
  *    one, and every earlier swap of the addends kept `(f = k)` and therefore
  *    kept a copy (that is the 78.2% waves 77 and 80 both measured).
@@ -75,7 +75,7 @@ void BomberFigure_Loop(void)
     if (f != 0xff)
     {
       struct Unk02029A10 *q;
-      sub_080505A4(c, k);
+      SpawnThirdEffectAndProjectile(c, k);
       q = (struct Unk02029A10 *) (((e * (sizeof(struct Unk02029A10))) + (c * (sizeof(struct Unk02029A10Group)))) + ((u8 *) gUnknown_02029A10));
       q->unk1e++;
       PlayMusicOrSfx(gUnknown_085D6C88[gUnknown_03004580[c][1]].unk0c[gUnknown_03004580[c][2] - 1][gUnknown_020296B0[c].unk1a & 1]);
@@ -98,7 +98,7 @@ void BomberFigure_Loop(void)
   entry = (struct Unk02029A10 *) (((e * (sizeof(struct Unk02029A10))) + (c * (sizeof(struct Unk02029A10Group)))) + ((u8 *) gUnknown_02029A10));
   entry->x += gUnknown_08553B28[c][w];
   entry->y -= gUnknown_085644D4[(row = gUnknown_02028E5C[c])[1]];
-  sub_0804EE08(c, e, gUnknown_03001FBC);
+  StepBomberBobOrKnock(c, e, gUnknown_03001FBC);
   SetSlotSpritePosition(gUnknown_03001FBC, entry->x, entry->y - (*p));
 }
 asm(".global sub_0804F3C8\n.thumb_set sub_0804F3C8, BomberFigure_Loop\n");

@@ -22,7 +22,8 @@
  * Proc_Start.
  */
 
-void sub_08031CE4(void)
+void EndLinkTransferPercent(void)
 {
     Proc_EndEach(gUnknown_0849B294);
 }
+asm(".global sub_08031CE4\n.thumb_set sub_08031CE4, EndLinkTransferPercent\n");

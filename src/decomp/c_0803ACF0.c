@@ -21,7 +21,7 @@ struct Unk0803ACF0
     /* 0x30 */ u16 unk30;
 };
 
-void sub_0803ACF0(struct Unk0803ACF0 *p)
+void DebugEdit_Init(struct Unk0803ACF0 *p)
 {
     p->unk20 = IsCampaignCompletionFlagSet(0x65);
     p->unk22 = IsCampaignCompletionFlagSet(0x66);
@@ -34,3 +34,4 @@ void sub_0803ACF0(struct Unk0803ACF0 *p)
                 + gUnknown_0200C420.unk0b) != 0;
     p->unk30 = gUnknown_0200CD0C;
 }
+asm(".global sub_0803ACF0\n.thumb_set sub_0803ACF0, DebugEdit_Init\n");

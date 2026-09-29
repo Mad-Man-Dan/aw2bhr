@@ -8,7 +8,7 @@
  */
 
 /* bool8, not int, and the evidence is entirely on the CALLER side: this body is
- * byte-identical under either return type, but sub_0802CC40 (wave 35, W35-H)
+ * byte-identical under either return type, but UnitMenu_SupplyUsability (wave 35, W35-H)
  * emits `bl HasSupplyAbility; lsls r0,r0,#0x18; cmp r0,#0` -- the narrowing agbcc
  * inserts at every call site of a sub-word-returning callee. Two instructions
  * earlier the same function calls BuildResupplyTargetList and tests it with a bare

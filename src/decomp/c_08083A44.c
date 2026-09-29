@@ -120,7 +120,7 @@ void MainMenuCarouselWheel_DrawSubmenuOptions(struct Unk8083A44 *p)
     {
         for (i = 0; i <= 1; i++)
         {
-            if (i == 0 && sub_0803BC7C() == 0)
+            if (i == 0 && GetCampaignSaveFlag() == 0)
                 PutSprite(3, 0x90, 0x48, gUnknown_08615C04, (i * 12 + 0x298) | 0xA800);
             else if (i == DivRem(p->unk66, 2))
                 PutSprite(3, 0x90, i * 16 + 0x48, gUnknown_08615C04, (i * 12 + 0x298) | 0x8800);
@@ -132,7 +132,7 @@ void MainMenuCarouselWheel_DrawSubmenuOptions(struct Unk8083A44 *p)
     {
         for (i = 0; i <= 1; i++)
         {
-            if (i == 0 && sub_0803BC88() == 0)
+            if (i == 0 && GetVersusSaveFlag() == 0)
                 PutSprite(3, 0x90, 0x48, gUnknown_08615C04, (i * 12 + 0x298) | 0xB800);
             else if (i == DivRem(p->unk66, 2))
                 PutSprite(3, 0x90, i * 16 + 0x48, gUnknown_08615C04, (i * 12 + 0x298) | 0x8800);
@@ -144,7 +144,7 @@ void MainMenuCarouselWheel_DrawSubmenuOptions(struct Unk8083A44 *p)
     {
         for (i = 0; i <= 1; i++)
         {
-            if (i == 0 && sub_0803BC94() == 0)
+            if (i == 0 && GetWarRoomSaveFlag() == 0)
                 PutSprite(3, 0x90, 0x48, gUnknown_08615C04, (i * 12 + 0x298) | 0xC800);
             else if (i == DivRem(p->unk66, 2))
                 PutSprite(3, 0x90, i * 16 + 0x48, gUnknown_08615C04, (i * 12 + 0x298) | 0x8800);

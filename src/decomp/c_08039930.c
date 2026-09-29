@@ -17,9 +17,10 @@ struct Unk39930Proc
     /* 54 */ int unk54;
 };
 
-void sub_08039930(int a, ProcPtr parent)
+void StartCoPowerPanel(int a, ProcPtr parent)
 {
     struct Unk39930Proc *proc = Proc_Start(gUnknown_0849D7FC, parent);
 
     proc->unk54 = a;
 }
+asm(".global sub_08039930\n.thumb_set sub_08039930, StartCoPowerPanel\n");

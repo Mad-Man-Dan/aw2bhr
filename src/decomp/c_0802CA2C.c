@@ -8,7 +8,7 @@
  * sub_0802CA2C @ 0x0802CA2C, sub_0802CA78 @ 0x0802CA78, sub_0802CB20 @ 0x0802CB20
  */
 
-int sub_0802CA2C(void)
+int UnitMenu_LaunchUsability(void)
 {
     if (!UnitMenu_JoinUsability())
         return 1;
@@ -24,6 +24,7 @@ int sub_0802CA2C(void)
 
     return 1;
 }
+asm(".global sub_0802CA2C\n.thumb_set sub_0802CA2C, UnitMenu_LaunchUsability\n");
 
 int UnitMenu_FireUsability(void)
 {
@@ -58,7 +59,7 @@ int UnitMenu_FireUsability(void)
 }
 asm(".global sub_0802CA78\n.thumb_set sub_0802CA78, UnitMenu_FireUsability\n");
 
-int sub_0802CB20(void)
+int UnitMenu_FireNoTargetUsability(void)
 {
     int off;
     u32 cur;
@@ -88,3 +89,4 @@ int sub_0802CB20(void)
 
     return 1;
 }
+asm(".global sub_0802CB20\n.thumb_set sub_0802CB20, UnitMenu_FireNoTargetUsability\n");

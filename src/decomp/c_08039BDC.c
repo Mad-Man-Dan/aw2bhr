@@ -30,7 +30,7 @@ struct Unk39BDCProc
     /* 0x32 */ s16 unk32;
 };
 
-void sub_08039BDC(struct Unk39BDCProc *proc)
+void SparkleZoom_Init(struct Unk39BDCProc *proc)
 {
     proc->unk32 = AllocObjAffineSlot(proc);
 
@@ -45,3 +45,4 @@ void sub_08039BDC(struct Unk39BDCProc *proc)
 
     proc->unk2e = 0;
 }
+asm(".global sub_08039BDC\n.thumb_set sub_08039BDC, SparkleZoom_Init\n");

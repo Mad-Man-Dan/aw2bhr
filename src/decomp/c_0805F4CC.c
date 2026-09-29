@@ -8,14 +8,14 @@
  */
 
 /* Dispatch through a ROM table of nullary handlers, guarded by a clamp on the
- * cursor byte. sub_0802CF94's shape one step further out: a bounds fix on a
+ * cursor byte. CycleWeather's shape one step further out: a bounds fix on a
  * counter held in a global record, then a call parameterised by it.
  *
  * The byte at +0x0b is struct Unk030040D8's unk07[4] -- a CONSTANT subscript, so
  * it folds into the `ldrb`/`strb` displacement and shows none of the
  * `adds rB,#7` member-array tell that a variable index would leave.
  *
- * `> 7` with the reset as the THEN arm, exactly as in sub_0802CF94: the `<= 7`
+ * `> 7` with the reset as the THEN arm, exactly as in CycleWeather: the `<= 7`
  * spelling emits the mirror branch. `bls` is UNSIGNED, agreeing with the u8.
  *
  * `bl _call_via_r0` with no argument register written before it -- r0 index is

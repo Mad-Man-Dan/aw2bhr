@@ -19,7 +19,7 @@
  * so the two byte reads land between the address and the load exactly as the
  * ROM has them. Without the parentheses the sum reassociates and the `ldrh`
  * moves four instructions earlier. */
-u8 sub_0803EED4(int a1, int a2)
+u8 GetTerrainTypeAt(int a1, int a2)
 {
     struct Unk02028360Pos pos;
     struct Unk02028360 *p;
@@ -29,9 +29,10 @@ u8 sub_0803EED4(int a1, int a2)
     p = FindInventionAt(a1, a2);
     if (p != NULL)
     {
-        sub_0803DF98(p->unk02_6, &pos);
+        GetInventionOriginOffset(p->unk02_6, &pos);
         ret = gMap->terrain[gMap->rowOffset[p->unk01 + pos.unk02] + (p->unk00 + pos.unk00)];
     }
 
     return ret;
 }
+asm(".global sub_0803EED4\n.thumb_set sub_0803EED4, GetTerrainTypeAt\n");

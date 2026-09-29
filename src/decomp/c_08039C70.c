@@ -40,7 +40,7 @@ struct Unk39C70Proc
     /* 0x32 */ s16 unk32;
 };
 
-void sub_08039C70(struct Unk39C70Proc *proc)
+void SparkleZoom_Loop(struct Unk39C70Proc *proc)
 {
     u16 step;
     int x;
@@ -71,3 +71,4 @@ void sub_08039C70(struct Unk39C70Proc *proc)
                      (y & 0xff) | 0x100,
                      gUnknown_0849D824, proc->unk2c);
 }
+asm(".global sub_08039C70\n.thumb_set sub_08039C70, SparkleZoom_Loop\n");

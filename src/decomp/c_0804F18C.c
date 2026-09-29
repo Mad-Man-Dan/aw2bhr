@@ -55,7 +55,7 @@ void BomberFigure_Init(void)
   oam.priority = 2;
   gUnknown_0300454C[0] = oam.priority;
   SetSlotSpriteAttrs(gUnknown_03001FBC, *((struct UnkVec *) (&oam)));
-  pos = (struct UnkPosPair *) sub_08057D44(gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]][0], gUnknown_03004580[gUnknown_0300453C][3]);
+  pos = (struct UnkPosPair *) GetFigurePositionTable(gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]][0], gUnknown_03004580[gUnknown_0300453C][3]);
   v = gUnknown_085644E0[gUnknown_0300453C][gUnknown_0300450C];
   ;
   if ((*((u8 *) (&gUnknown_03004504))) & 1)

@@ -68,7 +68,7 @@ void HandleRulesMenuInput(void)
     if (i != gUnknown_08580934->unk33)
     {
         gUnknown_08580934->unk2a = 0;
-        sub_0803B4DC(0x64);
+        PlayMusicOrSfx2(0x64);
     }
 
     gUnknown_08580934->unk33 = i;
@@ -114,6 +114,6 @@ void RuleOption_ChangeValue(struct Unk08580934_Obj *p)
     }
 
     if (p->unk49 != p->unk48)
-        sub_0803B4DC(0x64);
+        PlayMusicOrSfx2(0x64);
 }
 asm(".global sub_08066C70\n.thumb_set sub_08066C70, RuleOption_ChangeValue\n");

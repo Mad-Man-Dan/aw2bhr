@@ -37,7 +37,7 @@ void SetUpBattleBackdrops(u16 a, u16 b)
     if (e1[1] == 2)
         b = 7;
 
-    sub_0804B8BC(a, b);
+    InitPanelScrollDrivers(a, b);
     LoadBattleBackdropArt(0, a, (void *)0x06008000, (void *)0x06003000,
         (void *)0x05000020, (void *)0x06017C00, (void *)0x05000380);
     LoadBattleBackdropArt(1, b, (void *)0x0600C000, (void *)0x06003800,

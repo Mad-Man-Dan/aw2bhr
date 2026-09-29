@@ -26,7 +26,7 @@ void CruiserVariant2Figure_Loop(void)
     {
         if (gUnknown_020296B0[c].unk0c[gUnknown_020296B0[c].unk18] != 0xff)
         {
-            sub_080505A4(c, gUnknown_02029A10[c].entries[e].unk1e);
+            SpawnThirdEffectAndProjectile(c, gUnknown_02029A10[c].entries[e].unk1e);
             gUnknown_02029A10[c].entries[e].unk1e++;
         }
 

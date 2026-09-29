@@ -32,7 +32,7 @@
  * draft referenced any filler. Keep the drafts in sync; sync_work.py
  * reintroduces whatever the drafts say. */
 
-u8 sub_0802B6C8(u8 x, u8 y)
+u8 GetCursorInfoPanelSizeClass(u8 x, u8 y)
 {
     struct Unit *unit;
     u8 army;
@@ -54,3 +54,4 @@ u8 sub_0802B6C8(u8 x, u8 y)
 
     return 1;
 }
+asm(".global sub_0802B6C8\n.thumb_set sub_0802B6C8, GetCursorInfoPanelSizeClass\n");

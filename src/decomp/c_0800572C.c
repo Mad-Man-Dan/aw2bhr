@@ -27,15 +27,15 @@ void sub_0800572C(void)
 {
     InitTilePool(0, (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)), 0x2FC, 10);
     LoadTilePoolGraphic(9);
-    if (sub_0803CCB8(0, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(0, gDesignRoomName) != 1)
         sub_08004D74(0, 0);
     else
         sub_08004D90(0, 0, gDesignRoomName);
-    if (sub_0803CCB8(1, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(1, gDesignRoomName) != 1)
         sub_08004D74(0, 1);
     else
         sub_08004D90(0, 1, gDesignRoomName);
-    if (sub_0803CCB8(2, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(2, gDesignRoomName) != 1)
         sub_08004D74(0, 2);
     else
         sub_08004D90(0, 2, gDesignRoomName);
@@ -51,7 +51,7 @@ void sub_0800572C(void)
  * the `(u16)` shift pair appears with it. Same size either way, 20 of 76 bytes
  * different -- see the note added to docs/agbcc-codegen.md.
  *
- * unk10 stays `u8`: sub_0800520C hands it to sub_0803CCB8's `int` parameter
+ * unk10 stays `u8`: sub_0800520C hands it to LoadDesignRoomName's `int` parameter
  * with a bare `ldrb` and matches, and an `s8` member would give `ldrsb` there.
  * Declaring the member `s8` changes NOTHING here (probed with a struct cast),
  * so the cast is the source's and not the type's. */

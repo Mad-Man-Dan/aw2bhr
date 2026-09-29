@@ -75,13 +75,13 @@ void TitleIntro_WaitForInput(struct ProcTitleScreen * proc)
     if (proc->unk_2C < 0)
     {
         ((struct ProcTitlePressStartDraw *)(Proc_Find(ProcScr_TitlePressStartDraw)))->unk_34 = 0;
-        sub_0803B5E8();
+        FadeOutMusicDefault();
         Proc_Break(proc);
     }
 
     if ((proc->unk_2C <= (2700 - gUnknown_0202F2C4)) && (gpKeySt->pressed & 9))
     {
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
         LinkShutdown();
         Proc_GotoScript(proc, ProcScr_TitleToMainMenu);
     }
@@ -199,7 +199,7 @@ void sub_0806CB5C(struct ProcTitleScreen * proc)
     if (proc->unk_30 != 0)
     {
         ((struct ProcTitleSpriteDraw *)(Proc_Start(ProcScr_TitleScreenSpriteDraw, proc)))->unk_34 = proc->unk_34;
-        sub_0803B5E8();
+        FadeOutMusicDefault();
     }
 
     proc->unk_30 = 0;
@@ -232,7 +232,7 @@ void sub_0806CBA8(struct ProcTitleScreen * proc)
     if (proc->unk_30 == 10)
     {
         ((struct ProcTitleSpriteDraw *)(Proc_Start(ProcScr_TitleScreenSpriteDraw, proc)))->unk_34 = proc->unk_34;
-        sub_0803B5E8();
+        FadeOutMusicDefault();
     }
 
     sub_0806CC4C();
@@ -439,7 +439,7 @@ void TitleSpriteDraw_Init(struct ProcTitleSpriteDraw * proc)
         return;
     }
 
-    sub_0803B4DC(0x1CF);
+    PlayMusicOrSfx2(0x1CF);
 }
 
 void TitleSpriteDraw_Loop_Draw2(struct ProcTitleSpriteDraw * proc)
@@ -485,7 +485,7 @@ void TitleSpriteDraw_Loop_SlideTitleIn(struct ProcTitleSpriteDraw * proc)
 
     if (proc->unk_30 == 22)
     {
-        sub_0803B4DC(0x79);
+        PlayMusicOrSfx2(0x79);
         Proc_Break(proc);
     }
 

@@ -38,14 +38,14 @@ void MatchSetupHandleTeamStageInput(void)
         ForEachSlotRunningScript(gUnknown_08580A38, sub_08066210);
         ForEachSlotRunningScript(gUnknown_08580A08, sub_08066210);
 
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
     }
     else if (gpKeySt->pressed & 1)
     {
         sub_080654E8();
         MatchSetupSpawnRuleOptions();
         gUnknown_08580934->unk30 = 0;
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
     }
 }
 asm(".global sub_08066220\n.thumb_set sub_08066220, MatchSetupHandleTeamStageInput\n");

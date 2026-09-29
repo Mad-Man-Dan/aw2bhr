@@ -49,12 +49,12 @@ void WorldMapCursor_Loop(ProcPtr proc)
         SetDifficultyStarsPalette(2);
         SetWorldMapScopePalette(2);
         EndWorldMapNationPanel();
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
         Proc_Break(proc);
     }
     else if (gpKeySt->pressed & 2)
     {
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
         Proc_Goto(proc, 5);
     }
     else

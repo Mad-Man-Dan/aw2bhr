@@ -9,8 +9,9 @@
 
 /* src/decomp/c_0803A53C.c's shape twice over -- see the note there for why the
  * callback goes through a `(void *)` cast. */
-void sub_0803A440(void)
+void UnitInfoPanel_AddDrawCallbacks(void)
 {
-    RunOrQueueDrawCallback((void *)sub_0803A07C, 1);
+    RunOrQueueDrawCallback((void *)UnitInfoPanel_DrawPictureAndFuel, 1);
     RunOrQueueDrawCallback((void *)UnitInfoPanel_DrawAmmoAndRange, 1);
 }
+asm(".global sub_0803A440\n.thumb_set sub_0803A440, UnitInfoPanel_AddDrawCallbacks\n");

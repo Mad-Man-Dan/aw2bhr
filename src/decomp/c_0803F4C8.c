@@ -34,7 +34,7 @@ struct UnkF510Proc
  * BYTE-returning callee, which is what retyped AP_Update from `int` to `u8`
  * in unknown-functions.h -- with `int` the test is a bare `cmp r0, #0`.
  */
-void sub_0803F4C8(struct UnkF4C8Proc *proc)
+void VolcanoRock_WaitImpact(struct UnkF4C8Proc *proc)
 {
     if (AP_Update(proc->unk50, (proc->unk54 - gMap->scrollX) & 0x1FF, (proc->unk58 - gMap->scrollY) & 0xFF) == 0)
     {
@@ -42,12 +42,13 @@ void sub_0803F4C8(struct UnkF4C8Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0803F4C8\n.thumb_set sub_0803F4C8, VolcanoRock_WaitImpact\n");
 
 /* `adds r1, r2, #0` before the bl -- the parent is the third parameter, the
  * same shape src/decomp/c_0803F3E4.c has. Both stored fields are words; the
  * `lsls #0x10; asrs #0x10` pairs afterwards are the conversions to
  * ScrollCameraToCenterCell's `s16` parameters and apply to the arguments, not the fields. */
-void sub_0803F510(int a, int b, ProcPtr parent)
+void StartDeathRayFire(int a, int b, ProcPtr parent)
 {
     struct UnkF510Proc *proc = Proc_StartBlocking(gUnknown_0849F940, parent);
 
@@ -56,3 +57,4 @@ void sub_0803F510(int a, int b, ProcPtr parent)
 
     ScrollCameraToCenterCell(a + 1, b + 1);
 }
+asm(".global sub_0803F510\n.thumb_set sub_0803F510, StartDeathRayFire\n");

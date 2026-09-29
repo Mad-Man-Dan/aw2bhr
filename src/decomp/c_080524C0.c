@@ -15,7 +15,7 @@
  *     under "Large functions": assigning a u16 table element straight into a
  *     bitfield narrower than 16 bits lets force_to_mode push the store's byte
  *     mask back into the load and emit `ldrb`. The ROM has `ldrh`, so the
- *     original bound the element first, exactly as sub_0804D928 does;
+ *     original bound the element first, exactly as CruiserPart2_Init does;
  *   - priority is 1, as in SmokeEffect_Init.
  * Everything else -- including which address ends up in r7 for the whole
  * function -- falls out of the extra gUnknown_0300453C read and needs no

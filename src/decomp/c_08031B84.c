@@ -18,14 +18,14 @@
  * inverts the branch; assigning to a variable and returning once keeps
  * `movs r0,#1` inline where the ROM has it, and lets the `movs r0,#0` merge
  * with the zero the unk212 store already needs. */
-int sub_08031B84(void)
+int LinkWaitReadyBarrierBeepOnB(void)
 {
     int r;
 
     gUnknown_0849B01C->unk06 = 0x9ABC;
 
     if (gpKeySt->pressed & 2)
-        sub_0803B4DC(0x68);
+        PlayMusicOrSfx2(0x68);
 
     if (gUnknown_0849B01C->unk212 == 0)
     {
@@ -40,3 +40,4 @@ int sub_08031B84(void)
 
     return r;
 }
+asm(".global sub_08031B84\n.thumb_set sub_08031B84, LinkWaitReadyBarrierBeepOnB\n");

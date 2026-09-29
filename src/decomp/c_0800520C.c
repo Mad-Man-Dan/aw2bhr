@@ -11,7 +11,7 @@ void sub_0800520C(void)
 {
     gActiveMap->flags &= 0xFEFF;
     gActiveMap->designSlot = 0;
-    if (sub_0803CCB8(gActiveMap->designSlot, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(gActiveMap->designSlot, gDesignRoomName) != 1)
     {
         if (!sub_080051EC((const char *)gActiveMap->designName))
         {
@@ -43,7 +43,7 @@ void sub_080052D8(void)
 {
     gActiveMap->flags &= 0xFEFF;
     gActiveMap->designSlot = 1;
-    if (sub_0803CCB8(gActiveMap->designSlot, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(gActiveMap->designSlot, gDesignRoomName) != 1)
     {
         if (!sub_080051EC((const char *)gActiveMap->designName))
         {
@@ -75,7 +75,7 @@ void sub_080053A8(void)
 {
     gActiveMap->flags &= 0xFEFF;
     gActiveMap->designSlot = 2;
-    if (sub_0803CCB8(gActiveMap->designSlot, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(gActiveMap->designSlot, gDesignRoomName) != 1)
     {
         if (!sub_080051EC((const char *)gActiveMap->designName))
         {
@@ -112,7 +112,7 @@ int DesignRoomRefreshSlotFlag(int a1)
 {
     int result;
 
-    if (sub_0803CCB8((u8)a1, gDesignRoomName) == 1)
+    if (LoadDesignRoomName((u8)a1, gDesignRoomName) == 1)
     {
         result = 0;
         switch (a1)

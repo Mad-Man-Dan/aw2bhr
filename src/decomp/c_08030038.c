@@ -41,7 +41,7 @@
  *
  * Nothing in struct Unk02025564 or struct Unk02025584 needed changing. */
 
-void sub_08030038(s16 a1, struct Unk02025564 *p)
+void LinkMergeMapListBlock(s16 a1, struct Unk02025564 *p)
 {
     int i;
     int j;
@@ -66,3 +66,4 @@ void sub_08030038(s16 a1, struct Unk02025564 *p)
             gUnknown_02025564.unk20[a1 * 3 + j].unk14[i] = p->unk20[j].unk14[i];
     }
 }
+asm(".global sub_08030038\n.thumb_set sub_08030038, LinkMergeMapListBlock\n");

@@ -8,9 +8,10 @@
  */
 
 /* Three sequential calls, all results discarded. */
-void sub_08045EAC(void)
+void MapEventFx_ShakeAndFlashWithSfx1D5(void)
 {
     StartScreenShake(2, 0x8C, 0);
     StartWhiteFlash(2, 0, 0xB4, 0);
-    sub_0803B4DC(0x1D5);
+    PlayMusicOrSfx2(0x1D5);
 }
+asm(".global sub_08045EAC\n.thumb_set sub_08045EAC, MapEventFx_ShakeAndFlashWithSfx1D5\n");

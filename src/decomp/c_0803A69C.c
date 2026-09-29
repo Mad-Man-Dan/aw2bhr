@@ -47,7 +47,7 @@ void UnitClassInfo_Loop(void)
   StepMapCursorAndDraw(2);
   if (gpKeySt->repeated & (DPAD_LEFT | DPAD_UP))
   {
-    sub_0803B4DC(0x67);
+    PlayMusicOrSfx2(0x67);
     gUnknown_0849D89C->unk09--;
     if (gUnknown_0849D89C->unk09 < 0)
     {
@@ -65,7 +65,7 @@ void UnitClassInfo_Loop(void)
   }
   if (gpKeySt->repeated & (DPAD_RIGHT | DPAD_DOWN))
   {
-    sub_0803B4DC(0x67);
+    PlayMusicOrSfx2(0x67);
     gUnknown_0849D89C->unk09++;
     if (gUnknown_0849D89C->unk09 > 0xf)
     {
@@ -105,9 +105,9 @@ void UnitClassInfo_Loop(void)
   else
     if (gpKeySt->pressed & 2)
   {
-    sub_0803B4DC(0x66);
+    PlayMusicOrSfx2(0x66);
     sub_08014878();
-    sub_0803A59C();
+    EndUnitInfoPanelScripts();
     sub_0801537C(gUnknown_0849E2C0);
     ClearSlotScriptCallback(gUnknown_03001FBC);
   }
@@ -115,7 +115,7 @@ void UnitClassInfo_Loop(void)
     if (gpKeySt->pressed & R_BUTTON)
   {
     sub_08014878();
-    sub_0803A59C();
+    EndUnitInfoPanelScripts();
     sub_0801537C(gUnknown_0849E2C0);
     ClearSlotScriptCallback(gUnknown_03001FBC);
     ShowTerrainInfoWindow(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));

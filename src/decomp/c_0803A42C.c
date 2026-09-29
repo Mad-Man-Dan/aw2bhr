@@ -28,9 +28,10 @@
  * open-coded at 0x0803A3B0 and 0x0801A414 in asm/.
  */
 
-void sub_0803A42C(void)
+void UnitInfoPanel_Close(void)
 {
     BG_EnableSyncBG2();
     sub_08013AD4(0);
     SetMapLayerPrioritiesDefault();
 }
+asm(".global sub_0803A42C\n.thumb_set sub_0803A42C, UnitInfoPanel_Close\n");

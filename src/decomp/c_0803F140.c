@@ -18,7 +18,7 @@ struct UnkF140Proc
     /* 6a */ s16 unk6a;
 };
 
-void sub_0803F140(struct UnkF140Proc *proc)
+void CannonFire_StartMuzzleEffect(struct UnkF140Proc *proc)
 {
     int x;
     int y;
@@ -26,13 +26,14 @@ void sub_0803F140(struct UnkF140Proc *proc)
     x = 0;
     y = 0;
     sub_0803F29C(&x, &y, proc->unk6a);
-    Decompress(sub_0803F110(proc->unk6a), (void *)0x06013940);
+    Decompress(GetCannonFireTileGraphic(proc->unk6a), (void *)0x06013940);
     ApplyPaletteExt(gUnknown_08109564, 0x260, 0x40);
-    APProc_Create(sub_0803F128(proc->unk6a),
+    APProc_Create(GetCannonFireSpriteData(proc->unk6a),
                  proc->unk54 * 16 - gMap->scrollX + x,
                  proc->unk58 * 16 - gMap->scrollY + y,
                  0x31CA,
                  sub_0803F27C(proc->unk68),
                  0);
-    sub_0803B4DC(0x1C4);
+    PlayMusicOrSfx2(0x1C4);
 }
+asm(".global sub_0803F140\n.thumb_set sub_0803F140, CannonFire_StartMuzzleEffect\n");

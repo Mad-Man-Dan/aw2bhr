@@ -64,7 +64,7 @@ void SoundRoomMusicPage_Init(struct Unk0806EB5CProc *proc)
     ClearBg1Tilemap();
     ClearBg2Tilemap();
     ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-    sub_0802D5CC(0, 3);
+    ApplyWindowFramePalette(0, 3);
     Decompress(gUnknown_0823A3D4, (void *)0x06008000);
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     Decompress(gUnknown_081A3E28, (void *)0x06000400);
@@ -132,7 +132,7 @@ void SoundRoomMusicPage_Resume(struct Unk0806ED7CProc *proc)
     ClearBg1Tilemap();
     ClearBg2Tilemap();
     ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-    sub_0802D5CC(0, 3);
+    ApplyWindowFramePalette(0, 3);
     Decompress(gUnknown_0823A3D4, (void *)0x06008000);
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     Decompress(gUnknown_081A3E28, (void *)0x06000400);

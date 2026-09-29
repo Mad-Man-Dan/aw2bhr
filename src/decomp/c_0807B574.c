@@ -70,6 +70,6 @@ void sub_0807B574(struct Unk0807B574Proc * proc)
             proc->unk5c = 0x270f;
 
         if (proc->unk38 & 1)
-            sub_0803B4DC(0x7c);
+            PlayMusicOrSfx2(0x7c);
     }
 }

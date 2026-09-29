@@ -9,7 +9,7 @@
 
 /* MATCHED (wave 49, W49-C), first attempt. 324/324 bytes, relocs match.
  *
- * The proc step behind the sub_0803EB84 filter (src/decomp/c_0803EB84.c), whose
+ * The proc step behind the InventionFire_EndWhenDone filter (src/decomp/c_0803EB84.c), whose
  * +0x4c s16 cursor this one walks and increments.
  *
  * The `subs #1; cmp #4; bhi` switch is the dense jump-table form, so table entry
@@ -31,7 +31,7 @@ struct Unk3EBA4Proc
     /* 4c */ s16 unk4c;
 };
 
-void sub_0803EBA4(struct Unk3EBA4Proc *proc)
+void InventionFire_StartEffect(struct Unk3EBA4Proc *proc)
 {
     struct Unk03003338 *p;
     struct Unit *u;
@@ -47,26 +47,27 @@ void sub_0803EBA4(struct Unk3EBA4Proc *proc)
     switch (p[proc->unk4c].unk02)
     {
     case 1:
-        sub_0803EF44(p[proc->unk4c].unk04, p[proc->unk4c].unk06, proc);
+        StartLaserFire(p[proc->unk4c].unk04, p[proc->unk4c].unk06, proc);
         break;
     case 2:
-        sub_0803F2B8(p[proc->unk4c].unk04, p[proc->unk4c].unk06,
+        StartVolcanoFire(p[proc->unk4c].unk04, p[proc->unk4c].unk06,
                      (int)gUnknown_0849F728[gUnknown_03004080 & 1], proc);
         break;
     case 3:
         q = FindInventionAt(p[proc->unk4c].unk04, p[proc->unk4c].unk06);
-        sub_0803F0A4(p[proc->unk4c].unk04, p[proc->unk4c].unk06, u->x, u->y,
+        StartCannonFire(p[proc->unk4c].unk04, p[proc->unk4c].unk06, u->x, u->y,
                      3, q->unk02_e, proc);
         break;
     case 4:
         q = FindInventionAt(p[proc->unk4c].unk04, p[proc->unk4c].unk06);
-        sub_0803F0A4(p[proc->unk4c].unk04, p[proc->unk4c].unk06, u->x, u->y,
+        StartCannonFire(p[proc->unk4c].unk04, p[proc->unk4c].unk06, u->x, u->y,
                      4, q->unk02_e, proc);
         break;
     case 5:
-        sub_0803F510(p[proc->unk4c].unk04, p[proc->unk4c].unk06, proc);
+        StartDeathRayFire(p[proc->unk4c].unk04, p[proc->unk4c].unk06, proc);
         break;
     }
     proc->unk4c++;
     Proc_Goto(proc, 0);
 }
+asm(".global sub_0803EBA4\n.thumb_set sub_0803EBA4, InventionFire_StartEffect\n");

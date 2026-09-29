@@ -7,7 +7,7 @@
  * sub_0803A338 @ 0x0803A338
  */
 
-void sub_0803A338(void)
+void UnitInfoPanel_Open(void)
 {
     TmApplyTsaClipped(gBG2TilemapBuffer, gUnknown_0849D89C->unk00 >> 3, 0, gUnknown_080D4228, 0x8360);
     sub_0801F114();
@@ -35,6 +35,7 @@ void sub_0803A338(void)
     LoadTilePoolGraphic(0xb5);
     LoadTilePoolGraphic(0xb6);
     LoadTilePoolGraphic(0xb7);
-    sub_0803A190(gUnknown_0849D89C->unk00, gUnknown_0849D89C->unk04);
+    UnitInfoPanel_LoadPictureDrawMoveAndVision(gUnknown_0849D89C->unk00, gUnknown_0849D89C->unk04);
     sub_0803A2BC(gUnknown_0849D89C->unk00, gUnknown_0849D89C->unk04);
 }
+asm(".global sub_0803A338\n.thumb_set sub_0803A338, UnitInfoPanel_Open\n");

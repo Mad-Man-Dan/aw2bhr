@@ -28,7 +28,7 @@
 #include "hardware.h"
 /* A volatile view of struct Unk0849B01C's unk08 row array.  The member itself
  * cannot carry the qualifier -- see the note in include/unknown-globals.h:
- * sub_08030178's `unk08[0][i] |= 0xffff` goes +4 bytes if it does -- but the
+ * LinkRestartKeySync's `unk08[0][i] |= 0xffff` goes +4 bytes if it does -- but the
  * ROM's plain row store here carries the dead `ldrh` of the destination that
  * only a volatile AGGREGATE lvalue produces.  A `(volatile u16 *)` cast on the
  * row pointer is NOT equivalent: it folds the 0x8 into the store displacement
@@ -69,7 +69,7 @@ void SioHandleIrq_Serial(void)
                     gUnknown_0849B018->unk0a[i] = 1;
                 gUnknown_0849B018->unk08 |= 1 << i;
             }
-            if (sub_0802F460(i) == 1)
+            if (SioIsPlayerLinked(i) == 1)
             {
                 if (gUnknown_0849B018->unk0e[i] == 0xFFFF)
                     gUnknown_0849B018->unk16[i]++;
@@ -117,7 +117,7 @@ void SioHandleIrq_Serial(void)
                 }
                 for (i = 0; i < 4; i++)
                 {
-                    if (sub_0802F460(i) && buf[i] != 0x9ABC)
+                    if (SioIsPlayerLinked(i) && buf[i] != 0x9ABC)
                         count++;
                 }
                 if (count == 0)

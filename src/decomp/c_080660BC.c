@@ -56,9 +56,9 @@ void MatchSetupCycleTeam(u16 keys, int idx, u8 sfx)
         if (sfx)
         {
             if (old != gUnknown_08580934->unk11[index])
-                sub_0803B4DC(0x64);
+                PlayMusicOrSfx2(0x64);
             else
-                sub_0803B4DC(0x68);
+                PlayMusicOrSfx2(0x68);
         }
     }
 
@@ -79,9 +79,9 @@ void MatchSetupCycleTeam(u16 keys, int idx, u8 sfx)
         if (sfx)
         {
             if (old != gUnknown_08580934->unk11[index])
-                sub_0803B4DC(0x64);
+                PlayMusicOrSfx2(0x64);
             else
-                sub_0803B4DC(0x68);
+                PlayMusicOrSfx2(0x68);
         }
     }
 }

@@ -7,7 +7,8 @@
  * sub_08031CD4 @ 0x08031CD4
  */
 
-void sub_08031CD4(void)
+void LinkClearTransferProgress(void)
 {
     gUnknown_0849B060->unk0a = 0;
 }
+asm(".global sub_08031CD4\n.thumb_set sub_08031CD4, LinkClearTransferProgress\n");

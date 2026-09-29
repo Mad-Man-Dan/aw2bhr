@@ -18,7 +18,7 @@
 int CreateRootMenuWithSfx(const void *a1, u16 a2, u16 a3, u16 a4)
 {
     sub_0801A604();
-    sub_0803B4DC(0x65);
+    PlayMusicOrSfx2(0x65);
     return CreateRootMenu(a1, a2, a3, a4, 0);
 }
 asm(".global sub_0801A104\n.thumb_set sub_0801A104, CreateRootMenuWithSfx\n");

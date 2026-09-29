@@ -28,7 +28,7 @@
  * so `g[i] + g[i+2]` is what puts the `ldrb` of g[i+2] ahead of the reload of
  * g[i]. Four bitfield writes per group collapse into byte-wide
  * read-modify-writes the same way c_08030F20.c documents. */
-void sub_08030F60(int a1)
+void LinkScreenSetupWindow(int a1)
 {
     int i = a1 * 4;
 
@@ -54,5 +54,6 @@ void sub_08030F60(int a1)
     gUnknown_030030DC.bits.win0_enable_obj = 1;
     gUnknown_030030DC.bits.win0_enable_blend = 1;
 
-    sub_08030F20();
+    LinkScreenSetupBlend();
 }
+asm(".global sub_08030F60\n.thumb_set sub_08030F60, LinkScreenSetupWindow\n");

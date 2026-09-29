@@ -8,7 +8,7 @@
  */
 
 /* "Suspend the BGM": stash the currently-requested song id in gUnknown_030005C8
- * so sub_0803B640 / sub_0803B660 can restart it later, blank the requested slot
+ * so ReplayPendingMusic / ReplayPendingMusicIfEnabled can restart it later, blank the requested slot
  * to the 0xFFFF sentinel, then fade the mixer out and pause it over 2 frames
  * (m4aMPlayFadeOutPause, m4aMPlayFadeOutPause). Its resume counterpart is MusicResumeFade_Start
  * next door, which copies the pair back the other way and calls

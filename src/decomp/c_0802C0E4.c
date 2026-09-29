@@ -9,9 +9,9 @@
 
 /* An empty function. `bx lr` with no `push` at all is agbcc's leaf epilogue for
  * a body that does nothing, and the two bytes after it are the `.align 2, 0`
- * ahead of the 4-aligned sub_0802C0E8 -- here the splitter counted that pad as
+ * ahead of the 4-aligned StartMainMenuForGameMode -- here the splitter counted that pad as
  * part of this function rather than giving it its own symbol, which is the
- * opposite of what it did to sub_0802C604's pad at 0x0802C62A.
+ * opposite of what it did to OptionsMenu_DeleteUsability's pad at 0x0802C62A.
  */
 
 void sub_0802C0E4(void)
@@ -28,12 +28,12 @@ void sub_0802C0E4(void)
  *
  * The parameter is never read -- the body opens by loading gPlaySt
  * straight over r0 -- so its width is settled entirely at the only call site,
- * sub_0802C118, which hands it the u16 global gUnknown_030033EC with a bare
+ * QuitToMainMenu, which hands it the u16 global gUnknown_030033EC with a bare
  * `ldrb`. A byte load out of a halfword global is what a u8 parameter costs;
  * an `int` parameter would have emitted `ldrh`. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C0E8(u8 a)
+void StartMainMenuForGameMode(u8 a)
 {
     switch (gPlaySt.gameMode)
     {
@@ -49,15 +49,17 @@ void sub_0802C0E8(u8 a)
         break;
     }
 }
+asm(".global sub_0802C0E8\n.thumb_set sub_0802C0E8, StartMainMenuForGameMode\n");
 
-/* Two bare statements. sub_0802C0E8 discards its argument, so the `ldrb` of
+/* Two bare statements. StartMainMenuForGameMode discards its argument, so the `ldrb` of
  * the u16 gUnknown_030033EC is the only evidence for that parameter's width --
- * see the note on sub_0802C0E8 in include/unknown-functions.h.
+ * see the note on StartMainMenuForGameMode in include/unknown-functions.h.
  * `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C118(void)
+void QuitToMainMenu(void)
 {
     sub_080366A4();
-    sub_0802C0E8(gUnknown_030033EC);
+    StartMainMenuForGameMode(gUnknown_030033EC);
 }
+asm(".global sub_0802C118\n.thumb_set sub_0802C118, QuitToMainMenu\n");

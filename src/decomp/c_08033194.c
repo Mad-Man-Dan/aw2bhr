@@ -15,7 +15,7 @@ struct Unk33194Proc
     /* 0x64 */ s16 unk64;
 };
 
-void sub_08033194(struct Unk33194Proc *proc)
+void LinkMultiboot_Init(struct Unk33194Proc *proc)
 {
     struct Unk08062FB8 *p;
 
@@ -41,3 +41,4 @@ void sub_08033194(struct Unk33194Proc *proc)
 
     proc->unk64 = 0;
 }
+asm(".global sub_08033194\n.thumb_set sub_08033194, LinkMultiboot_Init\n");

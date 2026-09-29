@@ -9,7 +9,7 @@
 
 /* Rebuilds the OBJ attributes for the current gUnknown_03001470 slot and then
  * reseeds the entry's position from a ROM table of x/y pairs. Same family as
- * sub_0804D928 / sub_0804E3B4 -- see "Large functions" in
+ * CruiserPart2_Init / BattleshipPart2_Init -- see "Large functions" in
  * docs/agbcc-codegen.md for the `* 0x100` and the `pal`/`prio` temporaries.
  *
  * The two `e1 = &...` / `e2 = &...` bindings are load-bearing rather than
@@ -47,7 +47,7 @@ void WholeFigure_Init(void)
 
     SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 
-    pos = (struct Unk4EEFCPair *)sub_08057D44(
+    pos = (struct Unk4EEFCPair *)GetFigurePositionTable(
         gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]][0],
         gUnknown_03004580[gUnknown_0300453C][3]);
 

@@ -16,10 +16,11 @@
  * SpawnWholeFigure takes the u16 unit index the rest of that family takes,
  * and a wrapper that exists only to forward it takes the same thing.
  */
-void sub_0804C488(u16 a)
+void SpawnWholeFigure2(u16 a)
 {
     SpawnWholeFigure(a);
 }
+asm(".global sub_0804C488\n.thumb_set sub_0804C488, SpawnWholeFigure2\n");
 
 /* F086 -- `push {lr}; lsls #0x10; lsrs #0x10; bl` and nothing else.
  *
@@ -30,7 +31,8 @@ void sub_0804C488(u16 a)
  * SpawnWholeFigure takes the u16 unit index the rest of that family takes,
  * and a wrapper that exists only to forward it takes the same thing.
  */
-void sub_0804C498(u16 a)
+void SpawnWholeFigure3(u16 a)
 {
     SpawnWholeFigure(a);
 }
+asm(".global sub_0804C498\n.thumb_set sub_0804C498, SpawnWholeFigure3\n");

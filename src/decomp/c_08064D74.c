@@ -34,7 +34,7 @@ void sub_08064D74(struct Unk08580934_Obj *obj)
         else
         {
             (*stp)->unk2d--;
-            sub_08030178();
+            LinkRestartKeySync();
             ClearSlotScriptCallback(gUnknown_03001FBC);
         }
     }

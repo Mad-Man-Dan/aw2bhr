@@ -680,9 +680,9 @@ void sub_08002298(int a1, int a2) {
   a = gActiveMap->countPanelX >> 4;
   DrawOamObject(0x54, (a - 0xC) & 0x1FF, a2 + 1, 0, 0);
   if (gActiveMap->editMode == 0)
-    sub_0802BD54((a + 0x1A) & 0x1FF, a2, 0x3C - (s8)gActiveMap->propertyCount);
+    DrawSpriteNumberFont2((a + 0x1A) & 0x1FF, a2, 0x3C - (s8)gActiveMap->propertyCount);
   else
-    sub_0802BD54(
+    DrawSpriteNumberFont2(
         (a + 0x1A) & 0x1FF, a2,
         0x32 - (s8)((struct ActiveMap *)((u8 *)gActiveMap + gActiveMap->unitArmy))
                    ->propertyCount);
@@ -766,20 +766,20 @@ void DesignRoomDrawTerrainIcon(int a1, int a2, int a3, int a4, int a5, int a6, i
     switch (a4) {
     case 0x08:
     case 0x28:
-      sub_0803F6BC(8, 1, dest, a7);
+      LoadTerrainObjTiles(8, 1, dest, a7);
       break;
     case 0x48:
-      sub_0803F6BC(8, 2, dest, a7);
+      LoadTerrainObjTiles(8, 2, dest, a7);
       break;
     case 0x68:
-      sub_0803F6BC(8, 3, dest, a7);
+      LoadTerrainObjTiles(8, 3, dest, a7);
       break;
     case 0x88:
-      sub_0803F6BC(8, 4, dest, a7);
+      LoadTerrainObjTiles(8, 4, dest, a7);
       break;
     }
   } else {
-    sub_0803F6BC(a4 & 0x1F, 1, dest, a7);
+    LoadTerrainObjTiles(a4 & 0x1F, 1, dest, a7);
     a3 += 8;
   }
 
@@ -1071,7 +1071,7 @@ void DesignRoomDrawPropertyCounts(void) {
     x = 0x4C;
     for (i = 0; i <= 3; i++) {
       t = buf[k];
-      sub_0802BD54((x + 0xA) & 0x1FF, (y + 0x10) | 0x400, CountPropertiesOfType(t));
+      DrawSpriteNumberFont2((x + 0xA) & 0x1FF, (y + 0x10) | 0x400, CountPropertiesOfType(t));
       PutOamHi((x + 2) & 0x1FF, y | 0x400, gUnknown_08485CC8[i + 1],
                    sub_08001D04(t) << 12);
       x += 0x14;
@@ -1090,7 +1090,7 @@ void sub_08002FE4(void) {
   DrawWindowBackgroundOnBg2(9, 2, 0xB, 0x11);
   BG_EnableSync(2);
   for (i = 0; i <= 3; i++) {
-    sub_0803F6BC(buf[i] & 0x1F, 0,
+    LoadTerrainObjTiles(buf[i] & 0x1F, 0,
                  (void *)(0x06010000 + (gUnknown_08485C9C[i + 1] << 5)), 1);
   }
 }

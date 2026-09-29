@@ -27,11 +27,11 @@ void MatchSetupHandleArmyStageInput(void)
         ForEachSlotRunningScript(gUnknown_08580B90, ArmyColumn_StartExitDown);
         ForEachSlotRunningScript(gUnknown_08580BC8, ArmyColumn_StartExitDown);
 
-        sub_0803B4DC(0x66);
+        PlayMusicOrSfx2(0x66);
     }
     else if (gpKeySt->pressed & 1)
     {
-        sub_0803B4DC(0x71);
+        PlayMusicOrSfx2(0x71);
 
         if (gUnknown_08580934->unk08 == 2)
         {

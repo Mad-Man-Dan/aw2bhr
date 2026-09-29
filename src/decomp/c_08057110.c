@@ -7,7 +7,8 @@
  * sub_08057110 @ 0x08057110
  */
 
-void sub_08057110(u16 chr, u16 offset, u16 pal, u16 flip)
+void PutTileEntryA(u16 chr, u16 offset, u16 pal, u16 flip)
 {
     gUnknown_08551A00[offset] = chr + ((pal << 12) | (flip << 10));
 }
+asm(".global sub_08057110\n.thumb_set sub_08057110, PutTileEntryA\n");

@@ -11,7 +11,7 @@
  * Both globals are `volatile u16` but the stores are bare scalar assignments,
  * which is byte-identical with or without the qualifier -- the volatile on
  * these two was settled elsewhere (see include/unknown-globals.h). */
-void sub_08033120(void)
+void LinkScreenClearBackgrounds(void)
 {
     ClearBg0Tilemap();
     ClearBg1Tilemap();
@@ -23,20 +23,22 @@ void sub_08033120(void)
     gUnknown_03002F18 = 0;
     gUnknown_03002B34 = 0;
 }
+asm(".global sub_08033120\n.thumb_set sub_08033120, LinkScreenClearBackgrounds\n");
 
-/* Seven bare `bl`s, every result discarded. Note the order: sub_08032D60 runs
- * BEFORE sub_08032468, which is not the address order the callee list is
+/* Seven bare `bl`s, every result discarded. Note the order: EndLinkMapPick runs
+ * BEFORE EndLinkPlayerCursor, which is not the address order the callee list is
  * printed in. */
-void sub_08033150(void)
+void LinkScreenEndAll(void)
 {
-    sub_08031430();
+    EndLinkLobbySlots();
     sub_08011B18();
-    sub_08031CE4();
+    EndLinkTransferPercent();
     sub_08031E6C();
-    sub_08032D60();
-    sub_08032468();
+    EndLinkMapPick();
+    EndLinkPlayerCursor();
     UnlockMainMenu();
 }
+asm(".global sub_08033150\n.thumb_set sub_08033150, LinkScreenEndAll\n");
 
 /* 0xFFD0 is a POSITIVE literal and not -48: SetBgScrollShadow's second parameter is
  * `u16`, and the ROM materialises the value with a pool `ldr`. A -48 would have

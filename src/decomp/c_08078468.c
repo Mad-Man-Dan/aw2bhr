@@ -15,7 +15,7 @@
 
 void WM_ConfirmExit_08078469(void)
 {
-    sub_0802D5CC(0, 0);
+    ApplyWindowFramePalette(0, 0);
     gUnknown_03002F08.unk00 = 0;
 }
 

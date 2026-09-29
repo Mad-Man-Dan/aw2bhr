@@ -14,15 +14,16 @@
  */
 
 
-/* gUnknown_03001470 list. Its counterpart sub_0803B16C reaches the same
+/* gUnknown_03001470 list. Its counterpart IsDebugEntryScriptActive reaches the same
  * symbol through FindSlotScript rather than sub_080152EC, which is the same
  * allocator seen from the other side.
  */
 
-void sub_0803B15C(void)
+void EndDebugEntryScript(void)
 {
     sub_0801537C(gUnknown_0849E670);
 }
+asm(".global sub_0803B15C\n.thumb_set sub_0803B15C, EndDebugEntryScript\n");
 
 /* Family F020 (tools/families.py): seven 32-byte leaves that are all
  * `return <slot lookup>(script) != -1;`. The whole body is one `!=` compiled
@@ -37,7 +38,8 @@ void sub_0803B15C(void)
  * the branching four-block form from the Control-flow table in
  * docs/agbcc-codegen.md and is four bytes longer.
  */
-bool8 sub_0803B16C(void)
+bool8 IsDebugEntryScriptActive(void)
 {
     return FindSlotScript((s32)gUnknown_0849E670) != -1;
 }
+asm(".global sub_0803B16C\n.thumb_set sub_0803B16C, IsDebugEntryScriptActive\n");

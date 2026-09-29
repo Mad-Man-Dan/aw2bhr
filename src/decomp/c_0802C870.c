@@ -7,7 +7,7 @@
  * sub_0802C870 @ 0x0802C870
  */
 
-int sub_0802C870(void)
+int IntelMenu_UnitUsability(void)
 {
   s16 i;
   int idx;
@@ -42,3 +42,4 @@ int sub_0802C870(void)
 
   return 0;
 }
+asm(".global sub_0802C870\n.thumb_set sub_0802C870, IntelMenu_UnitUsability\n");

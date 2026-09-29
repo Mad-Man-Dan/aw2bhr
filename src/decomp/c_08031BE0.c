@@ -13,7 +13,8 @@ struct UnkP31BE0
     /* 0x2f */ u8 unk2f;
 };
 
-void sub_08031BE0(struct UnkP31BE0 *a)
+void LinkStoreTransferProgress(struct UnkP31BE0 *a)
 {
     gUnknown_0849B060->unk0a = a->unk2f;
 }
+asm(".global sub_08031BE0\n.thumb_set sub_08031BE0, LinkStoreTransferProgress\n");

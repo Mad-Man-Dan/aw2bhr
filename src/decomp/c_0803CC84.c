@@ -13,7 +13,7 @@
  * A string copy that writes one byte past the cursor on every iteration: the
  * `dst[i + 1]` store is redundant for all but the last pass, and the loop only
  * advances i by one. The `u8` counter is proved by the `lsl #24; lsr #24` on
- * the increment. dst is r0 and src is r1 -- sub_0803CCB8 passes its own second
+ * the increment. dst is r0 and src is r1 -- LoadDesignRoomName passes its own second
  * parameter as dst and &gUnknown_020280C0[i].unk02 as src. */
 void CopyString(u8 *dst, const u8 *src)
 {

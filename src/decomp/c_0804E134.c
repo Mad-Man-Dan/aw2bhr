@@ -7,12 +7,12 @@
  * sub_0804E134 @ 0x0804E134
  */
 
-/* One of the F088 trio (sub_0804D738 / sub_0804D818 / sub_0804E134): the same
- * sprite-attribute setter as sub_0804D928, minus the two zeroing stores and the
+/* One of the F088 trio (CruiserPart1Alt_Init / CruiserPart1_Init / BattleshipPart1_Init): the same
+ * sprite-attribute setter as CruiserPart2_Init, minus the two zeroing stores and the
  * SetSlotSpriteHook continuation, and with its own tile base. The three members are
  * byte-identical apart from that immediate. */
 
-void sub_0804E134(void)
+void BattleshipPart1_Init(void)
 {
     struct OamData oam;
     u16 pal;
@@ -32,3 +32,4 @@ void sub_0804E134(void)
 
     SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 }
+asm(".global sub_0804E134\n.thumb_set sub_0804E134, BattleshipPart1_Init\n");

@@ -56,7 +56,7 @@ void RulesScreenUpdate(void)
 
     if (gUnknown_08580934->unk30 == 0 && (gpKeySt->pressed & L_BUTTON))
     {
-        sub_0803B4DC(0x73);
+        PlayMusicOrSfx2(0x73);
         sub_080733B8();
         StartHeaderBanner(gUnknown_085802A4, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
         sub_0806D34C();
@@ -67,7 +67,7 @@ void RulesScreenUpdate(void)
 
     if (gUnknown_08580934->unk30 == 1 && (gpKeySt->pressed & R_BUTTON))
     {
-        sub_0803B4DC(0x73);
+        PlayMusicOrSfx2(0x73);
         sub_080733B8();
         StartHeaderBanner(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
         sub_0806D620();

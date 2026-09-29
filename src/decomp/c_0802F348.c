@@ -7,7 +7,7 @@
  * sub_0802F348 @ 0x0802F348
  */
 
-void sub_0802F348(void)
+void LinkResetState(void)
 {
     gPlaySt.savingEnabled = 0;
     gUnknown_0849B018->unk00 = 0;
@@ -22,9 +22,9 @@ void sub_0802F348(void)
     gUnknown_0849B018->unk1c = 0;
     gUnknown_0849B018->unk1d = 0;
     gUnknown_0849B018->unk1e = 0;
-    sub_0802F23C();
+    LinkResetKeySync();
     SioResetBuffers();
-    sub_0802F28C();
+    LinkClearMapListAndNames();
     gUnknown_0849B018->unk1ab0 = 0;
     gUnknown_0849B018->unk1ab2 = 0;
     gUnknown_0849B018->unk1ab3 = 0;
@@ -32,3 +32,4 @@ void sub_0802F348(void)
     gUnknown_030040C0 = gUnknown_08090C38;
     gUnknown_0300477C = 0;
 }
+asm(".global sub_0802F348\n.thumb_set sub_0802F348, LinkResetState\n");

@@ -39,7 +39,7 @@ void MapCursor_OnPressA(s16 x, s16 y)
 
     if (CanBuildAtCell(sx, sy))
     {
-        sub_0802D5E8(sx, sy);
+        OpenDeploymentScreen(sx, sy);
         return;
     }
 
@@ -62,6 +62,6 @@ void MapCursor_OnPressA(s16 x, s16 y)
     ShowRangeOverlay((u16)sx, (u16)sy, 0);
     gUnknown_03003334 = 1;
     InitMovePathForActiveUnit();
-    sub_0803B4DC(0x69);
+    PlayMusicOrSfx2(0x69);
 }
 asm(".global sub_0802E4B4\n.thumb_set sub_0802E4B4, MapCursor_OnPressA\n");

@@ -60,7 +60,7 @@
  * `gUnknown_02028E40 * 48 + 0x46` (emitted `(g * 2 + g) << 4`) OR 0x2000.
  */
 
-void sub_08049F24(void)
+void LanguageSelect_DrawSprites(void)
 {
     u16 t;
     u8 i;
@@ -85,3 +85,4 @@ void sub_08049F24(void)
     PutOamHi(0x58, 0x60, gUnknown_084C3800,
         (gUnknown_02028E40 * 48 + 0x46) | 0x2000);
 }
+asm(".global sub_08049F24\n.thumb_set sub_08049F24, LanguageSelect_DrawSprites\n");

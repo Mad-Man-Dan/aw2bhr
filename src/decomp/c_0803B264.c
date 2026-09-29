@@ -21,7 +21,7 @@
  * pair; with `int` the conversion at SetSlotSpriteRotation's `s16` parameter folds
  * with the callee's own re-narrowing into `lsls #0x10; adds 0x100000;
  * asrs #0x10` -- the ROM's form, and the same instruction count. */
-void sub_0803B264(void)
+void SlotSprite_SpinShrinkLoop(void)
 {
     int t;
     s16 v;
@@ -38,6 +38,7 @@ void sub_0803B264(void)
         SetSlotSpriteScaleY(gUnknown_03001FBC, v);
     }
 }
+asm(".global sub_0803B264\n.thumb_set sub_0803B264, SlotSprite_SpinShrinkLoop\n");
 
 /* Creates a gUnknown_03001470 object, rewrites two fields of its OBJ attribute
  * pair and then runs the standard five-call setup on it.
@@ -51,7 +52,7 @@ void sub_0803B264(void)
  * 0x4000 is `movs r3,#0x80; lsls r3,#7` and 0x200 is `movs r5,#0x80;
  * lsls r5,#2`, both literals agbcc rebuilt; the 0x200 is materialised once and
  * shared by the last two calls. */
-void sub_0803B2BC(void)
+void StartSpinningSlotSprite(void)
 {
     struct UnkVec v;
     s8 i;
@@ -68,3 +69,4 @@ void sub_0803B2BC(void)
     SetSlotSpriteScaleX(i, 0x200);
     SetSlotSpriteScaleY(i, 0x200);
 }
+asm(".global sub_0803B2BC\n.thumb_set sub_0803B2BC, StartSpinningSlotSprite\n");

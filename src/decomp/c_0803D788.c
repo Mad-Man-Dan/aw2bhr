@@ -13,7 +13,7 @@
  * gUnknown_0300251C.bits.chr_block, and the four gUnknown_084995xx buffers get
  * the same 0x800-byte copy, which is why the length lives in r4 across all
  * four calls rather than being rebuilt. */
-void sub_0803D788(void)
+void SaveScreen_Init(void)
 {
     ResetWindowShadows();
     gUnknown_030030E0.bits.effect = 3;
@@ -38,3 +38,4 @@ void sub_0803D788(void)
     LoadBg1WindowFrame(0);
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);
 }
+asm(".global sub_0803D788\n.thumb_set sub_0803D788, SaveScreen_Init\n");

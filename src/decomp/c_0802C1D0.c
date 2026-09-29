@@ -21,7 +21,8 @@
  * and not two statements. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C1D0(void)
+void WriteSuspendSaveForCurrentMode(void)
 {
     WriteSuspendSave(GetSuspendIdForGameMode(gPlaySt.gameMode), 0);
 }
+asm(".global sub_0802C1D0\n.thumb_set sub_0802C1D0, WriteSuspendSaveForCurrentMode\n");

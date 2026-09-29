@@ -7,10 +7,11 @@
  * sub_080485C4 @ 0x080485C4
  */
 
-int sub_080485C4(void)
+int ShopMessage_NeedsFlag21(void)
 {
     if (IsCampaignCompletionFlagSet(0x21) != 0)
         return 1;
 
     return 0;
 }
+asm(".global sub_080485C4\n.thumb_set sub_080485C4, ShopMessage_NeedsFlag21\n");

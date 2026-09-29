@@ -16,15 +16,15 @@ void sub_08005874(void)
 {
     InitTilePool(0, (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)), 0x2FC, 10);
     LoadTilePoolGraphic(9);
-    if (sub_0803CCB8(0, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(0, gDesignRoomName) != 1)
         sub_08004D74(1, 0);
     else
         sub_08004D90(1, 0, gDesignRoomName);
-    if (sub_0803CCB8(1, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(1, gDesignRoomName) != 1)
         sub_08004D74(1, 1);
     else
         sub_08004D90(1, 1, gDesignRoomName);
-    if (sub_0803CCB8(2, gDesignRoomName) != 1)
+    if (LoadDesignRoomName(2, gDesignRoomName) != 1)
         sub_08004D74(1, 2);
     else
         sub_08004D90(1, 2, gDesignRoomName);

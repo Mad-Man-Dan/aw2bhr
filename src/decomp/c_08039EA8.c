@@ -21,8 +21,9 @@ struct Unk39EA8Proc
  * returned pointer is still in r0 when `strh r1, [r0, #0x22]` runs -- no
  * reload. */
 
-void sub_08039EA8(struct Unk39EA8Proc *proc)
+void SparkleEffect_StartApAnim(struct Unk39EA8Proc *proc)
 {
     proc->unk34 = AP_Create(gUnknown_0810BB9C, 0, 1);
     proc->unk34->unk22 = proc->unk2c;
 }
+asm(".global sub_08039EA8\n.thumb_set sub_08039EA8, SparkleEffect_StartApAnim\n");

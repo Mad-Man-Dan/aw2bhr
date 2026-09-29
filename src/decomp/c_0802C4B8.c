@@ -18,8 +18,8 @@
  * consumed anywhere in the chain. A pass-through would be byte-identical here,
  * which is exactly why the readout has to come from the callee side.
  *
- * gUnknown_0849A02C is newly declared `const struct ProcCmd []`: sub_0802B3AC
- * and sub_0802B4D4 hand it straight to Proc_Find, and it is the 0x20-byte slot
+ * gUnknown_0849A02C is newly declared `const struct ProcCmd []`: DrawCursorDamagePreview
+ * and DrawArmyCaptureCounters hand it straight to Proc_Find, and it is the 0x20-byte slot
  * immediately after gUnknown_0849A00C, which is already declared that way. */
 
 void StartTargetPickList(ProcPtr parent)

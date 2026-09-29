@@ -24,7 +24,7 @@ struct Tbl49A2A6
     /* 0x02 */ s16 unk02[0x100];
 };
 
-void sub_0802AA14(int a1, int a2, int a3, int a4)
+void DrawMapCursorInfoUnitName(int a1, int a2, int a3, int a4)
 {
     RegisterDataMove((void *)GetUnitNameGraphic(a1), (void *)0x06013A40, 0x100);
     PutOamHi((a2 + ((struct Tbl49A2A6 *)gUnknown_0849A2A6)->unk02[a4 * 3]
@@ -32,3 +32,4 @@ void sub_0802AA14(int a1, int a2, int a3, int a4)
                  (a3 + gUnknown_0849A284[3]) | 0x400,
                  gUnknown_0849A248, 0x1000);
 }
+asm(".global sub_0802AA14\n.thumb_set sub_0802AA14, DrawMapCursorInfoUnitName\n");

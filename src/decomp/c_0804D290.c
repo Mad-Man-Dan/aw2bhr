@@ -10,9 +10,9 @@
 /* MATCHED -- byte-for-byte identical to the original.
  *
  * Rebuilds the OBJ attributes of the current gUnknown_03001470 slot, reseeds
- * the gUnknown_02029A10 entry's position from the ROM table sub_08057D44 hands
+ * the gUnknown_02029A10 entry's position from the ROM table GetFigurePositionTable hands
  * back, then arms a continuation out of gUnknown_08552FB8. Same family as
- * sub_0804D928 / sub_0804E3B4 / WholeFigure_Init -- see those for the `* 0x100`,
+ * CruiserPart2_Init / BattleshipPart2_Init / WholeFigure_Init -- see those for the `* 0x100`,
  * the `pal`/`prio` temporaries and the `(e1 = &pos[...])` binding.
  *
  * TWO of the three constructs below are levers, not natural source, and both
@@ -82,7 +82,7 @@ void CruiserFigure_Init(void)
 
     do
     {
-        pos = (struct UnkPosPair *)sub_08057D44(
+        pos = (struct UnkPosPair *)GetFigurePositionTable(
             gUnknown_085D6A48[(meta = gUnknown_03004580,
                 gUnknown_03004582[gUnknown_0300453C][0])][0],
             gUnknown_03004580[gUnknown_0300453C][3]);

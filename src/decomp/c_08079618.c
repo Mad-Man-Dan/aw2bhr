@@ -318,14 +318,14 @@ void sub_0807974C(struct Unk807974C *proc)
         || proc->unk68 != proc->unk60)
     {
         if ((proc->unk4c & 1) != 0)
-            sub_0803B4DC(0x7c);
+            PlayMusicOrSfx2(0x7c);
     }
 
     if (proc->unk4c > 0xaf)
     {
         gUnknown_03002020 = 0x10;
         gUnknown_03002B28 = 8;
-        sub_0803B4DC(0x79);
+        PlayMusicOrSfx2(0x79);
         Proc_Break(proc);
     }
 

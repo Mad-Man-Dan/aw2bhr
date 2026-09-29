@@ -14,5 +14,5 @@
 void sub_0807A8F4(void)
 {
     if (sub_08078E20() == 0)
-        sub_0803B3C8();
+        SetSoundMixerChannelCount8();
 }

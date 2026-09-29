@@ -13,7 +13,8 @@
  * hence `const u8 []` and a clean pool word.
  */
 
-void sub_0804AE10(void)
+void NameEntry_StartPromptMessage(void)
 {
     StartEventScript(gUnknown_084C38BC);
 }
+asm(".global sub_0804AE10\n.thumb_set sub_0804AE10, NameEntry_StartPromptMessage\n");

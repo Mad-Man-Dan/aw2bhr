@@ -7,7 +7,8 @@
  * sub_0803D54C @ 0x0803D54C
  */
 
-void sub_0803D54C(void)
+void SetMapIdToDesignSlot0(void)
 {
     gPlaySt.mapID = 0xb4;
 }
+asm(".global sub_0803D54C\n.thumb_set sub_0803D54C, SetMapIdToDesignSlot0\n");

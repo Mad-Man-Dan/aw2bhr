@@ -15,7 +15,7 @@ void sub_0802D9B8(struct Unk03001470 *proc)
     if (proc->unk20 == proc->unk1e + 6 && proc->unk1e <= proc->unk22 - 7)
         proc->unk1e = proc->unk1e + 1;
 
-    sub_0802D76C();
+    ClearDeploymentListArea();
     DrawDeploymentList(proc->unk1e);
-    sub_0803AA78(gUnknown_02023830[proc->unk20 * 4]);
+    RefreshDeploymentUnitInfo(gUnknown_02023830[proc->unk20 * 4]);
 }

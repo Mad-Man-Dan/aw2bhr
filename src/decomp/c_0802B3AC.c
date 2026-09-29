@@ -57,7 +57,7 @@ struct Tbl49A2A6
     /* 0x02 */ s16 unk02[0x100];
 };
 
-void sub_0802B3AC(s16 a, s16 b, s16 c)
+void DrawCursorDamagePreview(s16 a, s16 b, s16 c)
 {
     u8 tmp;
     register int d asm("r8");
@@ -90,3 +90,4 @@ void sub_0802B3AC(s16 a, s16 b, s16 c)
     PutRightAlignedNumberSpritesPlusSprite(x, b - 0x14 - (s8)d,
                  gBattleAttacker->displayDamage, 0x1a6);
 }
+asm(".global sub_0802B3AC\n.thumb_set sub_0802B3AC, DrawCursorDamagePreview\n");

@@ -35,7 +35,7 @@ void sub_08079470(struct Unk8079470 *proc)
     if (proc->unk4c > 0x21)
     {
         proc->unk4c = 0;
-        sub_0803B4DC(0x1D7);
+        PlayMusicOrSfx2(0x1D7);
         Proc_Break(proc);
     }
 }

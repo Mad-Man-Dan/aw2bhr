@@ -10,5 +10,5 @@
 void sub_080315D0(void)
 {
     DrawWindowBackgroundOnBg2(10, 5, 13, 10);
-    sub_08030F60(0);
+    LinkScreenSetupWindow(0);
 }

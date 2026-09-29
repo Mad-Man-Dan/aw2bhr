@@ -17,7 +17,7 @@
  * at +2 with 0xFFFFFC3F for unk02_6 because bits 6..9 straddle the byte
  * boundary, and `ldrb`/`strb` at +3 with ~0x3c for unk02_a. Exactly the
  * boundaries the type's own comment already records from AddInventionRecord and
- * sub_0803EB40, reached here from the clearing side.
+ * InventionTurn_ReloadCountdowns, reached here from the clearing side.
  *
  * Only ONE `strb` comes out of the first pair: agbcc CSEs the +2 byte across
  * the two inserts and then drops the first store as dead. */

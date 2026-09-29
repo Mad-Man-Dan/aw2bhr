@@ -16,8 +16,9 @@
  * would be byte-identical only if `g` had a parameter, and none of the 19
  * second callees does -- see the F005 block in unknown-functions.h. */
 
-void sub_0802DCA4(void)
+void ResetDisplayEffects(void)
 {
     SetDefaultColorEffects();
     ResetWindowShadows();
 }
+asm(".global sub_0802DCA4\n.thumb_set sub_0802DCA4, ResetDisplayEffects\n");

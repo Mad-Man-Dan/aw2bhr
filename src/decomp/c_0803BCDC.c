@@ -29,7 +29,7 @@
  * address is read again after the loop; only the `adds r2,#0x3e` is preheader.
  */
 
-void sub_0803BCDC(u8 *src)
+void SetArmyCoIdsFromList(u8 *src)
 {
     int n;
     int i;
@@ -41,3 +41,4 @@ void sub_0803BCDC(u8 *src)
 
     gPlaySt.co[0] = 0;
 }
+asm(".global sub_0803BCDC\n.thumb_set sub_0803BCDC, SetArmyCoIdsFromList\n");

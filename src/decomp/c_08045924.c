@@ -26,7 +26,7 @@
  * `if (count == 0) return TRUE; return FALSE;` and not the inverse: agbcc
  * branches on the condition TRUE to the far arm and falls through to the
  * trailing return, so the constant the `beq` REACHES (1) is the `if` body. */
-bool8 sub_08045924(void)
+bool8 MapEventCond_CurrentArmyHasNoUnitWithFuel(void)
 {
     int i;
     int count;
@@ -45,3 +45,4 @@ bool8 sub_08045924(void)
 
     return FALSE;
 }
+asm(".global sub_08045924\n.thumb_set sub_08045924, MapEventCond_CurrentArmyHasNoUnitWithFuel\n");

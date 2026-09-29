@@ -72,7 +72,7 @@ void ShopScreen_Init(void)
     u16 i;
 
     PlayMusic(0x12e);
-    sub_0803C784(gUnknown_02028E1C);
+    BuildShopItemList(gUnknown_02028E1C);
 
     gUnknown_084C30F8->unk030 = 0;
     gUnknown_084C30F8->unk834 = 0;
@@ -81,7 +81,7 @@ void ShopScreen_Init(void)
     gUnknown_084C30F8->unk838 = 0;
 
     LoadBg1WindowFrame(0);
-    sub_0802D5CC(0, 1);
+    ApplyWindowFramePalette(0, 1);
     LoadCursorSpriteGraphics();
 
     gUnknown_084C30F8->unk020 = 0;
@@ -108,7 +108,7 @@ void ShopScreen_Init(void)
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     ApplyPaletteExt(gUnknown_0823BE00, 0, 0x20);
     BG_EnableSyncBG3();
-    sub_0802D5CC(0, 3);
+    ApplyWindowFramePalette(0, 3);
     Decompress(gUnknown_0823E7D4, gBG2TilemapBuffer);
 
     for (i = 0; i <= 0x3ff; i++)
@@ -156,7 +156,7 @@ void ShopScreen_Init(void)
     CpuFastSet(gUnknown_0200FC50 + 0x400, (void *)0x060113E0, 0x20);
     CpuFastSet(gUnknown_0200FC50 + 0x80, (void *)0x06011460, 0x20);
     CpuFastSet(gUnknown_0200FC50 + 0x480, (void *)0x060114E0, 0x20);
-    sub_0802D5CC(0, 0x18);
+    ApplyWindowFramePalette(0, 0x18);
     Decompress(gUnknown_0823E140, gUnknown_0200FC50);
 
     for (i = 0; i <= 1; i++)

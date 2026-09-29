@@ -40,7 +40,7 @@ void HandleMoveMapCursorInMoveRange(void)
         gUnknown_030032C4.unk00 += gUnknown_08499C7C[dir][0] * 4;
         gUnknown_030033E4.unk00 = n;
         if ((tbl = gUnknown_08499C7C)[dir][0] != 0)
-            sub_0803B4DC(0x6a);
+            PlayMusicOrSfx2(0x6a);
     }
 
     n = gUnknown_030033E4.unk02 + gUnknown_08499C7C[dir][1];
@@ -49,7 +49,7 @@ void HandleMoveMapCursorInMoveRange(void)
         gUnknown_030032C4.unk02 += gUnknown_08499C7C[dir][1] * 4;
         gUnknown_030033E4.unk02 = n;
         if (gUnknown_08499C7C[dir][1] != 0)
-            sub_0803B4DC(0x6a);
+            PlayMusicOrSfx2(0x6a);
     }
 }
 asm(".global sub_080236E8\n.thumb_set sub_080236E8, HandleMoveMapCursorInMoveRange\n");

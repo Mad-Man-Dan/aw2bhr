@@ -10,12 +10,13 @@
 /* Three statements. RestoreMapCursorPosition and DecrementMapLock take nothing, so the
  * SetInfoBoxMode(1) result cannot be flowing into either of them. */
 
-void sub_0802DBD0(void)
+void DeploymentScreen_Finish(void)
 {
     SetInfoBoxMode(1);
     RestoreMapCursorPosition();
     DecrementMapLock();
 }
+asm(".global sub_0802DBD0\n.thumb_set sub_0802DBD0, DeploymentScreen_Finish\n");
 
 /* The same one-line forwarder as the OptionsMenu_HelpVisualA group: 0xC9E is >255 so
  * agbcc has no `movs #imm8` for it and the pool word is forced by the VALUE

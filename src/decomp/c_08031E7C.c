@@ -119,7 +119,7 @@ void sub_08031F10(struct Unk31F10Proc *proc)
 
 void sub_08031F28(void)
 {
-    sub_0803B4DC(0x6c);
+    PlayMusicOrSfx2(0x6c);
 
     if (gUnknown_0849B018->unk00 == 3)
         gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 12, 2);

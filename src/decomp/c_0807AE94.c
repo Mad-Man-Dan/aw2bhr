@@ -105,7 +105,7 @@ void sub_0807AE94(struct Unk0807AE94Proc * proc)
     }
 
     if (proc->unk4c == 0x20)
-        sub_0803B4DC(0x78);
+        PlayMusicOrSfx2(0x78);
 
     gUnknown_03002B34 = 0xf0 - proc->unk34;
     gUnknown_030030A0 = proc->unk34 - 0xf0;

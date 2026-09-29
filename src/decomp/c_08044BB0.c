@@ -28,7 +28,7 @@ void BuildUnlockedCoGroupList(void)
                 gUnknown_03005944++;
             }
         }
-        else if (sub_0803CAD4(gUnknown_084A08D0[i]))
+        else if (IsCoSelectable(gUnknown_084A08D0[i]))
         {
             gUnknown_030058E0[n] = gUnknown_084A08D0[i];
             n++;

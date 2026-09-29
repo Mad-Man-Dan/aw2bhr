@@ -86,7 +86,7 @@ void MainMenuCarouselWheel_DrawLabelPlateSlideIn(struct Unk80831FC *p, int t)
 
     if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0)
     {
-        if (sub_0803BC7C() == 0)
+        if (GetCampaignSaveFlag() == 0)
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0xAA98);
         else
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0x2A98);
@@ -95,7 +95,7 @@ void MainMenuCarouselWheel_DrawLabelPlateSlideIn(struct Unk80831FC *p, int t)
     }
     else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1)
     {
-        if (sub_0803BC88() == 0)
+        if (GetVersusSaveFlag() == 0)
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0xBA98);
         else
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0x3A98);
@@ -104,7 +104,7 @@ void MainMenuCarouselWheel_DrawLabelPlateSlideIn(struct Unk80831FC *p, int t)
     }
     else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5)
     {
-        if (sub_0803BC94() == 0)
+        if (GetWarRoomSaveFlag() == 0)
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0xCA98);
         else
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0x7A98);
@@ -139,7 +139,7 @@ void MainMenuCarouselWheel_DrawLabelPlateSlideOut(struct Unk8083484 *p, int t)
 
     if (gUnknown_0861696C[DivRem(p->unk52 + 2 + p->unk4e, 6)] == 0)
     {
-        if (sub_0803BC7C() == 0)
+        if (GetCampaignSaveFlag() == 0)
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0xAA98);
         else
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0x2A98);
@@ -148,7 +148,7 @@ void MainMenuCarouselWheel_DrawLabelPlateSlideOut(struct Unk8083484 *p, int t)
     }
     else if (gUnknown_0861696C[DivRem(p->unk52 + 2 + p->unk4e, 6)] == 1)
     {
-        if (sub_0803BC88() == 0)
+        if (GetVersusSaveFlag() == 0)
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0xBA98);
         else
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0x3A98);
@@ -157,7 +157,7 @@ void MainMenuCarouselWheel_DrawLabelPlateSlideOut(struct Unk8083484 *p, int t)
     }
     else if (gUnknown_0861696C[DivRem(p->unk52 + 2 + p->unk4e, 6)] == 5)
     {
-        if (sub_0803BC94() == 0)
+        if (GetWarRoomSaveFlag() == 0)
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0xCA98);
         else
             PutSprite(3, p->unk34 + 0x90, 0x48, gUnknown_08615C04, 0x7A98);
@@ -190,7 +190,7 @@ void MainMenuCarouselWheel_DrawLabelPlate(struct Unk8083738 *p)
 {
     if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0)
     {
-        if (sub_0803BC7C() == 0)
+        if (GetCampaignSaveFlag() == 0)
             PutSprite(3, 0x90, 0x48, gUnknown_08615C04, 0xAA98);
         else
             PutSprite(3, 0x90, 0x48, gUnknown_08615C04, 0x2A98);
@@ -199,7 +199,7 @@ void MainMenuCarouselWheel_DrawLabelPlate(struct Unk8083738 *p)
     }
     else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1)
     {
-        if (sub_0803BC88() == 0)
+        if (GetVersusSaveFlag() == 0)
             PutSprite(3, 0x90, 0x48, gUnknown_08615C04, 0xBA98);
         else
             PutSprite(3, 0x90, 0x48, gUnknown_08615C04, 0x3A98);
@@ -208,7 +208,7 @@ void MainMenuCarouselWheel_DrawLabelPlate(struct Unk8083738 *p)
     }
     else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5)
     {
-        if (sub_0803BC94() == 0)
+        if (GetWarRoomSaveFlag() == 0)
             PutSprite(3, 0x90, 0x48, gUnknown_08615C04, 0xCA98);
         else
             PutSprite(3, 0x90, 0x48, gUnknown_08615C04, 0x7A98);

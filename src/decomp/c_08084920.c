@@ -8,12 +8,12 @@
  */
 
 /* `if (C) return FALSE; return TRUE;` in that order. Writing the condition
- * negated (`if (!sub_0803C814()) return TRUE; return FALSE;`) swaps the two
+ * negated (`if (!AnyShopItemRemaining()) return TRUE; return FALSE;`) swaps the two
  * constants and turns the `bne` into a `beq`; see the block-ordering note added
  * to docs/agbcc-codegen.md this wave. */
 bool8 sub_08084920(void)
 {
-    if (sub_0803C814())
+    if (AnyShopItemRemaining())
         return FALSE;
     return TRUE;
 }

@@ -9,7 +9,7 @@
 
 /* Returns 0 when `a1` fails the current mode's check: with byte 0x32 of
  * gUnknown_03003FC0 set, when GetMapArmyCount(a1) differs from a2; otherwise
- * when a1 is in 0xB7..0xBF, or when byte 1 is 3 and sub_0803CC64(a1) is 0.
+ * when a1 is in 0xB7..0xBF, or when byte 1 is 3 and IsMapArmyCountValid(a1) is 0.
  *
  * The three failure exits are one `return 0` reached by goto. Written as
  * three `return 0`s, cross-jumping keeps the last copy, but the ROM's
@@ -28,7 +28,7 @@ u8 IsMapSelectableForSlots(u16 a1, u16 a2)
         fail:
             return 0;
         }
-        if (gUnknown_03003FC0[1] == 3 && (u8)sub_0803CC64(a1) == 0)
+        if (gUnknown_03003FC0[1] == 3 && (u8)IsMapArmyCountValid(a1) == 0)
             goto fail;
     }
 ok:

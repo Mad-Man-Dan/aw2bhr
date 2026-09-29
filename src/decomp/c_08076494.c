@@ -44,7 +44,7 @@ void sub_08076494(struct Unk08076494 *proc)
     proc->unk5c++;
     if (proc->unk5c > 0xF)
     {
-        sub_0803B4DC(0x1CC);
+        PlayMusicOrSfx2(0x1CC);
         Proc_Break(proc);
     }
     sub_080763C0();

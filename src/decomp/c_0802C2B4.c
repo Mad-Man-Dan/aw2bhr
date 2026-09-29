@@ -16,7 +16,7 @@
  * Byte 1 bit 0 of gDispIo is DISPCNT bit 8, i.e. disp_ct.bg0_enable. The mask
  * arrives as `movs r0,#2; rsbs r0,r0,#0` -- the SImode -2 -- and not as a
  * `movs r0,#0xfe`, because the bitfield container is u16 and the complement is
- * formed before the byte-wide read-modify-write is narrowed. sub_0802C390 in
+ * formed before the byte-wide read-modify-write is narrowed. MinimapScreen_FadeIn in
  * this same block is the setting half of the pair and emits the expected
  * `movs r1,#1; orrs`, which is what makes bit 0 of byte 1 the discriminating
  * use rather than a byte-neutral guess.
@@ -25,8 +25,9 @@
  * void and the call is a bare statement.
  */
 
-void sub_0802C2B4(void)
+void OpenMinimap(void)
 {
     sub_080152EC(gUnknown_0849A990, 0);
     gDispIo.disp_ct.bg0_enable = 0;
 }
+asm(".global sub_0802C2B4\n.thumb_set sub_0802C2B4, OpenMinimap\n");

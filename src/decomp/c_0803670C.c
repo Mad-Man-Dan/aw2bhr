@@ -117,7 +117,7 @@ void DefaultMainLoopCallback(void)
     {
         BeginOamFrameForMode();
         RefreshKeySt();
-        sub_08054B7C();
+        LatchBattleAnimKeys();
         RunEventScripts();
         RunAllSlotScripts();
         Proc_Run(gProcTreeRootArray[1]);
@@ -168,7 +168,7 @@ void MapMainLoopCallback(void)
     {
         BeginOamFrameForMode();
         RefreshKeySt();
-        sub_08054B7C();
+        LatchBattleAnimKeys();
         RunEventScripts();
 
         if (gUnknown_03003F3C != 0)
@@ -184,7 +184,7 @@ void MapMainLoopCallback(void)
         Proc_Run(gProcTreeRootArray[5]);
         Proc_Run(gProcTreeRootArray[4]);
         UpdateMapDisplay();
-        sub_0803F990();
+        DrawMapObjectSprites();
         DrawSimpleSpriteScriptsForMode();
         FlushSpritesForMode();
         SoundMainLoopNoOp();
@@ -226,7 +226,7 @@ void QueuedSpritesMainLoopCallback(void)
     if (gUnknown_03004094 == 0 && (gGameClock & gUnknown_030043F4) == 0)
     {
         RefreshKeySt();
-        sub_08054B7C();
+        LatchBattleAnimKeys();
         RunEventScripts();
         Proc_Run(gProcTreeRootArray[1]);
         Proc_Run(gProcTreeRootArray[2]);
