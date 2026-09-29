@@ -22783,6 +22783,15 @@
   "size": 8
  },
  {
+  "file": "src/decomp/c_0806412C.c",
+  "obj": "src/decomp/c_0806412C.o",
+  "addr_hex": "0x0806412C",
+  "functions": [
+   "sub_0806412C"
+  ],
+  "size": 232
+ },
+ {
   "file": "src/decomp/c_08064214.c",
   "obj": "src/decomp/c_08064214.o",
   "addr_hex": "0x08064214",
