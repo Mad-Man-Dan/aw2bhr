@@ -25,7 +25,7 @@
  *    pointer in the first free scratch register, so `_call_via_r1` is itself
  *    evidence that this is a ONE-ARGUMENT call. There are SIX callers
  *    (sub_080375D4, sub_080376DC, sub_080377C4, sub_08077A14, sub_08086DB4,
- *    sub_08086F3C) and every one passes a word loaded from offset 0x18 of the
+ *    BuildMapSelectPreviewNow) and every one passes a word loaded from offset 0x18 of the
  *    struct in its own first parameter -- sub_080375D4 is `ldr r0,[r2,#0x18]`.
  *    Hence `void *`.
  *
@@ -71,7 +71,7 @@ void sub_0801B6EC(void *dst)
  *    pointer in the first free scratch register, so `_call_via_r1` is itself
  *    evidence that this is a ONE-ARGUMENT call. There are SIX callers
  *    (sub_080375D4, sub_080376DC, sub_080377C4, sub_08077A14, sub_08086DD4,
- *    sub_08086F3C) and every one passes a word loaded from offset 0x18 of the
+ *    BuildMapSelectPreviewNow) and every one passes a word loaded from offset 0x18 of the
  *    struct in its own first parameter -- sub_080375D4 is `ldr r0,[r2,#0x18]`.
  *    Hence `void *`.
  *

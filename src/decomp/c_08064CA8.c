@@ -14,7 +14,7 @@
  *
  * `movs r0, #0x20; rsbs r0, r0, #0` is the literal -0x20, and the compare is
  * against a register because -32 is not a `cmp` immediate. */
-void sub_08064CA8(struct Unk08580934_Obj *obj)
+void TeamBadgeExitUp_Loop(struct Unk08580934_Obj *obj)
 {
     obj->unk3a += obj->unk3c;
     obj->unk2a += obj->unk3a;
@@ -22,5 +22,6 @@ void sub_08064CA8(struct Unk08580934_Obj *obj)
     if (obj->unk2a < -0x20)
         sub_08015C30(gUnknown_03001FBC);
 
-    sub_08064BF4(obj);
+    TeamBadge_Draw(obj);
 }
+asm(".global sub_08064CA8\n.thumb_set sub_08064CA8, TeamBadgeExitUp_Loop\n");

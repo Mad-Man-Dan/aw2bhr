@@ -24,7 +24,7 @@
  * statement and so takes the lower allocno, which is what wins it r0.
  *
  * This CORRECTS the note on struct Unk02027F74.unk04 in include/unknown-globals.h,
- * which recorded that sub_08087104 reaches the list "through this struct rather
+ * which recorded that UpdateMapSelectPropertyCounts reaches the list "through this struct rather
  * than through the overlapping gUnknown_02027F78 extern". The clean pool word is
  * not evidence for the member array -- both spellings produce it -- and the
  * member array is the one that does NOT match.
@@ -49,7 +49,7 @@ struct Unk87104
     /* 0x6a */ u16 unk6a;
 };
 
-void sub_08087104(void *arg)
+void UpdateMapSelectPropertyCounts(void *arg)
 {
     struct Unk87104 *p = arg;
     u8 *q;
@@ -72,6 +72,7 @@ void sub_08087104(void *arg)
         p->unk6a = -1;
     }
 }
+asm(".global sub_08087104\n.thumb_set sub_08087104, UpdateMapSelectPropertyCounts\n");
 
 /* Draws up to four HUD elements, in two layouts chosen by gPlaySt.gameMode.
  *
@@ -118,7 +119,7 @@ void sub_08087104(void *arg)
  *   - The first arm passes `m` as the 5th argument (the ROM reuses r4) while
  *     the second passes the literal 2. Not the same spelling, same value. */
 
-void sub_08087168(int a)
+void MapSelectList_DrawScrollArrows(int a)
 {
     int m;
     int n;
@@ -150,3 +151,4 @@ void sub_08087168(int a)
         DrawOamObject(0x46, 0x48, 0x28, 0, 2);
     }
 }
+asm(".global sub_08087168\n.thumb_set sub_08087168, MapSelectList_DrawScrollArrows\n");

@@ -9,7 +9,7 @@
 
 void sub_08085168(s16 *p)
 {
-    sub_080853B0();
+    CoInfoScreen_DrawArmyIcons();
     sub_08043B60(0x20, 0x28, 0x82AC, 3);
     DrawOamObject(gPlayers[p[0x33]].teamColor + 0x3D, 8, 0x28, 0, 1);
 

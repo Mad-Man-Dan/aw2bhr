@@ -15,7 +15,7 @@ struct Unk0806C52CProc
     /* 0x38 */ int unk38;
 };
 
-/* The same screen-setup shape as sub_0806BB08 / sub_0806EB5C -- one
+/* The same screen-setup shape as sub_0806BB08 / SoundRoomMusicPage_Init -- one
  * SetDispEnable, four BgCnt priorities, then palettes and graphics -- but with
  * the graphics set chosen by a single `if`. The two arms are the same five calls
  * over ten different symbols.
@@ -64,6 +64,6 @@ void sub_0806C52C(struct Unk0806C52CProc *proc)
         proc->unk38 = 0;
     }
 
-    sub_08072C40(0, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
     sub_0803B3C8();
 }

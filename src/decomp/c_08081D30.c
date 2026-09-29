@@ -81,7 +81,7 @@ struct Unk8081D30
     /* 68 */ s16 unk68;
     /* 6a */ s16 unk6a;
 };
-/* sub_080824D4 and sub_08084974 are already promoted -- signatures taken from
+/* sub_080824D4 and MainMenuCarousel_ShowOverwriteWarning are already promoted -- signatures taken from
  * src/decomp/c_080824D4.c and src/decomp/c_08084974.c rather than derived.
  * sub_08084700 is still `asm` and has no include/ entry; c_0808177C.c and
  * c_080819A0.c each declare it against their own tag for the same object, and
@@ -89,7 +89,7 @@ struct Unk8081D30
  * straight through in r0, and its result is never read. */
 void sub_080824D4(struct Unk8081D30 *);
 void sub_08084700(struct Unk8081D30 *);
-void sub_08084974(void);
+void MainMenuCarousel_ShowOverwriteWarning(void);
 
 void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
 {
@@ -244,7 +244,7 @@ void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
                         gUnknown_030033FC = 1;
 
                         if (sub_0803BC7C() != 0)
-                            sub_08084974();
+                            MainMenuCarousel_ShowOverwriteWarning();
                     }
                 }
                 else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 1)
@@ -258,7 +258,7 @@ void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
                         gUnknown_030033FC = 3;
 
                         if (sub_0803BC88() != 0)
-                            sub_08084974();
+                            MainMenuCarousel_ShowOverwriteWarning();
                     }
                 }
                 else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 5)
@@ -272,7 +272,7 @@ void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
                         gUnknown_030033FC = 5;
 
                         if (sub_0803BC94() != 0)
-                            sub_08084974();
+                            MainMenuCarousel_ShowOverwriteWarning();
                     }
                 }
                 else if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 3)
@@ -316,9 +316,9 @@ void MainMenuC2_IDLE_08081D31(struct Unk8081D30 *p)
             gUnknown_03005920 = ~gUnknown_03005920 & 1;
 
             if (gUnknown_03005920 != 0)
-                sub_080845A8(6);
+                LoadMainMenuCentreTileGraphic(6);
             else
-                sub_080845A8(2);
+                LoadMainMenuCentreTileGraphic(2);
 
             p->unk4c = 0;
         }

@@ -14,10 +14,11 @@
  * field's group mask followed by an OR, which is store_fixed_bit_field. Byte 1
  * and `ldrb`/`strb` is what makes it `.bits` rather than the `.raw` view its
  * neighbours use for pool-masked `ldrh` writes. */
-void sub_0808A340(void)
+void CoDesignEditor_ReturnToBrowse(void)
 {
     gUnknown_03001FE8.bits.size = 1;
     gUnknown_03005908 = 0;
 
-    sub_0808A5C4();
+    CoDesignEditor_DrawHelpText();
 }
+asm(".global sub_0808A340\n.thumb_set sub_0808A340, CoDesignEditor_ReturnToBrowse\n");

@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08074F1C(void)
+void EndWorldMapScope(void)
 {
     Proc_EndEach(gUnknown_08614344);
 }
+asm(".global sub_08074F1C\n.thumb_set sub_08074F1C, EndWorldMapScope\n");

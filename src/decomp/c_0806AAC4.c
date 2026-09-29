@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-int sub_0806AAC4(void)
+int IsMeteorImpactRunning(void)
 {
     return Proc_Find(gUnknown_0858168C) != 0;
 }
+asm(".global sub_0806AAC4\n.thumb_set sub_0806AAC4, IsMeteorImpactRunning\n");

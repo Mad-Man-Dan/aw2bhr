@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08074744(void)
+void EndWorldMapMarkerDrawer(void)
 {
     Proc_EndEach(gUnknown_086142B4);
 }
+asm(".global sub_08074744\n.thumb_set sub_08074744, EndWorldMapMarkerDrawer\n");

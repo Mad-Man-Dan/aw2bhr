@@ -8,7 +8,7 @@
  */
 
 /* The existence predicate for gUnknown_086141B4, whose starter is the
- * neighbouring sub_08073900. Same shape as the 23 wrappers described on the
+ * neighbouring StartCircleWipe. Same shape as the 23 wrappers described on the
  * "start/exists proc-script family" comment in unknown-globals.h, except that
  * this script's starter takes a payload rather than being the 20-byte
  * PROC_TREE_3 form.
@@ -19,7 +19,8 @@
 
 #include "proc.h"
 
-int sub_08073918(void)
+int IsCircleWipeActive(void)
 {
     return Proc_Find(gUnknown_086141B4) != 0;
 }
+asm(".global sub_08073918\n.thumb_set sub_08073918, IsCircleWipeActive\n");

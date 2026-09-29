@@ -21,5 +21,5 @@ void sub_08076ADC(ProcPtr proc)
     sub_0807681C();
     sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
     sub_08076C8C(proc);
-    sub_0807639C(proc);
+    StartWorldMapNationPanel(proc);
 }

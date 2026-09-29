@@ -24,24 +24,25 @@
  * its own call, which is copy-then-narrow -- an `s16` parameter would have been
  * narrowed once at entry.
  *
- * sub_08063E28 is called with its second and third arguments the same pointer,
+ * MultiplyMatrix43 is called with its second and third arguments the same pointer,
  * so it composes in place; the two calls chain m0*m1 into m1 and m1*m2 into m2,
  * leaving m2 as the one the loop uses. */
-void sub_08064214(int a1, int a2, int a3)
+void UnusedRotateCubeVertices(int a1, int a2, int a3)
 {
     int m0[12];
     int m1[12];
     int m2[12];
     int i;
 
-    sub_08063FEC((struct Mtx43 *)m0, (s16)a1);
-    sub_08064034((struct Unk64034Mtx *)m1, (s16)a2);
-    sub_0806407C((struct Unk6407CMtx *)m2, (s16)a3);
-    sub_08063E28((struct Mtx43 *)m0, (struct Mtx43 *)m1, (struct Mtx43 *)m1);
-    sub_08063E28((struct Mtx43 *)m1, (struct Mtx43 *)m2, (struct Mtx43 *)m2);
+    BuildRotationMatrixX((struct Mtx43 *)m0, (s16)a1);
+    BuildRotationMatrixY((struct Unk64034Mtx *)m1, (s16)a2);
+    BuildRotationMatrixZ((struct Unk6407CMtx *)m2, (s16)a3);
+    MultiplyMatrix43((struct Mtx43 *)m0, (struct Mtx43 *)m1, (struct Mtx43 *)m1);
+    MultiplyMatrix43((struct Mtx43 *)m1, (struct Mtx43 *)m2, (struct Mtx43 *)m2);
 
     for (i = 0; i < 8; i++)
-        sub_08063DDC((struct Vec3 *)gUnknown_0202F140[i].unk00,
+        TransformVec3ByRotation((struct Vec3 *)gUnknown_0202F140[i].unk00,
                      (struct Mtx43 *)m2,
                      (struct Vec3 *)gUnknown_0202F140[i].unk0c);
 }
+asm(".global sub_08064214\n.thumb_set sub_08064214, UnusedRotateCubeVertices\n");

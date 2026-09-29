@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* A 16-frame scroll step. Interpolate's result feeds sub_08072C40 directly --
+/* A 16-frame scroll step. Interpolate's result feeds SetBgScrollShadow directly --
  * `adds r1, r0, #0` then `lsls #0x10; lsrs #0x10` is copy-then-narrow into that
  * callee's u16 second parameter, not evidence about Interpolate, which is
  * declared s32.
@@ -49,7 +49,7 @@ struct Unk6E780Proc
  * seeds its start and end positions from two caller arguments.
  *
  * `b & 1` is computed ONCE and reused three times (stored to unk34, shifted by
- * 7 for the offset, shifted by 5 for sub_0806F000's argument), which is what
+ * 7 for the offset, shifted by 5 for SoundRoomDrawTrackTitle's argument), which is what
  * keeps it in r1 across the whole tail. unk30 is derived from unk2c rather than
  * recomputed: the ROM subtracts `a << 7` from the value still in r2, so the two
  * fields are one expression apart and the source says so. */
@@ -66,7 +66,7 @@ struct Unk6E7C0Proc
 
 void sub_0806E740(struct Unk6E740Proc *proc)
 {
-    sub_08072C40(0, Interpolate(4, proc->unk2c, proc->unk30, proc->unk38, 0x10), 0);
+    SetBgScrollShadow(0, Interpolate(4, proc->unk2c, proc->unk30, proc->unk38, 0x10), 0);
 
     if (proc->unk38 > 0x10)
         Proc_Break(proc);
@@ -93,7 +93,7 @@ void sub_0806E7C0(int a, int b, ProcPtr parent)
     proc->unk2c = -0x38 - ((b & 1) << 7);
     proc->unk30 = proc->unk2c - (a << 7);
     proc->unk38 = 0;
-    sub_0806F000(b, ((b & 1) << 5) + 0x40);
+    SoundRoomDrawTrackTitle(b, ((b & 1) << 5) + 0x40);
 }
 
 /* Pokes one palette entry from a ROM table keyed on the frame counter, then

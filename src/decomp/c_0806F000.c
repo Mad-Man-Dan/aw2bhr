@@ -18,7 +18,7 @@
  *
  * `movs r0,#0xc0; lsls r0,#6` is the constant 0x3000 written as a literal;
  * agbcc rebuilds the two instructions because it does not fit an imm8. */
-void sub_0806F000(int a1, int a2)
+void SoundRoomDrawTrackTitle(int a1, int a2)
 {
     s16 v;
 
@@ -34,3 +34,4 @@ void sub_0806F000(int a1, int a2)
         sub_08013AEC();
     }
 }
+asm(".global sub_0806F000\n.thumb_set sub_0806F000, SoundRoomDrawTrackTitle\n");

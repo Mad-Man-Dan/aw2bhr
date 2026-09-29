@@ -12,7 +12,7 @@
 /* The five `orrs`/`ands` on byte 1 of gDispIo are exactly hardware.h's
  * SetDispEnable macro -- one bitfield store per BG plus OBJ, in that order --
  * and the three that follow clear the two windows and the OBJ window. */
-void sub_08084974(void)
+void MainMenuCarousel_ShowOverwriteWarning(void)
 {
     SetDispEnable(0, 1, 1, 1, 1);
     gDispIo.disp_ct.win0_enable = 0;
@@ -21,3 +21,4 @@ void sub_08084974(void)
     sub_0801A5B0(0);
     sub_08019818(0xca0, 0, 0);
 }
+asm(".global sub_08084974\n.thumb_set sub_08084974, MainMenuCarousel_ShowOverwriteWarning\n");

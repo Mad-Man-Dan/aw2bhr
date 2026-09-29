@@ -22,21 +22,21 @@ struct Unk8086688
     /* 0x6a */ s16 unk6a;
 };
 
-void sub_08086688(ProcPtr arg)
+void MapSelectList_DrawFrame(ProcPtr arg)
 {
     struct Unk8086688 *p = arg;
     int i;
 
     sub_080867BC(arg);
     sub_08087040();
-    sub_080870B8(p->unk64, p->unk66, p->unk68, p->unk6a);
-    sub_08087168(p->unk5c);
-    sub_080872D0(p->unk5c);
+    MapSelectList_DrawPropertyCounts(p->unk64, p->unk66, p->unk68, p->unk6a);
+    MapSelectList_DrawScrollArrows(p->unk5c);
+    MapSelectList_DrawScrollbar(p->unk5c);
 
     if (gPlaySt.gameMode == 2)
-        sub_08087220(gUnknown_03005930, 0x28);
+        MapSelectList_DrawRowCursor(gUnknown_03005930, 0x28);
     else
-        sub_08087220(gUnknown_03005980, 0x48);
+        MapSelectList_DrawRowCursor(gUnknown_03005980, 0x48);
 
     if (p->unk4c <= 0x1D)
     {
@@ -57,3 +57,4 @@ void sub_08086688(ProcPtr arg)
             p->unk48 = 0x40;
     }
 }
+asm(".global sub_08086688\n.thumb_set sub_08086688, MapSelectList_DrawFrame\n");

@@ -33,7 +33,7 @@ void IntroT3_080688E5(struct Unk080688E4 *proc)
 {
     u32 zero;
 
-    proc->unk2c = sub_080674F4(gUnknown_0202F204++);
+    proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
     gDispIo.disp_ct.mode = 1;
     SetDispEnable(1, 1, 0, 0, 1);
     gUnknown_030030B4.bits.priority = 0;
@@ -50,7 +50,7 @@ void IntroT3_080688E5(struct Unk080688E4 *proc)
     Decompress(gUnknown_0817DA38, (void *)0x06008000);
     Decompress(gUnknown_0817E208, gBG2TilemapBuffer);
     sub_08013B0C();
-    sub_08067898(0xC00, -0x28, 0, proc);
+    StartIntroBgZoom(0xC00, -0x28, 0, proc);
     proc->unk30 = 0;
     proc->unk34 = 0;
 }

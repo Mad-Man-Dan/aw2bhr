@@ -7,10 +7,11 @@
  * sub_08073AE8 @ 0x08073AE8
  */
 
-void sub_08073AE8(void)
+void SwapWipeEdgeBuffers(void)
 {
     void * temp = gUnknown_0202FDDC;
 
     gUnknown_0202FDDC = gUnknown_0202FDE0;
     gUnknown_0202FDE0 = temp;
 }
+asm(".global sub_08073AE8\n.thumb_set sub_08073AE8, SwapWipeEdgeBuffers\n");

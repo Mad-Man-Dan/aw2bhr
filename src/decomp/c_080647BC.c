@@ -7,12 +7,12 @@
  * sub_080647BC @ 0x080647BC, sub_0806486C @ 0x0806486C, sub_08064918 @ 0x08064918
  */
 
-void sub_080647BC(struct Unk08580934_Obj *obj)
+void RuleValue_DrawFunds(struct Unk08580934_Obj *obj)
 {
     u8 digits[3];
     int n = 0;
 
-    sub_08063A58((obj->unk48 + 2) * 5, &digits[0], &digits[1], &digits[2]);
+    SplitDecimalDigits((obj->unk48 + 2) * 5, &digits[0], &digits[1], &digits[2]);
 
     if (digits[1] == 1)
         n = 1;
@@ -26,8 +26,9 @@ void sub_080647BC(struct Unk08580934_Obj *obj)
     DrawOamObject(0x55, (obj->unk28 + 0x18) & 0x1FF,
                  (obj->unk2a + 0xC) & 0xFF, 0, 0);
 }
+asm(".global sub_080647BC\n.thumb_set sub_080647BC, RuleValue_DrawFunds\n");
 
-void sub_0806486C(struct Unk08580934_Obj *obj)
+void RuleValue_DrawTimeLimit(struct Unk08580934_Obj *obj)
 {
     u8 digits[3];
     int n = 0;
@@ -39,7 +40,7 @@ void sub_0806486C(struct Unk08580934_Obj *obj)
     }
     else
     {
-        sub_08063A58(obj->unk48 + 4, &digits[0], &digits[1], &digits[2]);
+        SplitDecimalDigits(obj->unk48 + 4, &digits[0], &digits[1], &digits[2]);
 
         if (digits[1] == 1)
             n = 1;
@@ -52,8 +53,9 @@ void sub_0806486C(struct Unk08580934_Obj *obj)
                      (obj->unk2a + 0xC) & 0xFF, 0, 0);
     }
 }
+asm(".global sub_0806486C\n.thumb_set sub_0806486C, RuleValue_DrawTimeLimit\n");
 
-void sub_08064918(struct Unk08580934_Obj *obj)
+void RuleValue_DrawCaptureLimit(struct Unk08580934_Obj *obj)
 {
     u8 digits[3];
     int n = 0;
@@ -65,7 +67,7 @@ void sub_08064918(struct Unk08580934_Obj *obj)
     }
     else
     {
-        sub_08063A58(obj->unk48 + gUnknown_08580934->unk15 - 1,
+        SplitDecimalDigits(obj->unk48 + gUnknown_08580934->unk15 - 1,
                      &digits[0], &digits[1], &digits[2]);
 
         if (digits[1] == 1)
@@ -79,3 +81,4 @@ void sub_08064918(struct Unk08580934_Obj *obj)
                      (obj->unk2a + 0xC) & 0xFF, 0, 0);
     }
 }
+asm(".global sub_08064918\n.thumb_set sub_08064918, RuleValue_DrawCaptureLimit\n");

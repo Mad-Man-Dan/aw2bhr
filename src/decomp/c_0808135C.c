@@ -68,7 +68,7 @@ void MainMenuC2_0808135D(struct Unk808135C *proc)
 
     if (gUnknown_030058FC != 0)
     {
-        sub_08073304(gUnknown_085802D8, gUnknown_0200FC50, 0x140, 0, 1, 1, (int)proc);
+        StartHeaderBanner(gUnknown_085802D8, gUnknown_0200FC50, 0x140, 0, 1, 1, (int)proc);
 
         gUnknown_03002020 = 4;
         proc->unk4c = 0x20;
@@ -81,7 +81,7 @@ void MainMenuC2_0808135D(struct Unk808135C *proc)
     }
     else
     {
-        sub_08073304(gUnknown_085802D8, gUnknown_0200FC50, 0x140, 0, 1, 0, (int)proc);
+        StartHeaderBanner(gUnknown_085802D8, gUnknown_0200FC50, 0x140, 0, 1, 0, (int)proc);
 
         proc->unk64 = 0;
         gUnknown_030058FC = 1;

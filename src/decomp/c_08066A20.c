@@ -17,7 +17,7 @@
  *
  * gUnknown_03002040 is the three-slot struct KeySt array c_08064410.c fills;
  * the 0x14 stride of the loop's induction variable is sizeof(struct KeySt). */
-void sub_08066A20(void)
+void MatchSetupHandleArmyStageInputLink(void)
 {
     int i;
     int cnt;
@@ -40,10 +40,10 @@ void sub_08066A20(void)
     if (cnt != 0)
     {
         sub_08063A30(sub_08063A3C(), gUnknown_08580D90);
-        sub_08063A00(gUnknown_08580AF0, sub_08065F68);
-        sub_08063A00(gUnknown_08580B90, sub_08065F68);
-        sub_08063A00(gUnknown_08580BC8, sub_08065F68);
-        sub_0806377C(gUnknown_08580D0C);
+        ForEachSlotRunningScript(gUnknown_08580AF0, ArmyColumn_StartExitDown);
+        ForEachSlotRunningScript(gUnknown_08580B90, ArmyColumn_StartExitDown);
+        ForEachSlotRunningScript(gUnknown_08580BC8, ArmyColumn_StartExitDown);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580D0C);
     }
     else
     {
@@ -51,7 +51,7 @@ void sub_08066A20(void)
         sub_080665D4();
 
         if ((s8)gUnknown_08580934->unk70[gUnknown_08580934->unk25] == 0)
-            sub_08065EF4();
+            MatchSetupDrawSelectionArrows();
 
         for (i = 0; i < gUnknown_08580934->unk08; i++)
             if ((s8)gUnknown_08580934->unk70[i] == 0)
@@ -61,3 +61,4 @@ void sub_08066A20(void)
             sub_080152EC(gUnknown_08580D3C, 4);
     }
 }
+asm(".global sub_08066A20\n.thumb_set sub_08066A20, MatchSetupHandleArmyStageInputLink\n");

@@ -8,10 +8,10 @@
  */
 
 /* The fifth member of the descending gUnknown_03001470[] scan family
- * (sub_0806377C, sub_080637AC, sub_080637D8, sub_08063814): same walk, and the
+ * (ClearCallbackOfSlotsRunningScript, FindSlotRunningScript, StepSlotsRunningScript, EndSlotsNotRunningScript): same walk, and the
  * action is a caller-supplied callback handed the slot itself. `bl
  * _call_via_r6` is agbcc's ordinary indirect-call trampoline, not a veneer. */
-void sub_08063A00(const void *a, void (*f)(void *))
+void ForEachSlotRunningScript(const void *a, void (*f)(void *))
 {
     int i;
 
@@ -21,3 +21,4 @@ void sub_08063A00(const void *a, void (*f)(void *))
             f(&gUnknown_03001470[i]);
     }
 }
+asm(".global sub_08063A00\n.thumb_set sub_08063A00, ForEachSlotRunningScript\n");

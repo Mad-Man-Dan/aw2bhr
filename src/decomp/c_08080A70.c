@@ -8,9 +8,9 @@
  */
 
 #include "proc.h"
-/* sub_08080A70 @ 0x08080A70, 136 bytes, THUMB. Matched.
+/* SuperCoPowerName_HoldLoop @ 0x08080A70, 136 bytes, THUMB. Matched.
  *
- * Near-twin of sub_0807FC70 (src/decomp/c_0807FC70.c): the same Proc routine
+ * Near-twin of CoPowerNameBanner_HoldLoop (src/decomp/c_0807FC70.c): the same Proc routine
  * over the same gUnknown_030059A0 sprite column table. Four differences and
  * nothing else -- the magic handed to sub_08043C28 (0x11CA vs 0x41CA), the
  * sprite y (a gUnknown_030058D0 base instead of a flat +8), the OAM word
@@ -34,9 +34,9 @@ struct Unk08080A70
 };
 /* sub_08080AF8 @ 0x08080AF8, 248 bytes, THUMB. Matched.
  *
- * The long-form sibling of sub_08080A70 (src/decomp/c_08080A70.c): same
+ * The long-form sibling of SuperCoPowerName_HoldLoop (src/decomp/c_08080A70.c): same
  * sub_08043C28 setup with the same 0x11CA, and its second loop is
- * sub_08080A70's sprite-column loop unchanged, down to the register
+ * SuperCoPowerName_HoldLoop's sprite-column loop unchanged, down to the register
  * assignment. What is added around it is a 0x1E-step Interpolate ramp into
  * proc->unk2c while the frame counter is still <= 0x10, and a pair of
  * PutSpriteExt wipes per ramp step -- one closing in from 0xE8, one opening
@@ -61,7 +61,7 @@ struct Unk08080AF8
     /* 0x58 */ int unk58;
 };
 
-void sub_08080A70(struct Unk08080A70 *proc)
+void SuperCoPowerName_HoldLoop(struct Unk08080A70 *proc)
 {
     int i;
 
@@ -80,6 +80,7 @@ void sub_08080A70(struct Unk08080A70 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08080A70\n.thumb_set sub_08080A70, SuperCoPowerName_HoldLoop\n");
 
 void sub_08080AF8(struct Unk08080AF8 *proc)
 {

@@ -26,7 +26,7 @@ struct Unk08075298
  * into u16 members. a5 stays u16 -- its only call site passes a literal 0, so
  * nothing discriminates it. */
 
-void sub_08075298(ProcPtr parent, int a2, s16 a3, s16 a4, u16 a5)
+void StartDifficultyStars(ProcPtr parent, int a2, s16 a3, s16 a4, u16 a5)
 {
     struct Unk08075298 *proc = Proc_Start(ProcScr_WM_MoveScope, parent);
 
@@ -35,3 +35,4 @@ void sub_08075298(ProcPtr parent, int a2, s16 a3, s16 a4, u16 a5)
     proc->unk2c = a2;
     proc->unk38 = a5;
 }
+asm(".global sub_08075298\n.thumb_set sub_08075298, StartDifficultyStars\n");

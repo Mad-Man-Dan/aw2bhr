@@ -20,10 +20,10 @@ struct Unk0806BB08Proc
  * The wave-18 residual (94.2%, size-exact, 31 bytes) was diagnosed as a shared
  * zero hoisted into a callee-saved register, and it was not: it was the blend
  * read-modify-write, spelled through a `u16 v` temp. Two store statements
- * through the scalar cast -- the sub_08085F40 spelling -- fix the whole 31
+ * through the scalar cast -- the MapSelect_SetBlend spelling -- fix the whole 31
  * bytes at once, including the `movs r0, #0` the ROM re-materialises for
  * `proc->unk38 = 0` after the three calls, and including the r0/r1 roles at
- * that store. sub_0806EB5C had the identical residual from the identical
+ * that store. SoundRoomMusicPage_Init had the identical residual from the identical
  * spelling. Nothing about the zero needed changing. */
 void sub_0806BB08(struct Unk0806BB08Proc *proc)
 {
@@ -54,7 +54,7 @@ void sub_0806BB08(struct Unk0806BB08Proc *proc)
     sub_08013AFC();
     sub_08013B0C();
     sub_08013B1C();
-    sub_08072C40(0, 0, 0xFFFC);
+    SetBgScrollShadow(0, 0, 0xFFFC);
     Proc_Start(gUnknown_085819D4, proc);
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 9;

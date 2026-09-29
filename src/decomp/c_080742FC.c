@@ -12,10 +12,10 @@
  */
 u8 sub_080742FC(void)
 {
-    const struct Unk08074584 *p = sub_08074584();
+    const struct Unk08074584 *p = GetMapEventTable();
 
     if (p != 0 && p->unk04 != 0)
-        return sub_08074484(p->unk04, 0, 0);
+        return RunMapEventRecords(p->unk04, 0, 0);
 
     return 0;
 }

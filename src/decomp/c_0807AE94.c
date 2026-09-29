@@ -13,7 +13,7 @@
  * was NOT the pointer-binding class: it was the W54-B shared-local live web.
  * `t` and `v` were ONE local each across all three loops, which gave each
  * pseudo a three-range live web and cost the allocator the r0/r1 assignment at
- * every site (12 bytes, exactly the twelve W54-B measured on sub_080897C8).
+ * every site (12 bytes, exactly the twelve W54-B measured on CoDesignEditor_DrawEnterPicker).
  * The fix is that chapter's, verbatim: an inline ASSIGNMENT expression inside
  * the argument -- which is both the fold barrier for `A - (B - C)` / `X + (Y -
  * C)` and evaluated where it is written -- with a FRESH name per site

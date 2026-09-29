@@ -13,7 +13,7 @@
  * (`if (v < 0) return 0; if (v > 0xc0) return 0xc0; return v;`) mutates the
  * parameter in place instead and loses both the copy and the r1 temp.
  */
-int sub_08074C5C(int arg)
+int GetWorldMapCameraXCentered(int arg)
 {
     int v = arg - 0x78;
     int result = 0;
@@ -28,9 +28,10 @@ int sub_08074C5C(int arg)
 
     return result;
 }
+asm(".global sub_08074C5C\n.thumb_set sub_08074C5C, GetWorldMapCameraXCentered\n");
 
-/* Twin of sub_08074C5C with the offset and the cap swapped (0x50 / 0x60). */
-int sub_08074C70(int arg)
+/* Twin of GetWorldMapCameraXCentered with the offset and the cap swapped (0x50 / 0x60). */
+int GetWorldMapCameraYCentered(int arg)
 {
     int v = arg - 0x50;
     int result = 0;
@@ -45,3 +46,4 @@ int sub_08074C70(int arg)
 
     return result;
 }
+asm(".global sub_08074C70\n.thumb_set sub_08074C70, GetWorldMapCameraYCentered\n");

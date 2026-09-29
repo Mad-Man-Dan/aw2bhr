@@ -25,7 +25,7 @@
  */
 void CampaignIntro_0808A821(void)
 {
-    sub_0808A6A0();
+    CampaignIntro_ShowPrologueText();
 }
 
 asm(".global sub_0808A820\n.thumb_set sub_0808A820, CampaignIntro_0808A821\n");

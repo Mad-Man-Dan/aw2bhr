@@ -9,12 +9,14 @@
 
 #include "proc.h"
 
-void sub_080846C8(void)
+void StartMainMenuCarousel(void)
 {
     Proc_Start(ProcScr_MainMenuC1, PROC_TREE_3);
 }
+asm(".global sub_080846C8\n.thumb_set sub_080846C8, StartMainMenuCarousel\n");
 
-int sub_080846DC(void)
+int IsMainMenuCarouselRunning(void)
 {
     return Proc_Find(ProcScr_MainMenuC1) != 0;
 }
+asm(".global sub_080846DC\n.thumb_set sub_080846DC, IsMainMenuCarouselRunning\n");

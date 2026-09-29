@@ -44,12 +44,13 @@ void sub_08084580(ProcPtr proc)
 /* gUnknown_08616AC0 is an array of two-pointer records; see the evidence
  * comment on it in include/unknown-globals.h. This one takes member 0. */
 
-void sub_080845A8(int i)
+void LoadMainMenuCentreTileGraphic(int i)
 {
     Decompress(gUnknown_08616AC0[i][0], (void *)0x06013300);
 }
+asm(".global sub_080845A8\n.thumb_set sub_080845A8, LoadMainMenuCentreTileGraphic\n");
 
-/* Member 1 of the same two-pointer record sub_080845A8 reads member 0 of, and
+/* Member 1 of the same two-pointer record LoadMainMenuCentreTileGraphic reads member 0 of, and
  * the destination is per-index: 1 KB of VRAM each, so entry i lands at
  * 0x06013B00 + i * 0x400. The `adds r0, #4` on the pool word rather than a
  * displacement in the `ldr` is what the record type buys -- a flat pointer
@@ -62,17 +63,18 @@ void sub_080845A8(int i)
  * promoted definitions could not see it and the CALLER is the only witness.
  * Both functions still match byte-for-byte with the parameter added. */
 
-void sub_080845C4(int i, int a2)
+void LoadMainMenuSideTileGraphic(int i, int a2)
 {
     Decompress(gUnknown_08616AC0[i][1], (void *)(0x06013B00 + (i << 0xa)));
 }
+asm(".global sub_080845C4\n.thumb_set sub_080845C4, LoadMainMenuSideTileGraphic\n");
 
 void sub_080845E8(int a1, int a2)
 {
     Decompress(gUnknown_0823D980, (void *)0x06015300);
 }
 
-void sub_08084600(struct Unk8084600 *p)
+void MainMenuCarousel_DrawDescriptionText(struct Unk8084600 *p)
 {
     int i;
 
@@ -93,3 +95,4 @@ void sub_08084600(struct Unk8084600 *p)
 
     sub_08013AEC();
 }
+asm(".global sub_08084600\n.thumb_set sub_08084600, MainMenuCarousel_DrawDescriptionText\n");

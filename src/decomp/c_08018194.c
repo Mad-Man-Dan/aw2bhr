@@ -24,7 +24,7 @@ void sub_08018194(u8 a)
     int pal;
 
     pal = 9;
-    if (sub_08078198())
+    if (IsAnyWorldMapProcRunning())
         pal = 1;
 
     for (row = 0; row <= 5; row++)

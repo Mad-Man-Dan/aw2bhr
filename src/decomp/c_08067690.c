@@ -70,7 +70,7 @@ void IntroT3_Child_IDLE_08067691(struct Unk08067690Proc *proc)
         gDispIo.disp_ct.obj_enable = 1;
     }
 
-    sub_08072C40(f, proc->unk2c[proc->unk38 + 1], proc->unk2c[proc->unk38 + 2]);
+    SetBgScrollShadow(f, proc->unk2c[proc->unk38 + 1], proc->unk2c[proc->unk38 + 2]);
 
     proc->unk30--;
 }

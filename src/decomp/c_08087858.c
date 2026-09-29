@@ -9,12 +9,14 @@
 
 #include "proc.h"
 
-void sub_08087858(void)
+void StartMapSelect(void)
 {
     Proc_Start(gUnknown_08616C54, PROC_TREE_3);
 }
+asm(".global sub_08087858\n.thumb_set sub_08087858, StartMapSelect\n");
 
-int sub_0808786C(void)
+int IsMapSelectRunning(void)
 {
     return Proc_Find(gUnknown_08616C54) != 0;
 }
+asm(".global sub_0808786C\n.thumb_set sub_0808786C, IsMapSelectRunning\n");

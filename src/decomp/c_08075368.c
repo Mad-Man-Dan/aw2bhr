@@ -58,7 +58,7 @@ void sub_08075368(struct Unk8075368 *proc)
     case 1:
         proc->unk2a = Interpolate(4, proc->unk2e, proc->unk32, proc->unk3c, 0x10);
         proc->unk2c = Interpolate(4, proc->unk30, proc->unk34, proc->unk3c, 0x10);
-        sub_08072C40(1, proc->unk2a, proc->unk2c);
+        SetBgScrollShadow(1, proc->unk2a, proc->unk2c);
         proc->unk40 = 0x18;
         sub_08075340(proc->unk40);
 
@@ -81,7 +81,7 @@ void sub_08075368(struct Unk8075368 *proc)
     case 3:
         proc->unk2a = Interpolate(0, proc->unk2e, proc->unk32, proc->unk3c, 8);
         proc->unk2c = Interpolate(0, proc->unk30, proc->unk34, proc->unk3c, 8);
-        sub_08072C40(1, proc->unk2a, proc->unk2c);
+        SetBgScrollShadow(1, proc->unk2a, proc->unk2c);
 
         if (proc->unk3c == 8)
         {

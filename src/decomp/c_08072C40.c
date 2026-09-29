@@ -15,7 +15,7 @@
  * The shadows are the wave-12 BGxHOFS/BGxVOFS pairs; several are volatile,
  * which is why each arm loads its own pool word instead of walking one
  * address. A selector outside 0..3 stores nothing. */
-void sub_08072C40(u16 which, u16 x, u16 y)
+void SetBgScrollShadow(u16 which, u16 x, u16 y)
 {
     switch (which)
     {
@@ -40,3 +40,4 @@ void sub_08072C40(u16 which, u16 x, u16 y)
         break;
     }
 }
+asm(".global sub_08072C40\n.thumb_set sub_08072C40, SetBgScrollShadow\n");

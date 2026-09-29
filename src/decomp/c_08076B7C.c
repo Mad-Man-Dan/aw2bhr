@@ -35,11 +35,11 @@ void sub_08076BC4(ProcPtr parent)
 
 /* A pass-through wrapper: r0 is never written, so the proc arrives and is
  * forwarded unchanged and costs zero instructions -- the arity is read off the
- * callee, not off this body. sub_08074C84 returns s32 and the result is
+ * callee, not off this body. StartWorldMapCameraPan returns s32 and the result is
  * dropped (`pop {r0}; bx r0`). */
 void sub_08076BE0(ProcPtr proc)
 {
-    sub_08074C84(proc, 0, 0xAF, 1);
+    StartWorldMapCameraPan(proc, 0, 0xAF, 1);
 }
 
 /* The table read happens BEFORE the guard in the ROM -- a local bound outside
@@ -82,6 +82,6 @@ void sub_08076C64(ProcPtr parent)
 /* Two starters under the caller's own proc. */
 void sub_08076C8C(ProcPtr proc)
 {
-    sub_08074ED0(NULL, proc);
+    StartWorldMapScope(NULL, proc);
     sub_0807548C(0, 0, 0, proc);
 }

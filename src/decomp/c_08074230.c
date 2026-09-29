@@ -7,6 +7,7 @@
  * sub_08074230 @ 0x08074230
  */
 
-void sub_08074230(void)
+void EmptyStubMenuA(void)
 {
 }
+asm(".global sub_08074230\n.thumb_set sub_08074230, EmptyStubMenuA\n");

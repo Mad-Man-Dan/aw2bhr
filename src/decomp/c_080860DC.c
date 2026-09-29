@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080860DC.
- * sub_080860DC @ 0x080860DC
+ * MapSelectList_HandleInput @ 0x080860DC
  */
 
 #include "hardware.h"
@@ -46,7 +46,7 @@ struct Unk80860DCProc
     /* 0x5c */ int unk5c;
 };
 
-void sub_080860DC(ProcPtr procp)
+void MapSelectList_HandleInput(ProcPtr procp)
 {
     struct Unk80860DCProc *p = procp;
     int g;
@@ -67,7 +67,7 @@ void sub_080860DC(ProcPtr procp)
 
         if (gPlaySt.gameMode == 2)
         {
-            sub_08087B60(p->unk58);
+            RefreshMapSelectSidePanels(p->unk58);
 
             if (gUnknown_03005930 > 1 || p->unk5c == 0)
                 gUnknown_03005930--;
@@ -119,7 +119,7 @@ void sub_080860DC(ProcPtr procp)
 
         if (gPlaySt.gameMode == 2)
         {
-            sub_08087B60(p->unk58);
+            RefreshMapSelectSidePanels(p->unk58);
 
             if (gUnknown_03005930 < (g = gUnknown_03005928) - 2
                 || p->unk5c == gUnknown_02027F74.unk37 - g + 1)
@@ -209,7 +209,7 @@ void sub_080860DC(ProcPtr procp)
         else
             sub_0803B4DC(0x66);
 
-        sub_08087974(p->unk58, p);
+        ToggleMapRecordsPanel(p->unk58, p);
         return;
     }
     else if (gpKeySt->pressed & 0x220)
@@ -292,3 +292,4 @@ void sub_080860DC(ProcPtr procp)
         sub_0803B4DC(0x76);
     }
 }
+asm(".global sub_080860DC\n.thumb_set sub_080860DC, MapSelectList_HandleInput\n");

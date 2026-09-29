@@ -27,7 +27,7 @@
  * The `== 2` arm is the EARLIER one in the source: it is the arm carrying the
  * explicit `b` to the tail while the else arm falls through, which is the
  * wave-45 switch/if layout rule read backwards. */
-void sub_0806D53C(void)
+void RulesScreenSpawnArmyColumns(void)
 {
     struct Unk08580934_Obj *o;
     int i;
@@ -38,7 +38,7 @@ void sub_0806D53C(void)
         o->unk1c = i;
         gUnknown_08580934->unk34[i] = o;
         o->unk46 = 0;
-        o->unk2c = sub_08065200(i);
+        o->unk2c = GetArmyColumnX(i);
         o->unk2a = 0x28;
         o->unk24 = i * 2;
         o->unk44 = 0x190 + i * 0x24 + (i << 12);
@@ -52,6 +52,7 @@ void sub_0806D53C(void)
             o->unk42 = i * 4 + 0x42a0;
     }
 }
+asm(".global sub_0806D53C\n.thumb_set sub_0806D53C, RulesScreenSpawnArmyColumns\n");
 
 /* The third of the trio. It shares ONLY the frame with sub_08064B68 and
  * sub_0806D34C -- the loop body is genuinely different:
@@ -79,6 +80,6 @@ void sub_0806D620(void)
             o->unk34 = -5;
             o->unk30 = 0;
         }
-        sub_0806377C(gUnknown_08581ECC);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08581ECC);
     }
 }

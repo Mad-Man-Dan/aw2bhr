@@ -21,11 +21,11 @@ void sub_0806DE38(void)
 
     gUnknown_08580934->unk2a++;
 
-    sub_0806DCB8();
+    RulesScreenHandleMenuInput();
 
     if (gUnknown_0202F2C8 == 0)
     {
-        sub_0806DD34((struct Unk0806DD34 *)
+        RulesScreenRuleOption_ChangeValue((struct Unk0806DD34 *)
             gUnknown_08580934->unk54[gUnknown_08580934->unk33]);
         sub_0806DC50(gUnknown_08580934->unk33);
     }

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08085F40(void)
+void MapSelect_SetBlend(void)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -27,3 +27,4 @@ void sub_08085F40(void)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xFFE0) | 0x04;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0x200;
 }
+asm(".global sub_08085F40\n.thumb_set sub_08085F40, MapSelect_SetBlend\n");

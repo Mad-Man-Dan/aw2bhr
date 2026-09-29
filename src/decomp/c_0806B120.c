@@ -75,7 +75,7 @@ struct Unk0202F214Rec
     /* 0x02 */ u16 unk02_2 : 14;
 };
 
-void sub_0806B120(void)
+void BuildCreditsMissionList(void)
 {
     int i;
 
@@ -96,3 +96,4 @@ void sub_0806B120(void)
 
     gUnknown_0202F214[i].unk00 = 0;
 }
+asm(".global sub_0806B120\n.thumb_set sub_0806B120, BuildCreditsMissionList\n");

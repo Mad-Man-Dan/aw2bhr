@@ -9,20 +9,20 @@
 
 #include "hardware.h"
 
-/* The near-twin of sub_08065990: identical through the blend setup, the seven
+/* The near-twin of MatchSetupScreen_Init: identical through the blend setup, the seven
  * mode calls and the eight scroll zeros, then it diverges. Differences, all of
  * them local: sub_0806D850 stands in for the
- * `Decompress(sub_0801F49C(), 0x06015200)` / sub_0806574C / gUnknown_08580CB4
+ * `Decompress(sub_0801F49C(), 0x06015200)` / MatchSetupInitState / gUnknown_08580CB4
  * group; the three sub_0801F150 sizes are 0x290 / 0x2a0 / 0x2e0 rather than
  * 0x298 / 0x2a8 / 0x2d2; the second glyph run ends 0x8c, 0x8d instead of 0x68;
  * and the tail is a different set of calls with gUnknown_08580934->unk30 only
  * cleared, never set back.
  *
- * The `sub sp, #0xc` in the prologue is sub_08073304's three stack arguments
+ * The `sub sp, #0xc` in the prologue is StartHeaderBanner's three stack arguments
  * and nothing else -- there are no locals.
  */
 
-void sub_0806D944(void)
+void RulesScreen_Init(void)
 {
     sub_080366D0(DefaultVBlankCallback);
     sub_080366C4(DefaultMainLoopCallback);
@@ -130,8 +130,9 @@ void sub_0806D944(void)
     sub_0806D820();
     sub_080152EC(gUnknown_08580CC4, 3);
     sub_080733B8();
-    sub_08073304(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
+    StartHeaderBanner(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
     sub_0806D620();
-    sub_0806D268();
+    RulesScreenSpawnRuleOptions();
     gUnknown_08580934->unk30 = 0;
 }
+asm(".global sub_0806D944\n.thumb_set sub_0806D944, RulesScreen_Init\n");

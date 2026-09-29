@@ -24,7 +24,7 @@ struct Unk080806B0
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_080805E0(struct Unk080805E0 *proc)
+void SuperCoPowerName_Init(struct Unk080805E0 *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 0;
@@ -37,13 +37,14 @@ void sub_080805E0(struct Unk080805E0 *proc)
     gUnknown_030030DC.bits.win0_enable_blend = 0;
     gUnknown_030030DC.bits.win1_enable_blend = 0;
 
-    proc->unk58 = sub_0807F8FC(
+    proc->unk58 = LoadCoPowerNameLetters(
         gTextTable[gUnknown_085D3DD0[gUnknown_03005970].power[gUnknown_03005904].powerNameId],
         gUnknown_08616750, proc);
     proc->unk4c = 0;
 }
+asm(".global sub_080805E0\n.thumb_set sub_080805E0, SuperCoPowerName_Init\n");
 
-void sub_080806B0(struct Unk080806B0 *proc)
+void SuperCoPowerName_SlideInLoop(struct Unk080806B0 *proc)
 {
     if (proc->unk4c < 0x30)
     {
@@ -70,3 +71,4 @@ void sub_080806B0(struct Unk080806B0 *proc)
 
     proc->unk4c++;
 }
+asm(".global sub_080806B0\n.thumb_set sub_080806B0, SuperCoPowerName_SlideInLoop\n");

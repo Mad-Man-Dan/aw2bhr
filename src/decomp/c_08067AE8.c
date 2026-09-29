@@ -33,7 +33,7 @@ void sub_08067AE8(struct Unk08067AE8 *proc)
     gUnknown_03002020 = b;
     gUnknown_03002B28 = 0x10 - b;
     gUnknown_03001FFC = 0;
-    sub_08072C40(1, a, 0);
+    SetBgScrollShadow(1, a, 0);
 
     if (proc->unk3c == proc->unk38)
         Proc_Break(proc);

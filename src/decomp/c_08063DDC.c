@@ -29,9 +29,10 @@ struct Vec3 /* 0x0c */
  * output stores: the stores are SImode, and a word store does not invalidate a
  * cached load here. No local is needed to get that.
  */
-void sub_08063DDC(struct Vec3 *v, struct Mtx43 *mtx, struct Vec3 *dst)
+void TransformVec3ByRotation(struct Vec3 *v, struct Mtx43 *mtx, struct Vec3 *dst)
 {
     dst->x = (v->x * mtx->m[0][0] + v->y * mtx->m[1][0] + v->z * mtx->m[2][0]) >> 12;
     dst->y = (v->x * mtx->m[0][1] + v->y * mtx->m[1][1] + v->z * mtx->m[2][1]) >> 12;
     dst->z = (v->x * mtx->m[0][2] + v->y * mtx->m[1][2] + v->z * mtx->m[2][2]) >> 12;
 }
+asm(".global sub_08063DDC\n.thumb_set sub_08063DDC, TransformVec3ByRotation\n");

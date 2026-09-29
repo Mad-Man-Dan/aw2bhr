@@ -7,8 +7,9 @@
  * sub_08073F90 @ 0x08073F90
  */
 
-void sub_08073F90(u16 * x, u16 * y)
+void GetSoundScopeLevels(u16 * x, u16 * y)
 {
     *x = gUnknown_0202FDE8;
     *y = gUnknown_0202FDEA;
 }
+asm(".global sub_08073F90\n.thumb_set sub_08073F90, GetSoundScopeLevels\n");

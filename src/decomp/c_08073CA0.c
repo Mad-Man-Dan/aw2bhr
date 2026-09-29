@@ -8,11 +8,12 @@
  */
 
 /* Existence predicate for gUnknown_086141DC; its starter is the immediately
- * preceding sub_08073C88. Identical to sub_08073918 but for the script. */
+ * preceding StartPolygonWipe. Identical to IsCircleWipeActive but for the script. */
 
 #include "proc.h"
 
-int sub_08073CA0(void)
+int IsPolygonWipeActive(void)
 {
     return Proc_Find(gUnknown_086141DC) != 0;
 }
+asm(".global sub_08073CA0\n.thumb_set sub_08073CA0, IsPolygonWipeActive\n");

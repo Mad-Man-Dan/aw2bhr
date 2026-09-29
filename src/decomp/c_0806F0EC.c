@@ -43,7 +43,7 @@ struct Unk6F0ECProc
     /* 0x44 */ struct Unk6F0ECSubProc *unk44;
 };
 
-void sub_0806F0EC(struct Unk6F0ECProc *proc)
+void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
 {
     struct Unk6F0ECBlockProc *p;
     u16 held;
@@ -119,3 +119,4 @@ void sub_0806F0EC(struct Unk6F0ECProc *proc)
         sub_0806E7C0(-1, proc->unk30, proc);
     }
 }
+asm(".global sub_0806F0EC\n.thumb_set sub_0806F0EC, SoundRoomMusicPage_Input\n");

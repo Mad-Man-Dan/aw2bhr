@@ -19,11 +19,11 @@
  * into the load. `adds r4, #0x66` is computed once and shared because THUMB has
  * no ldrsh immediate form and 0x66 is past ldrb's imm5 limit.
  *
- * sub_080853B0 is nullary (it never reads r0), so the proc pointer still
+ * CoInfoScreen_DrawArmyIcons is nullary (it never reads r0), so the proc pointer still
  * sitting in r0 at that `bl` is not argument setup. */
 void sub_080851CC(s16 *p)
 {
-    sub_080853B0();
+    CoInfoScreen_DrawArmyIcons();
     DrawOamObject(0x13, 8, 0x28, 0, 1);
 
     if (IsPlayerAliveAndActive(p[0x33]) != 0)
@@ -34,7 +34,7 @@ void sub_080851CC(s16 *p)
  * difference is DrawOamObject's first argument (0x14 here, 0x13 there). */
 void sub_08085208(s16 *p)
 {
-    sub_080853B0();
+    CoInfoScreen_DrawArmyIcons();
     DrawOamObject(0x14, 8, 0x28, 0, 1);
 
     if (IsPlayerAliveAndActive(p[0x33]) != 0)

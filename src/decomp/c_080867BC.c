@@ -48,7 +48,7 @@ void sub_080867BC(struct Unk080867BCProc *proc)
         if (proc->unk4c <= 8)
             gUnknown_03002F18 = sub_08087298() + buf[proc->unk4c] * proc->unk4e;
         else if (proc->unk4c == 0xc)
-            sub_08086EB0(proc->unk58);
+            StartMapSelectPreview(proc->unk58);
         else if (proc->unk4c > 0x13)
         {
             if (proc->unk4c == 0x14)
@@ -62,7 +62,7 @@ void sub_080867BC(struct Unk080867BCProc *proc)
         proc->unk4c++;
         if (proc->unk4c == 0x1c)
         {
-            sub_08087104(proc);
+            UpdateMapSelectPropertyCounts(proc);
             gUnknown_03002F18 = sub_08087298();
             proc->unk4e = 0;
         }
@@ -75,7 +75,7 @@ void sub_080867BC(struct Unk080867BCProc *proc)
             *dst = sub_08087248() + buf[proc->unk4c] * proc->unk52;
         }
         else if (proc->unk4c == 0xc)
-            sub_08086EB0(proc->unk58);
+            StartMapSelectPreview(proc->unk58);
         else if (proc->unk4c > 0x13)
         {
             if (proc->unk4c == 0x14)
@@ -107,10 +107,10 @@ void sub_080867BC(struct Unk080867BCProc *proc)
             break;
         case 9:
             gUnknown_03001FF8 = proc->unk52 * 72;
-            sub_08086BF8(proc->unk5c, gUnknown_03005928, 0);
+            DrawMapListFirstTwoRows(proc->unk5c, gUnknown_03005928, 0);
             break;
         case 10:
-            sub_08086CE0(proc->unk5c, gUnknown_03005928, 0);
+            DrawMapListRowsFromThird(proc->unk5c, gUnknown_03005928, 0);
         case 11:
         case 12:
         case 13:
@@ -127,7 +127,7 @@ void sub_080867BC(struct Unk080867BCProc *proc)
         proc->unk2c++;
         if (proc->unk4c == 0x1c)
         {
-            sub_08087104(proc);
+            UpdateMapSelectPropertyCounts(proc);
             *(u16 *)&gUnknown_03002B34 = sub_08087248();
         }
         if (proc->unk4c > 0x1b && proc->unk2c > 0x11)

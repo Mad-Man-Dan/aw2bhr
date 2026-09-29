@@ -7,7 +7,7 @@
  * sub_08080F54 @ 0x08080F54
  */
 
-/* sub_08080F54 @ 0x08080F54, 60 bytes, THUMB. Matched.
+/* SetMainMenuCarouselPosition @ 0x08080F54, 60 bytes, THUMB. Matched.
  *
  * Linear search of the six-byte permutation gUnknown_0861696C for the
  * parameter; on a hit gUnknown_03005934 gets DivRem(i + 4, 6), and when the
@@ -28,7 +28,7 @@
  * The two `.4byte` pool words sit INSIDE the function body, between the hit
  * and miss paths; that is ordinary literal placement.
  */
-void sub_08080F54(int a1)
+void SetMainMenuCarouselPosition(int a1)
 {
     int i;
 
@@ -45,3 +45,4 @@ void sub_08080F54(int a1)
 
     gUnknown_03005934 = 4;
 }
+asm(".global sub_08080F54\n.thumb_set sub_08080F54, SetMainMenuCarouselPosition\n");

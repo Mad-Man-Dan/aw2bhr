@@ -43,5 +43,5 @@ void sub_08067BD0(int a, int b, int c, ProcPtr parent)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xffe0) | 2;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xe0ff) | 0x100;
 
-    sub_08072C40(1, proc->unk30, 0);
+    SetBgScrollShadow(1, proc->unk30, 0);
 }

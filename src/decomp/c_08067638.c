@@ -23,8 +23,8 @@ void IntroT3_Child_08067639(void)
 
     ApplyPaletteExt(gUnknown_0817C3E8, 0, 0x20);
 
-    sub_08072C40(0, 0, 0);
-    sub_08072C40(1, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
+    SetBgScrollShadow(1, 0, 0);
 }
 
 asm(".global sub_08067638\n.thumb_set sub_08067638, IntroT3_Child_08067639\n");

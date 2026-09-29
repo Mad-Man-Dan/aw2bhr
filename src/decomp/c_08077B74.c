@@ -42,7 +42,7 @@ void sub_08077B74(struct Unk77B74Proc *proc)
     if (n > m)
         n = m;
 
-    sub_08072C40(0, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
 
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_03002020 = 0;

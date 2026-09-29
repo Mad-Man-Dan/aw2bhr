@@ -48,9 +48,9 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
 
     sub_08077620(0, 0xa8 - gUnknown_0300064C);
     sub_08012358();
-    sub_080755E0();
+    EndWorldMapSelectionFrame();
     sub_08013C54();
-    sub_08072C40(1, 0, 0);
+    SetBgScrollShadow(1, 0, 0);
     ClearAllUnits();
     sub_08011C68(gUnknown_080A0F38,
                  (void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)),
@@ -87,6 +87,6 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
         proc->unk4a = 0;
 
     proc->unk44 = 0;
-    sub_080752D8(3);
-    sub_08074EEC(3);
+    SetDifficultyStarsPalette(3);
+    SetWorldMapScopePalette(3);
 }

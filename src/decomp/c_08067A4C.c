@@ -9,9 +9,9 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* Alpha-blend fade step that also drives sub_08072C40 channel 1 with a
+/* Alpha-blend fade step that also drives SetBgScrollShadow channel 1 with a
  * second, independently interpolated value. The `lsls #0x10; lsrs #0x10`
- * on that value is sub_08072C40's u16 parameter re-narrowing the s32
+ * on that value is SetBgScrollShadow's u16 parameter re-narrowing the s32
  * Interpolate result, not a cast in the source. The +0x38 limit and the
  * +0x3c counter are both cleared on the last frame, and the counter is
  * bumped unconditionally afterwards. */
@@ -35,7 +35,7 @@ void sub_08067A4C(struct Unk08067A4C *proc)
     gUnknown_03002020 = b;
     gUnknown_03002B28 = 0x10 - b;
     gUnknown_03001FFC = 0;
-    sub_08072C40(1, a, 0);
+    SetBgScrollShadow(1, a, 0);
 
     if (proc->unk3c == proc->unk38)
     {

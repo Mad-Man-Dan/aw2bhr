@@ -37,7 +37,7 @@ void CoInfo_08084BD5(struct UnkBD4Proc *proc)
     proc->unk58 = 0;
     proc->unk4c = 0;
     sub_08085298(proc);
-    sub_080852A8((struct Unk080852A8 *)proc);
+    CoInfoScreen_DrawPageText((struct Unk080852A8 *)proc);
     sub_08043834(proc->unk66);
 }
 

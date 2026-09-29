@@ -48,7 +48,7 @@
  *
  * Eases gSmoothScroll's current pair toward the gUnknown_08614588 target,
  * hands each halved axis to its clamp, and rumbles while either is moving. */
-void sub_08076E20(u16 a1)
+void UpdateWorldMapCursor(u16 a1)
 {
     int n;
     int k;
@@ -75,8 +75,8 @@ void sub_08076E20(u16 a1)
             (gSmoothScroll.targetY - gSmoothScroll.currentY) / 2;
     }
 
-    v = sub_08076CAC(gSmoothScroll.currentX / 2)
-        + sub_08076D68(gSmoothScroll.currentY / 2);
+    v = MoveWorldMapCursorX(gSmoothScroll.currentX / 2)
+        + MoveWorldMapCursorY(gSmoothScroll.currentY / 2);
 
     if (v == 0)
     {
@@ -105,3 +105,4 @@ void sub_08076E20(u16 a1)
         gSmoothScroll.frameCounter++;
     }
 }
+asm(".global sub_08076E20\n.thumb_set sub_08076E20, UpdateWorldMapCursor\n");

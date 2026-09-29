@@ -25,7 +25,7 @@ void sub_08064D74(struct Unk08580934_Obj *obj)
     else
     {
         obj->unk2a = obj->unk38 + gUnknown_085809F0[obj->unk26];
-        sub_08064BF4(obj);
+        TeamBadge_Draw(obj);
 
         if (obj->unk26 != 0)
         {

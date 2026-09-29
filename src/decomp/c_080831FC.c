@@ -22,15 +22,15 @@
  * The struct is one type shared by at least four functions, and the union of
  * what they pin is worth having in one place even though the convention keeps a
  * pointer-parameter type in the .c that uses it:
- *   +0x34  int  the interpolated scale/offset; sub_080831FC and sub_08083484
- *               write it, sub_08083738 writes it only on one branch
- *   +0x38  int  the same role for sub_080829B0, which is still unmatched and is
+ *   +0x34  int  the interpolated scale/offset; MainMenuCarouselWheel_DrawLabelPlateSlideIn and MainMenuCarouselWheel_DrawLabelPlateSlideOut
+ *               write it, MainMenuCarouselWheel_DrawLabelPlate writes it only on one branch
+ *   +0x38  int  the same role for MainMenuCarouselWheel_DrawTileFlipIn, which is still unmatched and is
  *               this function's only caller
- *   +0x4c  s16  sub_08083738's interpolation input (`ldrsh`)
- *   +0x4e  s16  sub_08083484's phase offset (`ldrsh`)
+ *   +0x4c  s16  MainMenuCarouselWheel_DrawLabelPlate's interpolation input (`ldrsh`)
+ *   +0x4e  s16  MainMenuCarouselWheel_DrawLabelPlateSlideOut's phase offset (`ldrsh`)
  *   +0x52  u16  the phase counter every one of the four reads (`ldrh`)
- *   +0x60  int  sub_08083738's two-way branch selector
- * sub_080829B0 is the obvious next target: it shares the struct, the phase
+ *   +0x60  int  MainMenuCarouselWheel_DrawLabelPlate's two-way branch selector
+ * MainMenuCarouselWheel_DrawTileFlipIn is the obvious next target: it shares the struct, the phase
  * table and the whole affine idiom, and it also names gUnknown_08616972, the
  * six s16 y-offsets that sit immediately after gUnknown_0861696C.
  */
@@ -43,9 +43,9 @@ struct Unk80831FC
     /* 52 */ u16 unk52;
 };
 /* Second of the three sprite builders at 0x080831FC-0x08083738. Identical to
- * sub_080831FC except for the two Interpolate calls (kind 1 with the endpoints
- * swapped, where sub_080831FC uses kind 4) and the phase expression, which adds
- * a signed +0x4e member to the +0x52 one. See work/sub_080831FC/ for the shape
+ * MainMenuCarouselWheel_DrawLabelPlateSlideIn except for the two Interpolate calls (kind 1 with the endpoints
+ * swapped, where MainMenuCarouselWheel_DrawLabelPlateSlideIn uses kind 4) and the phase expression, which adds
+ * a signed +0x4e member to the +0x52 one. See work/MainMenuCarouselWheel_DrawLabelPlateSlideIn/ for the shape
  * notes; the two .rodata words are gUnknown_081D93C4 / gUnknown_081D93C8, this
  * unit's -fforce-addr copies of &gUnknown_0861696C and &gUnknown_08615C04.
  */
@@ -63,7 +63,7 @@ struct Unk8083484
  * animation time: the four-way chain draws at a fixed x, and the affine tail
  * splits two ways on +0x60 -- one branch interpolates the scale from +0x4c, the
  * other uses the unit scale 0x100 for all four matrix terms. See
- * work/sub_080831FC/ for the shape notes; the two .rodata words are
+ * work/MainMenuCarouselWheel_DrawLabelPlateSlideIn/ for the shape notes; the two .rodata words are
  * gUnknown_081D93CC / gUnknown_081D93D0, this unit's -fforce-addr copies of
  * &gUnknown_0861696C and &gUnknown_08615C04.
  */
@@ -80,7 +80,7 @@ struct Unk8083738
     /* 60 */ int unk60;
 };
 
-void sub_080831FC(struct Unk80831FC *p, int t)
+void MainMenuCarouselWheel_DrawLabelPlateSlideIn(struct Unk80831FC *p, int t)
 {
     p->unk34 = Interpolate(4, -0x30, 0, t, 4);
 
@@ -131,8 +131,9 @@ void sub_080831FC(struct Unk80831FC *p, int t)
         PutSpriteExt(1, 0x25B, 0x153, gUnknown_0848B6CE, 0xD2C8);
     }
 }
+asm(".global sub_080831FC\n.thumb_set sub_080831FC, MainMenuCarouselWheel_DrawLabelPlateSlideIn\n");
 
-void sub_08083484(struct Unk8083484 *p, int t)
+void MainMenuCarouselWheel_DrawLabelPlateSlideOut(struct Unk8083484 *p, int t)
 {
     p->unk34 = Interpolate(1, 0, -0x30, t, 4);
 
@@ -183,8 +184,9 @@ void sub_08083484(struct Unk8083484 *p, int t)
         PutSpriteExt(1, 0x25B, 0x153, gUnknown_0848B6CE, 0xD2C8);
     }
 }
+asm(".global sub_08083484\n.thumb_set sub_08083484, MainMenuCarouselWheel_DrawLabelPlateSlideOut\n");
 
-void sub_08083738(struct Unk8083738 *p)
+void MainMenuCarouselWheel_DrawLabelPlate(struct Unk8083738 *p)
 {
     if (gUnknown_0861696C[DivRem(p->unk52 + 2, 6)] == 0)
     {
@@ -246,3 +248,4 @@ void sub_08083738(struct Unk8083738 *p)
         PutSpriteExt(1, 0x25B, 0x153, gUnknown_0848B6CE, 0xD2C8);
     }
 }
+asm(".global sub_08083738\n.thumb_set sub_08083738, MainMenuCarouselWheel_DrawLabelPlate\n");

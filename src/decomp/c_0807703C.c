@@ -19,11 +19,11 @@
  * unk08 is an idle counter: it advances while no direction key is held and is
  * pinned at 4 once the idle handler has fired. `unk10 = 0` and `unk0c = -1`
  * share one constant (`movs r0, #0` then `subs r0, #1`). */
-void sub_0807703C(ProcPtr proc)
+void WorldMapCursor_Loop(ProcPtr proc)
 {
     u16 k = gpKeySt->held;
 
-    sub_08076E20(k);
+    UpdateWorldMapCursor(k);
 
     if ((k & 0xF0) == 0)
         gUnknown_0202FDFC.unk08++;
@@ -40,15 +40,15 @@ void sub_0807703C(ProcPtr proc)
         gUnknown_0202FDFC.unk10 = 0;
         gUnknown_0202FDFC.unk0c = -1;
         sub_0807553C(0x20, 0x20, 3);
-        sub_08075304();
+        EndDifficultyStars();
     }
 
     if ((gpKeySt->pressed & 1) && gUnknown_0202FDFC.unk10 != 0)
     {
         sub_080733A0(5);
-        sub_080752D8(2);
-        sub_08074EEC(2);
-        sub_080763B0();
+        SetDifficultyStarsPalette(2);
+        SetWorldMapScopePalette(2);
+        EndWorldMapNationPanel();
         sub_0803B4DC(0x71);
         Proc_Break(proc);
     }
@@ -59,6 +59,7 @@ void sub_0807703C(ProcPtr proc)
     }
     else
     {
-        sub_08072C40(3, gUnknown_0202FDFC.unk00, gUnknown_0202FDFC.unk02);
+        SetBgScrollShadow(3, gUnknown_0202FDFC.unk00, gUnknown_0202FDFC.unk02);
     }
 }
+asm(".global sub_0807703C\n.thumb_set sub_0807703C, WorldMapCursor_Loop\n");

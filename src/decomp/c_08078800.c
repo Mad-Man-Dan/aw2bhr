@@ -10,19 +10,19 @@
 #include "proc.h"
 
 /* SetupCoSelectFactoryBlues's twin, 0x48 bytes along: the same shape with the roles of
- * sub_08078658 and sub_080786A4 swapped and the tag 0x6a instead of 0x6b. */
+ * AddCoSelectGroupBlueMoon and AddCoSelectGroupYellowComet swapped and the tag 0x6a instead of 0x6b. */
 
 void SetupCoSelectHuntsEnd(void)
 {
     s32 i;
 
     ClearArmyCount();
-    i = sub_080786A4(0);
-    i = sub_08078608(i);
+    i = AddCoSelectGroupYellowComet(0);
+    i = AddCoSelectGroupOrangeStar(i);
 
     if (IsCampaignCompletionFlagSet(0x6a))
     {
-        sub_08078658(i);
+        AddCoSelectGroupBlueMoon(i);
         sub_08078770();
     }
     else

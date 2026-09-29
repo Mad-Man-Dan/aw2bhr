@@ -24,7 +24,7 @@
  * one, which is why the pointer still advances (`adds r4, #0x6c`) while the
  * counter descends. proc.c's own Proc_Find/Proc_Count/Proc_FindUnblocked are
  * spelled exactly this way and are upstream's matching source. */
-void sub_08067504(const struct ProcCmd * script)
+void Proc_BreakEachOpenCoded(const struct ProcCmd * script)
 {
     s32 i;
 
@@ -38,8 +38,9 @@ void sub_08067504(const struct ProcCmd * script)
         }
     }
 }
+asm(".global sub_08067504\n.thumb_set sub_08067504, Proc_BreakEachOpenCoded\n");
 
-/* The twin of sub_08067504: the same open-coded scan of proc.c's sProcArray,
+/* The twin of Proc_BreakEachOpenCoded: the same open-coded scan of proc.c's sProcArray,
  * but the guard sense is INVERTED and the action is Proc_End. The ROM's `beq`
  * skips the call, so this ends every proc whose script is NOT the argument --
  * an "end everything except" sweep, not a Proc_EndEach. Free slots have a NULL

@@ -17,10 +17,10 @@
 
 void sub_08078018(void)
 {
-    sub_08074744();
-    sub_08074F1C();
-    sub_08075304();
-    sub_080755E0();
+    EndWorldMapMarkerDrawer();
+    EndWorldMapScope();
+    EndDifficultyStars();
+    EndWorldMapSelectionFrame();
     Proc_EndEach(gUnknown_086143E0);
 }
 

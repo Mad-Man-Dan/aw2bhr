@@ -25,8 +25,8 @@ void sub_080324C4(int a1, int a2, u8 a3)
     sub_08034290();
     sub_080733B8();
 
-    sub_08072C40(0, 0xFFD0, 8);
-    sub_08072C40(3, 0, 0);
+    SetBgScrollShadow(0, 0xFFD0, 8);
+    SetBgScrollShadow(3, 0, 0);
 
     sub_0801237C();
 
@@ -56,11 +56,11 @@ void sub_080324C4(int a1, int a2, u8 a3)
     for (i = 0x80; i < 0x200; i++)
         gBG3TilemapBuffer[i] = i - 0x80;
 
-    sub_08073304(gUnknown_0849B644, gUnknown_02010C50, 0xec, 0xf, 0, a3, a1);
+    StartHeaderBanner(gUnknown_0849B644, gUnknown_02010C50, 0xec, 0xf, 0, a3, a1);
 
     if (a2 == -1)
     {
-        sub_08072C40(0, 0, 0);
+        SetBgScrollShadow(0, 0, 0);
         sub_0802D5CC(0, 3);
         Decompress(gUnknown_081D2660, (void *)0x06006280);
         sub_08032484(gBG0TilemapBuffer + 0x221);

@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Same shape as sub_08073900 on the neighbouring script gUnknown_086141B4. */
+/* Same shape as StartCircleWipe on the neighbouring script gUnknown_086141B4. */
 struct Unk73C88Proc
 {
     /* 00 */ PROC_HEADER;
@@ -16,9 +16,10 @@ struct Unk73C88Proc
     /* 5c */ s32 unk5c;
 };
 
-void sub_08073C88(s32 a)
+void StartPolygonWipe(s32 a)
 {
     struct Unk73C88Proc * proc = Proc_Start(gUnknown_086141DC, PROC_TREE_VSYNC);
 
     proc->unk5c = a;
 }
+asm(".global sub_08073C88\n.thumb_set sub_08073C88, StartPolygonWipe\n");

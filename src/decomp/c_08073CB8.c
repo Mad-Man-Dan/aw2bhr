@@ -14,21 +14,22 @@
  * two high registers -- that is what the `mov r7, sb` save is for, not a
  * loop signal.
  *
- * As in sub_08073CF4, `width` is passed through unchanged while a separate
+ * As in ApplyBitmapLine, `width` is passed through unchanged while a separate
  * register counts the rows down. */
 
-void sub_08073CB8(u8 * src, u32 * dst, int width, int height)
+void ApplyBitmap(u8 * src, u32 * dst, int width, int height)
 {
     int i;
 
     for (i = 0; i < height; i++)
     {
-        sub_08073CF4(src, dst, width);
+        ApplyBitmapLine(src, dst, width);
 
         src += width * 0x40;
         dst += width * 8;
     }
 }
+asm(".global sub_08073CB8\n.thumb_set sub_08073CB8, ApplyBitmap\n");
 
 /* Blits one row of tiles: each pass hands the innermost packer the SAME
  * `width` it was given, then steps the nibble source 8 bytes (one packed
@@ -41,15 +42,16 @@ void sub_08073CB8(u8 * src, u32 * dst, int width, int height)
  * loop is the source's signed `<` test, so this is a `for`, not a
  * `do/while`. */
 
-void sub_08073CF4(u8 * src, u32 * dst, int width)
+void ApplyBitmapLine(u8 * src, u32 * dst, int width)
 {
     int i;
 
     for (i = 0; i < width; i++)
     {
-        sub_08073D1C(src, dst, width);
+        ApplyBitmapTile(src, dst, width);
 
         src += 8;
         dst += 8;
     }
 }
+asm(".global sub_08073CF4\n.thumb_set sub_08073CF4, ApplyBitmapLine\n");

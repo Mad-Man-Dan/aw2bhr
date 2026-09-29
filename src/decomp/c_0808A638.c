@@ -9,12 +9,14 @@
 
 #include "proc.h"
 
-void sub_0808A638(void)
+void StartCoDesignEditor(void)
 {
     Proc_Start(ProcScr_CoDesignC1, PROC_TREE_3);
 }
+asm(".global sub_0808A638\n.thumb_set sub_0808A638, StartCoDesignEditor\n");
 
-int sub_0808A64C(void)
+int IsCoDesignEditorRunning(void)
 {
     return Proc_Find(ProcScr_CoDesignC1) != 0;
 }
+asm(".global sub_0808A64C\n.thumb_set sub_0808A64C, IsCoDesignEditorRunning\n");

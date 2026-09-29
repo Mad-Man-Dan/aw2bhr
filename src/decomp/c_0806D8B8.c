@@ -7,13 +7,13 @@
  * sub_0806D8B8 @ 0x0806D8B8
  */
 
-/* The +0x84 packed header, the descending twin of sub_08065818's. The `(u8)`
+/* The +0x84 packed header, the descending twin of MatchSetupPackRuleIndices's. The `(u8)`
  * on `unk07 + 1` is load-bearing and is the whole difference between 92% and a
  * match: without it agbcc reassociates `a + 1 - b` into `a - (b - 1)` and
  * loads unk15 FIRST (probed side by side -- `(a + 1) - b` and `a - b + 1` both
  * give the reassociated form). The cast pins the `+ 1` to its own instruction
  * ahead of the second load, which is what the ROM has. */
-void sub_0806D8B8(void)
+void RulesScreenPackRuleIndices(void)
 {
     gUnknown_08580934->unk84 = (gUnknown_08580934->unk00 == 0);
     gUnknown_08580934->unk85 = gUnknown_08580934->unk06;
@@ -25,3 +25,4 @@ void sub_0806D8B8(void)
     gUnknown_08580934->unk89 = (gUnknown_08580934->unk01 == 0);
     gUnknown_08580934->unk8a = gUnknown_08580934->unk02;
 }
+asm(".global sub_0806D8B8\n.thumb_set sub_0806D8B8, RulesScreenPackRuleIndices\n");

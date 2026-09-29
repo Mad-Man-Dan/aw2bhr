@@ -113,8 +113,8 @@ void sub_08077CAC(struct Unk8077CAC *proc)
         proc->unk44 = zero_saved;
         sub_0803CEAC();
         sub_08012358();
-        sub_080752D8(2);
-        sub_08074EEC(2);
+        SetDifficultyStarsPalette(2);
+        SetWorldMapScopePalette(2);
         sub_08013C54();
         HideMapPreview();
         sub_0807548C(gUnknown_08615194[gUnknown_0202FDFC.unk0c].flagX

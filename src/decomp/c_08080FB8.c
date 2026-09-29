@@ -7,8 +7,9 @@
  * sub_08080FB8 @ 0x08080FB8
  */
 
-void sub_08080FB8(void)
+void MainMenuCarousel_ApplySoundRoomToggle(void)
 {
     if (gUnknown_03005920 != 0 && gUnknown_030033FC == 6)
         gUnknown_030033FC = 0xc;
 }
+asm(".global sub_08080FB8\n.thumb_set sub_08080FB8, MainMenuCarousel_ApplySoundRoomToggle\n");

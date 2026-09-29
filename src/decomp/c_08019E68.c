@@ -34,7 +34,7 @@ void sub_08019E68(void)
     w = 0x10;
     maxw = 0;
 
-    p = (struct Unk8019A60 *)sub_080637AC(gUnknown_0848A42C);
+    p = (struct Unk8019A60 *)FindSlotRunningScript(gUnknown_0848A42C);
 
     for (i = 0, e = p->unk20; e->unk00 != 0xff; i++, e = &p->unk20[i])
     {

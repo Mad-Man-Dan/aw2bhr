@@ -45,7 +45,7 @@ void sub_08067D5C(struct Unk67D5CProc *proc)
 void sub_08067D6C(struct Unk67D6CProc *proc)
 {
     proc->unk30 -= 5;
-    sub_08072C40(0, 0, proc->unk30);
+    SetBgScrollShadow(0, 0, proc->unk30);
 
     if (proc->unk30 <= 0)
         Proc_Break(proc);
@@ -61,7 +61,7 @@ void sub_08067D6C(struct Unk67D6CProc *proc)
  * lvalue and carries no signedness information. */
 void sub_08067D94(struct Unk67D94Proc *proc)
 {
-    sub_08072C40(0, 0, gUnknown_085810D4[proc->unk4c]);
+    SetBgScrollShadow(0, 0, gUnknown_085810D4[proc->unk4c]);
 
     if (proc->unk4c == 0xc)
         Proc_Break(proc);

@@ -30,7 +30,7 @@ struct Unk8077F9C
 
 void sub_08077F9C(struct Unk8077F9C *proc)
 {
-    sub_080638D0(0);
+    SetVCountInterruptHandler(0);
 
     gPlaySt.mapID = gUnknown_08615194[gUnknown_0202FDFC.unk0c].mapID;
 

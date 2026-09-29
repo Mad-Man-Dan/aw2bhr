@@ -26,9 +26,9 @@
  * shift is `asrs`.
  *
  * gUnknown_0202F214's declared `u16 unk02` is left ALONE. This is a fact about
- * the access, not about the struct. NOTE for whoever takes sub_0806B120: that
+ * the access, not about the struct. NOTE for whoever takes BuildCreditsMissionList: that
  * function is this one's WRITER and its stores genuinely want the bitfield
- * declaration, which would break the two reads here. See work/sub_0806B120/.
+ * declaration, which would break the two reads here. See work/BuildCreditsMissionList/.
  *
  * The digit loop's exit test is at the TOP and its backward branch is on a
  * DIFFERENT variable, which is a `while` whose body ends in a conditional

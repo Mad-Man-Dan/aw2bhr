@@ -18,12 +18,12 @@
  * `bl`s, and there is none, so every link is int-wide.
  *
  * SetupCoSelectLiberation, 0xd4 bytes above, is the short version of the same source --
- * `ClearArmyCount(); sub_08078740(sub_08078608(0));`.
+ * `ClearArmyCount(); sub_08078740(AddCoSelectGroupOrangeStar(0));`.
  */
 void SetupCoSelectHotPursuit(void)
 {
     ClearArmyCount();
-    sub_080786A4(sub_080786F0(sub_08078658(sub_08078608(0))));
+    AddCoSelectGroupYellowComet(AddCoSelectGroupGreenEarth(AddCoSelectGroupBlueMoon(AddCoSelectGroupOrangeStar(0))));
     sub_08078758();
 }
 

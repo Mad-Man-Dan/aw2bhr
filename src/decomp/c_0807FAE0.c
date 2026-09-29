@@ -19,7 +19,7 @@ struct Unk0807FAE0
     /* 0x58 */ int unk58;
 };
 
-void sub_0807FAE0(struct Unk0807FAE0 *p)
+void CoPowerNameBanner_PopInLoop(struct Unk0807FAE0 *p)
 {
     int i;
 
@@ -56,3 +56,4 @@ void sub_0807FAE0(struct Unk0807FAE0 *p)
         Proc_Break(p);
     }
 }
+asm(".global sub_0807FAE0\n.thumb_set sub_0807FAE0, CoPowerNameBanner_PopInLoop\n");

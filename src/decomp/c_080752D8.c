@@ -42,7 +42,7 @@ struct Unk80752D8
     /* 0x3c */ struct Unk80752D8Child *unk3c[10];
 };
 
-void sub_080752D8(int a1)
+void SetDifficultyStarsPalette(int a1)
 {
     struct Unk80752D8 *proc;
     u16 v;
@@ -59,3 +59,4 @@ void sub_080752D8(int a1)
             proc->unk3c[i]->unk30 = v;
     }
 }
+asm(".global sub_080752D8\n.thumb_set sub_080752D8, SetDifficultyStarsPalette\n");

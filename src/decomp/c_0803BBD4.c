@@ -14,7 +14,7 @@
 /* MATCHED byte-for-byte (wave 37, W37-Q2).
  *
  * Rebuild gUnknown_03003F30[0..3]: "is slot i a live, present player?", with
- * slot 1 getting an extra escape hatch through sub_080781F0.
+ * slot 1 getting an extra escape hatch through IsAnyWorldMapMissionCleared.
  *
  * The DUPLICATED `sub_08016D04(i)` is real source, not a compiler artefact.
  * agbcc never CSEs a call, so the two `bl sub_08016D04` in the stream are two
@@ -30,7 +30,7 @@
  * instruction shorter), and sub_08016E04 takes u16 so the already
  * zero-extended `t` goes through untouched.
  *
- * sub_080781F0's `lsls #0x18; lsrs #0x18` before the zero test is what forced
+ * IsAnyWorldMapMissionCleared's `lsls #0x18; lsrs #0x18` before the zero test is what forced
  * its return type from s32 to bool8 -- see include/unknown-functions.h and
  * src/decomp/c_08078198.c. An s32 return gives a bare `cmp r0,#0` here.
  *
@@ -47,7 +47,7 @@ void MainMenu_0803BBD5(void)
     u8 i;
     u8 t;
 
-    sub_08080F54(gUnknown_0200C420.unk0d);
+    SetMainMenuCarouselPosition(gUnknown_0200C420.unk0d);
 
     for (i = 0; i <= 6; i++)
         gUnknown_03003F30[i] = 0;
@@ -58,7 +58,7 @@ void MainMenu_0803BBD5(void)
 
         if (i == 1)
         {
-            if ((sub_08016CD8(t) != 0 && sub_08016E04(t) != 0) || sub_080781F0() != 0)
+            if ((sub_08016CD8(t) != 0 && sub_08016E04(t) != 0) || IsAnyWorldMapMissionCleared() != 0)
                 gUnknown_03003F30[i] = 1;
             else
                 gUnknown_03003F30[1] = 0;

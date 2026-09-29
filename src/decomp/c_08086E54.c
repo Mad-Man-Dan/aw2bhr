@@ -66,7 +66,7 @@ void sub_08086E54(void)
     sub_08013AFC();
 }
 
-void sub_08086EB0(int a1)
+void StartMapSelectPreview(int a1)
 {
     struct Unk86EB0Proc *proc;
     u8 *p;
@@ -92,3 +92,4 @@ void sub_08086EB0(int a1)
     }
     sub_08013AFC();
 }
+asm(".global sub_08086EB0\n.thumb_set sub_08086EB0, StartMapSelectPreview\n");

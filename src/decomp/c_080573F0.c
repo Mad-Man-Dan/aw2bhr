@@ -27,7 +27,7 @@ void sub_0805741C(u16 a)
      * and the ROM has the loaded halfword as the OR's destination. The
      * gUnknown_0300251C store two lines down is the same expression and takes
      * the same cast, for the same reason -- that symbol became a union in
-     * wave 13 when sub_08065990 read its chr_block bitfield. */
+     * wave 13 when MatchSetupScreen_Init read its chr_block bitfield. */
     *(u16 *)&gUnknown_030030B4 = gUnknown_085538AE[a ^ 1] | 0x608;
     *(u16 *)&gUnknown_0300251C = gUnknown_085538AE[a] | 0x70C;
 }

@@ -21,13 +21,14 @@ void sub_08080DFC(void)
     gUnknown_03001FF8 += 0x18;
 }
 
-void sub_08080E40(ProcPtr proc)
+void StartSuperCoPowerWhiteFade(ProcPtr proc)
 {
     StartPalFadeToWhite(0, 0x10, proc);
     StartPalFadeToWhite(8, 0x10, proc);
     StartPalFadeToWhite(0x10, 0x10, proc);
     StartPalFadeToWhite(0x11, 0x10, proc);
 }
+asm(".global sub_08080E40\n.thumb_set sub_08080E40, StartSuperCoPowerWhiteFade\n");
 
 void StartCoPowerScript(int a, int b, ProcPtr proc)
 {

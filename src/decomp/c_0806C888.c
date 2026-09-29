@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-int sub_0806C888(void)
+int IsCreditsRunning(void)
 {
     return Proc_Find(gUnknown_08581AC8) != 0;
 }
+asm(".global sub_0806C888\n.thumb_set sub_0806C888, IsCreditsRunning\n");

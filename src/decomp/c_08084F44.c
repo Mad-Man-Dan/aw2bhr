@@ -18,7 +18,7 @@
  * for the compare, which is the increment's own value being reused rather than
  * a re-read.
  *
- * Same struct as sub_08083EE0 (+0x2c int, +0x4c s16, +0x4e s16, +0x66 s16) and
+ * Same struct as MainMenuCarouselWheel_DrawCursor (+0x2c int, +0x4c s16, +0x4e s16, +0x66 s16) and
  * the same actor -- but, as there, that is field-set overlap and not a
  * discriminating use, so the type stays local to this file.
  */
@@ -34,7 +34,7 @@ struct Unk8084F44
     /* 66 */ s16 unk66;
 };
 
-void sub_08084F44(struct Unk8084F44 *p)
+void CoInfoScreen_DrawCoSlide(struct Unk8084F44 *p)
 {
     if (p->unk4e > 0)
     {
@@ -65,3 +65,4 @@ void sub_08084F44(struct Unk8084F44 *p)
             sub_08043C28(0xB0, 0xA0, 0x516C, 4, 1);
     }
 }
+asm(".global sub_08084F44\n.thumb_set sub_08084F44, CoInfoScreen_DrawCoSlide\n");

@@ -14,7 +14,8 @@ struct Unk8087884Proc
     int unk54;
 };
 
-void sub_08087884(int a, ProcPtr parent)
+void StartEnemyCoMinimugs(int a, ProcPtr parent)
 {
     ((struct Unk8087884Proc *)Proc_Start(ProcScr_PutEnemyCoMinimug, parent))->unk54 = a;
 }
+asm(".global sub_08087884\n.thumb_set sub_08087884, StartEnemyCoMinimugs\n");

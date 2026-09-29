@@ -19,7 +19,7 @@ struct Unk0807FCF8
     /* 0x58 */ int unk58;
 };
 
-void sub_0807FCF8(struct Unk0807FCF8 *p)
+void CoPowerNameBanner_PopOutLoop(struct Unk0807FCF8 *p)
 {
     int i;
 
@@ -58,3 +58,4 @@ void sub_0807FCF8(struct Unk0807FCF8 *p)
         Proc_Break(p);
     }
 }
+asm(".global sub_0807FCF8\n.thumb_set sub_0807FCF8, CoPowerNameBanner_PopOutLoop\n");

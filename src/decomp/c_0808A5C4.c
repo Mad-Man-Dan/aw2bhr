@@ -11,7 +11,7 @@
  * the ROM stores the compare register straight into [sp,#4] where the second
  * arm has to materialise a fresh `movs r0,#0`. That is agbcc reusing a known
  * zero, not two different arguments -- writing 0 in both arms reproduces both. */
-void sub_0808A5C4(void)
+void CoDesignEditor_DrawHelpText(void)
 {
     sub_08013C00();
     sub_0801B780(0);
@@ -24,3 +24,4 @@ void sub_0808A5C4(void)
 
     sub_08013AEC();
 }
+asm(".global sub_0808A5C4\n.thumb_set sub_0808A5C4, CoDesignEditor_DrawHelpText\n");

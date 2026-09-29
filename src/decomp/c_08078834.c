@@ -24,7 +24,7 @@
 
 /* The gUnknown_030058E0 display-list variant: ClearArmyCount resets the cursor
  * and sub_08078740 clears the five words of gUnknown_030059C0, and both are
- * nullary. sub_080786F0 returns the advanced byte index (`pop {r1}; bx r1`) and
+ * nullary. AddCoSelectGroupGreenEarth returns the advanced byte index (`pop {r1}; bx r1`) and
  * that result is DISCARDED here -- unlike SetupCoSelectHotPursuit, which chains the four
  * builders and does consume it.
  */
@@ -32,7 +32,7 @@
 void SetupCoSelectNeotanksGe(void)
 {
     ClearArmyCount();
-    sub_080786F0(0);
+    AddCoSelectGroupGreenEarth(0);
     sub_08078740();
 }
 

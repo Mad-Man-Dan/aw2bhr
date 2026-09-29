@@ -14,7 +14,7 @@
  * src/decomp/c_08069EAC.c -- unk38 is the discriminator there too.
  *
  * unk34 is an `int`, NOT a u16, even though sub_08067ED0 reads it with `ldrh`:
- * sub_080686E8 reads the SAME offset with a full `ldr` two instructions later.
+ * StartIntroCoNameBanner reads the SAME offset with a full `ldr` two instructions later.
  * The `ldrh` is sub_08067ED0's u16 parameter narrowing a memory operand in
  * place, which agbcc does without a separate shift pair.
  *
@@ -78,7 +78,7 @@ void sub_08069DE8(struct Unk69DE8Proc *proc)
     {
         sub_08067ED0(proc->unk38, proc->unk34, 0x3c, 0x50, proc->unk3c, 1, proc->unk38, 1, proc);
         sub_08068014(0, 0x10, proc->unk3c - 0x18, proc);
-        sub_080686E8(proc->unk38, proc->unk34, 0x280, 3, proc);
+        StartIntroCoNameBanner(proc->unk38, proc->unk34, 0x280, 3, proc);
         proc->unk2a = 0xe8;
         proc->unk2c = proc->unk2e = 0;
         proc->unk30 = 0xffc8;
@@ -88,7 +88,7 @@ void sub_08069DE8(struct Unk69DE8Proc *proc)
     {
         sub_08067ED0(proc->unk38, proc->unk34, 0xb4, 0xa0, proc->unk3c, 1, 1, 1, proc);
         sub_08068014(0, 0x10, proc->unk3c - 0x18, proc);
-        sub_080686E8(proc->unk38, proc->unk34, 0x280, 3, proc);
+        StartIntroCoNameBanner(proc->unk38, proc->unk34, 0x280, 3, proc);
         proc->unk2a = 0xffd0;
         proc->unk2c = proc->unk2e = 0;
         proc->unk30 = 0x98;

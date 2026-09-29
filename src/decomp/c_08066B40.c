@@ -7,27 +7,29 @@
  * sub_08066B40 @ 0x08066B40, sub_08066B6C @ 0x08066B6C
  */
 
-/* sub_0806630C's twin on the same selector, with the two handlers swapped
+/* MatchSetupRunStageLocal's twin on the same selector, with the two handlers swapped
  * relative to the case labels. */
-void sub_08066B40(void)
+void MatchSetupRunStageLink(void)
 {
     switch (gUnknown_08580934->unk26)
     {
     case 0:
-        sub_08066A20();
+        MatchSetupHandleArmyStageInputLink();
         break;
     case 1:
-        sub_08066874();
+        MatchSetupHandleTeamStageInputLink();
         break;
     }
 }
+asm(".global sub_08066B40\n.thumb_set sub_08066B40, MatchSetupRunStageLink\n");
 
 /* unk24 is read with a BARE `ldrb` here -- no sign extension, unlike the unk26
  * both callees dispatch on two bytes along. */
-void sub_08066B6C(void)
+void MatchSetupRunStage(void)
 {
     if (gUnknown_08580934->unk24 == 0)
-        sub_0806630C();
+        MatchSetupRunStageLocal();
     else
-        sub_08066B40();
+        MatchSetupRunStageLink();
 }
+asm(".global sub_08066B6C\n.thumb_set sub_08066B6C, MatchSetupRunStage\n");

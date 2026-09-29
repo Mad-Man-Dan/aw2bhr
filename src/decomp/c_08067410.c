@@ -21,7 +21,7 @@ struct Unk67410Proc
  * decoration: without it agbcc materialises the final `proc->unk58 = 0` early,
  * inside that statement, which costs a callee-saved register and four bytes of
  * push/pop. The degenerate loop is a code-motion barrier and pins the `movs
- * r1, #0` to its own store. See sub_08066D30 for the other function in this
+ * r1, #0` to its own store. See MatchSetupHighlightSelectedRuleOption for the other function in this
  * batch that needs the same construct, for the opposite effect.
  */
 void sub_08067410(struct Unk67410Proc *proc)

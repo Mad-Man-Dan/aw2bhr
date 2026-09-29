@@ -19,7 +19,7 @@ struct Unk8080794
     /* 58 */ int unk58;
 };
 
-void sub_08080794(struct Unk8080794 *proc)
+void SuperCoPowerName_LettersFlyInLoop(struct Unk8080794 *proc)
 {
     int i;
 
@@ -96,3 +96,4 @@ void sub_08080794(struct Unk8080794 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08080794\n.thumb_set sub_08080794, SuperCoPowerName_LettersFlyInLoop\n");

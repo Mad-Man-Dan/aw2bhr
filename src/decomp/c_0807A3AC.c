@@ -7,7 +7,7 @@
  * sub_0807A3AC @ 0x0807A3AC
  */
 
-int sub_0807A3AC(int a, int b)
+int GetVictoryQuoteTextId(int a, int b)
 {
     if (gPlaySt.gameMode == 1)
     {
@@ -148,3 +148,4 @@ int sub_0807A3AC(int a, int b)
 
     return gUnknown_085D3DD0[a].victoryQuote;
 }
+asm(".global sub_0807A3AC\n.thumb_set sub_0807A3AC, GetVictoryQuoteTextId\n");

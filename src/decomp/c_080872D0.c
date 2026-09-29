@@ -62,7 +62,7 @@
  * giv on priority rather than on a dead reference, and the final PutSprite
  * constant is no longer routed through r4. The dead `i = 0x608F` is gone. */
 
-void sub_080872D0(int a1)
+void MapSelectList_DrawScrollbar(int a1)
 {
     int i;
     int v;
@@ -124,3 +124,4 @@ void sub_080872D0(int a1)
         }
     }
 }
+asm(".global sub_080872D0\n.thumb_set sub_080872D0, MapSelectList_DrawScrollbar\n");

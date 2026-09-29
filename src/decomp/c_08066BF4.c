@@ -4,11 +4,11 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08066BF4.
- * HandleRulesMenuInput @ 0x08066BF4, sub_08066C70 @ 0x08066C70
+ * HandleRulesMenuInput @ 0x08066BF4, RuleOption_ChangeValue @ 0x08066C70
  */
 
 #include "hardware.h"
-/* The cursor stepper for the 0x0816E160 menu -- the twin of sub_0806DD34,
+/* The cursor stepper for the 0x0816E160 menu -- the twin of RulesScreenRuleOption_ChangeValue,
  * which is byte-identical apart from which private .rodata pool word carries
  * the gpKeySt address (0x0816E160 vs 0x0816E1B4; both ROM words hold
  * 0x03002EE0).
@@ -20,7 +20,7 @@
  * puts the equality arm inline. */
 /* Steps the seven-entry unk54[] selector at gUnknown_08580934->unk33 with the
  * gpKeySt->repeated bitmask, and plays sound 0x64 whenever the index actually
- * moved. Byte-identical twin of sub_0806DCB8: the two differ only in which
+ * moved. Byte-identical twin of RulesScreenHandleMenuInput: the two differ only in which
  * private .rodata address-constant word carries &gUnknown_08580934 and
  * &gpKeySt (0x0816E158/0x0816E15C vs 0x0816E1AC/0x0816E1B0 -- both pairs hold
  * 0x08580934 and 0x03002EE0), so the SOURCE is the same and the honest
@@ -76,7 +76,7 @@ void HandleRulesMenuInput(void)
 
 asm(".global sub_08066BF4\n.thumb_set sub_08066BF4, HandleRulesMenuInput\n");
 
-void sub_08066C70(struct Unk08580934_Obj *p)
+void RuleOption_ChangeValue(struct Unk08580934_Obj *p)
 {
     p->unk49 = p->unk48;
 
@@ -116,3 +116,4 @@ void sub_08066C70(struct Unk08580934_Obj *p)
     if (p->unk49 != p->unk48)
         sub_0803B4DC(0x64);
 }
+asm(".global sub_08066C70\n.thumb_set sub_08066C70, RuleOption_ChangeValue\n");

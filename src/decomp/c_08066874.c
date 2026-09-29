@@ -10,7 +10,7 @@
 #include "hardware.h"
 
 /* MATCHED wave 90 (W90-C). The 93.9% park was a +2/+2/-4 cancellation around
- * one fact: after `bl sub_0806377C` the ROM re-derives &gUnknown_08580934 from
+ * one fact: after `bl ClearCallbackOfSlotsRunningScript` the ROM re-derives &gUnknown_08580934 from
  * its -fforce-addr word (`mov r1,r8; ldr r0,[r1]`), while a draft with the arm
  * written twice keeps the address in callee-saved r5. cse.c does not
  * invalidate an unchanging `.rodata` MEM at a call, so inside one extended
@@ -25,7 +25,7 @@
  * `key = &keys[i]` in the second loop is still needed for the pointer giv.
  * Needs "rodata": ["0x0816E150"] (the force-addr word for gUnknown_08580934). */
 
-void sub_08066874(void)
+void MatchSetupHandleTeamStageInputLink(void)
 {
     int i;
     int cnt;
@@ -60,13 +60,13 @@ dispatch:
     if (cnt != 0)
     {
     arm:
-        sub_0806377C(gUnknown_08580D0C);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580D0C);
         gUnknown_08580934->unk26 = 0;
-        sub_08063A00(gUnknown_08580AF0, sub_08066200);
-        sub_08063A00(gUnknown_08580B90, sub_08066200);
-        sub_08063A00(gUnknown_08580BC8, sub_08066200);
-        sub_08063A00(gUnknown_08580A38, sub_08066210);
-        sub_08063A00(gUnknown_08580A08, sub_08066210);
+        ForEachSlotRunningScript(gUnknown_08580AF0, sub_08066200);
+        ForEachSlotRunningScript(gUnknown_08580B90, sub_08066200);
+        ForEachSlotRunningScript(gUnknown_08580BC8, sub_08066200);
+        ForEachSlotRunningScript(gUnknown_08580A38, sub_08066210);
+        ForEachSlotRunningScript(gUnknown_08580A08, sub_08066210);
         return;
     }
 
@@ -75,14 +75,14 @@ dispatch:
         if ((s8)gUnknown_08580934->unk70[i] == 0)
         {
             key = &((struct KeySt *)&gUnknown_03002040)[i];
-            sub_080660BC(key->repeated, i, i == gUnknown_08580934->unk25);
+            MatchSetupCycleTeam(key->repeated, i, i == gUnknown_08580934->unk25);
         }
     }
 
     sub_0806666C();
 
     if ((s8)gUnknown_08580934->unk70[gUnknown_08580934->unk25] == 0)
-        sub_08066078();
+        MatchSetupDrawTeamArrows();
 
     for (i = 0; i < gUnknown_08580934->unk08; i++)
         if ((s8)gUnknown_08580934->unk70[i] == 0)
@@ -91,3 +91,4 @@ dispatch:
     if (i == gUnknown_08580934->unk08)
         sub_080152EC(gUnknown_08580D54, 4);
 }
+asm(".global sub_08066874\n.thumb_set sub_08066874, MatchSetupHandleTeamStageInputLink\n");

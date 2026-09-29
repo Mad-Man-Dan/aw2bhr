@@ -16,7 +16,7 @@
  * See its note in unknown-globals.h for why it is named as a global rather than
  * written as an auto aggregate's initialiser -- both give these exact 116
  * bytes, only this one relocates against the address the ROM does. */
-void sub_08065EF4(void)
+void MatchSetupDrawSelectionArrows(void)
 {
     struct Unk0816E120 t = gUnknown_0816E120;
     struct Unk08580934_Obj *obj = gUnknown_08580934->unk34[gUnknown_08580934->unk32 / 2];
@@ -25,3 +25,4 @@ void sub_08065EF4(void)
     sub_08064474(obj->unk28 + t.unk00[i].unk08, t.unk00[i].unk0a + 0x34);
     sub_08064500(obj->unk28 + t.unk00[i].unk0c, t.unk00[i].unk0e + 0x34);
 }
+asm(".global sub_08065EF4\n.thumb_set sub_08065EF4, MatchSetupDrawSelectionArrows\n");

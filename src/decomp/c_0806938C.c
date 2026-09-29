@@ -22,7 +22,7 @@ struct Unk6938CProc
 /* Wave 53, W53-D. MATCHED first attempt; the whole function reads off
  * c_080691BC.c / c_080694EC.c, which are the same subsystem's already-promoted
  * neighbours and carry the identical `for (i = 0; i < 0x400; i++)
- * gBG0TilemapBuffer[i] += 0x140;` loop and the same 10-argument sub_080679D8
+ * gBG0TilemapBuffer[i] += 0x140;` loop and the same 10-argument StartIntroBgAffineTween
  * call.
  *
  * gBG0TilemapBuffer and gBG2TilemapBuffer are REAL ROM pointer variables, not
@@ -38,7 +38,7 @@ void IntroT3_0806938D(struct Unk6938CProc *proc)
 {
     int i;
 
-    proc->unk2c = sub_080674F4(gUnknown_0202F204++);
+    proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
 
     SetDispEnable(1, 1, 0, 0, 1);
 
@@ -64,12 +64,12 @@ void IntroT3_0806938D(struct Unk6938CProc *proc)
     sub_08013B0C();
     sub_08013B1C();
 
-    sub_08072C40(0, 0, 0);
-    sub_08072C40(1, 0, 0);
-    sub_08072C40(2, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
+    SetBgScrollShadow(1, 0, 0);
+    SetBgScrollShadow(2, 0, 0);
 
-    sub_080677BC(0, 0, -5, proc);
-    sub_080679D8(2, 1, 0, 0x88, 0x3800, 0, 0xc0, 0x100, 0xc, proc);
+    StartIntroBgScroll(0, 0, -5, proc);
+    StartIntroBgAffineTween(2, 1, 0, 0x88, 0x3800, 0, 0xc0, 0x100, 0xc, proc);
 }
 
 asm(".global sub_0806938C\n.thumb_set sub_0806938C, IntroT3_0806938D\n");

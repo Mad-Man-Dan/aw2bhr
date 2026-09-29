@@ -17,11 +17,11 @@
  * The ROM has one extra register-to-register COPY at the merge point:
  *     ROM   `adds r4, r7, #0`   (v copied into a second pseudo)
  *           `adds r0, r4, #0`   (argument taken from the copy)
- *           `bl sub_08074754`
+ *           `bl AddWorldMapMarker`
  *           `adds r0, r6, #0` / `adds r0, #0x12` / `adds r4, r4, r0`
  *           `ldrb r0, [r4]` / `movs r1, #1` / `orrs r0, r1` / `strb r0, [r4]`
  *     here  `adds r0, r7, #0`
- *           `bl sub_08074754`
+ *           `bl AddWorldMapMarker`
  *           `adds r0, r6, #0` / `adds r0, #0x12` / `adds r0, r7, r0`
  *           `ldrb r1, [r0]` / `movs r2, #1` / `orrs r1, r2` / `strb r1, [r0]`
  * so the ROM's address lands in the callee-saved r4 and its temporaries stay in
@@ -33,7 +33,7 @@
  *
  * The copy is the wave-17 "one local where the original had N" signature read
  * backwards, but the obvious cause is RULED OUT BY PROBE: introducing a second
- * local (`i = v; sub_08074754(i); ...unk12[i] |= 1;`) produces assembly
+ * local (`i = v; AddWorldMapMarker(i); ...unk12[i] |= 1;`) produces assembly
  * IDENTICAL to this one -- gcc 2.9 copy-propagates it away. Also ruled out by
  * probe: writing the subscript with v as the FIRST operand
  * (`v[gUnknown_0202FDFC.unk12] |= 1`), which was aimed at the c_0807610C.c
@@ -72,7 +72,7 @@ void sub_08076A68(ProcPtr proc)
     if (IsHardCampaignMode())
         v = 0x22;
 
-    sub_08074754(v);
+    AddWorldMapMarker(v);
     gUnknown_0202FDFC.unk12[v] |= 1;
 }
 

@@ -52,7 +52,7 @@
  * consecutive writes that configure the blend registers, wrapped in the
  * canonical function-like-macro idiom, is what a `SetBlend(...)`-style macro
  * expands to. The same lever is recorded in the soft-float chapter of
- * docs/agbcc-codegen.md, and `sub_08073304` carries one too.
+ * docs/agbcc-codegen.md, and `StartHeaderBanner` carries one too.
  *
  * REFUTED EARLIER AND STILL REFUTED -- do not re-spend attempts on either:
  *  - NOT cse sharing the zero with the two earlier `= 0` stores. Changing

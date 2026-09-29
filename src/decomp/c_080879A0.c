@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_080879A0(void)
+void EndMapRecordsPanel(void)
 {
     Proc_EndEach(gUnknown_08616DB4);
 }
+asm(".global sub_080879A0\n.thumb_set sub_080879A0, EndMapRecordsPanel\n");

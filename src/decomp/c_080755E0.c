@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_080755E0(void)
+void EndWorldMapSelectionFrame(void)
 {
     Proc_EndEach(gUnknown_086143B8);
 }
+asm(".global sub_080755E0\n.thumb_set sub_080755E0, EndWorldMapSelectionFrame\n");

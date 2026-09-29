@@ -19,7 +19,7 @@ struct Unk08614314
     /* 0x36 */ s16 unk36;
 };
 
-s32 sub_08074C84(ProcPtr a1, s32 a2, s32 a3, u8 a4)
+s32 StartWorldMapCameraPan(ProcPtr a1, s32 a2, s32 a3, u8 a4)
 {
     struct Unk08614314 *proc;
     s32 x;
@@ -32,8 +32,8 @@ s32 sub_08074C84(ProcPtr a1, s32 a2, s32 a3, u8 a4)
     }
     else
     {
-        x = sub_08074C5C(a2);
-        y = sub_08074C70(a3);
+        x = GetWorldMapCameraXCentered(a2);
+        y = GetWorldMapCameraYCentered(a3);
     }
 
     if ((x == gUnknown_0202FDFC.unk00 && y == gUnknown_0202FDFC.unk02)
@@ -54,3 +54,4 @@ s32 sub_08074C84(ProcPtr a1, s32 a2, s32 a3, u8 a4)
 
     return 1;
 }
+asm(".global sub_08074C84\n.thumb_set sub_08074C84, StartWorldMapCameraPan\n");

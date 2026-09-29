@@ -19,7 +19,7 @@ struct Unk08080254
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_08080254(struct Unk08080254 *proc)
+void SuperCoPowerScene_BgSlideInLoop(struct Unk08080254 *proc)
 {
     gUnknown_03001FF8 = Interpolate(1, 0x100, 0, proc->unk4c, 0x30)
                       + Interpolate(0, 0, -0x100, proc->unk4c, 0x30);
@@ -42,3 +42,4 @@ void sub_08080254(struct Unk08080254 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08080254\n.thumb_set sub_08080254, SuperCoPowerScene_BgSlideInLoop\n");

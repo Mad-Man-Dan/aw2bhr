@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08064C98.
- * sub_08064C98 @ 0x08064C98
+ * SetupObjectExitUp_Init @ 0x08064C98
  */
 
 struct Unk64C98Obj
@@ -21,8 +21,9 @@ struct Unk64C98Obj
  * pool (`ldr r1, =0x0000FFFE`), which is what a positive constant too large for
  * `movs` produces; `-2` into an s16 goes through `movs #2; negs`. Same readout
  * as sub_08005F1C's `0xFF`. */
-void sub_08064C98(struct Unk64C98Obj *p)
+void SetupObjectExitUp_Init(struct Unk64C98Obj *p)
 {
     p->unk3c = 0xFFFE;
     p->unk3a = 0;
 }
+asm(".global sub_08064C98\n.thumb_set sub_08064C98, SetupObjectExitUp_Init\n");

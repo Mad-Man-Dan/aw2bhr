@@ -12,7 +12,7 @@
  * unk44[] pointer array; the `ldrsh` pair that follows uses a REGISTER offset
  * at a constant displacement, so unk28/unk2a are plain s16 fields of the
  * selected object and not a second index. */
-void sub_08066078(void)
+void MatchSetupDrawTeamArrows(void)
 {
     struct Unk08580934_Obj *o;
 
@@ -20,3 +20,4 @@ void sub_08066078(void)
     sub_08064474(o->unk28 + 9, o->unk2a + 8);
     sub_08064500(o->unk28 + 9, o->unk2a + 0x28);
 }
+asm(".global sub_08066078\n.thumb_set sub_08066078, MatchSetupDrawTeamArrows\n");

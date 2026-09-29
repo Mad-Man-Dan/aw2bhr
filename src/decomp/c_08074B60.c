@@ -21,7 +21,7 @@ struct Unk08074B60
     /* 0x3c */ int unk3c;
 };
 
-void sub_08074B60(struct Unk08074B60 *proc)
+void WorldMapCameraPan_Loop(struct Unk08074B60 *proc)
 {
     if (proc->unk3c == 0)
     {
@@ -39,6 +39,7 @@ void sub_08074B60(struct Unk08074B60 *proc)
         gUnknown_0202FDFC.unk02 =
             proc->unk2e + ((proc->unk32 - proc->unk2e) * proc->unk3a) / proc->unk38;
 
-        sub_08072C40(3, gUnknown_0202FDFC.unk00, gUnknown_0202FDFC.unk02);
+        SetBgScrollShadow(3, gUnknown_0202FDFC.unk00, gUnknown_0202FDFC.unk02);
     }
 }
+asm(".global sub_08074B60\n.thumb_set sub_08074B60, WorldMapCameraPan_Loop\n");

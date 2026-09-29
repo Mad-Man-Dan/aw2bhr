@@ -17,8 +17,9 @@ struct Unk67930Proc
 
 /* The `adds r0, #0x50` is only the THUMB ldrb displacement limit of 31, not an
  * address being taken. */
-void sub_08067930(struct Unk67930Proc *proc)
+void IntroBgAffineTween_WaitTrigger(struct Unk67930Proc *proc)
 {
     if (proc->unk50 == 1)
         Proc_Break(proc);
 }
+asm(".global sub_08067930\n.thumb_set sub_08067930, IntroBgAffineTween_WaitTrigger\n");

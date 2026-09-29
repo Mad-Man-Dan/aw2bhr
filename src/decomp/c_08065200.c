@@ -7,7 +7,7 @@
  * sub_08065200 @ 0x08065200
  */
 
-int sub_08065200(int a)
+int GetArmyColumnX(int a)
 {
     int n = gUnknown_08580934->unk08;
     int q = (0xf0 - n * 0x32) / (n + 1);
@@ -21,3 +21,4 @@ int sub_08065200(int a)
 
     return x;
 }
+asm(".global sub_08065200\n.thumb_set sub_08065200, GetArmyColumnX\n");

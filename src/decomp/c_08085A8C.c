@@ -16,10 +16,11 @@
  *
  * The parameter survives in r4 across the first call only to reach Proc_Break,
  * which is what makes it a ProcPtr rather than an unused argument. */
-void sub_08085A8C(ProcPtr proc)
+void CoInfoPopup_HoldLoop(ProcPtr proc)
 {
     DrawOamObject(0x92, 0x38, 0x38, 0, 0);
 
     if (gpKeySt->pressed & (A_BUTTON | B_BUTTON | R_BUTTON))
         Proc_Break(proc);
 }
+asm(".global sub_08085A8C\n.thumb_set sub_08085A8C, CoInfoPopup_HoldLoop\n");

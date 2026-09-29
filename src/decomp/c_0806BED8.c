@@ -104,7 +104,7 @@ void sub_0806BF40(ProcPtr a1)
     {
         if (t->unk00[i].unk00 == 1)
         {
-            sub_0806BD1C(gBG0TilemapBuffer + (i * 0x60 + 0x29), t->unk00[i].unk04);
+            DrawCreditsHeadingText(gBG0TilemapBuffer + (i * 0x60 + 0x29), t->unk00[i].unk04);
             count++;
         }
 

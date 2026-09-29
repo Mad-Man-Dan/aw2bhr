@@ -43,7 +43,7 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     case 0x2a:
         ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
         sub_08067D04(1, 1, 0xc, proc);
-        sub_080679D8(0, -1, 0, 0x88, 0, 0x4000, 0x100, 0xc0, 0xc, proc);
+        StartIntroBgAffineTween(0, -1, 0, 0x88, 0, 0x4000, 0x100, 0xc0, 0xc, proc);
         break;
 
     case 0x5c:
@@ -80,7 +80,7 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     case 0xbe:
         sub_08012358();
         SetDispEnable(0, 0, 1, 0, 1);
-        sub_08067820();
+        EndIntroBgScroll();
         break;
     }
 

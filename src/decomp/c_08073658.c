@@ -15,7 +15,7 @@
  * function's data/promoted.json entry. 0x081CC028 holds 0x0202FDE4, i.e.
  * &gUnknown_0202FDE4 -- it is this unit's own -fforce-addr copy of that address,
  * not an object (verified against baserom.gba; 0x081CC024 and 0x081CC02C hold
- * the same value and are the private copies belonging to sub_08073480 and
+ * the same value and are the private copies belonging to BgWave_Loop and
  * sub_08073930). Naming the global directly is the honest spelling and agbcc
  * rebuilds the word.
  *

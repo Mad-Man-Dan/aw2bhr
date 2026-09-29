@@ -26,7 +26,7 @@
  * which is what the ROM has.
  */
 
-void sub_08087548(int a, int n, int c)
+void DrawWarRoomRanks(int a, int n, int c)
 {
     int i;
 
@@ -36,3 +36,4 @@ void sub_08087548(int a, int n, int c)
                 GetRankFromScore(gUnknown_0200C078[gUnknown_02027F74.unk04[a + i] - 0x6c].unk00[0].unk00_14),
                 i, c);
 }
+asm(".global sub_08087548\n.thumb_set sub_08087548, DrawWarRoomRanks\n");

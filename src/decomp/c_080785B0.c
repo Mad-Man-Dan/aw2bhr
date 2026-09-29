@@ -9,11 +9,12 @@
 
 #include "proc.h"
 
-/* Family F032, byte-identical to sub_08049928 and sub_08078524. See the note
+/* Family F032, byte-identical to sub_08049928 and BlockingEventScript_Wait. See the note
  * on sub_08049928 for why sub_08019260 is nullary and returns bool8. */
 
-void sub_080785B0(ProcPtr proc)
+void WorldMapScene_WaitScript(ProcPtr proc)
 {
     if (sub_08019260() == 0)
         Proc_Break(proc);
 }
+asm(".global sub_080785B0\n.thumb_set sub_080785B0, WorldMapScene_WaitScript\n");

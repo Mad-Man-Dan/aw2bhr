@@ -63,7 +63,7 @@ void IntroT3_IDLE_0806A219(struct Unk806A218 *proc)
     else
     {
         Proc_Break(proc);
-        sub_08067820();
+        EndIntroBgScroll();
     }
 }
 

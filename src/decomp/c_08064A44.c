@@ -27,7 +27,7 @@
  * the final statement binds, and the ROM says so: `ldr r1, [r1, #0x6c]` clobbers
  * the pointer's register inside the `if`, so it cannot be live at the merge. */
 
-void sub_08064A44(void)
+void MatchSetupSpawnRuleOptions(void)
 {
     struct Unk08580934 *g;
     struct Unk08580934_Obj *o;
@@ -64,6 +64,7 @@ void sub_08064A44(void)
     g = gUnknown_08580934;
     g->unk54[4]->unk4b = g->unk16 - g->unk15 + 2;
 
-    sub_08073304(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xF, 1, 1, 3);
+    StartHeaderBanner(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xF, 1, 1, 3);
     sub_08030178();
 }
+asm(".global sub_08064A44\n.thumb_set sub_08064A44, MatchSetupSpawnRuleOptions\n");

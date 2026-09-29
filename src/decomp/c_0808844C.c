@@ -280,19 +280,19 @@ void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
     proc->unk4c++;
 
     if (gUnknown_03005908 == -1 || gUnknown_03005908 == 0)
-        sub_08088ECC(proc);
+        CoDesignEditor_DrawBrowse(proc);
     else if (gUnknown_03005908 == 1)
-        sub_08089464(proc);
+        CoDesignEditor_DrawPicker(proc);
     else if (gUnknown_03005908 == 2 || gUnknown_03005908 == -2)
-        sub_080895E4((struct Unk080895E4Proc *)proc);
+        CoDesignEditor_DrawConfirm((struct Unk080895E4Proc *)proc);
     else if (gUnknown_03005908 == 3)
-        sub_080897C8((struct Unk080897C8 *)proc);
+        CoDesignEditor_DrawEnterPicker((struct Unk080897C8 *)proc);
     else if (gUnknown_03005908 == 4)
-        sub_08089A04((struct Unk08089A04 *)proc);
+        CoDesignEditor_DrawLeavePicker((struct Unk08089A04 *)proc);
     else if (gUnknown_03005908 == 5)
-        sub_08089C14((struct Unk08089C14 *)proc);
+        CoDesignEditor_DrawPickerToConfirm((struct Unk08089C14 *)proc);
     else if (gUnknown_03005908 == 6)
-        sub_08089F90((struct Unk08089F90 *)proc);
+        CoDesignEditor_DrawConfirmToPicker((struct Unk08089F90 *)proc);
 
     if (gUnknown_03005908 != -1 && gUnknown_03005908 != 0)
         sub_0808A2F4((struct Unk8A2F4Proc *)proc);

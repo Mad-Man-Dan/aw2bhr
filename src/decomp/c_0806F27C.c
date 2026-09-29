@@ -26,5 +26,5 @@ void sub_0806F27C(struct Unk0806F27CProc *proc)
         Proc_End(proc->unk3c[i]);
 
     Proc_EndEach(gUnknown_08582BE4);
-    sub_08074028();
+    EndBgScrollAnimator();
 }

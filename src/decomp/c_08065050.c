@@ -14,7 +14,7 @@ struct Unk65050Obj
     /* 3c */ s16 unk3c;
 };
 
-/* MATCHED. Byte-for-byte the same function as sub_08064C98 -- identical
+/* MATCHED. Byte-for-byte the same function as SetupObjectExitUp_Init -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
 void sub_08065050(struct Unk65050Obj *p)

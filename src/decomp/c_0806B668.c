@@ -12,7 +12,7 @@
 /* Alpha-blend fade step on a fixed 0x3c-frame ramp counted at +0x5c.
  * Two Interpolate results: the first splits across EVA/EVB as
  * ceil/floor of a halving -- `(a >> 1) + (a & 1)` and `a >> 1`, which
- * sum back to a -- and the second drives sub_08072C40 channel 2 twice
+ * sum back to a -- and the second drives SetBgScrollShadow channel 2 twice
  * over, once halved. `b >> 1` reaching a u16 parameter is the single
  * `lsls #0xf; lsrs #0x10` pair (net right shift of one plus the u16
  * truncation), not a shift followed by a mask. */
@@ -29,8 +29,8 @@ void sub_0806B668(struct Unk0806B668 *proc)
 
     a = Interpolate(0, 0xc, 0, proc->unk5c, 0x3c);
     b = Interpolate(0, -2, -8, proc->unk5c, 0x3c);
-    sub_08072C40(3, 0, 0);
-    sub_08072C40(2, b >> 1, (u16)b);
+    SetBgScrollShadow(3, 0, 0);
+    SetBgScrollShadow(2, b >> 1, (u16)b);
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = (a >> 1) + (a & 1);
     gUnknown_03002B28 = a >> 1;

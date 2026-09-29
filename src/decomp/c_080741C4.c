@@ -9,9 +9,9 @@
 
 #include "hardware.h"
 
-/* A subset of sub_0806EB5C's screen-init run, which is where every type here
+/* A subset of SoundRoomMusicPage_Init's screen-init run, which is where every type here
  * comes from -- same two Decompress calls, same palette, same tail.  The one
- * thing that differs is the first destination: sub_0806EB5C hard-codes
+ * thing that differs is the first destination: SoundRoomMusicPage_Init hard-codes
  * 0x06008000 where this computes the char base out of the BG3 control shadow.
  * `ldr` + `lsls #0x1c; lsrs #0x1e` is the bitfield read of `bits.chr_block`
  * whatever the container, and `<< 0xe` scales it by the 16 KB char block.

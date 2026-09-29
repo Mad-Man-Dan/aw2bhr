@@ -43,8 +43,8 @@
  * declaration in unknown-globals.h. It is what makes the body re-read through
  * `p` instead of forwarding `v` into `adds r0, r2, #1`.
  *
- * Its mirror sub_0807FFF0 closed on the identical three-local change. */
-void sub_0807FF78(void)
+ * Its mirror CoPowerScreenBlend_FadeOutLoop closed on the identical three-local change. */
+void CoPowerScreenBlend_FadeInLoop(void)
 {
     volatile u16 **pp;
     volatile u16 *p;
@@ -67,8 +67,9 @@ void sub_0807FF78(void)
 
     gUnknown_03001FF8 += 0x18;
 }
+asm(".global sub_0807FF78\n.thumb_set sub_0807FF78, CoPowerScreenBlend_FadeInLoop\n");
 
-/* MATCHED wave 34, W34-E. The mirror of sub_0807FF78 -- read that file's header
+/* MATCHED wave 34, W34-E. The mirror of CoPowerScreenBlend_FadeInLoop -- read that file's header
  * for why the address of gUnknown_081D9380, its dereferenced value and the
  * halfword read each need their own local, and in that order. The identical
  * three-local change closed both functions unmodified, which is the evidence
@@ -78,7 +79,7 @@ void sub_0807FF78(void)
  *
  * Wave 33 parked this 4 bytes SHORT at 120 against the ROM's 124, missing
  * precisely the `adds r3, r0, #0` those locals produce. */
-void sub_0807FFF0(ProcPtr proc)
+void CoPowerScreenBlend_FadeOutLoop(ProcPtr proc)
 {
     volatile u16 **pp;
     volatile u16 *p;
@@ -107,3 +108,4 @@ void sub_0807FFF0(ProcPtr proc)
 
     gUnknown_03001FF8 += 0x18;
 }
+asm(".global sub_0807FFF0\n.thumb_set sub_0807FFF0, CoPowerScreenBlend_FadeOutLoop\n");

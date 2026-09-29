@@ -14,8 +14,9 @@
  * script each and then re-register the same sub_080735B0 DMA0 shutdown. */
 #include "proc.h"
 
-void sub_080735D0(void)
+void EndBgWave(void)
 {
     Proc_EndEach(gUnknown_08614134);
     sub_08011AAC((void *)sub_080735B0);
 }
+asm(".global sub_080735D0\n.thumb_set sub_080735D0, EndBgWave\n");

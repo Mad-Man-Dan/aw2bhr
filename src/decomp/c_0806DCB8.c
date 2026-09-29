@@ -8,7 +8,7 @@
  */
 
 #include "hardware.h"
-/* Byte-identical twin of sub_08066C70 -- SAME SOURCE. The only difference in
+/* Byte-identical twin of RuleOption_ChangeValue -- SAME SOURCE. The only difference in
  * asm/ is the private -fforce-addr .rodata word carrying &gpKeySt
  * (0x0816E1B4 here, 0x0816E160 there); both ROM words hold 0x03002EE0. */
 struct Unk0806DD34
@@ -26,7 +26,7 @@ struct Unk0806DD34
  * for &gUnknown_08580934 and &gpKeySt (0x0816E1AC/0x0816E1B0 here,
  * 0x0816E158/0x0816E15C there); the ROM images of all four words are
  * 0x08580934 and 0x03002EE0. See HandleRulesMenuInput for the shape notes. */
-void sub_0806DCB8(void)
+void RulesScreenHandleMenuInput(void)
 {
     int i;
 
@@ -66,8 +66,9 @@ void sub_0806DCB8(void)
 
     gUnknown_08580934->unk33 = i;
 }
+asm(".global sub_0806DCB8\n.thumb_set sub_0806DCB8, RulesScreenHandleMenuInput\n");
 
-void sub_0806DD34(struct Unk0806DD34 *p)
+void RulesScreenRuleOption_ChangeValue(struct Unk0806DD34 *p)
 {
     p->unk49 = p->unk48;
 
@@ -107,3 +108,4 @@ void sub_0806DD34(struct Unk0806DD34 *p)
     if (p->unk49 != p->unk48)
         sub_0803B4DC(0x64);
 }
+asm(".global sub_0806DD34\n.thumb_set sub_0806DD34, RulesScreenRuleOption_ChangeValue\n");

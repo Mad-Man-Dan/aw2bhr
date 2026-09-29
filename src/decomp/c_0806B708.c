@@ -50,7 +50,7 @@ void sub_0806B708(struct Unk0806B708 *proc)
     gUnknown_0300251C.bits.priority = 1;
     gUnknown_03002B6C.bits.priority = 2;
     gUnknown_030030B4.bits.priority = 3;
-    sub_0806B120();
+    BuildCreditsMissionList();
     proc->unk2c = 0;
     proc->unk2a = 0;
     proc->unk30 = 0;

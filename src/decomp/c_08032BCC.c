@@ -89,8 +89,8 @@ void sub_08032BCC(struct Unk08032BCCProc *proc)
 
     Proc_Start(gUnknown_0849B670, 0);
 
-    sub_08063980(0);
-    sub_080638D0((int)sub_08032B84);
+    SetVCountCompareLine(0);
+    SetVCountInterruptHandler((int)sub_08032B84);
 
     proc->unk58 = 0;
 }

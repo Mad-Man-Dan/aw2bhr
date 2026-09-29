@@ -16,7 +16,7 @@ struct Unk080737EC
     /* 0x5c */ int unk5c;
 };
 
-void sub_080737EC(struct Unk080737EC *proc)
+void CircleWipe_Loop(struct Unk080737EC *proc)
 {
     int v;
     int t;
@@ -41,7 +41,7 @@ void sub_080737EC(struct Unk080737EC *proc)
     gUnknown_030030DC.bits.win0_enable_bg2 = 0;
     gUnknown_030030DC.bits.win0_enable_bg3 = 0;
     gUnknown_030030DC.bits.win0_enable_obj = 0;
-    sub_08073714(t);
+    BuildCircleWindowTable(t);
     proc->unk58++;
     REG_DMA0CNT_H = 0;
     REG_DMA0SAD = (u32)gUnknown_0202FDE4;
@@ -58,3 +58,4 @@ void sub_080737EC(struct Unk080737EC *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080737EC\n.thumb_set sub_080737EC, CircleWipe_Loop\n");

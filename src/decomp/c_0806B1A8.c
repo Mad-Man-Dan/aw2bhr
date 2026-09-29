@@ -74,7 +74,7 @@ void sub_0806B1A8(struct UnkB1A8Proc *proc)
     gUnknown_0300251C.bits.priority = 2;
     gUnknown_03001FE8.bits.priority = 3;
 
-    sub_08072C40(0, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
 
     zero = 0;
     CpuFastSet(&zero, gBG0TilemapBuffer, 0x01000200);

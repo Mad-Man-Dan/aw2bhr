@@ -50,7 +50,7 @@ void sub_08074A28(struct Unk8074AAC *proc)
     child->unk30 = v;
     child->unk38 = 0;
 
-    sub_08074754(id);
+    AddWorldMapMarker(id);
 
     proc->unk_2c++;
 

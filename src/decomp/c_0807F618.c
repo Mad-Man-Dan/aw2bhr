@@ -8,7 +8,7 @@
  */
 
 /* Existence predicate for gUnknown_08616710, the script sub_0807F82C hands to
- * Proc_StartBlocking. Identical to sub_08073918 but for the script. */
+ * Proc_StartBlocking. Identical to IsCircleWipeActive but for the script. */
 
 #include "proc.h"
 

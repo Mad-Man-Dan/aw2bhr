@@ -51,7 +51,7 @@
  * two-level load in the first loop and the direct symbol load in the second;
  * the `.rodata` relocation in the diff is the expected form.
  *
- * sub_08073930 is an HBlank handler installed through sub_08063928; it is now
+ * sub_08073930 is an HBlank handler installed through SetHBlankInterruptHandler; it is now
  * declared in include/unknown-functions.h. */
 
 struct Unk73A00Proc
@@ -93,5 +93,5 @@ void sub_08073A00(struct Unk73A00Proc *proc)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 
-    sub_08063928((int)sub_08073930);
+    SetHBlankInterruptHandler((int)sub_08073930);
 }

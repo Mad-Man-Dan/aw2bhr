@@ -39,7 +39,7 @@
 #include "hardware.h"
 /* The scanline record gUnknown_0202FDE4 points at while this handler runs:
  * stride FOUR, and only the halfword at +2 is read. The global is declared
- * `void *` in unknown-globals.h because sub_080737EC's REG_DMA0SAD use of the
+ * `void *` in unknown-globals.h because CircleWipe_Loop's REG_DMA0SAD use of the
  * same slot needs no type; the cast lives here rather than in the header until
  * the two readings are reconciled. */
 struct Unk73930Row

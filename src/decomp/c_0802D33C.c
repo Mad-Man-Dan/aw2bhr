@@ -7,7 +7,7 @@
  * sub_0802D33C @ 0x0802D33C
  */
 
-/* sub_080637AC finds the gUnknown_03001470 slot running gUnknown_0848A42C and
+/* FindSlotRunningScript finds the gUnknown_03001470 slot running gUnknown_0848A42C and
  * this reads that slot's unk48 (a u16 at a displacement past `ldrh`'s 5-bit
  * range, hence `adds r0,#0x48`). The field was narrowed out of
  * struct Unk03001470's filler_3a in wave 29.
@@ -21,7 +21,7 @@
 
 int sub_0802D33C(void)
 {
-    if (sub_080637AC(gUnknown_0848A42C)->unk48 > 0xF)
+    if (FindSlotRunningScript(gUnknown_0848A42C)->unk48 > 0xF)
         return 0x10;
 
     return 1;

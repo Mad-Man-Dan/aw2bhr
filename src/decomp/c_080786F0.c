@@ -7,7 +7,7 @@
  * sub_080786F0 @ 0x080786F0
  */
 
-int sub_080786F0(int a)
+int AddCoSelectGroupGreenEarth(int a)
 {
     gUnknown_03005958[gUnknown_03005944] = 2;
     gUnknown_03005948[gUnknown_03005944] = 3;
@@ -18,3 +18,4 @@ int sub_080786F0(int a)
 
     return a;
 }
+asm(".global sub_080786F0\n.thumb_set sub_080786F0, AddCoSelectGroupGreenEarth\n");

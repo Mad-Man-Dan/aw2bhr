@@ -20,7 +20,7 @@
  * ZERO test as the `if` and the step as the `else` -- gcc puts the else arm
  * after the short-circuit failures, which is the only order in which the
  * `&&` chain can branch past the step the way the ROM does. */
-void sub_08065C9C(int a1)
+void MatchSetupMoveArmyCursor(int a1)
 {
     int v = gUnknown_08580934->unk32;
 
@@ -55,3 +55,4 @@ void sub_08065C9C(int a1)
 
     gUnknown_08580934->unk32 = v;
 }
+asm(".global sub_08065C9C\n.thumb_set sub_08065C9C, MatchSetupMoveArmyCursor\n");

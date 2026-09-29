@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08088ECC.
- * sub_08088ECC @ 0x08088ECC, sub_08089464 @ 0x08089464
+ * CoDesignEditor_DrawBrowse @ 0x08088ECC, CoDesignEditor_DrawPicker @ 0x08089464
  */
 
 /* Matched wave 54 (W54-B), 1432 bytes, first attempt, from sub_080880BC's
@@ -49,7 +49,7 @@ struct Unk08089464Proc
     /* 0x48 */ u16 unk48;
 };
 
-void sub_08088ECC(void *arg)
+void CoDesignEditor_DrawBrowse(void *arg)
 {
     struct Unk08088ECC *proc = arg;
 
@@ -181,8 +181,9 @@ void sub_08088ECC(void *arg)
     DrawOamObject(gUnknown_03005958[proc->unk58] + 0x3E, 0x20, 0x78, 0, 0);
     sub_08043B60(0x30, 0x78, 0xA2CC, 3);
 }
+asm(".global sub_08088ECC\n.thumb_set sub_08088ECC, CoDesignEditor_DrawBrowse\n");
 
-void sub_08089464(void *arg)
+void CoDesignEditor_DrawPicker(void *arg)
 {
     struct Unk08089464Proc *proc = arg;
     int t;
@@ -221,3 +222,4 @@ void sub_08089464(void *arg)
 
     proc->unk48++;
 }
+asm(".global sub_08089464\n.thumb_set sub_08089464, CoDesignEditor_DrawPicker\n");

@@ -12,8 +12,9 @@
 /* `pop {r1}` rather than `pop {r0}` says the result is live, and the body is
  * the boolean shape (`cmp; beq; movs r0,#1`) rather than the two-constant
  * `if`/`return` pair, which would have materialised the zero as well.
- * Same predicate as sub_0806AAC4 over gUnknown_0858168C. */
-int sub_0806A474(void)
+ * Same predicate as IsMeteorImpactRunning over gUnknown_0858168C. */
+int IsIntroRunning(void)
 {
     return Proc_Find(ProcScr_IntroT3) != 0;
 }
+asm(".global sub_0806A474\n.thumb_set sub_0806A474, IsIntroRunning\n");

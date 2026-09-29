@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_0806C874(void)
+void StartCredits(void)
 {
     Proc_Start(gUnknown_08581AC8, PROC_TREE_3);
 }
+asm(".global sub_0806C874\n.thumb_set sub_0806C874, StartCredits\n");

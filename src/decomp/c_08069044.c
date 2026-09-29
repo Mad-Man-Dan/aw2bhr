@@ -43,7 +43,7 @@ void IntroT3_IDLE_08069045(struct Unk69044Proc *proc)
     case 0x44:
         ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
         sub_08067D04(0, 0, 0xe, proc);
-        sub_080679D8(0, 1, 0x120, 0x80, 0, -0x4000, 0x100, 0xc0, 0xc, proc);
+        StartIntroBgAffineTween(0, 1, 0x120, 0x80, 0, -0x4000, 0x100, 0xc0, 0xc, proc);
         break;
 
     case 0x74:

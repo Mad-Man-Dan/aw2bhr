@@ -18,14 +18,16 @@ int Campaign_WHILE_08078151(void)
     return Proc_Find(gUnknown_086147FC) != 0;
 }
 
-int sub_08078168(void)
+int IsWorldMapForResumeRunning(void)
 {
     return Proc_Find(gUnknown_0861485C) != 0;
 }
+asm(".global sub_08078168\n.thumb_set sub_08078168, IsWorldMapForResumeRunning\n");
 
-int sub_08078180(void)
+int IsWorldMapAfterMissionRunning(void)
 {
     return Proc_Find(gUnknown_08614894) != 0;
 }
+asm(".global sub_08078180\n.thumb_set sub_08078180, IsWorldMapAfterMissionRunning\n");
 
 asm(".global sub_08078150\n.thumb_set sub_08078150, Campaign_WHILE_08078151\n");

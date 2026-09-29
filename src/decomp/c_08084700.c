@@ -33,7 +33,7 @@ struct Unk08084700
     /* 0x6a */ s16 unk6a;
 };
 
-void sub_08084700(struct Unk08084700 *proc)
+void MainMenuCarouselWheel_AnimatePalettes(struct Unk08084700 *proc)
 {
     int i;
     int offset;
@@ -42,7 +42,7 @@ void sub_08084700(struct Unk08084700 *proc)
 
     if (proc->unk64 >= 0 && proc->unk6a == 0)
     {
-        if (sub_08084858(gUnknown_0861696C[DivRem(proc->unk52 + 2, 6)]) != 0)
+        if (IsMainMenuTileComplete(gUnknown_0861696C[DivRem(proc->unk52 + 2, 6)]) != 0)
             ApplyPaletteExt(gUnknown_0812598C + (((s16)proc->unk4a >> 2) & 0xf),
                             0x30A, 0x10);
 
@@ -63,7 +63,7 @@ void sub_08084700(struct Unk08084700 *proc)
     for (i = 0; i <= 5; i++)
     {
         pal = (0x24A + i * 0x20) << 16;
-        if (sub_08084858(i) != 0)
+        if (IsMainMenuTileComplete(i) != 0)
             ApplyPaletteExt(gUnknown_0812598C + (((s16)proc->unk4a >> 2) & 0xf),
                             (u16)(pal >> 16), 0x10);
 
@@ -71,3 +71,4 @@ void sub_08084700(struct Unk08084700 *proc)
 
     proc->unk4a++;
 }
+asm(".global sub_08084700\n.thumb_set sub_08084700, MainMenuCarouselWheel_AnimatePalettes\n");

@@ -20,7 +20,7 @@ struct Unk67358Proc
     /* 3c */ int unk3c;
 };
 
-/* MATCHED. Byte-for-byte the same function as sub_080672A8 -- identical
+/* MATCHED. Byte-for-byte the same function as BlendRamp_Loop -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
 void sub_08067358(struct Unk67358Proc *proc)

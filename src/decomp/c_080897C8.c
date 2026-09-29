@@ -4,10 +4,10 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080897C8.
- * sub_080897C8 @ 0x080897C8, sub_08089A04 @ 0x08089A04
+ * CoDesignEditor_DrawEnterPicker @ 0x080897C8, CoDesignEditor_DrawLeavePicker @ 0x08089A04
  */
 
-/* Matched wave 54 (W54-B), 572 bytes, three attempts. Twin of sub_08089A04,
+/* Matched wave 54 (W54-B), 572 bytes, three attempts. Twin of CoDesignEditor_DrawLeavePicker,
  * which is the same animation run backwards and matched first try off this
  * derivation. Exemplar was sub_080880BC (src/decomp/c_08088044.c).
 
@@ -40,7 +40,7 @@ struct Unk08089A04
     /* 4C */ s16 unk4c;
 };
 
-void sub_080897C8(struct Unk080897C8 *proc)
+void CoDesignEditor_DrawEnterPicker(struct Unk080897C8 *proc)
 {
     int i;
     int y0;
@@ -105,11 +105,12 @@ void sub_080897C8(struct Unk080897C8 *proc)
         gUnknown_03002B34 = 0;
         gUnknown_03005908 = 1;
         proc->unk48 = 0;
-        sub_0808A5C4();
+        CoDesignEditor_DrawHelpText();
     }
 }
+asm(".global sub_080897C8\n.thumb_set sub_080897C8, CoDesignEditor_DrawEnterPicker\n");
 
-void sub_08089A04(struct Unk08089A04 *proc)
+void CoDesignEditor_DrawLeavePicker(struct Unk08089A04 *proc)
 {
     int i;
     int y0;
@@ -168,8 +169,9 @@ void sub_08089A04(struct Unk08089A04 *proc)
     else
     {
         gUnknown_03005908 = 0;
-        sub_0808A5C4();
+        CoDesignEditor_DrawHelpText();
         gUnknown_03001FE8.bits.size = 1;
-        sub_08088ECC(proc);
+        CoDesignEditor_DrawBrowse(proc);
     }
 }
+asm(".global sub_08089A04\n.thumb_set sub_08089A04, CoDesignEditor_DrawLeavePicker\n");

@@ -35,6 +35,6 @@ void sub_08076858(void)
         u8 v = gUnknown_0202FDFC.unk12[i];
 
         if (v != 0 && (v & 1) != 0)
-            sub_08074754(i);
+            AddWorldMapMarker(i);
     }
 }

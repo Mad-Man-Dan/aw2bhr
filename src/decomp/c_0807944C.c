@@ -7,7 +7,8 @@
  * sub_0807944C @ 0x0807944C
  */
 
-void sub_0807944C(void)
+void ResultsScreen_LoadCoFullBody(void)
 {
     sub_08043BA4(gPlayers[sub_0807A908()].co, 0, 11);
 }
+asm(".global sub_0807944C\n.thumb_set sub_0807944C, ResultsScreen_LoadCoFullBody\n");

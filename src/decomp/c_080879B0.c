@@ -27,8 +27,8 @@ void PreviewMapRecords_080879D9(struct Unk080879D8 *proc)
 {
     DrawWindowBackground(0xD, 4, 0x12, 0xC, gBG2TilemapBuffer, 0);
     sub_08013B0C();
-    sub_08085F40();
-    sub_08087C14(proc->unk54);
+    MapSelect_SetBlend();
+    LoadMapRecordMinimugs(proc->unk54);
 }
 
 asm(".global sub_080879B0\n.thumb_set sub_080879B0, PreviewMapRecords_CB_080879B1\n"

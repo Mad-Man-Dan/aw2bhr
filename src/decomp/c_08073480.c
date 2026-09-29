@@ -45,7 +45,7 @@ struct Unk08073480Proc
     /* 0x48 */ int unk48;
 };
 
-void sub_08073480(struct Unk08073480Proc *proc)
+void BgWave_Loop(struct Unk08073480Proc *proc)
 {
   int i;
   int shift;
@@ -76,3 +76,4 @@ void sub_08073480(struct Unk08073480Proc *proc)
   *((vu16 *) (0x04000000 + 0x0B8)) = 1;
   *((vu16 *) (0x04000000 + 0x0BA)) = 0xA640;
 }
+asm(".global sub_08073480\n.thumb_set sub_08073480, BgWave_Loop\n");

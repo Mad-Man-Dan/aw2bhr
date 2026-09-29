@@ -7,7 +7,7 @@
  * sub_08063A58 @ 0x08063A58
  */
 
-void sub_08063A58(int val, u8 *hundreds, u8 *tens, u8 *ones)
+void SplitDecimalDigits(int val, u8 *hundreds, u8 *tens, u8 *ones)
 {
     if (val == 0)
     {
@@ -31,3 +31,4 @@ void sub_08063A58(int val, u8 *hundreds, u8 *tens, u8 *ones)
         }
     }
 }
+asm(".global sub_08063A58\n.thumb_set sub_08063A58, SplitDecimalDigits\n");

@@ -11,7 +11,7 @@
 
 /* A conditional variant of the family-F035 display-list builders that
  * src/decomp/c_08078790.c documents. Two of the four builders are CHAINED --
- * `bl sub_08078658` then `bl sub_08078608` with no argument setup between them
+ * `bl AddCoSelectGroupBlueMoon` then `bl AddCoSelectGroupOrangeStar` with no argument setup between them
  * is a nest, exactly as in src/decomp/c_08078864.c -- and the third is applied
  * only when IsCampaignCompletionFlagSet(0x6b) holds.
  *
@@ -25,12 +25,12 @@ void SetupCoSelectFactoryBlues(void)
     s32 i;
 
     ClearArmyCount();
-    i = sub_08078658(0);
-    i = sub_08078608(i);
+    i = AddCoSelectGroupBlueMoon(0);
+    i = AddCoSelectGroupOrangeStar(i);
 
     if (IsCampaignCompletionFlagSet(0x6b))
     {
-        sub_080786A4(i);
+        AddCoSelectGroupYellowComet(i);
         sub_08078770();
     }
     else

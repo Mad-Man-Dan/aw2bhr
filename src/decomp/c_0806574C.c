@@ -9,11 +9,11 @@
 
 /* Session setup: seeds the gUnknown_08580934 header, rebuilds the per-slot
  * tables and clears the cursor state, then hands off to sub_0803BFBC and
- * sub_08065818.
+ * MatchSetupPackRuleIndices.
  *
  * gUnknown_0816E108 is agbcc's own -fforce-addr word holding &gUnknown_08580934
- * (the same block of ROM words as gUnknown_0816E10C for sub_08065818 and
- * gUnknown_0816E110 for sub_080658AC). Naming the global honestly is what
+ * (the same block of ROM words as gUnknown_0816E10C for MatchSetupPackRuleIndices and
+ * gUnknown_0816E110 for MatchSetupUnpackRuleIndices). Naming the global honestly is what
  * produces the ROM's three-level `ldr r3,=<word>; ldr r2,[r3]; ldr r0,[r2]`
  * and the copy into r6 that survives the loop -- do not spell the word.
  *
@@ -21,7 +21,7 @@
  * the second store reuses the loaded unk24 (known to be 1) as its source
  * operand and the +0x24 address register minus 0x1b as its destination, which
  * is why only one `ldrb` appears for two uses of the field. */
-void sub_0806574C(void)
+void MatchSetupInitState(void)
 {
     int i;
 
@@ -30,7 +30,7 @@ void sub_0806574C(void)
     gUnknown_08580934->unk24 = gPlaySt.savingEnabled;
     gUnknown_08580934->unk25 = gUnknown_08580934->unk24 ? SioGetSelfId() : -1;
     sub_0803BFBC(gUnknown_08580934);
-    sub_08065818();
+    MatchSetupPackRuleIndices();
 
     for (i = 0; i < gUnknown_08580934->unk08; i++)
     {
@@ -46,3 +46,4 @@ void sub_0806574C(void)
     gUnknown_08580934->unk2d = 0;
     gUnknown_08580934->unk2e = 0;
 }
+asm(".global sub_0806574C\n.thumb_set sub_0806574C, MatchSetupInitState\n");

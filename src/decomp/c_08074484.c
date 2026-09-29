@@ -11,15 +11,15 @@
  *
  * The interpreter for an 8-byte-stride condition script: it walks records until
  * the leading opcode byte is 8, and for each one either accepts the record
- * (fall through to the next) or rejects it, in which case sub_08074570 skips
+ * (fall through to the next) or rejects it, in which case SkipToMapEventFireRecord skips
  * ahead to the next opcode-7-or-8 record. Only opcode 7 does any work --
  * running the +0x04 script through StartOrQueueEventScript and reporting `1` back to the
  * caller.
  *
  * THE RECORD IS READ THROUGH `u8 *` WITH EXPLICIT CASTS, not through a struct.
  * That is forced from two sides and is worth stating because it looks wrong:
- * `u8 sub_08074484(u8 *, struct Unk030040D8 *, int)` is the declared prototype,
- * and the already-promoted sub_08074570 (c_08074570.c) walks the same array as
+ * `u8 RunMapEventRecords(u8 *, struct Unk030040D8 *, int)` is the declared prototype,
+ * and the already-promoted SkipToMapEventFireRecord (c_08074570.c) walks the same array as
  * a bare `u8 *` with `p += 8`. Both halves of the original agreed on `u8 *`, so
  * `*(u16 *)(p + 2)` and `*(const u8 **)(p + 4)` are the original's own spelling.
  *
@@ -30,8 +30,8 @@
  * global: it is a local label the index lists as a data_ref, and the eight
  * `.4byte` entries are the case targets.
  *
- * The single shared `bl sub_08074570` block at _08074556 is cross-jumping
- * merging eight identical `p = sub_08074570(p);` tails -- it does NOT need a
+ * The single shared `bl SkipToMapEventFireRecord` block at _08074556 is cross-jumping
+ * merging eight identical `p = SkipToMapEventFireRecord(p);` tails -- it does NOT need a
  * goto, a flag variable, or a shared exit written in the source. Each case
  * simply ends with its own copy. Same for the `cmp r0, #0; beq` that case 3 and
  * case 6 share.
@@ -54,7 +54,7 @@
  * test jumps to the reject block on success.
  */
 
-u8 sub_08074484(u8 *p, struct Unk030040D8 *a2, int a3)
+u8 RunMapEventRecords(u8 *p, struct Unk030040D8 *a2, int a3)
 {
     u8 ret;
 
@@ -67,13 +67,13 @@ u8 sub_08074484(u8 *p, struct Unk030040D8 *a2, int a3)
         case 0:
             if ((p[1] != 0 && p[1] != gUnknown_030033EC)
              || (*(u16 *)(p + 2) != 0 && *(u16 *)(p + 2) != gUnknown_03004080))
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
 
         case 7:
             if (p[1] != 0xFF && IsCampaignCompletionFlagSet(p[1]) != 0)
             {
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
                 break;
             }
 
@@ -89,32 +89,32 @@ u8 sub_08074484(u8 *p, struct Unk030040D8 *a2, int a3)
 
         case 5:
             if ((*(u8 (**)(void))(p + 4))() != 1)
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
 
         case 6:
             if ((*(u8 (**)(void))(p + 4))())
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
 
         case 1:
             if (a2->unk00 != p[1])
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
 
         case 4:
             if (p[1] != a3)
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
 
         case 2:
             if (IsCampaignCompletionFlagSet(p[1]) == 0)
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
 
         case 3:
             if (IsCampaignCompletionFlagSet(p[1]) != 0)
-                p = sub_08074570(p);
+                p = SkipToMapEventFireRecord(p);
             break;
         }
 
@@ -123,3 +123,4 @@ u8 sub_08074484(u8 *p, struct Unk030040D8 *a2, int a3)
 
     return ret;
 }
+asm(".global sub_08074484\n.thumb_set sub_08074484, RunMapEventRecords\n");

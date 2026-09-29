@@ -26,9 +26,9 @@ struct Unk8082C0C;
 struct Unk8083034;
 
 /* The block's second dispatcher, and the one that closes the
- * 0x081D93B0-0x081D93D4 pool run: with sub_08082660 matched, every one of the
+ * 0x081D93B0-0x081D93D4 pool run: with MainMenuCarouselWheel_DrawRotation matched, every one of the
  * six functions that own a slot in that run is now C. It picks between
- * sub_08082660, sub_08083A44 and a bare sub_08083738 on three s16 fields, draws
+ * MainMenuCarouselWheel_DrawRotation, sub_08083A44 and a bare sub_08083738 on three s16 fields, draws
  * sub_08083A44's own five-step sprite loop when it takes the third path (with
  * the i == 2 arm's OAM word collapsed to the literal 0x8998 and no DivRem at
  * all), then unconditionally runs sub_08043C28 and sub_08083EE0 and finally
@@ -55,7 +55,7 @@ struct Unk80824D4
     /* 66 */ s16 unk66;
     /* 68 */ s16 unk68;
 };
-void sub_08082660(struct Unk8082660 *);
+void MainMenuCarouselWheel_DrawRotation(struct Unk8082660 *);
 void sub_08083738(struct Unk80824D4 *);
 void sub_08083A44(struct Unk80824D4 *);
 void sub_08083EE0(struct Unk80824D4 *);
@@ -64,8 +64,8 @@ void sub_08084600(struct Unk80824D4 *);
  * at +0x4c that runs one of the four sprite builders per arm, reads the D-pad
  * out of gpKeySt->repeated to set a +1/-1 direction at +0x5c, and steps
  * the phase counter at +0x52 around its period of six. Its own sprite loop is
- * sub_080829B0's with the phase expression `p->unk52 + i + p->unk4e` and six
- * iterations instead of five; see work/sub_080829B0/ for the OAM-word spelling.
+ * MainMenuCarouselWheel_DrawTileFlipIn's with the phase expression `p->unk52 + i + p->unk4e` and six
+ * iterations instead of five; see work/MainMenuCarouselWheel_DrawTileFlipIn/ for the OAM-word spelling.
  *
  * ONE spelling here was worth two instructions and it is a control-flow tell,
  * not a codegen one: the two `p->unk5c` arms are
@@ -90,12 +90,12 @@ struct Unk8082660
     /* 54 */ STRUCT_PAD(0x54, 0x5c);
     /* 5c */ int unk5c;
 };
-void sub_080829B0(struct Unk80831FC *, int);
-void sub_08082C0C(struct Unk8082C0C *, int);
-void sub_08083034(struct Unk8083034 *, int);
+void MainMenuCarouselWheel_DrawTileFlipIn(struct Unk80831FC *, int);
+void MainMenuCarouselWheel_DrawRotateWithFlip(struct Unk8082C0C *, int);
+void MainMenuCarouselWheel_DrawRotate(struct Unk8083034 *, int);
 void sub_08083484(struct Unk8082660 *, int);
 /* First of the four sprite builders at 0x080829B0-0x08083A44, the block whose
- * tail (sub_080831FC / sub_08083484 / sub_08083738) is already promoted in
+ * tail (MainMenuCarouselWheel_DrawLabelPlateSlideIn / sub_08083484 / sub_08083738) is already promoted in
  * src/decomp/c_080831FC.c. Everything here is that file's vocabulary plus a
  * loop: the affine head is the c_08032E88.c / c_08027B68.c idiom with `* 16`
  * and not `<< 4`, and the five-step loop draws gUnknown_08616972 /
@@ -118,7 +118,7 @@ void sub_08083484(struct Unk8082660 *, int);
  *     `cmp r5, #2 / bne`. One source expression, two spellings in the ROM.
  *   - The two Interpolate arms are cross-jumped by gcc into one `bl` and one
  *     shared affine tail. That is the compiler, not the source: the sibling
- *     sub_08082C0C has the identical two-arm shape and is NOT cross-jumped, and
+ *     MainMenuCarouselWheel_DrawRotateWithFlip has the identical two-arm shape and is NOT cross-jumped, and
  *     writing both honestly reproduces each.
  * This function has NO .rodata pool word, unlike the three straight-line
  * exemplars, because its loop hoists &gUnknown_0861696C into one pseudo. */
@@ -130,8 +130,8 @@ struct Unk80831FC
     /* 3c */ STRUCT_PAD(0x3c, 0x52);
     /* 52 */ u16 unk52;
 };
-void sub_080831FC(struct Unk80831FC *, int);
-/* Second of the block. Same affine head as sub_080829B0 (two Interpolate arms,
+void MainMenuCarouselWheel_DrawLabelPlateSlideIn(struct Unk80831FC *, int);
+/* Second of the block. Same affine head as MainMenuCarouselWheel_DrawTileFlipIn (two Interpolate arms,
  * here NOT cross-jumped -- see that file) and then two six-step loops selected
  * on the sign of the s16 at +0x4e, which is also the phase offset inside the
  * loop. The loops are the same body with different bounds and a different
@@ -163,10 +163,10 @@ struct Unk8082C0C
     /* 50 */ STRUCT_PAD(0x50, 0x52);
     /* 52 */ u16 unk52;
 };
-/* Third of the block, and the cheapest: sub_08082C0C's two loops with the affine
+/* Third of the block, and the cheapest: MainMenuCarouselWheel_DrawRotateWithFlip's two loops with the affine
  * head and the special-index arm removed. It is the function the whole batch's
  * spellings were derived on, because at 456 bytes every probe is a second.
- * See work/sub_08082C0C/ for the two rules it shares (`i + 1 - p->unk4e`, and
+ * See work/MainMenuCarouselWheel_DrawRotateWithFlip/ for the two rules it shares (`i + 1 - p->unk4e`, and
  * the `(k = i + 6)` binding) and docs/agbcc-codegen.md for the measurements.
  * Note the asymmetry between the two loops is real and not a transcription
  * slip: the negative-unk4e loop uses `DivRem(p->unk52 + (i + 6), 6)` and the
@@ -183,13 +183,13 @@ struct Unk8083034
     /* 52 */ u16 unk52;
 };
 
-void sub_080824D4(struct Unk80824D4 *p)
+void MainMenuCarouselWheel_DrawFrame(struct Unk80824D4 *p)
 {
     int i;
 
     if (p->unk4e != 0 && p->unk64 == 0 && p->unk68 == 0)
     {
-        sub_08082660((struct Unk8082660 *)p);
+        MainMenuCarouselWheel_DrawRotation((struct Unk8082660 *)p);
     }
     else if (p->unk64 != 0)
     {
@@ -227,8 +227,9 @@ void sub_080824D4(struct Unk80824D4 *p)
         }
     }
 }
+asm(".global sub_080824D4\n.thumb_set sub_080824D4, MainMenuCarouselWheel_DrawFrame\n");
 
-void sub_08082660(struct Unk8082660 *p)
+void MainMenuCarouselWheel_DrawRotation(struct Unk8082660 *p)
 {
     int i;
 
@@ -254,7 +255,7 @@ void sub_08082660(struct Unk8082660 *p)
     }
     else if (p->unk4c <= 0xD)
     {
-        sub_08082C0C((struct Unk8082C0C *)p, p->unk4c - 4);
+        MainMenuCarouselWheel_DrawRotateWithFlip((struct Unk8082C0C *)p, p->unk4c - 4);
 
         if ((gpKeySt->repeated & DPAD_UP) && p->unk4c > 7 && p->unk4c <= 0xD)
             p->unk5c = -1;
@@ -265,7 +266,7 @@ void sub_08082660(struct Unk8082660 *p)
     {
         if (p->unk5c == 0 && p->unk4c == 0xE)
         {
-            sub_080829B0((struct Unk80831FC *)p, p->unk4c - 0xE);
+            MainMenuCarouselWheel_DrawTileFlipIn((struct Unk80831FC *)p, p->unk4c - 0xE);
             p->unk4c += 9;
         }
         else
@@ -289,7 +290,7 @@ void sub_08082660(struct Unk8082660 *p)
                 p->unk4e = p->unk5c;
             }
 
-            sub_08083034((struct Unk8083034 *)p, p->unk4c - 0xE);
+            MainMenuCarouselWheel_DrawRotate((struct Unk8083034 *)p, p->unk4c - 0xE);
 
             if (p->unk4c == 0xE)
             {
@@ -309,7 +310,7 @@ void sub_08082660(struct Unk8082660 *p)
     }
     else if (p->unk4c <= 0x21)
     {
-        sub_080829B0((struct Unk80831FC *)p, p->unk4c - 0x18);
+        MainMenuCarouselWheel_DrawTileFlipIn((struct Unk80831FC *)p, p->unk4c - 0x18);
 
         if ((gpKeySt->repeated & DPAD_UP) && p->unk4c > 0x17 && p->unk4c <= 0x1B)
         {
@@ -332,15 +333,16 @@ void sub_08082660(struct Unk8082660 *p)
 
     if (p->unk4c == 0x17)
     {
-        sub_080845A8(gUnknown_0861696C[DivRem(p->unk52 + 2, 6)]);
-        ApplyPaletteExt(sub_08084864(gUnknown_0861696C[DivRem(p->unk52 + 2, 6)]), 0x300, 0x20);
+        LoadMainMenuCentreTileGraphic(gUnknown_0861696C[DivRem(p->unk52 + 2, 6)]);
+        ApplyPaletteExt(GetMainMenuTilePalette(gUnknown_0861696C[DivRem(p->unk52 + 2, 6)]), 0x300, 0x20);
     }
 
     if (p->unk4c == 0x21)
         p->unk4e = 0;
 }
+asm(".global sub_08082660\n.thumb_set sub_08082660, MainMenuCarouselWheel_DrawRotation\n");
 
-void sub_080829B0(struct Unk80831FC *p, int t)
+void MainMenuCarouselWheel_DrawTileFlipIn(struct Unk80831FC *p, int t)
 {
     int i;
 
@@ -372,7 +374,7 @@ void sub_080829B0(struct Unk80831FC *p, int t)
                      Div(SIN_Q12(0) * 16, 0x100),
                      Div(COS_Q12(0) * 16, 0x100));
 
-        sub_080831FC(p, t - 6);
+        MainMenuCarouselWheel_DrawLabelPlateSlideIn(p, t - 6);
     }
 
     for (i = 0; i <= 4; i++)
@@ -398,8 +400,9 @@ void sub_080829B0(struct Unk80831FC *p, int t)
         }
     }
 }
+asm(".global sub_080829B0\n.thumb_set sub_080829B0, MainMenuCarouselWheel_DrawTileFlipIn\n");
 
-void sub_08082C0C(struct Unk8082C0C *p, int t)
+void MainMenuCarouselWheel_DrawRotateWithFlip(struct Unk8082C0C *p, int t)
 {
     int i;
     int k;
@@ -488,8 +491,9 @@ void sub_08082C0C(struct Unk8082C0C *p, int t)
         }
     }
 }
+asm(".global sub_08082C0C\n.thumb_set sub_08082C0C, MainMenuCarouselWheel_DrawRotateWithFlip\n");
 
-void sub_08083034(struct Unk8083034 *p, int t)
+void MainMenuCarouselWheel_DrawRotate(struct Unk8083034 *p, int t)
 {
     int i;
     int k;
@@ -523,3 +527,4 @@ void sub_08083034(struct Unk8083034 *p, int t)
         }
     }
 }
+asm(".global sub_08083034\n.thumb_set sub_08083034, MainMenuCarouselWheel_DrawRotate\n");

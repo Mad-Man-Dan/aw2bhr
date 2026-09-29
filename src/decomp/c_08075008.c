@@ -57,7 +57,7 @@ void WM_DrawDifficultyStars_IDLE_08075009(struct Unk8075008 *proc)
     proc->unk34++;
 }
 
-void *sub_08075058(ProcPtr parent, u16 a2, s16 a3, s16 a4, u16 a5)
+void *StartDifficultyStar(ProcPtr parent, u16 a2, s16 a3, s16 a4, u16 a5)
 {
     struct Unk08075058 *proc = Proc_Start(ProcScr_WM_DrawDifficultyStars, parent);
 
@@ -69,5 +69,6 @@ void *sub_08075058(ProcPtr parent, u16 a2, s16 a3, s16 a4, u16 a5)
 
     return proc;
 }
+asm(".global sub_08075058\n.thumb_set sub_08075058, StartDifficultyStar\n");
 
 asm(".global sub_08075008\n.thumb_set sub_08075008, WM_DrawDifficultyStars_IDLE_08075009\n");

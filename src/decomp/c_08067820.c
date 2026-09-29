@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08067820(void)
+void EndIntroBgScroll(void)
 {
     Proc_EndEach(gUnknown_08580FE4);
 }
+asm(".global sub_08067820\n.thumb_set sub_08067820, EndIntroBgScroll\n");

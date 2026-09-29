@@ -56,8 +56,8 @@ void sub_0806B3E8(struct UnkB3E8Proc *proc)
     }
 
     sub_080135A4();
-    sub_08072C40(3, 0, 0);
-    sub_08072C40(2, b, b);
+    SetBgScrollShadow(3, 0, 0);
+    SetBgScrollShadow(2, b, b);
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = (a >> 1) + (a & 1);

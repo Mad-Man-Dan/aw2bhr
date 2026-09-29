@@ -38,6 +38,6 @@ void sub_08064B68(int a)
             o->unk3c = a;
             o->unk3a = 0;
         }
-        sub_0806377C(gUnknown_0858096C);
+        ClearCallbackOfSlotsRunningScript(gUnknown_0858096C);
     }
 }

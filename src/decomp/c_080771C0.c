@@ -18,13 +18,13 @@
  * value being stored occupies a register of its own, so agbcc has one free for
  * a second address and does not need to reuse the first.
  *
- * The `(int)` cast is what sub_080638D0's declared parameter forces. */
+ * The `(int)` cast is what SetVCountInterruptHandler's declared parameter forces. */
 void sub_080771C0(void)
 {
     REG_BG0VOFS = gUnknown_0300064C;
     REG_BG2VOFS = gUnknown_0300064C;
-    sub_08063980(0);
-    sub_080638D0((int)sub_080771F0);
+    SetVCountCompareLine(0);
+    SetVCountInterruptHandler((int)sub_080771F0);
 }
 
 /* The other half of sub_080771C0's ping-pong: zero the two scroll registers,
@@ -38,6 +38,6 @@ void sub_080771F0(void)
 {
     REG_BG0VOFS = 0;
     REG_BG2VOFS = 0;
-    sub_08063980(0x80);
-    sub_080638D0((int)sub_080771C0);
+    SetVCountCompareLine(0x80);
+    SetVCountInterruptHandler((int)sub_080771C0);
 }

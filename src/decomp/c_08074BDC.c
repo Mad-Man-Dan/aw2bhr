@@ -7,7 +7,7 @@
  * sub_08074BDC @ 0x08074BDC, sub_08074C1C @ 0x08074C1C
  */
 
-/* The camera-relative twin of sub_08074C5C: the same `x - 0x50` clamped into
+/* The camera-relative twin of GetWorldMapCameraXCentered: the same `x - 0x50` clamped into
  * [0, 0xc0], but applied only when x falls outside the 0x50..0xa0 band around
  * the scroll origin, and otherwise passing the origin itself back.
  *
@@ -46,7 +46,7 @@ int sub_08074BDC(int x)
 
 /* sub_08074BDC on the other axis: unk02 instead of unk00, and 0x28 / 0x78 /
  * 0x60 instead of 0x50 / 0xa0 / 0xc0 -- the same 0x50-vs-0x28 and 0xc0-vs-0x60
- * pairing sub_08074C5C and sub_08074C70 already show.
+ * pairing GetWorldMapCameraXCentered and GetWorldMapCameraYCentered already show.
  */
 int sub_08074C1C(int x)
 {

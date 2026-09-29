@@ -20,7 +20,8 @@
  * the branching four-block form from the Control-flow table in
  * docs/agbcc-codegen.md and is four bytes longer.
  */
-bool8 sub_080670D8(void)
+bool8 IsMatchSetupScreenRunning(void)
 {
     return sub_08015BD0((s32)gUnknown_08580DD8) != -1;
 }
+asm(".global sub_080670D8\n.thumb_set sub_080670D8, IsMatchSetupScreenRunning\n");

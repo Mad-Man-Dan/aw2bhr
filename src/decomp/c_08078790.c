@@ -38,7 +38,7 @@
 
 /* The gUnknown_030058E0 display-list variant: ClearArmyCount resets the cursor
  * and sub_08078740 clears the five words of gUnknown_030059C0, and both are
- * nullary. sub_08078608 returns the advanced byte index (`pop {r1}; bx r1`) and
+ * nullary. AddCoSelectGroupOrangeStar returns the advanced byte index (`pop {r1}; bx r1`) and
  * that result is DISCARDED here -- unlike SetupCoSelectHotPursuit, which chains the four
  * builders and does consume it.
  */
@@ -46,7 +46,7 @@
 void SetupCoSelectLiberation(void)
 {
     ClearArmyCount();
-    sub_08078608(0);
+    AddCoSelectGroupOrangeStar(0);
     sub_08078740();
 }
 
@@ -54,7 +54,7 @@ asm(".global sub_08078790\n.thumb_set sub_08078790, SetupCoSelectLiberation\n");
 
 /* The gUnknown_030058E0 display-list variant: ClearArmyCount resets the cursor
  * and sub_08078740 clears the five words of gUnknown_030059C0, and both are
- * nullary. sub_08078658 returns the advanced byte index (`pop {r1}; bx r1`) and
+ * nullary. AddCoSelectGroupBlueMoon returns the advanced byte index (`pop {r1}; bx r1`) and
  * that result is DISCARDED here -- unlike SetupCoSelectHotPursuit, which chains the four
  * builders and does consume it.
  */
@@ -62,7 +62,7 @@ asm(".global sub_08078790\n.thumb_set sub_08078790, SetupCoSelectLiberation\n");
 void SetupCoSelectNeotanksBm(void)
 {
     ClearArmyCount();
-    sub_08078658(0);
+    AddCoSelectGroupBlueMoon(0);
     sub_08078740();
 }
 

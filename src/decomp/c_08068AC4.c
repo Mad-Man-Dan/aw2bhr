@@ -40,7 +40,7 @@ struct Unk08068AC4
  * in a default arm.
  *
  * The `(u16)` cast on the last argument is NOT decoration: the ROM narrows it
- * with `lsls #16; lsrs #16` and the shared prototype for sub_08072C40 declares
+ * with `lsls #16; lsrs #16` and the shared prototype for SetBgScrollShadow declares
  * that parameter `u32`. Its third parameter is really `u16`; the cast is here
  * so this file does not have to retype another agent's declaration. */
 
@@ -53,7 +53,7 @@ struct Unk08068AC4
  * in a default arm.
  *
  * The `(u16)` cast on the last argument is NOT decoration: the ROM narrows it
- * with `lsls #16; lsrs #16` and the shared prototype for sub_08072C40 declares
+ * with `lsls #16; lsrs #16` and the shared prototype for SetBgScrollShadow declares
  * that parameter `u32`. Its third parameter is really `u16` -- see the note in
  * the wave report; the cast is here so this file does not have to retype
  * another agent's declaration. */
@@ -66,7 +66,7 @@ struct Unk08068BE4Proc
 
 void IntroT3_08068AC5(struct Unk08068AC4 *proc)
 {
-    proc->unk2c = sub_080674F4(gUnknown_0202F204++);
+    proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
     sub_0801237C();
     sub_08012358();
     sub_08012C58(gUnknown_085813D4);
@@ -81,9 +81,9 @@ void IntroT3_08068AC5(struct Unk08068AC4 *proc)
     Decompress(gUnknown_0817C408, (void *)0x06008000);
     sub_080718F8((u8 *)gBG3TilemapBuffer + 0x20C, gUnknown_0817D874, 0);
     sub_08013B1C();
-    sub_0806775C(0, proc);
-    sub_08072C40(2, 0, 0);
-    sub_08072C40(3, 0, 0);
+    StartIntroBgJitter(0, proc);
+    SetBgScrollShadow(2, 0, 0);
+    SetBgScrollShadow(3, 0, 0);
     gDispIo.disp_ct.forced_blank = 0;
     proc->unk30 = 0;
     PlayMusic(0x12C);
@@ -134,7 +134,7 @@ void IntroT3_IDLE_08068BE5(struct Unk08068BE4Proc *proc)
         Proc_Break(proc);
         break;
     }
-    sub_08072C40(3, gUnknown_08581414[t % 5], (u16)gUnknown_08581414[t % 5 + 1]);
+    SetBgScrollShadow(3, gUnknown_08581414[t % 5], (u16)gUnknown_08581414[t % 5 + 1]);
     proc->unk2c--;
 }
 

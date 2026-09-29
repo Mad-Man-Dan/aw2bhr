@@ -27,7 +27,7 @@ struct Unk73574Proc
  * are saved with a bare `adds rN, rM, #0` (r8 for the fourth) and no
  * PROMOTE_MODE narrowing, so all six are int. */
 
-void sub_08073574(int a, int b, int c, int d, int e, int f)
+void StartBgWave(int a, int b, int c, int d, int e, int f)
 {
     struct Unk73574Proc *proc = Proc_Start(gUnknown_08614134, PROC_TREE_VSYNC);
 
@@ -41,3 +41,4 @@ void sub_08073574(int a, int b, int c, int d, int e, int f)
     proc->unk48 = 0;
     proc->unk44 = 0;
 }
+asm(".global sub_08073574\n.thumb_set sub_08073574, StartBgWave\n");

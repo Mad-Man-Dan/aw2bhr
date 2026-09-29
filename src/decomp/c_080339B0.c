@@ -69,7 +69,7 @@ void LinkC2_080339B1(struct Unk339B0Proc *proc)
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     sub_08013B1C();
 
-    sub_08073304(gUnknown_085802F0, gUnknown_02010C50, 0xec, 0xf, 0, 0, (int)proc);
+    StartHeaderBanner(gUnknown_085802F0, gUnknown_02010C50, 0xec, 0xf, 0, 0, (int)proc);
 
     Proc_Start(gUnknown_0849BB80, proc);
     Proc_Start(ProcScr_PutFace, proc);

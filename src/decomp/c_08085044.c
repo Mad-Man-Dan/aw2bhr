@@ -33,7 +33,7 @@ struct Unk8085044
     /* 66 */ s16 unk66;
 };
 
-void sub_08085044(struct Unk8085044 *p)
+void CoInfoScreen_DrawCursorAndArrows(struct Unk8085044 *p)
 {
     int t;
 
@@ -71,3 +71,4 @@ void sub_08085044(struct Unk8085044 *p)
 
     p->unk58++;
 }
+asm(".global sub_08085044\n.thumb_set sub_08085044, CoInfoScreen_DrawCursorAndArrows\n");

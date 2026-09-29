@@ -8,9 +8,9 @@
  */
 
 #include "proc.h"
-/* sub_0807FC70 @ 0x0807FC70, 136 bytes, THUMB. Matched.
+/* CoPowerNameBanner_HoldLoop @ 0x0807FC70, 136 bytes, THUMB. Matched.
  *
- * Near-twin of sub_08080A70: same Proc routine over the same
+ * Near-twin of SuperCoPowerName_HoldLoop: same Proc routine over the same
  * gUnknown_030059A0 sprite column table, differing only in the magic passed
  * to sub_08043C28, the sprite y expression, and the two constants in the
  * frame-counter bound.
@@ -31,7 +31,7 @@ struct Unk0807FC70
     /* 0x58 */ int unk58;
 };
 
-void sub_0807FC70(struct Unk0807FC70 *proc)
+void CoPowerNameBanner_HoldLoop(struct Unk0807FC70 *proc)
 {
     int i;
 
@@ -50,3 +50,4 @@ void sub_0807FC70(struct Unk0807FC70 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0807FC70\n.thumb_set sub_0807FC70, CoPowerNameBanner_HoldLoop\n");

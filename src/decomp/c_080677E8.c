@@ -19,9 +19,9 @@ struct Unk677E8Proc
     /* 5c */ int unk5c;
 };
 
-/* Resets the gUnknown_08580FE4 scroll proc sub_0806778C ticks: clears the two
+/* Resets the gUnknown_08580FE4 scroll proc IntroBgScroll_Loop ticks: clears the two
  * positions and the enable flag, then republishes the base value. The zero in
- * r1 is written three times and then serves as sub_08072C40's second argument
+ * r1 is written three times and then serves as SetBgScrollShadow's second argument
  * unchanged -- constant CSE, not evidence about argument order. */
 void sub_080677E8(void)
 {
@@ -30,5 +30,5 @@ void sub_080677E8(void)
     proc->unk30 = 0;
     proc->unk2c = 0;
     proc->unk5c = 0;
-    sub_08072C40(proc->unk58, 0, 0);
+    SetBgScrollShadow(proc->unk58, 0, 0);
 }

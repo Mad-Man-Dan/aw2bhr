@@ -46,16 +46,16 @@ void sub_08073B00(struct Unk73B00Proc *proc)
     gUnknown_030030DC.bits.win0_enable_bg3 = 0;
     gUnknown_030030DC.bits.win0_enable_obj = 0;
 
-    sub_08073998(b * 2 - 0xf0, c, a, c - 0xa0, 0);
-    sub_08073998(b * 2 - 0xf0, c, b, 0xa0, 0);
+    DrawWipeEdgeLine(b * 2 - 0xf0, c, a, c - 0xa0, 0);
+    DrawWipeEdgeLine(b * 2 - 0xf0, c, b, 0xa0, 0);
 
     a += 0xa0;
     a -= c;
-    sub_08073998(a, c - 0xa0, b, 0xa0, 1);
+    DrawWipeEdgeLine(a, c - 0xa0, b, 0xa0, 1);
 
     proc->unk58++;
 
-    sub_08073AE8();
+    SwapWipeEdgeBuffers();
 
     REG_DMA0CNT_H = 0;
     REG_DMA0SAD = (u32)gUnknown_0202FDE0;
@@ -65,7 +65,7 @@ void sub_08073B00(struct Unk73B00Proc *proc)
 
     if (proc->unk58 >= proc->unk5c)
     {
-        sub_08063928(0);
+        SetHBlankInterruptHandler(0);
 
         REG_DMA0CNT_H = 0;
         REG_DMA0SAD = 0;

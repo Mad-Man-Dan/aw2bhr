@@ -129,7 +129,7 @@ void sub_08076888(ProcPtr proc)
                (void *)(gUnknown_03002B6C.bits.chr_block * 0x4000 + 0x06000000),
                0x01000008);
 
-    sub_08072C40(3, gUnknown_0202FDFC.unk00, gUnknown_0202FDFC.unk02);
+    SetBgScrollShadow(3, gUnknown_0202FDFC.unk00, gUnknown_0202FDFC.unk02);
 
     end = 0xFFFF;
     *list = end;

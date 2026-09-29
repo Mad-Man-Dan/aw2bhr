@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_080763B0(void)
+void EndWorldMapNationPanel(void)
 {
     Proc_EndEach(ProcScr_WM_Listener);
 }
+asm(".global sub_080763B0\n.thumb_set sub_080763B0, EndWorldMapNationPanel\n");

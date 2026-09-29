@@ -57,7 +57,7 @@ void sub_080697CC(void)
 
 void IntroT3_08069865(struct Unk69864Proc *proc)
 {
-    proc->unk2c = sub_080674F4(gUnknown_0202F204++);
+    proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
     sub_080670F8(gUnknown_08581438);
     gDispIo.disp_ct.mode = 0;
     SetDispEnable(1, 1, 1, 1, 1);
@@ -67,10 +67,10 @@ void IntroT3_08069865(struct Unk69864Proc *proc)
     gUnknown_030030B4.bits.priority = 3;
     sub_08012358();
     sub_080697CC();
-    sub_08072C40(0, 0, 0);
-    sub_08072C40(1, 0, 0);
-    sub_08072C40(2, 0, 0);
-    sub_08072C40(3, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
+    SetBgScrollShadow(1, 0, 0);
+    SetBgScrollShadow(2, 0, 0);
+    SetBgScrollShadow(3, 0, 0);
 }
 
 /* The mode-1 counterpart of IntroT3_08069865's setup: reorder the four BG

@@ -35,7 +35,7 @@ struct Unk686E8Proc
     /* 0x4f */ u8 unk4f;
 };
 
-void sub_080686E8(int a1, int a2, u16 a3, u8 a4, ProcPtr parent)
+void StartIntroCoNameBanner(int a1, int a2, u16 a3, u8 a4, ProcPtr parent)
 {
     struct Unk686E8Proc *proc;
     const struct CoData *tbl;
@@ -49,3 +49,4 @@ void sub_080686E8(int a1, int a2, u16 a3, u8 a4, ProcPtr parent)
     proc->unk2a = sub_08068038(gTextTable[(tbl = gUnknown_085D3DD0)[a2].nameIndex], a3);
     proc->unk4f = 0;
 }
+asm(".global sub_080686E8\n.thumb_set sub_080686E8, StartIntroCoNameBanner\n");

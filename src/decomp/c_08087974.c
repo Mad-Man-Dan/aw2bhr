@@ -14,11 +14,11 @@ struct Unk08087974
     /* 0x54 */ int unk54;
 };
 
-void sub_08087974(int a, ProcPtr parent)
+void ToggleMapRecordsPanel(int a, ProcPtr parent)
 {
     if (Proc_Find(gUnknown_08616DB4) != NULL)
     {
-        sub_080879A0();
+        EndMapRecordsPanel();
     }
     else
     {
@@ -27,3 +27,4 @@ void sub_08087974(int a, ProcPtr parent)
         proc->unk54 = a;
     }
 }
+asm(".global sub_08087974\n.thumb_set sub_08087974, ToggleMapRecordsPanel\n");

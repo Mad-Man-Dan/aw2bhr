@@ -16,14 +16,14 @@
  *
  * The `v = 9` preset with a conditional override to 1 is this block's house
  * idiom; sub_08018018 and sub_08018194 open the same way. The bare
- * `lsls r0, #0x18` on sub_08078198's result is what retyped that function from
+ * `lsls r0, #0x18` on IsAnyWorldMapProcRunning's result is what retyped that function from
  * `s32` to `bool8` -- see src/decomp/c_08078198.c. */
 void sub_0801815C(u8 a)
 {
     int v;
 
     v = 9;
-    if (sub_08078198())
+    if (IsAnyWorldMapProcRunning())
         v = 1;
 
     LoadCoFace(a, (void *)(0x06004160 + gUnknown_03002B6C.bits.chr_block * 0x4000), v);

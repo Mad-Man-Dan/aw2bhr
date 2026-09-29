@@ -7,7 +7,7 @@
  * sub_08085638 @ 0x08085638, sub_080856A0 @ 0x080856A0
  */
 
-int sub_08085638(int a1, int a2)
+int GetMovementBonusIcon(int a1, int a2)
 {
     switch (GetCoMovementBonus(gPlayers[a1].co, gPlayers[a1].coMode, a2))
     {
@@ -25,8 +25,9 @@ int sub_08085638(int a1, int a2)
         return 0x9a;
     }
 }
+asm(".global sub_08085638\n.thumb_set sub_08085638, GetMovementBonusIcon\n");
 
-int sub_080856A0(int a1, int a2)
+int GetRangeBonusIcon(int a1, int a2)
 {
     switch (GetCoRangeBonus(gPlayers[a1].co, gPlayers[a1].coMode, a2))
     {
@@ -44,3 +45,4 @@ int sub_080856A0(int a1, int a2)
         return 0x9a;
     }
 }
+asm(".global sub_080856A0\n.thumb_set sub_080856A0, GetRangeBonusIcon\n");

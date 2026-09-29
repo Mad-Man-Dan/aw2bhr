@@ -9,16 +9,16 @@
 
 #include "proc.h"
 #include "hardware.h"
-/* sub_080686E8's seven-argument sibling -- same 0x0858xxxx proc script setup,
+/* StartIntroCoNameBanner's seven-argument sibling -- same 0x0858xxxx proc script setup,
  * same gUnknown_085D3DD0 -> gTextTable -> sub_08068038 graphics chain.
- * Diffed against sub_080686E8 rather than predicted: the proc fields written
+ * Diffed against StartIntroCoNameBanner rather than predicted: the proc fields written
  * are +0x29, +0x30, +0x32, +0x2a, then +0x38, +0x39, +0x4e and +0x4f, where the
  * shorter one writes +0x4d and +0x4f. The store to +0x32 reaches through the
  * +0x29 chain (`adds r0,#9`) because the halfword store to +0x30 uses r7's own
  * displacement and does not disturb it.
  *
  * The `(tbl = gUnknown_085D3DD0)[a1]` binding is the same lever as in
- * sub_080686E8; see the note there. */
+ * StartIntroCoNameBanner; see the note there. */
 struct Unk68810Proc
 {
     /* 0x00 */ u8 filler_00[0x29];

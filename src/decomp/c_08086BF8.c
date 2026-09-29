@@ -20,14 +20,14 @@
  * and tools/split_rodata.py and tools/gen_lds.py must be re-run before building.
  * Do NOT declare gUnknown_081D943C as a global.
  *
- * The two levers that closed this (and its twin sub_08086CE0) are written up in
+ * The two levers that closed this (and its twin DrawMapListRowsFromThird) are written up in
  * docs/agbcc-codegen.md, "The ROM's y-offset is an EXPLICIT SOURCE BIV": the
  * `+2` counter is a strength-reduction giv and needs `int k = i * 2;` declared
  * in the ARM'S OWN BLOCK (function scope does not reduce), and the sum needs a
  * third local `z` so expand_binop does not swap the ADDS operands.
  */
 
-void sub_08086BF8(u32 a1, int a2, int a3)
+void DrawMapListFirstTwoRows(u32 a1, int a2, int a3)
 {
     int i;
     int flag;
@@ -70,8 +70,9 @@ void sub_08086BF8(u32 a1, int a2, int a3)
         }
     }
 }
+asm(".global sub_08086BF8\n.thumb_set sub_08086BF8, DrawMapListFirstTwoRows\n");
 
-/* MATCHES.  Wave 46, W46-L.  Twin of sub_08086BF8; relocs match, nothing to
+/* MATCHES.  Wave 46, W46-L.  Twin of DrawMapListFirstTwoRows; relocs match, nothing to
  * place at promotion.
  *
  * The asymmetry between the two arms is REAL and load-bearing, not an artefact:
@@ -84,7 +85,7 @@ void sub_08086BF8(u32 a1, int a2, int a3)
  * "tidy" the two arms into the same shape -- it un-matches the function.
  */
 
-void sub_08086CE0(u32 a1, int a2, int a3)
+void DrawMapListRowsFromThird(u32 a1, int a2, int a3)
 {
   int i;
   int flag;
@@ -126,3 +127,4 @@ void sub_08086CE0(u32 a1, int a2, int a3)
 
   }
 }
+asm(".global sub_08086CE0\n.thumb_set sub_08086CE0, DrawMapListRowsFromThird\n");

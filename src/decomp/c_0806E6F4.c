@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Reads a coordinate pair out of sub_08073F90 into two adjacent halfword slots
+/* Reads a coordinate pair out of GetSoundScopeLevels into two adjacent halfword slots
  * of its own frame -- `sub sp, #4` reserves exactly the two -- and biases both
  * by 0x100 into the two sprites the owner proc holds.
  *
@@ -42,7 +42,7 @@ void sub_0806E6F4(struct Unk6E6F4Proc *proc)
     u16 x;
     u16 y;
 
-    sub_08073F90(&x, &y);
+    GetSoundScopeLevels(&x, &y);
     sprite = owner->unk48;
     sprite->unk3c = 0x100 + x;
     sprite = owner->unk4c;

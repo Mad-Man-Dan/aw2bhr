@@ -8,7 +8,7 @@
  */
 
 #include "hardware.h"
-/* `proc->unk2c` is the object sub_080674F4 handed back; +0x5a is reached by
+/* `proc->unk2c` is the object GetIntroSceneDuration handed back; +0x5a is reached by
  * `adds r0, #0x5a` followed by a register-offset `ldrsh` at displacement zero,
  * which is a plain s16 field and not an array index. The `cmp #0; bge; adds
  * #3; asrs #2` chain is a signed divide by 4. */

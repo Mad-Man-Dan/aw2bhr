@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080672A8.
- * sub_080672A8 @ 0x080672A8
+ * BlendRamp_Loop @ 0x080672A8
  */
 
 #include "hardware.h"
@@ -40,7 +40,7 @@ struct Unk672A8Proc
  *
  * `.raw` and not `.bits`: the ROM has `ldrh` with a pool mask, which
  * hardware.h's union note reads as the HImode read-modify-write. */
-void sub_080672A8(struct Unk672A8Proc *proc)
+void BlendRamp_Loop(struct Unk672A8Proc *proc)
 {
     s32 v;
 
@@ -55,3 +55,4 @@ void sub_080672A8(struct Unk672A8Proc *proc)
 
     proc->unk38++;
 }
+asm(".global sub_080672A8\n.thumb_set sub_080672A8, BlendRamp_Loop\n");

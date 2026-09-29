@@ -104,10 +104,10 @@ void sub_08077870(struct Unk77870Proc *proc)
 
     if (++proc->unk44 == 5)
     {
-        sub_080638D0(0);
+        SetVCountInterruptHandler(0);
         proc->unk44 = 0;
-        sub_080752D8(0);
-        sub_08074EEC(0);
+        SetDifficultyStarsPalette(0);
+        SetWorldMapScopePalette(0);
         Proc_Break(proc);
     }
 }

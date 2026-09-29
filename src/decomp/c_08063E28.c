@@ -32,10 +32,10 @@ struct Mtx43 /* 0x30 */
 };
 /* Declared here rather than in unknown-functions.h because its signature needs
  * struct Mtx43, which is local to this pair of files. See
- * work/sub_08063FB8/sub_08063FB8.c, which carries the same definition. */
-void sub_08063FB8(struct Mtx43 *src, struct Mtx43 *dst);
+ * work/CopyMatrix43/CopyMatrix43.c, which carries the same definition. */
+void CopyMatrix43(struct Mtx43 *src, struct Mtx43 *dst);
 
-void sub_08063E28(struct Mtx43 *a, struct Mtx43 *b, struct Mtx43 *dst)
+void MultiplyMatrix43(struct Mtx43 *a, struct Mtx43 *b, struct Mtx43 *dst)
 {
     struct Mtx43 tmp;
     struct Mtx43 *out;
@@ -59,5 +59,6 @@ void sub_08063E28(struct Mtx43 *a, struct Mtx43 *b, struct Mtx43 *dst)
     out->m[3][2] = ((a->m[0][2] * b->m[3][0] + a->m[1][2] * b->m[3][1] + a->m[2][2] * b->m[3][2]) >> 12) + a->m[3][2];
 
     if (out == &tmp)
-        sub_08063FB8(&tmp, dst);
+        CopyMatrix43(&tmp, dst);
 }
+asm(".global sub_08063E28\n.thumb_set sub_08063E28, MultiplyMatrix43\n");

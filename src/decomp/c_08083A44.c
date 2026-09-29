@@ -11,10 +11,10 @@
 /* Fourth of the block, and the one that shows what the three matched exemplars
  * in src/decomp/c_080831FC.c look like once a loop is wrapped round them: the
  * four-way phase chain and the whole affine tail are transcribed from
- * sub_08083738 unchanged, and everything that cost anything is loop shape.
- * Structure is sub_080829B0's five-step sprite loop, then sub_08083738's
+ * MainMenuCarouselWheel_DrawLabelPlate unchanged, and everything that cost anything is loop shape.
+ * Structure is MainMenuCarouselWheel_DrawTileFlipIn's five-step sprite loop, then MainMenuCarouselWheel_DrawLabelPlate's
  * four-way chain with each arm turned into a two-iteration loop selected by
- * `i == DivRem(p->unk66, 2)`, then sub_08083738's affine tail verbatim.
+ * `i == DivRem(p->unk66, 2)`, then MainMenuCarouselWheel_DrawLabelPlate's affine tail verbatim.
  *
  * Two wave-20 rules live here (docs/agbcc-codegen.md, W20-A):
  *   - ONE `int i` is reused by the outer loop and all four inner loops. With a
@@ -99,7 +99,7 @@ struct Unk8083EE0
     /* 68 */ s16 unk68;
 };
 
-void sub_08083A44(struct Unk8083A44 *p)
+void MainMenuCarouselWheel_DrawSubmenuOptions(struct Unk8083A44 *p)
 {
     int i;
 
@@ -190,8 +190,9 @@ void sub_08083A44(struct Unk8083A44 *p)
         PutSpriteExt(1, 0x25B, 0x153, gUnknown_0848B6CE, 0xD2C8);
     }
 }
+asm(".global sub_08083A44\n.thumb_set sub_08083A44, MainMenuCarouselWheel_DrawSubmenuOptions\n");
 
-void sub_08083EE0(struct Unk8083EE0 *p)
+void MainMenuCarouselWheel_DrawCursor(struct Unk8083EE0 *p)
 {
     if (p->unk4e != 0)
     {
@@ -314,3 +315,4 @@ void sub_08083EE0(struct Unk8083EE0 *p)
         }
     }
 }
+asm(".global sub_08083EE0\n.thumb_set sub_08083EE0, MainMenuCarouselWheel_DrawCursor\n");

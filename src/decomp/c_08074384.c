@@ -30,44 +30,44 @@ void sub_080743B8(ProcPtr proc)
 
 u8 sub_080743E8(struct Unk030040D8 *a)
 {
-    const struct Unk08074584 *p = sub_08074584();
+    const struct Unk08074584 *p = GetMapEventTable();
 
     if (p != 0 && p->unk0c != 0)
-        return sub_08074484(p->unk0c, a, 0);
+        return RunMapEventRecords(p->unk0c, a, 0);
 
     return 0;
 }
 
 /* The only member of the group that forwards both of its own parameters, and
- * it forwards them CROSSED: its first argument becomes sub_08074484's third
- * and its second becomes sub_08074484's second.
+ * it forwards them CROSSED: its first argument becomes RunMapEventRecords's third
+ * and its second becomes RunMapEventRecords's second.
  */
 u8 sub_08074410(int a, struct Unk030040D8 *b)
 {
-    const struct Unk08074584 *p = sub_08074584();
+    const struct Unk08074584 *p = GetMapEventTable();
 
     if (p != 0 && p->unk10 != 0)
-        return sub_08074484(p->unk10, b, a);
+        return RunMapEventRecords(p->unk10, b, a);
 
     return 0;
 }
 
 u8 sub_0807443C(void)
 {
-    const struct Unk08074584 *p = sub_08074584();
+    const struct Unk08074584 *p = GetMapEventTable();
 
     if (p != 0 && p->unk14 != 0)
-        return sub_08074484(p->unk14, 0, 0);
+        return RunMapEventRecords(p->unk14, 0, 0);
 
     return 0;
 }
 
 u8 sub_08074460(void)
 {
-    const struct Unk08074584 *p = sub_08074584();
+    const struct Unk08074584 *p = GetMapEventTable();
 
     if (p != 0 && p->unk00 != 0)
-        return sub_08074484(p->unk00, 0, 0);
+        return RunMapEventRecords(p->unk00, 0, 0);
 
     return 0;
 }

@@ -13,14 +13,14 @@
 
 #include "proc.h"
 
-/* Breaks every proc running ProcScr_IntroT0. sub_08067504 is Proc_BreakEach
+/* Breaks every proc running ProcScr_IntroT0. Proc_BreakEachOpenCoded is Proc_BreakEach
  * open-coded over sProcArray rather than the proc tree; `pop {r0}; bx r0` makes
  * this void, so the call is a bare statement.
  */
 
 void IntroT3_0806A445(void)
 {
-    sub_08067504(ProcScr_IntroT0);
+    Proc_BreakEachOpenCoded(ProcScr_IntroT0);
 }
 
 asm(".global sub_0806A444\n.thumb_set sub_0806A444, IntroT3_0806A445\n");

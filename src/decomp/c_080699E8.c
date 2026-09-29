@@ -49,7 +49,7 @@ void IntroT3_IDLE_080699E9(struct Unk699E8Proc *proc)
     case 0x74:
         SetDispEnable(0, 0, 1, 0, 0);
         sub_08069924(1);
-        sub_08067898(0x100, 0x200, 0, proc);
+        StartIntroBgZoom(0x100, 0x200, 0, proc);
         break;
     case 0x9a:
         sub_08069924(0);

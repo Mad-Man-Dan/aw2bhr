@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08078240(void)
+void EndWorldMapReticle(void)
 {
     Proc_EndEach(gUnknown_086143E0);
 }
+asm(".global sub_08078240\n.thumb_set sub_08078240, EndWorldMapReticle\n");

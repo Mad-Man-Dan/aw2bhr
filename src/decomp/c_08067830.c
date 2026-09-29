@@ -30,7 +30,7 @@ struct Unk08067830Proc
     /* 0x60 */ s32 unk60;
 };
 
-void sub_08067830(struct Unk08067830Proc *proc)
+void IntroBgZoom_Loop(struct Unk08067830Proc *proc)
 {
     struct BgAffineSrcData src;
 
@@ -50,3 +50,4 @@ void sub_08067830(struct Unk08067830Proc *proc)
         BgAffineSet(&src, (struct BgAffineDstData *)gUnknown_030024D0, 1);
     }
 }
+asm(".global sub_08067830\n.thumb_set sub_08067830, IntroBgZoom_Loop\n");

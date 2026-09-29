@@ -28,7 +28,7 @@ void sub_0806F334(struct Unk806F334 *proc)
     gUnknown_0300251C.bits.priority = 3;
 
     sub_080670F8(gUnknown_085819E4);
-    sub_08072C40(0, 0, 0);
+    SetBgScrollShadow(0, 0, 0);
 
     gUnknown_030030A4.bits.win1_enable_bg0 = 1;
     gUnknown_030030A4.bits.win1_enable_bg1 = 1;

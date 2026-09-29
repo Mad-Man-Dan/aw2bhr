@@ -19,12 +19,12 @@
 
 
 /* Proc_Init is proc.h's own `void(void)`, so nothing flows from it into the
- * second call. sub_0806CC00 is `void(s32)` in src/title-screen.c -- upstream's
+ * second call. StartTitleScreen is `void(s32)` in src/title-screen.c -- upstream's
  * matching source, which must not be edited; the type is copied from there.
  */
 
 void sub_0806C78C(void)
 {
     Proc_Init();
-    sub_0806CC00(1);
+    StartTitleScreen(1);
 }

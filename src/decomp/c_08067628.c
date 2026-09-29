@@ -24,12 +24,12 @@ struct Unk67628Proc
  * immediate-offset form, hence the scratch register -- so +0x64 is s16 here
  * even though sub_08067554/sub_08067564 only ever store 0 and 1 into it.
  *
- * sub_0806CC00 is defined in src/title-screen.c, which is upstream's own
+ * StartTitleScreen is defined in src/title-screen.c, which is upstream's own
  * matching source and must not be edited; its prototype in
  * include/unknown-functions.h is the contract. */
 void IntroT0_08067629(struct Unk67628Proc *proc)
 {
-    sub_0806CC00(proc->unk64);
+    StartTitleScreen(proc->unk64);
 }
 
 asm(".global sub_08067628\n.thumb_set sub_08067628, IntroT0_08067629\n");

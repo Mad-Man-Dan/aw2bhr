@@ -9,11 +9,11 @@
 
 /* The removal half of a gUnknown_03001470 list pair: sub_0806D820 installs
  * gUnknown_08581F40 through sub_080152EC(script, 3) and this drops it
- * through sub_0806377C, which scans the 30 slots for the one whose .unk00
+ * through ClearCallbackOfSlotsRunningScript, which scans the 30 slots for the one whose .unk00
  * matches and ends it. `pop {r0}; bx r0`, so void.
  */
 
 void sub_0806D840(void)
 {
-    sub_0806377C(gUnknown_08581F40);
+    ClearCallbackOfSlotsRunningScript(gUnknown_08581F40);
 }

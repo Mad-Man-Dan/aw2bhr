@@ -13,7 +13,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The body of the ProcScr_WM_DrawDifficultyStars child sub_08075058 starts. The scale
+/* The body of the ProcScr_WM_DrawDifficultyStars child StartDifficultyStar starts. The scale
  * denominator is a single Interpolate ramp 8 -> 0x100 over 10 frames, and the
  * affine block is c_0807662C.c's zero-angle shape with the roles swapped: pa/pc
  * take the ramp and pb/pd the fixed 0x100. 0x100 is ONE constant in the source

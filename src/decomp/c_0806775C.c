@@ -28,7 +28,7 @@ struct Unk6775CProc
     /* 38 */ s32 unk38;
 };
 
-void sub_0806775C(int a, ProcPtr parent)
+void StartIntroBgJitter(int a, ProcPtr parent)
 {
     struct Unk6775CProc *proc = Proc_Start(ProcScr_IntroT3Child, parent);
 
@@ -37,3 +37,4 @@ void sub_0806775C(int a, ProcPtr parent)
     proc->unk30 = proc->unk2c[0];
     proc->unk34 = 2;
 }
+asm(".global sub_0806775C\n.thumb_set sub_0806775C, StartIntroBgJitter\n");

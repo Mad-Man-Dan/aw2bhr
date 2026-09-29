@@ -25,7 +25,7 @@
  * `unk00 + d` -- that reuse is what puts the inner value in the same register
  * the guard used, and it was the last 3 bytes. The first clamp arm is `+= d`,
  * not `= ox + d`: `+=` reuses the halfword CSE already holds. */
-int sub_08076CAC(s16 d)
+int MoveWorldMapCursorX(s16 d)
 {
     s16 ox = gUnknown_0202FDFC.unk04;
     s16 oy = gUnknown_0202FDFC.unk00;
@@ -59,16 +59,17 @@ int sub_08076CAC(s16 d)
 
     return 0;
 }
+asm(".global sub_08076CAC\n.thumb_set sub_08076CAC, MoveWorldMapCursorX\n");
 
-/* Wave 35 (W35-B). sub_08076CAC's Y axis. gUnknown_081CC594 is NOT a global:
+/* Wave 35 (W35-B). MoveWorldMapCursorX's Y axis. gUnknown_081CC594 is NOT a global:
  * the word at 0x081CC594 in baserom.gba holds 0x0202FDFC, so it is agbcc's
  * `-fforce-addr` address constant for &gUnknown_0202FDFC, one private copy per
- * function. See work/sub_08076CAC and docs/agbcc-codegen.md (wave 35, W35-B).
+ * function. See work/MoveWorldMapCursorX and docs/agbcc-codegen.md (wave 35, W35-B).
  *
  * Same shape as its X twin, with the vertical limits (0xEF, 0x4F, 0x6F, 0x5F,
  * 0x90) in place of the horizontal ones and the +0x06/+0x02 pair in place of
  * +0x04/+0x00. */
-int sub_08076D68(s16 d)
+int MoveWorldMapCursorY(s16 d)
 {
     s16 ox = gUnknown_0202FDFC.unk06;
     s16 oy = gUnknown_0202FDFC.unk02;
@@ -102,3 +103,4 @@ int sub_08076D68(s16 d)
 
     return 0;
 }
+asm(".global sub_08076D68\n.thumb_set sub_08076D68, MoveWorldMapCursorY\n");

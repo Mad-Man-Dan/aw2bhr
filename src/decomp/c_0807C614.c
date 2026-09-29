@@ -70,7 +70,7 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
     u16 clear[2];
 
     sub_0807898C(proc);
-    sub_08078AF0();
+    SyncAllBgTilemaps();
 
     gUnknown_0300251C.bits.tm_block = 0x1b;
 

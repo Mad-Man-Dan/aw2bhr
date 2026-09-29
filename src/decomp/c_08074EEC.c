@@ -9,7 +9,7 @@
 
 /* Pokes one halfword from the gUnknown_0861433C table into all five objects the
  * gUnknown_08614344 proc holds pointers to at +0x40. The proc is the one
- * sub_08074ED0 starts (it writes +0x54 and +0x58 of the same object).
+ * StartWorldMapScope starts (it writes +0x54 and +0x58 of the same object).
  *
  * The table element is re-`ldrh`d every iteration, which is why
  * gUnknown_0861433C must NOT be declared const: the `strh` goes through a
@@ -29,7 +29,7 @@ struct Unk8074EECProc
     /* 0x40 */ struct Unk8074EECSub * unk_40[5];
 };
 
-void sub_08074EEC(int index)
+void SetWorldMapScopePalette(int index)
 {
     struct Unk8074EECProc * proc = Proc_Find(gUnknown_08614344);
     int i;
@@ -37,3 +37,4 @@ void sub_08074EEC(int index)
     for (i = 0; i < 5; i++)
         proc->unk_40[i]->unk_22 = gUnknown_0861433C[index];
 }
+asm(".global sub_08074EEC\n.thumb_set sub_08074EEC, SetWorldMapScopePalette\n");

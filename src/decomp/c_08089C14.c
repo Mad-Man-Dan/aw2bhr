@@ -23,7 +23,7 @@ struct Unk08089F90
     s16 unk4C;
 };
 
-void sub_08089C14(struct Unk08089C14 *p)
+void CoDesignEditor_DrawPickerToConfirm(struct Unk08089C14 *p)
 {
     s32 i;
     s32 v;
@@ -102,11 +102,12 @@ void sub_08089C14(struct Unk08089C14 *p)
     else
     {
         gUnknown_03005908 = 2;
-        sub_080895E4((struct Unk080895E4Proc *)p);
+        CoDesignEditor_DrawConfirm((struct Unk080895E4Proc *)p);
     }
 }
+asm(".global sub_08089C14\n.thumb_set sub_08089C14, CoDesignEditor_DrawPickerToConfirm\n");
 
-void sub_08089F90(struct Unk08089F90 *p)
+void CoDesignEditor_DrawConfirmToPicker(struct Unk08089F90 *p)
 {
     s32 i;
     s32 v;
@@ -185,6 +186,7 @@ void sub_08089F90(struct Unk08089F90 *p)
     else
     {
         gUnknown_03005908 = 1;
-        sub_08089464(p);
+        CoDesignEditor_DrawPicker(p);
     }
 }
+asm(".global sub_08089F90\n.thumb_set sub_08089F90, CoDesignEditor_DrawConfirmToPicker\n");

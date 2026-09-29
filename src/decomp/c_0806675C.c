@@ -21,7 +21,7 @@ struct Unk66808Proc
 void sub_0806675C(struct Unk6675CProc *proc)
 {
     if (--proc->unk26 == 6)
-        sub_0806377C(gUnknown_08580D0C);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580D0C);
 
     if (proc->unk26 == 3)
     {
@@ -29,16 +29,16 @@ void sub_0806675C(struct Unk6675CProc *proc)
         {
             gUnknown_08580934->unk30 = 0;
             gUnknown_08580934->unk26 = 2;
-            sub_08063A00(gUnknown_08580AF0, sub_08065F78);
+            ForEachSlotRunningScript(gUnknown_08580AF0, ArmyColumn_StartExitUp);
             sub_080654E8();
-            sub_08064A44();
+            MatchSetupSpawnRuleOptions();
             return;
         }
 
         gUnknown_08580934->unk26 = 1;
-        sub_0806377C(gUnknown_08580AF0);
-        sub_0806377C(gUnknown_08580B90);
-        sub_0806377C(gUnknown_08580BC8);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580AF0);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580B90);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580BC8);
     }
 
     if (proc->unk26 < 0)
@@ -52,13 +52,13 @@ void sub_0806675C(struct Unk6675CProc *proc)
 void sub_08066808(struct Unk66808Proc *proc)
 {
     if (--proc->unk26 == 6)
-        sub_0806377C(gUnknown_08580D0C);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08580D0C);
 
     if (proc->unk26 == 3)
     {
         sub_0803B4DC(0x67);
         sub_080654E8();
-        sub_08064A44();
+        MatchSetupSpawnRuleOptions();
         gUnknown_08580934->unk30 = 0;
     }
 

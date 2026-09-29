@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08075304(void)
+void EndDifficultyStars(void)
 {
     Proc_EndEach(ProcScr_WM_MoveScope);
 }
+asm(".global sub_08075304\n.thumb_set sub_08075304, EndDifficultyStars\n");

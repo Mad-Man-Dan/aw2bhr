@@ -74,9 +74,9 @@ int ShopAvail_MapNotOwned(u32 id)
         return -1;
     return 1;
 }
+asm(".global sub_0803C3F4\n.thumb_set sub_0803C3F4, ShopAvail_MapNotOwned\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
-asm(".global sub_0803C3F4\n.thumb_set sub_0803C3F4, ShopAvail_MapNotOwned\n");
  * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
@@ -155,9 +155,9 @@ int ShopAvail_CoNeedsFlag24(u32 id)
         return 0;
     return 1;
 }
+asm(".global sub_0803C4B4\n.thumb_set sub_0803C4B4, ShopAvail_CoNeedsFlag24\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
-asm(".global sub_0803C4B4\n.thumb_set sub_0803C4B4, ShopAvail_CoNeedsFlag24\n");
  * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
@@ -170,9 +170,9 @@ int ShopAvail_CoNeedsFlag25(u32 id)
         return 0;
     return 1;
 }
+asm(".global sub_0803C4DC\n.thumb_set sub_0803C4DC, ShopAvail_CoNeedsFlag25\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
-asm(".global sub_0803C4DC\n.thumb_set sub_0803C4DC, ShopAvail_CoNeedsFlag25\n");
  * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
@@ -185,6 +185,7 @@ int ShopAvail_CoNeedsFlag26(u32 id)
         return 0;
     return 1;
 }
+asm(".global sub_0803C504\n.thumb_set sub_0803C504, ShopAvail_CoNeedsFlag26\n");
 
 /* The shared body behind ShopAvail_CoNeedsRank3 / ShopAvail_CoNeedsRank4 / ShopAvail_CoNeedsRank5, which
  * call it with n = 3, 4 and 5. Reads as "is this thing available at rank n":
@@ -217,6 +218,7 @@ int ShopAvail_CoNeedsRank(u32 id, int n)
 
     return 0;
 }
+asm(".global sub_0803C52C\n.thumb_set sub_0803C52C, ShopAvail_CoNeedsRank\n");
 
 /* `return ShopAvail_CoNeedsRank(id, 3);` -- the incoming r0 passes straight through as
  * the first argument and the constant goes in r1. The epilogue is
@@ -228,6 +230,7 @@ int ShopAvail_CoNeedsRank3(u32 id)
 {
     return ShopAvail_CoNeedsRank(id, 3);
 }
+asm(".global sub_0803C574\n.thumb_set sub_0803C574, ShopAvail_CoNeedsRank3\n");
 
 /* `return ShopAvail_CoNeedsRank(id, 4);` -- the incoming r0 passes straight through as
  * the first argument and the constant goes in r1. The epilogue is
@@ -239,6 +242,7 @@ int ShopAvail_CoNeedsRank4(u32 id)
 {
     return ShopAvail_CoNeedsRank(id, 4);
 }
+asm(".global sub_0803C580\n.thumb_set sub_0803C580, ShopAvail_CoNeedsRank4\n");
 
 /* `return ShopAvail_CoNeedsRank(id, 5);` -- the incoming r0 passes straight through as
  * the first argument and the constant goes in r1. The epilogue is
@@ -250,9 +254,9 @@ int ShopAvail_CoNeedsRank5(u32 id)
 {
     return ShopAvail_CoNeedsRank(id, 5);
 }
+asm(".global sub_0803C58C\n.thumb_set sub_0803C58C, ShopAvail_CoNeedsRank5\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
-asm(".global sub_0803C504\n.thumb_set sub_0803C504, ShopAvail_CoNeedsFlag26\n");
  * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */
@@ -265,13 +269,9 @@ int ShopAvail_CoNeedsFlag21(u32 id)
         return 0;
     return 1;
 }
+asm(".global sub_0803C598\n.thumb_set sub_0803C598, ShopAvail_CoNeedsFlag21\n");
 
 /* One of the 0x0803C354-0x0803C670 tri-state predicates: -1 (blocked),
-asm(".global sub_0803C598\n.thumb_set sub_0803C598, ShopAvail_CoNeedsFlag21\n");
-asm(".global sub_0803C58C\n.thumb_set sub_0803C58C, ShopAvail_CoNeedsRank5\n");
-asm(".global sub_0803C580\n.thumb_set sub_0803C580, ShopAvail_CoNeedsRank4\n");
-asm(".global sub_0803C574\n.thumb_set sub_0803C574, ShopAvail_CoNeedsRank3\n");
-asm(".global sub_0803C52C\n.thumb_set sub_0803C52C, ShopAvail_CoNeedsRank\n");
  * 1 (satisfied) or 0 (not yet). See the comment on sub_0803CA9C in
  * include/unknown-functions.h for why the bit readers return `u8`.
  */

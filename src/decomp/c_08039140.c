@@ -30,7 +30,7 @@
  *
  * DO NOT WIDEN PARAMETER 0. Wave 88 (W88-D) tested `int x` plus an explicit
  * `u16 a = (u16)x;` compensating cast -- the retype-plus-cast form that closed
- * sub_0807F57C in the same wave -- to buy the 2 bytes the `u16` costs the only
+ * BuildWarRoomCoSelectGroupList in the same wave -- to buy the 2 bytes the `u16` costs the only
  * caller. Result, by exit code: size-exact 72 bytes, 10 of 72 differ, and the
  * whole residual is a FOUR-INSTRUCTION BLOCK SWAP. A narrow PARAMETER's
  * conversion is emitted in the prologue insn group, ahead of every source

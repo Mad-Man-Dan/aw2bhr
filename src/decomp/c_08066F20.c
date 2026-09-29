@@ -7,7 +7,7 @@
  * sub_08066F20 @ 0x08066F20
  */
 
-void sub_08066F20(void)
+void MatchSetupShowHelpText(void)
 {
     u16 id;
 
@@ -42,3 +42,4 @@ void sub_08066F20(void)
         gUnknown_08580934->unk2e = id;
     }
 }
+asm(".global sub_08066F20\n.thumb_set sub_08066F20, MatchSetupShowHelpText\n");

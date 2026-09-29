@@ -32,5 +32,5 @@ void sub_0806C474(void)
     Decompress(gUnknown_081A23B4, (void *)0x06008000);
     Decompress(gUnknown_081A2854, (void *)0x0600F800);
 
-    sub_08072C40(3, 0, 0);
+    SetBgScrollShadow(3, 0, 0);
 }

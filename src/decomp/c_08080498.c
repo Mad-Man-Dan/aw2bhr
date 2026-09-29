@@ -39,5 +39,5 @@ void sub_08080498(struct Unk08080498 *proc)
     ApplyPalettes(gUnknown_08239DE4, 0x10, 1);
     proc->unk4c = 0;
     Proc_Start(gUnknown_086168BC, proc);
-    sub_08073574(0x200, 0x100, 0x180, 0x100, 2, 2);
+    StartBgWave(0x200, 0x100, 0x180, 0x100, 2, 2);
 }

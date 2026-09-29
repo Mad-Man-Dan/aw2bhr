@@ -20,14 +20,14 @@ void sub_08032B84(void)
 {
     REG_BG0HOFS = 0;
 
-    sub_08063980(0x50);
-    sub_080638D0((int)sub_08032BA4);
+    SetVCountCompareLine(0x50);
+    SetVCountInterruptHandler((int)sub_08032BA4);
 }
 
 void sub_08032BA4(void)
 {
     REG_BG0HOFS = gUnknown_03001FF8;
 
-    sub_08063980(0);
-    sub_080638D0((int)sub_08032B84);
+    SetVCountCompareLine(0);
+    SetVCountInterruptHandler((int)sub_08032B84);
 }

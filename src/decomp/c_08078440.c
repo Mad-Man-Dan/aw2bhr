@@ -20,15 +20,17 @@
  * what that reading does and does not prove. sub_08074AAC's first parameter was
  * retyped from `s32` to `const u8 *` on the same evidence. */
 
-void sub_08078440(ProcPtr parent)
+void WorldMapReturn_RevealMissions08To0A(ProcPtr parent)
 {
     sub_08074AAC(gUnknown_08615984, parent);
 }
+asm(".global sub_08078440\n.thumb_set sub_08078440, WorldMapReturn_RevealMissions08To0A\n");
 
-/* Family F006, the twin of sub_08078440 one list along. gUnknown_08615988 is
+/* Family F006, the twin of WorldMapReturn_RevealMissions08To0A one list along. gUnknown_08615988 is
  * {0x10, 0x11, 0x12, 0xff} in the ROM. */
 
-void sub_08078454(ProcPtr parent)
+void WorldMapReturn_RevealMissions10To12(ProcPtr parent)
 {
     sub_08074AAC(gUnknown_08615988, parent);
 }
+asm(".global sub_08078454\n.thumb_set sub_08078454, WorldMapReturn_RevealMissions10To12\n");

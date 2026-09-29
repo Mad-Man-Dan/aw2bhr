@@ -7,10 +7,11 @@
  * sub_08074584 @ 0x08074584, IsPlayer1CoPowerReady @ 0x08074598, HasPlayer1CoPowerCharge @ 0x080745A8
  */
 
-const struct Unk08074584 *sub_08074584(void)
+const struct Unk08074584 *GetMapEventTable(void)
 {
     return sub_08035000(gPlaySt.mapID)->dialogueHeader;
 }
+asm(".global sub_08074584\n.thumb_set sub_08074584, GetMapEventTable\n");
 
 /* The `lsls #0x18; lsrs #0x18` in front of the `pop` is THIS function's own u8
  * return narrowing, not a re-narrowing of IsCoPowerReady's -- agbcc emits the

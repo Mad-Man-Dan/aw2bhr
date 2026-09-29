@@ -14,7 +14,7 @@ void sub_08077118(void)
 {
     gUnknown_0202FDFC.unk10 = 0;
     AP_ClearAll();
-    sub_08074744();
+    EndWorldMapMarkerDrawer();
     Proc_EndEach(gUnknown_086143E0);
-    sub_080755E0();
+    EndWorldMapSelectionFrame();
 }

@@ -19,7 +19,7 @@ struct Unk8080BF0
     /* 58 */ int unk58;
 };
 
-void sub_08080BF0(struct Unk8080BF0 *proc)
+void SuperCoPowerName_ScatterOutLoop(struct Unk8080BF0 *proc)
 {
     int i;
 
@@ -47,10 +47,11 @@ void sub_08080BF0(struct Unk8080BF0 *proc)
     }
 
     if (proc->unk4c == 0x30)
-        sub_08080E40(proc);
+        StartSuperCoPowerWhiteFade(proc);
 
     if (proc->unk4c == 0x40)
         Proc_Break(proc);
 
     proc->unk4c++;
 }
+asm(".global sub_08080BF0\n.thumb_set sub_08080BF0, SuperCoPowerName_ScatterOutLoop\n");

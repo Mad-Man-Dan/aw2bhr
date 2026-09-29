@@ -17,7 +17,7 @@
 void CoDesignC1_08088005(ProcPtr proc)
 {
     gUnknown_03005908 = 0;
-    sub_0808A5C4();
+    CoDesignEditor_DrawHelpText();
     sub_0801A5B0(1);
     sub_0802D5CC(gUnknown_03005958[0], 8);
     sub_0808A47C();

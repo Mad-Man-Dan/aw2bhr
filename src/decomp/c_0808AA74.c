@@ -9,12 +9,14 @@
 
 #include "proc.h"
 
-void sub_0808AA74(void)
+void StartCampaignIntro(void)
 {
     Proc_Start(ProcScr_CampaignIntro, PROC_TREE_3);
 }
+asm(".global sub_0808AA74\n.thumb_set sub_0808AA74, StartCampaignIntro\n");
 
-int sub_0808AA88(void)
+int IsCampaignIntroRunning(void)
 {
     return Proc_Find(ProcScr_CampaignIntro) != 0;
 }
+asm(".global sub_0808AA88\n.thumb_set sub_0808AA88, IsCampaignIntroRunning\n");

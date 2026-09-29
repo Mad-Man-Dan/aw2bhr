@@ -7,7 +7,7 @@
  * sub_08065DAC @ 0x08065DAC
  */
 
-void sub_08065DAC(int a1, u16 a2, u8 a3)
+void MatchSetupCycleCo(int a1, u16 a2, u8 a3)
 {
     int v;
 
@@ -41,3 +41,4 @@ void sub_08065DAC(int a1, u16 a2, u8 a3)
         gUnknown_08580934->unk1c[a1] = v;
     }
 }
+asm(".global sub_08065DAC\n.thumb_set sub_08065DAC, MatchSetupCycleCo\n");

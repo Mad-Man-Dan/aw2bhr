@@ -108,10 +108,10 @@ void sub_08077304(struct Unk8077304Proc * proc)
     u32 d;
 
     gUnknown_0300064C = 0;
-    sub_08063980(0xa0);
-    sub_080638D0((int)sub_080771F0);
-    sub_08072C40(0, 0, 0);
-    sub_08072C40(2, 0, 0);
+    SetVCountCompareLine(0xa0);
+    SetVCountInterruptHandler((int)sub_080771F0);
+    SetBgScrollShadow(0, 0, 0);
+    SetBgScrollShadow(2, 0, 0);
 
     proc->unk34 = (s16)gUnknown_08615194[gUnknown_0202FDFC.unk0c].mapID;
     proc->unk2c = gUnknown_085C77A0[proc->unk34].unk18;

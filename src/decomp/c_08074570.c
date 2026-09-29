@@ -8,7 +8,7 @@
  */
 
 /* Walks an 8-byte-stride record array until the leading byte is 7 or 8, and
- * returns the record it stopped on -- its caller sub_08074484 does
+ * returns the record it stopped on -- its caller RunMapEventRecords does
  * `adds r4, r0, #0` right after the `bl`, which is what fixes the return.
  *
  * The `return p;` inside the loop is load-bearing and `break;` does NOT reach
@@ -21,7 +21,7 @@
  * `while (*p != 7 && *p != 8)` instead is worse still: GCC folds it to the
  * range test `(u8)(*p - 7) <= 1` and there is only one compare left. */
 
-u8 * sub_08074570(u8 * p)
+u8 * SkipToMapEventFireRecord(u8 * p)
 {
     while (*p != 7)
     {
@@ -33,3 +33,4 @@ u8 * sub_08074570(u8 * p)
 
     return p;
 }
+asm(".global sub_08074570\n.thumb_set sub_08074570, SkipToMapEventFireRecord\n");

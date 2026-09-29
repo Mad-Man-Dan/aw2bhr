@@ -57,12 +57,13 @@ extern struct ProcCmd ProcScr_TitlePressStartDraw[];
 extern struct ProcCmd ProcScr_TitleScreenSpriteDraw[];
 extern struct ProcCmd ProcScr_TitleScreen[];
 
-void sub_0806C9B4(struct ProcTitleScreen * proc)
+void TitleIntro_Init(struct ProcTitleScreen * proc)
 {
     proc->unk_2C = 2700;
 }
+asm(".global sub_0806C9B4\n.thumb_set sub_0806C9B4, TitleIntro_Init\n");
 
-void sub_0806C9C0(struct ProcTitleScreen * proc)
+void TitleIntro_WaitForInput(struct ProcTitleScreen * proc)
 {
     if (sub_0803B18C() == 1)
     {
@@ -85,14 +86,16 @@ void sub_0806C9C0(struct ProcTitleScreen * proc)
         Proc_GotoScript(proc, ProcScr_TitleToMainMenu);
     }
 }
+asm(".global sub_0806C9C0\n.thumb_set sub_0806C9C0, TitleIntro_WaitForInput\n");
 
-void sub_0806CA38(struct ProcTitleScreen * proc)
+void TitleIntro_StartFadeOut(struct ProcTitleScreen * proc)
 {
     ColFadeToBlack(-1);
     proc->unk_30 = 0x20;
 }
+asm(".global sub_0806CA38\n.thumb_set sub_0806CA38, TitleIntro_StartFadeOut\n");
 
-void sub_0806CA50(struct ProcTitleScreen * proc)
+void TitleIntro_FadeOutLoop(struct ProcTitleScreen * proc)
 {
     if (gGameClock & 1)
     {
@@ -110,16 +113,17 @@ void sub_0806CA50(struct ProcTitleScreen * proc)
         sub_0806A454();
     }
 }
+asm(".global sub_0806CA50\n.thumb_set sub_0806CA50, TitleIntro_FadeOutLoop\n");
 
 // clang-format off
 
 struct ProcCmd CONST_DATA ProcScr_TitleIntro[] =
 {
-    PROC_CALL(sub_0806C9B4),
-    PROC_REPEAT(sub_0806C9C0),
+    PROC_CALL(TitleIntro_Init),
+    PROC_REPEAT(TitleIntro_WaitForInput),
 
-    PROC_CALL(sub_0806CA38),
-    PROC_REPEAT(sub_0806CA50),
+    PROC_CALL(TitleIntro_StartFadeOut),
+    PROC_REPEAT(TitleIntro_FadeOutLoop),
 
     PROC_END,
 };
@@ -153,7 +157,7 @@ u32 CONST_DATA gUnknown_08581CB8[] =
 
 // clang-format on
 
-void sub_0806CA98(struct ProcTitleScreen * proc)
+void TitleScreen_Init(struct ProcTitleScreen * proc)
 {
     sub_08012C58(gUnknown_08581CB8);
 
@@ -174,7 +178,7 @@ void sub_0806CA98(struct ProcTitleScreen * proc)
     Decompress(Img_TitleScreenBg, (void *)0x06000000);
     Decompress(Img_0818DA8C, (void *)0x0600D800);
 
-    sub_0806CC64();
+    LoadTitleScreenSpriteGraphics();
 
     proc->unk_30 = 127;
 
@@ -182,12 +186,13 @@ void sub_0806CA98(struct ProcTitleScreen * proc)
 
     if (proc->unk_34 != 0)
     {
-        sub_08072C40(0, 0x40, 0);
+        SetBgScrollShadow(0, 0x40, 0);
         return;
     }
 
     Proc_Goto(proc, 0);
 }
+asm(".global sub_0806CA98\n.thumb_set sub_0806CA98, TitleScreen_Init\n");
 
 void sub_0806CB5C(struct ProcTitleScreen * proc)
 {
@@ -213,7 +218,7 @@ void sub_0806CBA8(struct ProcTitleScreen * proc)
 {
     if (proc->unk_30 >= 0)
     {
-        sub_08072C40(0, 64 - (proc->unk_30 >> 1), 0);
+        SetBgScrollShadow(0, 64 - (proc->unk_30 >> 1), 0);
 
         if ((proc->unk_30 & 3) == 2)
         {
@@ -240,7 +245,7 @@ struct ProcCmd CONST_DATA ProcScr_TitleScreen[] =
     PROC_YIELD,
     PROC_START_BUGGED(ProcScr_TitleIntro, 3),
 
-    PROC_CALL(sub_0806CA98),
+    PROC_CALL(TitleScreen_Init),
     PROC_REPEAT(sub_0806CB5C),
 
 PROC_LABEL(0),
@@ -252,7 +257,7 @@ PROC_LABEL(0),
 
 // clang-format on
 
-void sub_0806CC00(s32 arg0)
+void StartTitleScreen(s32 arg0)
 {
     ((struct UnkProc08581CF8 *)(Proc_Start(ProcScr_TitleScreen, PROC_TREE_3)))->unk_34 = arg0;
 
@@ -265,11 +270,13 @@ void sub_0806CC00(s32 arg0)
         gUnknown_0202F2C4 = 360;
     }
 }
+asm(".global sub_0806CC00\n.thumb_set sub_0806CC00, StartTitleScreen\n");
 
-bool8 sub_0806CC34(void)
+bool8 IsTitleScreenRunning(void)
 {
     return Proc_Exists(ProcScr_TitleScreen);
 }
+asm(".global sub_0806CC34\n.thumb_set sub_0806CC34, IsTitleScreenRunning\n");
 
 // clang-format off
 
@@ -296,10 +303,11 @@ void sub_0806CC4C(void)
     PutOamHi(40, 140, Sprite_08581D40, 0);
 }
 
-void sub_0806CC64(void)
+void LoadTitleScreenSpriteGraphics(void)
 {
     Decompress(Img_TitleScreenSprites, (void *)0x06010000);
 }
+asm(".global sub_0806CC64\n.thumb_set sub_0806CC64, LoadTitleScreenSpriteGraphics\n");
 
 // clang-format off
 

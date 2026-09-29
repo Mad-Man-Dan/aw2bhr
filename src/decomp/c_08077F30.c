@@ -25,7 +25,7 @@
  * call because they are callee-saved. */
 void sub_08077F30(void)
 {
-    sub_080638D0(0);
+    SetVCountInterruptHandler(0);
 
     gPlaySt.mapID = gUnknown_08615194[gUnknown_0202FDFC.unk0c].mapID;
 
@@ -33,8 +33,8 @@ void sub_08077F30(void)
         ? gUnknown_08615194[gUnknown_0202FDFC.unk0c].factoryScriptHc
         : gUnknown_08615194[gUnknown_0202FDFC.unk0c].factoryScriptNc;
 
-    sub_08074744();
-    sub_08074F1C();
-    sub_08075304();
-    sub_080755E0();
+    EndWorldMapMarkerDrawer();
+    EndWorldMapScope();
+    EndDifficultyStars();
+    EndWorldMapSelectionFrame();
 }

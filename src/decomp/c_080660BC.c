@@ -19,7 +19,7 @@
  * `index = idx` is also deliberate. A wide parameter used directly gets its
  * saved-register copy before the u16/u8 parameter conversions; a second local
  * pseudo emits the copy after both conversions, which is the ROM's prologue. */
-void sub_080660BC(u16 keys, int idx, u8 sfx)
+void MatchSetupCycleTeam(u16 keys, int idx, u8 sfx)
 {
     int index;
     int n;
@@ -85,3 +85,4 @@ void sub_080660BC(u16 keys, int idx, u8 sfx)
         }
     }
 }
+asm(".global sub_080660BC\n.thumb_set sub_080660BC, MatchSetupCycleTeam\n");

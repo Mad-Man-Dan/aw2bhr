@@ -7,11 +7,12 @@
  * sub_08085244 @ 0x08085244
  */
 
-void sub_08085244(s16 *p)
+void CoInfoScreen_DrawUnitBonusPage(s16 *p)
 {
     DrawOamObject(0x67, 0xBD, 0x98, 0, 1);
-    sub_08085708(p, p[0x33]);
-    sub_080853B0();
+    CoInfoScreen_DrawUnitBonusGrid(p, p[0x33]);
+    CoInfoScreen_DrawArmyIcons();
     sub_08043B60(0x78, 8, 0x82AC, 3);
     sub_0804402C(0x10D0, 0x18, 0x62B8, 5);
 }
+asm(".global sub_08085244\n.thumb_set sub_08085244, CoInfoScreen_DrawUnitBonusPage\n");

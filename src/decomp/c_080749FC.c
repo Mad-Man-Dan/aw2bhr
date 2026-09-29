@@ -32,5 +32,5 @@ void sub_080749FC(struct Unk8074AAC *proc)
     const u8 *p = proc->unk_2c;
     const struct Unk08615194 *r = &gUnknown_08615194[(s8)*p];
 
-    sub_08074C84(proc, r->flagX, r->flagY, 1);
+    StartWorldMapCameraPan(proc, r->flagX, r->flagY, 1);
 }

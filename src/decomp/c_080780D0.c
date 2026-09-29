@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_080780D0(void)
+void StartWorldMapAfterMission(void)
 {
     Proc_Start(gUnknown_08614894, PROC_TREE_3);
 }
+asm(".global sub_080780D0\n.thumb_set sub_080780D0, StartWorldMapAfterMission\n");

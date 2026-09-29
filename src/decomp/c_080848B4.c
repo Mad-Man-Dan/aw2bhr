@@ -14,7 +14,7 @@
  * `i - 0x8a` -- and strength reduction turns it into the `adds r1, #8` giv with
  * the pool word at addend 0. The loop is NOT reversed by check_dbra_loop
  * despite `i` surviving only in the exit test, because the early `return FALSE`
- * gives it two exits; sub_08084804 in the same block has one exit and IS
+ * gives it two exits; MainMenuCarousel_UpdateCompletionFlags in the same block has one exit and IS
  * reversed. */
 
 bool8 sub_080848B4(void)

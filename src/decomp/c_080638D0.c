@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_080638D0(int a1)
+void SetVCountInterruptHandler(int a1)
 {
     if (a1 != 0)
     {
@@ -23,8 +23,9 @@ void sub_080638D0(int a1)
         gUnknown_030020B4.bits.vcount_int_enable = 0;
     }
 }
+asm(".global sub_080638D0\n.thumb_set sub_080638D0, SetVCountInterruptHandler\n");
 
-void sub_08063928(int a1)
+void SetHBlankInterruptHandler(int a1)
 {
     if (a1 != 0)
     {
@@ -38,3 +39,4 @@ void sub_08063928(int a1)
         gUnknown_030020B4.bits.hblank_int_enable = 0;
     }
 }
+asm(".global sub_08063928\n.thumb_set sub_08063928, SetHBlankInterruptHandler\n");

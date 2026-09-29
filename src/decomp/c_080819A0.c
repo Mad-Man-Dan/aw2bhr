@@ -82,7 +82,7 @@ void MainMenuC2_IDLE_080819A1(struct Unk80819A0 *proc)
                   ((gUnknown_0861696C[DivRem(gUnknown_03005934 + 2, 6)] + 2) << 12) | 0xABC);
     }
 
-    ApplyPaletteExt(sub_08084864(gUnknown_0861696C[DivRem(gUnknown_03005934 + 2, 6)]), 0x300, 0x20);
+    ApplyPaletteExt(GetMainMenuTilePalette(gUnknown_0861696C[DivRem(gUnknown_03005934 + 2, 6)]), 0x300, 0x20);
 
     sub_08043C28(Interpolate(4, 0x78, 0, proc->unk4c, 8) + 0xb0, 0xa0, 0x1800, 4, 1);
 

@@ -14,7 +14,7 @@ struct Unk08080324Proc
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_08080324(struct Unk08080324Proc *proc)
+void SuperCoPowerScene_BgShakeLoop(struct Unk08080324Proc *proc)
 {
     if (proc->unk4c <= 3)
     {
@@ -54,3 +54,4 @@ void sub_08080324(struct Unk08080324Proc *proc)
 
     proc->unk4c++;
 }
+asm(".global sub_08080324\n.thumb_set sub_08080324, SuperCoPowerScene_BgShakeLoop\n");

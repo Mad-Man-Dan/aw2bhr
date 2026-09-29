@@ -9,13 +9,14 @@
 
 #include "proc.h"
 
-bool8 sub_08078198(void)
+bool8 IsAnyWorldMapProcRunning(void)
 {
     return (Proc_Find(gUnknown_086147FC) != NULL)
          | (Proc_Find(gUnknown_0861485C) != NULL)
          | (Proc_Find(gUnknown_08614894) != NULL)
          | (Proc_Find(gUnknown_08614614) != NULL);
 }
+asm(".global sub_08078198\n.thumb_set sub_08078198, IsAnyWorldMapProcRunning\n");
 
 /* "Does any of the 42 bytes of gUnknown_0202FDFC.unk12 have bit 1 set?" --
  * the any-of version of sub_080782C0's count. 0x2a is exactly unk12's length,
@@ -32,7 +33,7 @@ bool8 sub_08078198(void)
  * `lsls r0,#0x18; lsrs r0,#0x18` before its zero test, which is agbcc
  * re-narrowing a byte-returning callee and is what an s32 return cannot
  * produce. Re-verified byte-identical after the change. */
-bool8 sub_080781F0(void)
+bool8 IsAnyWorldMapMissionCleared(void)
 {
     s32 i;
 
@@ -44,3 +45,4 @@ bool8 sub_080781F0(void)
 
     return 0;
 }
+asm(".global sub_080781F0\n.thumb_set sub_080781F0, IsAnyWorldMapMissionCleared\n");

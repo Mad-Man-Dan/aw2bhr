@@ -45,7 +45,7 @@
  * hoisted (r4).  Writing the cast at the point of use reproduces that; a typed
  * local bound before the loop hoists and loses 4 bytes.
  *
- * The proc is sub_080737EC's, whose unk58 is the frame counter this resets.
+ * The proc is CircleWipe_Loop's, whose unk58 is the frame counter this resets.
  *
  * `movs #0x21; rsbs` is the single-bit bitfield tell (a scalar `&= ~0x20`
  * emits a bare `movs #0xdf`), and the bit is byte 1 of gDispIo.disp_ct, i.e.
@@ -61,7 +61,7 @@ struct Unk08073770Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_08073714(int a1)
+void BuildCircleWindowTable(int a1)
 {
     int x;
     int y;
@@ -94,6 +94,7 @@ void sub_08073714(int a1)
         y++;
     }
 }
+asm(".global sub_08073714\n.thumb_set sub_08073714, BuildCircleWindowTable\n");
 
 void sub_08073770(struct Unk08073770Proc *proc)
 {

@@ -33,7 +33,7 @@
  * ALL THIRTEEN affected functions verify byte-for-byte by exit code
  * (sub_0803C474/C48C/C4B4/C4DC/C504/C52C/C598/C5C0/C5E8, BuildUnlockedCoList,
  * sub_0803CA9C, IsCoUnlocked, and this one); proto_check is clean. Details in
- * work/sub_0807F57C/W88-notes.md.
+ * work/BuildWarRoomCoSelectGroupList/W88-notes.md.
  *
  * THE RULE: `(u8)f(x)` and an implicit u8 return emit the SAME narrowing, so a
  * wide declaration plus explicit casts is byte-neutral in both directions and
@@ -41,7 +41,7 @@
  * wave-59/73 claim that it cannot was about the implicit form only. Do not park
  * a residual as kind 5 before measuring the cast form.
  */
-void sub_0807F57C(void)
+void BuildWarRoomCoSelectGroupList(void)
 {
     int i;
     int k;
@@ -80,3 +80,4 @@ void sub_0807F57C(void)
         i++;
     }
 }
+asm(".global sub_0807F57C\n.thumb_set sub_0807F57C, BuildWarRoomCoSelectGroupList\n");

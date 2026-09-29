@@ -15,7 +15,7 @@
  * `stm r5!, {r0}` is `*dst++ = v`; the `lsls r4, #3` inside the loop is
  * `stride * 8` recomputed each pass. */
 
-void sub_08073D1C(u8 * src, u32 * dst, int stride)
+void ApplyBitmapTile(u8 * src, u32 * dst, int stride)
 {
     int i;
 
@@ -27,3 +27,4 @@ void sub_08073D1C(u8 * src, u32 * dst, int stride)
         src += stride * 8;
     }
 }
+asm(".global sub_08073D1C\n.thumb_set sub_08073D1C, ApplyBitmapTile\n");

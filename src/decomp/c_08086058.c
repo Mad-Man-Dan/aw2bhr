@@ -28,7 +28,7 @@
  * member has to be checked rather than copied: sub_0808606C really does take
  * the proc -- it opens `adds r4,r0,#0` and dereferences +0x30, +0x4e and +0x5c
  * -- so both calls receive it. sub_0808603C next door drives the same object
- * through sub_0808606C, sub_080860DC and sub_08086688 in a row.
+ * through sub_0808606C, MapSelectList_HandleInput and MapSelectList_DrawFrame in a row.
  *
  * Wave 44 (W44-C) retyped sub_0808606C's parameter to its own struct; ProcPtr
  * is `void *`, so the argument converts implicitly here and this stays
@@ -38,7 +38,7 @@
 void PutMapPropertiesPreview_IDLE_08086059(ProcPtr proc)
 {
     sub_0808606C(proc);
-    sub_08086688(proc);
+    MapSelectList_DrawFrame(proc);
 }
 
 asm(".global sub_08086058\n.thumb_set sub_08086058, PutMapPropertiesPreview_IDLE_08086059\n");

@@ -10,7 +10,7 @@
 /* F010: `push {lr}; ldr r0,=g1; bl S1; ldr r0,=g2; bl S2; pop {r0}; bx r0` --
  * two statements, each with its own pool word, result of each discarded.
  * src/decomp/c_08044924.c is the matched exemplar.
- * Sibling of sub_0806F2C0 and sub_080735D0. */
+ * Sibling of sub_0806F2C0 and EndBgWave. */
 #include "proc.h"
 
 void sub_080736D8(void)

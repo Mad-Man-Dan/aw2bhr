@@ -10,13 +10,14 @@
 /* Takes ONE argument that this body ignores, and the parameter is byte-neutral
  * here -- which is why it was first promoted `(void)`. The evidence is entirely
  * caller-side: InitGameSystems emits `movs r0, #0` immediately before its
- * `bl sub_08080F90`, with no other consumer of r0, and that instruction only
+ * `bl ResetMainMenuCarouselState`, with no other consumer of r0, and that instruction only
  * exists if an argument is being passed. Wave 27 briefly settled this the other
  * way from the definition and the merged-unit check rejected it. */
-void sub_08080F90(int a)
+void ResetMainMenuCarouselState(int a)
 {
     gUnknown_03005968 = 0;
     gUnknown_03005920 = 0;
     gUnknown_03005924 = 6;
     gUnknown_030058FC = 0;
 }
+asm(".global sub_08080F90\n.thumb_set sub_08080F90, ResetMainMenuCarouselState\n");

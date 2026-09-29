@@ -66,7 +66,7 @@ struct Unk73304Proc
     /* 0x68 */ u8 unk68;
 };
 
-ProcPtr sub_08073304(const void * src, void * dst, u16 a3, u16 a4, u16 a5,
+ProcPtr StartHeaderBanner(const void * src, void * dst, u16 a3, u16 a4, u16 a5,
                      u8 a6, int parent)
 {
     struct Unk73304Proc *proc;
@@ -91,3 +91,4 @@ ProcPtr sub_08073304(const void * src, void * dst, u16 a3, u16 a4, u16 a5,
 
     return proc;
 }
+asm(".global sub_08073304\n.thumb_set sub_08073304, StartHeaderBanner\n");

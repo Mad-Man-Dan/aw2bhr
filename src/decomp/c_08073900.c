@@ -14,9 +14,10 @@ struct Unk8073900
     /* 0x5c */ s32 unk_5c;
 };
 
-void sub_08073900(s32 arg)
+void StartCircleWipe(s32 arg)
 {
     struct Unk8073900 * proc = Proc_Start(gUnknown_086141B4, PROC_TREE_VSYNC);
 
     proc->unk_5c = arg;
 }
+asm(".global sub_08073900\n.thumb_set sub_08073900, StartCircleWipe\n");

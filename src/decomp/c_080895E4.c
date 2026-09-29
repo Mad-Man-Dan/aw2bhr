@@ -14,7 +14,7 @@ struct Unk080895E4Proc
     /* 0x48 */ u16 unk48;
 };
 
-void sub_080895E4(struct Unk080895E4Proc *proc)
+void CoDesignEditor_DrawConfirm(struct Unk080895E4Proc *proc)
 {
     int t;
     int scale;
@@ -79,3 +79,4 @@ void sub_080895E4(struct Unk080895E4Proc *proc)
 
     proc->unk48++;
 }
+asm(".global sub_080895E4\n.thumb_set sub_080895E4, CoDesignEditor_DrawConfirm\n");

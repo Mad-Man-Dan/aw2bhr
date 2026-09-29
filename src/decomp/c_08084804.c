@@ -28,7 +28,7 @@
  *     referenced on both sides of the loop's exit merge. Naming the global
  *     directly is the original spelling and the build places the word. */
 
-void sub_08084804(void)
+void MainMenuCarousel_UpdateCompletionFlags(void)
 {
     int i;
     int n;
@@ -49,3 +49,4 @@ void sub_08084804(void)
     if (n == 5)
         gUnknown_03000650[4] = 1;
 }
+asm(".global sub_08084804\n.thumb_set sub_08084804, MainMenuCarousel_UpdateCompletionFlags\n");

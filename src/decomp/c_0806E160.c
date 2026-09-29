@@ -7,8 +7,8 @@
  * sub_0806E160 @ 0x0806E160, sub_0806E17C @ 0x0806E17C
  */
 
-/* Family F054, the gUnknown_08581F7C twin of sub_080670A0 -- same shape, same
- * constants, different flag and script. See the note on sub_080670A0. */
+/* Family F054, the gUnknown_08581F7C twin of StartMatchSetupScreen -- same shape, same
+ * constants, different flag and script. See the note on StartMatchSetupScreen. */
 
 void sub_0806E160(void)
 {
@@ -17,7 +17,7 @@ void sub_0806E160(void)
 }
 
 /* Family F054, the mode-1 half of the sub_0806E160 pair. See the note on
- * sub_080670A0. */
+ * StartMatchSetupScreen. */
 
 void sub_0806E17C(void)
 {

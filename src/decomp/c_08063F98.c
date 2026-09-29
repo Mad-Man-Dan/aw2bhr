@@ -9,7 +9,7 @@
 
 /* A 4x3 fixed-point matrix: three rows of basis vectors plus a translation
  * row, elements in 20.12 (0x1000 == 1.0). The layout is proved by the matrix
- * multiply at sub_08063E28, which reserves exactly 0x30 bytes of stack for one
+ * multiply at MultiplyMatrix43, which reserves exactly 0x30 bytes of stack for one
  * of these and indexes the right-hand operand's columns at a stride of 0x0c.
  */
 struct Mtx43 /* 0x30 */
@@ -21,7 +21,7 @@ struct Mtx43 /* 0x30 */
  * m[0][0], m[1][1] and m[2][2] under the 0x0c row stride -- the cleanest
  * confirmation of the layout available.
  */
-void sub_08063F98(struct Mtx43 *mtx)
+void LoadIdentityMatrix43(struct Mtx43 *mtx)
 {
     mtx->m[0][0] = 0x1000;
     mtx->m[0][1] = 0;
@@ -36,6 +36,7 @@ void sub_08063F98(struct Mtx43 *mtx)
     mtx->m[3][1] = 0;
     mtx->m[3][2] = 0;
 }
+asm(".global sub_08063F98\n.thumb_set sub_08063F98, LoadIdentityMatrix43\n");
 
 /* Copy a matrix. This must be written out element by element: `*dst = *src` on
  * a 0x30-byte struct compiles to four `ldmia`/`stmia` pairs through r2-r4 and
@@ -43,7 +44,7 @@ void sub_08063F98(struct Mtx43 *mtx)
  * ldr/str shape is the element-wise source, exactly as the "8-byte struct
  * assignment" note in docs/agbcc-codegen.md predicts for the small case.
  */
-void sub_08063FB8(struct Mtx43 *src, struct Mtx43 *dst)
+void CopyMatrix43(struct Mtx43 *src, struct Mtx43 *dst)
 {
     dst->m[0][0] = src->m[0][0];
     dst->m[0][1] = src->m[0][1];
@@ -58,3 +59,4 @@ void sub_08063FB8(struct Mtx43 *src, struct Mtx43 *dst)
     dst->m[3][1] = src->m[3][1];
     dst->m[3][2] = src->m[3][2];
 }
+asm(".global sub_08063FB8\n.thumb_set sub_08063FB8, CopyMatrix43\n");

@@ -23,10 +23,11 @@
  * &gPlaySt -- the ROM word the splitter calls gUnknown_081D93F8,
  * which dereferences to 0x03003FC0. */
 
-void sub_080853B0(void)
+void CoInfoScreen_DrawArmyIcons(void)
 {
     int i;
 
     for (i = 0; i < (gPlaySt.gameMode == 2 ? sub_0802490C(gPlaySt.mapID) : GetLoadedMapArmyCount()); i++)
         DrawOamObject(gPlayers[i + 1].teamColor + 0x3d, i * 24 + 0x10, 8, 0, 1);
 }
+asm(".global sub_080853B0\n.thumb_set sub_080853B0, CoInfoScreen_DrawArmyIcons\n");

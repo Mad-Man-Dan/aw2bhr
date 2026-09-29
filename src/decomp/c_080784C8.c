@@ -13,8 +13,9 @@
  * predicate, same break. See the note there on why sub_08019850 takes no
  * argument despite the untouched r0. */
 
-void sub_080784C8(ProcPtr proc)
+void BlockingCoSpeech_Wait(ProcPtr proc)
 {
     if (sub_08019850() == 0)
         Proc_Break(proc);
 }
+asm(".global sub_080784C8\n.thumb_set sub_080784C8, BlockingCoSpeech_Wait\n");

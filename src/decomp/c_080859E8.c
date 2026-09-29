@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-void sub_080859E8(ProcPtr proc)
+void CoInfoPopup_SlideInLoop(ProcPtr proc)
 {
     DrawOamObject(0x92,
                  Interpolate(4, 0xF0, 0x38, ((s16 *)proc)[0x32]++, 8) & 0x1FF,
@@ -21,8 +21,9 @@ void sub_080859E8(ProcPtr proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080859E8\n.thumb_set sub_080859E8, CoInfoPopup_SlideInLoop\n");
 
-void sub_08085A38(ProcPtr proc)
+void CoInfoPopup_SlideOutLoop(ProcPtr proc)
 {
     DrawOamObject(0x92,
                  Interpolate(1, 0x38, -0x80, ((s16 *)proc)[0x32]++, 8) & 0x1FF,
@@ -34,3 +35,4 @@ void sub_08085A38(ProcPtr proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08085A38\n.thumb_set sub_08085A38, CoInfoPopup_SlideOutLoop\n");

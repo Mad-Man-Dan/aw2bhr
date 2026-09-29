@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* Screen setup, and the near-twin of sub_0806D944 for its first two thirds.
+/* Screen setup, and the near-twin of RulesScreen_Init for its first two thirds.
  *
  * The eleven BlendCnt field writes come out as exactly two `ldrb`/`strb`
  * pairs, one per container byte, because agbcc forwards each store into the
@@ -24,7 +24,7 @@
  * can only be the first call's result.
  */
 
-void sub_08065990(void)
+void MatchSetupScreen_Init(void)
 {
     sub_080366D0(DefaultVBlankCallback);
     sub_080366C4(DefaultMainLoopCallback);
@@ -70,7 +70,7 @@ void sub_08065990(void)
     sub_0801A444(0, 0x10, 0x1e, 4);
     sub_0802D5CC(0, 3);
     Decompress(sub_0801F49C(), (void *)0x06015200);
-    sub_0806574C();
+    MatchSetupInitState();
     sub_080152EC(gUnknown_08580CB4, 3);
     sub_0801F114();
 
@@ -133,7 +133,8 @@ void sub_08065990(void)
     sub_080152EC(gUnknown_08580CC4, 3);
     gUnknown_08580934->unk30 = 0;
     gpKeySt->pressed = L_BUTTON;
-    sub_08065238();
+    MatchSetupSpawnArmyColumns();
     gUnknown_08580934->unk30 = 1;
     gpKeySt->pressed = 0;
 }
+asm(".global sub_08065990\n.thumb_set sub_08065990, MatchSetupScreen_Init\n");

@@ -17,10 +17,10 @@
  * sub_080149C0 is 1 when the map's bit in gUnknown_02028030.unk30 (tested by
  * sub_0803CB24) is clear.
  *
- * In game mode 2 the rows start at top + 5 and sub_08087548 draws the rest of
+ * In game mode 2 the rows start at top + 5 and DrawWarRoomRanks draws the rest of
  * the screen. Otherwise a header from gUnknown_08499CE4 goes on row 5, the rows
  * start at top + 9, and the count is clamped to the list's length
- * (unk37 + 1). sub_08086BF8 is the same list drawn two rows at most.
+ * (unk37 + 1). DrawMapListFirstTwoRows is the same list drawn two rows at most.
  *
  * Measured spelling notes:
  * - The entries are read through the struct's own member array,
@@ -78,7 +78,7 @@ void DrawMapList(int first, int count, int top)
             }
         }
 
-        sub_08087548(first, count, top);
+        DrawWarRoomRanks(first, count, top);
     }
     else
     {

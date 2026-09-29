@@ -13,16 +13,18 @@
  * The load of gUnknown_03005970 could not survive -O2 if it fed nothing, so
  * the parameter is real however unused; see unknown-functions.h. */
 
-void sub_08080EE4(void)
+void SuperCoPowerScene_PlayMusic(void)
 {
     sub_08043E18(gUnknown_03005970);
 }
+asm(".global sub_08080EE4\n.thumb_set sub_08080EE4, SuperCoPowerScene_PlayMusic\n");
 
-/* Family F031, the twin of sub_08080EE4 -- same global, sibling callee. Like
+/* Family F031, the twin of SuperCoPowerScene_PlayMusic -- same global, sibling callee. Like
  * sub_08043E18, sub_08043DF4 never reads its parameter; see the note on both
  * in include/unknown-functions.h. */
 
-void sub_08080EF8(void)
+void CoPowerScene_PlayMusic(void)
 {
     sub_08043DF4(gUnknown_03005970);
 }
+asm(".global sub_08080EF8\n.thumb_set sub_08080EF8, CoPowerScene_PlayMusic\n");

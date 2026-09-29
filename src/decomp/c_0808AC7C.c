@@ -99,8 +99,8 @@
  * i.e. a timer-stop store that does not go through gUnknown_03000F78. Whether
  * the ROM even had one is unknown; the data_refs list offers no other pointer.
  *
- * NOTE the three-local address/value/read lever that closed sub_0807FF78,
- * sub_0807FFF0 and sub_08085F94 in wave 34 does NOT apply here: this function's
+ * NOTE the three-local address/value/read lever that closed CoPowerScreenBlend_FadeInLoop,
+ * CoPowerScreenBlend_FadeOutLoop and sub_08085F94 in wave 34 does NOT apply here: this function's
  * `mov r8, r0` already shows the address bound to a local, and the residual is
  * about a CSE of an offset expression rather than about which pseudo wins a
  * callee-saved register. */

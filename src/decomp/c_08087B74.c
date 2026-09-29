@@ -10,7 +10,7 @@
 #include "proc.h"
 /* Redraws the roster row for the unit list at gUnknown_02027F74.unk04[a]:
  * uploads each unit's tile blob into OBJ VRAM and, for the ones IsCampaignMapUnlocked
- * rejects, overwrites their 16-colour palette. The twin of sub_08087C14, which
+ * rejects, overwrites their 16-colour palette. The twin of LoadMapRecordMinimugs, which
  * reaches the same byte through the overlapping gUnknown_02027F78 extern.
  *
  * THE `+ 1` AND THE TABLE HOIST ARE ONE FACT, and wave 44 parked this function
@@ -63,7 +63,7 @@ struct Unk08087B74Proc
  *
  * src/decomp/c_08087B60.c already read this function's shape from its caller:
  * `a` is an INT used as an offset into a global's address, and it is stashed at
- * +0x54 of the proc found by script. This is the twin of sub_08087B74, which
+ * +0x54 of the proc found by script. This is the twin of LoadEnemyCoMinimugs, which
  * reaches the same byte as gUnknown_02027F74.unk04[a] instead -- the two symbols
  * overlap (0x02027F78 == gUnknown_02027F74 + 4) and each function names the one
  * its own CLEAN pool word records: `.4byte gUnknown_02027F78` here against
@@ -92,7 +92,7 @@ struct Unk08087C14Proc
     /* 0x54 */ int unk54;
 };
 
-void sub_08087B74(int a)
+void LoadEnemyCoMinimugs(int a)
 {
     struct Unk08087B74Proc *proc;
     u8 *tbl;
@@ -120,8 +120,9 @@ void sub_08087B74(int a)
         }
     }
 }
+asm(".global sub_08087B74\n.thumb_set sub_08087B74, LoadEnemyCoMinimugs\n");
 
-void sub_08087C14(int a)
+void LoadMapRecordMinimugs(int a)
 {
     struct Unk08087C14Proc *proc;
     int i;
@@ -141,3 +142,4 @@ void sub_08087C14(int a)
         }
     }
 }
+asm(".global sub_08087C14\n.thumb_set sub_08087C14, LoadMapRecordMinimugs\n");

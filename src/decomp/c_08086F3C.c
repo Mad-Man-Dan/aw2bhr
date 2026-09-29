@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08086F3C(int a1)
+void BuildMapSelectPreviewNow(int a1)
 {
     u8 *p;
     int i, j, k;
@@ -41,3 +41,4 @@ void sub_08086F3C(int a1)
     }
     sub_08013AFC();
 }
+asm(".global sub_08086F3C\n.thumb_set sub_08086F3C, BuildMapSelectPreviewNow\n");

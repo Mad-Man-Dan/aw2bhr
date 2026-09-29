@@ -14,7 +14,8 @@ struct Vec3 /* 0x0c */
     /* 0x08 */ s32 z;
 };
 
-s32 sub_080640C8(struct Vec3 *a, struct Vec3 *b)
+s32 DotProductVec3(struct Vec3 *a, struct Vec3 *b)
 {
     return (a->x * b->x + a->y * b->y + a->z * b->z) >> 12;
 }
+asm(".global sub_080640C8\n.thumb_set sub_080640C8, DotProductVec3\n");

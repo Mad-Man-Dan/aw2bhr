@@ -16,7 +16,7 @@
  * increment past the inner loop because the row base is computed from the
  * pre-increment value. */
 
-void sub_08073D64(u16 * tm, int tileref, int width, int height)
+void PutAppliedBitmap(u16 * tm, int tileref, int width, int height)
 {
     int ix, iy;
 
@@ -24,3 +24,4 @@ void sub_08073D64(u16 * tm, int tileref, int width, int height)
         for (ix = 0; ix < width; ix++)
             tm[iy * 0x20 + ix] = tileref++;
 }
+asm(".global sub_08073D64\n.thumb_set sub_08073D64, PutAppliedBitmap\n");

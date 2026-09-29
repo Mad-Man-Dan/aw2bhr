@@ -40,7 +40,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     u16 clear[2];
 
     sub_0807898C(proc);
-    sub_08078AF0();
+    SyncAllBgTilemaps();
 
     sub_0801F114();
     sub_0801F150(2, (void *)0x06010000, 0xf0, 0x14);
@@ -71,7 +71,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
         gUnknown_03005928 = 7;
         sub_080375A4(2);
         sub_08086A58(gUnknown_03005900, gUnknown_03005928, 0);
-        sub_08086F3C(gUnknown_03005900 + gUnknown_03005930);
+        BuildMapSelectPreviewNow(gUnknown_03005900 + gUnknown_03005930);
     }
     else
     {
@@ -86,7 +86,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
         }
 
         sub_08086A58(gUnknown_03005990[gUnknown_0300596C], gUnknown_03005928, 0);
-        sub_08086F3C(gUnknown_03005990[gUnknown_0300596C] + gUnknown_03005980);
+        BuildMapSelectPreviewNow(gUnknown_03005990[gUnknown_0300596C] + gUnknown_03005980);
     }
 
     gUnknown_0300251C.bits.tm_block = 0x1b;
@@ -97,7 +97,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
 
     sub_08078D80(proc);
 
-    sub_08073304(gUnknown_085802CC, gUnknown_0200FC50, 0, 0, 1, 1, (int)proc);
+    StartHeaderBanner(gUnknown_085802CC, gUnknown_0200FC50, 0, 0, 1, 1, (int)proc);
 
     sub_0802D5A0((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 0);
 
@@ -157,7 +157,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     }
     gUnknown_03002F18 = sub_08087298();
 
-    sub_08085F40();
+    MapSelect_SetBlend();
 
     PlayMusic(0x190);
 

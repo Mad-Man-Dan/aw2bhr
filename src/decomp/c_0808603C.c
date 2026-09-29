@@ -23,8 +23,8 @@
 void PutMapPropertiesPreview_IDLE_0808603D(ProcPtr proc)
 {
     sub_0808606C(proc);
-    sub_080860DC(proc);
-    sub_08086688(proc);
+    MapSelectList_HandleInput(proc);
+    MapSelectList_DrawFrame(proc);
 }
 
 asm(".global sub_0808603C\n.thumb_set sub_0808603C, PutMapPropertiesPreview_IDLE_0808603D\n");

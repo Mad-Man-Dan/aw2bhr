@@ -12,7 +12,7 @@
  */
 
 /* The opening line of src/decomp/c_080688E4.c on its own:
- * proc->unk2c = sub_080674F4(gUnknown_0202F204++). The post-increment is on a
+ * proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++). The post-increment is on a
  * u8 global, so the lsls #0x18; lsrs #0x18 after the strb is the argument's
  * own truncation and not a cast at the call. */
 struct Unk688A8Proc
@@ -23,7 +23,7 @@ struct Unk688A8Proc
 #include "proc.h"
 /* The countdown half of the pair IntroT3_080688A9 arms: tick unk2c down and break
  * once it reaches 0. int from the ldr/str, matching IntroT3_080688A9's own store
- * of sub_080674F4's int result.
+ * of GetIntroSceneDuration's int result.
  *
  * The unconditional b over the Proc_Break arm is the if/else -- the ROM tests
  * != 0 and falls into the decrement, so the break is the else. */
@@ -35,7 +35,7 @@ struct Unk688C8Proc
 
 void IntroT3_080688A9(struct Unk688A8Proc *proc)
 {
-    proc->unk2c = sub_080674F4(gUnknown_0202F204++);
+    proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
 }
 
 void IntroT3_IDLE_080688C9(struct Unk688C8Proc *proc)

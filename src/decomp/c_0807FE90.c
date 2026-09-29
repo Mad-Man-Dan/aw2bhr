@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_0807FE90(void)
+void CoPowerScreenBlend_Init(void)
 {
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 0;
@@ -27,3 +27,4 @@ void sub_0807FE90(void)
     ApplyPalettes(gUnknown_080A36C8, 8, 1);
     sub_08013AEC();
 }
+asm(".global sub_0807FE90\n.thumb_set sub_0807FE90, CoPowerScreenBlend_Init\n");

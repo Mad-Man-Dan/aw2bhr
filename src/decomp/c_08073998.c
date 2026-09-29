@@ -23,7 +23,7 @@
  * gUnknown_0202FDE0 is re-loaded from the global inside the loop because
  * sub_08073974 may store through it; only the address is hoisted (r8). */
 
-void sub_08073998(int x1, int y1, int x2, int y2, int c)
+void DrawWipeEdgeLine(int x1, int y1, int x2, int y2, int c)
 {
     int slope;
     int x;
@@ -57,3 +57,4 @@ void sub_08073998(int x1, int y1, int x2, int y2, int c)
         x += slope;
     }
 }
+asm(".global sub_08073998\n.thumb_set sub_08073998, DrawWipeEdgeLine\n");

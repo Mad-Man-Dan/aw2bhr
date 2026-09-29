@@ -75,7 +75,7 @@ void CoDesignC2_08088045(struct Unk08088044 *proc)
     for (i = 0; i < 5; i++)
         gUnknown_03005978[i] = 0;
 
-    sub_08073304(gUnknown_085802C0, gUnknown_0200FC50, 0x27c, 9, 0, 0, (int)proc);
+    StartHeaderBanner(gUnknown_085802C0, gUnknown_0200FC50, 0x27c, 9, 0, 0, (int)proc);
 }
 
 void CoDesignC2_IDLE_080880BD(struct Unk80880BC * proc)

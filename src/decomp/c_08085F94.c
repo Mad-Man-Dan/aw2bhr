@@ -14,7 +14,7 @@
 
 /* MATCHED wave 34, W34-E.
  *
- * Fills in the map/unit cursor pane's proc and hands it to sub_08087104,
+ * Fills in the map/unit cursor pane's proc and hands it to UpdateMapSelectPropertyCounts,
  * choosing between the gUnknown_03005900/30 pair and the
  * gUnknown_03005990[gUnknown_0300596C]/80 pair on `gUnknown_081D940C->unk01
  * == 2`. That choice is already described from the other side on the
@@ -88,14 +88,14 @@ void PutMapPropertiesPreview_08085F95(struct Unk8085F94Proc *proc)
     proc->unk2c = 0x14;
     proc->unk4c = 0;
 
-    sub_08087104(proc);
+    UpdateMapSelectPropertyCounts(proc);
 
     if ((*pp)->unk01 == 2)
     {
-        sub_08087884(proc->unk58, proc);
+        StartEnemyCoMinimugs(proc->unk58, proc);
 
         if (gUnknown_0200C420.unk0c != 0)
-            sub_08087974(proc->unk58, proc);
+            ToggleMapRecordsPanel(proc->unk58, proc);
     }
 }
 

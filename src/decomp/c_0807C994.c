@@ -119,7 +119,7 @@ void CoSelect_0807C9ED(struct Unk0807C9EC *proc)
             gUnknown_03005950[i] = 0;
     }
 
-    sub_08073304(gUnknown_085802D8 + 0xC, gUnknown_0200FC50, 0x2DC, 0xB, 0, 1, (int)proc);
+    StartHeaderBanner(gUnknown_085802D8 + 0xC, gUnknown_0200FC50, 0x2DC, 0xB, 0, 1, (int)proc);
 }
 
 void CoSelect_IDLE_0807CAFD(struct Unk807CAFC * proc)

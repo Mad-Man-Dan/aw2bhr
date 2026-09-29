@@ -47,7 +47,7 @@ u8 sub_08078E20(void)
 void sub_08078E48(ProcPtr proc)
 {
     sub_0807898C(proc);
-    sub_08078AF0();
+    SyncAllBgTilemaps();
     gDispIo.disp_ct.bg1_enable = 0;
     sub_08013B0C();
     sub_0801A5B0(sub_0807A908());

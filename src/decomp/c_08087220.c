@@ -7,7 +7,8 @@
  * sub_08087220 @ 0x08087220
  */
 
-void sub_08087220(int a, int b)
+void MapSelectList_DrawRowCursor(int a, int b)
 {
     PutSprite(1, 0x1FE, b + a * 16, gUnknown_08615C4E, 0x5470);
 }
+asm(".global sub_08087220\n.thumb_set sub_08087220, MapSelectList_DrawRowCursor\n");

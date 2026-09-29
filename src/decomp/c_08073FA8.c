@@ -8,9 +8,9 @@
  */
 
 #include "proc.h"
-/* The per-frame step of the proc sub_08073FF4 starts: four channels, each a
+/* The per-frame step of the proc StartBgScrollAnimator starts: four channels, each a
  * 16.8 position pair at +0x30 stepped by a velocity pair at +0x40, gated by
- * one bit of the +0x2c mask. The value handed to sub_08072C40 is the
+ * one bit of the +0x2c mask. The value handed to SetBgScrollShadow is the
  * position's integer part narrowed to a signed byte and then widened again
  * for that function's u16 parameters.
  *
@@ -43,7 +43,7 @@ struct Unk73FA8Proc
  * One induction variable serves both arrays: the ROM walks r1 from
  * proc + 0x30 and reaches the second array with the displacement 0x10, which
  * is what two 8-entry u16 arrays at 0x30 and 0x40 compile to. The source
- * pointer is stepped independently. sub_08073FA8 reads the same 0x30/0x40
+ * pointer is stepped independently. BgScrollAnimator_Loop reads the same 0x30/0x40
  * bytes as four PAIRS of halfwords; both readings describe the same memory
  * and each function is spelled the way its own accesses read out. */
 
@@ -56,7 +56,7 @@ struct Unk73FF4Proc
     /* 40 */ u16 unk40[8];
 };
 
-void sub_08073FA8(struct Unk73FA8Proc * proc)
+void BgScrollAnimator_Loop(struct Unk73FA8Proc * proc)
 {
     int i;
     int mask;
@@ -70,12 +70,13 @@ void sub_08073FA8(struct Unk73FA8Proc * proc)
             proc->pos[i].x += proc->vel[i].x;
             proc->pos[i].y += proc->vel[i].y;
 
-            sub_08072C40(i, (s8)(proc->pos[i].x >> 8), (s8)(proc->pos[i].y >> 8));
+            SetBgScrollShadow(i, (s8)(proc->pos[i].x >> 8), (s8)(proc->pos[i].y >> 8));
         }
     }
 }
+asm(".global sub_08073FA8\n.thumb_set sub_08073FA8, BgScrollAnimator_Loop\n");
 
-void sub_08073FF4(int a, const void * src, ProcPtr parent)
+void StartBgScrollAnimator(int a, const void * src, ProcPtr parent)
 {
     struct Unk73FF4Proc * proc = Proc_Start(gUnknown_08614220, parent);
     const u16 * in = src;
@@ -89,3 +90,4 @@ void sub_08073FF4(int a, const void * src, ProcPtr parent)
         proc->unk40[i] = in[i];
     }
 }
+asm(".global sub_08073FF4\n.thumb_set sub_08073FF4, StartBgScrollAnimator\n");

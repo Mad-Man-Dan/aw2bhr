@@ -28,7 +28,7 @@
  * 16-bit and drops the extension -- 8 bytes across the two coordinates.
  *
  * +0x2e and +0x30 are u16 HERE, where the promoted c_08075368.c calls them s16:
- * this function reads them straight back for sub_08072C40's u16 parameters and
+ * this function reads them straight back for SetBgScrollShadow's u16 parameters and
  * the ROM uses plain `ldrh`, which an s16 field cannot produce. The paired
  * stores are chained assignments -- `p->unk2a = p->unk2e = v` evaluates the
  * inner one first, which is what puts +0x2e ahead of +0x2a.
@@ -73,7 +73,7 @@ void sub_0807548C(s16 a1, s16 a2, int a3, ProcPtr parent)
     proc->unk38 = a3;
     proc->unk3c = 0;
 
-    sub_08072C40(1, proc->unk2e, proc->unk30);
+    SetBgScrollShadow(1, proc->unk2e, proc->unk30);
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 0xC;

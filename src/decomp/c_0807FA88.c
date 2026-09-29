@@ -16,10 +16,11 @@ struct Unk0807FA88
     /* 0x58 */ int unk58;
 };
 
-void sub_0807FA88(struct Unk0807FA88 *proc)
+void CoPowerNameBanner_Init(struct Unk0807FA88 *proc)
 {
-    proc->unk58 = sub_0807F8FC(
+    proc->unk58 = LoadCoPowerNameLetters(
         gTextTable[gUnknown_085D3DD0[gUnknown_03005970].power[gUnknown_03005904].powerNameId],
         gUnknown_08616750, proc);
     proc->unk4c = 0;
 }
+asm(".global sub_0807FA88\n.thumb_set sub_0807FA88, CoPowerNameBanner_Init\n");

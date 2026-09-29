@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08067A3C(void)
+void EndIntroBgAffineTween(void)
 {
     Proc_EndEach(gUnknown_08581014);
 }
+asm(".global sub_08067A3C\n.thumb_set sub_08067A3C, EndIntroBgAffineTween\n");

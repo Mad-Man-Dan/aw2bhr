@@ -44,7 +44,7 @@
  * use. That is four instructions per coordinate. Written as an `int` holding
  * `(s16)expr` the narrowing IS the sign extension: it happens once, at the
  * assignment, and lands straight in the argument register. The cast is pinned
- * to the ASSIGNMENT rather than to the call site by sub_08075058's third and
+ * to the ASSIGNMENT rather than to the call site by StartDifficultyStar's third and
  * fourth parameters being `int` -- nothing re-narrows after the merge.
  *
  * Each coordinate is a TWO-ARMED if, not a compound assignment. The x pair
@@ -114,7 +114,7 @@ void WM_MoveScope_IDLE_0807519D(struct Unk807519C *proc)
             }
 
             proc->unk3c[proc->unk30] =
-                sub_08075058(proc, n, x, y, proc->unk38);
+                StartDifficultyStar(proc, n, x, y, proc->unk38);
             proc->unk30++;
         }
     }

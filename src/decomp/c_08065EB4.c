@@ -14,10 +14,11 @@
  * matter, and `ldrsb` for `unk32 / 2`, where it does. Reading the pair as two
  * different fields is the trap. `lsrs #0x1f; adds; asrs #1` is the signed
  * divide-by-2 correction, not a shift in the source. */
-void sub_08065EB4(void)
+void MatchSetupChangeSelectedValue(void)
 {
     if (gUnknown_08580934->unk32 & 1)
-        sub_08065D20();
+        MatchSetupToggleController();
     else
-        sub_08065DAC(gUnknown_08580934->unk32 / 2, gpKeySt->repeated, 1);
+        MatchSetupCycleCo(gUnknown_08580934->unk32 / 2, gpKeySt->repeated, 1);
 }
+asm(".global sub_08065EB4\n.thumb_set sub_08065EB4, MatchSetupChangeSelectedValue\n");

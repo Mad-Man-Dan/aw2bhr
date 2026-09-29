@@ -23,7 +23,7 @@ struct Unk69B6CProc
 
 void IntroT3_08069B6D(struct Unk69B6CProc *proc)
 {
-    proc->unk2c = sub_080674F4(gUnknown_0202F204++);
+    proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
     sub_08012358();
 }
 

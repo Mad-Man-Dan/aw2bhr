@@ -16,7 +16,8 @@
  * agbcc re-narrow at every call site, which is exactly +4 bytes each and was
  * +12 across the ROM at wave 13 promotion. Settled from the callers, as the
  * "stub's return type carries no information" rule requires. */
-int sub_080674F4(int index)
+int GetIntroSceneDuration(int index)
 {
     return gUnknown_08580E64[index];
 }
+asm(".global sub_080674F4\n.thumb_set sub_080674F4, GetIntroSceneDuration\n");

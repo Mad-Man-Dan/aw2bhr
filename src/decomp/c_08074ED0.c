@@ -15,10 +15,11 @@ struct Unk8074ED0
     /* 0x58 */ s32 unk_58;
 };
 
-void sub_08074ED0(void * arg, ProcPtr parent)
+void StartWorldMapScope(void * arg, ProcPtr parent)
 {
     struct Unk8074ED0 * proc = Proc_Start(gUnknown_08614344, parent);
 
     proc->unk_54 = arg;
     proc->unk_58 = 0;
 }
+asm(".global sub_08074ED0\n.thumb_set sub_08074ED0, StartWorldMapScope\n");

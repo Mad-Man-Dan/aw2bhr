@@ -19,16 +19,17 @@
  * wrapper void even though the callee returns a slot pointer.
  *
  * The pairing is already documented on gUnknown_08580DD8 in
- * include/unknown-globals.h: this is the installer, sub_080670D8 is the
+ * include/unknown-globals.h: this is the installer, IsMatchSetupScreenRunning is the
  * matching liveness predicate. */
 
-void sub_080670A0(void)
+void StartMatchSetupScreen(void)
 {
     gUnknown_0202F200 = 0;
     sub_080152EC(gUnknown_08580DD8, 2);
 }
+asm(".global sub_080670A0\n.thumb_set sub_080670A0, StartMatchSetupScreen\n");
 
-/* Family F054, the mode-1 half of the sub_080670A0 pair. See the note there. */
+/* Family F054, the mode-1 half of the StartMatchSetupScreen pair. See the note there. */
 
 void sub_080670BC(void)
 {

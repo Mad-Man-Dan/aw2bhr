@@ -17,7 +17,7 @@
 
 void sub_0806C79C(void)
 {
-    sub_08073900(0x30);
+    StartCircleWipe(0x30);
 }
 
 /* Family F003 (data/families.json): 34 twelve-byte forwarders shaped
@@ -28,7 +28,8 @@ void sub_0806C79C(void)
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_0806C7A8(void)
+void StartCreditsPolygonWipe(void)
 {
-    sub_08073C88(0x30);
+    StartPolygonWipe(0x30);
 }
+asm(".global sub_0806C7A8\n.thumb_set sub_0806C7A8, StartCreditsPolygonWipe\n");

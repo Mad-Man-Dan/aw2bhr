@@ -14,7 +14,7 @@ struct Unk080800B0
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_080800B0(struct Unk080800B0 *proc)
+void SuperCoPowerScene_InitBackground(struct Unk080800B0 *proc)
 {
     gUnknown_030030A4.bits.win0_enable_blend = 0;
     gUnknown_03002B6C.bits.tm_block = 0xE;
@@ -35,3 +35,4 @@ void sub_080800B0(struct Unk080800B0 *proc)
     gUnknown_03001400 = 0xFFF0;
     proc->unk4c = 0;
 }
+asm(".global sub_080800B0\n.thumb_set sub_080800B0, SuperCoPowerScene_InitBackground\n");

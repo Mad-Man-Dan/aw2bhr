@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_0807639C(ProcPtr parent)
+void StartWorldMapNationPanel(ProcPtr parent)
 {
     Proc_Start(ProcScr_WM_Listener, parent);
 }
+asm(".global sub_0807639C\n.thumb_set sub_0807639C, StartWorldMapNationPanel\n");

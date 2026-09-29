@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The animated twin of sub_08067830: two Interpolates per frame drive the BG2
+/* The animated twin of IntroBgZoom_Loop: two Interpolates per frame drive the BG2
  * affine matrix's rotation and scale, and the proc breaks on the last frame.
  *
  * The `if` picks Interpolate's MODE only -- the other four arguments are
@@ -60,7 +60,7 @@ struct Unk08581014Proc
     /* 0x54 */ s32 unk54;
 };
 
-void sub_08067948(struct Unk08067948Proc *proc)
+void IntroBgAffineTween_Loop(struct Unk08067948Proc *proc)
 {
     struct BgAffineSrcData src;
     int a;
@@ -88,8 +88,9 @@ void sub_08067948(struct Unk08067948Proc *proc)
 
     proc->unk54++;
 }
+asm(".global sub_08067948\n.thumb_set sub_08067948, IntroBgAffineTween_Loop\n");
 
-void sub_080679D8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
+void StartIntroBgAffineTween(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8,
                   int a9, ProcPtr parent)
 {
     struct Unk08581014Proc *p;
@@ -108,3 +109,4 @@ void sub_080679D8(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8
     p->unk54 = 0;
     p->unk50 = 0;
 }
+asm(".global sub_080679D8\n.thumb_set sub_080679D8, StartIntroBgAffineTween\n");

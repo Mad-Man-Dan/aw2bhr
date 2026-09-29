@@ -15,13 +15,13 @@
  */
 u8 sub_08074320(struct Unk030040D8 *a1)
 {
-    const struct Unk08074584 *p = sub_08074584();
+    const struct Unk08074584 *p = GetMapEventTable();
     int r;
 
     if ((((struct Unit *)a1 - gUnits) & 0xC0) == 0
         && p != 0 && p->unk08 != 0)
     {
-        r = sub_08074484(p->unk08, a1, 0);
+        r = RunMapEventRecords(p->unk08, a1, 0);
 
         if (r != 0)
             Proc_Start(gUnknown_08614268, PROC_TREE_3);

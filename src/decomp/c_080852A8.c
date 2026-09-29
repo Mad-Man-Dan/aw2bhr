@@ -13,7 +13,7 @@ struct Unk080852A8
     /* 0x66 */ s16 unk66;
 };
 
-void sub_080852A8(struct Unk080852A8 *proc)
+void CoInfoScreen_DrawPageText(struct Unk080852A8 *proc)
 {
     if (gUnknown_03005940 <= 3)
         sub_08014668(1, 7, gBG0TilemapBuffer,
@@ -38,3 +38,4 @@ void sub_080852A8(struct Unk080852A8 *proc)
     }
     sub_08013AEC();
 }
+asm(".global sub_080852A8\n.thumb_set sub_080852A8, CoInfoScreen_DrawPageText\n");

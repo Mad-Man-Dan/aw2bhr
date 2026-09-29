@@ -37,14 +37,14 @@
  * carry the round-toward-zero fixup, and there is none.
  *
  * The two id tables are newly declared in include/unknown-globals.h; the two
- * callees sub_080859A0 / GetFirepowerIcon (and sub_08085638 / sub_080856A0) were
+ * callees sub_080859A0 / GetFirepowerIcon (and GetMovementBonusIcon / GetRangeBonusIcon) were
  * already promoted and matching in src/decomp but had never been declared,
  * because this function was their only caller and it was still asm. The
  * declarations added to include/unknown-functions.h copy the promoted
  * definitions exactly.
  */
 
-void sub_08085708(s16 *a1, int a2)
+void CoInfoScreen_DrawUnitBonusGrid(s16 *a1, int a2)
 {
     int i;
     int t;
@@ -67,16 +67,17 @@ void sub_08085708(s16 *a1, int a2)
             {
                 DrawOamObject(0x94, DivRem(i, 4) * 0x36 + 0x25,
                              (i >> 2) * 0x18 + 0x30, 0, 1);
-                DrawOamObject(sub_080856A0(a2, t), DivRem(i, 4) * 0x36 + 0x2d,
+                DrawOamObject(GetRangeBonusIcon(a2, t), DivRem(i, 4) * 0x36 + 0x2d,
                              (i >> 2) * 0x18 + 0x30, 0, 1);
             }
             else if (GetCoMovementBonus(gPlayers[a2].co, gPlayers[a2].coMode, t) != 0)
             {
                 DrawOamObject(0x93, DivRem(i, 4) * 0x36 + 0x25,
                              (i >> 2) * 0x18 + 0x30, 0, 1);
-                DrawOamObject(sub_08085638(a2, t), DivRem(i, 4) * 0x36 + 0x2d,
+                DrawOamObject(GetMovementBonusIcon(a2, t), DivRem(i, 4) * 0x36 + 0x2d,
                              (i >> 2) * 0x18 + 0x30, 0, 1);
             }
         }
     }
 }
+asm(".global sub_08085708\n.thumb_set sub_08085708, CoInfoScreen_DrawUnitBonusGrid\n");

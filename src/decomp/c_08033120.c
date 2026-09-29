@@ -38,7 +38,7 @@ void sub_08033150(void)
     UnlockMainMenu();
 }
 
-/* 0xFFD0 is a POSITIVE literal and not -48: sub_08072C40's second parameter is
+/* 0xFFD0 is a POSITIVE literal and not -48: SetBgScrollShadow's second parameter is
  * `u16`, and the ROM materialises the value with a pool `ldr`. A -48 would have
  * been `movs r1,#0x30; rsbs r1,r1,#0`, two instructions and no pool word.
  *
@@ -46,6 +46,6 @@ void sub_08033150(void)
  * operand class, not argument order. */
 void sub_08033174(void)
 {
-    sub_08072C40(0, 0xFFD0, 0);
-    sub_08072C40(3, 0, 0);
+    SetBgScrollShadow(0, 0xFFD0, 0);
+    SetBgScrollShadow(3, 0, 0);
 }

@@ -15,12 +15,13 @@ struct Unk0807FA34
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_0807FA34(struct Unk0807FA34 *proc)
+void CoPowerScene_Init(struct Unk0807FA34 *proc)
 {
     sub_08043BA4(gUnknown_03005970, 0x1CA, 4);
     ApplyPalettes(gUnknown_08239DE4, 0x13, 1);
     proc->unk4c = 0;
     Proc_Start(gUnknown_086167EC, proc);
     Proc_Start(gUnknown_086167BC, proc);
-    sub_08080EF8();
+    CoPowerScene_PlayMusic();
 }
+asm(".global sub_0807FA34\n.thumb_set sub_0807FA34, CoPowerScene_Init\n");

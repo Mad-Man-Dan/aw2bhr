@@ -56,7 +56,7 @@
  * allocation instead: find the source change that makes `a2` outrank `i` for
  * the last low callee-saved register. */
 
-u16 sub_0807F8FC(u8 * a1, u8 * a2, void * a3)
+u16 LoadCoPowerNameLetters(u8 * a1, u8 * a2, void * a3)
 {
     u16 buf[22];
     int n;
@@ -146,3 +146,4 @@ u16 sub_0807F8FC(u8 * a1, u8 * a2, void * a3)
 
     return n;
 }
+asm(".global sub_0807F8FC\n.thumb_set sub_0807F8FC, LoadCoPowerNameLetters\n");

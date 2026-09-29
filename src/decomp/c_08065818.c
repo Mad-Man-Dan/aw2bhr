@@ -17,7 +17,7 @@
  * three instructions. `unk07 - unk15 + 1` gives `subs; adds`. Only the form
  * that keeps the constant on the LEFT operand's side survives fold as the
  * ROM's `adds #1; ldrb; subs`. */
-void sub_08065818(void)
+void MatchSetupPackRuleIndices(void)
 {
     gUnknown_08580934->unk16--;
     gUnknown_08580934->unk84 = gUnknown_08580934->unk00 == 0;
@@ -28,3 +28,4 @@ void sub_08065818(void)
     gUnknown_08580934->unk89 = gUnknown_08580934->unk01 == 0;
     gUnknown_08580934->unk8a = gUnknown_08580934->unk02;
 }
+asm(".global sub_08065818\n.thumb_set sub_08065818, MatchSetupPackRuleIndices\n");

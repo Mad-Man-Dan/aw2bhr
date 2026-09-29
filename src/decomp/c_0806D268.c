@@ -22,7 +22,7 @@
  * `unk2c = i * 0x20 + 7; unk2a = 0x54 - i * 8;` -- agbcc recomputes both from
  * `i` inside the loop and, with the two registers it frees, force-addrs three
  * more tables that the ROM reaches directly. Probed both ways. */
-void sub_0806D268(void)
+void RulesScreenSpawnRuleOptions(void)
 {
     struct Unk08580934 *g;
     struct Unk08580934_Obj *o;
@@ -56,6 +56,7 @@ void sub_0806D268(void)
     g = gUnknown_08580934;
     g->unk54[4]->unk4b = g->unk16 - g->unk15 + 2;
 }
+asm(".global sub_0806D268\n.thumb_set sub_0806D268, RulesScreenSpawnRuleOptions\n");
 
 /* sub_08064B68's twin -- byte-exact prologue, gate and tail, and the same
  * seven-iteration walk over unk54[]. The only differences are the blob
@@ -83,6 +84,6 @@ void sub_0806D34C(void)
             o->unk34 = 5;
             o->unk30 = 0;
         }
-        sub_0806377C(gUnknown_08581E94);
+        ClearCallbackOfSlotsRunningScript(gUnknown_08581E94);
     }
 }

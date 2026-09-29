@@ -59,7 +59,7 @@ void StartCoInfoScreen_080849C9(ProcPtr parent)
     sub_08085950(0, gUnknown_030033EC);
     sub_0802D5A0((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00),
                  gUnknown_08616B1C[gPlayers[gUnknown_030033EC].teamColor], 0);
-    sub_080858C0();
+    CoInfoScreen_LoadBg2Backdrop();
     sub_08043BA4(gPlayers[gUnknown_030033EC].co, 0xB6 * 2, 5);
     LoadCoMiniPortrait(gPlayers[gUnknown_030033EC].co, (void *)0x06015700, 0x16);
     sub_08043B44(8);

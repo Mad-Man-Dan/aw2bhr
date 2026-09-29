@@ -7,11 +7,11 @@
  * sub_080658AC @ 0x080658AC
  */
 
-/* The inverse of sub_08065818 (src/decomp/c_08065818.c): that function packs the
+/* The inverse of MatchSetupPackRuleIndices (src/decomp/c_08065818.c): that function packs the
  * header at +0x00 into the seven bytes at +0x84, this one unpacks them back.
  *
  * Two shapes here are NOT the `?:` the exemplar uses, and the ROM says so
- * directly. sub_08065818's `unk03 ? unk03 - 4 : 0` lays the NON-zero arm first
+ * directly. MatchSetupPackRuleIndices's `unk03 ? unk03 - 4 : 0` lays the NON-zero arm first
  * with the `b` to the tail; both stores here lay the ZERO arm first. `?:` folds
  * to the exemplar's order whichever way the condition is spelled (probed both),
  * so the zero-arm-first order is an if/else STATEMENT, and the +0x07 one keeps
@@ -22,7 +22,7 @@
  * QImode). Written `unk88 - 1 + unk15` fold reassociates it to
  * `unk88 + (unk15 - 1)` and the `#0xff` lands on the freshly loaded unk15
  * instead -- same size, wrong two instructions. */
-void sub_080658AC(void)
+void MatchSetupUnpackRuleIndices(void)
 {
     int i;
 
@@ -43,3 +43,4 @@ void sub_080658AC(void)
     for (i = 0; i < 4; i++)
         gUnknown_08580934->unk20[i] = gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]];
 }
+asm(".global sub_080658AC\n.thumb_set sub_080658AC, MatchSetupUnpackRuleIndices\n");

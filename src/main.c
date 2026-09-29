@@ -55,7 +55,7 @@ void InitGameSystems(void)
     sub_0803B688();
     LinkShutdown();
     sub_08085AF4();
-    sub_08080F90(0);
+    ResetMainMenuCarouselState(0);
     sub_0801F114();
 }
 asm(".global sub_08036B4C\n.thumb_set sub_08036B4C, InitGameSystems\n");

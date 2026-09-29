@@ -7,7 +7,7 @@
  * sub_080870B8 @ 0x080870B8
  */
 
-void sub_080870B8(int a, int b, int c, int d)
+void MapSelectList_DrawPropertyCounts(int a, int b, int c, int d)
 {
     if (a != -1 || b != a || c != b || d != c)
     {
@@ -17,3 +17,4 @@ void sub_080870B8(int a, int b, int c, int d)
         sub_0802BD54(0xe7, 0x10, d);
     }
 }
+asm(".global sub_080870B8\n.thumb_set sub_080870B8, MapSelectList_DrawPropertyCounts\n");

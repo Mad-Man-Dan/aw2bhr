@@ -17,10 +17,10 @@
  *
  * The strongest-evidenced member of the family, because the loop closes: the
  * ROM holds `PROC_CALL(PutEnemyCoMinimug_0808789D)` at 0x08616DA0, which is INSIDE the
- * script ProcScr_PutEnemyCoMinimug -- and sub_08087B74, the callee here, is the
+ * script ProcScr_PutEnemyCoMinimug -- and LoadEnemyCoMinimugs, the callee here, is the
  * function that does `Proc_Find(ProcScr_PutEnemyCoMinimug)` and `str r5,[r0,#0x54]`.
  * So +0x54 of this proc is written by the callee and read back by this
- * wrapper, and it holds sub_08087B74's own `int` parameter (used there as an
+ * wrapper, and it holds LoadEnemyCoMinimugs's own `int` parameter (used there as an
  * offset into gUnknown_02027F74 + 4, not as a pointer -- hence `int` and not
  * `void *`). */
 
@@ -33,7 +33,7 @@ struct Unk0808789CProc
 
 void PutEnemyCoMinimug_0808789D(struct Unk0808789CProc *proc)
 {
-    sub_08087B74(proc->unk54);
+    LoadEnemyCoMinimugs(proc->unk54);
 }
 
 asm(".global sub_0808789C\n.thumb_set sub_0808789C, PutEnemyCoMinimug_0808789D\n");

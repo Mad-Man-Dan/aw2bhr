@@ -41,7 +41,7 @@
  * is neither 1 nor 2), which is why `return type;` is written here rather than
  * `return 0;` -- a literal 0 costs a `movs r0, #0` the ROM does not have.
  */
-int sub_08080EB0(int type)
+int IsCoPowerScriptRunning(int type)
 {
     register int t asm("r1") = type;
     if (t == 1)
@@ -52,3 +52,4 @@ int sub_08080EB0(int type)
 
     return type;
 }
+asm(".global sub_08080EB0\n.thumb_set sub_08080EB0, IsCoPowerScriptRunning\n");

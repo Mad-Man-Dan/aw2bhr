@@ -18,7 +18,7 @@
  * ADDRESS's, while `dst[0x20]` emits them in the ROM's order (`adds r1, #0x40`
  * then `adds r0, #0x20`). 0x20 * 2 == 0x40 is past `strh`'s 5-bit
  * displacement, which is why the add appears at all. */
-int sub_0806BD1C(u16 *dst, u8 *src)
+int DrawCreditsHeadingText(u16 *dst, u8 *src)
 {
     int width;
     int t;
@@ -48,3 +48,4 @@ int sub_0806BD1C(u16 *dst, u8 *src)
     sub_08013AEC();
     return width;
 }
+asm(".global sub_0806BD1C\n.thumb_set sub_0806BD1C, DrawCreditsHeadingText\n");

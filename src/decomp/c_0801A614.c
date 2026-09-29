@@ -18,7 +18,7 @@
  * unk28 note records, spelled with a cast until a union exists. */
 void PushMenu(void)
 {
-    struct Unk03001470 *p = sub_080637AC(gUnknown_0848A42C);
+    struct Unk03001470 *p = FindSlotRunningScript(gUnknown_0848A42C);
 
     if (p != NULL)
     {

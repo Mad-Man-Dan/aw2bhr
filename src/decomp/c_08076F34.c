@@ -25,7 +25,7 @@
  * `ldrh [r6]` then `ldrh [r6,#4]`, because the right operand of the sum
  * expands first.
  *
- * The fifth argument to sub_08075298 is a literal 0 in both arms; the ROM
+ * The fifth argument to StartDifficultyStars is a literal 0 in both arms; the ROM
  * spends no instruction on it because each arm already has a register known to
  * hold zero (unk10 in the then arm, IsHardCampaignMode's result in the else arm). */
 
@@ -42,8 +42,8 @@ void sub_08076F34(ProcPtr proc)
 
         if (sub_08076F14(dx, dy))
         {
-            sub_08076CAC(dx >> 2);
-            sub_08076D68(dy >> 2);
+            MoveWorldMapCursorX(dx >> 2);
+            MoveWorldMapCursorY(dy >> 2);
 
             if ((dx >> 2) != 0)
                 return;
@@ -62,11 +62,11 @@ void sub_08076F34(ProcPtr proc)
                          1);
 
             if (IsHardCampaignMode())
-                sub_08075298(proc, gUnknown_08615194[p->unk00].hardModeStars,
+                StartDifficultyStars(proc, gUnknown_08615194[p->unk00].hardModeStars,
                              gUnknown_0202FDFC.unk04 + 8,
                              gUnknown_0202FDFC.unk06 + 0xc, 0);
             else
-                sub_08075298(proc, gUnknown_08615194[p->unk00].difficultyStars,
+                StartDifficultyStars(proc, gUnknown_08615194[p->unk00].difficultyStars,
                              gUnknown_0202FDFC.unk04 + 8,
                              gUnknown_0202FDFC.unk06 + 0xc, 0);
 

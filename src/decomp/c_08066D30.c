@@ -25,7 +25,7 @@
  *     is what moves the tie-break. Written the way the macro it plainly came
  *     from would expand.
  */
-void sub_08066D30(void)
+void MatchSetupHighlightSelectedRuleOption(void)
 {
     struct Unk0816E1B8 *const *pp;
     struct Unk08580934 *cur;
@@ -42,3 +42,4 @@ void sub_08066D30(void)
 
     (*pp)->unk00->unk54[(*pp)->unk00->unk33]->unk46 = 1;
 }
+asm(".global sub_08066D30\n.thumb_set sub_08066D30, MatchSetupHighlightSelectedRuleOption\n");
