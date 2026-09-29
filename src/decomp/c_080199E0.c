@@ -9,17 +9,20 @@
 
 #include "hardware.h"
 
-void sub_080199E0(void)
+void StashMapId(void)
 {
     gPlaySt.unk03 = gPlaySt.mapID;
 }
+asm(".global sub_080199E0\n.thumb_set sub_080199E0, StashMapId\n");
 
-void sub_080199EC(void)
+void RestoreStashedMapId(void)
 {
     gPlaySt.mapID = gPlaySt.unk03;
 }
+asm(".global sub_080199EC\n.thumb_set sub_080199EC, RestoreStashedMapId\n");
 
-void sub_080199F8(void)
+void DisableWindow0(void)
 {
     gDispIo.disp_ct.win0_enable = FALSE;
 }
+asm(".global sub_080199F8\n.thumb_set sub_080199F8, DisableWindow0\n");

@@ -7,34 +7,36 @@
  * sub_08016944 @ 0x08016944, sub_08016974 @ 0x08016974, sub_080169A4 @ 0x080169A4
  */
 
-/* The hide half of a hide/show pair with sub_08016974, and the same template as
+/* The hide half of a hide/show pair with ClearSlotSpriteDoubleSize, and the same template as
  * src/decomp/c_080154C4.c: fetch the slot's stashed OBJ attributes into a stack
- * local with sub_0801566C, poke one bit, hand the eight bytes back by value to
- * sub_08015608. The bit is attr0's 9 -- `ldrb [r5,#1]; orrs #2` -- which is why
+ * local with CopySlotSpriteAttrs, poke one bit, hand the eight bytes back by value to
+ * SetSlotSpriteAttrs. The bit is attr0's 9 -- `ldrb [r5,#1]; orrs #2` -- which is why
  * struct OamData's old 2-bit `affineMode` had to be split into `affineEnable`
  * and `doubleSize`; the 2-bit field costs eight bytes extracting and
  * re-inserting the pair. See the note on the split in unknown-globals.h. */
-void sub_08016944(int a)
+void SetSlotSpriteDoubleSize(int a)
 {
     struct OamData o;
 
-    sub_0801566C(a, (struct UnkVec *)&o);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&o);
     o.doubleSize = 1;
-    sub_08015608(a, *(struct UnkVec *)&o);
+    SetSlotSpriteAttrs(a, *(struct UnkVec *)&o);
 }
+asm(".global sub_08016944\n.thumb_set sub_08016944, SetSlotSpriteDoubleSize\n");
 
-/* sub_08016944's other half -- the SAME source with the bit cleared. The
+/* SetSlotSpriteDoubleSize's other half -- the SAME source with the bit cleared. The
  * `movs r0,#3; rsbs r0,r0,#0; ands` mask is the one-bit-field clear: a 32-bit
  * ~2, where a hand-rolled `*(u8 *)&o + 1 &= ~2` folds to a bare `movs #0xfd`
  * and comes out two bytes short. */
-void sub_08016974(int a)
+void ClearSlotSpriteDoubleSize(int a)
 {
     struct OamData o;
 
-    sub_0801566C(a, (struct UnkVec *)&o);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&o);
     o.doubleSize = 0;
-    sub_08015608(a, *(struct UnkVec *)&o);
+    SetSlotSpriteAttrs(a, *(struct UnkVec *)&o);
 }
+asm(".global sub_08016974\n.thumb_set sub_08016974, ClearSlotSpriteDoubleSize\n");
 
 /* sub_0801E968's twin -- the same dispatch through
  * gUnknown_0200E438[...].unk44, minus the stash into gUnknown_03000550. Two

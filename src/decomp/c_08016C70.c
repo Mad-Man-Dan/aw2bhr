@@ -7,15 +7,16 @@
  * sub_08016C70 @ 0x08016C70, sub_08016C9C @ 0x08016C9C, sub_08016CD8 @ 0x08016CD8, sub_08016CEC @ 0x08016CEC, sub_08016D04 @ 0x08016D04
  */
 
-void sub_08016C70(u8 a)
+void DeleteSuspendSave(u8 a)
 {
     if (a != 0) {
-        sub_08016A14();
-        sub_0801ABF8(a);
+        MarkProfileSaved();
+        EraseSaveSlot(a);
         if (gPlaySt.gameMode == 1)
-            sub_08016E74();
+            BackupBattleMapPoints();
     }
 }
+asm(".global sub_08016C70\n.thumb_set sub_08016C70, DeleteSuspendSave\n");
 
 /* Returns the address of one of three byte flags in gUnknown_0200C420.
  *
@@ -29,7 +30,7 @@ void sub_08016C70(u8 a)
  * A `switch` (repeated `cmp r1,#3` with `beq` then `bgt`) with NO default: on
  * any other value r0 is never written, so the incoming argument falls straight
  * out through the shared `bx lr`. */
-u8 *sub_08016C9C(s8 a)
+u8 *GetSuspendFlagPtr(s8 a)
 {
     switch (a) {
     case 2:
@@ -40,30 +41,33 @@ u8 *sub_08016C9C(s8 a)
         return &gUnknown_0200C420.unk0b;
     }
 }
+asm(".global sub_08016C9C\n.thumb_set sub_08016C9C, GetSuspendFlagPtr\n");
 
 /* The `ldrb` plus `lsls #0x18; asrs #0x18` is the RETURN being narrowed to s8,
- * not the load: a `s8 *` return from sub_08016C9C would have given a single
+ * not the load: a `s8 *` return from GetSuspendFlagPtr would have given a single
  * `ldrsb`. */
-s8 sub_08016CD8(s8 a)
+s8 GetSuspendFlag(s8 a)
 {
-    return *sub_08016C9C(a);
+    return *GetSuspendFlagPtr(a);
 }
+asm(".global sub_08016CD8\n.thumb_set sub_08016CD8, GetSuspendFlag\n");
 
-/* sub_08016CD8's setter. The second parameter's copy-then-narrow
+/* GetSuspendFlag's setter. The second parameter's copy-then-narrow
  * (`adds r4,r1,#0; lsls #0x18; lsrs #0x18`) is NOT the int-with-a-cast shape
  * here -- it is a declared-narrow parameter whose pseudo has to live across the
  * `bl`, the case src/decomp/c_080154C4.c measured. */
-void sub_08016CEC(s8 a, u8 b)
+void SetSuspendFlag(s8 a, u8 b)
 {
-    *sub_08016C9C(a) = b;
+    *GetSuspendFlagPtr(a) = b;
 }
+asm(".global sub_08016CEC\n.thumb_set sub_08016CEC, SetSuspendFlag\n");
 
 /* The gPlaySt.gameMode mode -> id map every caller uses
  * (src/decomp/c_0802C1D0.c, c_0802CF48.c, c_08038548.c, c_08045770.c). A
  * `switch`: the repeated `cmp r0,#2` with `beq` then `bgt` is gcc's decision
  * tree. `s8` return and `u8` parameter were already settled by those callers;
  * see include/unknown-functions.h. */
-s8 sub_08016D04(u8 a)
+s8 GetSuspendIdForGameMode(u8 a)
 {
     switch (a) {
     case 1:
@@ -75,3 +79,4 @@ s8 sub_08016D04(u8 a)
     }
     return -1;
 }
+asm(".global sub_08016D04\n.thumb_set sub_08016D04, GetSuspendIdForGameMode\n");

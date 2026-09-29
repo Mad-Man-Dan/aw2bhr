@@ -53,7 +53,7 @@ struct Unk31F88Proc
 };
 
 /* `movs r1, #1; rsbs r1, r1, #0` here is the CONSTANT -1 handed to
- * sub_0801394C as its second argument, NOT the negate-and-subtract bitfield
+ * ColFadeFromWhiteRow as its second argument, NOT the negate-and-subtract bitfield
  * mask -- the value goes straight out with no `ands` anywhere. */
 
 void sub_08031E7C(struct Unk31E7CProc *proc)
@@ -61,9 +61,9 @@ void sub_08031E7C(struct Unk31E7CProc *proc)
     proc->unk58 = 0x20;
 
     ColorFadeInit();
-    sub_0801394C(0x11, -1);
+    ColFadeFromWhiteRow(0x11, -1);
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
 }
 
 /* sub_08031E7C's repeat half: the counter it arms with 0x20 ticks down once
@@ -74,7 +74,7 @@ void sub_08031E9C(struct Unk31E9CProc *proc)
     if ((gGameClock & 3) == 0)
     {
         sub_080718F0();
-        sub_080135A4();
+        EnablePaletteSync();
 
         proc->unk58--;
     }
@@ -87,8 +87,8 @@ void sub_08031ED0(struct Unk31ED0Proc *proc)
 {
     proc->unk1e = 0x20;
 
-    sub_08013928(1);
-    sub_080135A4();
+    ColFadeToWhite(1);
+    EnablePaletteSync();
 }
 
 /* The test reads the DECREMENTED value out of the register rather than
@@ -99,22 +99,22 @@ void sub_08031ED0(struct Unk31ED0Proc *proc)
 void sub_08031EE4(struct Unk31EE4Proc *proc)
 {
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
 
     if (--proc->unk1e < 0)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 
-/* sub_08031ED0 with the other direction: the same 0x20 arm, and sub_080139C4
- * instead of sub_08013928 with -1 instead of 1. `movs r0,#1; rsbs r0,r0,#0` is
+/* sub_08031ED0 with the other direction: the same 0x20 arm, and ColFadeFromWhite
+ * instead of ColFadeToWhite with -1 instead of 1. `movs r0,#1; rsbs r0,r0,#0` is
  * the constant, not a mask. */
 
 void sub_08031F10(struct Unk31F10Proc *proc)
 {
     proc->unk1e = 0x20;
 
-    sub_080139C4(-1);
-    sub_080135A4();
+    ColFadeFromWhite(-1);
+    EnablePaletteSync();
 }
 
 void sub_08031F28(void)

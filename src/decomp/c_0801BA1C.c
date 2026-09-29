@@ -7,7 +7,7 @@
  * sub_0801BA1C @ 0x0801BA1C, sub_0801BA4C @ 0x0801BA4C
  */
 
-void sub_0801BA1C(void *dst, u16 tile, int n)
+void PutTextTileRows(void *dst, u16 tile, int n)
 {
     u16 *p = (u16 *)dst;
     int i;
@@ -18,6 +18,7 @@ void sub_0801BA1C(void *dst, u16 tile, int n)
         p[i + 0x20] = (s16)tile + 1 + i * 2;
     }
 }
+asm(".global sub_0801BA1C\n.thumb_set sub_0801BA1C, PutTextTileRows\n");
 
 s16 SinDegrees(int a)
 {

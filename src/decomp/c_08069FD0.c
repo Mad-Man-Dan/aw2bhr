@@ -9,7 +9,7 @@
 
 /* The near-twin of sub_080697CC: same seven steps, but the first blob goes to
  * 0x06008000 instead of 0x06000000, the gBG1TilemapBuffer blob is absent, and
- * there is no sub_08013AFC call. 0x06000000 is reachable as `0xc0 << 19` and
+ * there is no BG_EnableSyncBG1 call. 0x06000000 is reachable as `0xc0 << 19` and
  * 0x06008000 is not, which is why that one destination is a pool word here and
  * a shifted immediate there. */
 void sub_08069FD0(void)
@@ -23,6 +23,6 @@ void sub_08069FD0(void)
     ApplyPaletteExt(gUnknown_081866D8, 0xc0, 0x20);
     Decompress(gUnknown_0818633C, gBG2TilemapBuffer);
     Decompress(gUnknown_08186460, gUnknown_08580E60);
-    sub_08013B0C();
-    sub_08011E54(gUnknown_08580E60, (void *)0x0600F000, 0x1000);
+    BG_EnableSyncBG2();
+    RegisterDataMove(gUnknown_08580E60, (void *)0x0600F000, 0x1000);
 }

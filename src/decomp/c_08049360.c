@@ -127,7 +127,7 @@ void ShopScreen_Loop(ProcPtr proc)
                          + 7,
                      gBG0TilemapBuffer,
                      gUnknown_02028E1C[gUnknown_084C30F8->unk01e], 4);
-        sub_08013AEC();
+        BG_EnableSyncBG0();
         gUnknown_084C30F8->unk834++;
         break;
 
@@ -150,12 +150,12 @@ void ShopScreen_Loop(ProcPtr proc)
             TrySpendBattleMapPoints(
                 gUnknown_0849EDB0[gUnknown_02028E1C[gUnknown_084C30F8->unk01e]]
                     .unk04);
-            sub_08012BC8(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, 0);
+            FillTilemapRect(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, 0);
             sub_0803B4DC(0x6c);
             gUnknown_084C30F8->unk834++;
         }
         gUnknown_084C30F8->unk835 = 1;
-        sub_08013AEC();
+        BG_EnableSyncBG0();
         break;
 
     case 6:

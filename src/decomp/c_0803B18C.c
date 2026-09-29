@@ -29,7 +29,7 @@ bool8 sub_0803B18C(void)
  * unconditional and neither result is used, so they are two statements and not
  * a nesting -- sequential `bl`s carry no nesting signal (docs/agbcc-codegen.md)
  * and DebugScreenNoOp is a bare `bx lr` that reads nothing.
- * `ldrb` on the `s16` gUnknown_03001FBC is sub_08015C30's `u8` parameter
+ * `ldrb` on the `s16` gUnknown_03001FBC is ClearSlotScriptCallback's `u8` parameter
  * conversion folded into the load, exactly as in sub_0803B118 above.
  * `pop {r0}; bx r0` -> void. */
 
@@ -38,7 +38,7 @@ void sub_0803B198(void)
     if (gpKeySt->pressed & 9)
     {
         sub_0803B4DC(0x71);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
     GetNextRandomNumber();

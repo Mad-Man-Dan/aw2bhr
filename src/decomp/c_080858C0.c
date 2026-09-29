@@ -26,7 +26,7 @@ void CoInfoScreen_LoadBg2Backdrop(void)
     for (i = 0; i <= 0x3ff; i++)
         gBG2TilemapBuffer[i] = 0x360 + gBG2TilemapBuffer[i];
 
-    sub_08013B0C();
+    BG_EnableSyncBG2();
 }
 asm(".global sub_080858C0\n.thumb_set sub_080858C0, CoInfoScreen_LoadBg2Backdrop\n");
 
@@ -41,6 +41,6 @@ void CoInfoScreen_LoadBg2UnitBonusBackdrop(void)
     for (i = 0; i <= 0x3ff; i++)
         gBG2TilemapBuffer[i] = 0x360 + gBG2TilemapBuffer[i];
 
-    sub_08013B0C();
+    BG_EnableSyncBG2();
 }
 asm(".global sub_08085908\n.thumb_set sub_08085908, CoInfoScreen_LoadBg2UnitBonusBackdrop\n");

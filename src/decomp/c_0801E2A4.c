@@ -33,7 +33,7 @@
  * `gUnknown_0200F720[i].member`: the `strh` stores in the first arm may alias
  * the object, so the repeated form re-derives the base for the second arm and
  * costs a callee-saved register. */
-void sub_0801E2A4(void)
+void StepObjAffineTweens(void)
 {
     int i;
     int flag;
@@ -63,3 +63,4 @@ void sub_0801E2A4(void)
             UpdateObjAffineRecord(i);
     }
 }
+asm(".global sub_0801E2A4\n.thumb_set sub_0801E2A4, StepObjAffineTweens\n");

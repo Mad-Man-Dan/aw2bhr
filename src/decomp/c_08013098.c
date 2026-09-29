@@ -21,19 +21,21 @@ struct Unk130B0Proc
     /* 64 */ u16 unk64;
 };
 
-void sub_08013098(int a, ProcPtr parent)
+void StartLockingWipeToBlack(int a, ProcPtr parent)
 {
     struct Unk13098Proc *proc = Proc_StartBlocking(ProcScr_SomeFade, parent);
 
     proc->unk64 = a;
 }
+asm(".global sub_08013098\n.thumb_set sub_08013098, StartLockingWipeToBlack\n");
 
-void sub_080130B0(int a, ProcPtr parent)
+void StartLockingWipeFromBlack(int a, ProcPtr parent)
 {
     struct Unk130B0Proc *proc = Proc_StartBlocking(ProcScr_FadeLoadMap, parent);
 
     proc->unk64 = a;
 }
+asm(".global sub_080130B0\n.thumb_set sub_080130B0, StartLockingWipeFromBlack\n");
 
 void sub_080130C8(u16 *dst, int delta, int size)
 {

@@ -42,7 +42,7 @@ void sub_0804B2A8(void)
         y = gUnknown_02029A10[g].entries[s].y;
         q1 = gUnknown_084C3F70[g];
         q2 = gUnknown_084C3F78[g];
-        sub_080155C0(gUnknown_03001FBC,
+        SetSlotSpritePosition(gUnknown_03001FBC,
                      gUnknown_02029A10[g].entries[s].x - *q1, y - *q2);
     }
 }

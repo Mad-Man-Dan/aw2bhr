@@ -43,13 +43,13 @@ struct Unk1470Wrap /* not a real object: see above */
 
 
 /*
- * sub_080161B4 -- script command: step along a list of per-frame offsets.
+ * SlotOp_MoveAlongOffsets -- script command: step along a list of per-frame offsets.
  *
  * The command word points at a list of s16 x/y pairs in ROM, one pair per
  * frame. The slot's .unk38 is both the cursor into that list and the frame
  * count: on the first frame the slot's current position is read out with
- * sub_080155E8 and kept as the float origin, and every frame after that
- * sub_080155C0 moves the sprite to the origin plus this frame's pair. An x of
+ * GetSlotSpritePosition and kept as the float origin, and every frame after that
+ * SetSlotSpritePosition moves the sprite to the origin plus this frame's pair. An x of
  * -1 ends the list -- the tick is cleared and the script cursor steps 8 bytes
  * on to the next command. Returns FALSE, as all the command handlers in this
  * file do; what the caller reads into that is not visible here.
@@ -58,13 +58,13 @@ struct Unk1470Wrap /* not a real object: see above */
  * second statement. As one expression the compiler reads the command word
  * last, and the output no longer matches.
  */
-bool8 sub_080161B4(u8 a)
+bool8 SlotOp_MoveAlongOffsets(u8 a)
 {
     s16 x, y;
     const s16 *r;
 
     if (gPath[a].unk38 == 0) {
-        sub_080155E8(a, &x, &y);
+        GetSlotSpritePosition(a, &x, &y);
         gPath[a].unk3c = x;
         gPath[a].unk40 = y;
     }
@@ -74,19 +74,20 @@ bool8 sub_080161B4(u8 a)
         gPath[a].unk04 = (const u8 *)gPath[a].unk04 + 8;
         gPath[a].unk38 = 0;
     } else {
-        sub_080155C0(a, gPath[a].unk3c + r[0], gPath[a].unk40 + r[1]);
+        SetSlotSpritePosition(a, gPath[a].unk3c + r[0], gPath[a].unk40 + r[1]);
         gPath[a].unk38++;
     }
     return FALSE;
 }
+asm(".global sub_080161B4\n.thumb_set sub_080161B4, SlotOp_MoveAlongOffsets\n");
 
 
 /*
- * sub_080162A4 -- one frame of the smooth move that the three commands below
+ * StepSlotSpriteMotion -- one frame of the smooth move that the three commands below
  * set up.
  *
  * Adds velocity to position and acceleration to velocity, pushes the position
- * out through sub_080155C0, and counts the frame off .unk5c. When that counter
+ * out through SetSlotSpritePosition, and counts the frame off .unk5c. When that counter
  * was already 0 the command is done: the tick is cleared and the script cursor
  * steps 8 bytes on to the next command.
  *
@@ -96,7 +97,7 @@ bool8 sub_080161B4(u8 a)
  * no local at all, `p->unk5c-- == 0` compares the decremented value against -1
  * instead.
  */
-void sub_080162A4(u8 a)
+void StepSlotSpriteMotion(u8 a)
 {
     int n;
 
@@ -104,32 +105,33 @@ void sub_080162A4(u8 a)
     gPath[a].unk40 += gPath[a].unk50;
     gPath[a].unk4c += gPath[a].unk54;
     gPath[a].unk50 += gPath[a].unk58;
-    sub_080155C0(a, gPath[a].unk3c, gPath[a].unk40);
+    SetSlotSpritePosition(a, gPath[a].unk3c, gPath[a].unk40);
     n = gPath[a].unk5c--;
     if (n == 0) {
         gPath[a].unk38 = 0;
         gPath[a].unk04 = (const u8 *)gPath[a].unk04 + 8;
     }
 }
+asm(".global sub_080162A4\n.thumb_set sub_080162A4, StepSlotSpriteMotion\n");
 
 
 /*
- * sub_08016370 -- script command: start a move under constant acceleration.
+ * SlotOp_MoveAccelerated -- script command: start a move under constant acceleration.
  *
  * The command word points at five floats: velocity x and y, acceleration x and
  * y, and a frame count. On the first frame only (the slot's tick is still 0)
- * the current position is read out with sub_080155E8 as the float origin and
+ * the current position is read out with GetSlotSpritePosition as the float origin and
  * the five values are copied into the slot. Every frame then runs one step of
- * sub_080162A4, which is what retires the command. Returns FALSE.
+ * StepSlotSpriteMotion, which is what retires the command. Returns FALSE.
  */
-bool8 sub_08016370(u8 a)
+bool8 SlotOp_MoveAccelerated(u8 a)
 {
     s16 x, y;
     const float *q;
 
     q = *(const float **)gPath[a].unk04;
     if (gPath[a].unk38 == 0) {
-        sub_080155E8(a, &x, &y);
+        GetSlotSpritePosition(a, &x, &y);
         gPath[a].unk3c = x;
         gPath[a].unk40 = y;
         gPath[a].unk4c = q[0];
@@ -139,26 +141,27 @@ bool8 sub_08016370(u8 a)
         gPath[a].unk5c = q[4];
         gPath[a].unk38++;
     }
-    sub_080162A4(a);
+    StepSlotSpriteMotion(a);
     return FALSE;
 }
+asm(".global sub_08016370\n.thumb_set sub_08016370, SlotOp_MoveAccelerated\n");
 
 
 /*
- * sub_0801642C -- script command: move horizontally at a constant speed.
+ * SlotOp_MoveX -- script command: move horizontally at a constant speed.
  *
- * sub_08016370's setup with both accelerations forced to 0, and with the
+ * SlotOp_MoveAccelerated's setup with both accelerations forced to 0, and with the
  * operands stored inline in the 8-byte command instead of behind its first
  * word: the signed word at +0 is the x velocity and the unsigned halfword at
- * +4 is the frame count. sub_080164E0 below is the vertical version. Returns
+ * +4 is the frame count. SlotOp_MoveY below is the vertical version. Returns
  * FALSE.
  */
-bool8 sub_0801642C(u8 a)
+bool8 SlotOp_MoveX(u8 a)
 {
     s16 x, y;
 
     if (gPath[a].unk38 == 0) {
-        sub_080155E8(a, &x, &y);
+        GetSlotSpritePosition(a, &x, &y);
         gPath[a].unk3c = x;
         gPath[a].unk40 = y;
         gPath[a].unk4c = *(const int *)gPath[a].unk04;
@@ -168,22 +171,23 @@ bool8 sub_0801642C(u8 a)
         gPath[a].unk5c = ((const u16 *)gPath[a].unk04)[2];
         gPath[a].unk38++;
     }
-    sub_080162A4(a);
+    StepSlotSpriteMotion(a);
     return FALSE;
 }
+asm(".global sub_0801642C\n.thumb_set sub_0801642C, SlotOp_MoveX\n");
 
 
 /*
- * sub_080164E0 -- script command: move vertically at a constant speed.
- * sub_0801642C with the inline word driving y instead of x, and the other
+ * SlotOp_MoveY -- script command: move vertically at a constant speed.
+ * SlotOp_MoveX with the inline word driving y instead of x, and the other
  * three float members zeroed. Returns FALSE.
  */
-bool8 sub_080164E0(u8 a)
+bool8 SlotOp_MoveY(u8 a)
 {
     s16 x, y;
 
     if (gPath[a].unk38 == 0) {
-        sub_080155E8(a, &x, &y);
+        GetSlotSpritePosition(a, &x, &y);
         gPath[a].unk3c = x;
         gPath[a].unk40 = y;
         gPath[a].unk4c = 0;
@@ -193,6 +197,7 @@ bool8 sub_080164E0(u8 a)
         gPath[a].unk5c = ((const u16 *)gPath[a].unk04)[2];
         gPath[a].unk38++;
     }
-    sub_080162A4(a);
+    StepSlotSpriteMotion(a);
     return FALSE;
 }
+asm(".global sub_080164E0\n.thumb_set sub_080164E0, SlotOp_MoveY\n");

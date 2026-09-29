@@ -23,10 +23,10 @@ void IntelStatus_Init(void)
     gUnknown_084C1430->unk54 = 0;
     gUnknown_084C1430->unk5e = gUnknown_030033EC;
     gUnknown_084C1430->unk59 = 0;
-    sub_08013C00();
-    sub_08013CA8();
+    ClearBg0Tilemap();
+    ClearBg2Tilemap();
     sub_08046030();
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 }
 asm(".global sub_08046644\n.thumb_set sub_08046644, IntelStatus_Init\n");

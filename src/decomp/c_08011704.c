@@ -20,7 +20,8 @@
  *
  * All three parameters are u16: the third is passed through with nothing but
  * the bare promote pair, which is what a declared-narrow parameter emits. */
-void sub_08011704(u16 a, u16 b, u16 c)
+void PutGlyphSprite(u16 a, u16 b, u16 c)
 {
     PutOamHi(a & 0x1FF, b & 0xFF, (void *)gUnknown_0848930C, c);
 }
+asm(".global sub_08011704\n.thumb_set sub_08011704, PutGlyphSprite\n");

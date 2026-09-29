@@ -7,12 +7,13 @@
  * sub_080169E8 @ 0x080169E8
  */
 
-void sub_080169E8(void)
+void EndAllSpriteScripts(void)
 {
     u8 i;
 
     for (i = 0; i < 0x1e; i++) {
         if (gUnknown_0200E438[i].unk08 != 0)
-            sub_0801D81C(i);
+            EndSpriteScript(i);
     }
 }
+asm(".global sub_080169E8\n.thumb_set sub_080169E8, EndAllSpriteScripts\n");

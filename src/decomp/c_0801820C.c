@@ -16,7 +16,7 @@
  * which is the third independent reading of unk0e as signed. The two volatile
  * shadows take one CSE'd result; only the halfword load of unk0e is shared,
  * and the ROM shares it too. */
-void sub_0801820C(struct Unk0200C528 *slot)
+void CoScreenWipe_Step(struct Unk0200C528 *slot)
 {
     slot->unk0e -= 4;
     if (slot->unk0e <= 0)
@@ -28,5 +28,6 @@ void sub_0801820C(struct Unk0200C528 *slot)
     gUnknown_0300309C = -0x70 - slot->unk0e;
     gUnknown_03002028 = -0x70 - slot->unk0e;
     gUnknown_03001420 = slot->unk0e;
-    sub_08011AAC((void *)sub_08017EEC);
+    QueueVBlankCallback((void *)sub_08017EEC);
 }
+asm(".global sub_0801820C\n.thumb_set sub_0801820C, CoScreenWipe_Step\n");

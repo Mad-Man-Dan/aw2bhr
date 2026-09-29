@@ -8,7 +8,7 @@
  */
 
 /* The +0x58 slot is a whole word (`ldr`) and the `lsls #0x10; lsrs #0x10`
- * after it is the conversion to sub_08019818's declared `u16` first
+ * after it is the conversion to StartCoSpeechScript's declared `u16` first
  * parameter, not a field width -- the narrowing sits at the use, which is
  * docs/agbcc-codegen.md's copy-then-narrow readout. */
 struct Unk8071ADC
@@ -20,7 +20,7 @@ struct Unk8071ADC
 
 void sub_08071ADC(struct Unk8071ADC *proc)
 {
-    sub_08019818(proc->unk58, 0, 0);
+    StartCoSpeechScript(proc->unk58, 0, 0);
 }
 
 /* A front end onto StartPalFade that adds only the palette. See the

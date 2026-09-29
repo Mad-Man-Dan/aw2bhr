@@ -15,8 +15,9 @@ struct Unk080143EC
     /* 0x34 */ u16 unk34;
 };
 
-void sub_080143EC(struct Unk080143EC *s, u16 *dst)
+void TextWriterPutTilePair(struct Unk080143EC *s, u16 *dst)
 {
     dst[0] = s->unk34 | s->unk2c;
     dst[0x20] = (s->unk34 + 1) | s->unk2c;
 }
+asm(".global sub_080143EC\n.thumb_set sub_080143EC, TextWriterPutTilePair\n");

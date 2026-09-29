@@ -18,13 +18,13 @@ struct Unk80719EC
     /* 0x64 */ s16 unk64;
 };
 
-void sub_080719EC(struct Unk80719EC *proc)
+void DigitPicker_Loop(struct Unk80719EC *proc)
 {
     if (proc->unk64 != GetMapLock())
         return;
 
-    sub_08011A20(0x78, 0x50, proc->unk58);
-    sub_08011A20(0x78 - proc->unk5c * 8, 0x58, 0);
+    PutDecimalNumberSprites(0x78, 0x50, proc->unk58);
+    PutDecimalNumberSprites(0x78 - proc->unk5c * 8, 0x58, 0);
 
     if (gpKeySt->repeated & DPAD_LEFT)
     {
@@ -63,3 +63,4 @@ void sub_080719EC(struct Unk80719EC *proc)
     if (gpKeySt->pressed & 2)
         Proc_End(proc);
 }
+asm(".global sub_080719EC\n.thumb_set sub_080719EC, DigitPicker_Loop\n");

@@ -31,11 +31,11 @@ void CampaignIntro_WaitForButtonA(ProcPtr proc)
 {
     if (gpKeySt->pressed & 1)
     {
-        sub_08013C00();
-        sub_08013AEC();
-        sub_08014BC0(proc);
+        ClearBg0Tilemap();
+        BG_EnableSyncBG0();
+        StartDialogueBlock(proc);
         StartEventScript(gUnknown_084A0D58);
-        sub_0801A5B0(0);
+        LoadBg1WindowFrame(0);
         Proc_Break(proc);
     }
 }

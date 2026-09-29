@@ -25,9 +25,10 @@
  * added at run time. (Binding `&g[i]` instead is the third outcome, and gives
  * the `ldr r0,[r4,#0x4]` displacement form.) All four spellings probed. */
 
-bool8 sub_08015E80(u8 i)
+bool8 SlotOp_StartEventScript(u8 i)
 {
     StartEventScript(*(const u8 **)gUnknown_03001470[i].unk04);
     gUnknown_03001470[i].unk04 = (const u8 *)gUnknown_03001470[i].unk04 + 8;
     return 1;
 }
+asm(".global sub_08015E80\n.thumb_set sub_08015E80, SlotOp_StartEventScript\n");

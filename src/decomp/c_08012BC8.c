@@ -7,7 +7,7 @@
  * sub_08012BC8 @ 0x08012BC8
  */
 
-void sub_08012BC8(u16 *dst, u16 x, u16 y, u16 width, u16 height, u16 value)
+void FillTilemapRect(u16 *dst, u16 x, u16 y, u16 width, u16 height, u16 value)
 {
     u16 i;
     u16 j;
@@ -31,3 +31,4 @@ void sub_08012BC8(u16 *dst, u16 x, u16 y, u16 width, u16 height, u16 value)
         offset += 0x20;
     }
 }
+asm(".global sub_08012BC8\n.thumb_set sub_08012BC8, FillTilemapRect\n");

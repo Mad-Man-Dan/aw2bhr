@@ -28,14 +28,14 @@ struct Unk8012FB8
     /* 0x24 */ void *unk24;
 };
 /* Calls the slot's own +0x20 hook and, when it reports false, tears the slot
- * down through sub_08015C30. The +0x20 slot is the one sub_08012FB8 fills.
+ * down through ClearSlotScriptCallback. The +0x20 slot is the one sub_08012FB8 fills.
  *
  * `bl _call_via_r0` is a nullary indirect call, and `lsls #0x18; cmp #0` after
  * it is the u8 truth test agbcc emits for a narrow-returning callee -- so the
  * hook returns a byte, not an int.
  *
  * gUnknown_03001FBC is a declared s16 and is read here with a bare `ldrb`:
- * that is the s16 -> u8 conversion to sub_08015C30's declared parameter, which
+ * that is the s16 -> u8 conversion to ClearSlotScriptCallback's declared parameter, which
  * on little-endian is just the low byte, not evidence of a second type. */
 struct Unk8012FE8
 {
@@ -48,7 +48,7 @@ struct Unk8012FE8
  *
  * `bl _call_via_r0` is a NULLARY indirect call -- the trampoline's register
  * index counts the arguments, and gcc puts the pointer in the first free
- * scratch register. gUnknown_03002F1C is the one-shot latch sub_08013028 sets
+ * scratch register. gUnknown_03002F1C is the one-shot latch SetSlotScriptFlag sets
  * to 1; this consumes it and clears it in the same breath. */
 struct Unk08013008
 {
@@ -69,7 +69,7 @@ void sub_08012FB8(void (*hook)(void *), void *a, void *b)
 void sub_08012FE8(struct Unk8012FE8 *proc)
 {
     if (!proc->unk20())
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 
 void sub_08013008(struct Unk08013008 *p)

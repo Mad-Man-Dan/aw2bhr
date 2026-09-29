@@ -11,7 +11,7 @@
  * pairs (a full-width space in this encoding) by re-terminating the string.
  * The cursor is `u8`: both steps round-trip through `lsls #0x18; lsrs #0x18`,
  * and the final store folds the last `+ 2` into the strb displacement. */
-void sub_08013034(u8 *p)
+void TrimTrailingFullWidthSpaces(u8 *p)
 {
     u8 i;
 
@@ -30,3 +30,4 @@ void sub_08013034(u8 *p)
 
     p[i + 2] = 0;
 }
+asm(".global sub_08013034\n.thumb_set sub_08013034, TrimTrailingFullWidthSpaces\n");

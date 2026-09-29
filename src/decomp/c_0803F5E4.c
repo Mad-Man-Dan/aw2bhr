@@ -22,7 +22,7 @@ void sub_0803F5E4(int a1, int a2)
         src = gUnknown_080D0B44;
         table = gUnknown_080D1BC4;
     }
-    sub_08011E54(src, (void *)(0x06010000 + ((a2 & 0x3FF) << 5)), 0xB80);
+    RegisterDataMove(src, (void *)(0x06010000 + ((a2 & 0x3FF) << 5)), 0xB80);
     CpuFastSet(table + ((((sub_08042DE0(1) - 1) << 3) & 0x3FF) << 5),
                (void *)(0x06010000 + (((a2 + 0x5C) & 0x3FF) << 5)), 0x40);
     CpuFastSet(table + ((((sub_08042DE0(2) - 1) << 3) & 0x3FF) << 5),

@@ -7,15 +7,15 @@
  * sub_0803A53C @ 0x0803A53C
  */
 
-/* F002 shape, third callee: `sub_0801F024(fn, K)`. The pool word holds a
+/* F002 shape, third callee: `RunOrQueueDrawCallback(fn, K)`. The pool word holds a
  * FUNCTION address, not a global -- sub_0803A07C is a void(void) body, and
- * sub_0801F024 either calls it straight away or queues it. The `(void *)` cast
- * is the sub_08011AAC / sub_08011B34 house convention for handing a function to
+ * RunOrQueueDrawCallback either calls it straight away or queues it. The `(void *)` cast
+ * is the QueueVBlankCallback / AddVBlankHook house convention for handing a function to
  * a `void *` parameter in C89, and it is what makes the pool word relocate
  * against the symbol rather than becoming a plain constant.
- * sub_0801F024 returns a value (`pop {r1}; bx r1`); this wrapper discards it and
+ * RunOrQueueDrawCallback returns a value (`pop {r1}; bx r1`); this wrapper discards it and
  * is itself void (`pop {r0}`). */
 void sub_0803A53C(void)
 {
-    sub_0801F024((void *)sub_0803A07C, 1);
+    RunOrQueueDrawCallback((void *)sub_0803A07C, 1);
 }

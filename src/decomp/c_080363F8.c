@@ -7,7 +7,7 @@
  * sub_080363F8 @ 0x080363F8
  */
 
-/* The eight bytes sub_08015638 returns are an OBJ attribute set (see
+/* The eight bytes GetSlotSpriteAttrs returns are an OBJ attribute set (see
  * struct OamData); this view reads attr2's 10-bit tile number from the
  * second word. The ROM's `lsls r5,r1,#22` kept across the call, then
  * `lsrs #22` and `lsrs #17` from it, are three reads of this bitfield, not
@@ -35,14 +35,14 @@ void sub_080363F8(s16 index, u16 *attributes)
     u16 distance;
     u16 remainder;
 
-    obj.vec = sub_08015638(index);
+    obj.vec = GetSlotSpriteAttrs(index);
     distance = (attributes[2] - obj.f.tileNum) & 0x3ff;
     remainder = distance % 9;
     attributes[2] = (attributes[2] & 0xfc00) + remainder + obj.f.tileNum;
     if (remainder == 0)
     {
         u8 **source = (u8 **)(gUnknown_03001470[index].unk18 + 0x48);
-        sub_08011E54(*source + distance * 0x20,
+        RegisterDataMove(*source + distance * 0x20,
                       (void *)(0x06010000 + obj.f.tileNum * 0x20), 0x120);
     }
 }

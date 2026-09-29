@@ -17,7 +17,7 @@ void sub_08063BE0(struct Unk8063BE0 *p)
 {
     if (gUnknown_0202F0E8[2] != 0)
     {
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
     else
     {
@@ -35,6 +35,6 @@ void sub_08063BE0(struct Unk8063BE0 *p)
                      gUnknown_085806F2, p->unk1c * 4);
 
         if (p->unk44 <= 1)
-            sub_08015C30(gUnknown_03001FBC);
+            ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

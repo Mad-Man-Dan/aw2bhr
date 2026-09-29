@@ -139,6 +139,6 @@ void sub_0802B868(void)
 void sub_0802B8C4(s16 a1, s16 a2, u16 a3)
 {
     PutOamHi(a1, a2 | 0x400, gUnknown_0849A22C[1], (a3 * 4) | 0xf000);
-    sub_08011E54((void *)gUnknown_0810E9E0,
+    RegisterDataMove((void *)gUnknown_0810E9E0,
                  (void *)(0x06010000 + ((a3 * 4 + 0x1DA) & 0x3ff) * 0x20), 0x80);
 }

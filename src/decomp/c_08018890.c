@@ -7,10 +7,11 @@
  * sub_08018890 @ 0x08018890
  */
 
-bool8 sub_08018890(s16 a)
+bool8 EventOp_SetFramePaletteSlot8(s16 a)
 {
     gUnknown_03002F08.unk00 = 8;
-    sub_0801A57C(gUnknown_030033EC);
+    LoadArmyObjPalette(gUnknown_030033EC);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08018890\n.thumb_set sub_08018890, EventOp_SetFramePaletteSlot8\n");

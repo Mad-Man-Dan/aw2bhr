@@ -18,11 +18,11 @@ int GetCenteredTextX(const char *s)
 asm(".global sub_08034A44\n.thumb_set sub_08034A44, GetCenteredTextX\n");
 
 /* Draw `s` centred on row `y`. Both shift pairs are the int -> u16 conversions
- * sub_080119A0's first two parameters force, not evidence of narrow returns or
+ * PutAsciiStringSprites's first two parameters force, not evidence of narrow returns or
  * narrow parameters here: `adds r4, r0, #0` with a bare prologue says `y`
  * arrives wide. */
 void PutCenteredAsciiStringSprites(int y, const char *s)
 {
-    sub_080119A0(GetCenteredTextX(s), y, s);
+    PutAsciiStringSprites(GetCenteredTextX(s), y, s);
 }
 asm(".global sub_08034A58\n.thumb_set sub_08034A58, PutCenteredAsciiStringSprites\n");

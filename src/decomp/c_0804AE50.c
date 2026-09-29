@@ -18,6 +18,6 @@ void sub_0804AE50(void)
     if (sub_08019260() == 0)
     {
         sub_080152C0((s32)gUnknown_084C3D7C, 0);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

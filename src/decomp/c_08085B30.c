@@ -43,7 +43,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     SyncAllBgTilemaps();
 
     sub_0801F114();
-    sub_0801F150(2, (void *)0x06010000, 0xf0, 0x14);
+    InitTilePool(2, (void *)0x06010000, 0xf0, 0x14);
 
     LoadTilePoolGraphic(0x43);
     LoadTilePoolGraphic(0x44);
@@ -55,7 +55,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     for (i = 0; i <= 9; i++)
         LoadTilePoolGraphic(i + 0x55);
 
-    sub_0801F150(4, (void *)((gUnknown_03002B6C.bits.chr_block << 14) + 0x06000000), 0x370, 9);
+    InitTilePool(4, (void *)((gUnknown_03002B6C.bits.chr_block << 14) + 0x06000000), 0x370, 9);
 
     LoadTilePoolGraphic(0xb8);
     LoadTilePoolGraphic(0xb9);
@@ -63,7 +63,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     LoadTilePoolGraphic(0xbb);
 
     sub_08087938();
-    sub_0801B780(0);
+    InitTextTileCache(0);
     sub_08037750(6);
 
     if (gPlaySt.gameMode == 2)
@@ -113,7 +113,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
         sub_0801A368(0x12, 0, 0xd, 4, gUnknown_08499580, 0);
     }
 
-    sub_08013B0C();
+    BG_EnableSyncBG2();
     sub_080116E8();
 
     ApplyPaletteExt(gUnknown_084892EC, 0x220, 0x20);

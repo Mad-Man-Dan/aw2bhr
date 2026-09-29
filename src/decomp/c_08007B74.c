@@ -14,7 +14,7 @@ void sub_08007B74(void)
 {
     if (gActiveMap->spriteId != -1)
     {
-        sub_08015328(gActiveMap->spriteId);
+        EndSlotScriptAt(gActiveMap->spriteId);
         gActiveMap->spriteId = 0xFF;
     }
 }

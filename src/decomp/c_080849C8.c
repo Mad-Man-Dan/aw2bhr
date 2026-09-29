@@ -65,9 +65,9 @@ void CoInfoScreen_LoadGraphics(ProcPtr parent)
     sub_08043B44(8);
     LoadCoNameGraphic(gPlayers[gUnknown_030033EC].co, 0xAB * 4);
     sub_0801F114();
-    sub_0801F150(0, (void *)0x06010000, 0xB1 * 4, 0x12);
-    sub_0801F150(1, (void *)0x06010000, 0xB3 * 4, 0x13);
-    sub_0801F150(2, (void *)0x06010000, 0xB7 * 4, 0x14);
+    InitTilePool(0, (void *)0x06010000, 0xB1 * 4, 0x12);
+    InitTilePool(1, (void *)0x06010000, 0xB3 * 4, 0x13);
+    InitTilePool(2, (void *)0x06010000, 0xB7 * 4, 0x14);
     LoadTilePoolGraphic(0x13);
     LoadTilePoolGraphic(0x14);
 
@@ -105,7 +105,7 @@ void CoInfoScreen_LoadGraphics(ProcPtr parent)
     LoadTilePoolGraphic(0x92);
 
     Proc_Start(ProcScr_CoInfo, savedParent);
-    sub_08011B34((void *)sub_08043590);
+    AddVBlankHook((void *)sub_08043590);
 }
 
 asm(".global sub_080849C8\n.thumb_set sub_080849C8, CoInfoScreen_LoadGraphics\n");

@@ -91,7 +91,7 @@ void Fade_CommonCallBack(void)
     }
     while (0);
     gPal[0] = 0;
-    sub_080135A4();
+    EnablePaletteSync();
     gDispIo.disp_ct.bg0_enable = 0;
     gDispIo.disp_ct.bg1_enable = 0;
     gDispIo.disp_ct.bg2_enable = 0;

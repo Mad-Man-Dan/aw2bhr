@@ -38,5 +38,5 @@ void sub_0804FCA4(void)
                                    + c * sizeof(struct Unk02029A10Group)
                                    + (u8 *)gUnknown_02029A10);
     entry->x += gUnknown_08553B28[c][w];
-    sub_080155C0(gUnknown_03001FBC, entry->x - *p1, entry->y - *p2);
+    SetSlotSpritePosition(gUnknown_03001FBC, entry->x - *p1, entry->y - *p2);
 }

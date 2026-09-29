@@ -33,9 +33,9 @@ void sub_0806B708(struct Unk0806B708 *proc)
 {
     u32 fill;
 
-    sub_0801237C();
-    sub_08012358();
-    sub_08012C58(gUnknown_0849D16C);
+    ResetWindowShadows();
+    SetDefaultColorEffects();
+    SetupBackgrounds(gUnknown_0849D16C);
     gDispIo.disp_ct.obj_mapping = 1;
     gPal[1] = 0;
     ApplyPalettes(gUnknown_0822DE80, 0x10, 1);
@@ -43,7 +43,7 @@ void sub_0806B708(struct Unk0806B708 *proc)
     CpuFastSet(&fill,
                (void *)(0x06005000 + gUnknown_03001FE8.bits.chr_block * 0x4000),
                0x01000008);
-    sub_08072C28(gBG1TilemapBuffer, 0x400, 0x280);
+    FillHalfwordsUnsigned(gBG1TilemapBuffer, 0x400, 0x280);
     Decompress(gUnknown_081918A4, (void *)0x06016000);
     SetDispEnable(0, 1, 0, 1, 1);
     gUnknown_03001FE8.bits.priority = 0;
@@ -55,6 +55,6 @@ void sub_0806B708(struct Unk0806B708 *proc)
     proc->unk2a = 0;
     proc->unk30 = 0;
     sub_0806AF44(proc);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
     Proc_Start(gUnknown_0858193C, proc);
 }

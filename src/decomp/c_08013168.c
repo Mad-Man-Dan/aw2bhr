@@ -10,7 +10,7 @@
 #include "hardware.h"
 #include "proc.h"
 /*
- * sub_08013168 -- the start-up body of the gUnknown_0848936C process: clear its
+ * WhiteFlash_Init -- the start-up body of the gUnknown_0848936C process: clear its
  * three word fields and set the blend registers up.
  *
  * unk64 chooses the starting blend level in gUnknown_03001FFC -- 0x10 when it
@@ -35,7 +35,7 @@ struct Unk08013168Proc
     /* 64 */ s16 unk64;
 };
 
-void sub_08013168(struct Unk08013168Proc *proc)
+void WhiteFlash_Init(struct Unk08013168Proc *proc)
 {
     proc->unk54 = 0;
     proc->unk58 = 0;
@@ -61,3 +61,4 @@ void sub_08013168(struct Unk08013168Proc *proc)
     gUnknown_030030E0.bits.target1_enable_bd = 1;
     gUnknown_030030E0.bits.target2_enable_bd = 0;
 }
+asm(".global sub_08013168\n.thumb_set sub_08013168, WhiteFlash_Init\n");

@@ -26,7 +26,7 @@ void TankHitEffect_Loop(void)
 
     if (gUnknown_02029A10[a].entries[b].unk00 == 0
         && (r = gUnknown_085D6A48[gUnknown_03004580[a][1]])[1] == 1)
-        sub_08015328(gUnknown_03001FBC);
+        EndSlotScriptAt(gUnknown_03001FBC);
 
     sub_080513FC(a, b, gUnknown_03001FBC);
 }

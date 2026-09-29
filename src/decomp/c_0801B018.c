@@ -59,7 +59,7 @@ struct Unk02002000
  * definition wins over anything decided at a call site, so the call sites
  * convert rather than the declarations moving. Both prototypes look like they
  * WANT retyping -- ReadFlashIfPresent's third parameter is a pointer at every known
- * call, and gUnknown_0200CC34 is what sub_0808AC44 writes a callback through --
+ * call, and gUnknown_0200CC34 is what SetFlashTimerIntr writes a callback through --
  * but that is a separate change with its own re-verification and it was not
  * made here. */
 int ReadAndValidateSaveSector(u16 a)

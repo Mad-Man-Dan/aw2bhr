@@ -7,7 +7,7 @@
  * sub_080156FC @ 0x080156FC
  */
 
-void sub_080156FC(s16 a, u16 b)
+void SetSlotSpriteScriptIndex(s16 a, u16 b)
 {
     struct Unk0200E438 *p = &gUnknown_0200E438[gUnknown_03001470[a].unk26];
     u32 v;
@@ -17,3 +17,4 @@ void sub_080156FC(s16 a, u16 b)
     p->unk04 = v;
     p->unk08 = v;
 }
+asm(".global sub_080156FC\n.thumb_set sub_080156FC, SetSlotSpriteScriptIndex\n");

@@ -27,7 +27,7 @@ void sub_0806B0B4(struct Unk6B050Proc *proc)
     if (!(proc->unk58 & 3))
     {
         sub_080718F0();
-        sub_080135A4();
+        EnablePaletteSync();
     }
 
     proc->unk58--;
@@ -49,7 +49,7 @@ void sub_0806B0F4(struct Unk6B050Proc *proc)
     if (!(proc->unk58 & 1))
     {
         sub_080718F0();
-        sub_080135A4();
+        EnablePaletteSync();
     }
 
     proc->unk58--;

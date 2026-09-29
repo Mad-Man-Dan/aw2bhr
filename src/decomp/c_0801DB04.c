@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_0801DB04(s16 a1)
+void UpdateSpriteScriptAffine(s16 a1)
 {
     struct Unk0200E438 *e = &gUnknown_0200E438[a1];
     s16 *ang;
@@ -31,3 +31,4 @@ void sub_0801DB04(s16 a1)
                  Div(gSinLut[*ang & 0xFF] * 16, sx == 0 ? 2 : sx),
                  Div(gSinLut[(*ang & 0xFF) + 0x40] * 16, sy == 0 ? 2 : sy));
 }
+asm(".global sub_0801DB04\n.thumb_set sub_0801DB04, UpdateSpriteScriptAffine\n");

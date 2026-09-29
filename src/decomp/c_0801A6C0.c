@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_0801A6C0 -- clear the table gUnknown_0808E5C8 points at.
+ * ResetSpriteRequestQueue -- clear the table gUnknown_0808E5C8 points at.
  *
  * .unk00 of all 0x81 entries goes to 0, then gUnknown_030020A8's first two
  * members and the table's own .unk04 are cleared.
@@ -28,7 +28,7 @@
  *     compiler put the table pointer and the zero in the same two registers the
  *     original uses; without it the two swap.
  */
-bool8 sub_0801A6C0(void)
+bool8 ResetSpriteRequestQueue(void)
 {
     struct Unk0808E5C8 **pp;
     struct Unk0808E5C8 *p;
@@ -48,3 +48,4 @@ bool8 sub_0801A6C0(void)
     gUnknown_030020A8.unk00 = 0;
     (*pp)->unk04 = NULL;
 }
+asm(".global sub_0801A6C0\n.thumb_set sub_0801A6C0, ResetSpriteRequestQueue\n");

@@ -9,10 +9,10 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* Brighten fade step, the reverse ramp of sub_0801320C: Interpolate's
+/* Brighten fade step, the reverse ramp of WhiteFlash_FadeIn: Interpolate's
  * endpoints are swapped (0x10 -> 0 instead of 0 -> 0x10), the counter is
  * at +0x5c and the signed-halfword duration at +0x68. The counter bump
- * is inside the assignment for the same reason as in sub_0801320C. */
+ * is inside the assignment for the same reason as in WhiteFlash_FadeIn. */
 struct Unk080132B0
 {
     /* 0x00 */ u8 filler_00[0x5c];
@@ -21,7 +21,7 @@ struct Unk080132B0
     /* 0x68 */ s16 unk68;
 };
 
-void sub_080132B0(struct Unk080132B0 *proc)
+void WhiteFlash_FadeOut(struct Unk080132B0 *proc)
 {
     if (proc->unk68 == 0)
     {
@@ -38,3 +38,4 @@ void sub_080132B0(struct Unk080132B0 *proc)
             Proc_Break(proc);
     }
 }
+asm(".global sub_080132B0\n.thumb_set sub_080132B0, WhiteFlash_FadeOut\n");

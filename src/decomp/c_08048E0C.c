@@ -10,8 +10,8 @@
 #include "hardware.h"
 
 /* Same family as sub_080039E4/sub_08003A80 but with the two library calls
- * split around the window setup: sub_0801237C first, the gDispIo/030030A4/
- * 030030DC block, then sub_08012358 and only afterwards the blend groups.
+ * split around the window setup: ResetWindowShadows first, the gDispIo/030030A4/
+ * 030030DC block, then SetDefaultColorEffects and only afterwards the blend groups.
  *
  * No raw-halfword write and no zero anywhere in the function -- every constant
  * that appears twice (2, 4, 8, 0x10, 0x20) is materialised once and held, and
@@ -19,7 +19,7 @@
  * reuses, which is why that store cannot move. */
 void sub_08048E0C(void)
 {
-    sub_0801237C();
+    ResetWindowShadows();
 
     gDispIo.disp_ct.win0_enable = 1;
 
@@ -41,7 +41,7 @@ void sub_08048E0C(void)
     gUnknown_030030DC.bits.win0_enable_obj = 1;
     gUnknown_030030DC.bits.win0_enable_blend = 1;
 
-    sub_08012358();
+    SetDefaultColorEffects();
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg1 = 1;

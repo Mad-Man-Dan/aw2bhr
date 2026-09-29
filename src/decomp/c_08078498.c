@@ -10,7 +10,7 @@
 #include "proc.h"
 /* Reuses src/decomp/c_080784E4.c's proc layout exactly -- the three `s32`s at
  * +0x58/+0x5c/+0x60 that sub_080784E4 stores are what this method reads back.
- * The three shift pairs at the sub_08019818 call are the narrowing that
+ * The three shift pairs at the StartCoSpeechScript call are the narrowing that
  * callee's own prologue demands (u16, u8, u8); they are NOT casts in this
  * source, and they are what proves the proc fields are wider than the
  * parameters rather than narrow themselves. */
@@ -26,6 +26,6 @@ struct Unk80784E4
 void sub_08078498(struct Unk80784E4 *proc)
 {
     gUnknown_03002F08.unk00 = 0;
-    sub_08014BC0(proc);
-    sub_08019818(proc->unk_58, proc->unk_5c, proc->unk_60);
+    StartDialogueBlock(proc);
+    StartCoSpeechScript(proc->unk_58, proc->unk_5c, proc->unk_60);
 }

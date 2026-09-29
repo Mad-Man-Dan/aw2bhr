@@ -12,6 +12,6 @@
 
 void sub_080393AC(void)
 {
-    sub_08016824(gUnknown_03001FBC);
-    sub_08016944(gUnknown_03001FBC);
+    EnableSlotSpriteAffine(gUnknown_03001FBC);
+    SetSlotSpriteDoubleSize(gUnknown_03001FBC);
 }

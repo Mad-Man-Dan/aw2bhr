@@ -14,7 +14,7 @@
 #define P ((struct Unk8019A60 *)arg)
 
 /*
- * sub_08019A60 -- act on a button press in an option list.
+ * Menu_HandleButtons -- act on a button press in an option list.
  *
  * `arg` is the list object (struct Unk8019A60). .unk42 is the row the cursor is
  * on, .unk31 maps a row to an item index, .unk20 is the array of item records
@@ -44,7 +44,7 @@
  *     byte-neutral as far as was tested, and is kept because nothing has
  *     re-derived it.
  */
-void sub_08019A60(void *arg)
+void Menu_HandleButtons(void *arg)
 {
     long new_var;
     void (*fn)(u8, u8, u8);
@@ -94,3 +94,4 @@ void sub_08019A60(void *arg)
         sub_0803B4DC(0x66);
     }
 }
+asm(".global sub_08019A60\n.thumb_set sub_08019A60, Menu_HandleButtons\n");

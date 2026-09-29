@@ -40,7 +40,7 @@ void sub_0803B0EC(void)
  * the INCREMENTED object. The `lsls #0x10; asrs #0x10` on that value is what
  * types unk1e `s16` -- see the member comment in include/unknown-globals.h.
  * The `ldrb` on the `s16` global gUnknown_03001FBC is the s16 -> u8 conversion
- * for sub_08015C30's declared `u8` parameter, folded into the load.
+ * for ClearSlotScriptCallback's declared `u8` parameter, folded into the load.
  * `pop {r0}; bx r0` -> void. */
 
 void sub_0803B118(struct Unk03001470 *a)
@@ -50,7 +50,7 @@ void sub_0803B118(struct Unk03001470 *a)
         if (++a->unk1e > 0x5a)
         {
             StartDebugBackupUtility();
-            sub_08015C30(gUnknown_03001FBC);
+            ClearSlotScriptCallback(gUnknown_03001FBC);
         }
     }
     else

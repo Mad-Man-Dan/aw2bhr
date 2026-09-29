@@ -15,7 +15,7 @@
 
 
 /* Removes AnimateMapPreviewPalette from the 16-slot gUnknown_03000000 callback list.
- * sub_08011B5C is the remover and sub_08011B34 the inserter, both `void *`,
+ * RemoveVBlankHook is the remover and AddVBlankHook the inserter, both `void *`,
  * so a function argument casts -- same spelling as sub_080111AC's
  * registration. AnimateMapPreviewPalette is not promoted yet; `void (void)` is read off
  * its own bytes (`push {lr}` ... `pop {r0}; bx r0`, no argument register
@@ -24,6 +24,6 @@
 
 void RemoveMapPreviewPaletteHook(void)
 {
-    sub_08011B5C((void *)AnimateMapPreviewPalette);
+    RemoveVBlankHook((void *)AnimateMapPreviewPalette);
 }
 asm(".global sub_08037780\n.thumb_set sub_08037780, RemoveMapPreviewPaletteHook\n");

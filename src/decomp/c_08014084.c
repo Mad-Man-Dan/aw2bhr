@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08014084 -- run one command of the text script at p->unk20 and say what
+ * TextWriterStepCommand -- run one command of the text script at p->unk20 and say what
  * the caller should do next.
  *
  * p is the text writer's state. unk20 is the read position in the script, unk28
@@ -81,7 +81,7 @@ struct Unk8014084Slot
     /* 0x30 */ u16 unk30;
 };
 
-s16 sub_08014084(struct Unk08014074 *p, u16 *dst)
+s16 TextWriterStepCommand(struct Unk08014074 *p, u16 *dst)
 {
     u8 *s;
     u8 *s2;
@@ -114,7 +114,7 @@ entry_done:
             return 0;
         p->unk20 = (u8 *)p->unk24;
         p->unk24 = 0;
-        return sub_08014084(p, dst);
+        return TextWriterStepCommand(p, dst);
 
     case 20:
     case 22:
@@ -232,3 +232,4 @@ entry_done:
 
     return 1;
 }
+asm(".global sub_08014084\n.thumb_set sub_08014084, TextWriterStepCommand\n");

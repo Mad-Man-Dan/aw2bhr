@@ -7,10 +7,11 @@
  * sub_08014ED4 @ 0x08014ED4
  */
 
-/* The free half of the sub_08014E44 pair; no early-out block because there is
+/* The free half of the HeapMalloc pair; no early-out block because there is
  * nothing to return. `pop {r0}; bx r0` makes it void. */
-void sub_08014ED4(void *p)
+void HeapFree(void *p)
 {
     if (gUnknown_03000050 != -1)
-        sub_08014E68(gUnknown_03000050, p);
+        HeapFreeBlock(gUnknown_03000050, p);
 }
+asm(".global sub_08014ED4\n.thumb_set sub_08014ED4, HeapFree\n");

@@ -16,5 +16,5 @@
 void sub_080736D8(void)
 {
     Proc_EndEach(gUnknown_0861418C);
-    sub_08011AAC((void *)sub_080735B0);
+    QueueVBlankCallback((void *)sub_080735B0);
 }

@@ -46,7 +46,7 @@ void sub_0807B884(ProcPtr proc)
     Decompress(gUnknown_0822FEF0, (void *)((gUnknown_03001FE8.bits.chr_block << 14) + 0x06000000));
     Decompress(gUnknown_0822F9AC, gBG1TilemapBuffer);
 
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 
     ApplyPaletteExt(gUnknown_0822FE50, 0x20, 0xa0);
 

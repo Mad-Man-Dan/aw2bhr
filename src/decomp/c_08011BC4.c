@@ -7,7 +7,8 @@
  * sub_08011BC4 @ 0x08011BC4
  */
 
-s16 sub_08011BC4(void)
+s16 GetCopyQueueCount(void)
 {
     return gUnknown_03002F30;
 }
+asm(".global sub_08011BC4\n.thumb_set sub_08011BC4, GetCopyQueueCount\n");

@@ -18,7 +18,7 @@
  * gUnknown_08499590 -- the fifth of that set (see include/unknown-globals.h).
  *
  * The first two parameters are dead here and cost no instruction: they are
- * already in r0/r1 at entry and sub_08013C00 is declared nullary, so the
+ * already in r0/r1 at entry and ClearBg0Tilemap is declared nullary, so the
  * forwarding is invisible either way.  Only the third is narrowed at entry
  * (`lsls #0x10; lsrs #0x10`) and parked in r8 across the loop for the final
  * `strh` into the slot sub_080152EC hands back. */
@@ -27,7 +27,7 @@ void ShowRangeOverlay(int a1, int a2, u16 a3)
     u16 x;
     u16 y;
 
-    sub_08013C00();
+    ClearBg0Tilemap();
 
     for (y = 0; y <= 0xa; y++)
     {
@@ -38,7 +38,7 @@ void ShowRangeOverlay(int a1, int a2, u16 a3)
         }
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
     gUnknown_03000559 = 1;
     sub_080152EC(gUnknown_08499B4C, 0xff)->unk1e = a3;
 }

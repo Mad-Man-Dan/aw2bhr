@@ -103,7 +103,7 @@ void sub_080867BC(struct Unk080867BCProc *proc)
             gUnknown_03001FF8 = Interpolate(1, 0, proc->unk52 * 72, proc->unk2c, 8);
             break;
         case 8:
-            sub_0801B780(0);
+            InitTextTileCache(0);
             break;
         case 9:
             gUnknown_03001FF8 = proc->unk52 * 72;

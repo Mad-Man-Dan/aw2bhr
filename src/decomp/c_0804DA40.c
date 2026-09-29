@@ -38,7 +38,7 @@
  * park never named. The park listed FigureTileHook_CruiserVariant2 and FigureTileHook_Cruiser as "the
  * twins" and recorded that nothing in either transfers. The actual nearest
  * matched relative is LanderPart_StreamHook (src/decomp/c_0804CE24.c): same
- * prototype, same sub_0801566C readout, the SAME 0x38 divisor and the SAME
+ * prototype, same CopySlotSpriteAttrs readout, the SAME 0x38 divisor and the SAME
  * 0x700 stride, differing only in the gUnknown_02029668 column ([4] vs [3])
  * and the VRAM base (0x06011000 vs 0x06010C00). It has been matched with
  * `u16 d` the whole time. Reading it settled a four-wave park in one probe.
@@ -71,7 +71,7 @@ void CruiserPart2_StreamHook(s16 a, u16 *p)
     u16 f;
     u16 side;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
     d = (p[2] - oam.tileNum) & 0x3ff;
     e = d / 0x38;
     f = d % 0x38;
@@ -79,7 +79,7 @@ void CruiserPart2_StreamHook(s16 a, u16 *p)
     p[2] = (p[2] & 0xfc00) + f + oam.tileNum;
 
     if (a == gUnknown_02029668[side][3] && d != gUnknown_03001470[a].unk28)
-        sub_08011E54((u8 *)gUnknown_08552FB0[side] + e * 0x700,
+        RegisterDataMove((u8 *)gUnknown_08552FB0[side] + e * 0x700,
                      (void *)(0x06010C00 + (side << 13)), 0x700);
 }
 asm(".global sub_0804DA40\n.thumb_set sub_0804DA40, CruiserPart2_StreamHook\n");

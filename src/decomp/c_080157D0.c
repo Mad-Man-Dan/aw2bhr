@@ -7,7 +7,8 @@
  * sub_080157D0 @ 0x080157D0
  */
 
-u16 sub_080157D0(s16 a)
+u16 GetSlotSpriteScaleX(s16 a)
 {
     return gUnknown_0200E438[gUnknown_03001470[a].unk26].unk3c;
 }
+asm(".global sub_080157D0\n.thumb_set sub_080157D0, GetSlotSpriteScaleX\n");

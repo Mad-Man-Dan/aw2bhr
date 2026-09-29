@@ -24,9 +24,10 @@ struct Unk80719D4
     /* 0x64 */ s16 unk64;
 };
 
-void sub_080719D4(struct Unk80719D4 *proc)
+void DigitPicker_Init(struct Unk80719D4 *proc)
 {
     proc->unk58 = 0;
     proc->unk5c = 0;
     proc->unk64 = GetMapLock();
 }
+asm(".global sub_080719D4\n.thumb_set sub_080719D4, DigitPicker_Init\n");

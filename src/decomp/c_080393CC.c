@@ -19,16 +19,16 @@ void sub_080393CC(void)
 {
     s16 v;
 
-    sub_080156FC(gUnknown_03001FBC, 0);
+    SetSlotSpriteScriptIndex(gUnknown_03001FBC, 0);
 
-    v = sub_080157D0(gUnknown_03001FBC);
+    v = GetSlotSpriteScaleX(gUnknown_03001FBC);
     v += 0x20;
 
-    sub_080157A4(gUnknown_03001FBC, v);
-    sub_080157F4(gUnknown_03001FBC, v);
+    SetSlotSpriteScaleX(gUnknown_03001FBC, v);
+    SetSlotSpriteScaleY(gUnknown_03001FBC, v);
 
     if (v == 0x200)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 
 /* The parameterised twin of src/decomp/c_0803B264.c's sub_0803B2BC: identical
@@ -54,17 +54,17 @@ void sub_0803941C(int a, int b)
     s8 i;
     int t;
 
-    i = sub_08015438(gUnknown_0849D73C, 0, gUnknown_0849D730, 0, 0);
+    i = StartSlotScriptWithSprite(gUnknown_0849D73C, 0, gUnknown_0849D730, 0, 0);
 
-    v = sub_08015638(i);
+    v = GetSlotSpriteAttrs(i);
     v.unk04 = (v.unk04 & 0xFFFF0FFF) | 0x3000;
     t = (b * 8 + 0x30A) & 0x3FF;
     v.unk04 = (v.unk04 & 0xFFFFFC00) | t;
-    sub_08015608(i, v);
+    SetSlotSpriteAttrs(i, v);
 
-    sub_080155C0(i, a + 0x14, 0x50);
-    sub_08016824(i);
-    sub_08016944(i);
-    sub_080157A4(i, 0x200);
-    sub_080157F4(i, 0x200);
+    SetSlotSpritePosition(i, a + 0x14, 0x50);
+    EnableSlotSpriteAffine(i);
+    SetSlotSpriteDoubleSize(i);
+    SetSlotSpriteScaleX(i, 0x200);
+    SetSlotSpriteScaleY(i, 0x200);
 }

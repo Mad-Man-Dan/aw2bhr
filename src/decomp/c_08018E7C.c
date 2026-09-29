@@ -7,12 +7,13 @@
  * sub_08018E7C @ 0x08018E7C, sub_08018EB0 @ 0x08018EB0
  */
 
-bool8 sub_08018E7C(s16 a)
+bool8 EventOp_EndCursorScript(s16 a)
 {
     EndEventScript(gUnknown_0848A378);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08018E7C\n.thumb_set sub_08018E7C, EventOp_EndCursorScript\n");
 
 bool8 sub_08018EB0(s16 a)
 {

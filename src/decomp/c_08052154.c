@@ -33,7 +33,7 @@ void AirBlastEffect_Init(void)
     u16 x;
     u16 y;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     gUnknown_03001470[gUnknown_03001FBC].unk28 = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
@@ -48,7 +48,7 @@ void AirBlastEffect_Init(void)
         + gUnknown_08552D80[3].unk02[gUnknown_0300453C];
     y = gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y;
 
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
 asm(".global sub_08052154\n.thumb_set sub_08052154, AirBlastEffect_Init\n");

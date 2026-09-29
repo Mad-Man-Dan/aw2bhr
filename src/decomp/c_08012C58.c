@@ -9,13 +9,13 @@
 
 #include "hardware.h"
 /*
- * sub_08012C58 -- set all four backgrounds up from one descriptor and blank
+ * SetupBackgrounds -- set all four backgrounds up from one descriptor and blank
  * them.
  *
  * arg points at sixteen words, four per background: unk00 and unk04 are that
  * background's tile-data and tilemap addresses in VRAM, unk08 is the tile
- * number used to blank the map, and unk0c is a fourth value. sub_080122EC
- * resets things first; then sub_08012C30, sub_08012C1C and sub_08012C48 write
+ * number used to blank the map, and unk0c is a fourth value. ResetBgShadows
+ * resets things first; then SetBgCntChrBlock, SetBgCntTilemapBlock and SetBgCntScreenSize write
  * each background's control shadow -- gUnknown_03002B6C, gUnknown_03001FE8,
  * gUnknown_030030B4 and gUnknown_0300251C for BG0 to BG3.
  *
@@ -67,7 +67,7 @@ struct Unk8012C58
     /* 0x3c */ u32 unk3c;
 };
 
-void sub_08012C58(void *arg)
+void SetupBackgrounds(void *arg)
 {
   struct Unk8012C58 *s = arg;
   u16 *p0;
@@ -75,20 +75,20 @@ void sub_08012C58(void *arg)
   u16 *p2;
   u16 *p3;
   u16 i;
-  sub_080122EC();
-  sub_08012C30((struct Unk8012C30 *) (&gUnknown_03002B6C), s->unk00);
-  sub_08012C1C((struct Unk8012C30 *) (&gUnknown_03002B6C), s->unk04);
-  sub_08012C48((struct Unk8012C30 *) (&gUnknown_03002B6C), s->unk0c);
-  sub_08012C30((struct Unk8012C30 *) (&gUnknown_03001FE8), s->unk10);
-  sub_08012C1C((struct Unk8012C30 *) (&gUnknown_03001FE8), s->unk14);
-  sub_08012C48((struct Unk8012C30 *) (&gUnknown_03001FE8), s->unk1c);
-  sub_08012C30((struct Unk8012C30 *) (&gUnknown_030030B4), s->unk20);
+  ResetBgShadows();
+  SetBgCntChrBlock((struct Unk8012C30 *) (&gUnknown_03002B6C), s->unk00);
+  SetBgCntTilemapBlock((struct Unk8012C30 *) (&gUnknown_03002B6C), s->unk04);
+  SetBgCntScreenSize((struct Unk8012C30 *) (&gUnknown_03002B6C), s->unk0c);
+  SetBgCntChrBlock((struct Unk8012C30 *) (&gUnknown_03001FE8), s->unk10);
+  SetBgCntTilemapBlock((struct Unk8012C30 *) (&gUnknown_03001FE8), s->unk14);
+  SetBgCntScreenSize((struct Unk8012C30 *) (&gUnknown_03001FE8), s->unk1c);
+  SetBgCntChrBlock((struct Unk8012C30 *) (&gUnknown_030030B4), s->unk20);
   p3 = (u16 *) (s->unk30 + (s->unk38 << 5));
-  sub_08012C1C((struct Unk8012C30 *) (&gUnknown_030030B4), s->unk24);
-  sub_08012C48((struct Unk8012C30 *) (&gUnknown_030030B4), s->unk2c);
-  sub_08012C30((struct Unk8012C30 *) (&gUnknown_0300251C), s->unk30);
-  sub_08012C1C((struct Unk8012C30 *) (&gUnknown_0300251C), s->unk34);
-  sub_08012C48((struct Unk8012C30 *) (&gUnknown_0300251C), s->unk3c);
+  SetBgCntTilemapBlock((struct Unk8012C30 *) (&gUnknown_030030B4), s->unk24);
+  SetBgCntScreenSize((struct Unk8012C30 *) (&gUnknown_030030B4), s->unk2c);
+  SetBgCntChrBlock((struct Unk8012C30 *) (&gUnknown_0300251C), s->unk30);
+  SetBgCntTilemapBlock((struct Unk8012C30 *) (&gUnknown_0300251C), s->unk34);
+  SetBgCntScreenSize((struct Unk8012C30 *) (&gUnknown_0300251C), s->unk3c);
   gDispIo.disp_ct.mode = 0;
   gDispIo.disp_ct.bg0_enable = 1;
   gDispIo.disp_ct.bg1_enable = 1;
@@ -118,8 +118,9 @@ void sub_08012C58(void *arg)
     p0[i] = (p1[i] = (p2[i] = (p3[i] = gUnknown_08489334[i])));
   }
 
-  sub_08011C68(gBG0TilemapBuffer, (void *) s->unk04, 0x800);
-  sub_08011C68(gBG1TilemapBuffer, (void *) s->unk14, 0x800);
-  sub_08011C68(gBG2TilemapBuffer, (void *) s->unk24, 0x800);
-  sub_08011C68(gBG3TilemapBuffer, (void *) s->unk34, 0x800);
+  CpuCopyAuto(gBG0TilemapBuffer, (void *) s->unk04, 0x800);
+  CpuCopyAuto(gBG1TilemapBuffer, (void *) s->unk14, 0x800);
+  CpuCopyAuto(gBG2TilemapBuffer, (void *) s->unk24, 0x800);
+  CpuCopyAuto(gBG3TilemapBuffer, (void *) s->unk34, 0x800);
 }
+asm(".global sub_08012C58\n.thumb_set sub_08012C58, SetupBackgrounds\n");

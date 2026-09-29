@@ -20,7 +20,7 @@
  *      row * 16 + col, with palette 5 (0x5000 is palette 5 << 12).
  *   3. If the width is 32 or more, columns 16 and up take their tiles from
  *      the next block: tile 0x100 + row * 16 + col.
- *   4. Flag BG1 for copying to VRAM (sub_08013AFC is BG_EnableSyncByMask(2)).
+ *   4. Flag BG1 for copying to VRAM (BG_EnableSyncBG1 is BG_EnableSyncByMask(2)).
  *
  * sub_0802E130 below is the same routine for BG0.
  *
@@ -74,12 +74,12 @@ void sub_0802E010(void)
 
     }
   }
-  sub_08013AFC();
+  BG_EnableSyncBG1();
 }
 
 /*
  * sub_0802E130 -- same as sub_0802E010, but for BG0: fills gBG0TilemapBuffer
- * and flags BG0 for copying (sub_08013AEC is BG_EnableSyncByMask(1)). The
+ * and flags BG0 for copying (BG_EnableSyncBG0 is BG_EnableSyncByMask(1)). The
  * notes above apply here unchanged.
  */
 
@@ -123,5 +123,5 @@ void sub_0802E130(void)
 
     }
   }
-  sub_08013AEC();
+  BG_EnableSyncBG0();
 }

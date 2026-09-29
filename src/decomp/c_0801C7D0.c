@@ -7,7 +7,7 @@
  * sub_0801C7D0 @ 0x0801C7D0
  */
 
-u16 sub_0801C7D0(u16 *p)
+u16 AP_TakeSignal(u16 *p)
 {
     u16 r;
 
@@ -16,3 +16,4 @@ u16 sub_0801C7D0(u16 *p)
 
     return r;
 }
+asm(".global sub_0801C7D0\n.thumb_set sub_0801C7D0, AP_TakeSignal\n");

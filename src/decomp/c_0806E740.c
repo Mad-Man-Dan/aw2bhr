@@ -81,8 +81,8 @@ void sub_0806E780(struct Unk6E780Proc *proc)
     pal &= -(proc->unk34 != 0);
 
     sub_0803B4DC(0x67);
-    sub_08012BC8(gBG0TilemapBuffer, pal, 0x10, 0x10, 2, 0);
-    sub_08013AEC();
+    FillTilemapRect(gBG0TilemapBuffer, pal, 0x10, 0x10, 2, 0);
+    BG_EnableSyncBG0();
 }
 
 void sub_0806E7C0(int a, int b, ProcPtr parent)
@@ -120,5 +120,5 @@ void sub_0806E7FC(void)
     const u16 *tbl = gUnknown_081A47E4;
 
     gPal[0x1EC] = tbl[((u32)gGameClock & 0x1F) / 2];
-    sub_080135A4();
+    EnablePaletteSync();
 }

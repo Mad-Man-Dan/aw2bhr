@@ -48,14 +48,14 @@ void sub_0804FFFC(void)
     struct OamData oam;
     u16 p;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     oam.hFlip = gUnknown_0300453C ^ 1;
     p = gUnknown_08551D0C[gUnknown_0300453C][0];
     oam.paletteNum = p;
     oam.tileNum = gUnknown_0300453C * 0x100 + 0xF0;
     oam.priority = 2;
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     gUnknown_02029C0C[gUnknown_0300453C] = gUnknown_0855357C[gUnknown_0300453C];
     gUnknown_02029C10[gUnknown_0300453C] = 0x96;
 }

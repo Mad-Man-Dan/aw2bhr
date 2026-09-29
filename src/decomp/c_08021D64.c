@@ -30,7 +30,7 @@ void LoadSeaAnimFrame(int a1)
 {
     u8 n = a1;
 
-    sub_08011C68(gUnknown_080C1FC4 + (n << 12),
+    CpuCopyAuto(gUnknown_080C1FC4 + (n << 12),
                  (u8 *)(gUnknown_0300251C.bits.chr_block << 14) + 0x06002000
                      + ((n & 1) << 12),
                  0x1000);

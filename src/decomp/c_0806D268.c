@@ -72,7 +72,7 @@ void sub_0806D34C(void)
     u8 *p;
     int i;
 
-    if (sub_08015BD0((s32)gUnknown_08581E94) != -1)
+    if (FindSlotScript((s32)gUnknown_08581E94) != -1)
     {
         for (i = 0; i <= 6; i++)
         {

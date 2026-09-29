@@ -12,13 +12,13 @@
  *
  * gUnknown_03001FBC IS RELOADED at every use -- five `movs rN,#0; ldrsh` off
  * one pool word -- because each call may change it. Passing it as both
- * arguments of ONE sub_080158D4 call makes gcc read it once before the inner
+ * arguments of ONE SetSlotSpriteRotation call makes gcc read it once before the inner
  * call and keep it in a callee-saved register instead, which is two
  * instructions different. Splitting the inner call into its own statement is
  * what restores the reload.
  *
  * `t` is `int`, not `s16`. With `s16` the +0x10 is applied before the shift
- * pair; with `int` the conversion at sub_080158D4's `s16` parameter folds
+ * pair; with `int` the conversion at SetSlotSpriteRotation's `s16` parameter folds
  * with the callee's own re-narrowing into `lsls #0x10; adds 0x100000;
  * asrs #0x10` -- the ROM's form, and the same instruction count. */
 void sub_0803B264(void)
@@ -26,25 +26,25 @@ void sub_0803B264(void)
     int t;
     s16 v;
 
-    t = sub_08015900(gUnknown_03001FBC);
-    sub_080158D4(gUnknown_03001FBC, t + 0x10);
+    t = GetSlotSpriteRotation(gUnknown_03001FBC);
+    SetSlotSpriteRotation(gUnknown_03001FBC, t + 0x10);
 
-    v = sub_080157D0(gUnknown_03001FBC);
+    v = GetSlotSpriteScaleX(gUnknown_03001FBC);
 
     if (v != 0x80)
     {
         v -= 0x10;
-        sub_080157A4(gUnknown_03001FBC, v);
-        sub_080157F4(gUnknown_03001FBC, v);
+        SetSlotSpriteScaleX(gUnknown_03001FBC, v);
+        SetSlotSpriteScaleY(gUnknown_03001FBC, v);
     }
 }
 
 /* Creates a gUnknown_03001470 object, rewrites two fields of its OBJ attribute
  * pair and then runs the standard five-call setup on it.
  *
- * `struct UnkVec` moves BY VALUE through both accessors -- sub_08015638
+ * `struct UnkVec` moves BY VALUE through both accessors -- GetSlotSpriteAttrs
  * returns it (hidden buffer pointer in r0, hence the `add r0, sp, #4`) and
- * sub_08015608 takes it in r1/r2. The whole attribute edit is ONE expression:
+ * SetSlotSpriteAttrs takes it in r1/r2. The whole attribute edit is ONE expression:
  * the ROM never stores the intermediate back to the stack slot, which two
  * statements would have made it do.
  *
@@ -56,15 +56,15 @@ void sub_0803B2BC(void)
     struct UnkVec v;
     s8 i;
 
-    i = sub_08015438((void *)gUnknown_0849E700, 0, gUnknown_0849E6F8, 0, 0);
+    i = StartSlotScriptWithSprite((void *)gUnknown_0849E700, 0, gUnknown_0849E6F8, 0, 0);
 
-    v = sub_08015638(i);
+    v = GetSlotSpriteAttrs(i);
     v.unk04 = (((v.unk04 & 0xFFFF0FFF) | 0x4000) & 0xFFFFFC00) | 0x74;
-    sub_08015608(i, v);
+    SetSlotSpriteAttrs(i, v);
 
-    sub_080155C0(i, 0xaa, 0x20);
-    sub_08016824(i);
-    sub_08016944(i);
-    sub_080157A4(i, 0x200);
-    sub_080157F4(i, 0x200);
+    SetSlotSpritePosition(i, 0xaa, 0x20);
+    EnableSlotSpriteAffine(i);
+    SetSlotSpriteDoubleSize(i);
+    SetSlotSpriteScaleX(i, 0x200);
+    SetSlotSpriteScaleY(i, 0x200);
 }

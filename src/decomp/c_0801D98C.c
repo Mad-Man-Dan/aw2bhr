@@ -7,10 +7,11 @@
  * sub_0801D98C @ 0x0801D98C
  */
 
-void sub_0801D98C(int index, s16 x, s16 y)
+void SetSpriteScriptOffset(int index, s16 x, s16 y)
 {
     struct Unk0200E438 *p = &gUnknown_0200E438[index];
 
     p->unk0c = x << 8;
     p->unk10 = y << 8;
 }
+asm(".global sub_0801D98C\n.thumb_set sub_0801D98C, SetSpriteScriptOffset\n");

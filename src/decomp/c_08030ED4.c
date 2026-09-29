@@ -16,7 +16,7 @@ void LinkShutdown(void)
     REG_SIOCNT = 0;
     SetIRQHandler(7, 0);
     SetIRQHandler(6, 0);
-    sub_0801BB10(1, -0xC1);
+    UpdateInterruptEnable(1, -0xC1);
     gUnknown_0849B018->unk06 = 0xff;
     gPlaySt.savingEnabled = 0;
 }

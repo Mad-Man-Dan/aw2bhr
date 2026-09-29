@@ -21,11 +21,11 @@
  *     five sprites that belong to the second page.
  *   state 0x5A tears the screen down -- both tilemaps blanked, BG0 and BG2
  *     flagged for copying to VRAM -- and hands gUnknown_03001FBC, the screen
- *     to return to, to sub_08015C30. Leaving with anything other than B also
+ *     to return to, to ClearSlotScriptCallback. Leaving with anything other than B also
  *     sets gUnknown_03002F1C.
  *
  * The first frame after the mode change clears the state, zeroes the two
- * view-offset globals and opens the window with sub_0801A444.
+ * view-offset globals and opens the window with DrawWindowBackgroundOnBg2.
  *
  * global.h does not include hardware.h, so the include below is needed for
  * gpKeySt and the key names.
@@ -41,8 +41,8 @@ void DesignRoomHelp_Loop(void)
         gActiveMap->state = 0;
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;
-        sub_0801A444(2, 2, 0x1A, 0xF);
-        sub_0801B780(0);
+        DrawWindowBackgroundOnBg2(2, 2, 0x1A, 0xF);
+        InitTextTileCache(0);
     }
 
     if ((gpKeySt->pressed & 7) != 0)
@@ -51,7 +51,7 @@ void DesignRoomHelp_Loop(void)
     switch (gActiveMap->state)
     {
     case 0:
-        sub_0801B780(0);
+        InitTextTileCache(0);
         gActiveMap->state++;
         DesignRoomDrawHelpPage1();
         sub_08005EF0(1);
@@ -60,14 +60,14 @@ void DesignRoomHelp_Loop(void)
         if ((gpKeySt->pressed & DPAD_DOWN) != 0)
         {
             gActiveMap->state = 0xA;
-            sub_08012BC8(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
-            sub_08013AEC();
+            FillTilemapRect(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
+            BG_EnableSyncBG0();
             sub_08005F1C();
             sub_0803B4DC(0x67);
         }
         break;
     case 0xA:
-        sub_0801B780(0);
+        InitTextTileCache(0);
         gActiveMap->state++;
         DesignRoomDrawHelpPage2();
         sub_08005EF0(0);
@@ -76,8 +76,8 @@ void DesignRoomHelp_Loop(void)
         if ((gpKeySt->pressed & DPAD_UP) != 0)
         {
             gActiveMap->state = 0;
-            sub_08012BC8(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
-            sub_08013AEC();
+            FillTilemapRect(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
+            BG_EnableSyncBG0();
             sub_08005F1C();
             sub_0803B4DC(0x67);
         }
@@ -94,11 +94,11 @@ void DesignRoomHelp_Loop(void)
         if ((gpKeySt->pressed & 2) == 0)
             gUnknown_03002F1C = 1;
         sub_08005F1C();
-        sub_08012BC8(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
-        sub_08012BC8(gBG2TilemapBuffer, 0, 0, 0x1E, 0x14, 0x360);
-        sub_08013AEC();
-        sub_08013B0C();
-        sub_08015C30(gUnknown_03001FBC);
+        FillTilemapRect(gBG0TilemapBuffer, 0, 0, 0x1E, 0x14, 0);
+        FillTilemapRect(gBG2TilemapBuffer, 0, 0, 0x1E, 0x14, 0x360);
+        BG_EnableSyncBG0();
+        BG_EnableSyncBG2();
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }
 asm(".global sub_08005B24\n.thumb_set sub_08005B24, DesignRoomHelp_Loop\n");

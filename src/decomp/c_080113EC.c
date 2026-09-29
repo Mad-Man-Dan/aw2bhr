@@ -33,8 +33,8 @@ void SomeFade_IDLE_080113ED(struct Unk80113EC *proc)
     if (gUnknown_03001408 > 0x13f)
     {
         gUnknown_03001408 = 0x140;
-        sub_08011300();
-        sub_08011354();
+        SetupWipeWindow();
+        SetWin0FullScreen();
         Proc_Break(proc);
         return;
     }

@@ -14,7 +14,7 @@
  * enable goes through the gDispIo shadow (bit 13 of DISPCNT is byte 1 bit 5,
  * hence `ldrb [r6,#1]; movs #0x20; orrs; strb`); the four bound registers have
  * no shadow and are written directly. */
-void sub_08019A0C(s16 x, s16 y, s16 w, s16 h)
+void SetWindow0Rect(s16 x, s16 y, s16 w, s16 h)
 {
     gDispIo.disp_ct.win0_enable = TRUE;
     REG_WIN0H = (x << 8) | (x + w);
@@ -22,3 +22,4 @@ void sub_08019A0C(s16 x, s16 y, s16 w, s16 h)
     REG_WININ = 0x3f;
     REG_WINOUT = 0x1f;
 }
+asm(".global sub_08019A0C\n.thumb_set sub_08019A0C, SetWindow0Rect\n");

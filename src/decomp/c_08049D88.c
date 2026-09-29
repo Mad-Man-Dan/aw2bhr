@@ -55,7 +55,7 @@ void sub_08049DE4(struct Unk08049DE4Proc *proc)
         break;
 
     case 0x32:
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         break;
     }
 

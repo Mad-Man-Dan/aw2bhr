@@ -18,7 +18,7 @@
  * early `if (id == 0) return 1;`. That is not cosmetic: the early form emits
  * the `movs r0,#1` inline after the guard, the nested form emits it past the
  * literal pools as the ROM does. */
-int sub_0801ABF8(u8 id)
+int EraseSaveSlot(u8 id)
 {
     int i;
     int r;
@@ -41,3 +41,4 @@ int sub_0801ABF8(u8 id)
 
     return 1;
 }
+asm(".global sub_0801ABF8\n.thumb_set sub_0801ABF8, EraseSaveSlot\n");

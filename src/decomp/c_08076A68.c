@@ -66,7 +66,7 @@ void sub_08076A68(ProcPtr proc)
     gUnknown_0202FDFC.unk06 = 0x50;
 
     Decompress(gUnknown_081D0BAC, gUnknown_08614280);
-    sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
+    RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
     sub_08076888(proc);
 
     if (IsHardCampaignMode())

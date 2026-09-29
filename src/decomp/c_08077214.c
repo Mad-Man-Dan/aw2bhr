@@ -28,18 +28,18 @@
  * wave-32 note recorded for `u16` PARAMETERS and it has the same cause.
  * (Ruled out again here from both directions.)
  *
- * The fourth argument to sub_08014740 must stay the raw `a7`, not `h`: the
+ * The fourth argument to StartTextBox must stay the raw `a7`, not `h`: the
  * callee re-narrows it, CSE supplies r7, and the copy lands in the ROM's
  * position at the end of the argument group. Passing `h` explicitly is 15 bytes
  * -- it hoists `adds r3,r7,#0` above the stack-argument stores.
  *
  * Rebuilds a text box only when its two size arguments disagree: it clears the
- * old one, redraws through sub_08012BC8 and allocates a fresh sub_08014740 slot
+ * old one, redraws through FillTilemapRect and allocates a fresh StartTextBox slot
  * whose unk3a it seeds from the last argument. Returns the seventh argument
  * narrowed to a halfword, which its one caller (sub_08077790) discards.
  *
  * Settled earlier and unchanged: it RETURNS a value (wave 31 called it void
- * from a call site that discards the result); sub_08014740's first two
+ * from a call site that discards the result); StartTextBox's first two
  * parameters are `s16`, not `u16`; the eighth argument must be a bound `u16`
  * local, because read straight off the stack at its use it needs no narrowing
  * at all and the frame comes out two registers smaller. */
@@ -56,8 +56,8 @@ int sub_08077214(u16 *a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8
     if (w != h)
     {
         sub_08014878();
-        sub_08012BC8(a1, a2, a3, a4, a5, 0);
-        sub_08014740((s16)a2, (s16)a3, a1, a7, 0, 0x280)->unk3a = v;
+        FillTilemapRect(a1, a2, a3, a4, a5, 0);
+        StartTextBox((s16)a2, (s16)a3, a1, a7, 0, 0x280)->unk3a = v;
     }
 
     return h;

@@ -16,17 +16,17 @@
  *
  *   1. sub_080152EC puts the gUnknown_0848A42C script in a gUnknown_03001470
  *      slot; that slot, seen as struct Unk8019A60, is the list object. Its
- *      .unk0c takes sub_08019D78 when a4 is 0 and sub_08019DA8 when it is 1.
+ *      .unk0c takes Menu_OnEndBlankBg2 when a4 is 0 and Menu_OnEndReleaseMapLock when it is 1.
  *   2. Walk the item array. Each item's .unk04 is called and its result kept as
  *      that item's flags in .unk24. An item with bit 0 clear is visible: its
  *      index is appended to the row table .unk31, and the pixel width of its
- *      string (gTextTable[.unk1c], measured by sub_08014D20) goes into the
+ *      string (gTextTable[.unk1c], measured by GetStringWidthInTiles) goes into the
  *      running maximum. Each visible row adds 0x10 to a height counter that
  *      starts at 0x10.
  *   3. Record the item count, the visible-row count and the starting cursor
  *      row, then take a second slot for the cursor sprite. It goes in .unk44,
  *      sized from a2 and a3 in pixels, with the cursor row in its .unk20.
- *   4. DrawMenuItems draws the rows, and sub_0801A444 opens the window round
+ *   4. DrawMenuItems draws the rows, and DrawWindowBackgroundOnBg2 opens the window round
  *      them: the same position, the widest string plus 2, and the height
  *      counter divided by 8.
  *
@@ -65,11 +65,11 @@ int CreateMenu(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
     switch (a4)
     {
     case 0:
-        p->unk0c = sub_08019D78;
+        p->unk0c = Menu_OnEndBlankBg2;
         break;
 
     case 1:
-        p->unk0c = sub_08019DA8;
+        p->unk0c = Menu_OnEndReleaseMapLock;
         break;
     }
 
@@ -87,7 +87,7 @@ int CreateMenu(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
         {
             p->unk31[n++] = i;
 
-            t = sub_08014D20((const char *)gTextTable[e->unk1c]);
+            t = GetStringWidthInTiles((const char *)gTextTable[e->unk1c]);
 
             if (maxw < t)
                 maxw = t;
@@ -112,7 +112,7 @@ int CreateMenu(const void *a1, u16 a2, u16 a3, u16 a4, u16 a5)
 
     DrawMenuItems(p);
 
-    sub_0801A444(p->unk48, p->unk4a, (s16)(maxw + 2), (w >> 2) >> 1);
+    DrawWindowBackgroundOnBg2(p->unk48, p->unk4a, (s16)(maxw + 2), (w >> 2) >> 1);
 
     return (int)p;
 }

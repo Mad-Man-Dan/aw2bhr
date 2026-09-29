@@ -26,6 +26,6 @@ void sub_0803F1F4(struct UnkF1F4Proc *proc)
                  sub_0803F27C(proc->unk68) + 2,
                  0);
     sub_0803B4DC(0x1C3);
-    sub_08013338(1, 0x14, proc);
-    sub_080130DC(2, 0, 1, proc);
+    StartScreenShake(1, 0x14, proc);
+    StartWhiteFlash(2, 0, 1, proc);
 }

@@ -41,8 +41,8 @@ void sub_08048850(u16 a1, u16 a2)
 {
     u16 i;
 
-    sub_0801B780(0);
-    sub_08012BC8(gUnknown_084C30F8->unk032, 0, 0, 0x14, 0xa, 0);
+    InitTextTileCache(0);
+    FillTilemapRect(gUnknown_084C30F8->unk032, 0, 0, 0x14, 0xa, 0);
 
     for (i = 0; i < a1 + 3 && gUnknown_02028E1C[a2 + i] != 0xff; i++)
         DrawShopItemRow(0, i * 2 + 2, gUnknown_084C30F8->unk032,

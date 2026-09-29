@@ -40,13 +40,13 @@ void MainMenu_080191B1(void)
     sub_0803CB8C();
     gUnknown_03002EF0 = 0;
     gUnknown_03001404 = 0;
-    sub_0801797C();
+    ResumeEventScripts();
     sub_080179AC();
-    sub_08017A0C();
+    FillBlankBgTilemapAndSetScroll();
     gUnknown_03002F08.unk00 = 8;
     gUnknown_03002F08.unk02 = 0xFFFF;
-    sub_08011C68(gUnknown_08499588, (void *)0x06006800, 0x200);
-    sub_08011C68(gUnknown_0849958C, (void *)0x0600E000, 0x200);
+    CpuCopyAuto(gUnknown_08499588, (void *)0x06006800, 0x200);
+    CpuCopyAuto(gUnknown_0849958C, (void *)0x0600E000, 0x200);
 }
 
 asm(".global sub_080191B0\n.thumb_set sub_080191B0, MainMenu_080191B1\n");

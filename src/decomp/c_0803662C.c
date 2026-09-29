@@ -9,17 +9,17 @@
 
 void InstallMapFrameCallbacks(void)
 {
-    sub_0801F00C();
+    EnableSpriteLayerMode();
     SetMapLayersDefault();
     sub_08011B18();
-    sub_08011B34((void *)sub_08022048);
-    sub_08011B34((void *)UpdateTerrainAnimation);
-    sub_08011B34((void *)UpdateFuelAmmoGraphics);
-    sub_08011B34((void *)UpdateWeatherParticles);
-    sub_08011B34((void *)sub_080246B4);
-    sub_08011B34((void *)sub_08024720);
-    sub_08011B34((void *)sub_08022A6C);
-    sub_08011B34((void *)sub_08043590);
+    AddVBlankHook((void *)sub_08022048);
+    AddVBlankHook((void *)UpdateTerrainAnimation);
+    AddVBlankHook((void *)UpdateFuelAmmoGraphics);
+    AddVBlankHook((void *)UpdateWeatherParticles);
+    AddVBlankHook((void *)sub_080246B4);
+    AddVBlankHook((void *)sub_08024720);
+    AddVBlankHook((void *)sub_08022A6C);
+    AddVBlankHook((void *)sub_08043590);
     sub_080366D0(MapVBlankCallback);
     sub_080366C4(MapMainLoopCallback);
 }

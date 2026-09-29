@@ -18,7 +18,7 @@ struct Unk3628CProc
     /* 0x35 */ u8 unk35;
 };
 /* sub_0803628C's twin. The `(s32)` cast and the `== -1` are the spelling every
- * other sub_08015BD0 caller in src/decomp already uses (c_08017C4C.c); the
+ * other FindSlotScript caller in src/decomp already uses (c_08017C4C.c); the
  * `lsls #0x18; asrs #0x18` before the compare is the s8 return being
  * re-narrowed at the call site. */
 struct Unk362A8Proc
@@ -40,7 +40,7 @@ void MoveSlideState_WaitForCameraScroll(ProcPtr procArg)
 {
     struct Unk362A8Proc *proc = procArg;
 
-    if (sub_08015BD0((s32)gUnknown_0849A00C) == -1)
+    if (FindSlotScript((s32)gUnknown_0849A00C) == -1)
         proc->unk35 = 2;
 }
 asm(".global sub_080362A8\n.thumb_set sub_080362A8, MoveSlideState_WaitForCameraScroll\n");

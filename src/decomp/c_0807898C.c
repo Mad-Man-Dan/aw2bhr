@@ -84,9 +84,9 @@ void sub_0807898C(ProcPtr proc)
     gUnknown_0300200C = 0;
     gUnknown_03002000 = 0;
 
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
     sub_080616F0();
 
     gDispIo.disp_ct.obj_mapping = 1;

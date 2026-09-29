@@ -29,7 +29,7 @@
  * Both counters are plain `int`: neither the increment nor the exit test
  * carries a narrowing, and both bounds are `ldrh`ed and compared SIGNED. */
 
-void sub_0801759C(void)
+void RebuildTerrainPlaneFromTiles(void)
 {
     int x;
     int y;
@@ -49,5 +49,6 @@ void sub_0801759C(void)
     sub_080215B8();
     sub_08023348();
     sub_08024268();
-    sub_0801A548(gUnknown_030033EC);
+    ApplyArmyWindowFramePalette(gUnknown_030033EC);
 }
+asm(".global sub_0801759C\n.thumb_set sub_0801759C, RebuildTerrainPlaneFromTiles\n");

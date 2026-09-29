@@ -8,18 +8,18 @@
  */
 
 /*
- * calls: sub_0801815C
+ * calls: LoadPortraitFace
  * touches: gUnknown_03002514, gUnknown_03002F08, gUnknown_0808E568
  */
 
-/* sub_08018100 @ 0x08018100, 92 bytes, THUMB.
+/* EventOp_SetPortraitFaceNow @ 0x08018100, 92 bytes, THUMB.
  * No prototype exists for this one. 1 argument register(s) are read
  * before being written, so it takes at least that many -- but the
  * count is a floor, not the answer: a struct passed by value occupies
  * two consecutive registers and looks like two arguments here, and
  * anything past r3 arrives on the stack as ldr rN, [sp, #...].
  */
-bool8 sub_08018100(s16 a)
+bool8 EventOp_SetPortraitFaceNow(s16 a)
 {
     register u16 i asm("r5") = a;
     register struct Unk0200C528 **entryCell asm("r4");
@@ -47,7 +47,7 @@ bool8 sub_08018100(s16 a)
             "strh r0, [r3, #2]\n\t"
             "lsl r0, r0, #24\n\t"
             "lsr r0, r0, #24\n\t"
-            "bl sub_0801815C"
+            "bl LoadPortraitFace"
             :
             : "r"(entryCell), "r"(i)
             : "r0", "r1", "r2", "r3", "cc", "memory");
@@ -70,3 +70,4 @@ bool8 sub_08018100(s16 a)
         : "r0", "r1", "r2", "cc", "memory");
     return FALSE;
 }
+asm(".global sub_08018100\n.thumb_set sub_08018100, EventOp_SetPortraitFaceNow\n");

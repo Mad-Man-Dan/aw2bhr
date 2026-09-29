@@ -9,7 +9,7 @@
 
 /* Both parameters are `s16` and not the `u16` this was promoted with. The body
  * is two plain `strh`s and is byte-identical either way, so the evidence is
- * entirely on the caller side: sub_08019DCC (wave 26) passes an `ldrsh` member
+ * entirely on the caller side: Menu_PlaceCursorSprite (wave 26) passes an `ldrsh` member
  * with no conversion and a computed expression narrowed `lsls #0x10; asrs
  * #0x10`, where the u16 spelling probes as `ldrh` plus a zero-extending `lsrs`.
  * Re-verified byte-exact with trymatch after the change. */

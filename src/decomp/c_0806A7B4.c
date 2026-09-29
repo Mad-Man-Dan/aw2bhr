@@ -126,7 +126,7 @@ void sub_0806A8E4(struct Unk6A8E4Proc *proc)
         map->scrollY = proc->unk60 + y;
 
         sub_08023860();
-        sub_0801237C();
+        ResetWindowShadows();
 
         gDispIo.disp_ct.win0_enable = 1;
 

@@ -28,33 +28,33 @@ void sub_0803F6BC(int a1, int a2, void *a3, int a4)
     switch (a1)
     {
     default:
-        sub_08011E54((void *)(sub_0802A880(a1, 0) + 0x40), a3, 0xc0);
-        sub_08011E54(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
+        RegisterDataMove((void *)(sub_0802A880(a1, 0) + 0x40), a3, 0xc0);
+        RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     case 8:
-        sub_08011E54(table + ((((sub_08042DE0(a2) - 1) << 3) & 0x3ff) << 5),
+        RegisterDataMove(table + ((((sub_08042DE0(a2) - 1) << 3) & 0x3ff) << 5),
                      a3, 0x100);
         break;
     case 11:
-        sub_08011E54(src + 0x240, a3, 0xc0);
-        sub_08011E54(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
+        RegisterDataMove(src + 0x240, a3, 0xc0);
+        RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     case 10:
-        sub_08011E54(src + 0x140, a3, 0xc0);
-        sub_08011E54(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
+        RegisterDataMove(src + 0x140, a3, 0xc0);
+        RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     case 6:
-        sub_08011E54(src + 0x440, a3, 0xc0);
-        sub_08011E54(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
+        RegisterDataMove(src + 0x440, a3, 0xc0);
+        RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     case 14:
-        sub_08011E54(gUnknown_08485A2C, a3, 0x40);
-        sub_08011E54(src + 0x80, (u8 *)a3 + 0x40, 0x80);
-        sub_08011E54(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
+        RegisterDataMove(gUnknown_08485A2C, a3, 0x40);
+        RegisterDataMove(src + 0x80, (u8 *)a3 + 0x40, 0x80);
+        RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     case 17:
-        sub_08011E54(src + 0xa40, a3, 0xc0);
-        sub_08011E54(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
+        RegisterDataMove(src + 0xa40, a3, 0xc0);
+        RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     }
 }

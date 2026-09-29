@@ -80,7 +80,7 @@ void ShopScreen_Init(void)
     gUnknown_084C30F8->unk832 = -0x38;
     gUnknown_084C30F8->unk838 = 0;
 
-    sub_0801A5B0(0);
+    LoadBg1WindowFrame(0);
     sub_0802D5CC(0, 1);
     sub_08022A34();
 
@@ -90,7 +90,7 @@ void ShopScreen_Init(void)
     gUnknown_084C30F8->unk02c = v;
     gUnknown_084C30F8->unk028 = v;
 
-    sub_0801B780(0);
+    InitTextTileCache(0);
 
     for (i = 0; gUnknown_02028E1C[i] != 0xff; i++)
         ;
@@ -99,15 +99,15 @@ void ShopScreen_Init(void)
     p->unk837 = i;
     p->unk836 = i;
 
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
 
     Decompress(gUnknown_0823A3D4,
                (void *)(0x06000000 + gUnknown_0300251C.bits.chr_block * 0x4000));
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     ApplyPaletteExt(gUnknown_0823BE00, 0, 0x20);
-    sub_08013B1C();
+    BG_EnableSyncBG3();
     sub_0802D5CC(0, 3);
     Decompress(gUnknown_0823E7D4, gBG2TilemapBuffer);
 
@@ -115,7 +115,7 @@ void ShopScreen_Init(void)
         gBG2TilemapBuffer[i] += 0x1360;
 
     gUnknown_03001400 = -0x30;
-    sub_08013B0C();
+    BG_EnableSyncBG2();
     StartHeaderBanner(gUnknown_085802B4, gUnknown_0200FC50, 0, 5, 1, 1, 3);
     LoadCoFace(0xf, (void *)0x06011560, 0x16);
     Decompress(gUnknown_0823EA40, gUnknown_0200FC50);
@@ -136,10 +136,10 @@ void ShopScreen_Init(void)
 
     gUnknown_084C30F8->unk835 = 1;
 
-    sub_08013AEC();
-    sub_08013AFC();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
     sub_0801F114();
-    sub_0801F150(0,
+    InitTilePool(0,
                  (void *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  0x180, 9);
     LoadTilePoolGraphic(0x18);
@@ -147,7 +147,7 @@ void ShopScreen_Init(void)
     LoadTilePoolGraphic(0x1a);
     LoadTilePoolGraphic(0x13);
     LoadTilePoolGraphic(0x14);
-    sub_0801F150(2, (void *)0x06010000, 0x7f, 0x14);
+    InitTilePool(2, (void *)0x06010000, 0x7f, 0x14);
     LoadTilePoolGraphic(0x43);
     LoadTilePoolGraphic(0x44);
     LoadTilePoolGraphic(0x51);

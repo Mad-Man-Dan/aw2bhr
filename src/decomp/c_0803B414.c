@@ -45,7 +45,7 @@ void PlayMusicOrSfx(s16 a)
 
         if (gUnknown_030005CC != 0x100)
         {
-            if (sub_08015BD0((s32)gUnknown_0849E710) == -1)
+            if (FindSlotScript((s32)gUnknown_0849E710) == -1)
                 sub_080152EC(gUnknown_0849E710, 0);
         }
     }

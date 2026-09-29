@@ -46,8 +46,8 @@ struct Unk2C450Proc
 void sub_0802C430(struct Unk2C430Proc *proc)
 {
     sub_08024268();
-    sub_08013C00();
-    sub_08013AEC();
+    ClearBg0Tilemap();
+    BG_EnableSyncBG0();
     HideMapPreview();
     proc->unk1e = 6;
 }
@@ -58,8 +58,8 @@ void sub_0802C450(struct Unk2C450Proc *proc)
 
     if (proc->unk1e == 0)
     {
-        sub_08012358();
-        sub_08015C30(gUnknown_03001FBC);
+        SetDefaultColorEffects();
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
     else
     {

@@ -27,7 +27,7 @@ void sub_0802EA5C(struct Unk030040C0 *a1)
 
     SetIRQHandler(7, (void *)SioHandleIrq_Serial);
     SetIRQHandler(6, (void *)SioHandleIrq_Timer3);
-    sub_0801BB10(2, 0x000100C0);
+    UpdateInterruptEnable(2, 0x000100C0);
 
     gUnknown_0300055C = 0xf0;
 }

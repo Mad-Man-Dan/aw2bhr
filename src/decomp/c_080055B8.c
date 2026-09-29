@@ -33,13 +33,13 @@ void DesignRoomShowSlotPreview0(int a, int b, int c)
     if (sub_0803CCB8(0, gDesignRoomName) != 1)
     {
         sub_0803CEAC();
-        sub_08012BC8(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
-        sub_08013AEC();
+        FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
+        BG_EnableSyncBG0();
     }
     else
     {
         sub_0803CEAC();
-        sub_08012BC8(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
+        FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
         sub_0803CDBC(0xE, 4, 0);
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;
@@ -53,13 +53,13 @@ void DesignRoomShowSlotPreview1(int a, int b, int c)
     if (sub_0803CCB8(1, gDesignRoomName) != 1)
     {
         sub_0803CEAC();
-        sub_08012BC8(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
-        sub_08013AEC();
+        FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
+        BG_EnableSyncBG0();
     }
     else
     {
         sub_0803CEAC();
-        sub_08012BC8(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
+        FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
         sub_0803CDBC(0xE, 4, 1);
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;
@@ -73,13 +73,13 @@ void DesignRoomShowSlotPreview2(int a, int b, int c)
     if (sub_0803CCB8(2, gDesignRoomName) != 1)
     {
         sub_0803CEAC();
-        sub_08012BC8(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
-        sub_08013AEC();
+        FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
+        BG_EnableSyncBG0();
     }
     else
     {
         sub_0803CEAC();
-        sub_08012BC8(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
+        FillTilemapRect(gBG0TilemapBuffer, 0xE, 4, 0xF, 0xA, 0);
         sub_0803CDBC(0xE, 4, 2);
         gUnknown_03001418 = 0;
         gUnknown_03001FF8 = 0;

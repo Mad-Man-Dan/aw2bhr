@@ -7,8 +7,9 @@
  * sub_08016A14 @ 0x08016A14
  */
 
-void sub_08016A14(void)
+void MarkProfileSaved(void)
 {
     if ((gUnknown_0200C420.unk08 & 1) == 0)
         gUnknown_0200C420.unk08++;
 }
+asm(".global sub_08016A14\n.thumb_set sub_08016A14, MarkProfileSaved\n");

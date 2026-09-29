@@ -26,7 +26,7 @@
  * into a plain local first (or, equivalently, an `int` accumulator with an
  * explicit `(u16)` cast) restores the ROM's order; changing the order of the
  * `+` operands in the source does NOT -- that was measured both ways. */
-s16 sub_08011BD4(void)
+s16 GetCopyQueuePendingSize(void)
 {
     u16 sum;
     u16 x;
@@ -45,3 +45,4 @@ s16 sub_08011BD4(void)
 
     return sum;
 }
+asm(".global sub_08011BD4\n.thumb_set sub_08011BD4, GetCopyQueuePendingSize\n");

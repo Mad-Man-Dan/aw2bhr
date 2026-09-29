@@ -40,7 +40,7 @@ u8 FadeCore_Tick(ProcPtr procPtr)
 
     sub_080718F0();
     gPal[0] = 0;
-    sub_080135A4();
+    EnablePaletteSync();
 
     return 1;
 }

@@ -16,5 +16,5 @@
  * wave. See the wave-21 list. */
 void sub_08038548(void)
 {
-    sub_0803D73C(sub_08016D04(gPlaySt.gameMode), StartWarRoom);
+    sub_0803D73C(GetSuspendIdForGameMode(gPlaySt.gameMode), StartWarRoom);
 }

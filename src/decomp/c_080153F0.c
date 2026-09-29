@@ -7,10 +7,11 @@
  * sub_080153F0 @ 0x080153F0
  */
 
-bool8 sub_080153F0(s16 a)
+bool8 IsSlotScriptActiveAt(s16 a)
 {
     if (gUnknown_03001470[a].unk00 != 0)
         return 1;
 
     return 0;
 }
+asm(".global sub_080153F0\n.thumb_set sub_080153F0, IsSlotScriptActiveAt\n");

@@ -65,7 +65,7 @@ void sub_08037B90(void)
         for (j = 0; j < ((h + 1) >> 1) * 16; j += 16)
             gBG1TilemapBuffer[j * 2 + i] = j + 1 + i + 0x1000;
 
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 
 void sub_08037C34(void)

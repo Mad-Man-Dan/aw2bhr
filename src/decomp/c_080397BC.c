@@ -50,17 +50,17 @@ asm(".global sub_080397CC\n.thumb_set sub_080397CC, CoPowerSequence_PlayMusic\n"
 void sub_080397DC(void)
 {
     sub_08022A34();
-    sub_0801A5B0(gUnknown_030033EC);
+    LoadBg1WindowFrame(gUnknown_030033EC);
 }
 
 /* The record for the current army -- gUnknown_030033EC indexes
- * gPlayers[] at stride 0x3c -- supplies sub_08019818's terrain byte.
+ * gPlayers[] at stride 0x3c -- supplies StartCoSpeechScript's terrain byte.
  * The entry `lsls #0x10; lsrs #0x10` is the u16 parameter's own declaration:
- * sub_08019818's first parameter is u16 too, so nothing narrows it again. */
+ * StartCoSpeechScript's first parameter is u16 too, so nothing narrows it again. */
 
 void sub_080397F4(u16 a)
 {
-    sub_08019818(a, gPlayers[gUnknown_030033EC].co, 0);
+    StartCoSpeechScript(a, gPlayers[gUnknown_030033EC].co, 0);
 }
 
 /* In mode 1 the scripted line (sub_08039850) is tried first and the random

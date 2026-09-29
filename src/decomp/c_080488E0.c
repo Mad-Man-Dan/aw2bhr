@@ -98,5 +98,5 @@ void sub_080488E0(void)
         }
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }

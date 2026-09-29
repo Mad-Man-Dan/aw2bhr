@@ -14,7 +14,7 @@ int sub_0803CDBC(int a1, int a2, u8 a3)
     u8 *p;
 
     p = gUnknown_02000000;
-    if (sub_0801AD70(a3 + 5) != 0)
+    if (IsSaveSlotInvalid(a3 + 5) != 0)
         return 0;
     ReadSaveSlot(a3 + 5, p);
     sub_08037B84(p);

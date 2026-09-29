@@ -8,12 +8,12 @@ void LoadMapData(u16 a1)
 
     if (a1 >= 0xb4 && a1 <= 0xbf)
     {
-        sub_08037B84(sub_08014E44(0x724));
+        sub_08037B84(HeapMalloc(0x724));
         ReadSaveSlot(8, (u8 *)gUnknown_03003F68);
     }
     else
     {
-        sub_08037B84(sub_08014E44(0xa14));
+        sub_08037B84(HeapMalloc(0xa14));
 
         p = gUnknown_085C77A0[a1].mapData[IsHardCampaignMode()];
         if (p == NULL)
@@ -27,7 +27,7 @@ asm(".global sub_080247A4\n.thumb_set sub_080247A4, LoadMapData\n");
 
 void FreeMapLoadBuffer(void)
 {
-    sub_08014ED4(gUnknown_03003F68);
+    HeapFree(gUnknown_03003F68);
 }
 
 asm(".global sub_0802481C\n.thumb_set sub_0802481C, FreeMapLoadBuffer\n");
@@ -51,9 +51,9 @@ void sub_08024830(void)
     sub_08035020(gPlaySt.weather);
     sub_08022A34();
 
-    sub_0801A5B0(gUnknown_030033EC);
+    LoadBg1WindowFrame(gUnknown_030033EC);
     sub_08043834(gUnknown_030033EC);
-    sub_0801A57C(gUnknown_030033EC);
+    LoadArmyObjPalette(gUnknown_030033EC);
 }
 
 u8 *GetLoadedMapName(void)

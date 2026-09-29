@@ -26,5 +26,5 @@ void sub_0802C3D0(void)
         return;
 
     sub_0803B4DC(0x66);
-    sub_08015C30(gUnknown_03001FBC);
+    ClearSlotScriptCallback(gUnknown_03001FBC);
 }

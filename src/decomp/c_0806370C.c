@@ -12,8 +12,8 @@ void sub_0806370C(int a1, int a2)
     int n = a2 & 0x3FF;
 
     if (a1 < 0)
-        sub_08011D7C((void *)(0x06010000 + n * 32), 0x80);
+        RegisterFillZero16((void *)(0x06010000 + n * 32), 0x80);
     else
-        sub_08011E54(gUnknown_08614258[gUnknown_02028E40] + a1 * 128,
+        RegisterDataMove(gUnknown_08614258[gUnknown_02028E40] + a1 * 128,
                      (void *)(0x06000000 + (n * 32 | 0x10000)), 0x80);
 }

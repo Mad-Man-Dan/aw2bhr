@@ -11,7 +11,7 @@ asm(".global sub_08036B28\n.thumb_set sub_08036B28, ClearMainLoopFrameMask\n");
 void sub_08036B34(void)
 {
     gUnknown_030043F4 = 0;
-    sub_0801F00C();
+    EnableSpriteLayerMode();
 }
 
 static void sub_08036B48(void)
@@ -24,7 +24,7 @@ void InitGameSystems(void)
 {
     gUnknown_030040A0 = 0;
     gUnknown_02028E40 = 0;
-    sub_08010FE0();
+    ForceScreenBlack();
     sub_080366C4(0);
     sub_080366D0(0);
     gUnknown_03004094 = 0;
@@ -37,20 +37,20 @@ void InitGameSystems(void)
     StoreRoutinesToIRAM();
     sub_0803486C();
     sub_08034848();
-    sub_0801BCE0();
-    sub_08015544();
+    InitSpriteEngine();
+    ClearAllSpriteScripts2();
     ClearTileRigistry();
     sub_08011B18();
-    sub_08011A84();
+    ClearVBlankCallbackQueue();
     sub_080191B0();
-    sub_08015184();
+    InitSlotScripts();
     Proc_Init();
     ClearMoveSlideSlots();
-    sub_08010F94();
-    sub_08013434();
-    sub_0801F4A4();
-    sub_0801295C();
-    sub_080128D0();
+    InitScreenFadeLatch();
+    InitKeySt();
+    InitMapFloodHandler();
+    EnableVBlankInterrupt();
+    FlushLCDControl();
     sub_0803B37C();
     sub_0803B688();
     LinkShutdown();
@@ -62,7 +62,7 @@ asm(".global sub_08036B4C\n.thumb_set sub_08036B4C, InitGameSystems\n");
 
 void sub_08036C08(void)
 {
-    sub_0801F018();
+    DisableSpriteLayerMode();
     sub_080366D0(sub_08036A50);
     sub_080366C4(sub_08036AB8);
     ClearMainLoopFrameMask();
@@ -78,7 +78,7 @@ void sub_08036C2C(void)
 
 void sub_08036C4C(void)
 {
-    sub_0801F00C();
+    EnableSpriteLayerMode();
     InitGameSystems();
     gUnknown_030032CC = 0xE28;
     sub_080366D0(DefaultVBlankCallback);
@@ -88,7 +88,7 @@ void sub_08036C4C(void)
 
 void sub_08036C80(void)
 {
-    sub_0801F00C();
+    EnableSpriteLayerMode();
     InitGameSystems();
     gUnknown_030032CC = 0xE28;
     sub_080366D0(DefaultVBlankCallback);
@@ -135,21 +135,21 @@ void AgbMain(void)
     REG_WAITCNT = 0x45B4;
     keys = ~REG_KEYINPUT & 0x3FF;
     StoreIRQToIRAM();
-    if (sub_08014DA8(gUnknown_02003000, 0x8000) == -1)
+    if (HeapInit(gUnknown_02003000, 0x8000) == -1)
         sub_08036B48();
     InitSaveSystem(PackProfileRecord, ResetProfileToDefaults, gUnknown_02000000, 2, gUnknown_03003064);
     LoadProfile();
     sub_0803D48C();
-    sub_080129D4(0x0A6B99CD);
+    SetRandomSeed(0x0A6B99CD);
     sub_080128C4();
-    sub_080128D0();
+    FlushLCDControl();
     SetIRQHandler(0, sub_080366F4);
     flag = (keys & 0xF) != 0xF && keys == 0x214;
     if (flag)
         StartEraseSaveDataScreen();
     else
         sub_08036C4C();
-    sub_0801BB10(2, 0x00012001);
+    UpdateInterruptEnable(2, 0x00012001);
     for (;;) {
         if (gUnknown_030040EC != 0)
             gUnknown_030040EC();
@@ -177,23 +177,23 @@ asm(".global sub_08036E18\n.thumb_set sub_08036E18, CheckSoftResetCombo\n");
 void StartEraseSaveDataScreen(void)
 {
     InitGameSystems();
-    sub_0801B780(0);
+    InitTextTileCache(0);
     sub_080152EC(gUnknown_0849D1AC, 0);
 }
 asm(".global sub_08036E54\n.thumb_set sub_08036E54, StartEraseSaveDataScreen\n");
 
 void sub_08036E70(void)
 {
-    sub_08012C58(gUnknown_0849D16C);
+    SetupBackgrounds(gUnknown_0849D16C);
     gDispIo.disp_ct.forced_blank = 0;
-    sub_0801295C();
-    sub_080128D0();
-    sub_08011C68(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
-    sub_08011C68(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
-    sub_08011C68(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
-    sub_08011C68(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
+    EnableVBlankInterrupt();
+    FlushLCDControl();
+    CpuCopyAuto(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
+    CpuCopyAuto(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
+    CpuCopyAuto(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
+    CpuCopyAuto(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
     sub_0802465C();
-    sub_0801A5B0(0);
+    LoadBg1WindowFrame(0);
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);
     sub_08011B18();
     sub_080366C4(DefaultMainLoopCallback);
@@ -212,7 +212,7 @@ void sub_08036F44(void)
     gDispIo.disp_ct.bg2_enable = 1;
 
     sub_08022A34();
-    sub_0801A5B0(0);
+    LoadBg1WindowFrame(0);
 }
 
 void sub_08036F68(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7, u8 a8,
@@ -272,7 +272,7 @@ int sub_0803710C(void)
 
 void sub_08037124(void)
 {
-    sub_080169E8();
+    EndAllSpriteScripts();
     sub_0801537C(gUnknown_08553820);
     Proc_EndEach(gUnknown_0855379C);
     Proc_EndEach(gUnknown_0849D3BC);

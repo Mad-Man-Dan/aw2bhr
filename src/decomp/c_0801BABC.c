@@ -19,7 +19,7 @@ void StoreIRQToIRAM(void)
 {
     int i;
 
-    sub_0801BB10(0, 0);
+    UpdateInterruptEnable(0, 0);
 
     for (i = 0; i < 15; i++)
         gUnknown_03002FE0[i] = DummyIRQRoutine;

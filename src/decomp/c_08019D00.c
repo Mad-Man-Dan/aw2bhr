@@ -16,11 +16,12 @@
  * the callee returned, so nothing about the callee is visible from
  * here. Everything below was read off the callee's own body instead.
  *
- * One pointer passed through. sub_08019B50 reads r0 before writing it
+ * One pointer passed through. Menu_CallCursorHook reads r0 before writing it
  * (`adds r2, r0, #0`) and takes nothing else; it is not a Proc -- see the
  * note on its declaration in include/unknown-functions.h -- hence void *.
  */
-void sub_08019D00(void * a)
+void Menu_CallCursorHook2(void * a)
 {
-    sub_08019B50(a);
+    Menu_CallCursorHook(a);
 }
+asm(".global sub_08019D00\n.thumb_set sub_08019D00, Menu_CallCursorHook2\n");

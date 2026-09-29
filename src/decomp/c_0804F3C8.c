@@ -85,7 +85,7 @@ void BomberFigure_Loop(void)
     {
       struct Unk02029A10 *r;
       r = (struct Unk02029A10 *) ((c * (sizeof(struct Unk02029A10Group))) + ((u8 *) gUnknown_02029A10));
-      if ((r->unk18 != (-1)) && sub_080153F0(r->unk18))
+      if ((r->unk18 != (-1)) && IsSlotScriptActiveAt(r->unk18))
       {
         sub_080156E8(r->unk18, gUnknown_02029BA8[c].unk04);
       }
@@ -99,6 +99,6 @@ void BomberFigure_Loop(void)
   entry->x += gUnknown_08553B28[c][w];
   entry->y -= gUnknown_085644D4[(row = gUnknown_02028E5C[c])[1]];
   sub_0804EE08(c, e, gUnknown_03001FBC);
-  sub_080155C0(gUnknown_03001FBC, entry->x, entry->y - (*p));
+  SetSlotSpritePosition(gUnknown_03001FBC, entry->x, entry->y - (*p));
 }
 asm(".global sub_0804F3C8\n.thumb_set sub_0804F3C8, BomberFigure_Loop\n");

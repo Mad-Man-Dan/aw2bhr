@@ -11,8 +11,8 @@
  *
  * Collect every pending slot (unk00 set and unk12 bit 0 set) into a 30-byte
  * stack list, selection-sort the list ascending by `unk14 & 0x7f`, then run
- * each one through sub_080159E0 -- re-testing unk00, because an earlier
- * sub_080159E0 may have torn its slot down.
+ * each one through RunSlotScriptFrame -- re-testing unk00, because an earlier
+ * RunSlotScriptFrame may have torn its slot down.
  *
  * Frame is 0x28: list[30] rounded to 32, plus the two 4-byte slots the sort
  * loop spills at +0x20 (i + 1) and +0x24 (count - 1).
@@ -42,10 +42,10 @@
  *
  * One variable serves all three loops. A separate `j` for the sort's outer
  * loop puts it in the caller-saved r2 instead of the ROM's r4; `i` is live
- * across `bl sub_080159E0` in the last loop, which is what forces the
+ * across `bl RunSlotScriptFrame` in the last loop, which is what forces the
  * callee-saved register the sort loop also uses.
  */
-void sub_08015A9C(void)
+void RunPendingSlotScripts(void)
 {
     u8 list[30];
     u8 i;
@@ -86,13 +86,14 @@ void sub_08015A9C(void)
     for (i = 0; i < count; i++)
     {
         if (gUnknown_03001470[list[i]].unk00 != 0)
-            sub_080159E0(list[i]);
+            RunSlotScriptFrame(list[i]);
     }
 }
+asm(".global sub_08015A9C\n.thumb_set sub_08015A9C, RunPendingSlotScripts\n");
 
 /* MATCHED.
  *
- * "Is any slot still pending?" -- the loop half of sub_08015954's and
+ * "Is any slot still pending?" -- the loop half of RunAllSlotScripts's and
  * sub_08015994's `do/while` condition. Structurally c_08015BD0.c's scan with a
  * different predicate.
  *
@@ -103,7 +104,7 @@ void sub_08015A9C(void)
  * bool8 rather than u8: both callers narrow the result `lsls r0,r0,#0x18` and
  * only test it.
  */
-bool8 sub_08015B94(void)
+bool8 AnySlotScriptPending(void)
 {
     u8 i;
 
@@ -116,3 +117,4 @@ bool8 sub_08015B94(void)
 
     return FALSE;
 }
+asm(".global sub_08015B94\n.thumb_set sub_08015B94, AnySlotScriptPending\n");

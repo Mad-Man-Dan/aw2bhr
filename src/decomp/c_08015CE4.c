@@ -30,14 +30,15 @@ struct Unk08015CF4
  * before the epilogue is the only thing making it non-void; its single caller
  * discards the result, so nothing narrows the return type further.
  */
-int sub_08015CE4(u8 a)
+int SlotOp_End(u8 a)
 {
-    sub_08015328(a);
+    EndSlotScriptAt(a);
 
     return 0;
 }
+asm(".global sub_08015CE4\n.thumb_set sub_08015CE4, SlotOp_End\n");
 
-int sub_08015CF4(u8 a)
+int SlotOp_StartScript(u8 a)
 {
     const struct Unk08015CF4 *p = gUnknown_03001470[a].unk04;
 
@@ -47,3 +48,4 @@ int sub_08015CF4(u8 a)
 
     return 1;
 }
+asm(".global sub_08015CF4\n.thumb_set sub_08015CF4, SlotOp_StartScript\n");

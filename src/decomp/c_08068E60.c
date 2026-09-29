@@ -34,10 +34,10 @@ void IntroT3_08068E61(struct Unk08068E60 *proc)
     gUnknown_03001FE8.bits.priority = 1;
     gUnknown_03002B6C.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08012358();
+    SetDefaultColorEffects();
     sub_08063994();
-    sub_08012C48((struct Unk8012C30 *)&gUnknown_03001FE8, 1);
-    sub_08012C48((struct Unk8012C30 *)&gUnknown_030030B4, 2);
+    SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_03001FE8, 1);
+    SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 2);
     gUnknown_030030B4.bits.wrap = 0;
     zero0 = 0;
     CpuFastSet(&zero0, (void *)0x0600E000, 0x01000400);
@@ -57,9 +57,9 @@ void IntroT3_08068E61(struct Unk08068E60 *proc)
     CpuFastSet(&zero2, (void *)0x06000000, 0x01000008);
     zero3 = 0;
     CpuFastSet(&zero3, (void *)0x06008000, 0x01000008);
-    sub_08013AEC();
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(1, 0, 0);
     SetBgScrollShadow(2, 0, 0);

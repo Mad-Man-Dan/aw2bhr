@@ -12,7 +12,7 @@
  */
 
 /* Three `sub_0801537C(<script>)` stops in a row, result discarded at each.
- * gUnknown_08489548 and gUnknown_08489568 are the two blobs sub_08014668 and
+ * gUnknown_08489548 and gUnknown_08489568 are the two blobs StartTextBoxViaRecord and
  * sub_080146D4 start, so this is the stop half of that pairing. */
 void EndCoInfoScreen_08014879(void)
 {

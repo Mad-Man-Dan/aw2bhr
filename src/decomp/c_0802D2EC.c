@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* Reloads the BG char block sub_0801F150 owns and then replays every entry of
+/* Reloads the BG char block InitTilePool owns and then replays every entry of
  * the 0xFF-terminated gUnknown_0849AAA8 list through LoadTilePoolGraphic. The
  * destination expression is c_0800572C.c's and c_08005874.c's verbatim -- only
  * the 0x1b4 length differs from those two.
@@ -21,7 +21,7 @@ void sub_0802D2EC(void)
 {
     u8 i;
 
-    sub_0801F150(0, (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)), 0x1b4, 10);
+    InitTilePool(0, (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)), 0x1b4, 10);
 
     i = 0;
     while (gUnknown_0849AAA8[i] != 0xff)

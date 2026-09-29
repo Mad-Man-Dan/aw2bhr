@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* Picks one of eight animation frames for the actor and hands it to
- * sub_08014668, bracketed by sub_08013C00 / sub_08013AEC. The selector starts as
+ * StartTextBoxViaRecord, bracketed by ClearBg0Tilemap / BG_EnableSyncBG0. The selector starts as
  * the phase DivRem(unk52, 6) and is then overridden to 6 or 7 by two independent
  * state tests, each of which re-reads unk52 -- the third read recomputes the
  * member ADDRESS (`adds r0, r6, #0; adds r0, #0x52`) where the first two share
@@ -78,7 +78,7 @@ void MainMenuCarousel_DrawDescriptionText(struct Unk8084600 *p)
 {
     int i;
 
-    sub_08013C00();
+    ClearBg0Tilemap();
 
     i = DivRem(p->unk52, 6);
 
@@ -89,10 +89,10 @@ void MainMenuCarousel_DrawDescriptionText(struct Unk8084600 *p)
         i = 7;
 
     if (gUnknown_0300591C[1] == 0)
-        sub_08014668(0, 0x12, gBG0TilemapBuffer, gUnknown_08616FA4[i], 0x8000, 0x40);
+        StartTextBoxViaRecord(0, 0x12, gBG0TilemapBuffer, gUnknown_08616FA4[i], 0x8000, 0x40);
     else
-        sub_08014668(0, 0x12, gBG0TilemapBuffer, gUnknown_08616FB4[i * 2 + DivRem(p->unk66, 2)], 0x8000, 0x40);
+        StartTextBoxViaRecord(0, 0x12, gBG0TilemapBuffer, gUnknown_08616FB4[i * 2 + DivRem(p->unk66, 2)], 0x8000, 0x40);
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 asm(".global sub_08084600\n.thumb_set sub_08084600, MainMenuCarousel_DrawDescriptionText\n");

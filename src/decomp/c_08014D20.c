@@ -8,9 +8,10 @@
  */
 
 /* Pixel width to tiles. The `bge; adds #7; asrs #3` bias sequence is a SIGNED
- * divide by 8, so sub_08014D38's return is a signed word -- an unsigned one
+ * divide by 8, so GetStringPixelWidth's return is a signed word -- an unsigned one
  * would be a bare `lsrs #3`. The string argument is forwarded untouched. */
-int sub_08014D20(const char *s)
+int GetStringWidthInTiles(const char *s)
 {
-    return (sub_08014D38(s) + 6) / 8;
+    return (GetStringPixelWidth(s) + 6) / 8;
 }
+asm(".global sub_08014D20\n.thumb_set sub_08014D20, GetStringWidthInTiles\n");

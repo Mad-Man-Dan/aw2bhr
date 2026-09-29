@@ -11,7 +11,7 @@
 
 /* Key-subsystem init: sets the repeat timing pair and clears all five
  * `struct KeySt` slots of the array based at gUnknown_03002040, then points
- * gpKeySt at slot 4 -- which is gUnknown_03002090, the buffer sub_0801348C
+ * gpKeySt at slot 4 -- which is gUnknown_03002090, the buffer RefreshKeyStFromKeys
  * refreshes (see include/unknown-globals.h).
  *
  * The 20-byte stride is `struct KeySt`'s: the ROM synthesises it as
@@ -21,7 +21,7 @@
  * has it after (the pool word is an LICM hoist, not a source statement).
  * The nine `strh`s are in the ROM's store order, which is the source order.
  * gpKeySt takes gUnknown_03002090's own pool word, not gUnknown_03002040+0x50. */
-void sub_08013434(void)
+void InitKeySt(void)
 {
     s16 i;
 
@@ -43,3 +43,4 @@ void sub_08013434(void)
 
     gpKeySt = (struct KeySt *)&gUnknown_03002090;
 }
+asm(".global sub_08013434\n.thumb_set sub_08013434, InitKeySt\n");

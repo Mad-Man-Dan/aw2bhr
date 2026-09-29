@@ -24,7 +24,7 @@ void MapCursor_OnPressA(s16 x, s16 y)
     s16 sx;
     s16 sy;
 
-    sub_0801B780(0);
+    InitTextTileCache(0);
     gUnknown_030040DC = 0;
     gUnknown_030033E8[0] = 0;
     gUnknown_030033E8[1] = 0;

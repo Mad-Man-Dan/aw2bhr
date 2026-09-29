@@ -21,12 +21,12 @@ void sub_08024500(void)
     gUnknown_03001FE8.bits.priority = 1;
     gUnknown_030030B4.bits.priority = 0;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08012358();
+    SetDefaultColorEffects();
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg0 = 1;
     gUnknown_030030E0.bits.target2_enable_bg2 = 1;
     gUnknown_030030E0.bits.target2_enable_bg3 = 1;
     gUnknown_03002020 = 0x10;
     gUnknown_03002B28 = 0x10;
-    sub_0801237C();
+    ResetWindowShadows();
 }

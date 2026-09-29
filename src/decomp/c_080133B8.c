@@ -36,7 +36,7 @@ struct Unk80133B8Proc
     /* 58 */ int unk58;
 };
 
-void sub_080133B8(struct Unk80133B8Proc *proc)
+void ScreenShake_Loop(struct Unk80133B8Proc *proc)
 {
     const struct Unk80133B8Cmd *cmds = proc->unk4c;
 
@@ -60,3 +60,4 @@ void sub_080133B8(struct Unk80133B8Proc *proc)
     if (proc->unk58 == proc->unk44)
         Proc_Break(proc);
 }
+asm(".global sub_080133B8\n.thumb_set sub_080133B8, ScreenShake_Loop\n");

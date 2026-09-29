@@ -16,7 +16,7 @@
  */
 
 
-/* The stop half of sub_08013338's start (Proc_StartBlocking or Proc_Start on
+/* The stop half of StartScreenShake's start (Proc_StartBlocking or Proc_Start on
  * tree 3, depending on its ProcPtr argument).
  */
 

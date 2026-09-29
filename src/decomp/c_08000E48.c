@@ -83,7 +83,7 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     sub_080366D0(MapVBlankCallback);
     sub_080366C4(MapMainLoopCallback);
     gUnknown_03003F3C = 0;
-    sub_0801B780(0);
+    InitTextTileCache(0);
     DesignRoomLoadGraphics();
     sub_08022AAC(7, 4);
     gActiveMap->designSlot = 0xFF;

@@ -10,11 +10,11 @@
 /* One of three identical wrappers -- sub_08038548 and sub_08038568 are the
  * others, and the only thing that changes between them is the callback.
  * The `lsls #24; lsrs #24` between the two calls is the s8 -> u8 conversion
- * of sub_08016D04's result for sub_0803D73C's `u8` first parameter; see the
+ * of GetSuspendIdForGameMode's result for sub_0803D73C's `u8` first parameter; see the
  * prototypes in include/unknown-functions.h for how both widths were settled.
  * `pop {r0}; bx r0` -- void.
  */
 void sub_08045770(void)
 {
-    sub_0803D73C(sub_08016D04(gPlaySt.gameMode), sub_0803B8A0);
+    sub_0803D73C(GetSuspendIdForGameMode(gPlaySt.gameMode), sub_0803B8A0);
 }

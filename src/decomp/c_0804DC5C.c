@@ -24,7 +24,7 @@ void RidePartOnFigure(u16 a, u16 b, int c)
 
     v = *gUnknown_084C3F78[a];
 
-    sub_080155C0(c, (s16)gUnknown_02029A10[a].entries[b].x,
+    SetSlotSpritePosition(c, (s16)gUnknown_02029A10[a].entries[b].x,
                  gUnknown_02029A10[a].entries[b].y - v);
 }
 asm(".global sub_0804DC5C\n.thumb_set sub_0804DC5C, RidePartOnFigure\n");

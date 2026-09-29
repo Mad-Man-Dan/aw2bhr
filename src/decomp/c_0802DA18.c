@@ -51,7 +51,7 @@ void DeploymentScreen_Loop(void)
 
     sub_0802776C(1);
 
-    if (sub_08019850())
+    if (IsCoSpeechScriptRunning())
         return;
 
     ent = &gUnknown_03001470[gUnknown_03001FBC];
@@ -90,7 +90,7 @@ void DeploymentScreen_Loop(void)
 
     if (gpKeySt->pressed & 3)
     {
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         sub_0802D76C();
         sub_0803A59C();
         return;

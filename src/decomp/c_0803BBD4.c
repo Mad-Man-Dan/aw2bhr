@@ -16,15 +16,15 @@
  * Rebuild gUnknown_03003F30[0..3]: "is slot i a live, present player?", with
  * slot 1 getting an extra escape hatch through IsAnyWorldMapMissionCleared.
  *
- * The DUPLICATED `sub_08016D04(i)` is real source, not a compiler artefact.
- * agbcc never CSEs a call, so the two `bl sub_08016D04` in the stream are two
+ * The DUPLICATED `GetSuspendIdForGameMode(i)` is real source, not a compiler artefact.
+ * agbcc never CSEs a call, so the two `bl GetSuspendIdForGameMode` in the stream are two
  * source calls; the first one's result is only ever used on the i == 1 path,
  * and the else arm fetches it again. Writing it once above the `if` and
  * letting both arms share it produces one `bl`, which is 12 bytes short.
  *
  * The three narrowings are all prototype-driven and none of them is a source
- * cast: sub_08016D04 returns s8 so its result is re-narrowed (`lsls #0x18;
- * lsrs #0x18` into the u8 `t`), sub_08016CD8 takes s8 so `t` is sign-extended
+ * cast: GetSuspendIdForGameMode returns s8 so its result is re-narrowed (`lsls #0x18;
+ * lsrs #0x18` into the u8 `t`), GetSuspendFlag takes s8 so `t` is sign-extended
  * at the call (`lsls #0x18; asrs #0x18` -- and in the else arm agbcc folds
  * that onto the still-live shifted r0, which is why that arm is one
  * instruction shorter), and sub_08016E04 takes u16 so the already
@@ -54,19 +54,19 @@ void MainMenu_0803BBD5(void)
 
     for (i = 0; i <= 3; i++)
     {
-        t = sub_08016D04(i);
+        t = GetSuspendIdForGameMode(i);
 
         if (i == 1)
         {
-            if ((sub_08016CD8(t) != 0 && sub_08016E04(t) != 0) || IsAnyWorldMapMissionCleared() != 0)
+            if ((GetSuspendFlag(t) != 0 && sub_08016E04(t) != 0) || IsAnyWorldMapMissionCleared() != 0)
                 gUnknown_03003F30[i] = 1;
             else
                 gUnknown_03003F30[1] = 0;
         }
         else
         {
-            t = sub_08016D04(i);
-            if (sub_08016CD8(t) != 0 && sub_08016E04(t) != 0)
+            t = GetSuspendIdForGameMode(i);
+            if (GetSuspendFlag(t) != 0 && sub_08016E04(t) != 0)
                 gUnknown_03003F30[i] = 1;
             else
                 gUnknown_03003F30[i] = 0;

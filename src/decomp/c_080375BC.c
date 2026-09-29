@@ -18,6 +18,6 @@
 
 void sub_080375BC(void)
 {
-    sub_08013C54();
-    sub_08013AFC();
+    ClearBg1Tilemap();
+    BG_EnableSyncBG1();
 }

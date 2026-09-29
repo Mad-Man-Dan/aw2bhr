@@ -8,8 +8,8 @@
  */
 
 /* Set one OBJ attribute bit on the slot's stashed attributes: fetch the eight
- * bytes into a stack local with sub_0801566C, poke one bitfield, hand them
- * back by value to sub_08015608. SetSlotSpriteFlicker is the SAME SOURCE one bit
+ * bytes into a stack local with CopySlotSpriteAttrs, poke one bitfield, hand them
+ * back by value to SetSlotSpriteAttrs. SetSlotSpriteFlicker is the SAME SOURCE one bit
  * along (`bpp`, `lsls #5`, mask ~0x20).
  *
  * The `movs r0,#0x11; rsbs r0,r0,#0` mask is the bitfield-store tell: it is a
@@ -28,9 +28,9 @@ void SetSlotSpriteHidden(s16 a, u8 b)
 {
     struct OamData o;
 
-    sub_0801566C(a, (struct UnkVec *)&o);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&o);
     o.mosaic = b;
-    sub_08015608(a, *(struct UnkVec *)&o);
+    SetSlotSpriteAttrs(a, *(struct UnkVec *)&o);
 }
 asm(".global sub_080154C4\n.thumb_set sub_080154C4, SetSlotSpriteHidden\n");
 
@@ -42,8 +42,8 @@ void SetSlotSpriteFlicker(s16 a, u8 b)
 {
     struct OamData o;
 
-    sub_0801566C(a, (struct UnkVec *)&o);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&o);
     o.bpp = b;
-    sub_08015608(a, *(struct UnkVec *)&o);
+    SetSlotSpriteAttrs(a, *(struct UnkVec *)&o);
 }
 asm(".global sub_08015504\n.thumb_set sub_08015504, SetSlotSpriteFlicker\n");

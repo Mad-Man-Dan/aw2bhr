@@ -18,10 +18,11 @@ void DialogueBlock_CB_08014BB5(void)
     gUnknown_03002514 = 0;
 }
 
-void sub_08014BC0(ProcPtr parent)
+void StartDialogueBlock(ProcPtr parent)
 {
     Proc_Start(ProcScr_DialogueOnEnd, parent);
 }
+asm(".global sub_08014BC0\n.thumb_set sub_08014BC0, StartDialogueBlock\n");
 
 asm(".global sub_08014BB4\n.thumb_set sub_08014BB4, DialogueBlock_CB_08014BB5\n");
 

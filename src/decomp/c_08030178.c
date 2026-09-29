@@ -15,7 +15,7 @@ void sub_08030178(void)
 
     gUnknown_0849B01C->unk00++;
     gUnknown_0849B01C->unk00 &= 7;
-    sub_08013434();
+    InitKeySt();
     REG_IME = 0;
     for (i = 0; i < 4; i++)
         gUnknown_0849B01C->unk08[0][i] |= 0xFFFF;

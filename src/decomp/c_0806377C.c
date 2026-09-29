@@ -20,7 +20,7 @@ void ClearCallbackOfSlotsRunningScript(const void *a)
     for (i = 0x1d; i >= 0; i--)
     {
         if (gUnknown_03001470[i].unk00 == (u32)a)
-            sub_08015C30(i);
+            ClearSlotScriptCallback(i);
     }
 }
 asm(".global sub_0806377C\n.thumb_set sub_0806377C, ClearCallbackOfSlotsRunningScript\n");
@@ -42,7 +42,7 @@ struct Unk03001470 *FindSlotRunningScript(const void *a)
 }
 asm(".global sub_080637AC\n.thumb_set sub_080637AC, FindSlotRunningScript\n");
 
-/* ClearCallbackOfSlotsRunningScript with sub_08015A30 in place of sub_08015C30 -- the two differ in
+/* ClearCallbackOfSlotsRunningScript with StepSlotScript in place of ClearSlotScriptCallback -- the two differ in
  * that one instruction and nothing else. */
 void StepSlotsRunningScript(const void *a)
 {
@@ -51,7 +51,7 @@ void StepSlotsRunningScript(const void *a)
     for (i = 0x1d; i >= 0; i--)
     {
         if (gUnknown_03001470[i].unk00 == (u32)a)
-            sub_08015A30(i);
+            StepSlotScript(i);
     }
 }
 asm(".global sub_080637D8\n.thumb_set sub_080637D8, StepSlotsRunningScript\n");

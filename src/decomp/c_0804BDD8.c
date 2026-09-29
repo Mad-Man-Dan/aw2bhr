@@ -28,7 +28,7 @@ int StepFigureHitFlash(u16 a, u16 b, s16 c)
     u16 pal;
     u16 t;
 
-    sub_0801566C(c, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(c, (struct UnkVec *)&oam);
 
     gUnknown_020298E0[a].unk30[b] += gUnknown_020298E0[a].unk26[b];
 
@@ -46,7 +46,7 @@ int StepFigureHitFlash(u16 a, u16 b, s16 c)
     t = gUnknown_020298E0[a].unk26[b] + gUnknown_020298E0[a].unk30[b];
     pal = gUnknown_08553B40[a][t];
     oam.paletteNum = pal;
-    sub_08015608(c, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(c, *(struct UnkVec *)&oam);
 
     return t;
 }
@@ -61,7 +61,7 @@ int StepFigureHitFlash2(u16 a, u16 b, s16 c)
     u16 pal;
     u16 t;
 
-    sub_0801566C(c, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(c, (struct UnkVec *)&oam);
 
     gUnknown_020298E0[a].unk30[b] += gUnknown_020298E0[a].unk26[b];
 
@@ -79,7 +79,7 @@ int StepFigureHitFlash2(u16 a, u16 b, s16 c)
     t = gUnknown_020298E0[a].unk26[b] + gUnknown_020298E0[a].unk30[b];
     pal = gUnknown_08553B40[a][t];
     oam.paletteNum = pal;
-    sub_08015608(c, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(c, *(struct UnkVec *)&oam);
 
     return t;
 }

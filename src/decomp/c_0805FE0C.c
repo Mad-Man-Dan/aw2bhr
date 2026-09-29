@@ -9,7 +9,7 @@
 
 void sub_0805FE0C(void)
 {
-    sub_080129D4(gUnknown_030046C0.unk08);
+    SetRandomSeed(gUnknown_030046C0.unk08);
 
     if (gUnknown_030046C0.unk00 == 1
      || gUnknown_030046C0.unk00 == 0xe

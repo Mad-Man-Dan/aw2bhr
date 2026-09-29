@@ -75,27 +75,27 @@ void DebugArmyEditor_Loop(struct Unk3D9FC *proc)
     delta = 0;
     army = proc->unk1E;
 
-    sub_080119A0(8, 0x00, "FORCE   /");
-    sub_080119A0(8, 0x08, "PLAY");
-    sub_080119A0(8, 0x10, "MONEY");
-    sub_080119A0(8, 0x18, "BREAK");
-    sub_080119A0(8, 0x20, "SYOGUN");
-    sub_080119A0(8, 0x28, "TEAM");
-    sub_080119A0(8, 0x30, "SAKU");
-    sub_080119A0(8, 0x38, "TURN");
-    sub_080119A0(8, 0x40, "COLOR");
+    PutAsciiStringSprites(8, 0x00, "FORCE   /");
+    PutAsciiStringSprites(8, 0x08, "PLAY");
+    PutAsciiStringSprites(8, 0x10, "MONEY");
+    PutAsciiStringSprites(8, 0x18, "BREAK");
+    PutAsciiStringSprites(8, 0x20, "SYOGUN");
+    PutAsciiStringSprites(8, 0x28, "TEAM");
+    PutAsciiStringSprites(8, 0x30, "SAKU");
+    PutAsciiStringSprites(8, 0x38, "TURN");
+    PutAsciiStringSprites(8, 0x40, "COLOR");
 
     sub_0802BD54(0x50, 0x00, sub_0802490C(gPlaySt.mapID));
     sub_0802BD54(0x40, 0x00, proc->unk1E);
-    sub_080119A0(0x40, 0x08, sCtrl[gPlayers[army].aiControlled]);
+    PutAsciiStringSprites(0x40, 0x08, sCtrl[gPlayers[army].aiControlled]);
     sub_0802BD54(0x68, 0x10, gPlayers[army].funds);
     sub_0802BD54(0x68, 0x18, gPlayers[army].coCharge);
-    sub_080119A0(0x40, 0x20, sCoNames[gPlayers[army].co]);
+    PutAsciiStringSprites(0x40, 0x20, sCoNames[gPlayers[army].co]);
     sub_0802BD54(0x68, 0x28, gPlayers[army].team);
-    sub_080119A0(0x50, 0x30, sOnOff[gPlaySt.fog]);
+    PutAsciiStringSprites(0x50, 0x30, sOnOff[gPlaySt.fog]);
     sub_0802BD54(0x40, 0x38, gUnknown_03004080);
-    sub_080119A0(0x40, 0x40, sColors[gPlayers[army].teamColor]);
-    sub_080119A0(0, proc->unk20 * 8, "/");
+    PutAsciiStringSprites(0x40, 0x40, sColors[gPlayers[army].teamColor]);
+    PutAsciiStringSprites(0, proc->unk20 * 8, "/");
 
     if (gpKeySt->pressed & R_BUTTON)
     {
@@ -183,7 +183,7 @@ void DebugArmyEditor_Loop(struct Unk3D9FC *proc)
     if (gpKeySt->pressed & 3)
     {
         sub_08026B28();
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }
 asm(".global sub_0803D9FC\n.thumb_set sub_0803D9FC, DebugArmyEditor_Loop\n");

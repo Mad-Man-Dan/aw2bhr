@@ -7,8 +7,9 @@
  * sub_08013324 @ 0x08013324
  */
 
-void sub_08013324(void)
+void ResetScreenShakeOffset(void)
 {
     gUnknown_030030D0 = 0;
     gUnknown_03002B20 = 0;
 }
+asm(".global sub_08013324\n.thumb_set sub_08013324, ResetScreenShakeOffset\n");

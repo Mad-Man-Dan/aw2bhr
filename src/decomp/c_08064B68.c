@@ -26,7 +26,7 @@ void sub_08064B68(int a)
     u8 *p;
     int i;
 
-    if (sub_08015BD0((s32)gUnknown_0858096C) != -1)
+    if (FindSlotScript((s32)gUnknown_0858096C) != -1)
     {
         for (i = 0; i <= 6; i++)
         {

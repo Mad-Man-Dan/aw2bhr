@@ -13,12 +13,12 @@
  * these two was settled elsewhere (see include/unknown-globals.h). */
 void sub_08033120(void)
 {
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
 
     gUnknown_03002F18 = 0;
     gUnknown_03002B34 = 0;

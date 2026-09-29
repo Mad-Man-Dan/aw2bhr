@@ -53,7 +53,7 @@ void sub_0802E278(void)
 
         if (k == 0)
         {
-            sub_08012358();
+            SetDefaultColorEffects();
             gUnknown_03003334 = k;
         }
     }

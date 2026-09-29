@@ -18,7 +18,7 @@
  * then `a * 0xb4`. The matched DeathHandler_Tank has the same shape from the same
  * inline spelling.
  *
- * sub_080153F0 returns `bool8` -- copied from its promoted definition, not
+ * IsSlotScriptActiveAt returns `bool8` -- copied from its promoted definition, not
  * re-derived -- which is what makes the test a bare `lsls #0x18; cmp #0` with
  * no `lsrs`.
  *
@@ -32,7 +32,7 @@ void StartFigureFall(u16 a, u16 b)
     gUnknown_02029B80[a][b] = 1;
 
     if (gUnknown_02029A10[a].entries[b].unk18 != -1
-        && sub_080153F0(gUnknown_02029A10[a].entries[b].unk18))
+        && IsSlotScriptActiveAt(gUnknown_02029A10[a].entries[b].unk18))
         sub_080156E8(gUnknown_02029A10[a].entries[b].unk18,
             gUnknown_02029BA8[a].unk14);
 }

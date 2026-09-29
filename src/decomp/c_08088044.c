@@ -96,7 +96,7 @@ void CoDesignEditor_IntroLoop(struct Unk80880BC * proc)
 
         if (proc->unk4c >= 0xF && proc->unk4c <= 0x12)
         {
-            sub_0801A444(0x15 - proc->unk4c, 0xE, (proc->unk4c - 0xD) * 2, 4);
+            DrawWindowBackgroundOnBg2(0x15 - proc->unk4c, 0xE, (proc->unk4c - 0xD) * 2, 4);
             sub_0808A47C();
         }
     }

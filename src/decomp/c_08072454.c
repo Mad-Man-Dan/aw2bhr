@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08072454(void)
+void Fade_WhiteCallBack(void)
 {
     gUnknown_030030E0.bits.effect = 2;
 
@@ -20,3 +20,4 @@ void sub_08072454(void)
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xFFE0) | 0x1F;
     gUnknown_030030E0.bits.target1_enable_bd = 1;
 }
+asm(".global sub_08072454\n.thumb_set sub_08072454, Fade_WhiteCallBack\n");

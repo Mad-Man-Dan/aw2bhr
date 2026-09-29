@@ -16,7 +16,7 @@
  * BOTH BLOCKERS RECORDED BY THE EARLIER PARKED DRAFT WERE WRONG, and the
  * corrections are the useful part of this function:
  *
- * 1. sub_08015438's fourth parameter does NOT need retyping. The old note
+ * 1. StartSlotScriptWithSprite's fourth parameter does NOT need retyping. The old note
  *    argued the `void *` in include/unknown-functions.h was wrong because
  *    this caller passes a sign-extended s16 VALUE, and that fixing it meant
  *    editing five promoted files. It does not: `(void *)(int)a3` casts
@@ -42,7 +42,7 @@
  * `a < 0 || a > N` into an unsigned `> N` inside one expression but not
  * across two separate `if` statements.
  *
- * sub_080155C0's two arguments are computed in HImode -- `ldrh` on the camera
+ * SetSlotSpritePosition's two arguments are computed in HImode -- `ldrh` on the camera
  * origin despite unk04/unk06 being s16, then one `lsls #0x10; asrs #0x10` --
  * because that callee's parameters are s16, exactly as
  * src/decomp/c_08035B80.c documents for the same call. The bound tests above
@@ -51,7 +51,7 @@
  *
  * `id` is `s16`, and that is 4 bytes rather than a preference: it is what
  * puts the `ldr =gUnknown_03001470` BETWEEN the `lsls #0x18` and the
- * `asrs #0x18` of sub_08015438's s8 return re-narrow. With `s8 id` the pool
+ * `asrs #0x18` of StartSlotScriptWithSprite's s8 return re-narrow. With `s8 id` the pool
  * load lands ahead of both shifts and with `int id` behind both; only s16
  * splits the pair the way the ROM does. Found by decomp-permuter from a
  * 98.0% hand draft -- an order-only residual, which is precisely its case.
@@ -72,17 +72,17 @@ void sub_08035BC4(s16 x, s16 y, s16 a3)
     if (y - gMap->scrollY > 0x9f)
         return;
 
-    id = sub_08015438(gUnknown_0849BDE0, 5, gUnknown_0849BFD8, (void *)(int)a3, 2);
+    id = StartSlotScriptWithSprite(gUnknown_0849BDE0, 5, gUnknown_0849BFD8, (void *)(int)a3, 2);
 
     p = &gUnknown_03001470[id];
     p->unk1e = x;
     p->unk20 = y;
 
-    sub_080155C0(id,
+    SetSlotSpritePosition(id,
                  x - gMap->scrollX,
                  y - gMap->scrollY);
 
-    v = sub_08015638(id);
+    v = GetSlotSpriteAttrs(id);
     v.unk04 = (((v.unk04 & 0xFFFFFC00) | 0x176) & 0xFFFF0FFF) | 0x8000;
-    sub_08015608(id, v);
+    SetSlotSpriteAttrs(id, v);
 }

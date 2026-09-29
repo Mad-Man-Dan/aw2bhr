@@ -7,7 +7,8 @@
  * sub_08015638 @ 0x08015638
  */
 
-struct UnkVec sub_08015638(s16 a)
+struct UnkVec GetSlotSpriteAttrs(s16 a)
 {
     return gUnknown_0200E438[gUnknown_03001470[a].unk26].unk30;
 }
+asm(".global sub_08015638\n.thumb_set sub_08015638, GetSlotSpriteAttrs\n");

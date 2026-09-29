@@ -7,7 +7,8 @@
  * sub_08017970 @ 0x08017970
  */
 
-void sub_08017970(void)
+void PauseEventScripts(void)
 {
     gUnknown_03002B38 = 1;
 }
+asm(".global sub_08017970\n.thumb_set sub_08017970, PauseEventScripts\n");

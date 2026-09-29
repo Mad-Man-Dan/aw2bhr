@@ -11,7 +11,7 @@
 
 /* Program a whole save slot: walk sub_0808B540 across as many sectors as the
  * slot is bytes long, retrying each sector once. The 64-byte stack local is
- * the relocated read routine sub_0808AD6C copies out of ROM.
+ * the relocated read routine SetReadFlash1 copies out of ROM.
  *
  * MATCHED in wave 79 (W79-D) after thirty waves parked. NEEDS THE FLASH BLOCK'S
  * OVERRIDE -- -O2 AND -fforce-addr removed, -O1 added -- now recorded in
@@ -41,7 +41,7 @@
  * record read twice. One local const u8 * per site: a single shared local gives
  * one long-lived pseudo where the ROM rematerialises the address per statement.
  */
-u16 sub_0808B5B8(u16 sectorNum, const u8 *src)
+u16 ProgramFlashSector_AT(u16 sectorNum, const u8 *src)
 {
     u16 buf[0x20];
     const u8 *slotInfo;
@@ -54,7 +54,7 @@ u16 sub_0808B5B8(u16 sectorNum, const u8 *src)
     if (sectorNum > 0xf)
         return 0x80FF;
 
-    sub_0808AD6C(buf);
+    SetReadFlash1(buf);
 
     REG_WAITCNT = (REG_WAITCNT & ~3) | gUnknown_084856A4[0x12];
 
@@ -98,3 +98,4 @@ u16 sub_0808B5B8(u16 sectorNum, const u8 *src)
 
     return result;
 }
+asm(".global sub_0808B5B8\n.thumb_set sub_0808B5B8, ProgramFlashSector_AT\n");

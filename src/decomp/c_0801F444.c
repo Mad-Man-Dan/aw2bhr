@@ -16,7 +16,7 @@
  * that typing stays. Per the wave-38 brief, a diff that seems to demand a
  * different width for a member someone else already typed is evidence about the
  * ACCESS, so the cast lives here. */
-void *sub_0801F444(int a1, int a2)
+void *GetGraphicSourceAddress(int a1, int a2)
 {
     const struct Unk0848B738 *row;
     u8 *base;
@@ -31,3 +31,4 @@ void *sub_0801F444(int a1, int a2)
         total += gUnknown_0848B780[i].unk00 * gUnknown_0848B780[i].unk01;
     return base + (total & 0x3FF) * 32;
 }
+asm(".global sub_0801F444\n.thumb_set sub_0801F444, GetGraphicSourceAddress\n");

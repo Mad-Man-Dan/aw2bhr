@@ -7,10 +7,10 @@
  * sub_0801D778 @ 0x0801D778
  */
 
-/* Arity is read off sub_0801D6E8's prologue, not off this body -- forwarded
+/* Arity is read off InitSpriteScript's prologue, not off this body -- forwarded
  * parameters cost no instruction here. See the note in
  * include/unknown-functions.h. */
 int sub_0801D778(int a, int b, int c, int d)
 {
-    return sub_0801D6E8(a, b, c, d, 0);
+    return InitSpriteScript(a, b, c, d, 0);
 }

@@ -19,6 +19,6 @@ void sub_08030CCC(void)
         gUnknown_0849B018->unk04 = 5;
         gPlaySt.savingEnabled = v;
         SioSend16((u16 *)&gGameClock, 1);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

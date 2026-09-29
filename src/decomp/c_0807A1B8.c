@@ -51,7 +51,7 @@ void sub_0807A1B8(struct Unk0807A1B8Proc *proc)
         proc->unk4c = 0;
         gUnknown_03001400 = 0xFF10;
         gDispIo.disp_ct.bg2_enable = 0;
-        sub_0801A444(0, 0xE, 0x1E, 6);
+        DrawWindowBackgroundOnBg2(0, 0xE, 0x1E, 6);
         Proc_Break(proc);
     }
 }

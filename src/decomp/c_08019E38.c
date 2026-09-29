@@ -18,7 +18,7 @@
  *
  * CloseTopMenu RETURNS a value -- it ends `pop {r1}; bx r1` and is
  * declared s8 -- and this forwarder still pops into r0, so the result
- * is discarded and the forwarder is void. sub_08019E38, sub_08019E44
+ * is discarded and the forwarder is void. sub_08019E38, CloseTopMenu3
  * and sub_0802C5AC are the three byte-identical copies of it.
  */
 void sub_08019E38(void)
@@ -37,10 +37,11 @@ void sub_08019E38(void)
  *
  * CloseTopMenu RETURNS a value -- it ends `pop {r1}; bx r1` and is
  * declared s8 -- and this forwarder still pops into r0, so the result
- * is discarded and the forwarder is void. sub_08019E38, sub_08019E44
+ * is discarded and the forwarder is void. sub_08019E38, CloseTopMenu3
  * and sub_0802C5AC are the three byte-identical copies of it.
  */
-void sub_08019E44(void)
+void CloseTopMenu3(void)
 {
     CloseTopMenu();
 }
+asm(".global sub_08019E44\n.thumb_set sub_08019E44, CloseTopMenu3\n");

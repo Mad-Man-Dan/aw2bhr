@@ -32,7 +32,7 @@
  * PROMOTION NEEDS THE POOL WORD PLACED: this function's data/promoted.json
  * entry needs  "rodata": ["0x0808E524"]  and then tools/split_rodata.py +
  * tools/gen_lds.py before the build. */
-void sub_08012260(void)
+void UpdateKeyRepeatState(void)
 {
     u16 keys;
 
@@ -59,3 +59,4 @@ void sub_08012260(void)
 
     gUnknown_03000040 = keys;
 }
+asm(".global sub_08012260\n.thumb_set sub_08012260, UpdateKeyRepeatState\n");

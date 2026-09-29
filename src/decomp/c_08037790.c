@@ -20,7 +20,7 @@
  * `(gGameClock & 0x3c) >> 2`, a 16-step cycle off the frame counter. */
 void AnimateMapPreviewPalette(void)
 {
-    sub_0801368C(&gUnknown_081253F0[16 + ((gGameClock & 0x3c) >> 2)],
+    ApplyPaletteAndUploadNow(&gUnknown_081253F0[16 + ((gGameClock & 0x3c) >> 2)],
         gUnknown_0300057C * 0x20 + 0x1c, 2);
 }
 asm(".global sub_08037790\n.thumb_set sub_08037790, AnimateMapPreviewPalette\n");

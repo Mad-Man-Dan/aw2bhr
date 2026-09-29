@@ -14,8 +14,8 @@
 void OnVBlank_SioError(void)
 {
     gUnknown_03007FF8 = 1;
-    sub_080128D0();
-    sub_08011FF0();
+    FlushLCDControl();
+    FlushTiles();
     RunSoundVSync();
     RunSoundMain();
 }

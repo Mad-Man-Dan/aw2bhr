@@ -9,7 +9,7 @@
 
 /* One of the F088 trio (sub_0804D738 / sub_0804D818 / sub_0804E134): the same
  * sprite-attribute setter as sub_0804D928, minus the two zeroing stores and the
- * sub_08015928 continuation, and with its own tile base. The three members are
+ * SetSlotSpriteHook continuation, and with its own tile base. The three members are
  * byte-identical apart from that immediate. */
 
 void sub_0804E134(void)
@@ -18,7 +18,7 @@ void sub_0804E134(void)
     u16 pal;
     u16 prio;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
@@ -30,5 +30,5 @@ void sub_0804E134(void)
     prio = gUnknown_085523A4[gUnknown_0300453C ^ gUnknown_0300450C];
     oam.priority = prio;
 
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 }

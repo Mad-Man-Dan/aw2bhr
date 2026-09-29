@@ -20,7 +20,7 @@
  * load is not scheduled alongside the table's.
  *
  * unk1e / unk20 are declared `s16` and read `ldrh` here: the subtraction is
- * computed in HImode because sub_080155C0's parameters are `s16`, so both
+ * computed in HImode because SetSlotSpritePosition's parameters are `s16`, so both
  * operands load unsigned and the single `lsls #0x10; asrs #0x10` at the end is
  * the whole conversion. No cast is needed or wanted. */
 void sub_08035B80(void)
@@ -31,7 +31,7 @@ void sub_08035B80(void)
     i = gUnknown_03001FBC;
     p = &gUnknown_03001470[i];
 
-    sub_080155C0(i,
+    SetSlotSpritePosition(i,
                  p->unk1e - gMap->scrollX,
                  p->unk20 - gMap->scrollY - 2);
 }

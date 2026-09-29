@@ -42,13 +42,13 @@ void SubmarinePart_Loop(void)
     slot = gUnknown_03001470[gUnknown_03001FBC].unk34;
 
     RidePartOnFigure(side, slot, gUnknown_03001FBC);
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     t = gUnknown_020298E0[side].unk26[slot] + gUnknown_020298E0[side].unk30[slot];
     pal = gUnknown_08553B40[side][t];
     oam.paletteNum = pal;
 
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 }
 
 asm(".global sub_0804C828\n.thumb_set sub_0804C828, SubmarinePart_Loop\n");

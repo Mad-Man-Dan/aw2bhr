@@ -20,6 +20,6 @@ struct Unk674BCProc
 void sub_080674BC(struct Unk674BCProc *proc)
 {
     proc->unk58 = 0x20;
-    sub_08013928(1);
-    sub_080135A4();
+    ColFadeToWhite(1);
+    EnablePaletteSync();
 }

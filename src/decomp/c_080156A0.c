@@ -30,12 +30,12 @@ int sub_080156C4(s16 a)
     return (s16)sub_0801DA54(gUnknown_03001470[a].unk26);
 }
 
-/* A narrowing forwarder to sub_080156FC. The second parameter is `void *` on
+/* A narrowing forwarder to SetSlotSpriteScriptIndex. The second parameter is `void *` on
  * caller-side evidence (see include/unknown-functions.h) even though
- * sub_080156FC uses it as a table index; the cast is what produces the
+ * SetSlotSpriteScriptIndex uses it as a table index; the cast is what produces the
  * `lsls #0x10; lsrs #0x10`.
  */
 void sub_080156E8(s16 a, void *b)
 {
-    sub_080156FC(a, (u32)b);
+    SetSlotSpriteScriptIndex(a, (u32)b);
 }

@@ -36,6 +36,6 @@ void ClearAllSpriteScripts(void)
     for (i = 0; i < 30; i++)
         gUnknown_0200E438[i].unk08 = 0;
 
-    sub_0801DA94();
+    ClearObjAffineSlots();
 }
 asm(".global sub_0801D8B4\n.thumb_set sub_0801D8B4, ClearAllSpriteScripts\n");

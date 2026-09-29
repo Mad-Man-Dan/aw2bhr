@@ -13,11 +13,12 @@
  * The second argument is `gUnknown_03002F08.unk00`, not a literal -- CSE
  * rematerialises the 0xf it stored one statement earlier rather than keeping a
  * register alive, so `movs r1, #0xf` is what the global read compiles to here.
- * sub_080188D0, the same call with no preceding store, reloads it `ldrb`. */
-bool8 sub_08018838(s16 a)
+ * EventOp_ApplyFramePaletteForArmy, the same call with no preceding store, reloads it `ldrb`. */
+bool8 EventOp_SetFramePaletteSlot15(s16 a)
 {
     gUnknown_03002F08.unk00 = 0xf;
     sub_0802D5CC(gPlayers[gUnknown_030033EC].teamColor - 1, gUnknown_03002F08.unk00);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08018838\n.thumb_set sub_08018838, EventOp_SetFramePaletteSlot15\n");

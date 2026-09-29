@@ -8,17 +8,17 @@
  */
 
 /*
- * sub_080145E8 -- copy the text writer's parameters out of gUnknown_0200C020
+ * TextBox_Init -- copy the text writer's parameters out of gUnknown_0200C020
  * into another record of the same type.
  *
- * Exactly the fields sub_080147B4 fills, in the order sub_080147B4 writes them.
+ * Exactly the fields InitTextWriter fills, in the order InitTextWriter writes them.
  *
  * Why the C looks odd: this spelling does not change what the code does, but
  * the original compiler only produces identical output with it.
  *   - `d->unk34 = d->unk36 = <value>` is one chained assignment. One load feeds
  *     both stores and unk36 is written first, as in the original.
  */
-void sub_080145E8(struct Unk08014074 *d)
+void TextBox_Init(struct Unk08014074 *d)
 {
     d->unk20 = gUnknown_0200C020.unk20;
     d->unk24 = gUnknown_0200C020.unk24;
@@ -36,3 +36,4 @@ void sub_080145E8(struct Unk08014074 *d)
     d->unk3c = gUnknown_0200C020.unk3c;
     d->unk40 = gUnknown_0200C020.unk40;
 }
+asm(".global sub_080145E8\n.thumb_set sub_080145E8, TextBox_Init\n");

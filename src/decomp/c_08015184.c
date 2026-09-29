@@ -8,9 +8,9 @@
  */
 
 /* Marks all 30 gUnknown_03001470 slots free and resets the count.
- * The 30 is the same bound sub_08015BD0 scans to.
+ * The 30 is the same bound FindSlotScript scans to.
  */
-void sub_08015184(void)
+void InitSlotScripts(void)
 {
     u8 i;
 
@@ -19,3 +19,4 @@ void sub_08015184(void)
 
     gUnknown_03002F1C = 0;
 }
+asm(".global sub_08015184\n.thumb_set sub_08015184, InitSlotScripts\n");

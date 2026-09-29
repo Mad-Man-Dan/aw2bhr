@@ -45,7 +45,7 @@ void StreamBodyPose(u16 a, u16 b, u16 c)
     o2 = (a * 0x100 + b * (row = gUnknown_085D6A48[t])[9]) * 0x20;
     k = gUnknown_08551D1C[gUnknown_02029A10[a].entries[b].unk00];
 
-    sub_08011E54((u8 *)gUnknown_02029BA8[a].unk18[k] + o1,
+    RegisterDataMove((u8 *)gUnknown_02029BA8[a].unk18[k] + o1,
                  (void *)(0x06010000 + o2), 0x480);
 }
 asm(".global sub_0804EA54\n.thumb_set sub_0804EA54, StreamBodyPose\n");
@@ -73,7 +73,7 @@ void StreamCrewPose(u16 a, u16 b, u16 c)
     o2 = (a * 0x100 + b * (row = gUnknown_085D6A48[t])[9] + 0x28) * 0x20;
     k = gUnknown_08551D1C[gUnknown_02029A10[a].entries[b].unk00];
 
-    sub_08011E54((u8 *)gUnknown_02029BA8[a].unk18[k] + o1,
+    RegisterDataMove((u8 *)gUnknown_02029BA8[a].unk18[k] + o1,
                  (void *)(0x06010000 + o2), 0x100);
 }
 asm(".global sub_0804EAEC\n.thumb_set sub_0804EAEC, StreamCrewPose\n");

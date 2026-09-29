@@ -88,7 +88,7 @@ void sub_08044610(struct Unk08044610Proc *proc)
 
     proc->unk64++;
 
-    if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+    if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
         return;
 
     if (proc->unk64 <= 4)
@@ -121,7 +121,7 @@ void sub_08044610(struct Unk08044610Proc *proc)
             {
                 ScrollCameraToKeepCellInView(unit->x, unit->y);
 
-                if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+                if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
                     return;
 
                 gUnknown_084A0090[gPlayers[gUnknown_030033EC].co]

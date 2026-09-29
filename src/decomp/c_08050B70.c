@@ -53,7 +53,7 @@ void ThirdEffect_Init(void)
     u16 *row;
     void (*fn)(u16, u16);
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
@@ -65,7 +65,7 @@ void ThirdEffect_Init(void)
     prio = gUnknown_0855239C[gUnknown_0300453C * 2 + gUnknown_0300450C];
     oam.priority = prio;
 
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 
     fn = gUnknown_085535B0[(row = gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]],
                             row[2])];

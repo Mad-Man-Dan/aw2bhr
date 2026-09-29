@@ -8,7 +8,7 @@
  */
 
 /* Runs every non-null entry of the 16-slot callback list B
- * (gUnknown_03000000); sub_08011A84's twin sub_08011B18 is the reset half.
+ * (gUnknown_03000000); ClearVBlankCallbackQueue's twin sub_08011B18 is the reset half.
  *
  * `bl _call_via_r0` is ordinary agbcc output for an indirect THUMB call, and
  * the r0 index says the callee takes no arguments.
@@ -25,7 +25,7 @@
  *
  * Casting at each use instead of binding the local does NOT work: it forces
  * the base address into a `.rodata` pool word and adds an indirection. */
-void sub_08011B98(void)
+void RunVBlankHooks(void)
 {
     u16 i;
 
@@ -39,3 +39,4 @@ void sub_08011B98(void)
             fns[i]();
     }
 }
+asm(".global sub_08011B98\n.thumb_set sub_08011B98, RunVBlankHooks\n");

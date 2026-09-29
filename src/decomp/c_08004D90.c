@@ -7,7 +7,7 @@
  * sub_08004D90 @ 0x08004D90
  */
 
-/* Passes sub_0801F2AC(9, ...) the BG0 tilemap cell at column 3,
+/* Passes PutTilePoolGraphicTilemap(9, ...) the BG0 tilemap cell at column 3,
  * tile row row*2 + 5 (side 0) or row*2 + 7 (side 1), the same rows
  * sub_08004DD4 computes, then calls sub_08004DD4 with the same
  * arguments and 2.
@@ -29,6 +29,6 @@ void sub_08004D90(int side, int row, u8 *text)
     else
         tm = gBG0TilemapBuffer + (u32)((y + 7) * 32 + 3);
 
-    sub_0801F2AC(9, tm);
+    PutTilePoolGraphicTilemap(9, tm);
     sub_08004DD4(side, row, text, 2);
 }

@@ -31,7 +31,7 @@ struct Unk8019578
     /* 0x30 */ u16 unk30;
 };
 
-void sub_08019578(void *proc)
+void ChoiceBox_DrawCursor(void *proc)
 {
     struct Unk8019578 *p = (struct Unk8019578 *)proc;
 
@@ -45,3 +45,4 @@ void sub_08019578(void *proc)
 
     p->unk2c();
 }
+asm(".global sub_08019578\n.thumb_set sub_08019578, ChoiceBox_DrawCursor\n");

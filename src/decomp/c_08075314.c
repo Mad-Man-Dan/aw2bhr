@@ -13,7 +13,7 @@ void sub_08075314(void)
 {
     Decompress(gUnknown_081D1398, (void *)0x06000800);
     Decompress(gUnknown_081D13E0, gBG1TilemapBuffer);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 
 void sub_08075340(int a)
@@ -23,5 +23,5 @@ void sub_08075340(int a)
 
     i = (a & 0x1F) >> 1;
     gPal[0x59] = p[i];
-    sub_080135A4();
+    EnablePaletteSync();
 }

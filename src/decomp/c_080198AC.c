@@ -7,7 +7,8 @@
  * sub_080198AC @ 0x080198AC
  */
 
-void sub_080198AC(void)
+void ClearCoScreenDrawHook(void)
 {
     gUnknown_03002F20 = 0;
 }
+asm(".global sub_080198AC\n.thumb_set sub_080198AC, ClearCoScreenDrawHook\n");

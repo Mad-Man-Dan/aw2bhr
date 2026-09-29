@@ -17,5 +17,5 @@
 
 void sub_0804856C(void)
 {
-    sub_0801B780(0);
+    InitTextTileCache(0);
 }

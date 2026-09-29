@@ -7,14 +7,14 @@
  * sub_0801220C @ 0x0801220C
  */
 
-/* Resets the text/dialogue cursor state: seed the pair through sub_0801224C,
+/* Resets the text/dialogue cursor state: seed the pair through SetKeyRepeatTiming,
  * snapshot gUnknown_03000044 into its neighbour, then clear four more
  * halfwords. Every store is `strh` through its own pool word, so these are six
  * separate scalars and not one aggregate -- the same reading the
  * gUnknown_03000044 / gUnknown_03000046 note already carries. */
 void sub_0801220C(void)
 {
-    sub_0801224C(0x14, 6);
+    SetKeyRepeatTiming(0x14, 6);
 
     gUnknown_03000042 = gUnknown_03000044;
     gUnknown_03000040 = 0;

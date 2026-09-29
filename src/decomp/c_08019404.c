@@ -21,7 +21,7 @@
  * called with the slot index, and handlers keep being called for as long as one
  * returns nonzero -- a handler returning 0 ends the slot's turn for this frame.
  * Each handler moves the cursor itself. include/unknown-functions.h lists the
- * family beside sub_08017A80.
+ * family beside EventOp_CallFunction.
  *
  * Why the C looks odd: the loop re-reads `gUnknown_0200C528[a].unk04` every
  * pass, which it has to, because the handlers move it. The slot's .unk00 is
@@ -52,7 +52,7 @@ asm(".global sub_08019404\n.thumb_set sub_08019404, StepEventScriptSlot\n");
 /*
  * RunEventScripts -- run the whole gUnknown_0200C528 script system for one frame.
  *
- * Does nothing while sub_08017988 reports the system busy. Otherwise
+ * Does nothing while AreEventScriptsPaused reports the system busy. Otherwise
  * gUnknown_03002EF0 is cleared and each of the ten slots that holds a script
  * gets its callback run, if it has one, and then its script stepped by
  * StepEventScriptSlot above. Afterwards, when gUnknown_03001404 is set, all four key
@@ -73,7 +73,7 @@ void RunEventScripts(void)
 {
     s16 i;
 
-    if (sub_08017988() != 0)
+    if (AreEventScriptsPaused() != 0)
         return;
 
     gUnknown_03002EF0 = 0;

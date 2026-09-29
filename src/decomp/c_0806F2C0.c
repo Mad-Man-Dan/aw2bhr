@@ -11,7 +11,7 @@
  * two statements, each with its own pool word, result of each discarded.
  * src/decomp/c_08044924.c is the matched exemplar.
  * Two different callees. The second pool word is a FUNCTION address, so it
- * needs the `(void *)` cast sub_08011AAC's declared parameter forces.
+ * needs the `(void *)` cast QueueVBlankCallback's declared parameter forces.
  * NOT asm-resident despite the address: 0x0806F2C0 sits below the m4a span's
  * 0x0806F734 lower bound, it is absent from data/asm-resident.json, and it
  * takes nothing in r1 -- the driver's hand-written half is the r1-convention
@@ -21,5 +21,5 @@
 void sub_0806F2C0(void)
 {
     Proc_EndEach(gUnknown_08614200);
-    sub_08011AAC((void *)sub_080735B0);
+    QueueVBlankCallback((void *)sub_080735B0);
 }

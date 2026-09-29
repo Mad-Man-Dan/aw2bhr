@@ -28,7 +28,7 @@ void BattleAnimScene_Init(void)
     if (!gUnknown_03004504.bit0)
         *(u16 *)&gDispIo.disp_ct = 0;
 
-    sub_08012420();
+    FlushDisplayRegisters();
     PlanBattleAnim();
     LoadBattleAnimScene();
     sub_080152C0((int)gUnknown_08553820, 0);
@@ -44,7 +44,7 @@ void BattleAnimScene_Init(void)
                 gUnknown_085537EC[gUnknown_030045A0[gUnknown_0300450C]];
     }
 
-    sub_08012420();
+    FlushDisplayRegisters();
 }
 asm(".global sub_080531D4\n.thumb_set sub_080531D4, BattleAnimScene_Init\n");
 
@@ -56,7 +56,7 @@ void BattleAnimScene_Loop(ProcPtr proc)
 {
     RunBattleAnimStepHandler();
     sub_080535E0();
-    sub_08011E54(gUnknown_08551A04, (void *)0x06002800, 0x800);
+    RegisterDataMove(gUnknown_08551A04, (void *)0x06002800, 0x800);
 
     if (gUnknown_03004508 == 0x12c)
         Proc_Break(proc);

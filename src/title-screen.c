@@ -103,7 +103,7 @@ void TitleIntro_FadeOutLoop(struct ProcTitleScreen * proc)
     }
 
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
 
     proc->unk_30--;
 
@@ -159,7 +159,7 @@ u32 CONST_DATA gUnknown_08581CB8[] =
 
 void TitleScreen_Init(struct ProcTitleScreen * proc)
 {
-    sub_08012C58(gUnknown_08581CB8);
+    SetupBackgrounds(gUnknown_08581CB8);
 
     gDispIo.disp_ct.mode = 0;
     SetDispEnable(1, 0, 0, 0, 1);
@@ -168,8 +168,8 @@ void TitleScreen_Init(struct ProcTitleScreen * proc)
     *(u8 *)&gUnknown_03002B6C |= 0x80;
     gDispIo.disp_ct.obj_mapping = 1;
 
-    sub_0801237C();
-    sub_08012358();
+    ResetWindowShadows();
+    SetDefaultColorEffects();
 
     sub_08063994();
 
@@ -208,9 +208,9 @@ void sub_0806CB5C(struct ProcTitleScreen * proc)
 
 void sub_0806CB88(struct ProcTitleScreen * proc)
 {
-    sub_080139C4(-1);
+    ColFadeFromWhite(-1);
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
     proc->unk_30 = 127;
 }
 
@@ -223,7 +223,7 @@ void sub_0806CBA8(struct ProcTitleScreen * proc)
         if ((proc->unk_30 & 3) == 2)
         {
             sub_080718F0();
-            sub_080135A4();
+            EnablePaletteSync();
         }
 
         proc->unk_30--;
@@ -391,7 +391,7 @@ void TitlePressStartDraw_Loop(struct ProcTitlePressStartDraw * proc)
     if (!(r1 % 4) && (proc->unk_34 != 0))
     {
         PAL_OBJ_COLOR(3, 12) = PAL_OBJ_COLOR(4, proc->unk_3C);
-        sub_080135A4();
+        EnablePaletteSync();
         proc->unk_3C = ((proc->unk_3C + 1) & 15);
     }
 
@@ -498,9 +498,9 @@ void TitleSpriteDraw_StartIdle(struct ProcTitleSpriteDraw * proc)
     proc->unk_2C = 173;
 
     ColorFadeInit();
-    sub_080139C4(-1);
+    ColFadeFromWhite(-1);
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
 }
 
 void TitleSpriteDraw_Loop_Idle(struct ProcTitleSpriteDraw * proc)
@@ -508,7 +508,7 @@ void TitleSpriteDraw_Loop_Idle(struct ProcTitleSpriteDraw * proc)
     if (!(gGameClock & 3) && (proc->unk_30 > 0))
     {
         sub_080718F0();
-        sub_080135A4();
+        EnablePaletteSync();
         proc->unk_30--;
     }
 

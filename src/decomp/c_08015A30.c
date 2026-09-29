@@ -27,7 +27,7 @@ struct Unk08015A30Cmd
     /* 0x06 */ u16 unk06;
 };
 
-void sub_08015A30(u8 a)
+void StepSlotScript(u8 a)
 {
     if (gUnknown_03001470[a].unk00 == 0)
         return;
@@ -48,3 +48,4 @@ void sub_08015A30(u8 a)
         ((const struct Unk08015A30Cmd *)gUnknown_03001470[a].unk04)->unk06](a))
         ;
 }
+asm(".global sub_08015A30\n.thumb_set sub_08015A30, StepSlotScript\n");

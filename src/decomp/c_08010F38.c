@@ -26,7 +26,7 @@
  * The index must be parenthesised as `dest + (x + y * 32)`: written
  * `dest + x + y * 32` agbcc scales and adds the two terms separately instead of
  * forming the cell index first and scaling once. */
-void sub_08010F38(u16 x, u16 y, const u8 *s, u16 *dest)
+void DrawAsciiStringToTilemap(u16 x, u16 y, const u8 *s, u16 *dest)
 {
     u16 *p;
 
@@ -43,3 +43,4 @@ void sub_08010F38(u16 x, u16 y, const u8 *s, u16 *dest)
         p++;
     }
 }
+asm(".global sub_08010F38\n.thumb_set sub_08010F38, DrawAsciiStringToTilemap\n");

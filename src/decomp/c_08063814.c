@@ -8,9 +8,9 @@
  */
 
 /* The same descending gUnknown_03001470[] scan, inverted: it acts on every
- * slot that is NOT the argument's (`beq` skips the call). sub_08015328 takes
+ * slot that is NOT the argument's (`beq` skips the call). EndSlotScriptAt takes
  * s16, which is where `lsls #0x10; asrs #0x10` comes from -- the u8 narrowing
- * its twins emit is sub_08015C30/sub_08015A30's u8 parameter, not a different
+ * its twins emit is ClearSlotScriptCallback/StepSlotScript's u8 parameter, not a different
  * index type. */
 void EndSlotsNotRunningScript(const void *a)
 {
@@ -19,7 +19,7 @@ void EndSlotsNotRunningScript(const void *a)
     for (i = 0x1d; i >= 0; i--)
     {
         if (gUnknown_03001470[i].unk00 != (u32)a)
-            sub_08015328(i);
+            EndSlotScriptAt(i);
     }
 }
 asm(".global sub_08063814\n.thumb_set sub_08063814, EndSlotsNotRunningScript\n");

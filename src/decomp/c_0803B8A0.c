@@ -24,6 +24,6 @@
  * this discards it. */
 void sub_0803B8A0(void)
 {
-    sub_08016ED8();
+    ReloadProgressFromProfile();
     Proc_Start(ProcScr_MainMenu, PROC_TREE_3);
 }

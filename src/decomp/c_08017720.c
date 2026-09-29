@@ -10,7 +10,7 @@
 
 
 /*
- * sub_08017720 -- insert an entry into a unit's ranked list.
+ * InsertBestScoreRecord -- insert an entry into a unit's ranked list.
  *
  * Does nothing unless player 1's team is alive. Which list depends on the game
  * mode: mode 2 uses the five-slot rows of gUnknown_0200C078 with `b` biased by
@@ -47,7 +47,7 @@
  *     order while testing the values in ascending order, which is what the
  *     original does.
  */
-void sub_08017720(int a, int b, int c, int d)
+void InsertBestScoreRecord(int a, int b, int c, int d)
 {
     int k;
     int j;
@@ -94,3 +94,4 @@ search_done:
         break;
     }
 }
+asm(".global sub_08017720\n.thumb_set sub_08017720, InsertBestScoreRecord\n");

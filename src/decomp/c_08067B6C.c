@@ -20,13 +20,13 @@ struct Unk67B90Proc
  * source is a single stack word rather than a buffer. Same idiom as
  * src/decomp/c_080688E4.c, down to the `u32` local.
  *
- * The local is written AFTER the sub_08012358 call, which is the source order
+ * The local is written AFTER the SetDefaultColorEffects call, which is the source order
  * -- agbcc had no reason to sink a constant store past a call otherwise. */
 void sub_08067B6C(void)
 {
     u32 zero;
 
-    sub_08012358();
+    SetDefaultColorEffects();
     zero = 0;
     CpuFastSet(&zero, (void *)0x0600E000, 0x01000400);
 }
@@ -44,5 +44,5 @@ void sub_08067B90(struct Unk67B90Proc *proc)
 {
     Decompress(gUnknown_08581050[proc->unk2c], (void *)0x06001400);
     Decompress(gUnknown_0858105C[proc->unk2c], gBG1TilemapBuffer);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }

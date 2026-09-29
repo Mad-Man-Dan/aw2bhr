@@ -8,11 +8,11 @@
  */
 
 /* MATCHED. DebrisEffect_Loop plus a tail that fires once, on the last frame
- * (`unk28 == 8`): hand the slot's sprite id to sub_080157A4 / sub_080157F4.
+ * (`unk28 == 8`): hand the slot's sprite id to SetSlotSpriteScaleX / SetSlotSpriteScaleY.
  * Read DebrisEffect_Loop's comment first; everything above the tail is identical.
  *
  * `e` is LOAD-BEARING and it is the whole cost of this function. Written inline
- * as `sub_080157A4(gUnknown_02029808[a].unk24[b], gUnknown_08553B10[a])` agbcc
+ * as `SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], gUnknown_08553B10[a])` agbcc
  * expands argument 1's address, loads it, then does the same for argument 2;
  * the ROM expands gUnknown_08553B10's address FIRST and issues the two loads in
  * the opposite order. Binding the second argument to a local moves the address
@@ -48,8 +48,8 @@ void AirBlastEffect_Loop(void)
     if (gUnknown_03001470[gUnknown_03001FBC].unk28 == 8)
     {
         e = gUnknown_08553B10[a];
-        sub_080157A4(gUnknown_02029808[a].unk24[b], e);
-        sub_080157F4(gUnknown_02029808[a].unk24[b], 0x180);
+        SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], e);
+        SetSlotSpriteScaleY(gUnknown_02029808[a].unk24[b], 0x180);
     }
 }
 asm(".global sub_08052270\n.thumb_set sub_08052270, AirBlastEffect_Loop\n");

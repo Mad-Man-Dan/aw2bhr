@@ -7,7 +7,7 @@
  * sub_08015BD0 @ 0x08015BD0
  */
 
-s8 sub_08015BD0(s32 a)
+s8 FindSlotScript(s32 a)
 {
     u8 i;
 
@@ -19,3 +19,4 @@ s8 sub_08015BD0(s32 a)
 
     return -1;
 }
+asm(".global sub_08015BD0\n.thumb_set sub_08015BD0, FindSlotScript\n");

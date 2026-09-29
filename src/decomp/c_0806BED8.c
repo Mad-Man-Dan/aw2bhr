@@ -111,21 +111,21 @@ void sub_0806BF40(ProcPtr a1)
         if (t->unk00[i].unk00 == 3)
         {
             sub_080718F8(gBG0TilemapBuffer + (i * 0x60 + 0x49), gUnknown_081B9BC8, 0xe0);
-            sub_08013AEC();
+            BG_EnableSyncBG0();
             count++;
         }
 
         if (t->unk00[i].unk00 == 4)
         {
             sub_080718F8(gBG0TilemapBuffer + (i * 0x60 + 0x49), gUnknown_081B9C3C, 0xe0);
-            sub_08013AEC();
+            BG_EnableSyncBG0();
             count++;
         }
 
         if (t->unk00[i].unk00 == 5)
         {
             sub_080718F8(gBG0TilemapBuffer + (i * 0x60 + 0x29), gUnknown_081B9CC0, 0xe0);
-            sub_08013AEC();
+            BG_EnableSyncBG0();
             count++;
         }
     }

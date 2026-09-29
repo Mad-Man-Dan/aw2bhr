@@ -32,7 +32,7 @@ int sub_0801ED80(int a, int b, int c, long long d, s16 e)
 }
 
 /* Queues a deferred callback, tagging the pointer with bit 31. See the note on
- * sub_0801F024 in include/unknown-functions.h, which names this function's two
+ * RunOrQueueDrawCallback in include/unknown-functions.h, which names this function's two
  * parameters from its own call site.
  *
  * The 64-bit zero is bound to a local so that it is materialised BEFORE the
@@ -40,7 +40,7 @@ int sub_0801ED80(int a, int b, int c, long long d, s16 e)
  * r4/r5, which only happens while r0, r1 and r2 are all still occupied by the
  * two incoming parameters and the copy of `fn`. Folded into the argument list
  * it is created after r1 is free and takes r1/r2 instead. */
-int sub_0801EDC0(void *fn, s16 arg)
+int QueueSpriteCallback(void *fn, s16 arg)
 {
     long long zero = 0;
 
@@ -49,6 +49,7 @@ int sub_0801EDC0(void *fn, s16 arg)
     else
         return 0;
 }
+asm(".global sub_0801EDC0\n.thumb_set sub_0801EDC0, QueueSpriteCallback\n");
 
 /* Passes a 64-bit zero through to sub_0801ED80 with its own fourth parameter
  * as the trailing s16. ONE `movs r3, #0` covers both halves of that zero --

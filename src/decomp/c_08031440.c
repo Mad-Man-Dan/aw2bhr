@@ -16,7 +16,7 @@
  * round-trip, which is why the ROM has no branch over it. */
 void sub_08031440(ProcPtr proc)
 {
-    if (sub_08015BD0((s32)gUnknown_0849B048) == -1)
+    if (FindSlotScript((s32)gUnknown_0849B048) == -1)
         Proc_Goto(proc, 0);
 
     if (gpKeySt->pressed & 2)

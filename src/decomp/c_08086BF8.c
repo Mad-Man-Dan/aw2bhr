@@ -35,9 +35,9 @@ void DrawMapListFirstTwoRows(u32 a1, int a2, int a3)
     int z;
     u8 t;
 
-    sub_08013C00();
+    ClearBg0Tilemap();
 
-    sub_08014A5C(1, 5, gBG0TilemapBuffer, gUnknown_08499CE4[gUnknown_0300596C], 0, 0);
+    PutTextTableEntryImmediate(1, 5, gBG0TilemapBuffer, gUnknown_08499CE4[gUnknown_0300596C], 0, 0);
 
     if (gUnknown_02027F74.unk37 < a2)
         a2 = gUnknown_02027F74.unk37 + 1;
@@ -58,7 +58,7 @@ void DrawMapListFirstTwoRows(u32 a1, int a2, int a3)
             int k = i * 2;
             y = a3 + 9;
             z = k + y;
-            sub_080149C0(1, (s16)z, gBG0TilemapBuffer, gUnknown_084C3F50, 0, flag);
+            PutTextScriptImmediate(1, (s16)z, gBG0TilemapBuffer, gUnknown_084C3F50, 0, flag);
         }
         else
         {
@@ -66,7 +66,7 @@ void DrawMapListFirstTwoRows(u32 a1, int a2, int a3)
             int k = i * 2;
             y = a3 + 9;
             z = k + y;
-            sub_080149C0(1, (s16)z, gBG0TilemapBuffer, p, 0, flag);
+            PutTextScriptImmediate(1, (s16)z, gBG0TilemapBuffer, p, 0, flag);
         }
     }
 }
@@ -96,7 +96,7 @@ void DrawMapListRowsFromThird(u32 a1, int a2, int a3)
   {
     a2 = gUnknown_02027F74.unk37 + 1;
   }
-  sub_08013AEC();
+  BG_EnableSyncBG0();
   if (a2 > 2)
   {
     for (i = 2; i < a2; i++)
@@ -112,7 +112,7 @@ void DrawMapListRowsFromThird(u32 a1, int a2, int a3)
         int k = i * 2;
         y = a3 + 9;
         z = k + y;
-        sub_080149C0(1, (s16) z, gBG0TilemapBuffer, gUnknown_084C3F50, 0, flag);
+        PutTextScriptImmediate(1, (s16) z, gBG0TilemapBuffer, gUnknown_084C3F50, 0, flag);
       }
       else
       {
@@ -121,7 +121,7 @@ void DrawMapListRowsFromThird(u32 a1, int a2, int a3)
         y = a3;
         y = y + 9;
         z = k + y;
-        sub_080149C0(1, (s16) z, gBG0TilemapBuffer, p, 0, flag);
+        PutTextScriptImmediate(1, (s16) z, gBG0TilemapBuffer, p, 0, flag);
       }
     }
 

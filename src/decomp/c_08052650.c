@@ -51,8 +51,8 @@ void SplashEffect_Loop(void)
         gUnknown_02028E5C[a][0] = 1;
         *gUnknown_084C3F78[a] = 0;
 
-        sub_080157A4(gUnknown_02029808[a].unk24[b], e);
-        sub_080157F4(gUnknown_02029808[a].unk24[b], 0x180);
+        SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], e);
+        SetSlotSpriteScaleY(gUnknown_02029808[a].unk24[b], 0x180);
     }
 }
 asm(".global sub_08052650\n.thumb_set sub_08052650, SplashEffect_Loop\n");

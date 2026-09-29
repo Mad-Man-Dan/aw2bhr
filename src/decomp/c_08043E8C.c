@@ -49,7 +49,7 @@ void sub_08043E8C(int a1, u16 *a2, int a3)
     u16 v;
 
     src = gUnknown_02017C50;
-    sub_08011C68(gUnknown_084A0090[a1].miniPortrait, src, 0x180);
+    CpuCopyAuto(gUnknown_084A0090[a1].miniPortrait, src, 0x180);
     for (j = 0; j < 12; j++)
     {
         for (i = 0; i < 16; i++)

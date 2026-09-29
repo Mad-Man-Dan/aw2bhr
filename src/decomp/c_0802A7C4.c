@@ -22,8 +22,8 @@ void RefreshMapCursorInfoPanel(void)
     if (gPlaySt.dispMiniPanel == 0)
         return;
 
-    sub_0801F024((void *)sub_0802AA78, 1);
-    sub_08012358();
+    RunOrQueueDrawCallback((void *)sub_0802AA78, 1);
+    SetDefaultColorEffects();
 
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_030030E0.bits.target1_enable_bg0 = 1;

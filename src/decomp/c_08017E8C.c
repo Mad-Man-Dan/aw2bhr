@@ -28,14 +28,15 @@
  * global under a variable index -- so the plain subscript is the right
  * spelling and no pointer local is wanted.
  */
-bool8 sub_08017E8C(s16 a)
+bool8 EventOp_DisableScriptedInput(s16 a)
 {
-    sub_08017E80();
+    DisableScriptedInput();
 
     gUnknown_0200C528[a].unk04++;
 
     return TRUE;
 }
+asm(".global sub_08017E8C\n.thumb_set sub_08017E8C, EventOp_DisableScriptedInput\n");
 
 /* Family F041 (tools/families.py): four 48-byte cursor bumps on the
  * gUnknown_0200C528 list. `unk04` is a `struct Unk0200C528Node *` and the node
@@ -58,11 +59,12 @@ bool8 sub_08017E8C(s16 a)
  * global under a variable index -- so the plain subscript is the right
  * spelling and no pointer local is wanted.
  */
-bool8 sub_08017EBC(s16 a)
+bool8 EventOp_EnableScriptedInput(s16 a)
 {
-    sub_08017E74();
+    EnableScriptedInput();
 
     gUnknown_0200C528[a].unk04++;
 
     return TRUE;
 }
+asm(".global sub_08017EBC\n.thumb_set sub_08017EBC, EventOp_EnableScriptedInput\n");

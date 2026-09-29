@@ -7,7 +7,7 @@
  * sub_0802A3FC @ 0x0802A3FC
  */
 
-/* The gate is `s8 sub_08015BD0(s32)`, so agbcc re-narrows the result
+/* The gate is `s8 FindSlotScript(s32)`, so agbcc re-narrows the result
  * (`lsls #0x18; asrs #0x18`) before comparing it against -1.
  *
  * gUnknown_03001FBC is read three times across control-flow merges and so
@@ -47,7 +47,7 @@ void sub_0802A3FC(void)
     struct Unit *p;
     u16 i;
 
-    if (sub_08015BD0((s32)gUnknown_0849A0A8) != -1)
+    if (FindSlotScript((s32)gUnknown_0849A0A8) != -1)
         return;
 
     for (i = gUnknown_03001470[gUnknown_03001FBC].unk38; i <= 0x32; i++)
@@ -74,5 +74,5 @@ void sub_0802A3FC(void)
     }
 
     if (i == 0x33)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }

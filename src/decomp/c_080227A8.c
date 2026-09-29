@@ -30,6 +30,6 @@ void RedrawUnitIconLayer(void)
         }
     }
 
-    sub_08013B0C();
+    BG_EnableSyncBG2();
 }
 asm(".global sub_080227A8\n.thumb_set sub_080227A8, RedrawUnitIconLayer\n");

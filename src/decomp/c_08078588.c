@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* sub_08078504 wrapped in a null check on the script pointer. The ROM re-loads
- * +0x54 after the sub_08014BC0 call rather than keeping the value it just
+ * +0x54 after the StartDialogueBlock call rather than keeping the value it just
  * tested, which is what an ordinary non-const field does across a call. */
 
 struct UnkProc8615AAC
@@ -23,7 +23,7 @@ void sub_08078588(struct UnkProc8615AAC *proc)
     if (proc->unk_54 != NULL)
     {
         gUnknown_03002F08.unk00 = 0;
-        sub_08014BC0(proc);
+        StartDialogueBlock(proc);
         StartEventScript(proc->unk_54);
     }
 }

@@ -68,7 +68,7 @@ void sub_08028D28(struct Unk08028D28Proc *proc)
     u8 *map;
     s16 x, y;
 
-    proc->unk4c = sub_08014E44(0x660);
+    proc->unk4c = HeapMalloc(0x660);
     buf = proc->unk4c;
     proc->unk64 = 0;
     proc->unk66 = 0;

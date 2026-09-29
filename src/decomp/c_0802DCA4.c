@@ -18,6 +18,6 @@
 
 void sub_0802DCA4(void)
 {
-    sub_08012358();
-    sub_0801237C();
+    SetDefaultColorEffects();
+    ResetWindowShadows();
 }

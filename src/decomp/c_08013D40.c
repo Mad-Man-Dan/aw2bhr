@@ -7,7 +7,8 @@
  * sub_08013D40 @ 0x08013D40
  */
 
-void sub_08013D40(void)
+void ClearTextSkipFlag(void)
 {
     gUnknown_03002514 = 0;
 }
+asm(".global sub_08013D40\n.thumb_set sub_08013D40, ClearTextSkipFlag\n");

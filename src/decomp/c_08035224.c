@@ -13,7 +13,7 @@ void InitSnowParticles(void)
     s16 i;
     s16 j;
 
-    sub_08011C68(gUnknown_0809169C, (void *)0x06012E00, 0x60);
+    CpuCopyAuto(gUnknown_0809169C, (void *)0x06012E00, 0x60);
 
     for (i = 0; i <= 0x1f; i++)
     {
@@ -63,7 +63,7 @@ void InitRainParticles(void)
     s16 i;
     s16 j;
 
-    sub_08011C68(gUnknown_080916FC, (void *)0x06012E60, 0x60);
+    CpuCopyAuto(gUnknown_080916FC, (void *)0x06012E60, 0x60);
 
     for (i = 0; i <= 0x1f; i++)
     {

@@ -9,6 +9,6 @@
 
 void sub_08045FA4(void)
 {
-    sub_08013338(2, 0x8c, 0);
+    StartScreenShake(2, 0x8c, 0);
     sub_0803B4DC(0x23);
 }

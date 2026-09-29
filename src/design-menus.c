@@ -135,11 +135,11 @@ void sub_08004970(void)
 
     if ((gpKeySt->pressed & 7) != 0)
     {
-        sub_08012BC8(gBG2TilemapBuffer, 9, 2, 0xB, 0x11, 0x360);
-        sub_08013B0C();
+        FillTilemapRect(gBG2TilemapBuffer, 9, 2, 0xB, 0x11, 0x360);
+        BG_EnableSyncBG2();
         sub_08002E5C();
         sub_08002E3C();
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 
         if ((gpKeySt->pressed & 2) == 0)
             gUnknown_03002F1C = 1;
@@ -272,8 +272,8 @@ void sub_08004B7C(void)
 {
     PushMenu();
     CloseTopMenu();
-    sub_0801B780(0x70);
-    sub_0801A148(gUnknown_084872FC, 2, 2, 0);
+    InitTextTileCache(0x70);
+    CreateSubMenu(gUnknown_084872FC, 2, 2, 0);
     DesignRoomSetMode(7);
     DesignRoomLoadTerrainNamePalettes();
     gActiveMap->menuCursorX = 0x15;
@@ -306,7 +306,7 @@ void sub_08004C34(void)
     PushMenu();
     CloseTopMenu();
     sub_08024268();
-    sub_0801A148(gUnknown_08487C04, 2, 3, 0);
+    CreateSubMenu(gUnknown_08487C04, 2, 3, 0);
     sub_08004C10();
 }
 
@@ -317,7 +317,7 @@ void sub_08004C5C(void)
     sub_08003704();
     gActiveMap->menuCursorX = 0x15;
     gActiveMap->menuCursorY = 0x10;
-    sub_0801B780(0x70);
+    InitTextTileCache(0x70);
     sub_08022AD0(0x10, 0x10);
     DesignRoomHideTilePanel();
     DesignRoomHideCoordBox();
@@ -331,7 +331,7 @@ void DesignRoomMode_Menu(void)
     {
         sub_08004C5C();
         sub_08024268();
-        sub_0801A104(gUnknown_08487C84, 2, 2, 0);
+        CreateRootMenuWithSfx(gUnknown_08487C84, 2, 2, 0);
     }
 
     switch (gActiveMap->state)

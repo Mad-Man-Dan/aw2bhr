@@ -12,7 +12,7 @@
  * addresses; read that one for the derivation. */
 void CopyOamShadowToOam2(void)
 {
-    sub_08011C90(gUnknown_03002520, (void *)0x07000000, 0x400);
+    CpuFastCopy(gUnknown_03002520, (void *)0x07000000, 0x400);
 }
 
 asm(".global sub_0801EFC0\n.thumb_set sub_0801EFC0, CopyOamShadowToOam2\n");

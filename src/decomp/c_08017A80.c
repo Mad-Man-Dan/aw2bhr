@@ -17,9 +17,9 @@
  * the argument's address before the function pointer and lands
  * gUnknown_0200C528 in r1 rather than r2, which swaps two instructions.
  *
- * `s16` return: sub_08017CF0 re-narrows the result `lsls #0x10; asrs #0x10`.
+ * `s16` return: EventOp_CallFunctionSkippable re-narrows the result `lsls #0x10; asrs #0x10`.
  * See the handler-family note in unknown-functions.h. */
-s16 sub_08017A80(s16 a)
+s16 EventOp_CallFunction(s16 a)
 {
     void (*f)(struct Unk0200C528 *);
 
@@ -32,6 +32,7 @@ s16 sub_08017A80(s16 a)
     else
         return FALSE;
 }
+asm(".global sub_08017A80\n.thumb_set sub_08017A80, EventOp_CallFunction\n");
 
 /* The callback sub_08017B08 installs: when sub_080281A0's liveness test fails,
  * clear the slot's own callback -- an install/remove pair, which is what fixes
@@ -50,16 +51,17 @@ void sub_08017ABC(struct Unk0200C528 *slot)
 /* The node's +0x04 is the polymorphic script operand this block casts at every
  * use (see the struct Unk0200C528Node note in unknown-globals.h); here it is
  * the u32 key FindMapIdByMapData scans gUnknown_085C77A0 for. */
-bool8 sub_08017AD4(s16 a)
+bool8 EventOp_SetMapIdFromMapData(s16 a)
 {
     gPlaySt.mapID = FindMapIdByMapData((u32)gUnknown_0200C528[a].unk04->unk04);
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }
+asm(".global sub_08017AD4\n.thumb_set sub_08017AD4, EventOp_SetMapIdFromMapData\n");
 
 /* Installs sub_08017ABC as the slot's callback, then starts the thing that
  * callback will later tear down. The +8 slot is declared `struct
- * Unk0200C528Node *` because sub_08018B40 stores a node link there; this half
+ * Unk0200C528Node *` because EventOp_InstallCallback stores a node link there; this half
  * of the union stores a function, so it is cast rather than retyped. */
 bool8 sub_08017B08(s16 a)
 {
@@ -71,8 +73,9 @@ bool8 sub_08017B08(s16 a)
     return FALSE;
 }
 
-bool8 sub_08017B50(s16 a)
+bool8 EventOp_EndScript(s16 a)
 {
-    sub_080192EC(a);
+    EndEventScriptSlot(a);
     return FALSE;
 }
+asm(".global sub_08017B50\n.thumb_set sub_08017B50, EventOp_EndScript\n");

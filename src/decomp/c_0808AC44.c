@@ -11,7 +11,7 @@
  *
  * The second parameter was declared `int` in unknown-functions.h on the grounds
  * that "nothing types it"; this body does -- `str r0, [r2]` writes
- * &sub_0808AC20 through it, so it is a pointer to a `void (*)(void)`. Retyped
+ * &FlashTimerIntr through it, so it is a pointer to a `void (*)(void)`. Retyped
  * there in the same edit; the only caller is unpromoted.
  *
  * gUnknown_03000F70 is re-read with `ldrb` immediately after its own `strb`,
@@ -21,14 +21,15 @@
  * `cmp r1, #3; bhi` is the unsigned reject, and returning 1 there puts the
  * `movs r0, #1` block after the pool, which is why the success path's
  * `movs r0, #0` needs the `b`. */
-u16 sub_0808AC44(u8 id, void (**out)(void))
+u16 SetFlashTimerIntr(u8 id, void (**out)(void))
 {
     if (id > 3)
         return 1;
 
     gUnknown_03000F70 = id;
     gUnknown_03000F78 = (vu16 *)(0x04000100 + gUnknown_03000F70 * 4);
-    *out = sub_0808AC20;
+    *out = FlashTimerIntr;
 
     return 0;
 }
+asm(".global sub_0808AC44\n.thumb_set sub_0808AC44, SetFlashTimerIntr\n");

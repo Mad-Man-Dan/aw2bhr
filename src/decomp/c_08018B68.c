@@ -17,7 +17,7 @@
  * (the AND result and the node) when the pointer is materialised, so gcc takes
  * the next free scratch. The register index only counts arguments when the
  * argument registers are the reason they are occupied. */
-bool8 sub_08018B68(s16 a)
+bool8 EventOp_WaitForKeyThenCall(s16 a)
 {
     struct Unk0200C528Node *p;
     void (*f)(void);
@@ -28,8 +28,9 @@ bool8 sub_08018B68(s16 a)
     if (gpKeySt->unk0c & p->unk0c)
     {
         f();
-        sub_08017E74();
+        EnableScriptedInput();
         gUnknown_0200C528[a].unk04++;
     }
     return FALSE;
 }
+asm(".global sub_08018B68\n.thumb_set sub_08018B68, EventOp_WaitForKeyThenCall\n");

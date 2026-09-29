@@ -12,7 +12,7 @@
 void sub_08045F24(void)
 {
     sub_0803B4DC(0x1c7);
-    sub_080130DC(0x14, 0x64, 0x3c, 0);
+    StartWhiteFlash(0x14, 0x64, 0x3c, 0);
 }
 
 void sub_08045F40(void)

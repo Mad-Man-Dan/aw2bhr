@@ -35,5 +35,5 @@ void sub_08021D10(void)
                      (u16)(y + (gMap->scrollY >> 4)));
     }
 
-    sub_08013B1C();
+    BG_EnableSyncBG3();
 }

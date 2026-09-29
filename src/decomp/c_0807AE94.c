@@ -90,7 +90,7 @@ void sub_0807AE94(struct Unk0807AE94Proc * proc)
         else
             Decompress(gUnknown_0822BCF0, gBG1TilemapBuffer);
 
-        sub_08013AFC();
+        BG_EnableSyncBG1();
 
         child = Proc_Start(gUnknown_08616034, proc);
         child->unk3c = proc->unk3c;
@@ -98,9 +98,9 @@ void sub_0807AE94(struct Unk0807AE94Proc * proc)
         gUnknown_030030B4.bits.tm_block = 15;
         gUnknown_030030B4.bits.chr_block = 2;
 
-        sub_08013CA8();
-        sub_08013B0C();
-        sub_0801A5B0(sub_0807A908());
+        ClearBg2Tilemap();
+        BG_EnableSyncBG2();
+        LoadBg1WindowFrame(sub_0807A908());
         Proc_Break(proc);
     }
 

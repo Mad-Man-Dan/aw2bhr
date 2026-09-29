@@ -55,7 +55,7 @@ void sub_08029C38(struct Unk29C38Proc *proc)
         gPlayers[gUnknown_030033EC].funds = proc->unk28;
 
     sub_080272B4();
-    sub_08015328(gUnknown_03001FBC);
+    EndSlotScriptAt(gUnknown_03001FBC);
     sub_0803B4DC(0x6c);
 }
 

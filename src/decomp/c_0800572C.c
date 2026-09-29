@@ -25,7 +25,7 @@
  * base block into its VRAM address. */
 void sub_0800572C(void)
 {
-    sub_0801F150(0, (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)), 0x2FC, 10);
+    InitTilePool(0, (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)), 0x2FC, 10);
     LoadTilePoolGraphic(9);
     if (sub_0803CCB8(0, gDesignRoomName) != 1)
         sub_08004D74(0, 0);

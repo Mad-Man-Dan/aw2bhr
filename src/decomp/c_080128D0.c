@@ -8,10 +8,10 @@
  */
 
 #include "hardware.h"
-void sub_08012420(void);
+void FlushDisplayRegisters(void);
 void sub_0801258C(void);
 
-/* sub_080128D0 @ 0x080128D0, 140 bytes, THUMB.
+/* FlushLCDControl @ 0x080128D0, 140 bytes, THUMB.
  * Signature below is DECLARED in include/unknown-functions.h -- it is authoritative.
  * The compiler sees that header too, so a definition that
  * disagrees will not compile.
@@ -20,9 +20,9 @@ void sub_0801258C(void);
  * straight to hardware (0x04000040-0x0400004B: WIN0H/WIN1H/WIN0V/WIN1V
  * as byte pairs, then WININ/WINOUT as halfwords) after two setup calls.
  */
-void sub_080128D0(void)
+void FlushLCDControl(void)
 {
-    sub_08012420();
+    FlushDisplayRegisters();
     sub_0801258C();
     *(vu8 *)(REG_BASE + REG_OFFSET_WIN0H)     = gUnknown_03002B4C;
     *(vu8 *)(REG_BASE + REG_OFFSET_WIN0H + 1) = gUnknown_03002B40;
@@ -35,3 +35,4 @@ void sub_080128D0(void)
     REG_WININ  = gUnknown_030030A4.raw;
     REG_WINOUT = gUnknown_030030DC.raw;
 }
+asm(".global sub_080128D0\n.thumb_set sub_080128D0, FlushLCDControl\n");

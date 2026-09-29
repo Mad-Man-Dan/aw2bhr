@@ -44,7 +44,7 @@ void sub_0807662C(struct Unk0807662C *proc)
     proc->unk5c++;
     if (proc->unk5c > 7)
     {
-        sub_08012358();
+        SetDefaultColorEffects();
         Proc_Break(proc);
     }
     sub_080763C0();

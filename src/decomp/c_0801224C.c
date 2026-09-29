@@ -7,8 +7,9 @@
  * sub_0801224C @ 0x0801224C
  */
 
-void sub_0801224C(u16 a, u16 b)
+void SetKeyRepeatTiming(u16 a, u16 b)
 {
     gUnknown_03000044 = a;
     gUnknown_03000046 = b;
 }
+asm(".global sub_0801224C\n.thumb_set sub_0801224C, SetKeyRepeatTiming\n");

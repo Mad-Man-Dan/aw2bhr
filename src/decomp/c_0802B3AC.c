@@ -64,7 +64,7 @@ void sub_0802B3AC(s16 a, s16 b, s16 c)
     int idx;
     register int x asm("r0");
 
-    tmp = sub_08012E4C();
+    tmp = GetClockPhase();
     asm("" : "+r" (tmp));
     d = tmp;
 

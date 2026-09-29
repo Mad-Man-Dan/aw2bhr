@@ -24,6 +24,6 @@ void ApcFigure_Loop(void)
                                    + (u8 *)gUnknown_02029A10);
     entry->x += gUnknown_08553B28[c][w];
     entry->y -= gUnknown_085644D4[(row = gUnknown_02028E5C[c])[1]];
-    sub_080155C0(gUnknown_03001FBC, entry->x, entry->y - *p);
+    SetSlotSpritePosition(gUnknown_03001FBC, entry->x, entry->y - *p);
 }
 asm(".global sub_0804F0D8\n.thumb_set sub_0804F0D8, ApcFigure_Loop\n");

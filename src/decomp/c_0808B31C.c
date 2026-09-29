@@ -10,16 +10,16 @@
 #include "hardware.h"
 
 /* Program one sector: erase it, then walk the source buffer a byte at a time
- * through sub_0808B184.
+ * through ProgramByte_MX.
  *
  * gUnknown_03005C7C is the loop counter and it is a GLOBAL -- re-loaded at the
  * top of every iteration and stored back after every decrement, which needs no
- * `volatile` because sub_0808B184 in the body already stops agbcc caching it.
+ * `volatile` because ProgramByte_MX in the body already stops agbcc caching it.
  * The seeding store names the global and the loop goes through a pointer bound
  * just after it: naming the global at all five sites parks the address constant
  * in this unit's own .rodata and reaches it through a second indirection, while
  * binding the pointer before the store loses the ROM's `adds r6, r1, #0`. */
-u16 sub_0808B31C(u16 sectorNum, u8 *src)
+u16 ProgramFlashSector_MX(u16 sectorNum, u8 *src)
 {
     u16 buf[0x20];
     u32 sector;
@@ -34,12 +34,12 @@ u16 sub_0808B31C(u16 sectorNum, u8 *src)
 
     do
     {
-        result = sub_0808B0E8(sector);
+        result = EraseFlashSector_MX(sector);
 
         if (result != 0)
             return result;
 
-        sub_0808AD6C(buf);
+        SetReadFlash1(buf);
 
         REG_WAITCNT = (REG_WAITCNT & ~3) | gUnknown_03005C78->unk10;
 
@@ -52,7 +52,7 @@ u16 sub_0808B31C(u16 sectorNum, u8 *src)
 
     while (*remaining != 0)
     {
-        result = sub_0808B184(src, dest);
+        result = ProgramByte_MX(src, dest);
 
         if (result != 0)
             break;
@@ -66,13 +66,14 @@ u16 sub_0808B31C(u16 sectorNum, u8 *src)
 
     return result;
 }
+asm(".global sub_0808B31C\n.thumb_set sub_0808B31C, ProgramFlashSector_MX\n");
 
-u16 sub_0808B3C0(void)
+u16 EraseFlashChip_AT(void)
 {
     u16 buffer[0x20];
     u16 result;
 
-    sub_0808AD6C(buffer);
+    SetReadFlash1(buffer);
 
     REG_WAITCNT = (REG_WAITCNT & 0xfffc) | gUnknown_084856A4[0x12];
 
@@ -89,6 +90,7 @@ u16 sub_0808B3C0(void)
 
     return result;
 }
+asm(".global sub_0808B3C0\n.thumb_set sub_0808B3C0, EraseFlashChip_AT\n");
 
 /* The erase-sector command sequence for one sector, with interrupts masked
  * across it. gUnknown_084856A4 is the ROM flash descriptor: +0x1c is the sector
@@ -103,7 +105,7 @@ u16 sub_0808B3C0(void)
  *
  * The unlock/command writes must be volatile: 0x0E005555 is written twice with
  * different values and agbcc would otherwise drop one. Same idiom as the
- * matched sub_0808B184. The `addr--` after the fill backs the cursor up to the
+ * matched ProgramByte_MX. The `addr--` after the fill backs the cursor up to the
  * LAST byte written, which is what the poll helper is handed.
  *
  * PARKED at -4 bytes. Every instruction from the REG_IME save onward is
@@ -158,14 +160,14 @@ u16 sub_0808B430(u16 sectorNum)
 }
 
 /* Erase the 32 flash sectors backing save slot `sectorNum`, retrying each one
- * once. The 64-byte stack local is the relocated read routine sub_0808AD6C
+ * once. The 64-byte stack local is the relocated read routine SetReadFlash1
  * copies out of ROM.
  *
  * NEEDS -O1 -- see data/compiler-overrides.json. The flash library came out of
  * the SDK prebuilt at -O1 and the whole 0x0808A-0x0808B block is built that
  * way. At -O2 this same source is 5 bytes off on register assignment around
  * the two REG_WAITCNT read-modify-writes, which is what parked it. */
-u16 sub_0808B4B4(u16 sectorNum)
+u16 EraseFlashSector_AT(u16 sectorNum)
 {
     u16 buf[0x20];
     u16 n;
@@ -176,7 +178,7 @@ u16 sub_0808B4B4(u16 sectorNum)
     if (sectorNum > 0xf)
         return 0x80FF;
 
-    sub_0808AD6C(buf);
+    SetReadFlash1(buf);
 
     REG_WAITCNT = (REG_WAITCNT & ~3) | gUnknown_084856A4[0x12];
 
@@ -206,6 +208,7 @@ u16 sub_0808B4B4(u16 sectorNum)
 
     return result;
 }
+asm(".global sub_0808B4B4\n.thumb_set sub_0808B4B4, EraseFlashSector_AT\n");
 
 /* Program one flash sector from a caller buffer -- the byte-copy twin of
  * sub_0808B430, which stores 0xFF instead. Same descriptor reads (+0x1c the

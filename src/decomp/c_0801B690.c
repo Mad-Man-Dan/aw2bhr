@@ -7,11 +7,11 @@
  * sub_0801B690 @ 0x0801B690
  */
 
-/* A byte copy, written like its neighbour sub_0801B6A8's 0xff-fill: the
+/* A byte copy, written like its neighbour FillBytesWithFF's 0xff-fill: the
  * pointers advance inside the store expression and the count is the loop
  * variable, which gives the duplicated `cmp #0; beq` entry guard rather than
  * the reversed-counter shape. */
-void sub_0801B690(u8 *src, u8 *dst, u32 size)
+void CopyBytes2(u8 *src, u8 *dst, u32 size)
 {
     while (size != 0)
     {
@@ -19,3 +19,4 @@ void sub_0801B690(u8 *src, u8 *dst, u32 size)
         size--;
     }
 }
+asm(".global sub_0801B690\n.thumb_set sub_0801B690, CopyBytes2\n");

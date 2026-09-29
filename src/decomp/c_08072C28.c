@@ -7,10 +7,11 @@
  * sub_08072C28 @ 0x08072C28
  */
 
-void sub_08072C28(u16 *dst, u32 count, u16 value)
+void FillHalfwordsUnsigned(u16 *dst, u32 count, u16 value)
 {
     u32 i;
 
     for (i = 0; i < count; i++)
         *dst++ = value;
 }
+asm(".global sub_08072C28\n.thumb_set sub_08072C28, FillHalfwordsUnsigned\n");

@@ -20,11 +20,11 @@ void CoPowerScreenBlend_Init(void)
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xE0FF) | 0x1E00;
     gUnknown_030030E0.bits.target2_enable_bd = 0;
     SetDispEnable(1, 1, 1, 1, 1);
-    sub_08011E54(gUnknown_080A29A4,
+    RegisterDataMove(gUnknown_080A29A4,
                  (void *)(0x06005600 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  0x800);
     sub_08012B70(gBG0TilemapBuffer, gUnknown_080A31A4, 0, 0, 0x82B0);
     ApplyPalettes(gUnknown_080A36C8, 8, 1);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 asm(".global sub_0807FE90\n.thumb_set sub_0807FE90, CoPowerScreenBlend_Init\n");

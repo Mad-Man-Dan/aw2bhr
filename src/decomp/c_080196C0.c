@@ -18,14 +18,14 @@
  * probes as the branching form. Assigning to a `u8` (or `u16`) local is what
  * produces the ROM's branchless form, because the narrowing makes gcc want the
  * value in a register rather than a jump. The same "narrow the destination and
- * the expansion changes" effect is what settles sub_08019DEC's final shift.
+ * the expansion changes" effect is what settles Menu_SlideCursorSprite's final shift.
  *
  * The separate statement is load-bearing for a second reason: written inline as
  * a subscript, the `gPlaySt.mapID` load and its `muls #0x5c` get
  * hoisted ABOVE the `bl` and the index degenerates into a conditional
  * `adds r4, #4`. The ROM evaluates the call first, so the index is its own
  * statement. */
-void sub_080196C0(void)
+void ApplyMapUnitTableForDifficulty(void)
 {
     void *p;
     u8 i;
@@ -35,3 +35,4 @@ void sub_080196C0(void)
     if (p != NULL)
         ApplyUnitSpawnTable(p);
 }
+asm(".global sub_080196C0\n.thumb_set sub_080196C0, ApplyMapUnitTableForDifficulty\n");

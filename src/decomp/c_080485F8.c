@@ -16,9 +16,9 @@
  * argument that types it in src/decomp/c_080485DC.c. */
 void sub_080485F8(void)
 {
-    sub_080199D0(1);
-    sub_08012BC8(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, 0);
-    sub_08013AEC();
+    SetChoiceResult(1);
+    FillTilemapRect(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, 0);
+    BG_EnableSyncBG0();
     sub_0801537C(gUnknown_08489530);
     EndEventScript(gUnknown_084C30F8->unk850);
 }

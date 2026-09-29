@@ -9,11 +9,11 @@
 
 #include "hardware.h"
 
-/* The display-state snapshot: every shadow that sub_08012420 pushes to the
+/* The display-state snapshot: every shadow that FlushDisplayRegisters pushes to the
  * hardware, copied into a parallel set of symbols. 824 bytes, 43 statements,
  * no branches and no calls -- the emitted store order IS the source order,
  * because none of the 88 addresses is reachable by arithmetic from any other
- * (they are all distinct relocations, so unlike sub_08012420 there is no
+ * (they are all distinct relocations, so unlike FlushDisplayRegisters there is no
  * absolute-address chain to read the ordering off, and none is needed).
  *
  * Six of the copies pack two shadows into one word as `lo | (hi << 16)`, and

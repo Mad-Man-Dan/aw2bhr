@@ -9,12 +9,14 @@
 
 #include "hardware.h"
 
-void sub_0801296C(void)
+void EnableForcedBlank(void)
 {
     gDispIo.disp_ct.forced_blank = 1;
 }
+asm(".global sub_0801296C\n.thumb_set sub_0801296C, EnableForcedBlank\n");
 
-void sub_0801297C(void)
+void DisableForcedBlank(void)
 {
     gDispIo.disp_ct.forced_blank = 0;
 }
+asm(".global sub_0801297C\n.thumb_set sub_0801297C, DisableForcedBlank\n");

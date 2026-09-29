@@ -13,8 +13,9 @@
  * The two `movs`/`lsls` pairs are agbcc materialising 0x05000000 (PLTT) and
  * 0x400 (PLTT_SIZE) -- neither constant has low bits, so the shift form is
  * cheaper than a pool word. */
-void sub_08013580(void)
+void FlushPalette(void)
 {
     if (gUnknown_03000048 == 1)
-        sub_08011C68(gPal, (void *)PLTT, PLTT_SIZE);
+        CpuCopyAuto(gPal, (void *)PLTT, PLTT_SIZE);
 }
+asm(".global sub_08013580\n.thumb_set sub_08013580, FlushPalette\n");

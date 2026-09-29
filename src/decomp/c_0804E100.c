@@ -8,7 +8,7 @@
  */
 
 /* F087 -- three members that differ only in one size constant. The whole
- * function is one call to sub_08011E54(src, dest, size) with size 0x800.
+ * function is one call to RegisterDataMove(src, dest, size) with size 0x800.
  *
  * Both `lsls #N; lsrs #0x10` pairs are a MULTIPLY that agbcc shortened to
  * HImode, not a shift and not a mask: `shorten_binary_op` applies to
@@ -33,6 +33,6 @@ void sub_0804E100(u16 a, int unused, u16 c)
     u16 src = c * 0x800;
     u16 dest = a * 0x2000;
 
-    sub_08011E54((u8 *)gUnknown_02029BA8[a].unk18[0] + src,
+    RegisterDataMove((u8 *)gUnknown_02029BA8[a].unk18[0] + src,
                  (void *)(0x06010000 + dest), 0x800);
 }

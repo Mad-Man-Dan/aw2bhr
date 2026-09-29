@@ -17,7 +17,7 @@
  * `bgt` rather than `bhi` makes the masked value signed, i.e. the parameter is
  * `int` -- and `adds r1, r0, #0` before the mask is the copy-then-use that says
  * the parameter is not narrower. */
-int sub_0801E3B4(int a)
+int GetObjDimensionFromBits(int a)
 {
     switch (a & 0xC000)
     {
@@ -31,3 +31,4 @@ int sub_0801E3B4(int a)
         return 8;
     }
 }
+asm(".global sub_0801E3B4\n.thumb_set sub_0801E3B4, GetObjDimensionFromBits\n");

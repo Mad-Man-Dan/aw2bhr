@@ -18,12 +18,14 @@ struct Unk8013D4C
     u8 unk33;
 };
 
-u16 *sub_08013D4C(struct Unk8013D4C *s)
+u16 *TextWriterGetCursorTilemapPtr(struct Unk8013D4C *s)
 {
     return s->unk28 + s->unk32 + s->unk33 * 32;
 }
+asm(".global sub_08013D4C\n.thumb_set sub_08013D4C, TextWriterGetCursorTilemapPtr\n");
 
-u16 *sub_08013D64(struct Unk8013D4C *s)
+u16 *TextWriterGetOriginTilemapPtr(struct Unk8013D4C *s)
 {
     return s->unk28 + s->unk30 + s->unk31 * 32;
 }
+asm(".global sub_08013D64\n.thumb_set sub_08013D64, TextWriterGetOriginTilemapPtr\n");

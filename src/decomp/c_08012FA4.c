@@ -7,7 +7,7 @@
  * sub_08012FA4 @ 0x08012FA4
  */
 
-void sub_08012FA4(u8 *dst, int size)
+void ClearBytes2(u8 *dst, int size)
 {
     while (size != 0)
     {
@@ -16,3 +16,4 @@ void sub_08012FA4(u8 *dst, int size)
         size--;
     }
 }
+asm(".global sub_08012FA4\n.thumb_set sub_08012FA4, ClearBytes2\n");

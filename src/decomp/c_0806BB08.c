@@ -27,7 +27,7 @@ struct Unk0806BB08Proc
  * spelling. Nothing about the zero needed changing. */
 void sub_0806BB08(struct Unk0806BB08Proc *proc)
 {
-    sub_08012358();
+    SetDefaultColorEffects();
     Proc_EndEach(gUnknown_0858175C);
     sub_080670F8(gUnknown_085819E4);
     SetDispEnable(1, 1, 1, 1, 1);
@@ -35,9 +35,9 @@ void sub_0806BB08(struct Unk0806BB08Proc *proc)
     gUnknown_03001FE8.bits.priority = 1;
     gUnknown_030030B4.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08072C28(gBG0TilemapBuffer, 0x400, 0);
-    sub_08072C28(gBG1TilemapBuffer, 0x400, 0);
-    sub_08072C28(gBG2TilemapBuffer, 0x400, 0);
+    FillHalfwordsUnsigned(gBG0TilemapBuffer, 0x400, 0);
+    FillHalfwordsUnsigned(gBG1TilemapBuffer, 0x400, 0);
+    FillHalfwordsUnsigned(gBG2TilemapBuffer, 0x400, 0);
     ApplyPalette(gUnknown_081951F4, 15);
     ApplyPalette(gUnknown_08195214, 0);
     ApplyPalette(gUnknown_08195214, 16);
@@ -50,10 +50,10 @@ void sub_0806BB08(struct Unk0806BB08Proc *proc)
     sub_080718F8(gBG0TilemapBuffer + 1, gUnknown_08195234, 0);
     sub_080718F8(gBG1TilemapBuffer, gUnknown_081952D4, 0);
     sub_080718F8(gBG2TilemapBuffer + 7, gUnknown_081952D4, 0);
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     SetBgScrollShadow(0, 0, 0xFFFC);
     Proc_Start(gUnknown_085819D4, proc);
     gUnknown_030030E0.bits.effect = 1;

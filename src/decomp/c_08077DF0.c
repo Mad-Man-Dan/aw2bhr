@@ -22,8 +22,8 @@ void sub_08077DF0(struct Unk77DF0Proc *proc)
 
     sub_08071918(gBG0TilemapBuffer + 0x80, 0x1E, 7, 0);
     sub_08071918(gBG2TilemapBuffer + 0x80, 0x1E, 7, 0);
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 
     x = gUnknown_086145D8[proc->unk44];
     sub_08071900(gUnknown_08551A00, gBG0TilemapBuffer + (0x9E - x), x, 7);

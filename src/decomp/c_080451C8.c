@@ -17,7 +17,7 @@ struct UnkP45210
 };
 
 /* The near-twin of sub_080039E4 (src/decomp/c_080039E4.c): the same
- * sub_08012358 call, the same byte-at-a-time read-modify-write of the BLDCNT
+ * SetDefaultColorEffects call, the same byte-at-a-time read-modify-write of the BLDCNT
  * shadow, and the same pair of trailing halfword stores.
  *
  * This function does NOT have the discrimination problem that a pure OR-in
@@ -28,7 +28,7 @@ struct UnkP45210
  * multi-bit field in the same statement group. */
 void sub_080451C8(void)
 {
-    sub_08012358();
+    SetDefaultColorEffects();
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg0 = 1;

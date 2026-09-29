@@ -533,7 +533,7 @@ void sub_08043418(int x, int y, int id)
         break;
     }
 
-    sub_0801C7DC(gUnknown_08101EC0, id, gGameClock,
+    AP_PutAnimFrameAtTime(gUnknown_08101EC0, id, gGameClock,
                  x & 0x1FF, y & 0xFF, 0x1365, 1);
 }
 
@@ -564,9 +564,9 @@ void sub_08043590(void)
         return;
 
     if (IsCoPowerReady(gUnknown_030005D0))
-        sub_0801368C((u16 *)((((t >> 2) & 0xf) * 2) + (int)gUnknown_08104324), 0x2f6, 2);
+        ApplyPaletteAndUploadNow((u16 *)((((t >> 2) & 0xf) * 2) + (int)gUnknown_08104324), 0x2f6, 2);
     else
-        sub_0801368C((u16 *)((((t >> 1) & 0xf) * 2) + (int)gUnknown_08104304), 0x2f6, 2);
+        ApplyPaletteAndUploadNow((u16 *)((((t >> 1) & 0xf) * 2) + (int)gUnknown_08104304), 0x2f6, 2);
 }
 
 void sub_0804360C(int a)

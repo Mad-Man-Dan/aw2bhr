@@ -17,7 +17,7 @@ void ArmyColumnExitUp_Loop(struct Unk08580934_Obj *o)
     o->unk2a += o->unk3a;
 
     if (o->unk2a < -0x28)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 
     sub_08064E5C(o);
 }

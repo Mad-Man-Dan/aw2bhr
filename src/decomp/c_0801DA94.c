@@ -7,10 +7,11 @@
  * sub_0801DA94 @ 0x0801DA94
  */
 
-void sub_0801DA94(void)
+void ClearObjAffineSlots(void)
 {
     u16 i;
 
     for (i = 0; i < 0x20; i++)
         gUnknown_03001430[i] = 0;
 }
+asm(".global sub_0801DA94\n.thumb_set sub_0801DA94, ClearObjAffineSlots\n");

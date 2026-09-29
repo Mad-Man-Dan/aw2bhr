@@ -10,7 +10,7 @@
 /* MATCHED. The near-twin of DeathHandler_Air -- same install sequence, differing
  * in the sub_08015410 blob (gUnknown_085536A4), the gUnknown_08553B10 table,
  * an extra SetSlotSpriteFlicker call, the 0x180 rather than 0x100 handed to
- * sub_080157F4, and the tail. See DeathHandler_Air for the `f`, `c`/`d` and
+ * SetSlotSpriteScaleY, and the tail. See DeathHandler_Air for the `f`, `c`/`d` and
  * pointer-local notes; all three carry over except that this one needs no
  * `row` local, because its gUnknown_085D6A48 read is column 0 and has no
  * constant to misplace.
@@ -59,10 +59,10 @@ void DeathHandler_Tank(u16 a, u16 b)
 
     e = gUnknown_08553B10[a];
 
-    sub_08016824(gUnknown_02029808[a].unk24[b]);
-    sub_08016944(gUnknown_02029808[a].unk24[b]);
-    sub_080157A4(gUnknown_02029808[a].unk24[b], e);
-    sub_080157F4(gUnknown_02029808[a].unk24[b], 0x180);
+    EnableSlotSpriteAffine(gUnknown_02029808[a].unk24[b]);
+    SetSlotSpriteDoubleSize(gUnknown_02029808[a].unk24[b]);
+    SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], e);
+    SetSlotSpriteScaleY(gUnknown_02029808[a].unk24[b], 0x180);
 
     if (gUnknown_02029A10[a].entries[b].unk01 == 1)
     {

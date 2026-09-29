@@ -24,7 +24,7 @@
 
 void sub_080470DC(void)
 {
-    sub_0801B780(0);
+    InitTextTileCache(0);
 }
 
 /* Stop half of ShowTerrainInfoWindow's sub_080152EC. */

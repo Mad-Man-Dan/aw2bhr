@@ -17,7 +17,7 @@
  * instead of __mulsf3/__addsf3, which is 20 bytes. Coefficients are the ROM's
  * own 13-significant-digit decimals, not exact rationals. */
 
-float sub_0808B710(float x)
+float sinf(float x)
 {
     int n;
     float z;
@@ -40,3 +40,4 @@ float sub_0808B710(float x)
         return -x;
     return x;
 }
+asm(".global sub_0808B710\n.thumb_set sub_0808B710, sinf\n");

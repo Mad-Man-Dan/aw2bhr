@@ -8,7 +8,7 @@
  */
 
 /* `pop {r1}` is the value-returning epilogue, and the declared `void *` return
- * is sub_08014E44's own -- this is a pass-through allocation of 0xa20 bytes.
+ * is HeapMalloc's own -- this is a pass-through allocation of 0xa20 bytes.
  *
  * The constant is a PLAIN LITERAL despite `movs #0xa2; lsls #4` using a
  * non-minimal shift (0xa20 has five trailing zeros, so 0x51 << 5 would also
@@ -17,6 +17,6 @@
  * directly reproduces the shift of 4 exactly. */
 void *AllocMoveSlideGfxBuffer(void)
 {
-    return sub_08014E44(0xa20);
+    return HeapMalloc(0xa20);
 }
 asm(".global sub_080364C4\n.thumb_set sub_080364C4, AllocMoveSlideGfxBuffer\n");

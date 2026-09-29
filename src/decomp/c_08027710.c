@@ -37,19 +37,19 @@ void sub_0802776C(u8 a1)
     switch (a1)
     {
     case 0:
-        sub_0801F024(DrawInfoBoxCombobox, 0);
+        RunOrQueueDrawCallback(DrawInfoBoxCombobox, 0);
         break;
 
     case 1:
-        sub_0801F024(sub_080276D0, 0);
+        RunOrQueueDrawCallback(sub_080276D0, 0);
         break;
 
     case 2:
-        sub_0801F024(sub_080276F0, 0);
+        RunOrQueueDrawCallback(sub_080276F0, 0);
         break;
 
     case 3:
-        sub_0801F024(sub_08027710, 0);
+        RunOrQueueDrawCallback(sub_08027710, 0);
         break;
     }
 }
@@ -58,9 +58,9 @@ void sub_080277BC(void)
 {
     gUnknown_03001470[gUnknown_03001FBC].unk24++;
 
-    sub_080157A4(gUnknown_03001FBC, gUnknown_08090AA8[gUnknown_03001470[gUnknown_03001FBC].unk24]);
-    sub_080157F4(gUnknown_03001FBC, gUnknown_08090AA8[gUnknown_03001470[gUnknown_03001FBC].unk24]);
+    SetSlotSpriteScaleX(gUnknown_03001FBC, gUnknown_08090AA8[gUnknown_03001470[gUnknown_03001FBC].unk24]);
+    SetSlotSpriteScaleY(gUnknown_03001FBC, gUnknown_08090AA8[gUnknown_03001470[gUnknown_03001FBC].unk24]);
 
     if (gUnknown_08090AA8[gUnknown_03001470[gUnknown_03001FBC].unk24] == 0x100)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }

@@ -18,7 +18,7 @@
  * wide the object really is. This function BYTE-addresses it at +0 and +1 --
  * two independent `ldrb`/`orrs`/`strb` pairs off one pool word -- which makes
  * the halfword declaration at best incomplete: it is an aggregate of at least
- * two bytes, probably another register shadow given the sub_08012420 flush that
+ * two bytes, probably another register shadow given the FlushDisplayRegisters flush that
  * follows. The byte-pointer view is the weakest spelling that reproduces the
  * ROM without retyping a global that a matched file already writes; NOT a claim
  * about the real type. Both masks here are SETS, and per docs/agbcc-codegen.md
@@ -32,5 +32,5 @@ void sub_08052EE4(void)
     *(u8 *)&gUnknown_03001FD0 |= 1;
     *((u8 *)&gUnknown_03001FD0 + 1) |= 0x80;
 
-    sub_08012420();
+    FlushDisplayRegisters();
 }

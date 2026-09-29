@@ -27,8 +27,8 @@ void IntroT3_08069155(struct Unk69154Proc *proc)
 {
     proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
     Decompress(gUnknown_08183A00, gBG2TilemapBuffer);
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     StartIntroBgAffineTween(1, -1, 0x170, 0x88, -0x3800, 0, 0xc0, 0x100, 0xc, proc);
 }
 

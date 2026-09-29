@@ -47,7 +47,7 @@ void CampaignIntro_Init(ProcPtr proc)
     Decompress(gUnknown_0822FEF0,
         (void *)(gUnknown_0300251C.bits.chr_block * 0x4000 + 0x06000000));
     Decompress(gUnknown_0822F9AC, gBG3TilemapBuffer);
-    sub_08013B1C();
+    BG_EnableSyncBG3();
     ApplyPaletteExt(gUnknown_0822FE50, 0x20, 0xa0);
     Proc_Start(gUnknown_086170D4, proc);
     Decompress(gUnknown_0823FFBC, gUnknown_0200FC50);
@@ -67,9 +67,9 @@ void CampaignIntro_Init(ProcPtr proc)
     CpuFastSet(gUnknown_0200FED0, (void *)0x06010B00, 0x20);
     ApplyPaletteExt(gUnknown_08240AD4, 0x200, 0x20);
     Proc_Start(gUnknown_0861707C, proc);
-    sub_0801B780(0);
+    InitTextTileCache(0);
     ApplyPaletteExt(gUnknown_081320AC, 0x100, 0x20);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 
 asm(".global sub_0808A6CC\n.thumb_set sub_0808A6CC, CampaignIntro_Init\n");

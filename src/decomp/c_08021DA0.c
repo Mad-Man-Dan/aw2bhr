@@ -13,7 +13,7 @@ void LoadRiverAnimFrame(int a1)
 {
     u8 n = a1;
 
-    sub_08011C68(gUnknown_080C9FC4 + n * 0xc00,
+    CpuCopyAuto(gUnknown_080C9FC4 + n * 0xc00,
                  (void *)(0x06004000 + (gUnknown_0300251C.bits.chr_block << 14)),
                  0xc00);
 }

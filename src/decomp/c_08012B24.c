@@ -7,7 +7,7 @@
  * sub_08012B24 @ 0x08012B24
  */
 
-void sub_08012B24(u16 *src, u16 *dst, u16 size, u16 add)
+void CopyHalfwordsAdd(u16 *src, u16 *dst, u16 size, u16 add)
 {
     while (size != 0)
     {
@@ -17,3 +17,4 @@ void sub_08012B24(u16 *src, u16 *dst, u16 size, u16 add)
         size -= 2;
     }
 }
+asm(".global sub_08012B24\n.thumb_set sub_08012B24, CopyHalfwordsAdd\n");

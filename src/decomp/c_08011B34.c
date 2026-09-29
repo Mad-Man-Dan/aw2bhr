@@ -14,7 +14,7 @@
  * same address, so the linked bytes are identical; trymatch compares
  * relocations symbolically and reports a false mismatch here. The ROM hash
  * is the oracle that settles it. */
-void sub_08011B34(void *a)
+void AddVBlankHook(void *a)
 {
     void **p;
 
@@ -27,3 +27,4 @@ void sub_08011B34(void *a)
         }
     }
 }
+asm(".global sub_08011B34\n.thumb_set sub_08011B34, AddVBlankHook\n");

@@ -30,7 +30,7 @@ struct Unk0801320C
     /* 0x64 */ s16 unk64;
 };
 
-void sub_0801320C(struct Unk0801320C *proc)
+void WhiteFlash_FadeIn(struct Unk0801320C *proc)
 {
     if (proc->unk64 == 0)
     {
@@ -47,3 +47,4 @@ void sub_0801320C(struct Unk0801320C *proc)
             Proc_Break(proc);
     }
 }
+asm(".global sub_0801320C\n.thumb_set sub_0801320C, WhiteFlash_FadeIn\n");

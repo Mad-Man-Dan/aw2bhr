@@ -9,7 +9,7 @@
 
 /* A gUnknown_0200C528 list-script handler: allocates a gUnknown_03001470 slot
  * seeded from the script's own +0x14 halfword, arms it, and hands the script
- * over to sub_080185BC.
+ * over to EventCb_ClearWhenTextBoxesEnd.
  *
  * The +0x14 read is BOUND TO A LOCAL, and that is the whole difference between
  * this and a 4-byte-wrong candidate: written inline as the fourth argument it
@@ -26,17 +26,18 @@
  * c_08015E04.c, c_08029FC4.c, c_0802A690.c), so this `strb` of 1 touches only
  * its low half and the member is not retyped. `adds r0, #0x38` rather than a
  * displaced `strb` because 0x38 is past strb's 5-bit range. */
-bool8 sub_08018758(s16 a)
+bool8 EventOp_ShowTextFromSlot(s16 a)
 {
     struct Unk03001470 *s;
     u16 t;
 
     t = gUnknown_0200C528[a].unk14;
-    s = sub_08014740(7, 1, gUnknown_08499588, t,
+    s = StartTextBox(7, 1, gUnknown_08499588, t,
                      gUnknown_03002F08.unk00 * 0x1000, 0x100);
-    s->unk3c = sub_080185A0;
+    s->unk3c = UploadEventTilemap;
     *(u8 *)&s->unk38 = 1;
-    gUnknown_0200C528[a].unk08 = (struct Unk0200C528Node *)sub_080185BC;
+    gUnknown_0200C528[a].unk08 = (struct Unk0200C528Node *)EventCb_ClearWhenTextBoxesEnd;
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }
+asm(".global sub_08018758\n.thumb_set sub_08018758, EventOp_ShowTextFromSlot\n");

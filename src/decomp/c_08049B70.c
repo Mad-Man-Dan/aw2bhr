@@ -25,7 +25,7 @@
 
 void BattleMaps_08049B71(void)
 {
-    sub_08011B34((void *)sub_08049BAC);
+    AddVBlankHook((void *)sub_08049BAC);
 }
 
 asm(".global sub_08049B70\n.thumb_set sub_08049B70, BattleMaps_08049B71\n");

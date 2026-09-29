@@ -26,7 +26,7 @@
  * The two arms of the flag test reach that same `return 1` by opposite routes:
  * with bit 4 clear a MATCHING id rejects, with bit 4 set a non-matching one
  * does. */
-int sub_0801AD70(u8 id)
+int IsSaveSlotInvalid(u8 id)
 {
     int i;
 
@@ -49,3 +49,4 @@ int sub_0801AD70(u8 id)
 
     return 0;
 }
+asm(".global sub_0801AD70\n.thumb_set sub_0801AD70, IsSaveSlotInvalid\n");

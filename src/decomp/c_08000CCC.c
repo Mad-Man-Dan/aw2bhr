@@ -75,7 +75,7 @@ void SetSelectedTile(int a1)
         gActiveMap->cursorUnit = b;
     }
 
-    sub_08011E54(gUnknown_0808D8AC, (void *)0x06014D40, 0x8C << 3);
+    RegisterDataMove(gUnknown_0808D8AC, (void *)0x06014D40, 0x8C << 3);
 }
 
 asm(".global sub_08000CCC\n.thumb_set sub_08000CCC, SetSelectedTile\n");

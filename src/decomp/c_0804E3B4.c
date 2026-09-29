@@ -18,7 +18,7 @@ void sub_0804E3B4(void)
     u16 pal;
     u16 prio;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
     gUnknown_03001470[gUnknown_03001FBC].unk28 = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk2c = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
@@ -29,6 +29,6 @@ void sub_0804E3B4(void)
     oam.tileNum = gUnknown_0300453C * 0x100 + 0xc0;
     prio = gUnknown_085523A4[gUnknown_0300453C ^ gUnknown_0300450C];
     oam.priority = prio;
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_08015928(gUnknown_03001FBC, (u32)BattleshipPart2_StreamHook);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteHook(gUnknown_03001FBC, (u32)BattleshipPart2_StreamHook);
 }

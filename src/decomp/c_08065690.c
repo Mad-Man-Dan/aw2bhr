@@ -29,5 +29,5 @@ void sub_08065690(struct Unk65690Proc *proc)
     PutOamHi((proc->unk24 + 0x200) & 0x1ff, (proc->unk28 + 0x100) & 0xff, proc->unk3c, 0);
 
     if (proc->unk24 + 0x30 > 0x120)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }

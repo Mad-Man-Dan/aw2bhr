@@ -23,7 +23,7 @@ struct Unk14D7CHeap
     /* 0c */ u32 unk0c;
 };
 
-int sub_08014D7C(void *buf, u32 size)
+int HeapInitBuffer(void *buf, u32 size)
 {
     struct Unk14D7CHeap *h;
 
@@ -38,3 +38,4 @@ int sub_08014D7C(void *buf, u32 size)
     h->unk0c = size;
     return (int)h;
 }
+asm(".global sub_08014D7C\n.thumb_set sub_08014D7C, HeapInitBuffer\n");

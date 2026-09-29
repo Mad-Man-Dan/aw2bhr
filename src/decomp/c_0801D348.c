@@ -9,7 +9,7 @@
 
 /* A two-way dispatch on bit 0 of argument 1. The `long long` seventh argument
  * is not a guess: the pair of adjacent word loads carries agbcc's own "created
- * by thumb_load_double_from_address" note and lands in sub_0801E338's declared
+ * by thumb_load_double_from_address" note and lands in QueueSpriteRequest's declared
  * 64-bit slot, which forces the 8-byte alignment that puts it at +0x24. */
 /* Wave 56, W56-H. The last parameter was retyped `u16` -> `s16`. The witness is
  * the ONE caller, sub_0801D390: it loads gUnknown_0200E438[i].unk38 with
@@ -19,10 +19,11 @@
  * bytes short overall. This body stays byte-for-byte identical either way
  * (PROMOTE_MODE zero-extends the stack slot regardless of signedness and the
  * `(s16)` cast at the use is unchanged), re-verified by trymatch. */
-void sub_0801D348(int a, int b, int c, int d, int e, int f, long long g, s16 h)
+void SubmitSpriteScriptFrame(int a, int b, int c, int d, int e, int f, long long g, s16 h)
 {
     if (a & 1)
-        sub_0801E4B0(e, b, c, d, f);
+        QueueSpriteRequestSimple(e, b, c, d, f);
     else
-        sub_0801E338(e, b, c, d, g, (s16)h);
+        QueueSpriteRequest(e, b, c, d, g, (s16)h);
 }
+asm(".global sub_0801D348\n.thumb_set sub_0801D348, SubmitSpriteScriptFrame\n");

@@ -7,7 +7,8 @@
  * sub_08012E74 @ 0x08012E74
  */
 
-void sub_08012E74(u16 x, u16 y, u16 c)
+void PutBg0Tile(u16 x, u16 y, u16 c)
 {
     gBG0TilemapBuffer[y * 32 + x] = c | 0xC000;
 }
+asm(".global sub_08012E74\n.thumb_set sub_08012E74, PutBg0Tile\n");

@@ -19,7 +19,7 @@ void SetMapLayersDefault(void)
     gUnknown_03001FE8.bits.priority = 2;
     gUnknown_030030B4.bits.priority = 1;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08012358();
-    sub_0801237C();
+    SetDefaultColorEffects();
+    ResetWindowShadows();
 }
 asm(".global sub_08024584\n.thumb_set sub_08024584, SetMapLayersDefault\n");

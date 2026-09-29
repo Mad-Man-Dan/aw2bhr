@@ -29,7 +29,7 @@ void sub_08026040(int a1, int a2, int a3, int a4)
     if (a1 == 1 && a2 == 2 && a3 == 3 && a4 == 4)
         return;
 
-    buf = sub_08014E44(0xc00);
+    buf = HeapMalloc(0xc00);
 
     for (i = 0; i < 0x100; i++)
         buf[i] = gUnknown_02022684[i];
@@ -38,5 +38,5 @@ void sub_08026040(int a1, int a2, int a3, int a4)
     CopyRosterToArmy(&buf[0x40], a2);
     CopyRosterToArmy(&buf[0x80], a3);
     CopyRosterToArmy(&buf[0xc0], a4);
-    sub_08014ED4(buf);
+    HeapFree(buf);
 }

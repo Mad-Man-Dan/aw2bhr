@@ -19,7 +19,7 @@
  * which is exactly where the ROM has it. Reassigning `src` makes it a
  * parameter copy instead, moving the `ldr` up two instructions and letting
  * the accumulation happen in a low register, which is 4 bytes short. */
-void sub_080727C0(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, int idx)
+void TmCopySheetCellClipped(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, int idx)
 {
     const u16 *p = src;
     int ix;
@@ -36,10 +36,11 @@ void sub_080727C0(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src
             if ((unsigned) (x + ix) < 0x20 && (unsigned) (y + iy) < 0x20)
                 *(map + (x + ix) + (y + iy) * 0x20) = *(p + ix + iy * 0x20) + base;
 }
+asm(".global sub_080727C0\n.thumb_set sub_080727C0, TmCopySheetCellClipped\n");
 
-/* Same blit as sub_080727C0 but vertically mirrored, and the sheet's real row
+/* Same blit as TmCopySheetCellClipped but vertically mirrored, and the sheet's real row
  * stride comes from a two-byte header: src[0] + 1 halfwords, pixel data from
- * src + 2. See sub_080727C0 for why `p` is a separate local seeded from the
+ * src + 2. See TmCopySheetCellClipped for why `p` is a separate local seeded from the
  * parameter rather than a reassignment of it.
  *
  * The two odd-looking constructs are the whole difference between 97.3% and a
@@ -54,7 +55,7 @@ void sub_080727C0(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src
  *    `(h - iy - 1) * stride` is folded before the multiply; bound, the
  *    subtraction of 1 stays on the near side of it, which is the ROM's
  *    `subs r0, r1, r5; subs r0, #1; muls r2, r0`. */
-void sub_0807286C(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, int idx)
+void TmCopyTsaSheetCellRowsReversedClipped(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, int idx)
 {
     const u16 *p = src;
     int ix;
@@ -88,3 +89,4 @@ void sub_0807286C(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src
         }
     }
 }
+asm(".global sub_0807286C\n.thumb_set sub_0807286C, TmCopyTsaSheetCellRowsReversedClipped\n");

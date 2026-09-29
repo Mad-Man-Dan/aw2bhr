@@ -97,8 +97,8 @@ void CoPowerScreenBlend_FadeOutLoop(ProcPtr proc)
 
     if (**pp == 0)
     {
-        sub_08013C00();
-        sub_08013AEC();
+        ClearBg0Tilemap();
+        BG_EnableSyncBG0();
         Proc_Break(proc);
     }
     else

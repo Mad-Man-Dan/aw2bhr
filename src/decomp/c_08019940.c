@@ -21,7 +21,7 @@
  * and the bound is `cmp #4; bls`, an unsigned test. The `&&` really is one --
  * both halves branch to the same skip label and the second is a call, so
  * there is no arm to invert. */
-void sub_08019940(u8 a, u8 b)
+void DefeatOtherTeamsAndEndMatch(u8 a, u8 b)
 {
     u8 i;
 
@@ -34,3 +34,4 @@ void sub_08019940(u8 a, u8 b)
     FinalizeBattleResult();
     gUnknown_030032D8 = 0x12;
 }
+asm(".global sub_08019940\n.thumb_set sub_08019940, DefeatOtherTeamsAndEndMatch\n");

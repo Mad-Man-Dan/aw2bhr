@@ -16,7 +16,7 @@
  *
  *   - the byte tables .unk00 and .unk10 are set to 0xff and .unk20 and .unk30
  *     to 0, and both generation counters are zeroed;
- *   - sub_0801B6A8 fills the 0x1000-byte buffer at gUnknown_02002000;
+ *   - FillBytesWithFF fills the 0x1000-byte buffer at gUnknown_02002000;
  *   - the sector is written with ProgramFlashSectorIfPresent and read back with VerifyFlashSectorIfPresent,
  *     up to four times. Four failed attempts abandon the whole job and return
  *     1;
@@ -49,7 +49,7 @@ int FormatSaveSectors(void)
       gUnknown_0200CC38.unk20[i] = 0;
       gUnknown_0200CC38.unk30[i] = 0;
       gUnknown_0200CC88.sectorGeneration[i] = gUnknown_0200CC88.slotGeneration[i] = 0;
-      sub_0801B6A8(gUnknown_02002000, 0x1000);
+      FillBytesWithFF(gUnknown_02002000, 0x1000);
       for (j = 0; j < 4; j++)
       {
         ProgramFlashSectorIfPresent(i, (int) gUnknown_02002000);

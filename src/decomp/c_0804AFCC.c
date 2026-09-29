@@ -30,12 +30,12 @@ void NameEntry_SlideOut_Step(void)
     t = ((gUnknown_030030A0 - 0x138) >> 3) + 5;
     t &= 0x1f;
 
-    sub_08012BC8(gBG0TilemapBuffer, t, 0, 3, 0x14, 0);
-    sub_08012BC8(gBG2TilemapBuffer, t, 0, 3, 0x14, 0x360);
-    sub_08013AEC();
-    sub_08013B0C();
+    FillTilemapRect(gBG0TilemapBuffer, t, 0, 3, 0x14, 0);
+    FillTilemapRect(gBG2TilemapBuffer, t, 0, 3, 0x14, 0x360);
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 
     if (t == 0)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 asm(".global sub_0804AFCC\n.thumb_set sub_0804AFCC, NameEntry_SlideOut_Step\n");

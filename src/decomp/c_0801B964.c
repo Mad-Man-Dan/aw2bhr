@@ -7,7 +7,7 @@
  * sub_0801B964 @ 0x0801B964, sub_0801B998 @ 0x0801B998
  */
 
-/* Draws one run through sub_0801B9C8 and advances the two cursors it consumed
+/* Draws one run through PutCachedTextString and advances the two cursors it consumed
  * by however much the callee reported.
  *
  * The struct is a pointer parameter only, so it lives here rather than in
@@ -40,7 +40,7 @@ struct Unk1B998
  * The wrap arm re-uses the value it just stored (`adds r0, r3, #0`) instead of
  * re-loading it, which is the ordinary non-volatile store-forwarding and rules
  * volatile out for gUnknown_03000058. */
-int sub_0801B964(int a)
+int AdvanceTextPixelCursor(int a)
 {
     gUnknown_03000058 += a;
     gUnknown_0300005C += a;
@@ -53,12 +53,14 @@ int sub_0801B964(int a)
     else
         return 0;
 }
+asm(".global sub_0801B964\n.thumb_set sub_0801B964, AdvanceTextPixelCursor\n");
 
-void sub_0801B998(struct Unk1B998 *p, int b, u16 c)
+void PutCachedTextRun(struct Unk1B998 *p, int b, u16 c)
 {
     u16 width = p->unk2c + p->unk2e;
-    int used = sub_0801B9C8(b, p->unk20, width, c);
+    int used = PutCachedTextString(b, p->unk20, width, c);
 
     p->unk32 += used;
     p->unk20 += used;
 }
+asm(".global sub_0801B998\n.thumb_set sub_0801B998, PutCachedTextRun\n");

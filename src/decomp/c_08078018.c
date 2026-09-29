@@ -47,8 +47,8 @@ void sub_08078038(void)
     CpuFastSet(&fill1, gBG0TilemapBuffer, 0x01000200);
     fill2 = 0;
     CpuFastSet(&fill2, gBG2TilemapBuffer, 0x01000200);
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 }
 
 /* The one-buffer version of sub_08078038: a single CpuFastSet FILL of the
@@ -62,7 +62,7 @@ void sub_08078078(void)
     u32 fill = 0;
 
     CpuFastSet(&fill, gBG1TilemapBuffer, 0x01000200);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 
 /* A proc method. GetMainMenuLock returns u8 (promoted in src/decomp/c_0803BD54.c)

@@ -491,7 +491,7 @@ void sub_08079FAC(struct Unk8079FACProc *proc)
         gUnknown_03001400 = 0xFF10;
         gDispIo.disp_ct.bg2_enable = 0;
 
-        sub_0801A444(0, 0xE, 0x1E, 6);
+        DrawWindowBackgroundOnBg2(0, 0xE, 0x1E, 6);
 
         gUnknown_030030E0.bits.effect = 1;
 

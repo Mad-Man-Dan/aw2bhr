@@ -43,6 +43,6 @@ void sub_0806745C(struct Unk6745CProc *proc)
 void sub_08067480(struct Unk67480Proc *proc)
 {
     proc->unk58 = 0x20;
-    sub_080139C4(-1);
-    sub_080135A4();
+    ColFadeFromWhite(-1);
+    EnablePaletteSync();
 }

@@ -10,7 +10,7 @@
 #include "proc.h"
 
 /* Wave 50, W50-F. A teardown sweep: five proc-id slots per (side, slot), each
- * killed with the same `if (id != -1 && sub_080153F0(id)) sub_08015328(id);`
+ * killed with the same `if (id != -1 && IsSlotScriptActiveAt(id)) EndSlotScriptAt(id);`
  * guard. The FIRST of the five carries an extra outer `!= 0` test whose false
  * arm jumps past the next three groups -- so the last group, gUnknown_02029668,
  * sits outside that `if` and runs unconditionally.
@@ -34,37 +34,37 @@ void BattleAnimScene_OnEnd(ProcPtr proc)
             if (gUnknown_02029A10[i].entries[j].unk18 != 0)
             {
                 if (gUnknown_02029A10[i].entries[j].unk18 != -1
-                    && sub_080153F0(gUnknown_02029A10[i].entries[j].unk18))
+                    && IsSlotScriptActiveAt(gUnknown_02029A10[i].entries[j].unk18))
                 {
-                    sub_08015328(gUnknown_02029A10[i].entries[j].unk18);
+                    EndSlotScriptAt(gUnknown_02029A10[i].entries[j].unk18);
                     gUnknown_02029A10[i].entries[j].unk18 = 0;
                 }
 
                 if (gUnknown_020296B0[i].unk02[j] != -1
-                    && sub_080153F0(gUnknown_020296B0[i].unk02[j]))
-                    sub_08015328(gUnknown_020296B0[i].unk02[j]);
+                    && IsSlotScriptActiveAt(gUnknown_020296B0[i].unk02[j]))
+                    EndSlotScriptAt(gUnknown_020296B0[i].unk02[j]);
 
                 if (gUnknown_020298E0[i].unk02[j] != -1
-                    && sub_080153F0(gUnknown_020298E0[i].unk02[j]))
-                    sub_08015328(gUnknown_020298E0[i].unk02[j]);
+                    && IsSlotScriptActiveAt(gUnknown_020298E0[i].unk02[j]))
+                    EndSlotScriptAt(gUnknown_020298E0[i].unk02[j]);
 
                 if (gUnknown_0202967C[i][j] != -1
-                    && sub_080153F0(gUnknown_0202967C[i][j]))
-                    sub_08015328(gUnknown_0202967C[i][j]);
+                    && IsSlotScriptActiveAt(gUnknown_0202967C[i][j]))
+                    EndSlotScriptAt(gUnknown_0202967C[i][j]);
             }
 
             if (gUnknown_02029668[i][j] != -1
-                && sub_080153F0(gUnknown_02029668[i][j]))
-                sub_08015328(gUnknown_02029668[i][j]);
+                && IsSlotScriptActiveAt(gUnknown_02029668[i][j]))
+                EndSlotScriptAt(gUnknown_02029668[i][j]);
         }
     }
 
-    if (gUnknown_03004570 != -1 && sub_080153F0(gUnknown_03004570))
-        sub_08015328(gUnknown_03004570);
+    if (gUnknown_03004570 != -1 && IsSlotScriptActiveAt(gUnknown_03004570))
+        EndSlotScriptAt(gUnknown_03004570);
 
-    sub_080169E8();
+    EndAllSpriteScripts();
     Proc_End(proc);
     sub_08036B34();
-    sub_0801F00C();
+    EnableSpriteLayerMode();
 }
 asm(".global sub_080532D8\n.thumb_set sub_080532D8, BattleAnimScene_OnEnd\n");

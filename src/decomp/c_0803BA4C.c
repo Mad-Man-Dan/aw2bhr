@@ -23,7 +23,7 @@ void sub_0803BA4C(void)
         SetHardCampaignFlag(1);
     else
         SetHardCampaignFlag(0);
-    sub_08016E74();
+    BackupBattleMapPoints();
     gPlaySt.gameMode = 1;
     Proc_Start(ProcScr_Campaign, PROC_TREE_3);
 }

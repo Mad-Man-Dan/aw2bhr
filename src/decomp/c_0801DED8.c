@@ -16,7 +16,7 @@ void DrawSimpleSpriteScripts(void)
         if (gUnknown_0200E438[i].unk08)
         {
             RunSimpleSpriteScript(i, 0);
-            sub_0801DB04(i);
+            UpdateSpriteScriptAffine(i);
         }
     }
 }

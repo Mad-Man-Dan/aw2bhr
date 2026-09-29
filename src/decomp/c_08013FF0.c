@@ -19,10 +19,11 @@ struct Unk8013FF0
     /* 0x1e */ s16 unk1e;
 };
 
-void sub_08013FF0(struct Unk8013FF0 *s)
+void TextPause_Loop(struct Unk8013FF0 *s)
 {
     if (s->unk1e == 0)
         s->unk08 = 0;
 
     s->unk1e--;
 }
+asm(".global sub_08013FF0\n.thumb_set sub_08013FF0, TextPause_Loop\n");

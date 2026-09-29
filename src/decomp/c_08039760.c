@@ -37,7 +37,7 @@ void sub_08039760(struct Unk39760Proc *proc)
     {
         Proc_Break(proc);
         Proc_EndEach(gUnknown_0849D7FC);
-        sub_08013C00();
-        sub_08013AEC();
+        ClearBg0Tilemap();
+        BG_EnableSyncBG0();
     }
 }

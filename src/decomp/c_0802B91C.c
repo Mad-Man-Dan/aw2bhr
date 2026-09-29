@@ -65,7 +65,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
         dst = sub_08026198() + (0x78 - sub_080261A0()) * 0x20;
         t = a8 * 4;
         u = (a4 & 1) + 0x1dc;
-        sub_08011E54(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
+        RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
         n++;
     }
     else
@@ -79,7 +79,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
             dst = sub_08026198() + (0x75 - sub_080261A0()) * 0x20;
             t = a8 * 4;
             u = (a4 & 1) + 0x1dc;
-            sub_08011E54(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
+            RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
             n++;
         }
 
@@ -92,7 +92,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
             dst = sub_08026198() + (0x76 - sub_080261A0()) * 0x20;
             t = a8 * 4;
             u = (a4 & 1) + 0x1dc;
-            sub_08011E54(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
+            RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
             n++;
         }
 
@@ -105,12 +105,12 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
             dst = sub_08026198() + (0x77 - sub_080261A0()) * 0x20;
             t = a8 * 4;
             u = (a4 & 1) + 0x1dc;
-            sub_08011E54(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
+            RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
             n++;
         }
     }
 
-    sub_08011E54(sub_08026190() + (sub_080261A4(a4, a3) & 0x3ff) * 0x20,
+    RegisterDataMove(sub_08026190() + (sub_080261A4(a4, a3) & 0x3ff) * 0x20,
                  (void *)(0x06013B40 + a8 * 0x80), 0x80);
 
     if (n != 0)

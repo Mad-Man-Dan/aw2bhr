@@ -7,14 +7,14 @@
  * sub_0808B02C @ 0x0808B02C
  */
 
-/* sub_0808AFE8 with a caller-supplied length: the same three-attempt
- * program-then-verify loop, with sub_0808AF74 in place of sub_0808AF00.
+/* ProgramFlashSectorAndVerify with a caller-supplied length: the same three-attempt
+ * program-then-verify loop, with VerifyFlashSectorNBytes in place of VerifyFlashSector.
  *
  * `i` is a u8 (`adds; lsls #0x18; lsrs #0x18`) and both failure paths land on
  * the same increment, so it is one ordinary `for` with `result` declared ahead
  * of it -- the ROM's apparent read of an uninitialised `r3` when the loop is
  * not entered is just that, and must not be reproduced by hand. */
-int sub_0808B02C(u16 a1, int a2, int a3)
+int ProgramFlashSectorAndVerifyNBytes(u16 a1, int a2, int a3)
 {
     u8 i;
     int result;
@@ -25,7 +25,7 @@ int sub_0808B02C(u16 a1, int a2, int a3)
 
         if (result == 0)
         {
-            result = sub_0808AF74(a1, a2, a3);
+            result = VerifyFlashSectorNBytes(a1, a2, a3);
 
             if (result == 0)
                 break;
@@ -34,3 +34,4 @@ int sub_0808B02C(u16 a1, int a2, int a3)
 
     return result;
 }
+asm(".global sub_0808B02C\n.thumb_set sub_0808B02C, ProgramFlashSectorAndVerifyNBytes\n");

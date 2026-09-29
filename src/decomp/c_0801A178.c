@@ -12,7 +12,7 @@
  * window. Returns 0 when already at the top and 1 otherwise.
  *
  * A LEAF -- no `push` at all and a bare `bx lr` -- so nothing here may need a
- * callee-saved register. sub_0801A1A0 below is the mirror image and does need
+ * callee-saved register. ScrollList_CursorDown below is the mirror image and does need
  * one, for the (unk01 - unk02) it computes up front.
  *
  * `p->unk00 - p->unk03 < p->unk04` compares SIGNED (`bge` on the skip): the
@@ -28,7 +28,7 @@ struct Unk1A178
     /* 04 */ u8 unk04;
     /* 05 */ u8 unk05;
 };
-/* The downward twin of sub_0801A178: counts unk00 up towards the unk01 limit
+/* The downward twin of ScrollList_CursorUp: counts unk00 up towards the unk01 limit
  * and pushes the view origin unk03 after it, bounded by the unk05-row window
  * and by the (unk01 - unk02) computed on entry.
  *
@@ -50,7 +50,7 @@ struct Unk1A1A0
     /* 05 */ u8 unk05;
 };
 
-int sub_0801A178(struct Unk1A178 *p)
+int ScrollList_CursorUp(struct Unk1A178 *p)
 {
     if (p->unk00 == 0)
         return 0;
@@ -62,8 +62,9 @@ int sub_0801A178(struct Unk1A178 *p)
 
     return 1;
 }
+asm(".global sub_0801A178\n.thumb_set sub_0801A178, ScrollList_CursorUp\n");
 
-int sub_0801A1A0(struct Unk1A1A0 *p)
+int ScrollList_CursorDown(struct Unk1A1A0 *p)
 {
     u8 v = p->unk01 - p->unk02;
 
@@ -77,3 +78,4 @@ int sub_0801A1A0(struct Unk1A1A0 *p)
 
     return 1;
 }
+asm(".global sub_0801A1A0\n.thumb_set sub_0801A1A0, ScrollList_CursorDown\n");

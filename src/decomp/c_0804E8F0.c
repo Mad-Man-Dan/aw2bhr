@@ -32,7 +32,7 @@ void FigureTileHook_BodyCrew(s16 a, struct Unk0804E8F0 *dst)
     u16 c;
     u16 e;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
     d = (u16)(dst->unk04 - oam.tileNum) & 0x3FF;
     if (gUnknown_08552A40[d] != 0xFFFF)
     {

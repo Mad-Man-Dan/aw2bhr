@@ -38,7 +38,7 @@ u8 sub_08078E20(void)
  * for forced_blank is the same construct with a mask that happens to narrow.
  *
  * sub_0807A908's result is re-narrowed `lsls #0x10; lsrs #0x10` and consumed
- * by sub_0801A5B0(u16), so it is a nest and the callee returns u16. */
+ * by LoadBg1WindowFrame(u16), so it is a nest and the callee returns u16. */
 
 /* WAVE 53, W53-D: the ProcPtr parameter is forced by sub_0807898C gaining one
  * (see include/unknown-functions.h) and costs nothing -- r0 already holds it at
@@ -49,8 +49,8 @@ void sub_08078E48(ProcPtr proc)
     sub_0807898C(proc);
     SyncAllBgTilemaps();
     gDispIo.disp_ct.bg1_enable = 0;
-    sub_08013B0C();
-    sub_0801A5B0(sub_0807A908());
+    BG_EnableSyncBG2();
+    LoadBg1WindowFrame(sub_0807A908());
     sub_0807A99C(gUnknown_085C77A0[gPlaySt.mapID].unk16, 0);
 }
 

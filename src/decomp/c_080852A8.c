@@ -16,26 +16,26 @@ struct Unk080852A8
 void CoInfoScreen_DrawPageText(struct Unk080852A8 *proc)
 {
     if (gUnknown_03005940 <= 3)
-        sub_08014668(1, 7, gBG0TilemapBuffer,
+        StartTextBoxViaRecord(1, 7, gBG0TilemapBuffer,
                      gUnknown_08616F0C[gPlayers[proc->unk66].co * 4
                                        + gUnknown_03005940],
                      0x8000, 0x3F);
     if (gUnknown_03005940 == 2)
     {
-        sub_0801B780(0);
-        sub_080149C0(3, 5, gBG0TilemapBuffer,
+        InitTextTileCache(0);
+        PutTextScriptImmediate(3, 5, gBG0TilemapBuffer,
                      gTextTable[gUnknown_085D3DD0[gPlayers[proc->unk66].co]
                                            .power[1].powerNameId],
                      0x8000, 0);
     }
     if (gUnknown_03005940 == 3)
     {
-        sub_0801B780(0);
-        sub_080149C0(3, 5, gBG0TilemapBuffer,
+        InitTextTileCache(0);
+        PutTextScriptImmediate(3, 5, gBG0TilemapBuffer,
                      gTextTable[gUnknown_085D3DD0[gPlayers[proc->unk66].co]
                                            .power[2].powerNameId],
                      0x8000, 0);
     }
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 asm(".global sub_080852A8\n.thumb_set sub_080852A8, CoInfoScreen_DrawPageText\n");

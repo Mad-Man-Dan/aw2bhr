@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_0801906C -- script command: skip a block of nodes unless a CO matches.
+ * EventOp_SkipUnlessArmyHasCo -- script command: skip a block of nodes unless a CO matches.
  *
  * The current node holds an army index in .unk08, a CO number in .unk0a and a
  * node count in .unk0c. DivRem reduces the CO number modulo 24; if the army is
@@ -25,7 +25,7 @@
  * on the two u16 members fold the narrowing into the load and are not evidence
  * that the members are signed.
  */
-bool8 sub_0801906C(s16 a)
+bool8 EventOp_SkipUnlessArmyHasCo(s16 a)
 {
     int army;
     int n;
@@ -45,3 +45,4 @@ bool8 sub_0801906C(s16 a)
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_0801906C\n.thumb_set sub_0801906C, EventOp_SkipUnlessArmyHasCo\n");

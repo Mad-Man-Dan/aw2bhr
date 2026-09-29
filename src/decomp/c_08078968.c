@@ -15,7 +15,7 @@
 
 void WorldMap_StartConfirmExit(ProcPtr parent)
 {
-    sub_0801B780(0x340);
+    InitTextTileCache(0x340);
     Proc_StartBlocking(ProcScr_WM_ConfirmExit, parent);
 }
 asm(".global sub_08078968\n.thumb_set sub_08078968, WorldMap_StartConfirmExit\n");

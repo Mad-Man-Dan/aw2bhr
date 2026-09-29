@@ -9,7 +9,8 @@
 
 #include "hardware.h"
 
-void sub_0801295C(void)
+void EnableVBlankInterrupt(void)
 {
     gUnknown_030020B4.bits.vblank_int_enable = 1;
 }
+asm(".global sub_0801295C\n.thumb_set sub_0801295C, EnableVBlankInterrupt\n");

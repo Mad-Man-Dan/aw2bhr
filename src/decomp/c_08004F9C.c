@@ -18,8 +18,8 @@
  * from that token.
  *
  * Slots 0, 1 and 2 occupy tile rows 7, 9 and 0xB. The row is blanked
- * (sub_08012BC8), given its marker (sub_0801F2AC) and has the name drawn on it
- * (sub_080149C0), then BG0 is flagged for copying to VRAM. Flag 0x100 means
+ * (FillTilemapRect), given its marker (PutTilePoolGraphicTilemap) and has the name drawn on it
+ * (PutTextScriptImmediate), then BG0 is flagged for copying to VRAM. Flag 0x100 means
  * the name is to be emptied, and is consumed here; flag 0x1000 is cleared on
  * every call.
  *
@@ -55,11 +55,11 @@ void DesignRoomSaveToSlot(void)
         break;
     }
 
-    sub_08012BC8(gBG0TilemapBuffer, 3, v, 0xB, 2, 0);
-    sub_0801F2AC(9, gBG0TilemapBuffer + (v * 32 + 3));
-    sub_080149C0(5, (s16)v, gBG0TilemapBuffer, gActiveMap->designName,
+    FillTilemapRect(gBG0TilemapBuffer, 3, v, 0xB, 2, 0);
+    PutTilePoolGraphicTilemap(9, gBG0TilemapBuffer + (v * 32 + 3));
+    PutTextScriptImmediate(5, (s16)v, gBG0TilemapBuffer, gActiveMap->designName,
                  0x8000, 0);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 
     if (gActiveMap->flags & 0x100)
     {

@@ -84,7 +84,7 @@ void sub_08029FE4(void)
   int n;
   int m;
   u8 flag;
-  if (sub_08015BD0((s32) gUnknown_0849A0A8) != (-1))
+  if (FindSlotScript((s32) gUnknown_0849A0A8) != (-1))
   {
     return;
   }
@@ -144,6 +144,6 @@ void sub_08029FE4(void)
   if (i == 0x33)
   {
     sub_08029FC4();
-    sub_08015C30(gUnknown_03001FBC);
+    ClearSlotScriptCallback(gUnknown_03001FBC);
   }
 }

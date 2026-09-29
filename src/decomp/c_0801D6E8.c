@@ -7,13 +7,13 @@
  * sub_0801D6E8 @ 0x0801D6E8
  */
 
-int sub_0801D6E8(int a1, int a2, int a3, int a4, int a5)
+int InitSpriteScript(int a1, int a2, int a3, int a4, int a5)
 {
     struct Unk0200E438 *e;
 
     if (a5 > 0x1F)
     {
-        a5 = sub_0801E13C();
+        a5 = AllocObjAffineRecord();
         if (a5 == -1)
             return a5;
     }
@@ -45,3 +45,4 @@ int sub_0801D6E8(int a1, int a2, int a3, int a4, int a5)
         gUnknown_03003034 = a1 + 1;
     return a1;
 }
+asm(".global sub_0801D6E8\n.thumb_set sub_0801D6E8, InitSpriteScript\n");

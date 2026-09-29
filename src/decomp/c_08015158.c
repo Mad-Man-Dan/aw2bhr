@@ -7,12 +7,12 @@
  * sub_08015158 @ 0x08015158
  */
 
-/* Counts the free slots -- the same 30-slot scan sub_08015184 clears and
- * sub_08015BD0 searches, with a `u8` accumulator. A leaf: no `push`, and the
+/* Counts the free slots -- the same 30-slot scan InitSlotScripts clears and
+ * FindSlotScript searches, with a `u8` accumulator. A leaf: no `push`, and the
  * count comes back in r0 already zero-extended, so nothing here narrows the
  * return type.
  */
-int sub_08015158(void)
+int CountFreeSlotScripts(void)
 {
     u8 n;
     u8 i;
@@ -27,3 +27,4 @@ int sub_08015158(void)
 
     return n;
 }
+asm(".global sub_08015158\n.thumb_set sub_08015158, CountFreeSlotScripts\n");

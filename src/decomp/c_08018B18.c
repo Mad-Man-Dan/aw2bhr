@@ -7,14 +7,15 @@
  * sub_08018B18 @ 0x08018B18, sub_08018B40 @ 0x08018B40
  */
 
-bool8 sub_08018B18(s16 a)
+bool8 EventOp_SetCoScreenDrawHook(s16 a)
 {
     gUnknown_03002F20 = (void (*)(void))gUnknown_0200C528[a].unk04->unk04;
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }
+asm(".global sub_08018B18\n.thumb_set sub_08018B18, EventOp_SetCoScreenDrawHook\n");
 
-bool8 sub_08018B40(s16 a)
+bool8 EventOp_InstallCallback(s16 a)
 {
     struct Unk0200C528Node *p;
 
@@ -22,3 +23,4 @@ bool8 sub_08018B40(s16 a)
     gUnknown_0200C528[a].unk04 = p + 1;
     return FALSE;
 }
+asm(".global sub_08018B40\n.thumb_set sub_08018B40, EventOp_InstallCallback\n");

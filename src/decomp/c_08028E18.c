@@ -29,5 +29,5 @@ struct Unk08028E18Proc
 
 void sub_08028E18(struct Unk08028E18Proc *proc)
 {
-    sub_08014ED4(proc->unk4c);
+    HeapFree(proc->unk4c);
 }

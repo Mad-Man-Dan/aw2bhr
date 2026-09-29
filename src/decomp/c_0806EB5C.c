@@ -51,18 +51,18 @@ struct Unk0806ED7CProc
  */
 void SoundRoomMusicPage_Init(struct Unk0806EB5CProc *proc)
 {
-    sub_0801237C();
-    sub_08012358();
-    sub_08012C58(gUnknown_0849D16C);
+    ResetWindowShadows();
+    SetDefaultColorEffects();
+    SetupBackgrounds(gUnknown_0849D16C);
     gDispIo.disp_ct.obj_mapping = 1;
     SetDispEnable(1, 1, 1, 1, 1);
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_030030B4.bits.priority = 1;
     gUnknown_03001FE8.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
     ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
     sub_0802D5CC(0, 3);
     Decompress(gUnknown_0823A3D4, (void *)0x06008000);
@@ -71,12 +71,12 @@ void SoundRoomMusicPage_Init(struct Unk0806EB5CProc *proc)
     sub_080718F8(gBG1TilemapBuffer, gUnknown_081A3E3C, 0x1020);
     Decompress(gUnknown_081A4000, (void *)0x06010000);
     Decompress(gUnknown_081A4450, (void *)0x06016000);
-    sub_0801A5B0(0);
-    sub_0801A444(6, 0xf, 0x12, 4);
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    LoadBg1WindowFrame(0);
+    DrawWindowBackgroundOnBg2(6, 0xf, 0x12, 4);
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 0;
     gUnknown_03002B28 = 0x10;
@@ -119,18 +119,18 @@ asm(".global sub_0806EB5C\n.thumb_set sub_0806EB5C, SoundRoomMusicPage_Init\n");
  */
 void SoundRoomMusicPage_Resume(struct Unk0806ED7CProc *proc)
 {
-    sub_0801237C();
-    sub_08012358();
-    sub_08012C58(gUnknown_0849D16C);
+    ResetWindowShadows();
+    SetDefaultColorEffects();
+    SetupBackgrounds(gUnknown_0849D16C);
     gDispIo.disp_ct.obj_mapping = 1;
     SetDispEnable(1, 1, 1, 1, 1);
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_030030B4.bits.priority = 1;
     gUnknown_03001FE8.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
     ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
     sub_0802D5CC(0, 3);
     Decompress(gUnknown_0823A3D4, (void *)0x06008000);
@@ -139,12 +139,12 @@ void SoundRoomMusicPage_Resume(struct Unk0806ED7CProc *proc)
     sub_080718F8(gBG1TilemapBuffer, gUnknown_081A3E3C, 0x1020);
     Decompress(gUnknown_081A4000, (void *)0x06010000);
     Decompress(gUnknown_081A4450, (void *)0x06016000);
-    sub_0801A5B0(0);
-    sub_0801A444(6, 0xf, 0x12, 4);
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    LoadBg1WindowFrame(0);
+    DrawWindowBackgroundOnBg2(6, 0xf, 0x12, 4);
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 0;
     gUnknown_03002B28 = 0x10;

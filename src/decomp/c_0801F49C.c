@@ -12,7 +12,8 @@ u8 *sub_0801F49C(void)
     return gUnknown_081268F8;
 }
 
-void sub_0801F4A4(void)
+void InitMapFloodHandler(void)
 {
     gUnknown_030013EC = sub_0801F4B4;
 }
+asm(".global sub_0801F4A4\n.thumb_set sub_0801F4A4, InitMapFloodHandler\n");

@@ -7,7 +7,8 @@
  * sub_0801F018 @ 0x0801F018
  */
 
-void sub_0801F018(void)
+void DisableSpriteLayerMode(void)
 {
     gUnknown_03001FE0 = 0;
 }
+asm(".global sub_0801F018\n.thumb_set sub_0801F018, DisableSpriteLayerMode\n");

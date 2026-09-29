@@ -17,7 +17,7 @@
  * is just the constant 0x1ca. */
 void sub_08027FBC(void *a1, u16 a2, u16 a3)
 {
-    sub_08011E54((u8 *)a1 + (((a2 * 0x10) & 0x3ff) << 5),
+    RegisterDataMove((u8 *)a1 + (((a2 * 0x10) & 0x3ff) << 5),
                  (void *)((((a3 * 0x10 + 0x1ca) & 0x3ff) << 5) + 0x06010000),
                  0x200);
 }

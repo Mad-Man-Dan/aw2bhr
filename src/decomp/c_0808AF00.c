@@ -9,8 +9,8 @@
 
 #include "hardware.h"
 
-/* The relocating trampoline for sub_0808AED0 (the SRAM verify), as
- * sub_0808AE54 is the one for sub_0808AE30 (the SRAM read). It copies a
+/* The relocating trampoline for VerifyFlashSector_Core (the SRAM verify), as
+ * ReadFlash is the one for ReadFlash_Core (the SRAM read). It copies a
  * SIBLING FUNCTION'S MACHINE CODE onto the stack and calls it from there so
  * the SRAM access runs out of RAM.
  *
@@ -22,15 +22,15 @@
  *
  * Wave 60 measured only the -O1 half, which gets to 92.2% (9 of 116
  * bytes, size exact) and no further. BOTH halves are needed, and the same pair
- * matches sub_0808AF74 and sub_0808B1BC, so the block takes one uniform entry.
+ * matches VerifyFlashSectorNBytes and ProgramFlashSector_SST, so the block takes one uniform entry.
  *
  * WHY, precisely -- this is the same residual c_0808AD6C.c documents, and that
  * file's conclusion "no source spelling can [reach the re-load]: the flag
  * decides it" is HALF right. Two independent axes decide it, and the flag alone
  * is not sufficient:
  *
- *   ONE statement    s = (const u16 *)((u32)sub_0808AED0 ^ 1);   -> COPY
- *   TWO statements   s = (const u16 *)sub_0808AED0;              -> RE-LOAD,
+ *   ONE statement    s = (const u16 *)((u32)VerifyFlashSector_Core ^ 1);   -> COPY
+ *   TWO statements   s = (const u16 *)VerifyFlashSector_Core;              -> RE-LOAD,
  *                    s = (const u16 *)((u32)s ^ 1);                 but only
  *                                                                   with the
  *                                                                   flag OFF
@@ -42,7 +42,7 @@
  * re-loaded from the SAME pool word -- which is what this ROM does:
  *     ldr r3,=f ; movs r0,#1 ; eors r3,r0 ... ldr r1,=f ; subs r0,r0,r1
  * The one-statement form creates a fresh pseudo, keeps the value live, and
- * emits the copy under either flag. sub_0808B1BC is the same idiom wanting the
+ * emits the copy under either flag. ProgramFlashSector_SST is the same idiom wanting the
  * OTHER answer, and it is one statement there.
  *
  * MEASURED, do not re-run: at -O1, removing `-fforce-addr` changes NOTHING for
@@ -59,7 +59,7 @@
  * updated to forward its second parameter explicitly and re-verified
  * byte-for-byte. That edit is settled and is not part of this note.
  */
-int sub_0808AF00(u16 a1, int a2)
+int VerifyFlashSector(u16 a1, int a2)
 {
     u16 buf[0x80];
     const u16 *s;
@@ -68,10 +68,10 @@ int sub_0808AF00(u16 a1, int a2)
 
     REG_WAITCNT = (REG_WAITCNT & 0xFFFC) | 3;
 
-    s = (const u16 *)sub_0808AED0;
+    s = (const u16 *)VerifyFlashSector_Core;
     s = (const u16 *)((u32)s ^ 1);
     d = buf;
-    n = ((u32)sub_0808AF00 - (u32)sub_0808AED0) / 2;
+    n = ((u32)VerifyFlashSector - (u32)VerifyFlashSector_Core) / 2;
 
     while (n != 0)
     {
@@ -84,8 +84,9 @@ int sub_0808AF00(u16 a1, int a2)
         (u8 *)((a1 << gUnknown_08485550.unk1c) + 0x0E000000),
         gUnknown_08485550.unk18);
 }
+asm(".global sub_0808AF00\n.thumb_set sub_0808AF00, VerifyFlashSector\n");
 
-/* sub_0808AF00 with a caller-supplied length instead of
+/* VerifyFlashSector with a caller-supplied length instead of
  * gUnknown_08485550.unk18. Same relocating-trampoline idiom.
  *
  * MATCHED in Wave 61 -- byte-for-byte, relocations included.
@@ -96,7 +97,7 @@ int sub_0808AF00(u16 a1, int a2)
  *     cflags_remove: ["-O2", "-fforce-addr"]      cflags_add: ["-O1"]
  *
  * The -O1 half alone reaches 92.2% (9 of 116, size exact). Read the long note
- * in work/sub_0808AF00/sub_0808AF00.c for the mechanism: the two-statement
+ * in work/VerifyFlashSector/VerifyFlashSector.c for the mechanism: the two-statement
  * spelling of the THUMB-bit XOR plus `-fforce-addr` OFF is what makes agbcc
  * RE-LOAD the pool word instead of copying it, and both axes are needed.
  *
@@ -107,12 +108,12 @@ int sub_0808AF00(u16 a1, int a2)
  * before any source change, and the residual was the same 9-byte copy/re-load
  * difference its two siblings had. The hoist was an artefact of -O2.
  *
- * It relocates sub_0808AED0 bounded by sub_0808AF00 -- the same 0x30 bytes
- * sub_0808AF00 copies, NOT a range ending at its own address. That remains the
+ * It relocates VerifyFlashSector_Core bounded by VerifyFlashSector -- the same 0x30 bytes
+ * VerifyFlashSector copies, NOT a range ending at its own address. That remains the
  * one place the family's pattern breaks: the bound is the next function after
  * the one being COPIED, not the next function after the copier.
  */
-int sub_0808AF74(u16 a1, int a2, int a3)
+int VerifyFlashSectorNBytes(u16 a1, int a2, int a3)
 {
     u16 buf[0x80];
     const u16 *s;
@@ -121,10 +122,10 @@ int sub_0808AF74(u16 a1, int a2, int a3)
 
     REG_WAITCNT = (REG_WAITCNT & 0xFFFC) | 3;
 
-    s = (const u16 *)sub_0808AED0;
+    s = (const u16 *)VerifyFlashSector_Core;
     s = (const u16 *)((u32)s ^ 1);
     d = buf;
-    n = ((u32)sub_0808AF00 - (u32)sub_0808AED0) / 2;
+    n = ((u32)VerifyFlashSector - (u32)VerifyFlashSector_Core) / 2;
 
     while (n != 0)
     {
@@ -137,3 +138,4 @@ int sub_0808AF74(u16 a1, int a2, int a3)
         (u8 *)((a1 << gUnknown_08485550.unk1c) + 0x0E000000),
         a3);
 }
+asm(".global sub_0808AF74\n.thumb_set sub_0808AF74, VerifyFlashSectorNBytes\n");

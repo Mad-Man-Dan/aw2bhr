@@ -15,24 +15,25 @@
  * its address in this unit's own .rodata, which is the ROM word at 0x0808E5C4,
  * and that is where the base's two `ldr r0,[r0]` come from -- there is no
  * second pointer variable. */
-void sub_0801A474(s16 a1, s16 a2, s16 a3, s16 a4)
+void DrawWindowFrameAndUpload(s16 a1, s16 a2, s16 a3, s16 a4)
 {
     u16 *dst;
     u16 i, alt;
 
     dst = gUnknown_0849958C + a1 + a2 * 32;
-    sub_0801A1D8(dst, a1, a3, 8);
+    DrawWindowFrameTopRow(dst, a1, a3, 8);
     dst += 32;
 
     alt = 1;
     for (i = 0; i < a4 - 2; i++)
     {
-        sub_0801A240(dst, a1, a3, alt, 8);
+        DrawWindowFrameMiddleRow(dst, a1, a3, alt, 8);
         dst += 32;
         alt = 1 - alt;
     }
 
-    sub_0801A2E4(dst, a1, a3, 8);
+    DrawWindowFrameBottomRow(dst, a1, a3, 8);
 
-    sub_08011C68(gUnknown_0849958C, (void *)0x0600E800, 0x200);
+    CpuCopyAuto(gUnknown_0849958C, (void *)0x0600E800, 0x200);
 }
+asm(".global sub_0801A474\n.thumb_set sub_0801A474, DrawWindowFrameAndUpload\n");

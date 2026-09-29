@@ -50,7 +50,7 @@ struct Unk1BC3C
     /* 0x0a */ STRUCT_PAD(0x0a, 0x0c);
 };
 
-void sub_0801BC3C(struct Unk1BC3C *p, int a, int b)
+void PutOamHiOffsetList(struct Unk1BC3C *p, int a, int b)
 {
     u32 *dst;
     u32 x;
@@ -68,3 +68,4 @@ void sub_0801BC3C(struct Unk1BC3C *p, int a, int b)
         p++;
     }
 }
+asm(".global sub_0801BC3C\n.thumb_set sub_0801BC3C, PutOamHiOffsetList\n");

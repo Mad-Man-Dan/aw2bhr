@@ -31,20 +31,20 @@ void sub_08027A50(u16 a1, u16 a2, u16 a3)
     u32 tile;
     struct UnkVec v;
 
-    id = sub_08015438(gUnknown_08499DE8, 0, gUnknown_08499DDC, NULL, 0);
+    id = StartSlotScriptWithSprite(gUnknown_08499DE8, 0, gUnknown_08499DDC, NULL, 0);
 
-    v = sub_08015638(id);
+    v = GetSlotSpriteAttrs(id);
     v.unk04 = (v.unk04 & 0xFFFF0FFF) | 0x3000;
     tile = (a3 + 0x1ca) & 0x3ff;
     v.unk04 = (v.unk04 & 0xFFFFFC00) | tile;
-    sub_08015608(id, v);
+    SetSlotSpriteAttrs(id, v);
 
-    sub_080155C0(id, a1, a2);
-    sub_08016824(id);
-    sub_08016944(id);
-    sub_080157A4(id, 0x200);
-    sub_080157F4(id, 0x200);
-    sub_080158D4(id, 0x20);
+    SetSlotSpritePosition(id, a1, a2);
+    EnableSlotSpriteAffine(id);
+    SetSlotSpriteDoubleSize(id);
+    SetSlotSpriteScaleX(id, 0x200);
+    SetSlotSpriteScaleY(id, 0x200);
+    SetSlotSpriteRotation(id, 0x20);
 }
 
 void StartDayStartGlyph(int a1, int a2, int a3, int a4, ProcPtr a5)

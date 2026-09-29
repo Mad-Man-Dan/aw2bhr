@@ -35,7 +35,7 @@ void sub_08064D74(struct Unk08580934_Obj *obj)
         {
             (*stp)->unk2d--;
             sub_08030178();
-            sub_08015C30(gUnknown_03001FBC);
+            ClearSlotScriptCallback(gUnknown_03001FBC);
         }
     }
 }

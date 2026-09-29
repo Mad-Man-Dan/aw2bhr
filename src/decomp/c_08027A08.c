@@ -7,21 +7,21 @@
  * sub_08027A08 @ 0x08027A08
  */
 
-/* sub_08027844's twin on the other axis: sub_080157D0 / sub_080157A4 instead of
- * sub_08015820 / sub_080157F4, and a threshold of 4 instead of 0x10. */
+/* sub_08027844's twin on the other axis: GetSlotSpriteScaleX / SetSlotSpriteScaleX instead of
+ * GetSlotSpriteScaleY / SetSlotSpriteScaleY, and a threshold of 4 instead of 0x10. */
 void sub_08027A08(void)
 {
-    s16 v = sub_080157D0(gUnknown_03001FBC);
+    s16 v = GetSlotSpriteScaleX(gUnknown_03001FBC);
 
     v = v - v / 2;
 
     if (v <= 4)
     {
-        sub_080157A4(gUnknown_03001FBC, 1);
-        sub_08015328(gUnknown_03001FBC);
+        SetSlotSpriteScaleX(gUnknown_03001FBC, 1);
+        EndSlotScriptAt(gUnknown_03001FBC);
     }
     else
     {
-        sub_080157A4(gUnknown_03001FBC, v);
+        SetSlotSpriteScaleX(gUnknown_03001FBC, v);
     }
 }

@@ -16,14 +16,14 @@
  * 0x0812A140 is an agbcc -fforce-addr address constant holding 0x03001FBC,
  * i.e. &gUnknown_03001FBC -- one more member of the 0x0812Axxx run
  * unknown-globals.h documents, and NOT an object. The honest spelling
- * `sub_08015C30(gUnknown_03001FBC)` is what produces it, and it appears in the
+ * `ClearSlotScriptCallback(gUnknown_03001FBC)` is what produces it, and it appears in the
  * FIRST arm only: there the address must survive a call inside the loop and so
  * lands in a callee-saved register. The second arm's identical call gets a
  * plain inline pool word.
  *
  * The cursor is s16 and the scan DESCENDS: `ldrb p->unk1f; lsls #0x10;
  * asrs #0x10` with a `blt` exit, and the decrement re-narrows to u16 before the
- * next sign-extending read. gUnknown_03001FBC is declared s16 and sub_08015C30
+ * next sign-extending read. gUnknown_03001FBC is declared s16 and ClearSlotScriptCallback
  * takes u8, so the narrowing folds into the `ldrb` -- there is no cast in the
  * source. `sel` is deliberately read after a loop that may not have run; the
  * ROM does the same (r5 is undefined on the zero-trip path).
@@ -44,12 +44,12 @@ void UnitList_Loop(struct Unk0804769C *p)
         }
         p->unk28 = sel;
         sub_0803B4DC(0x65);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
     else if (gpKeySt->pressed & 2)
     {
         sub_0803B4DC(0x66);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_03002F1C = 1;
     }
     else

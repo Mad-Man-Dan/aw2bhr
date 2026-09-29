@@ -18,7 +18,7 @@
  *    operand-order question. Masking `t` in place as a separate statement emits
  *    it first (two-address `ands r2,r0` on t's own register) and leaves the OR
  *    with `d & ~0xFF` as its FIRST operand, which is what picks the
- *    destination. Note this is the opposite of the sibling sub_0801EE80, where
+ *    destination. Note this is the opposite of the sibling PutObjectListToLoOam, where
  *    the whole attribute word is one expression with no local at all -- the two
  *    functions genuinely differ, so do not carry either rule across.
  * 2. The last 5 bytes were a pure allocation tie: the ROM gives the
@@ -31,7 +31,7 @@
  *    the base to a SEPARATE local (`base = gUnknown_03002520; dst = base + a*4;`
  *    -- copy-propagated away), and `&gUnknown_03002520[a * 4]`.
  */
-int sub_0801E3E8(int a, int b, int c, u16 *data, int idx)
+int PutObjectListToOamShadow(int a, int b, int c, u16 *data, int idx)
 {
   u16 *dst;
   int n;
@@ -68,3 +68,4 @@ int sub_0801E3E8(int a, int b, int c, u16 *data, int idx)
 
   return 0;
 }
+asm(".global sub_0801E3E8\n.thumb_set sub_0801E3E8, PutObjectListToOamShadow\n");

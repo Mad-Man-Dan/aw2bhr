@@ -55,7 +55,7 @@ void sub_0806B3E8(struct UnkB3E8Proc *proc)
         gPal[i] = cr + ((cb << 10) + (cg << 5));
     }
 
-    sub_080135A4();
+    EnablePaletteSync();
     SetBgScrollShadow(3, 0, 0);
     SetBgScrollShadow(2, b, b);
 

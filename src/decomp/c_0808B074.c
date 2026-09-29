@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-u16 sub_0808B074(void)
+u16 EraseFlashChip_MX(void)
 {
     u16 buffer[0x20];
     u16 result;
@@ -23,7 +23,7 @@ u16 sub_0808B074(void)
     *(volatile u8 *)0x0E002AAA = 0x55;
     *(volatile u8 *)0x0E005555 = 0x10;
 
-    sub_0808AD6C(buffer);
+    SetReadFlash1(buffer);
 
     result = gUnknown_03005C70(3, (u8 *)0x0E000000, 0xFF);
 
@@ -31,8 +31,9 @@ u16 sub_0808B074(void)
 
     return result;
 }
+asm(".global sub_0808B074\n.thumb_set sub_0808B074, EraseFlashChip_MX\n");
 
-u16 sub_0808B0E8(u16 sector)
+u16 EraseFlashSector_MX(u16 sector)
 {
     u16 buffer[0x20];
     u8 *addr;
@@ -52,7 +53,7 @@ u16 sub_0808B0E8(u16 sector)
     *(volatile u8 *)0x0E002AAA = 0x55;
     *addr = 0x30;
 
-    sub_0808AD6C(buffer);
+    SetReadFlash1(buffer);
 
     result = gUnknown_03005C70(2, addr, 0xFF);
 
@@ -60,3 +61,4 @@ u16 sub_0808B0E8(u16 sector)
 
     return result;
 }
+asm(".global sub_0808B0E8\n.thumb_set sub_0808B0E8, EraseFlashSector_MX\n");

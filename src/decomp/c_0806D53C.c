@@ -70,7 +70,7 @@ void sub_0806D620(void)
     struct Unk08580934_Obj *o;
     int i;
 
-    if (sub_08015BD0((s32)gUnknown_08581ECC) != -1)
+    if (FindSlotScript((s32)gUnknown_08581ECC) != -1)
     {
         for (i = 0; i < gUnknown_08580934->unk08; i++)
         {

@@ -7,7 +7,8 @@
  * sub_0801E17C @ 0x0801E17C
  */
 
-void sub_0801E17C(int index)
+void FreeObjAffineRecord(int index)
 {
     gUnknown_030024F0[index] = 0;
 }
+asm(".global sub_0801E17C\n.thumb_set sub_0801E17C, FreeObjAffineRecord\n");

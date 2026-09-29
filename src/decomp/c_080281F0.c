@@ -41,7 +41,7 @@ void DebugSettingsMenu_Loop(void)
 
     if (gpKeySt->pressed & 9)
     {
-        sub_08015328(gUnknown_03001FBC);
+        EndSlotScriptAt(gUnknown_03001FBC);
         return;
     }
 
@@ -105,10 +105,10 @@ void DebugSettingsMenu_Loop(void)
         }
     }
 
-    sub_08013428(8, (s16)(gUnknown_03001470[gUnknown_03001FBC].unk1e * 2 + 14), "O");
-    sub_08013428(10, 14, " MAP:%02d", gPlaySt.mapID);
-    sub_08013428(10, 16, "SNOW:%s", sNames[gPlaySt.weather]);
-    sub_08013428(10, 18, "SAKU:%s", sNames[gPlaySt.fog]);
+    DebugPrintf(8, (s16)(gUnknown_03001470[gUnknown_03001FBC].unk1e * 2 + 14), "O");
+    DebugPrintf(10, 14, " MAP:%02d", gPlaySt.mapID);
+    DebugPrintf(10, 16, "SNOW:%s", sNames[gPlaySt.weather]);
+    DebugPrintf(10, 18, "SAKU:%s", sNames[gPlaySt.fog]);
 }
 
 asm(".global sub_080281F0\n.thumb_set sub_080281F0, DebugSettingsMenu_Loop\n");

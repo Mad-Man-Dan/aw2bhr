@@ -49,7 +49,7 @@ void sub_0807B288(struct Proc7B288 *proc)
 
 void sub_0807B2B8(struct Proc7B2B8 *proc)
 {
-    sub_0801A444(8 - proc->unk_54, proc->unk_30, proc->unk_54 * 2 + 1, proc->unk_64);
+    DrawWindowBackgroundOnBg2(8 - proc->unk_54, proc->unk_30, proc->unk_54 * 2 + 1, proc->unk_64);
     if (proc->unk_54 > 7)
         Proc_Break(proc);
     proc->unk_54++;

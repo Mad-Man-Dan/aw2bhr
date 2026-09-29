@@ -7,7 +7,7 @@
  * sub_0808AFE8 @ 0x0808AFE8
  */
 
-int sub_0808AFE8(u16 a1, int a2)
+int ProgramFlashSectorAndVerify(u16 a1, int a2)
 {
     u8 i;
     int result;
@@ -18,7 +18,7 @@ int sub_0808AFE8(u16 a1, int a2)
 
         if (result == 0)
         {
-            result = sub_0808AF00(a1, a2);
+            result = VerifyFlashSector(a1, a2);
 
             if (result == 0)
                 break;
@@ -27,3 +27,4 @@ int sub_0808AFE8(u16 a1, int a2)
 
     return result;
 }
+asm(".global sub_0808AFE8\n.thumb_set sub_0808AFE8, ProgramFlashSectorAndVerify\n");

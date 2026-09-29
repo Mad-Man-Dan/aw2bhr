@@ -197,7 +197,7 @@ void sub_0802BEC4(struct Unk2BEC4 *p)
     phase = p->unk1e;
     for (col = 0; col < p->unk1e && col <= 0xE; col++)
         sub_0802BDBC(col, phase--, 1);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
     if (p->unk1e == 0x15)
         p->unk08 = 0;
     else
@@ -212,7 +212,7 @@ void sub_0802BF20(struct Unk2BF20 *p)
     phase = 6 - p->unk1e;
     for (col = 0; col <= p->unk1e && col <= 0xE; col++)
         sub_0802BDBC(col, phase++, 0);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
     if (p->unk1e == 0x15)
         p->unk08 = 0;
     else

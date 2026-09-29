@@ -14,7 +14,7 @@
  * 0x084893F0 and 0x08489404, all inside the 0x08489 script run -- so +0x4c
  * holds a `const struct ProcCmd *`.
  *
- * Tree 1 here where sub_080130DC uses tree 3; the `movs r1, #1` is the whole
+ * Tree 1 here where StartWhiteFlash uses tree 3; the `movs r1, #1` is the whole
  * difference. */
 struct Unk13338Proc
 {
@@ -25,7 +25,7 @@ struct Unk13338Proc
     /* 4c */ const struct ProcCmd *unk4c;
 };
 
-void sub_08013338(int a, int b, ProcPtr parent)
+void StartScreenShake(int a, int b, ProcPtr parent)
 {
     struct Unk13338Proc *proc;
 
@@ -37,3 +37,4 @@ void sub_08013338(int a, int b, ProcPtr parent)
     proc->unk4c = gUnknown_0848950C[a];
     proc->unk44 = b;
 }
+asm(".global sub_08013338\n.thumb_set sub_08013338, StartScreenShake\n");

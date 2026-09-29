@@ -37,7 +37,7 @@ void sub_0803F43C(struct UnkF43CProc *proc)
         sprite->unk22 = 0x51CA;
         AP_SwitchAnimation(proc->unk50, 1);
         sub_0803B4DC(0x1D4);
-        sub_08013338(0, 8, 0);
+        StartScreenShake(0, 8, 0);
         Proc_Break(proc);
     }
 }

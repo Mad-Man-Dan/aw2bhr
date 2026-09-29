@@ -22,7 +22,7 @@ void OptionsMenu_ToggleMusic(void)
         break;
     }
 
-    sub_08019E68();
+    RebuildMenuItems();
     gUnknown_0200C420.unk14 = (gPlaySt.bgmOn == 0);
 }
 asm(".global sub_0802CE04\n.thumb_set sub_0802CE04, OptionsMenu_ToggleMusic\n");

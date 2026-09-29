@@ -22,6 +22,6 @@ void sub_080500D0(void)
     p = gUnknown_084C3F70[side];
     q = gUnknown_084C3F78[side];
 
-    sub_080155C0(gUnknown_03001FBC, gUnknown_02029C0C[side] - *p,
+    SetSlotSpritePosition(gUnknown_03001FBC, gUnknown_02029C0C[side] - *p,
                  gUnknown_02029C10[side] - *q);
 }

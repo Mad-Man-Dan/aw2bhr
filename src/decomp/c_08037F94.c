@@ -16,14 +16,14 @@
  * prototype does not declare. */
 void sub_08037F94(int a, ProcPtr parent)
 {
-    sub_0801237C();
-    sub_08012358();
+    ResetWindowShadows();
+    SetDefaultColorEffects();
     Proc_StartBlocking(gUnknown_08615CB0, parent);
 }
 
 void sub_08037FB4(ProcPtr parent)
 {
-    sub_0801237C();
-    sub_08012358();
+    ResetWindowShadows();
+    SetDefaultColorEffects();
     sub_08049F08(1, parent);
 }

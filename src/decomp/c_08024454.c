@@ -16,7 +16,7 @@ void sub_08024454(void)
     gUnknown_03002B6C.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
 
-    sub_08012358();
+    SetDefaultColorEffects();
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg0 = 1;
@@ -34,5 +34,5 @@ void sub_08024454(void)
         gUnknown_03002B28 = 16;
     }
 
-    sub_0801237C();
+    ResetWindowShadows();
 }

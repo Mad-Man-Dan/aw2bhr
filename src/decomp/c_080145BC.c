@@ -7,7 +7,7 @@
  * sub_080145BC @ 0x080145BC
  */
 
-void sub_080145BC(void)
+void TextBox_OnEnd(void)
 {
     if (gUnknown_03002514 == 2)
         gUnknown_03002514 = 0;
@@ -15,3 +15,4 @@ void sub_080145BC(void)
     sub_0801537C(gUnknown_0848A398);
     sub_0801537C(gUnknown_0848A3C4);
 }
+asm(".global sub_080145BC\n.thumb_set sub_080145BC, TextBox_OnEnd\n");

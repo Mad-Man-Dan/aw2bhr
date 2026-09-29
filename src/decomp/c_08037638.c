@@ -9,7 +9,7 @@
 
 void ShowMapPreview(int a, int b, int c, int d)
 {
-    sub_08011B34((void *)AnimateMapPreviewPalette);
+    AddVBlankHook((void *)AnimateMapPreviewPalette);
     sub_08037610(a + ((c & 0x3ff) << 5));
     sub_0803768C(a, b, c, d);
 }

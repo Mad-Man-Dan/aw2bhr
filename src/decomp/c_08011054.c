@@ -32,7 +32,7 @@ void FadeToBlack_OnInit(struct Unk8011054Proc *proc)
     }
 
     gUnknown_03002B5C = 1;
-    sub_08010FA0();
+    InitFadeBlend();
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_03001FFC = 0;
     proc->unk64 = 0x100;

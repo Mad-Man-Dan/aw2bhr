@@ -7,6 +7,7 @@
  * sub_08013428 @ 0x08013428
  */
 
-void sub_08013428(int x, int y, const char *fmt, ...)
+void DebugPrintf(int x, int y, const char *fmt, ...)
 {
 }
+asm(".global sub_08013428\n.thumb_set sub_08013428, DebugPrintf\n");

@@ -11,7 +11,7 @@
 #include "hardware.h"
 /* The tick half of the same blend family: it drives the two BLDALPHA
  * coefficient shadows off a counter at +0x58 and draws one sprite, then hands
- * over to sub_08012358 (the wholesale blend clear) when the counter runs out.
+ * over to SetDefaultColorEffects (the wholesale blend clear) when the counter runs out.
  * `asrs` on the counter is what makes it signed. */
 
 struct Unk806C154
@@ -35,7 +35,7 @@ void sub_0806C154(struct Unk806C154 *proc)
 
     if (proc->unk58 > 0x1F)
     {
-        sub_08012358();
+        SetDefaultColorEffects();
         Proc_Break(proc);
     }
     else

@@ -9,10 +9,10 @@
 
 /* Seeds the counter sub_08063BE0 decrements and runs the first frame at once.
  * `ldrb` off the s16 gUnknown_03001FBC is agbcc narrowing the load to
- * sub_08015C30's `u8` parameter, exactly as src/decomp/c_08063BE0.c does. */
+ * ClearSlotScriptCallback's `u8` parameter, exactly as src/decomp/c_08063BE0.c does. */
 void sub_08063BBC(struct Unk8063BE0 *p)
 {
-    sub_08015C30(gUnknown_03001FBC);
+    ClearSlotScriptCallback(gUnknown_03001FBC);
     p->unk44 = 8;
     sub_08063BE0(p);
 }

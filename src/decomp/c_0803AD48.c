@@ -39,14 +39,14 @@ void DebugEdit_Loop(struct Unk0803AD48 *p)
 {
     u8 i;
 
-    sub_080119D4(0xd8, 0x98, 0x188);
+    PutHexNumberSprites(0xd8, 0x98, 0x188);
     DebugScreenNoOp();
-    sub_080119A0(0, 0, gUnknown_0809105C);
+    PutAsciiStringSprites(0, 0, gUnknown_0809105C);
     for (i = 0; i <= 8; i++) {
-        sub_080119A0(0, i * 8 + 8, gUnknown_08090FB0[i]);
+        PutAsciiStringSprites(0, i * 8 + 8, gUnknown_08090FB0[i]);
         sub_0802BD54(0x68, i * 8 + 8, p->unk20[i]);
     }
-    sub_080119A0(0, p->unk1e * 8 + 8, gUnknown_08091064);
+    PutAsciiStringSprites(0, p->unk1e * 8 + 8, gUnknown_08091064);
     if (gpKeySt->pressed & 1) {
         p->unk08 = 0;
         return;

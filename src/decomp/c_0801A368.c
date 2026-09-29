@@ -17,18 +17,18 @@ void DrawWindowBackground(int a1, int a2, int a3, int a4, u16 *a5, int a6)
     u16 i, alt;
 
     dst = a5 + a1 + a2 * 32;
-    sub_0801A1D8(dst, a1, a3, a6);
+    DrawWindowFrameTopRow(dst, a1, a3, a6);
     dst += 32;
 
     alt = 1;
     for (i = 0; i < a4 - 2; i++)
     {
-        sub_0801A240(dst, a1, a3, alt, a6);
+        DrawWindowFrameMiddleRow(dst, a1, a3, alt, a6);
         dst += 32;
         alt = 1 - alt;
     }
 
-    sub_0801A2E4(dst, a1, a3, a6);
+    DrawWindowFrameBottomRow(dst, a1, a3, a6);
 
     if (a5 == gBG0TilemapBuffer)
         sub_08013AD4(0);

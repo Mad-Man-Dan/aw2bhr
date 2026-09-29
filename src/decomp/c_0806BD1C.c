@@ -45,7 +45,7 @@ int DrawCreditsHeadingText(u16 *dst, u8 *src)
         dst++;
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
     return width;
 }
 asm(".global sub_0806BD1C\n.thumb_set sub_0806BD1C, DrawCreditsHeadingText\n");

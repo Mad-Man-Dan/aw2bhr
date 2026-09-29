@@ -32,14 +32,14 @@ void sub_080741C4(int a1, int a2, int a3)
                (void *)(0x06000000 + (gUnknown_0300251C.bits.chr_block << 14)));
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-    sub_08013B1C();
+    BG_EnableSyncBG3();
 }
 
 /* sub_08037F1C is registered by ADDRESS and so is cast to `void *`, which is
- * the sub_08011B34 convention unknown-functions.h already records.
+ * the AddVBlankHook convention unknown-functions.h already records.
  */
 void sub_0807420C(void)
 {
-    sub_08011C68(gUnknown_0812B29C, (void *)0x06001F00, 0x100);
-    sub_08011B34((void *)sub_08037F1C);
+    CpuCopyAuto(gUnknown_0812B29C, (void *)0x06001F00, 0x100);
+    AddVBlankHook((void *)sub_08037F1C);
 }

@@ -33,7 +33,7 @@
  *   static inline -> MATCH
  *
  * A 100%-identical-but-+4 result is worth recognising on sight: it is a section
- * artefact, not a codegen residual. Compare with sub_0801C7DC, which is +2 for
+ * artefact, not a codegen residual. Compare with AP_PutAnimFrameAtTime, which is +2 for
  * the alignment-pad reason and cannot be fixed at all.
  *
  * DO NOT TIDY ANY OF THE FOLLOWING -- each is a permuter edit that is load

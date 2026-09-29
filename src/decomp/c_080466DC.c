@@ -24,15 +24,15 @@ void IntelStatus_Loop(void)
     if (gUnknown_084C1430->unk50 != 0)
     {
         sub_08046030();
-        sub_08013AEC();
-        sub_08013B0C();
+        BG_EnableSyncBG0();
+        BG_EnableSyncBG2();
         gUnknown_084C1430->unk50 = 0;
     }
     else if (gpKeySt->pressed & 3)
     {
         sub_08014878();
         sub_0803B4DC(0x66);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 
         if (gpKeySt->pressed & 2)
             gUnknown_03002F1C = 1;

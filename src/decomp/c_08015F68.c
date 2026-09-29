@@ -7,7 +7,7 @@
  * sub_08015F68 @ 0x08015F68, sub_08015FA8 @ 0x08015FA8
  */
 
-/* sub_08015DC8's conditional twin: the handler's byte-wide result decides
+/* SlotOp_CallHandler's conditional twin: the handler's byte-wide result decides
  * whether the cursor advances at all. `lsls #0x18; lsrs #0x18` before the
  * `cmp #1` is the re-narrowing agbcc applies to a narrow-returning callee, so
  * the handler returns a byte and the comparison is against 1 exactly.
@@ -15,7 +15,7 @@
  * The advance and the `return TRUE` are the arm UNDER the `if` -- they sit
  * after the literal pool and the `beq` jumps to them -- so the guard is
  * written positively rather than as an early `return FALSE`. The handler is
- * bound to a local for the same ordering reason as sub_08015DC8. */
+ * bound to a local for the same ordering reason as SlotOp_CallHandler. */
 bool8 sub_08015F68(u8 a)
 {
     u8 (*handler)(struct Unk03001470 *) =

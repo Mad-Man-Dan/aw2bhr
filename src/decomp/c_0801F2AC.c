@@ -19,7 +19,7 @@ static inline struct Unk0848B780 *inline_fn(const struct Unk0848B780 *arg0)
     return (struct Unk0848B780 *)arg0;
 }
 
-void sub_0801F2AC(int a1, u16 *a2)
+void PutTilePoolGraphicTilemap(int a1, u16 *a2)
 {
     struct Unk0200F920 *e;
     int i;
@@ -40,3 +40,4 @@ void sub_0801F2AC(int a1, u16 *a2)
         }
     }
 }
+asm(".global sub_0801F2AC\n.thumb_set sub_0801F2AC, PutTilePoolGraphicTilemap\n");

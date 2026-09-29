@@ -17,7 +17,7 @@
 void StartFigureFireScript(u16 a1, u16 a2)
 {
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
-     && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+     && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
         sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                      gUnknown_02029BA8[a1].unk08);
     SpawnFireEffect(a1, a2);
@@ -52,7 +52,7 @@ void StartFigureReturnScript(u16 a1, u16 a2)
     PlayMusicOrSfx(gUnknown_085D6C88[gUnknown_03004580[a1][1]]
                  .unk08[gUnknown_03004580[a1][3] == 2]);
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
-     && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+     && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
         sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                      gUnknown_02029BA8[a1].unk0c);
 }
@@ -96,10 +96,10 @@ void StartFigureThirdScript(u16 a1, u16 a2)
     u16 t;
 
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
-     && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+     && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
     {
         if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
-         && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+         && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
             sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                          gUnknown_02029BA8[a1].unk10);
         sub_080505A4(a1, a2);
@@ -125,7 +125,7 @@ void StartWholeFigureThirdScript(u16 a1, u16 a2)
     if (gUnknown_03001470[gUnknown_02029A10[a1].entries[a2].unk18].unk2c == 1)
         return;
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
-     && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+     && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
         sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                      gUnknown_02029BA8[a1].unk10);
     gUnknown_03001470[gUnknown_02029A10[a1].entries[a2].unk18].unk2c = 1;
@@ -160,7 +160,7 @@ asm(".global sub_08054488\n.thumb_set sub_08054488, StepHitTimeline\n");
 void ApplyHitToFigure(u16 a1, u16 a2)
 {
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
-     && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+     && IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
     {
         gUnknown_020298E0[a1].unk16++;
         if (gUnknown_08553838[gUnknown_02029A10[a1].entries[a2].unk00 * 2

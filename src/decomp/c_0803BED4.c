@@ -10,8 +10,8 @@
 /* Four sequential statements, every result discarded. */
 void sub_0803BED4(void)
 {
-    sub_08012C58(gUnknown_0849D16C);
+    SetupBackgrounds(gUnknown_0849D16C);
     sub_08022A34();
-    sub_0801A5B0(0);
+    LoadBg1WindowFrame(0);
     sub_08037F18();
 }

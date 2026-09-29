@@ -31,7 +31,8 @@ void DisableCoPowers(void)
 
 asm(".global sub_08019894\n.thumb_set sub_08019894, DisableCoPowers\n");
 
-void sub_080198A0(void (*func)(void))
+void SetCoScreenDrawHook(void (*func)(void))
 {
     gUnknown_03002F20 = func;
 }
+asm(".global sub_080198A0\n.thumb_set sub_080198A0, SetCoScreenDrawHook\n");

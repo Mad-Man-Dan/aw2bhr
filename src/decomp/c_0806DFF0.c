@@ -27,7 +27,7 @@
  * `ldr rN,=<pool>; ldr rM,[rN]; ldr rM,[rM]`, so the address only ever appears
  * as pool-word content and never as a direct `ldr rN,=gpKeySt`.
  *
- * The two `sub_08015C30(gUnknown_03001FBC)` tails are written out twice
+ * The two `ClearSlotScriptCallback(gUnknown_03001FBC)` tails are written out twice
  * because they are two separate early returns in the source; agbcc's
  * cross-jumping merges them into the one block at _0806E03A. Likewise the
  * `1` stored to the stack for StartHeaderBanner's fifth and sixth arguments in the
@@ -43,14 +43,14 @@ void RulesScreenUpdate(void)
 
     if (gUnknown_0202F2C8 == 0 && (gpKeySt->pressed & 8))
     {
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         return;
     }
 
     if (gpKeySt->held & 2)
     {
         gUnknown_0202F2C8 = 1;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         return;
     }
 

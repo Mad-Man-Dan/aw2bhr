@@ -59,7 +59,7 @@ void MainMenuCarouselWheel_Init(struct Unk808135C *proc)
     SetDispEnable(1, 1, 1, 1, 1);
 
     sub_0801F114();
-    sub_0801F150(2, (void *)0x06010000, 0x300, 0x19);
+    InitTilePool(2, (void *)0x06010000, 0x300, 0x19);
     LoadTilePoolGraphic(0x50);
 
     proc->unk4c = 0;

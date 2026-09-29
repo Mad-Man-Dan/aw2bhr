@@ -35,9 +35,9 @@ void sub_08005080(void)
         t = 0xB;
         break;
     }
-    sub_08012BC8(gBG0TilemapBuffer, 5, t, 9, 2, 0);
-    sub_080149C0(5, t, gBG0TilemapBuffer, gActiveMap->designName, 0x8000, 0);
-    sub_08013AEC();
+    FillTilemapRect(gBG0TilemapBuffer, 5, t, 9, 2, 0);
+    PutTextScriptImmediate(5, t, gBG0TilemapBuffer, gActiveMap->designName, 0x8000, 0);
+    BG_EnableSyncBG0();
     if (gActiveMap->flags & 0x100)
     {
         gActiveMap->flags &= 0xFEFF;

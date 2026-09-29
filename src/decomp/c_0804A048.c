@@ -15,19 +15,19 @@
  * `mov #N; neg`, which is why this one lacks the usual bitfield-store shape. */
 void sub_0804A048(void)
 {
-    sub_0801237C();
-    sub_08012C58(gUnknown_0849D16C);
-    sub_0801295C();
-    sub_080128D0();
+    ResetWindowShadows();
+    SetupBackgrounds(gUnknown_0849D16C);
+    EnableVBlankInterrupt();
+    FlushLCDControl();
     gDispIo.disp_ct.forced_blank = 0;
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
     sub_080616F0();
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     sub_080152EC(gUnknown_084C3814, 0);
 }
 
@@ -37,7 +37,7 @@ void sub_0804A048(void)
  * why the 0x80 arm ends in a bare `b` into the middle of the 0x40 arm.
  *
  * gUnknown_0200C420.unk08 is left a plain u8 with explicit masks rather than
- * retyped as a bitfield container: sub_08016A14 already reads bit 0 of the
+ * retyped as a bitfield container: MarkProfileSaved already reads bit 0 of the
  * same byte as a flag, and the mask spelling reproduces both this write and
  * sub_0804A124's `>> 6` read exactly. */
 void LanguageSelect_Loop(void)
@@ -48,7 +48,7 @@ void LanguageSelect_Loop(void)
         sub_0803B4DC(0x71);
         gUnknown_0200C420.unk08 = (gUnknown_0200C420.unk08 & 0x3f)
                                 | (gUnknown_02028E40 << 6);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         sub_0804A010();
         break;
     case 0x80:

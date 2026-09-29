@@ -22,7 +22,7 @@ void TerrainInfoInput_Loop(void)
             sub_080468D4(gUnknown_02028DD5);
             gUnknown_02028DD4 = 2;
             sub_08014878();
-            sub_08014668((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
+            StartTextBoxViaRecord((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
                          gUnknown_085D583C[gUnknown_02028DD6].descriptionIndex, 0x8000, 0x100);
         }
         break;
@@ -31,7 +31,7 @@ void TerrainInfoInput_Loop(void)
         if (gpKeySt->pressed & DPAD_UP)
         {
             sub_0803B4DC(0x67);
-            sub_08012BC8(gBG0TilemapBuffer, (gUnknown_02028DD5 >> 3) + 1, 0xb, 0xc, 8, 0);
+            FillTilemapRect(gBG0TilemapBuffer, (gUnknown_02028DD5 >> 3) + 1, 0xb, 0xc, 8, 0);
             DrawTerrainInfoMoveCosts(gUnknown_02028DD5, gUnknown_02028DD6);
             gUnknown_02028DD4 = 1;
             sub_08014878();
@@ -43,7 +43,7 @@ void TerrainInfoInput_Loop(void)
     {
         sub_08014878();
         EndTerrainInfoWindowScript();
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         sub_0803B4DC(0x66);
     }
 }
@@ -57,13 +57,13 @@ void TerrainInfoWindow_Init(void)
     gUnknown_03001FF8 = 0;
     gUnknown_03001418 = 0;
 
-    sub_0801B780(0);
+    InitTextTileCache(0);
     sub_08022A34();
-    sub_08071948(gBG2TilemapBuffer, gUnknown_02028DD5 >> 3, 0, gUnknown_0812AF68, 0x8360);
-    sub_08013B0C();
+    TmApplyTsaClipped(gBG2TilemapBuffer, gUnknown_02028DD5 >> 3, 0, gUnknown_0812AF68, 0x8360);
+    BG_EnableSyncBG2();
     sub_0801F114();
 
-    sub_0801F150(0, (void *)0x06010000, 0x1fa, 0x16);
+    InitTilePool(0, (void *)0x06010000, 0x1fa, 0x16);
     LoadTilePoolGraphic(0x1c);
     LoadTilePoolGraphic(0x1d);
     LoadTilePoolGraphic(0x1e);
@@ -75,7 +75,7 @@ void TerrainInfoWindow_Init(void)
     LoadTilePoolGraphic(0x2d);
     LoadTilePoolGraphic(0x2e);
     LoadTilePoolGraphic(0x39);
-    sub_0801F150(2, (void *)0x06010000, 0x27e, 0x11);
+    InitTilePool(2, (void *)0x06010000, 0x27e, 0x11);
     LoadTilePoolGraphic(0xa8);
 
     switch (gUnknown_02028DD6)
@@ -99,17 +99,17 @@ void TerrainInfoWindow_Init(void)
     Decompress(src, (void *)0x060148E0);
     ApplyPaletteExt(pal, 0x260, 0x60);
 
-    sub_08011C68(gUnknown_0812C024, (void *)0x06014EE0, 0x60);
-    sub_08011C68(gUnknown_0812C024 + 0x20, (void *)0x06014F40, 0x40);
-    sub_08011C68(gUnknown_0812C024 + 0x60, (void *)0x06014F80, 0x20);
-    sub_08011C68(gUnknown_0812C024 + 0x60, (void *)0x06014FA0, 0x20);
+    CpuCopyAuto(gUnknown_0812C024, (void *)0x06014EE0, 0x60);
+    CpuCopyAuto(gUnknown_0812C024 + 0x20, (void *)0x06014F40, 0x40);
+    CpuCopyAuto(gUnknown_0812C024 + 0x60, (void *)0x06014F80, 0x20);
+    CpuCopyAuto(gUnknown_0812C024 + 0x60, (void *)0x06014FA0, 0x20);
 
     switch (gUnknown_02028DD4)
     {
     case 0:
         sub_08046914(gUnknown_02028DD5, gUnknown_02028DD6);
         sub_08014878();
-        sub_08014668((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
+        StartTextBoxViaRecord((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
                      gUnknown_085D583C[gUnknown_02028DD6].descriptionIndex, 0x8000, 0x100);
         break;
 
@@ -120,7 +120,7 @@ void TerrainInfoWindow_Init(void)
 
     case 2:
         sub_08014878();
-        sub_08014668((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
+        StartTextBoxViaRecord((gUnknown_02028DD5 >> 3) + 1, 0xb, gBG0TilemapBuffer,
                      gUnknown_085D583C[gUnknown_02028DD6].descriptionIndex, 0x8000, 0x100);
         break;
     }

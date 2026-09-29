@@ -11,7 +11,7 @@
 
 /* Advance only once the proc the node names has finished. The node's +0x04 is a
  * proc script here, exactly as in c_08017D70.c. Same inverted-arm spelling as
- * sub_08017CF0 -- both arms return, so agbcc emits the else inline. */
+ * EventOp_CallFunctionSkippable -- both arms return, so agbcc emits the else inline. */
 bool8 EventOp_WaitForProc(s16 a)
 {
     if (Proc_Find((const struct ProcCmd *)gUnknown_0200C528[a].unk04->unk04) != NULL)

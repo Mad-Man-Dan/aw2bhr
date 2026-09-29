@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /*
- * sub_080111C8 (below) -- start the screen-line fade process and give it its
+ * StartFadeScreenLines (below) -- start the screen-line fade process and give it its
  * parameters: two buffers, two 16-bit values and a function pointer.
  * gUnknown_03001FDC is 0 while the process is being set up and 1 once it is
  * ready.
@@ -33,7 +33,7 @@ struct Unk80111C8Proc
     /* 0x38 */ void (*unk38)(void);
 };
 
-void sub_080111C8(void *a, void *b, u16 c, u16 d, void (*e)(void))
+void StartFadeScreenLines(void *a, void *b, u16 c, u16 d, void (*e)(void))
 {
     struct Unk80111C8Proc *proc;
 
@@ -46,3 +46,4 @@ void sub_080111C8(void *a, void *b, u16 c, u16 d, void (*e)(void))
     proc->unk38 = e;
     gUnknown_03001FDC = 1;
 }
+asm(".global sub_080111C8\n.thumb_set sub_080111C8, StartFadeScreenLines\n");

@@ -22,7 +22,7 @@
 
 void sub_080780E4(void)
 {
-    sub_0801F00C();
+    EnableSpriteLayerMode();
     sub_080366D0(DefaultVBlankCallback);
     sub_080366C4(DefaultMainLoopCallback);
     InitGameSystems();

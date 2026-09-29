@@ -85,7 +85,7 @@ void sub_08076888(ProcPtr proc)
 
     sub_080366D0(DefaultVBlankCallback);
     sub_080366C4(DefaultMainLoopCallback);
-    sub_08012C58(gUnknown_08614548);
+    SetupBackgrounds(gUnknown_08614548);
 
     gDispIo.disp_ct.bg0_enable = 1;
     gDispIo.disp_ct.bg1_enable = 1;
@@ -105,9 +105,9 @@ void sub_08076888(ProcPtr proc)
     c = 0;
     CpuFastSet(&c, gBG2TilemapBuffer, 0x01000200);
 
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
 
     Decompress(gUnknown_081CC5F0, (void *)0x06008000);
     ApplyPaletteExt(gUnknown_081D1504, 0xC0, 0x120);
@@ -141,6 +141,6 @@ void sub_08076888(ProcPtr proc)
     gSmoothScroll.targetX = 0;
 
     sub_08074714((ProcPtr)4);
-    sub_0801237C();
-    sub_08012358();
+    ResetWindowShadows();
+    SetDefaultColorEffects();
 }

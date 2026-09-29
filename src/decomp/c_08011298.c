@@ -28,11 +28,11 @@ void SomeFade_08011299(struct Unk8011298Proc *proc)
 
     gUnknown_03002B5C = 1;
     proc->unk64 = 1;
-    sub_08011300();
-    sub_08011354();
+    SetupWipeWindow();
+    SetWin0FullScreen();
     gUnknown_03001408 = 0;
     gUnknown_03002F3C = 0;
-    sub_080111C8(gUnknown_0200B274, (void *)0x04000040, 1, 0xA240, sub_08011228);
+    StartFadeScreenLines(gUnknown_0200B274, (void *)0x04000040, 1, 0xA240, FillWipeScanlineTable);
 }
 
 asm(".global sub_08011298\n.thumb_set sub_08011298, SomeFade_08011299\n");

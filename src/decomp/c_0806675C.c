@@ -43,7 +43,7 @@ void sub_0806675C(struct Unk6675CProc *proc)
 
     if (proc->unk26 < 0)
     {
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_08580934->unk2d--;
         sub_08030178();
     }
@@ -64,7 +64,7 @@ void sub_08066808(struct Unk66808Proc *proc)
 
     if (proc->unk26 < 0)
     {
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_08580934->unk2d--;
         sub_08030178();
     }

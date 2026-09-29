@@ -7,8 +7,9 @@
  * sub_0801DAE8 @ 0x0801DAE8
  */
 
-void sub_0801DAE8(s16 a)
+void FreeObjAffineSlot(s16 a)
 {
     if (a != -1)
         gUnknown_03001430[a] = 0;
 }
+asm(".global sub_0801DAE8\n.thumb_set sub_0801DAE8, FreeObjAffineSlot\n");

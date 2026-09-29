@@ -7,7 +7,8 @@
  * sub_0801DF8C @ 0x0801DF8C
  */
 
-u16 *sub_0801DF8C(void)
+u16 *GetOamShadow(void)
 {
     return gUnknown_03002520;
 }
+asm(".global sub_0801DF8C\n.thumb_set sub_0801DF8C, GetOamShadow\n");

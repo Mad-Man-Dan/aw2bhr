@@ -53,7 +53,7 @@
  * skipped, so `s` is NOT advanced past that row's data and every later row
  * reads shifted source. Both are in the ROM; do not "fix" either.
  */
-void sub_08071948(u16 * dest, int x0, int y0, const void * src, u16 base)
+void TmApplyTsaClipped(u16 * dest, int x0, int y0, const void * src, u16 base)
 {
     const u16 * s;
     u16 * d;
@@ -85,3 +85,4 @@ void sub_08071948(u16 * dest, int x0, int y0, const void * src, u16 base)
         y--;
     }
 }
+asm(".global sub_08071948\n.thumb_set sub_08071948, TmApplyTsaClipped\n");

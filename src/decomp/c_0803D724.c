@@ -23,12 +23,12 @@ struct UnkD73CProc
 };
 
 /* The entry `lsls #0x18; lsrs #0x18` is a declared `u8` parameter; the second
- * pair `lsls #0x18; asrs #0x18` is the conversion to sub_08016CEC's `s8`
+ * pair `lsls #0x18; asrs #0x18` is the conversion to SetSuspendFlag's `s8`
  * first parameter, not a second narrowing of this one. */
 void sub_0803D724(u8 a)
 {
     if (a != 0)
-        sub_08016CEC(a, 0);
+        SetSuspendFlag(a, 0);
 }
 
 void sub_0803D73C(u8 a, void (*f)(void))
@@ -36,7 +36,7 @@ void sub_0803D73C(u8 a, void (*f)(void))
     struct UnkD73CProc *proc;
 
     if (a != 0)
-        sub_08016CEC(a, 0);
+        SetSuspendFlag(a, 0);
 
     proc = Proc_Start(gUnknown_0849F330, PROC_TREE_3);
     proc->unk64 = a;

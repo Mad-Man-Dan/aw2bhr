@@ -7,7 +7,7 @@
  * sub_08011B5C @ 0x08011B5C
  */
 
-/* The remove half of the sub_08011B34 / sub_08011B5C pair on list B
+/* The remove half of the AddVBlankHook / RemoveVBlankHook pair on list B
  * (gUnknown_03000000, 16 pointer slots): finds the entry and zeroes its slot.
  *
  * The ROM reaches the array through TWO loads -- `ldr r0, =X; ldr r4, [r0]` --
@@ -18,9 +18,9 @@
  * address constant gets its own .rodata word. The store through the array can
  * alias that word, so it is re-loaded at the top of every iteration.
  *
- * sub_08011B34, which references the same array only twice, gets the plain
+ * AddVBlankHook, which references the same array only twice, gets the plain
  * `ldr rN, =gUnknown_03000000` instead. */
-void sub_08011B5C(void *a)
+void RemoveVBlankHook(void *a)
 {
     u8 i;
 
@@ -33,3 +33,4 @@ void sub_08011B5C(void *a)
         }
     }
 }
+asm(".global sub_08011B5C\n.thumb_set sub_08011B5C, RemoveVBlankHook\n");

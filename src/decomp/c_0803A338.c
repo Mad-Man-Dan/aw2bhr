@@ -9,9 +9,9 @@
 
 void sub_0803A338(void)
 {
-    sub_08071948(gBG2TilemapBuffer, gUnknown_0849D89C->unk00 >> 3, 0, gUnknown_080D4228, 0x8360);
+    TmApplyTsaClipped(gBG2TilemapBuffer, gUnknown_0849D89C->unk00 >> 3, 0, gUnknown_080D4228, 0x8360);
     sub_0801F114();
-    sub_0801F150(0, (void *)0x06010000, 0x296, 0x15);
+    InitTilePool(0, (void *)0x06010000, 0x296, 0x15);
     LoadTilePoolGraphic(6);
     LoadTilePoolGraphic(0x23);
     LoadTilePoolGraphic(0x24);
@@ -22,7 +22,7 @@ void sub_0803A338(void)
     LoadTilePoolGraphic(0x29);
     LoadTilePoolGraphic(0x2a);
     LoadTilePoolGraphic(0x3b);
-    sub_0801F150(3, (void *)0x06010000, 0x1ca, 0x16);
+    InitTilePool(3, (void *)0x06010000, 0x1ca, 0x16);
     LoadTilePoolGraphic(0xac);
     LoadTilePoolGraphic(0xad);
     LoadTilePoolGraphic(0xae);

@@ -24,7 +24,7 @@ int sub_0801537C(const void *a)
     {
         if (gUnknown_03001470[i].unk00 == (u32)a)
         {
-            sub_08015328(i);
+            EndSlotScriptAt(i);
 
             return (s8)i;
         }
@@ -46,7 +46,7 @@ int sub_080153B8(struct Unk03001470 *a)
     {
         if (&gUnknown_03001470[i] == a)
         {
-            sub_08015328(i);
+            EndSlotScriptAt(i);
 
             return (s8)i;
         }

@@ -30,5 +30,5 @@ void sub_0806DF20(void)
         n = 0x1F - n;
 
     gPal[0x148] = ((n + 10) << 10) + ((n + 10) << 5) + (n + 10);
-    sub_080135A4();
+    EnablePaletteSync();
 }

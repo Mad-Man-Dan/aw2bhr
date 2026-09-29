@@ -35,8 +35,8 @@ void StartArmyTurn(void)
     gPlayers[gUnknown_030033EC].unk24 = 0;
     RecomputeArmyVisionMasks();
     AddPlayerIncomeToFunds();
-    sub_0801A548(gUnknown_030033EC);
-    sub_0801A57C(gUnknown_030033EC);
+    ApplyArmyWindowFramePalette(gUnknown_030033EC);
+    LoadArmyObjPalette(gUnknown_030033EC);
     sub_08043834(gUnknown_030033EC);
     if (gUnknown_03004080 == 1)
     {

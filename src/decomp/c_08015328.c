@@ -18,14 +18,14 @@
  *
  * The slot index is used BOTH ways and the two shift results are both live:
  * `lsrs` (zero-extended) is what `gUnknown_03001FBC = a` stores, `asrs`
- * (sign-extended) is what the array subscript and sub_080168BC need. That is
+ * (sign-extended) is what the array subscript and DisableSlotSpriteAffine need. That is
  * PROMOTE_MODE on an s16 parameter, not two variables.
  *
  * `(s16)` on the u16 member ->unk26 folds into the `ldrsh` and costs nothing,
  * unlike the same cast on a parameter or local; retyping the member is not
  * needed and would touch its other users.
  */
-void sub_08015328(s16 a)
+void EndSlotScriptAt(s16 a)
 {
     s16 saved = gUnknown_03001FBC;
 
@@ -39,9 +39,10 @@ void sub_08015328(s16 a)
 
     if (gUnknown_03001470[a].unk12 & 2)
     {
-        sub_080168BC(a);
-        sub_08015568((s16)gUnknown_03001470[a].unk26);
+        DisableSlotSpriteAffine(a);
+        FreeSpriteScript2((s16)gUnknown_03001470[a].unk26);
     }
 
     gUnknown_03001FBC = saved;
 }
+asm(".global sub_08015328\n.thumb_set sub_08015328, EndSlotScriptAt\n");

@@ -22,7 +22,7 @@ void sub_0802925C(struct Unk2925CProc *proc)
     s16 old;
     s8 r;
 
-    r = sub_08015BD0((s32)gUnknown_0849A00C);
+    r = FindSlotScript((s32)gUnknown_0849A00C);
 
     if (r != -1)
         return;
@@ -75,7 +75,7 @@ void sub_0802925C(struct Unk2925CProc *proc)
 
     ScrollCameraToKeepCellInView(*(s16 *)&p->unk04, *(s16 *)&p->unk06);
 
-    if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+    if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
     {
         sub_0802DCA4();
         return;

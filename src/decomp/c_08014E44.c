@@ -11,10 +11,11 @@
  * PAST the body because the branch goes to it and the body is the fall-through
  * -- the ordinary `if (C) return A; <body>` layout, the same one
  * src/decomp/c_08014D7C.c documents. */
-void *sub_08014E44(int size)
+void *HeapMalloc(int size)
 {
     if (gUnknown_03000050 == -1)
         return NULL;
 
     return sub_08014DCC(gUnknown_03000050, size);
 }
+asm(".global sub_08014E44\n.thumb_set sub_08014E44, HeapMalloc\n");

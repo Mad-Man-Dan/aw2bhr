@@ -27,12 +27,12 @@ asm(".global sub_0803D8E8\n.thumb_set sub_0803D8E8, SaveScreen_RunCallback\n");
 
 /* Reads the byte sub_0803D8C0/sub_0803D92C stashed at struct Unk0200C528's
  * +0x10 -- signed for the `== 6` test (`ldrsb`), then re-loaded `ldrb` as
- * sub_08016C70's `u8` argument. The two loads are the member's own s8 type and
+ * DeleteSuspendSave's `u8` argument. The two loads are the member's own s8 type and
  * a cast at the second use. */
 void sub_0803D8F8(struct Unk0200C528 *p)
 {
     if (p->unk10 == 6)
         WriteProfile();
     else
-        sub_08016C70(p->unk10);
+        DeleteSuspendSave(p->unk10);
 }

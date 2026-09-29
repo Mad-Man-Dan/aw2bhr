@@ -8,10 +8,10 @@
  */
 
 /* The stop half of sub_08022878's blink: push the OFF frame unconditionally
- * through sub_08011E54 (the immediate path, where sub_08022878 uses the queued
+ * through RegisterDataMove (the immediate path, where sub_08022878 uses the queued
  * one) and park a 2 in the proc.
  *
- * sub_08011E54 returns int and the result is discarded here, so nothing about
+ * RegisterDataMove returns int and the result is discarded here, so nothing about
  * the return is settled from this call. */
 struct Unk228B8Proc
 {
@@ -26,13 +26,13 @@ struct Unk228B8Proc
 void sub_08022878(void)
 {
     if (gGameClock & 1)
-        sub_08011C68(gUnknown_08091B9C, (void *)0x06003600, 0x80);
+        CpuCopyAuto(gUnknown_08091B9C, (void *)0x06003600, 0x80);
     else
-        sub_08011C68(gUnknown_0809181C, (void *)0x06003600, 0x80);
+        CpuCopyAuto(gUnknown_0809181C, (void *)0x06003600, 0x80);
 }
 
 void sub_080228B8(struct Unk228B8Proc *proc)
 {
-    sub_08011E54(gUnknown_0809181C, (void *)0x06003600, 0x80);
+    RegisterDataMove(gUnknown_0809181C, (void *)0x06003600, 0x80);
     proc->unk20 = 2;
 }

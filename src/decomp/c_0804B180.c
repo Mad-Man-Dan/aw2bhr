@@ -50,7 +50,7 @@ void sub_0804B180(void)
 {
     struct UnkVec v;
 
-    v = sub_08015638(gUnknown_03001FBC);
+    v = GetSlotSpriteAttrs(gUnknown_03001FBC);
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
 
@@ -59,8 +59,8 @@ void sub_0804B180(void)
     v.unk04 = set_tile(v.unk04, gUnknown_08551D18[gUnknown_0300453C]);
     v.unk04 = set_prio(v.unk04, gUnknown_085523A4[gUnknown_0300453C ^ gUnknown_0300450C]);
 
-    sub_08015608(gUnknown_03001FBC, v);
-    sub_080155C0(gUnknown_03001FBC,
+    SetSlotSpriteAttrs(gUnknown_03001FBC, v);
+    SetSlotSpritePosition(gUnknown_03001FBC,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk04,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
 }

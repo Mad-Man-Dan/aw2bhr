@@ -38,7 +38,7 @@ void TankFigure_Loop(void)
   entry->y -= gUnknown_085644D4[(row = gUnknown_02028E5C[c])[1]];
   x = entry->x - (*p1);
   y = entry->y - (*p2);
-  sub_080155C0(gUnknown_03001FBC, entry->x - (*p1), entry->y - (*p2));
+  SetSlotSpritePosition(gUnknown_03001FBC, entry->x - (*p1), entry->y - (*p2));
 
 }
 asm(".global sub_0804E7A8\n.thumb_set sub_0804E7A8, TankFigure_Loop\n");

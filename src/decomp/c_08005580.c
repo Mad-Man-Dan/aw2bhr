@@ -9,7 +9,7 @@
 
 void sub_08005580(void)
 {
-    sub_0801B780(0x70);
+    InitTextTileCache(0x70);
     PopMenu();
     sub_0803B4DC(0x66);
 }

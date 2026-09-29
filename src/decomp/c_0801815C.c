@@ -15,10 +15,10 @@
  * VRAM address.
  *
  * The `v = 9` preset with a conditional override to 1 is this block's house
- * idiom; sub_08018018 and sub_08018194 open the same way. The bare
+ * idiom; DrawCoPortraitClipped and DrawCoPortrait open the same way. The bare
  * `lsls r0, #0x18` on IsAnyWorldMapProcRunning's result is what retyped that function from
  * `s32` to `bool8` -- see src/decomp/c_08078198.c. */
-void sub_0801815C(u8 a)
+void LoadPortraitFace(u8 a)
 {
     int v;
 
@@ -28,3 +28,4 @@ void sub_0801815C(u8 a)
 
     LoadCoFace(a, (void *)(0x06004160 + gUnknown_03002B6C.bits.chr_block * 0x4000), v);
 }
+asm(".global sub_0801815C\n.thumb_set sub_0801815C, LoadPortraitFace\n");

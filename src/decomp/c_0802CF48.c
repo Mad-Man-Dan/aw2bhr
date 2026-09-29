@@ -101,7 +101,7 @@ void MapMenu_Save(int a1, int a2, u8 a3)
 asm(".global sub_0802CFC0\n.thumb_set sub_0802CFC0, MapMenu_Save\n");
 
 /* sub_0802C1D0's twin, one block down: the same
- * `sub_08016D04(gPlaySt.gameMode)` result handed to a u16-taking
+ * `GetSuspendIdForGameMode(gPlaySt.gameMode)` result handed to a u16-taking
  * sub_08016Dxx entry, with the fused `lsls #0x18; asrs #8; lsrs #0x10` s8-to-u16
  * conversion between the two `bl`s. LoadSuspendSave's own prologue
  * (`lsls r0,#0x10; lsrs r0,#0x10`) confirms the u16 independently of the call
@@ -115,5 +115,5 @@ asm(".global sub_0802CFC0\n.thumb_set sub_0802CFC0, MapMenu_Save\n");
 void sub_0802CFDC(void)
 {
     CloseTopMenu();
-    LoadSuspendSave(sub_08016D04(gPlaySt.gameMode));
+    LoadSuspendSave(GetSuspendIdForGameMode(gPlaySt.gameMode));
 }

@@ -11,10 +11,11 @@
  * both halves makes gcc lay the else-block out first and inverts the branch to
  * `bne`. Falling off the end leaves the callee's r0 in place, which is what the
  * ROM does and what the `int` return in the header describes. */
-int sub_0801F024(void *f, u16 b)
+int RunOrQueueDrawCallback(void *f, u16 b)
 {
     if (gUnknown_03001FE0)
         ((int (*)(u32, u16))f)(gUnknown_03001FE0, b);
     else
-        sub_0801EDC0(f, b);
+        QueueSpriteCallback(f, b);
 }
+asm(".global sub_0801F024\n.thumb_set sub_0801F024, RunOrQueueDrawCallback\n");

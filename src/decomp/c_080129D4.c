@@ -7,7 +7,8 @@
  * sub_080129D4 @ 0x080129D4
  */
 
-void sub_080129D4(u32 seed)
+void SetRandomSeed(u32 seed)
 {
     gUnknown_03001FD4 = seed;
 }
+asm(".global sub_080129D4\n.thumb_set sub_080129D4, SetRandomSeed\n");

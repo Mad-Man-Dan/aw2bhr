@@ -21,7 +21,7 @@
  * as `x > h + 0xf0` -- the ROM's `cmp r0, r4` has the operands that way round,
  * and swapping them swaps the instruction. `asrs` on the size makes it
  * signed. */
-int sub_0801306C(int x, int y, int size)
+int IsSpriteOnScreen(int x, int y, int size)
 {
     int h = size >> 1;
 
@@ -29,3 +29,4 @@ int sub_0801306C(int x, int y, int size)
         return 0;
     return 1;
 }
+asm(".global sub_0801306C\n.thumb_set sub_0801306C, IsSpriteOnScreen\n");

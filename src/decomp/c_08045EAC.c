@@ -10,7 +10,7 @@
 /* Three sequential calls, all results discarded. */
 void sub_08045EAC(void)
 {
-    sub_08013338(2, 0x8C, 0);
-    sub_080130DC(2, 0, 0xB4, 0);
+    StartScreenShake(2, 0x8C, 0);
+    StartWhiteFlash(2, 0, 0xB4, 0);
     sub_0803B4DC(0x1D5);
 }

@@ -9,12 +9,12 @@
 
 /* `lsls r0, r0, #0x18; cmp r0, #0` is agbcc re-narrowing sub_08019260's
  * declared `bool8` return -- not a cast in the source. gUnknown_03001FBC is a
- * declared `s16` and sub_08015C30 takes `u8`, so the conversion is a bare
+ * declared `s16` and ClearSlotScriptCallback takes `u8`, so the conversion is a bare
  * `ldrb` off the little-endian low byte rather than a load plus a mask. */
 void sub_0804B06C(void)
 {
     if (!sub_08019260())
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 
 /* gUnknown_03001FF8 is declared `volatile u16` and the zero is still shared

@@ -20,7 +20,7 @@
  * duplicates as shared case labels instead gives a different order. */
 void UpdateTerrainAnimation(void)
 {
-    if (sub_08011BD4() <= 0x1000)
+    if (GetCopyQueuePendingSize() <= 0x1000)
     {
         gUnknown_030043F0++;
 

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_0808AD24(void)
+void StopFlashTimer(void)
 {
     REG_IME = 0;
 
@@ -19,3 +19,4 @@ void sub_0808AD24(void)
     REG_IE &= ~(INTR_FLAG_TIMER0 << gUnknown_03000F70);
     REG_IME = gUnknown_03000F7C;
 }
+asm(".global sub_0808AD24\n.thumb_set sub_0808AD24, StopFlashTimer\n");

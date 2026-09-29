@@ -28,9 +28,9 @@ struct MemBlock
 
 
 /*
- * sub_08014EF4 -- resize a block in the gUnknown_03000050 heap (realloc).
+ * HeapRealloc -- resize a block in the gUnknown_03000050 heap (realloc).
  *
- * The same heap sub_08014E44 (allocate) and sub_08014ED4 (free) work in. A
+ * The same heap HeapMalloc (allocate) and HeapFree (free) work in. A
  * caller's pointer is the byte just past its own header.
  *
  *   1. A NULL pointer is a plain allocation; a size of 0 frees and returns
@@ -60,7 +60,7 @@ struct MemBlock
  * The new header lands at ptr + size + 0x10, one header further along than the
  * block sub_08014DCC splits off. That asymmetry is in the original.
  */
-void *sub_08014EF4(void *ptr, u32 size)
+void *HeapRealloc(void *ptr, u32 size)
 {
     struct MemBlock *blk;
     struct MemBlock *next;
@@ -69,11 +69,11 @@ void *sub_08014EF4(void *ptr, u32 size)
     u32 avail;
 
     if (ptr == NULL)
-        return sub_08014E44(size);
+        return HeapMalloc(size);
 
     if (size == 0)
     {
-        sub_08014ED4(ptr);
+        HeapFree(ptr);
         return NULL;
     }
 
@@ -101,11 +101,11 @@ void *sub_08014EF4(void *ptr, u32 size)
 
     if (size > avail)
     {
-        newptr = sub_08014E44(size);
+        newptr = HeapMalloc(size);
         if (newptr == NULL)
             return NULL;
         sub_0808B6E8(newptr, ptr, size);
-        sub_08014ED4(ptr);
+        HeapFree(ptr);
         return newptr;
     }
 
@@ -127,14 +127,15 @@ void *sub_08014EF4(void *ptr, u32 size)
 
     return ptr;
 }
+asm(".global sub_08014EF4\n.thumb_set sub_08014EF4, HeapRealloc\n");
 
 
 /*
- * sub_08014FB0 -- allocate n * size zeroed bytes from the gUnknown_03000050
+ * HeapCalloc -- allocate n * size zeroed bytes from the gUnknown_03000050
  * heap (calloc).
  *
  * Returns NULL if the heap is not set up (gUnknown_03000050 is -1) or if
- * sub_08014E44 cannot satisfy the request. The clear is a plain byte loop.
+ * HeapMalloc cannot satisfy the request. The clear is a plain byte loop.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
  * the original compiler only produces identical output with them.
@@ -144,7 +145,7 @@ void *sub_08014EF4(void *ptr, u32 size)
  *   - `while (i-- != 0)` and not a `for`: the post-decrement is what makes the
  *     compiler test against -1, and reuse the -1 the heap check already loaded.
  */
-void *sub_08014FB0(int n, int size)
+void *HeapCalloc(int n, int size)
 {
     u8 *q;
     void *p;
@@ -155,7 +156,7 @@ void *sub_08014FB0(int n, int size)
         return NULL;
 
     total = n * size;
-    p = sub_08014E44(total);
+    p = HeapMalloc(total);
     if (p == NULL)
         return NULL;
 
@@ -166,3 +167,4 @@ void *sub_08014FB0(int n, int size)
 
     return p;
 }
+asm(".global sub_08014FB0\n.thumb_set sub_08014FB0, HeapCalloc\n");

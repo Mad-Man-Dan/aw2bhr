@@ -24,6 +24,6 @@ void sub_0806D19C(struct Unk08580934_Obj *obj)
     if (obj->unk28 > 0xf0)
     {
         gUnknown_08580934->unk2d--;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

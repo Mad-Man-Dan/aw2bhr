@@ -8,7 +8,7 @@
  */
 
 /* The 0x48-byte object the 0x08019A60-0x08019D48 group walks. It is NOT the
- * object sub_08019DCC/sub_08019DEC take: both arrive as a ProcPtr, but this one
+ * object Menu_PlaceCursorSprite/Menu_SlideCursorSprite take: both arrive as a ProcPtr, but this one
  * holds a word pointer at +0x20 where that one holds an `ldrsh` halfword, so
  * they are different objects and keep different tags. */
 struct Unk08019B50Cmd /* 0x20 */
@@ -37,7 +37,7 @@ struct Unk08019B50 /* 0x48 */
  * loaded into r4 while r3 still holds the live index, long before r3 dies, so
  * r4 is a register-allocation outcome; the arguments are the three registers
  * the call site actually writes, r0, r1 and r2. */
-void sub_08019B50(void *arg)
+void Menu_CallCursorHook(void *arg)
 {
     struct Unk08019B50 *p = (struct Unk08019B50 *)arg;
     u8 i = p->unk42;
@@ -48,3 +48,4 @@ void sub_08019B50(void *arg)
     if (fn != NULL)
         fn(j, i, p->unk24[j]);
 }
+asm(".global sub_08019B50\n.thumb_set sub_08019B50, Menu_CallCursorHook\n");

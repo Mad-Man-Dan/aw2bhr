@@ -20,7 +20,7 @@ void TeamBadgeExitUp_Loop(struct Unk08580934_Obj *obj)
     obj->unk2a += obj->unk3a;
 
     if (obj->unk2a < -0x20)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 
     TeamBadge_Draw(obj);
 }

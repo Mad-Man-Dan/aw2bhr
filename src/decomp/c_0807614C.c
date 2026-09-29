@@ -102,8 +102,8 @@ void WM_Listener_IDLE_080761C9(struct Unk80761C8 *proc)
                      n, 4);
     }
 
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 
     proc->unk40++;
 

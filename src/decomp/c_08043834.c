@@ -13,11 +13,11 @@ void sub_08043834(int a)
     int i;
 
     gUnknown_030005D0 = 0;
-    sub_08011E54(gUnknown_08102824, (void *)0x06010000, 0x740);
+    RegisterDataMove(gUnknown_08102824, (void *)0x06010000, 0x740);
     tbl = gUnknown_08104264;
     i = gPlayers[a].teamColor - 1;
     ApplyPaletteExt(tbl[i], 0x2e0, 0x20);
-    sub_08011E54(gUnknown_081259CC, (void *)0x06010840, 0xc0);
+    RegisterDataMove(gUnknown_081259CC, (void *)0x06010840, 0xc0);
 }
 
 void DrawCoPowerLabel(int x, int y, int i)

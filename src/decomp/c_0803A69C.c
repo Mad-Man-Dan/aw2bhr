@@ -109,7 +109,7 @@ void UnitClassInfo_Loop(void)
     sub_08014878();
     sub_0803A59C();
     sub_0801537C(gUnknown_0849E2C0);
-    sub_08015C30(gUnknown_03001FBC);
+    ClearSlotScriptCallback(gUnknown_03001FBC);
   }
   else
     if (gpKeySt->pressed & R_BUTTON)
@@ -117,7 +117,7 @@ void UnitClassInfo_Loop(void)
     sub_08014878();
     sub_0803A59C();
     sub_0801537C(gUnknown_0849E2C0);
-    sub_08015C30(gUnknown_03001FBC);
+    ClearSlotScriptCallback(gUnknown_03001FBC);
     ShowTerrainInfoWindow(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
   }
 }

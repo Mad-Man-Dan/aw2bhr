@@ -38,5 +38,5 @@ void sub_080763C0(void)
     u16 *src = gUnknown_081D22A4;
 
     gPal[0x157] = src[i];
-    sub_080135A4();
+    EnablePaletteSync();
 }

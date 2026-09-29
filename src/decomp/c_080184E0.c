@@ -15,12 +15,12 @@ void sub_080184D8(struct Unk0200C528 *s);
 /*
  * sub_080184E0 -- hand a gUnknown_0200C528 slot on to sub_080184D8.
  *
- * Installed as a slot's callback by sub_080184EC (src/decomp/c_080184EC.c).
+ * Installed as a slot's callback by CoScreenWipeOut_Step (src/decomp/c_080184EC.c).
  * All it does is put the next callback in the sequence in its own place, so the
  * slot runs sub_080184D8 from the next frame on.
  *
  * The callback field .unk08 is declared as a node pointer, because
- * sub_08018B40 stores a node link in it, so the function is cast rather than
+ * EventOp_InstallCallback stores a node link in it, so the function is cast rather than
  * the member retyped.
  */
 void sub_080184E0(struct Unk0200C528 *s)

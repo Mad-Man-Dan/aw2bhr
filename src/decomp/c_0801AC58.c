@@ -10,7 +10,7 @@
 /* Commit one save slot's staging buffer back into the live tables.
  *
  * The 0x10-byte stack array preserves bit 4 of every gUnknown_0200CC38.unk20
- * slot across the sub_0801AD70 call, which is free to clobber them, and puts it
+ * slot across the IsSaveSlotInvalid call, which is free to clobber them, and puts it
  * back afterwards (`& 0xef` clears bit 4, `| tmp[i]` restores it).
  *
  * gUnknown_02002000 is the 0x1000-byte flash staging buffer that
@@ -25,11 +25,11 @@
  * gUnknown_0200CC2C is re-read on every iteration of the copy loop because the
  * `strb` through it may alias it -- no volatile is needed for that.
  *
- * ONE local `j` for the sub_0801AD70 result AND every inner loop counter, and
+ * ONE local `j` for the IsSaveSlotInvalid result AND every inner loop counter, and
  * that is measured. Split into a separate `r`, j's live range is short enough
  * that it outranks the -fforce-addr base pointers and takes r2, pushing the
  * bases to r3; the ROM has it the other way round in all three inner loops and
- * in the sub_0801AD70 result, which only happens when they are one pseudo whose
+ * in the IsSaveSlotInvalid result, which only happens when they are one pseudo whose
  * live range spans the function. */
 
 struct Unk1AC58Buf
@@ -54,7 +54,7 @@ int ReadSaveSlot(u8 id, u8 *a2)
     for (i = 0; i < 0x10; i++)
         tmp[i] = gUnknown_0200CC38.unk20[i] & 0x10;
 
-    j = sub_0801AD70(id);
+    j = IsSaveSlotInvalid(id);
 
     for (i = 0; i < 0x10; i++)
         gUnknown_0200CC38.unk20[i] = (gUnknown_0200CC38.unk20[i] & 0xef) | tmp[i];

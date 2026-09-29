@@ -7,7 +7,7 @@
  * sub_08017F54 @ 0x08017F54
  */
 
-bool8 sub_08017F54(s16 a)
+bool8 EventOp_SetPortraitCo(s16 a)
 {
     bool8 r;
 
@@ -17,13 +17,13 @@ bool8 sub_08017F54(s16 a)
             == DivRem((s16)gUnknown_0200C528[a].unk04->unk08, 0x18))
         {
             gUnknown_03002F08.unk02 = gUnknown_0200C528[a].unk04->unk08;
-            sub_0801815C(gUnknown_03002F08.unk02);
+            LoadPortraitFace(gUnknown_03002F08.unk02);
         }
         else
         {
             gUnknown_03002F08.unk02 = gUnknown_0200C528[a].unk04->unk08;
             gUnknown_0200C528[a].unk0e = 0;
-            gUnknown_0200C528[a].unk08 = (struct Unk0200C528Node *)sub_080180CC;
+            gUnknown_0200C528[a].unk08 = (struct Unk0200C528Node *)PortraitWipe_OutStep;
         }
 
         r = FALSE;
@@ -37,3 +37,4 @@ bool8 sub_08017F54(s16 a)
 
     return r;
 }
+asm(".global sub_08017F54\n.thumb_set sub_08017F54, EventOp_SetPortraitCo\n");

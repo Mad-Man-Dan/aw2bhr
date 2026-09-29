@@ -18,7 +18,7 @@ void ShopScreen_DrawSprites(void)
     if (gUnknown_084C30F8->unk835 != 0)
     {
         gUnknown_084C30F8->unk835 = 0;
-        sub_08013AEC();
+        BG_EnableSyncBG0();
     }
 
     DrawOamObject(0x51, 4, 0x20, 0, 0);

@@ -44,10 +44,10 @@ void DeathHandler_Bomb(u16 a, u16 b)
 
     e = gUnknown_08553B10[a];
 
-    sub_08016824(gUnknown_02029808[a].unk24[b]);
-    sub_08016944(gUnknown_02029808[a].unk24[b]);
-    sub_080157A4(gUnknown_02029808[a].unk24[b], e);
-    sub_080157F4(gUnknown_02029808[a].unk24[b], 0x180);
+    EnableSlotSpriteAffine(gUnknown_02029808[a].unk24[b]);
+    SetSlotSpriteDoubleSize(gUnknown_02029808[a].unk24[b]);
+    SetSlotSpriteScaleX(gUnknown_02029808[a].unk24[b], e);
+    SetSlotSpriteScaleY(gUnknown_02029808[a].unk24[b], 0x180);
 
     gUnknown_02028E5C[a][0] = 1;
 

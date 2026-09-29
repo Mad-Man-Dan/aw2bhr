@@ -10,7 +10,7 @@
 #include "proc.h"
 /* The gUnknown_081D1504 row index is `unk64 - 6` scaled by 0x10 HALFWORDS: the
  * ROM's `lsls #5` is the 0x20-byte stride of that table seen through
- * sub_080135F4's `u16 *` parameter, not a byte offset.
+ * CopyToPaletteBufferNoSync's `u16 *` parameter, not a byte offset.
  *
  * Both +0x4c and +0x64 are reached by materialising the address first (`adds
  * r0, r4, #0; adds r0, #0x64`) because THUMB's `strh`/`ldrsh` immediate forms
@@ -31,11 +31,11 @@ void sub_08075DBC(struct Unk8075DBC *proc)
     if (proc->unk5c == 0)
         Proc_End(proc);
 
-    sub_080135F4(gUnknown_081D1504 + (proc->unk64 - 6) * 0x10, 0x1E0, 0x20);
+    CopyToPaletteBufferNoSync(gUnknown_081D1504 + (proc->unk64 - 6) * 0x10, 0x1E0, 0x20);
 
     proc->unk4c = 0;
 
     ColorFadeInit();
     sub_08075A54(0xF, -1);
-    sub_080135A4();
+    EnablePaletteSync();
 }

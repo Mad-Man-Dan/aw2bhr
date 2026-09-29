@@ -26,7 +26,7 @@
 void InitMovePathForActiveUnit(void)
 {
     ApplyPaletteExt(gUnknown_0809165C, 0x260, 0x20);
-    sub_08011E54(gUnknown_080A1C24, (void *)0x06013940, 0xa00);
+    RegisterDataMove(gUnknown_080A1C24, (void *)0x06013940, 0xa00);
 
     if (((struct Unit *)gUnknown_030040D8)->fuel
         < GetUnitMovementWithCoBonus(((((struct Unit *)gUnknown_030040D8)

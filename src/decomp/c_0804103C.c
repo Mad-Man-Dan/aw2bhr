@@ -63,6 +63,6 @@ void sub_0804103C(int a1, int a2, int a3)
         break;
     }
 
-    sub_08011E54(src, (void *)(0x06010000 + (a2 & 0x3ff) * 32), 0x400);
+    RegisterDataMove(src, (void *)(0x06010000 + (a2 & 0x3ff) * 32), 0x400);
     ApplyPaletteExt(&gUnknown_081213F4[pal * 0x10], (u16)((a3 + 0x10) * 0x20), 0x20);
 }

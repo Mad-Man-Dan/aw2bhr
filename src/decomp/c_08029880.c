@@ -12,7 +12,7 @@ void sub_08029880(void)
     if (gUnknown_030040E4 != 0)
         return;
 
-    sub_08015328(gUnknown_03001FBC);
+    EndSlotScriptAt(gUnknown_03001FBC);
 
     if (gUnknown_03001470[gUnknown_03001FBC].unk24 == 0)
         DropCargoUnit(gUnknown_03001470[gUnknown_03001FBC].unk22);

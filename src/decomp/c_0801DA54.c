@@ -18,9 +18,10 @@ u32 sub_0801DA54(int index)
     return r;
 }
 
-u8 sub_0801DA68(int index)
+u8 GetSpriteScriptPriority(int index)
 {
     struct Unk0200E438 *p = &gUnknown_0200E438[index];
 
     return p->unk1e;
 }
+asm(".global sub_0801DA68\n.thumb_set sub_0801DA68, GetSpriteScriptPriority\n");

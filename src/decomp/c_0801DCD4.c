@@ -106,7 +106,7 @@ void RunSimpleSpriteScript(int id, int tick)
                 return;
             case 0xe00:
                 if (tick != 0)
-                    sub_0801D81C(id);
+                    EndSpriteScript(id);
                 return;
             case 0xa00:
                 e->unk1e = *p;

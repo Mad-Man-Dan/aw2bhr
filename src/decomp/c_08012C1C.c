@@ -17,7 +17,8 @@ struct Unk8012C30
     u8 unk01_6 : 2;
 };
 
-void sub_08012C1C(struct Unk8012C30 *s, u32 value)
+void SetBgCntTilemapBlock(struct Unk8012C30 *s, u32 value)
 {
     s->unk01_0 = value >> 11;
 }
+asm(".global sub_08012C1C\n.thumb_set sub_08012C1C, SetBgCntTilemapBlock\n");

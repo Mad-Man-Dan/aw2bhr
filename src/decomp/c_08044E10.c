@@ -10,7 +10,7 @@
 #include "proc.h"
 /* MATCHED -- wave 45 (W45-A), first attempt.
  *
- * A repair tick: every 5 frames, while the sub_08015BD0 slot for
+ * A repair tick: every 5 frames, while the FindSlotScript slot for
  * gUnknown_0849A00C is free, it scans the current army's units from unk29 and
  * heals the first live, un-flagged one by unk2e * 10, clamped to 100.
  *
@@ -107,7 +107,7 @@ void sub_08044E10(struct Unk08044E10Proc *proc)
 
     proc->unk2b++;
 
-    if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+    if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
         return;
 
     if (proc->unk2b <= 4)
@@ -165,7 +165,7 @@ void sub_08044F24(struct Unk08044F24Proc *proc)
 
     proc->unk2b++;
 
-    if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+    if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
         return;
 
     if (proc->unk2b <= 4)

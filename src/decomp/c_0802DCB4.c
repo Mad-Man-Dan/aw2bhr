@@ -29,7 +29,7 @@ void MapCursorIdle(void)
 
         if (gpKeySt->pressed & 4)
         {
-            sub_0801B780(0);
+            InitTextTileCache(0);
             OpenMapMenu();
             return;
         }
@@ -40,7 +40,7 @@ void MapCursorIdle(void)
                     gMap->rowOffset[gUnknown_030033E4.unk02]
                     + gUnknown_030033E4.unk00] != 0)
             {
-                sub_0801B780(0);
+                InitTextTileCache(0);
                 sub_0803A8F0(&gUnits[
                     gMap->unit[
                         gMap->rowOffset[gUnknown_030033E4.unk02]
@@ -48,7 +48,7 @@ void MapCursorIdle(void)
                 return;
             }
 
-            sub_0801B780(0);
+            InitTextTileCache(0);
             ShowTerrainInfoWindow(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
             return;
         }
@@ -62,7 +62,7 @@ void MapCursorIdle(void)
             {
                 ScrollCameraToKeepCellInView(unit->x, unit->y);
 
-                if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+                if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
                 {
                     sub_0802DCA4();
                     return;

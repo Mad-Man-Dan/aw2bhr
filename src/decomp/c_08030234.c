@@ -18,7 +18,7 @@
  * That is agbcc's own choice and needs no help from the source.
  *
  * gUnknown_03002040 is declared as a 0x58-byte struct, but this function walks
- * it with a 0x14 stride and hands each element to sub_0801348C(struct
+ * it with a 0x14 stride and hands each element to RefreshKeyStFromKeys(struct
  * Unk03002090 *, ...). 0x03002040 + 4 * 0x14 is exactly 0x03002090, so the
  * object is an array of struct Unk03002090 whose element [4] carries its own
  * name. Reached by cast, which is the idiom already used elsewhere in the tree
@@ -101,5 +101,5 @@ zero:
         gUnknown_0849B018->unk1b = nSplit;
 
     for (i = 0; i < 4; i++)
-        sub_0801348C(&((struct Unk03002090 *)&gUnknown_03002040)[i], buf[i]);
+        RefreshKeyStFromKeys(&((struct Unk03002090 *)&gUnknown_03002040)[i], buf[i]);
 }

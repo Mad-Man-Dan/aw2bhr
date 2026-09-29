@@ -22,10 +22,10 @@
  * before both increments and `dst` is loaded first, which is what fixes the
  * comparison's operand order.
  *
- * sub_0808AF00 and sub_0808AF74 relocate this function's machine code onto the
+ * VerifyFlashSector and VerifyFlashSectorNBytes relocate this function's machine code onto the
  * stack and call it there, so its address is a pool word in both -- see the
  * "Self-relocating code" chapter in docs/agbcc-codegen.md. */
-u8 *sub_0808AED0(const u8 *src, u8 *dst, int n)
+u8 *VerifyFlashSector_Core(const u8 *src, u8 *dst, int n)
 {
     int i;
 
@@ -42,3 +42,4 @@ u8 *sub_0808AED0(const u8 *src, u8 *dst, int n)
 
     return NULL;
 }
+asm(".global sub_0808AED0\n.thumb_set sub_0808AED0, VerifyFlashSector_Core\n");

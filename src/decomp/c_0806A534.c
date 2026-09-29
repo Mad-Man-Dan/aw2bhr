@@ -42,6 +42,6 @@ void sub_0806A578(struct Unk806A578 *proc)
     {
         gUnknown_03002020 = 4 - v;
         gUnknown_03002B28 = v + 0xC;
-        sub_0801F024((void *)sub_0806A534, 0x7F);
+        RunOrQueueDrawCallback((void *)sub_0806A534, 0x7F);
     }
 }

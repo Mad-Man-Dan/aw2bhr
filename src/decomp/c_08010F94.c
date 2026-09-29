@@ -7,7 +7,8 @@
  * sub_08010F94 @ 0x08010F94
  */
 
-void sub_08010F94(void)
+void InitScreenFadeLatch(void)
 {
     gUnknown_03002B5C = 1;
 }
+asm(".global sub_08010F94\n.thumb_set sub_08010F94, InitScreenFadeLatch\n");

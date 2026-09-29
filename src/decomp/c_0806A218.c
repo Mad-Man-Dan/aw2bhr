@@ -43,7 +43,7 @@ void IntroT3_IDLE_0806A219(struct Unk806A218 *proc)
         ApplyPaletteExt(gUnknown_0817C3E8, 0, 0x20);
         Decompress(gUnknown_081866F8, (void *)0x06000000);
         Decompress(gUnknown_08186D4C, gBG0TilemapBuffer);
-        sub_08013AEC();
+        BG_EnableSyncBG0();
         break;
 
     case 0x11d:

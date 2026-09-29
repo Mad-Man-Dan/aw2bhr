@@ -31,7 +31,7 @@
  * address into its own pseudo first and re-materialises it for the argument.
  * `fill32` needs no such thing: Thumb `str` addresses sp directly, so no
  * reload is created and the plain local already matches. */
-void sub_08011FF0(void)
+void FlushTiles(void)
 {
     vu16 fill16;
     u32 fill32;
@@ -45,7 +45,7 @@ void sub_08011FF0(void)
         {
         case 0:
         case 1:
-            sub_08011C68((const void *)gUnknown_0200B3B4[(s16)gUnknown_03002F30].unk00,
+            CpuCopyAuto((const void *)gUnknown_0200B3B4[(s16)gUnknown_03002F30].unk00,
                          (void *)gUnknown_0200B3B4[(s16)gUnknown_03002F30].unk04,
                          gUnknown_0200B3B4[(s16)gUnknown_03002F30].unk08);
             break;
@@ -74,3 +74,4 @@ void sub_08011FF0(void)
     ClearTileRigistry();
     *(vu16 *)0x05000000 = 0;
 }
+asm(".global sub_08011FF0\n.thumb_set sub_08011FF0, FlushTiles\n");

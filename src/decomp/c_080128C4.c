@@ -21,5 +21,5 @@
  */
 void sub_080128C4(void)
 {
-    sub_080123EC();
+    ResetDisplayState();
 }

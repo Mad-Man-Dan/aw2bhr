@@ -7,7 +7,7 @@
  * sub_08012F6C @ 0x08012F6C
  */
 
-/* sub_08011C68's SIGNED sibling -- same CpuSet-or-CpuFastSet choice on a
+/* CpuCopyAuto's SIGNED sibling -- same CpuSet-or-CpuFastSet choice on a
  * multiple-of-32 byte count, but the count is a signed int and the result is
  * masked to CpuSet's 21-bit length field.
  *

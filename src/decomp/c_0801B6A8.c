@@ -10,7 +10,7 @@
 /* A 0xff-fill. The pointer is advanced in its own expression and the count is
  * the loop variable, which is why the guard is `cmp #0; beq` and the bottom
  * test `cmp #0; bne` rather than the reversed-counter shape. */
-void sub_0801B6A8(u8 *dst, u32 size)
+void FillBytesWithFF(u8 *dst, u32 size)
 {
     while (size != 0)
     {
@@ -18,3 +18,4 @@ void sub_0801B6A8(u8 *dst, u32 size)
         size--;
     }
 }
+asm(".global sub_0801B6A8\n.thumb_set sub_0801B6A8, FillBytesWithFF\n");

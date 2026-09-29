@@ -66,7 +66,7 @@ void sub_080377C4(void *a1)
     int x;
     int y;
 
-    sub_08037B84(sub_08014E44(0xa14));
+    sub_08037B84(HeapMalloc(0xa14));
 
     ((u8 *)gUnknown_03003F68)[0] = gMap->width;
     ((u8 *)gUnknown_03003F68)[1] = gMap->height;
@@ -87,5 +87,5 @@ void sub_080377C4(void *a1)
 
     gUnknown_03001FF8 = (((u8 *)gUnknown_03003F68)[0] * 4 - 0xf0) >> 1;
     gUnknown_03001418 = (((u8 *)gUnknown_03003F68)[1] * 4 - 0xa0) >> 1;
-    sub_08014ED4(gUnknown_03003F68);
+    HeapFree(gUnknown_03003F68);
 }

@@ -15,7 +15,7 @@ void FigureTileHook_Ship(s16 a, u16 *p)
     u16 side;
     u16 slot;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
     d = (p[2] - oam.tileNum) & 0x3ff;
     side = gUnknown_03001470[a].unk30;
     slot = gUnknown_03001470[a].unk34;

@@ -7,7 +7,8 @@
  * sub_0808AD68 @ 0x0808AD68
  */
 
-u8 sub_0808AD68(u8 *p)
+u8 ReadFlash1(u8 *p)
 {
     return *p;
 }
+asm(".global sub_0808AD68\n.thumb_set sub_0808AD68, ReadFlash1\n");

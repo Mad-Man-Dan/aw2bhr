@@ -15,14 +15,14 @@
  * `c` is `s16`: the entry narrowing is PROMOTE_MODE's zero-extend and the
  * `lsls #0x10; asrs #0x10` at the use is the sign, CSEd across all three uses
  * (the `!= -1` guard and both calls, whose own parameters are `s16` and cost
- * nothing on top). sub_080153F0 returns `bool8`, hence the bare
+ * nothing on top). IsSlotScriptActiveAt returns `bool8`, hence the bare
  * `lsls #0x18; cmp #0` truth test with no `lsrs`. */
 void EndMissileHitEffect(u16 a, u16 b, s16 c)
 {
     if (gUnknown_02029A10[a ^ 1].entries[b].unk1a == 0 && a != gUnknown_0300450C)
         gUnknown_02029664 |= 0x40;
 
-    if (c != -1 && sub_080153F0(c))
-        sub_08015328(c);
+    if (c != -1 && IsSlotScriptActiveAt(c))
+        EndSlotScriptAt(c);
 }
 asm(".global sub_08051920\n.thumb_set sub_08051920, EndMissileHitEffect\n");

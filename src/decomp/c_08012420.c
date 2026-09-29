@@ -26,7 +26,7 @@
  * leftover BGxOFS cursor instead of being loaded as fresh pool words.
  */
 
-void sub_08012420(void)
+void FlushDisplayRegisters(void)
 {
     REG_DISPCNT = *(u16 *)&gDispIo.disp_ct;
     REG_DISPSTAT = gUnknown_030020B4.raw;
@@ -55,3 +55,4 @@ void sub_08012420(void)
     REG_BG3AFFIN(2) = gUnknown_03003020[2];
     REG_BG3AFFIN(3) = gUnknown_03003020[3];
 }
+asm(".global sub_08012420\n.thumb_set sub_08012420, FlushDisplayRegisters\n");

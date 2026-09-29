@@ -14,7 +14,7 @@
  * index and the exit test. 0x360 is materialised as `movs #0xd8; lsls #2`
  * rather than a pool word, and the shared 0xFF60 pool word is copied once and
  * stored twice because both globals are `volatile u16`. */
-void sub_08017A0C(void)
+void FillBlankBgTilemapAndSetScroll(void)
 {
     s16 i;
 
@@ -24,3 +24,4 @@ void sub_08017A0C(void)
     gUnknown_0300309C = 0xff60;
     gUnknown_03002028 = 0xff60;
 }
+asm(".global sub_08017A0C\n.thumb_set sub_08017A0C, FillBlankBgTilemapAndSetScroll\n");

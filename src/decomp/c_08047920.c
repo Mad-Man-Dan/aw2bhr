@@ -89,7 +89,7 @@ void DrawUnitListRows(void *arg)
         sub_0802239C(gBG0TilemapBuffer, n + 3, i * 2 + 7, u->type, c, u->unk07,
                      u->unk05_3);
         b = (u->flags >> 3) & m;
-        sub_08014A5C(8, (s16)(i * 2 + 7), gBG0TilemapBuffer,
+        PutTextTableEntryImmediate(8, (s16)(i * 2 + 7), gBG0TilemapBuffer,
                      gUnknown_085D5ABC[u->type].unk00, 0x8000, pal[b]);
 
         if (u->hp != 0)
@@ -97,31 +97,31 @@ void DrawUnitListRows(void *arg)
         else
             v = 0;
 
-        sub_08014B0C(0x10, (s16)(i * 2 + 7), gBG0TilemapBuffer, v, 0x8000,
+        DrawTallNumberRightAligned(0x10, (s16)(i * 2 + 7), gBG0TilemapBuffer, v, 0x8000,
                      pal[b]);
-        sub_08014B0C(0x13, (s16)(i * 2 + 7), gBG0TilemapBuffer, u->fuel,
+        DrawTallNumberRightAligned(0x13, (s16)(i * 2 + 7), gBG0TilemapBuffer, u->fuel,
                      0x8000, pal[b]);
-        sub_080149C0(0x14, (s16)(i * 2 + 7), gBG0TilemapBuffer,
+        PutTextScriptImmediate(0x14, (s16)(i * 2 + 7), gBG0TilemapBuffer,
                      gUnknown_084C3F38, 0x8000, pal[b]);
-        sub_08014B0C(0x16, (s16)(i * 2 + 7), gBG0TilemapBuffer,
+        DrawTallNumberRightAligned(0x16, (s16)(i * 2 + 7), gBG0TilemapBuffer,
                      gUnknown_085D5ABC[u->type].maxFuel, 0x8000, pal[b]);
 
         if (gUnknown_085D5ABC[u->type].maxAmmo == 0)
         {
             if (gUnknown_085D5ABC[u->type].unk11 != 0)
-                sub_08014A5C(0x18, (s16)(i * 2 + 7), gBG0TilemapBuffer, 0x962,
+                PutTextTableEntryImmediate(0x18, (s16)(i * 2 + 7), gBG0TilemapBuffer, 0x962,
                              0x8000, pal[b]);
             else
-                sub_08014A5C(0x18, (s16)(i * 2 + 7), gBG0TilemapBuffer, 0x966,
+                PutTextTableEntryImmediate(0x18, (s16)(i * 2 + 7), gBG0TilemapBuffer, 0x966,
                              0x8000, pal[b]);
         }
         else
         {
-            sub_08014B0C(0x19, (s16)(i * 2 + 7), gBG0TilemapBuffer, u->ammo,
+            DrawTallNumberRightAligned(0x19, (s16)(i * 2 + 7), gBG0TilemapBuffer, u->ammo,
                          0x8000, pal[b]);
-            sub_080149C0(0x1a, (s16)(i * 2 + 7), gBG0TilemapBuffer,
+            PutTextScriptImmediate(0x1a, (s16)(i * 2 + 7), gBG0TilemapBuffer,
                          gUnknown_084C3F3C, 0x8000, pal[b]);
-            sub_08014B0C(0x1b, (s16)(i * 2 + 7), gBG0TilemapBuffer,
+            DrawTallNumberRightAligned(0x1b, (s16)(i * 2 + 7), gBG0TilemapBuffer,
                          gUnknown_085D5ABC[u->type].maxAmmo, 0x8000, pal[b]);
         }
     }

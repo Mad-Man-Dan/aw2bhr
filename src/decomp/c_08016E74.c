@@ -7,8 +7,9 @@
  * sub_08016E74 @ 0x08016E74
  */
 
-void sub_08016E74(void)
+void BackupBattleMapPoints(void)
 {
     gUnknown_0200C500[0] = gUnknown_0200C420.unk00;
     gUnknown_0200C500[1] = gUnknown_0200C420.unk04;
 }
+asm(".global sub_08016E74\n.thumb_set sub_08016E74, BackupBattleMapPoints\n");

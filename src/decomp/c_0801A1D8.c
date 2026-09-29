@@ -16,7 +16,7 @@
  * The `cmp r4,#0x1f / bhi` guard is INSIDE the loop body, not a loop bound:
  * the column and the destination advance even when the store is skipped.
  * It compares UNSIGNED, hence the (u32) cast on an `int` parameter. */
-void sub_0801A1D8(u16 *dst, int col, s16 width, int pal)
+void DrawWindowFrameTopRow(u16 *dst, int col, s16 width, int pal)
 {
     u16 i;
     u16 p = pal << 12;
@@ -37,6 +37,7 @@ void sub_0801A1D8(u16 *dst, int col, s16 width, int pal)
     if ((u32)col < 0x20)
         *dst = 0x363 | p;
 }
+asm(".global sub_0801A1D8\n.thumb_set sub_0801A1D8, DrawWindowFrameTopRow\n");
 
 /* The middle row of a window frame, and the only one of the three strips that
  * writes FOUR cells: a left cap, a run of `width - 3` middles, then two tail
@@ -46,7 +47,7 @@ void sub_0801A1D8(u16 *dst, int col, s16 width, int pal)
  * loop -- that is the optimiser, not source.
  *
  * The palette is the fifth argument, arriving at [sp,#0x14]. */
-void sub_0801A240(u16 *dst, int col, s16 width, s16 kind, int pal)
+void DrawWindowFrameMiddleRow(u16 *dst, int col, s16 width, s16 kind, int pal)
 {
     u16 i;
     u16 p = pal << 12;
@@ -72,6 +73,7 @@ void sub_0801A240(u16 *dst, int col, s16 width, s16 kind, int pal)
     if ((u32)col < 0x20)
         *dst = gUnknown_0848A478[kind] | p;
 }
+asm(".global sub_0801A240\n.thumb_set sub_0801A240, DrawWindowFrameMiddleRow\n");
 
 /* The bottom row of a window frame. The two alternating middle tiles are not
  * literals: they are memcpy'd out of the 4-byte gUnknown_0808E5C0 template
@@ -80,7 +82,7 @@ void sub_0801A240(u16 *dst, int col, s16 width, s16 kind, int pal)
  * The palette local is assigned AFTER the memcpy call, which is where the ROM
  * computes it. `movs r7,#1` in the preheader is the mask parked in a register
  * by the loop optimiser -- not source. */
-void sub_0801A2E4(u16 *dst, int col, s16 width, int pal)
+void DrawWindowFrameBottomRow(u16 *dst, int col, s16 width, int pal)
 {
     u16 buf[2];
     u16 i;
@@ -105,3 +107,4 @@ void sub_0801A2E4(u16 *dst, int col, s16 width, int pal)
     if ((u32)col < 0x20)
         *dst = 0x369 | p;
 }
+asm(".global sub_0801A2E4\n.thumb_set sub_0801A2E4, DrawWindowFrameBottomRow\n");

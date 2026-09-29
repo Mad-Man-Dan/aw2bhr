@@ -7,7 +7,7 @@
  * sub_0808AC20 @ 0x0808AC20
  */
 
-void sub_0808AC20(void)
+void FlashTimerIntr(void)
 {
     int v;
 
@@ -24,3 +24,4 @@ void sub_0808AC20(void)
             gUnknown_03000F74 = 1;
     }
 }
+asm(".global sub_0808AC20\n.thumb_set sub_0808AC20, FlashTimerIntr\n");

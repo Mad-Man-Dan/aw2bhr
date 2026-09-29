@@ -7,7 +7,7 @@
  * sub_08037D64 @ 0x08037D64
  */
 
-/* A byte-identical LOOSE duplicate of the promoted sub_08017688: same
+/* A byte-identical LOOSE duplicate of the promoted StartResumeScript: same
  * instruction stream, only the pool symbol differs. `u16` and not `int` for
  * the reason recorded there -- the `adds r4,r0,#0; lsls #0x10; lsrs #0x10`
  * prologue is PROMOTE_MODE's copy-then-narrow of a sub-word parameter, and an

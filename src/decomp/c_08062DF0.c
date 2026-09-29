@@ -13,7 +13,7 @@
  *
  * gUnknown_0816DB40/50/5C/68/74/80 are printf FORMAT STRINGS, not data objects:
  * baserom.gba holds "UNIT  C0  C1", "PSQ(%1d)", "ASQ(%1d)", "USQ(%1d)",
- * "CPT(%1d)" and "(%1d)" there, and sub_08013428's third parameter is
+ * "CPT(%1d)" and "(%1d)" there, and DebugPrintf's third parameter is
  * `const char *`. Their ROM spacing (0x10, 0xc, 0xc, 0xc, 0xc) is exactly
  * agbcc's 4-byte alignment of 13, 9, 9, 9, 9 and 6 bytes, which confirms both
  * the reading and each extent. They are NOT the -fforce-addr pool words at
@@ -27,7 +27,7 @@
  * and this section is 0x46. Naming the symbols is the compromise; see
  * docs/agbcc-codegen.md.
  *
- * sub_08013428 is VARARGS, and that is what explains the FIRST call leaving r3
+ * DebugPrintf is VARARGS, and that is what explains the FIRST call leaving r3
  * holding gUnknown_030040D8: a three-argument call never writes r3, so the
  * leftover is not an argument. A fixed-arity prototype cannot produce it.
  *
@@ -72,8 +72,8 @@ void sub_08062DF0(void)
         {
             gUnknown_03004780 = gUnknown_030045DC;
             SetMapLayersDefault();
-            sub_08013C00();
-            sub_08013AEC();
+            ClearBg0Tilemap();
+            BG_EnableSyncBG0();
             return;
         }
 
@@ -91,26 +91,26 @@ void sub_08062DF0(void)
             if (gUnknown_030040D8->unk07[1] != 0)
                 b = (struct Unk030040D8 *)&gUnits[gUnknown_030040D8->unk07[1]];
 
-            sub_08013428(2, 4, gUnknown_0816DB40);
-            sub_08013428(2, 5, gUnknown_0816DB50, BITS(gUnknown_030040D8)->unk09_0);
-            sub_08013428(2, 6, gUnknown_0816DB5C, BITS(gUnknown_030040D8)->unk09_3);
-            sub_08013428(2, 7, gUnknown_0816DB68, BITS(gUnknown_030040D8)->unk09_6);
-            sub_08013428(2, 8, gUnknown_0816DB74, gUnknown_030040D8->unk07[4]);
+            DebugPrintf(2, 4, gUnknown_0816DB40);
+            DebugPrintf(2, 5, gUnknown_0816DB50, BITS(gUnknown_030040D8)->unk09_0);
+            DebugPrintf(2, 6, gUnknown_0816DB5C, BITS(gUnknown_030040D8)->unk09_3);
+            DebugPrintf(2, 7, gUnknown_0816DB68, BITS(gUnknown_030040D8)->unk09_6);
+            DebugPrintf(2, 8, gUnknown_0816DB74, gUnknown_030040D8->unk07[4]);
 
             if (a != 0)
             {
-                sub_08013428(9, 5, gUnknown_0816DB80, BITS(a)->unk09_0);
-                sub_08013428(9, 6, gUnknown_0816DB80, BITS(a)->unk09_3);
-                sub_08013428(9, 7, gUnknown_0816DB80, BITS(a)->unk09_6);
-                sub_08013428(9, 8, gUnknown_0816DB80, a->unk07[4]);
+                DebugPrintf(9, 5, gUnknown_0816DB80, BITS(a)->unk09_0);
+                DebugPrintf(9, 6, gUnknown_0816DB80, BITS(a)->unk09_3);
+                DebugPrintf(9, 7, gUnknown_0816DB80, BITS(a)->unk09_6);
+                DebugPrintf(9, 8, gUnknown_0816DB80, a->unk07[4]);
             }
 
             if (b != 0)
             {
-                sub_08013428(0xE, 5, gUnknown_0816DB80, BITS(b)->unk09_0);
-                sub_08013428(0xE, 6, gUnknown_0816DB80, BITS(b)->unk09_3);
-                sub_08013428(0xE, 7, gUnknown_0816DB80, BITS(b)->unk09_6);
-                sub_08013428(0xE, 8, gUnknown_0816DB80, b->unk07[4]);
+                DebugPrintf(0xE, 5, gUnknown_0816DB80, BITS(b)->unk09_0);
+                DebugPrintf(0xE, 6, gUnknown_0816DB80, BITS(b)->unk09_3);
+                DebugPrintf(0xE, 7, gUnknown_0816DB80, BITS(b)->unk09_6);
+                DebugPrintf(0xE, 8, gUnknown_0816DB80, b->unk07[4]);
             }
         }
     }

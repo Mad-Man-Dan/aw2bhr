@@ -55,16 +55,18 @@ void StartLockingFadeFromWhite(int a, ProcPtr parent)
 }
 asm(".global sub_0801163C\n.thumb_set sub_0801163C, StartLockingFadeFromWhite\n");
 
-void sub_08011668(int a)
+void StartWipeToBlack(int a)
 {
     struct Unk11668Proc *proc = Proc_Start(ProcScr_SomeFade, PROC_TREE_3);
 
     proc->unk64 = a;
 }
+asm(".global sub_08011668\n.thumb_set sub_08011668, StartWipeToBlack\n");
 
-void sub_08011684(int a)
+void StartWipeFromBlack(int a)
 {
     struct Unk11684Proc *proc = Proc_Start(ProcScr_FadeLoadMap, PROC_TREE_3);
 
     proc->unk64 = a;
 }
+asm(".global sub_08011684\n.thumb_set sub_08011684, StartWipeFromBlack\n");

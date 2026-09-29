@@ -63,7 +63,7 @@ void sub_08086E54(void)
 
     gUnknown_03005918 = 0x14;
     gUnknown_030058F4 = 0x10;
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 
 void StartMapSelectPreview(int a1)
@@ -71,7 +71,7 @@ void StartMapSelectPreview(int a1)
     struct Unk86EB0Proc *proc;
     u8 *p;
 
-    sub_08013C54();
+    ClearBg1Tilemap();
     p = (u8 *)&gUnknown_02027F74;
     p += 4;
 
@@ -90,6 +90,6 @@ void StartMapSelectPreview(int a1)
             Proc_EndEach(gUnknown_08616D6C);
         Proc_Start(gUnknown_08616D6C, PROC_TREE_3);
     }
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 asm(".global sub_08086EB0\n.thumb_set sub_08086EB0, StartMapSelectPreview\n");

@@ -17,8 +17,8 @@ void TerrainInfoWindow_OnEnd(void)
     for (i = 0; i <= 0x3FF; i++)
         gBG0TilemapBuffer[i] = 0;
 
-    sub_08013AEC();
-    sub_0801A538(0, 0, 0, 0);
+    BG_EnableSyncBG0();
+    DisableWindow0AndResetMapLayers(0, 0, 0, 0);
     RedrawUnitLayer();
     RedrawUnitIconLayer();
 }

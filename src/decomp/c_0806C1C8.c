@@ -49,5 +49,5 @@ void sub_0806C1E4(void)
     u32 i = ((u32)gGameClock & 0x1F) / 2;
 
     gPal[0x12C] = tbl[i];
-    sub_080135A4();
+    EnablePaletteSync();
 }

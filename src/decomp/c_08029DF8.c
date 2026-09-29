@@ -77,7 +77,7 @@ void sub_08029DF8(struct Unk03001470 *proc)
   int c;
   int new_var;
   struct Map *new_var2;
-  if (sub_08015BD0((s32) gUnknown_0849A0A8) != (-1))
+  if (FindSlotScript((s32) gUnknown_0849A0A8) != (-1))
   {
     return;
   }
@@ -91,7 +91,7 @@ void sub_08029DF8(struct Unk03001470 *proc)
         gUnknown_030033E4.unk00 = gUnknown_03003100.pos.unk00;
         gUnknown_030033E4.unk02 = gUnknown_03003100.pos.unk02;
       }
-      sub_08015328(gUnknown_03001FBC);
+      EndSlotScriptAt(gUnknown_03001FBC);
       CommitUnitMove();
       if ((proc->unk20 == 0) && (gPlaySt.savingEnabled != 0))
       {

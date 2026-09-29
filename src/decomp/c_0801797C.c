@@ -7,12 +7,14 @@
  * sub_0801797C @ 0x0801797C, sub_08017988 @ 0x08017988
  */
 
-void sub_0801797C(void)
+void ResumeEventScripts(void)
 {
     gUnknown_03002B38 = 0;
 }
+asm(".global sub_0801797C\n.thumb_set sub_0801797C, ResumeEventScripts\n");
 
-s16 sub_08017988(void)
+s16 AreEventScriptsPaused(void)
 {
     return gUnknown_03002B38;
 }
+asm(".global sub_08017988\n.thumb_set sub_08017988, AreEventScriptsPaused\n");

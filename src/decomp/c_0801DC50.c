@@ -7,7 +7,7 @@
  * sub_0801DC50 @ 0x0801DC50
  */
 
-int sub_0801DC50(s16 a1, u32 *a2, s16 a3, int a4)
+int InitSpriteScriptFromTable(s16 a1, u32 *a2, s16 a3, int a4)
 {
     struct Unk0200E438 *e = &gUnknown_0200E438[a1];
 
@@ -41,3 +41,4 @@ int sub_0801DC50(s16 a1, u32 *a2, s16 a3, int a4)
         gUnknown_03003034 = a1 + 1;
     return a1;
 }
+asm(".global sub_0801DC50\n.thumb_set sub_0801DC50, InitSpriteScriptFromTable\n");

@@ -20,7 +20,7 @@ void sub_0802A8DC(int a1, int a2, int a3, int a4, int a5)
     m = GetCellOwnerTeamColor(t);
     n = sub_08024984(t);
 
-    sub_08011E54((void *)GetTerrainNameGraphic(k), (void *)0x06013940, 0x100);
+    RegisterDataMove((void *)GetTerrainNameGraphic(k), (void *)0x06013940, 0x100);
 
     PutOamHi((a3 + gUnknown_0849A2A6[a5 * 3] + gUnknown_0849A284[0x14]) & 0x1ff,
                  (a4 + gUnknown_0849A284[0x15]) | 0x400,
@@ -31,7 +31,7 @@ void sub_0802A8DC(int a1, int a2, int a3, int a4, int a5)
             gMap->rowOffset[a2] + a1] == 0 && k != 8)
         m = 0;
 
-    sub_08011E54((void *)sub_0802A880(k, n), (void *)0x06013CC0, 0x100);
+    RegisterDataMove((void *)sub_0802A880(k, n), (void *)0x06013CC0, 0x100);
     ApplyPaletteExt((u16 *)GetTerrainNamePalette(k, m), 0x2c0, 0x20);
 
     PutOamHi((a3 + gUnknown_0849A2A6[a5 * 3] + gUnknown_0849A284[0x12]) & 0x1ff,

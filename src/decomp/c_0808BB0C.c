@@ -7,7 +7,7 @@
  * sub_0808BB0C @ 0x0808BB0C
  */
 
-/* fabsf, as the header's wave-13 note already predicted from sub_0808B710's
+/* fabsf, as the header's wave-13 note already predicted from sinf's
  * use of it. `a < 0.0f` picks __ltsf2 and the `blt`; the negation is __negsf2,
  * which is what `-a` compiles to with no hardware FPU. */
 float sub_0808BB0C(float a)

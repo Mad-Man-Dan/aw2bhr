@@ -10,5 +10,5 @@
 void sub_080604BC(void)
 {
     sub_080425FC(gUnknown_030046C0.unk06);
-    sub_08015C30(gUnknown_03001FBC);
+    ClearSlotScriptCallback(gUnknown_03001FBC);
 }

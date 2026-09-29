@@ -12,10 +12,11 @@
  * PROMOTE_MODE's zero-extension fused with the `/ 2` -- the reading the
  * prototype note in include/unknown-functions.h already carried, now confirmed
  * from the definition side. */
-void sub_08011C58(const void *src, void *dst, u16 size)
+void CpuCopy16(const void *src, void *dst, u16 size)
 {
     CpuSet(src, dst, size / 2);
 }
+asm(".global sub_08011C58\n.thumb_set sub_08011C58, CpuCopy16\n");
 
 /* Picks the wide copy when it can: a byte count that is a multiple of 32 goes
  * to CpuFastSet as words, anything else to CpuSet as halfwords.
@@ -28,19 +29,21 @@ void sub_08011C58(const void *src, void *dst, u16 size)
  * divisions are a bare `lsrs #0x11` / `#0x12`. Spelled `int` with `(u16)`
  * casts, the mask becomes a plain imm8 AND that clobbers r1, the dst pointer
  * spills to r4, and the prologue grows to `push {r4, lr}`. */
-void sub_08011C68(const void *src, void *dst, u16 size)
+void CpuCopyAuto(const void *src, void *dst, u16 size)
 {
     if (size & 0x1F)
         CpuSet(src, dst, size / 2);
     else
         CpuFastSet(src, dst, size / 4);
 }
+asm(".global sub_08011C68\n.thumb_set sub_08011C68, CpuCopyAuto\n");
 
-/* The word-copy member of the sub_08011C58 family: byte count in, word count
+/* The word-copy member of the CpuCopy16 family: byte count in, word count
  * out. Its own body is byte-identical whether the third parameter is `u16` or
  * `int` with a `(u16)` cast; it is spelled u16 to follow its two siblings,
- * where sub_08011C68's body does discriminate. Flagged rather than claimed. */
-void sub_08011C90(const void *src, void *dst, u16 size)
+ * where CpuCopyAuto's body does discriminate. Flagged rather than claimed. */
+void CpuFastCopy(const void *src, void *dst, u16 size)
 {
     CpuFastSet(src, dst, size / 4);
 }
+asm(".global sub_08011C90\n.thumb_set sub_08011C90, CpuFastCopy\n");

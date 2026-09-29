@@ -8,7 +8,7 @@
  */
 
 /* The HBlank scanline buffer fill for the "curtain"/wipe effect installed by
- * sub_08011298 and sub_0801137C through sub_080111C8's fifth parameter.
+ * sub_08011298 and sub_0801137C through StartFadeScreenLines's fifth parameter.
  *
  * 160 scanlines, two interleaved halves. On odd lines the window edge is
  * packed as `((0xF0 - v) << 8) | 0xF0` (a WIN0H-style right/left pair); on
@@ -25,7 +25,7 @@
  * pool slot; referencing gUnknown_0200B274 inside the loop body instead makes
  * gUnknown_03001408's address the first-created pseudo and swaps both the two
  * pool words and the two callee-saved registers. */
-void sub_08011228(void)
+void FillWipeScanlineTable(void)
 {
     u16 *p;
     int i;
@@ -55,3 +55,4 @@ void sub_08011228(void)
         }
     }
 }
+asm(".global sub_08011228\n.thumb_set sub_08011228, FillWipeScanlineTable\n");

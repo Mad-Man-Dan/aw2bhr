@@ -16,12 +16,12 @@
 
 /* Same registration shape as sub_080111AC: sub_08012A34 (already promoted in
  * src/decomp/c_08012A24.c) goes into the gUnknown_03002FA0 list. Two functions
- * in this batch call sub_08011AAC with two different function symbols, which
+ * in this batch call QueueVBlankCallback with two different function symbols, which
  * pins its parameter as an opaque `void *` harder than either alone -- neither
  * argument is a data object, so no data type could describe both.
  */
 
 void sub_08012A74(void)
 {
-    sub_08011AAC((void *)sub_08012A34);
+    QueueVBlankCallback((void *)sub_08012A34);
 }

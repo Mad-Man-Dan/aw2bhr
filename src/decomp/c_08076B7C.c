@@ -23,7 +23,7 @@ void sub_08076B7C(ProcPtr proc)
 
     sub_08076858();
     sub_0807681C();
-    sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
+    RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
 }
 
 /* A five-argument forwarder: the fifth goes on the stack, which is what the

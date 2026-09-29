@@ -65,7 +65,7 @@ void sub_0806A6F0(ProcPtr a1, int a2, int a3)
     struct Unk806A6F0Sub *sub;
     int i;
 
-    sub_08011E54(gUnknown_0817B150, (void *)0x06013940, 0x800);
+    RegisterDataMove(gUnknown_0817B150, (void *)0x06013940, 0x800);
     ApplyPaletteExt(gUnknown_0817B950, 0x260, 0x20);
 
     for (i = 0; i < 0x10; i++)

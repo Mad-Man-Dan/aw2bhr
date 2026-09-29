@@ -13,12 +13,12 @@
  * unk6b is `s8` -- `ldrsb` and a test against -1 -- but the value written back
  * is spelled `0xFF`, not `-1`: the ROM has `movs r1,#0xff; strb`, where `-1`
  * into an s8 would have gone through the `movs #1; negs` pair. The pointer is
- * re-loaded after the call because sub_08015328 may clobber memory. */
+ * re-loaded after the call because EndSlotScriptAt may clobber memory. */
 void sub_08005F1C(void)
 {
     if (gActiveMap->spriteId != -1)
     {
-        sub_08015328(gActiveMap->spriteId);
+        EndSlotScriptAt(gActiveMap->spriteId);
         gActiveMap->spriteId = 0xFF;
     }
 }

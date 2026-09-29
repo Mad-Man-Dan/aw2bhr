@@ -54,7 +54,7 @@ asm(".global sub_08013830\n.thumb_set sub_08013830, ColFadeFromBlack\n");
  * kept as a byte and sign-extended at both the use and the exit test
  * (`lsls #0x18` feeding a `lsrs` for the variable and an `asrs` for the
  * compare), which an int counter would not produce. */
-void sub_080138B0(u8 row, s8 delta)
+void ColFadeToWhiteRow(u8 row, s8 delta)
 {
     s8 i;
 
@@ -66,25 +66,27 @@ void sub_080138B0(u8 row, s8 delta)
         gUnknown_0200B614[(row * 16 + i) * 3 + 2] = ((gPal[row * 16 + i] >> 10) & 0x1f) + 0x20;
     }
 }
+asm(".global sub_080138B0\n.thumb_set sub_080138B0, ColFadeToWhiteRow\n");
 
-/* Applies sub_080138B0 to all 32 palette slots. The counter is `s8`: it is
+/* Applies ColFadeToWhiteRow to all 32 palette slots. The counter is `s8`: it is
  * carried between iterations as `(u8)i` and the exit test reads the shifted
  * temp (`cmp r4, #0; bge` on `i << 24`), which is what ends the loop at -1.
  * `a1` is `int` per its declaration, so the `(s8)` narrowing for the callee's
  * second parameter stays inside the loop while the `lsls #0x18` it shares
  * hoists out. */
-void sub_08013928(int a1)
+void ColFadeToWhite(int a1)
 {
     s8 i;
 
     for (i = 31; i >= 0; i--)
-        sub_080138B0(i, a1);
+        ColFadeToWhiteRow(i, a1);
 }
+asm(".global sub_08013928\n.thumb_set sub_08013928, ColFadeToWhite\n");
 
-/* sub_080138B0 with twice the bias, giving the fade 0x40 of headroom instead
+/* ColFadeToWhiteRow with twice the bias, giving the fade 0x40 of headroom instead
  * of 0x20 -- the brighten direction, where a channel has to travel further
  * before ColFadeTick's clamp lets it show. */
-void sub_0801394C(u8 row, s8 delta)
+void ColFadeFromWhiteRow(u8 row, s8 delta)
 {
     s8 i;
 
@@ -96,17 +98,19 @@ void sub_0801394C(u8 row, s8 delta)
         gUnknown_0200B614[(row * 16 + i) * 3 + 2] = ((gPal[row * 16 + i] >> 10) & 0x1f) + 0x40;
     }
 }
+asm(".global sub_0801394C\n.thumb_set sub_0801394C, ColFadeFromWhiteRow\n");
 
-/* Applies sub_0801394C to all 32 rows. The parameter stays wide: the shift
- * pair around the call is the conversion to sub_0801394C's s8, with the `lsls`
+/* Applies ColFadeFromWhiteRow to all 32 rows. The parameter stays wide: the shift
+ * pair around the call is the conversion to ColFadeFromWhiteRow's s8, with the `lsls`
  * hoisted out of the loop. */
-void sub_080139C4(s32 delta)
+void ColFadeFromWhite(s32 delta)
 {
     int i;
 
     for (i = 0x1f; i >= 0; i--)
-        sub_0801394C(i, delta);
+        ColFadeFromWhiteRow(i, delta);
 }
+asm(".global sub_080139C4\n.thumb_set sub_080139C4, ColFadeFromWhite\n");
 
 /* One step of the fade: for every armed row, add its s8 delta to all three
  * channels of all 16 colours, then take the bias back off and repack.
@@ -154,6 +158,6 @@ void ColFadeTick(void)
             }
         }
     }
-    sub_080135A4();
+    EnablePaletteSync();
 }
 asm(".global sub_080139E0\n.thumb_set sub_080139E0, ColFadeTick\n");

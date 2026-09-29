@@ -27,7 +27,7 @@ struct UnkB1A8Proc
  *  - `gUnknown_0816E170` is NOT a global. The ROM word at 0x0816E170 is
  *    0x08499578, i.e. agbcc's own -fforce-addr address constant for
  *    gBG0TilemapBuffer, which this function reads twice (CpuFastSet and
- *    sub_08014668). Naming the global directly is what reproduces the
+ *    StartTextBoxViaRecord). Naming the global directly is what reproduces the
  *    `ldr rN,<pool>; ldr rM,[rN]; ldr rK,[rM]` double indirection. Note this
  *    is TWO uses, not four -- the "it needs four uses to hold" line in
  *    docs/agbcc-codegen.md does not apply to a word the ROM already carries.
@@ -62,9 +62,9 @@ void sub_0806B1A8(struct UnkB1A8Proc *proc)
     int zero;
     u16 v;
 
-    sub_0801237C();
-    sub_08012358();
-    sub_08012C58(gUnknown_0849D16C);
+    ResetWindowShadows();
+    SetDefaultColorEffects();
+    SetupBackgrounds(gUnknown_0849D16C);
 
     gDispIo.disp_ct.obj_mapping = TRUE;
     SetDispEnable(1, 1, 1, 1, 0);
@@ -103,12 +103,12 @@ void sub_0806B1A8(struct UnkB1A8Proc *proc)
     Decompress(gUnknown_081933F4, (void *)0x0600CC00);
     Decompress(gUnknown_081942A0, gBG3TilemapBuffer);
     Decompress(gUnknown_081942A0, gBG2TilemapBuffer);
-    sub_08014668(4, 0x14, gBG0TilemapBuffer, 0x873, 0x3000, 0x40);
+    StartTextBoxViaRecord(4, 0x14, gBG0TilemapBuffer, 0x873, 0x3000, 0x40);
 
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
 
     proc->unk58 = 0;
     proc->unk5c = 0;

@@ -8,7 +8,7 @@
  */
 
 /* Latches "a flash chip was identified" into gUnknown_0200CD0C: the raw
- * sub_0808AB8C result first, then its logical negation.
+ * IdentifyFlash result first, then its logical negation.
  *
  * Two things here are spelling-sensitive and both were probed.
  *
@@ -26,7 +26,7 @@ void DetectFlash(void)
 {
     u8 *p = &gUnknown_0200CD0C;
 
-    *p = sub_0808AB8C();
+    *p = IdentifyFlash();
 
     if (*p == 0)
         *p = 1;

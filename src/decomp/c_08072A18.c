@@ -7,14 +7,14 @@
  * sub_08072A18 @ 0x08072A18
  */
 
-/* A halfword "add a bias into a copy" loop: the same shape as sub_08012B00 two
+/* A halfword "add a bias into a copy" loop: the same shape as AddToHalfwords two
  * files down, except the destination is a second pointer rather than the source
  * itself. `size` counts BYTES (`subs r2, #2` per halfword) and is signed --
  * `ble`/`bgt`, and the guard is duplicated at the top, so the decrement is the
  * last statement of the body rather than part of the condition.
  * `delta` is u16: the `lsls #16; lsrs #16` ahead of the loop is the fill-loop
  * parameter narrowing, and `adds r0, r3, r0` puts the value's own register
- * first, which is the narrow-parameter operand order sub_08012B00 records. */
+ * first, which is the narrow-parameter operand order AddToHalfwords records. */
 
 void PutTmLinear(u16 * src, u16 * dst, int size, u16 delta)
 {

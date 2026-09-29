@@ -43,7 +43,7 @@ void BomberFigure_Init(void)
   struct UnkPosPair *e2;
   int v;
   int flags;
-  sub_0801566C(gUnknown_03001FBC, (struct UnkVec *) (&oam));
+  CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *) (&oam));
   gUnknown_03001470[gUnknown_03001FBC].unk28 = gUnknown_0300451C * 8;
   gUnknown_03001470[gUnknown_03001FBC].unk2c = 0;
   gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
@@ -54,7 +54,7 @@ void BomberFigure_Init(void)
   oam.tileNum = gUnknown_0300453C * 0x100;
   oam.priority = 2;
   gUnknown_0300454C[0] = oam.priority;
-  sub_08015608(gUnknown_03001FBC, *((struct UnkVec *) (&oam)));
+  SetSlotSpriteAttrs(gUnknown_03001FBC, *((struct UnkVec *) (&oam)));
   pos = (struct UnkPosPair *) sub_08057D44(gUnknown_085D6A48[gUnknown_03004580[gUnknown_0300453C][1]][0], gUnknown_03004580[gUnknown_0300453C][3]);
   v = gUnknown_085644E0[gUnknown_0300453C][gUnknown_0300450C];
   ;
@@ -70,6 +70,6 @@ void BomberFigure_Init(void)
   gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06 = (e2 = &pos[(gUnknown_0300453C * 5) + gUnknown_0300451C])->y;
   gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y = gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06;
   StartFigureEntrySlide(gUnknown_0300453C, gUnknown_0300451C, 0, 0x32);
-  sub_080155C0(gUnknown_03001FBC, inline_fn(v, gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x), gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
+  SetSlotSpritePosition(gUnknown_03001FBC, inline_fn(v, gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x), gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
 }
 asm(".global sub_0804F18C\n.thumb_set sub_0804F18C, BomberFigure_Init\n");

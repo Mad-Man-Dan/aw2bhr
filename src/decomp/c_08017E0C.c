@@ -23,7 +23,7 @@
  * PROMOTION NEEDS THE POOL WORD PLACED: this function's data/promoted.json
  * entry needs  "rodata": ["0x0808E560"]  and then tools/split_rodata.py +
  * tools/gen_lds.py before the build. */
-int sub_08017E0C(u16 i)
+int EventOp_HoldScriptedKeys(u16 i)
 {
     int r;
 
@@ -42,3 +42,4 @@ int sub_08017E0C(u16 i)
 
     return r;
 }
+asm(".global sub_08017E0C\n.thumb_set sub_08017E0C, EventOp_HoldScriptedKeys\n");

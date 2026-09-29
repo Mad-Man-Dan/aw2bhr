@@ -17,7 +17,7 @@ void EndProjectileEffect(u16 a1, u16 a2, s16 a3)
             gUnknown_02029664 |= 8;
     }
 
-    if (a3 != -1 && sub_080153F0(a3) != 0)
-        sub_08015328(a3);
+    if (a3 != -1 && IsSlotScriptActiveAt(a3) != 0)
+        EndSlotScriptAt(a3);
 }
 asm(".global sub_08050AEC\n.thumb_set sub_08050AEC, EndProjectileEffect\n");

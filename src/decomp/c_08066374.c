@@ -41,7 +41,7 @@ void sub_08066374(struct Unk08580934_Obj *obj)
     if (obj->unk26 < 0)
     {
         obj->unk26 = 3;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         gUnknown_08580934->unk70[obj->unk1c] = 1;
     }
 }

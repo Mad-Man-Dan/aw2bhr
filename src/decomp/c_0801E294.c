@@ -13,8 +13,9 @@
  * `lsls #0x10; asrs #0x10`; a `u16` parameter forces `ldrh` / `lsrs` at the
  * caller instead. These bodies are byte-identical either way (the members they
  * store into are u16) and were re-verified by trymatch after the change. */
-void sub_0801E294(int index, s16 a, s16 b)
+void StartObjAffineAngleTween(int index, s16 a, s16 b)
 {
     gUnknown_0200F720[index].unk0c = a;
     gUnknown_0200F720[index].unk0e = b;
 }
+asm(".global sub_0801E294\n.thumb_set sub_0801E294, StartObjAffineAngleTween\n");

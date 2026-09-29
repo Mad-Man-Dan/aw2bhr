@@ -77,7 +77,7 @@ void sub_08057AE8(void)
     Decompress(gUnknown_0816CABC, (void *)0x06004000);
     CpuFastSet(gUnknown_0816D498 + gUnknown_03004500[0] * 32, (void *)0x05000140, 8);
     CpuFastSet(gUnknown_0816D498 + gUnknown_03004500[1] * 32, (void *)0x05000120, 8);
-    sub_08013C00();
+    ClearBg0Tilemap();
 
     for (i = 0; i <= 1; i++)
     {

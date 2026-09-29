@@ -100,7 +100,7 @@ void sub_0807AA84(struct Unk807AA84 *proc)
     u16 c;
 
     sub_0807898C(proc);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_03001FE8.bits.priority = 1;
@@ -221,7 +221,7 @@ void sub_0807AA84(struct Unk807AA84 *proc)
                          i + 0x19);
     }
 
-    sub_0801B780(0);
+    InitTextTileCache(0);
     proc->unk4c = 0;
     }
 }

@@ -13,7 +13,8 @@
  * sub_0801E950 can and does: it forwards the result into HideOamObjects's `int`
  * parameter with no re-narrowing, and agbcc re-narrows a narrow-returning
  * callee at every call site. Re-verified with trymatch after the change. */
-int sub_0801E334(u16 *p)
+int GetObjectListCount(u16 *p)
 {
     return *p;
 }
+asm(".global sub_0801E334\n.thumb_set sub_0801E334, GetObjectListCount\n");

@@ -33,7 +33,7 @@ struct Unk69864Proc
 
 /* Graphics loader; sub_08069FD0 is its near-twin, differing only in the first
  * Decompress destination (0x06000000 here, 0x06008000 there), one extra blob
- * into *gBG1TilemapBuffer, and the extra sub_08013AFC call.
+ * into *gBG1TilemapBuffer, and the extra BG_EnableSyncBG1 call.
  *
  * The zero word CpuFastSet fills from is a STACK local, which is what the
  * `sub sp, #4` and `mov r0, sp` are for. gUnknown_08580E60's address stays in
@@ -50,9 +50,9 @@ void sub_080697CC(void)
     Decompress(gUnknown_0818616C, gBG1TilemapBuffer);
     Decompress(gUnknown_0818633C, gBG2TilemapBuffer);
     Decompress(gUnknown_08186460, gUnknown_08580E60);
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08011E54(gUnknown_08580E60, (void *)0x0600F000, 0x1000);
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    RegisterDataMove(gUnknown_08580E60, (void *)0x0600F000, 0x1000);
 }
 
 void IntroT3_08069865(struct Unk69864Proc *proc)
@@ -65,7 +65,7 @@ void IntroT3_08069865(struct Unk69864Proc *proc)
     gUnknown_03001FE8.bits.priority = 1;
     gUnknown_0300251C.bits.priority = 2;
     gUnknown_030030B4.bits.priority = 3;
-    sub_08012358();
+    SetDefaultColorEffects();
     sub_080697CC();
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(1, 0, 0);
@@ -74,7 +74,7 @@ void IntroT3_08069865(struct Unk69864Proc *proc)
 }
 
 /* The mode-1 counterpart of IntroT3_08069865's setup: reorder the four BG
- * priorities, hand gUnknown_030030B4 to sub_08012C48, clear the tile buffer and
+ * priorities, hand gUnknown_030030B4 to SetBgCntScreenSize, clear the tile buffer and
  * load graphics. The one blob is conditional on the argument.
  *
  * The argument is `u8` -- the `lsl #0x18; lsr #0x18` at entry is PROMOTE_MODE
@@ -94,7 +94,7 @@ void sub_08069924(u8 a1)
     gUnknown_03001FE8.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
     sub_08063994();
-    sub_08012C48((struct Unk8012C30 *)&gUnknown_030030B4, 1);
+    SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 1);
     zero = 0;
     CpuFastSet(&zero, gBG2TilemapBuffer, 0x01000200);
     gUnknown_030030B4.bits.wrap = 1;
@@ -102,7 +102,7 @@ void sub_08069924(u8 a1)
     if (a1 != 0)
         Decompress(gUnknown_0817DA38, (void *)0x06008000);
     Decompress(gUnknown_0817E208, gBG2TilemapBuffer);
-    sub_08013B0C();
+    BG_EnableSyncBG2();
 }
 
 asm(".global sub_08069864\n.thumb_set sub_08069864, IntroT3_08069865\n");

@@ -34,7 +34,7 @@ void sub_08039948(struct Unk39948Proc *proc)
     i = proc->unk54;
 
     ApplyPaletteExt(&gUnknown_080A36A8[i * 0x10], 0x100, 0x20);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 
     switch (gUnknown_085D3DD0[i].unk14)
     {

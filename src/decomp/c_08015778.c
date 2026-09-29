@@ -8,9 +8,10 @@
  */
 
 /* One more member of the gUnknown_0200E438 accessor family; identical to
- * sub_08015928 (unk44) and sub_080157A4 (unk3c) with the offset swapped.
+ * SetSlotSpriteHook (unk44) and SetSlotSpriteScaleX (unk3c) with the offset swapped.
  */
-void sub_08015778(s16 a, u32 b)
+void SetSlotSpriteFrameTable(s16 a, u32 b)
 {
     gUnknown_0200E438[gUnknown_03001470[a].unk26].unk20 = b;
 }
+asm(".global sub_08015778\n.thumb_set sub_08015778, SetSlotSpriteFrameTable\n");

@@ -20,7 +20,7 @@ void OpenMapMenu(void)
         v = 0x14;
 
     sub_08024268();
-    sub_0801A104(gUnknown_0849AAC0, v, 1, 1);
+    CreateRootMenuWithSfx(gUnknown_0849AAC0, v, 1, 1);
     IncrementMapLock();
 }
 asm(".global sub_0802D458\n.thumb_set sub_0802D458, OpenMapMenu\n");

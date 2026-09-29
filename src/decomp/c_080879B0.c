@@ -19,14 +19,14 @@ struct Unk080879D8
 
 void PreviewMapRecords_OnEnd(void)
 {
-    sub_08012BC8(gBG2TilemapBuffer, 0xD, 4, 0x12, 0xC, 0);
-    sub_08013B0C();
+    FillTilemapRect(gBG2TilemapBuffer, 0xD, 4, 0x12, 0xC, 0);
+    BG_EnableSyncBG2();
 }
 
 void PreviewMapRecords_Init(struct Unk080879D8 *proc)
 {
     DrawWindowBackground(0xD, 4, 0x12, 0xC, gBG2TilemapBuffer, 0);
-    sub_08013B0C();
+    BG_EnableSyncBG2();
     MapSelect_SetBlend();
     LoadMapRecordMinimugs(proc->unk54);
 }

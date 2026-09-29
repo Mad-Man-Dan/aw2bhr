@@ -26,9 +26,9 @@ void SuperCoPowerScene_InitBackground(struct Unk080800B0 *proc)
     Decompress(gUnknown_08235558,
                (void *)(0x06000020 + gUnknown_03002B6C.bits.chr_block * 0x4000));
     Decompress(gUnknown_082352FC, gUnknown_0200FC50);
-    sub_08012B00((u16 *)gUnknown_0200FC50, 0x800, 0x9001);
+    AddToHalfwords((u16 *)gUnknown_0200FC50, 0x800, 0x9001);
     ApplyPalettes(gUnknown_08235D10, 9, 1);
-    sub_08011AAC((void *)sub_080801A8);
+    QueueVBlankCallback((void *)sub_080801A8);
     gUnknown_03001FF8 = 0x100;
     gUnknown_03001418 = 0xFFF0;
     gUnknown_030030A0 = 0xFF00;

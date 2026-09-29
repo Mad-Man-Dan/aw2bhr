@@ -12,8 +12,8 @@
  * 0x80 << 4 and 0x380 is 0xe0 << 2. Nothing in the source asks for that.
  *
  * The members do not share a destination class either: sub_080116E8 and
- * sub_0803A174 blit to VRAM through sub_08011C68, sub_0801EFD8 pushes an OAM
- * shadow to 0x07000080 through sub_08011C90 -- a different callee, listed in
+ * sub_0803A174 blit to VRAM through CpuCopyAuto, CopyHiOamShadowToOam pushes an OAM
+ * shadow to 0x07000080 through CpuFastCopy -- a different callee, listed in
  * `varies`. Both destinations are bare address literals in the ROM's pool
  * (`.4byte 0x06017800`, not a relocation), so `(void *)0xNNNNNNNN` is the
  * honest spelling and it is also the one that matches; this is NOT the
@@ -22,5 +22,5 @@
 
 void sub_0803A174(void)
 {
-    sub_08011C68(gUnknown_0200FD50, (void *)0x06015D00, 0x800);
+    CpuCopyAuto(gUnknown_0200FD50, (void *)0x06015D00, 0x800);
 }

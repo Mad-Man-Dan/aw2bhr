@@ -15,7 +15,8 @@
  * only the kind and speed are constants. StartFadeCore's fourth parameter is
  * already declared `void (*)(void)`, which is what makes r1 a function pointer
  * rather than another word. */
-void sub_080722A4(ProcPtr parent, void (*onDone)(void))
+void FadeInBlackWithCustomCallBack(ProcPtr parent, void (*onDone)(void))
 {
     StartFadeCore(3, 0x40, parent, onDone);
 }
+asm(".global sub_080722A4\n.thumb_set sub_080722A4, FadeInBlackWithCustomCallBack\n");

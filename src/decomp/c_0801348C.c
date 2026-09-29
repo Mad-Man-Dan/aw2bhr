@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* The key-state update: `keys` is the raw pad bitmask (sub_08013510 hands it
+/* The key-state update: `keys` is the raw pad bitmask (RefreshKeySt hands it
  * `~REG_KEYINPUT & 0x3ff`), `st` is gUnknown_03002090. Opposing D-pad pairs
  * cancel first (0x30 = Left|Right, 0xc0 = Up|Down).
  *
@@ -28,7 +28,7 @@
  * The `ldr r0,[r0]` shared by both repeat-reload arms is agbcc merging the
  * common tail of an if/else whose arms differ only in which global they name.
  */
-void sub_0801348C(struct Unk03002090 *st, s16 keys)
+void RefreshKeyStFromKeys(struct Unk03002090 *st, s16 keys)
 {
     if ((keys & 0x30) == 0x30)
         keys ^= 0x30;
@@ -59,19 +59,20 @@ void sub_0801348C(struct Unk03002090 *st, s16 keys)
     st->unk02 = st->unk0a;
     st->unk06 = st->unk0e;
 }
+asm(".global sub_0801348C\n.thumb_set sub_0801348C, RefreshKeyStFromKeys\n");
 
 /* The once-per-frame key poll. Normally reads the pad, but when
  * gPlaySt.unk32 selects the replay mode AND IsLinkKeySyncMode reports 1
  * the mask comes out of the replay stream instead (sub_080303C8) and
  * sub_08030234 advances it.
  *
- * `v` is a u16 local, not two separate calls to sub_0801348C: the ROM's TWO
+ * `v` is a u16 local, not two separate calls to RefreshKeyStFromKeys: the ROM's TWO
  * copies of the 0x3ff pool word (`adds r0,r2,#0; adds r4,r0,#0`) before the
  * `bics` are what a merged variable costs -- r4 is written in both arms, so the
  * constant cannot be ANDed into it in place. The single-arm spelling in
  * AgbMain's own `~REG_KEYINPUT & 0x3ff` has one copy, not two.
  */
-void sub_08013510(void)
+void RefreshKeySt(void)
 {
     u16 v;
 
@@ -85,5 +86,6 @@ void sub_08013510(void)
         v = ~REG_KEYINPUT & 0x3ff;
     }
 
-    sub_0801348C(&gUnknown_03002090, v);
+    RefreshKeyStFromKeys(&gUnknown_03002090, v);
 }
+asm(".global sub_08013510\n.thumb_set sub_08013510, RefreshKeySt\n");

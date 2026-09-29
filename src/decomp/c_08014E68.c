@@ -15,7 +15,7 @@ struct MemBlock
     /* 0x0c */ u32 filler_0c;
 };
 
-int sub_08014E68(int head, void *ptr)
+int HeapFreeBlock(int head, void *ptr)
 {
     struct MemBlock *blk;
     struct MemBlock *q;
@@ -70,3 +70,4 @@ int sub_08014E68(int head, void *ptr)
 
     return 0;
 }
+asm(".global sub_08014E68\n.thumb_set sub_08014E68, HeapFreeBlock\n");

@@ -113,7 +113,7 @@ asm(".global sub_0806540C\n.thumb_set sub_0806540C, MatchSetupSpawnArmyColumnsSl
  * gUnknown_0816E0F8 / _0816E0FC / _0816E100 are agbcc's own -fforce-addr words
  * holding &gUnknown_08580AF0, &gUnknown_08580B90 and &gUnknown_08580BC8 (read
  * straight out of baserom.gba at those addresses). Each of the three is
- * referenced TWICE across the control-flow merge -- once by sub_08015BD0 and
+ * referenced TWICE across the control-flow merge -- once by FindSlotScript and
  * once by ClearCallbackOfSlotsRunningScript -- which is exactly the documented trigger; the two
  * scripts named only once (gUnknown_08580A38, gUnknown_08580A08) get plain
  * pool words instead. Naming all five honestly reproduces the split.
@@ -129,9 +129,9 @@ void sub_080654E8(void)
 
     sub_080733B8();
 
-    if (sub_08015BD0((s32)gUnknown_08580AF0) == -1
-        && sub_08015BD0((s32)gUnknown_08580B90) == -1
-        && sub_08015BD0((s32)gUnknown_08580BC8) == -1)
+    if (FindSlotScript((s32)gUnknown_08580AF0) == -1
+        && FindSlotScript((s32)gUnknown_08580B90) == -1
+        && FindSlotScript((s32)gUnknown_08580BC8) == -1)
         return;
 
     for (i = 0; i < gUnknown_08580934->unk08; i++)

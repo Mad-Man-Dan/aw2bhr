@@ -13,11 +13,12 @@
  * the value the counter is reset to, so the pair is one quantity written
  * twice, not two coincidences. */
 
-void sub_0801EF90(void)
+void ClearHiOamShadow(void)
 {
     HideOamObjects(0x10, 0x70);
     gUnknown_03002B54 = 0x10;
 }
+asm(".global sub_0801EF90\n.thumb_set sub_0801EF90, ClearHiOamShadow\n");
 
 /* Family F069, third member: objects 0..0xF, and a different counter.
  * gUnknown_03001FE4 is newly declared `u16` in unknown-globals.h -- it has
@@ -25,8 +26,9 @@ void sub_0801EF90(void)
  * `ldrh; adds #1; strh` bump inside sub_0801EEnn's sprite-emit loop, which
  * fixes the width at 16 rather than at "at least 16". */
 
-void sub_0801EFA8(void)
+void ClearLoOamShadow(void)
 {
     HideOamObjects(0, 0x10);
     gUnknown_03001FE4 = 0;
 }
+asm(".global sub_0801EFA8\n.thumb_set sub_0801EFA8, ClearLoOamShadow\n");

@@ -17,7 +17,8 @@ struct Unk8012C30
     u8 unk01_6 : 2;
 };
 
-void sub_08012C48(struct Unk8012C30 *s, u32 value)
+void SetBgCntScreenSize(struct Unk8012C30 *s, u32 value)
 {
     s->unk01_6 = value;
 }
+asm(".global sub_08012C48\n.thumb_set sub_08012C48, SetBgCntScreenSize\n");

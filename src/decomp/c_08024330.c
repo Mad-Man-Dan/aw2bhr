@@ -26,11 +26,11 @@ void sub_08024330(void)
     switch ((u32)gGameClock % 40)
     {
     case 0:
-        sub_08011C68(gUnknown_0810E6E0, (void *)(PLTT + 0x1C0), 0x20);
+        CpuCopyAuto(gUnknown_0810E6E0, (void *)(PLTT + 0x1C0), 0x20);
         break;
 
     case 4:
-        sub_08011C68(gUnknown_0810E720, (void *)(PLTT + 0x1C0), 0x20);
+        CpuCopyAuto(gUnknown_0810E720, (void *)(PLTT + 0x1C0), 0x20);
         break;
     }
 }

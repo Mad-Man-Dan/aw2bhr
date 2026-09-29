@@ -9,10 +9,10 @@
 
 
 /*
- * sub_08015438 -- start a script in a free slot and give it a sprite.
+ * StartSlotScriptWithSprite -- start a script in a free slot and give it a sprite.
  *
- * sub_08015BD0 finds a free gUnknown_03001470 slot (the first whose script
- * pointer is 0, or -1 when they are all taken) and sub_0801DC04 an OBJ, built
+ * FindSlotScript finds a free gUnknown_03001470 slot (the first whose script
+ * pointer is 0, or -1 when they are all taken) and StartSpriteScriptFromTable an OBJ, built
  * out of `c`, `d` and `e`. The two are then linked: the slot's .unk26 holds the
  * OBJ index and the OBJ's .unk38 holds the slot index. sub_08015224 installs
  * script blob `a` with mode `b`, and bit 1 of the mode word then marks the slot
@@ -20,20 +20,20 @@
  * free. sub_08015410 is a forwarder into this one that swaps arguments 3 and 4.
  *
  * Why the C looks odd: `i` is s8 and `j` is int, and the casts on `d`, `e` and
- * the sub_0801DC04 result are written out instead of being folded into
+ * the StartSpriteScriptFromTable result are written out instead of being folded into
  * narrower types. Each cast is one sign-extension in the original; declaring
  * `j` as s8 would add a second one.
  */
-s8 sub_08015438(void *a, int b, void *c, void *d, int e)
+s8 StartSlotScriptWithSprite(void *a, int b, void *c, void *d, int e)
 {
     s8 i;
     int j;
 
-    i = sub_08015BD0(0);
+    i = FindSlotScript(0);
 
     if (i != -1)
     {
-        j = (s8)sub_0801DC04(c, (s16)(int)d, (s16)e);
+        j = (s8)StartSpriteScriptFromTable(c, (s16)(int)d, (s16)e);
 
         if (j == -1)
             return j;
@@ -46,3 +46,4 @@ s8 sub_08015438(void *a, int b, void *c, void *d, int e)
 
     return i;
 }
+asm(".global sub_08015438\n.thumb_set sub_08015438, StartSlotScriptWithSprite\n");

@@ -29,7 +29,7 @@ void sub_08023860(void)
     int x;
     int y;
 
-    if (sub_08015BD0((s32)gUnknown_08499B4C) != -1)
+    if (FindSlotScript((s32)gUnknown_08499B4C) != -1)
     {
         gUnknown_03001FF8 = (u16)gMap->scrollX - gMap->camX * 16;
         gUnknown_03001418 = (u16)gMap->scrollY - gMap->camY * 16;

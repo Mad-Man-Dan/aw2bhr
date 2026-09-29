@@ -24,11 +24,11 @@
  * 0x08084xxx), which is argument setup and nothing else. The parameter is dead
  * here -- the first `bl` overwrites r0 -- so this definition is byte-identical
  * before and after (re-verified with trymatch). Same correction as
- * sub_0801A538, and those two are the only F005 members whose callers set any
+ * DisableWindow0AndResetMapLayers, and those two are the only F005 members whose callers set any
  * argument register; the other seventeen really are nullary. */
 
 void sub_08085298(ProcPtr proc)
 {
-    sub_08013C00();
-    sub_08013AEC();
+    ClearBg0Tilemap();
+    BG_EnableSyncBG0();
 }

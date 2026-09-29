@@ -16,8 +16,8 @@
  * the `adds r0, #0x40` continuation of the first address rather than its own
  * pool word.
  *
- * The zero in r4 is one value doing four jobs -- both sub_08012BC8 sixth
- * arguments, both `strh`s and sub_08014B0C's sixth -- which is what pays for
+ * The zero in r4 is one value doing four jobs -- both FillTilemapRect sixth
+ * arguments, both `strh`s and DrawTallNumberRightAligned's sixth -- which is what pays for
  * r4 being callee-saved here. */
 
 struct Unk08047B98
@@ -30,12 +30,12 @@ struct Unk08047B98
 void RefreshUnitList(struct Unk08047B98 *p)
 {
     sub_08047190(p, p->unk1e);
-    sub_08012BC8(gBG0TilemapBuffer, 0xf, 1, 1, 2, 0);
-    sub_08012BC8(gBG0TilemapBuffer, 1, 7, 0x1c, 0xc, 0);
+    FillTilemapRect(gBG0TilemapBuffer, 0xf, 1, 1, 2, 0);
+    FillTilemapRect(gBG0TilemapBuffer, 1, 7, 0x1c, 0xc, 0);
     gBG0TilemapBuffer[0x37] = 0;
     gBG0TilemapBuffer[0x57] = 0;
-    sub_08014B0C(0x18, 1, gBG0TilemapBuffer, p->unk1f + 1, 0x8000, 0);
+    DrawTallNumberRightAligned(0x18, 1, gBG0TilemapBuffer, p->unk1f + 1, 0x8000, 0);
     DrawUnitListRows(p);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 asm(".global sub_08047B98\n.thumb_set sub_08047B98, RefreshUnitList\n");

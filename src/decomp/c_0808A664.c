@@ -27,12 +27,12 @@ void CampaignIntroBg_Loop(void)
 }
 asm(".global sub_0808A664\n.thumb_set sub_0808A664, CampaignIntroBg_Loop\n");
 
-/* One statement: sub_08014740's result is used directly, with no local. Six
+/* One statement: StartTextBox's result is used directly, with no local. Six
  * arguments -- `movs r0,#0x80; lsls r0,r0,#8` is 0x8000 and 0x41 follows it in
  * the second stack slot -- and the returned gUnknown_03001470 slot takes a 6 in
  * its +0x3a byte. `adds r0, #0x3a` is strb's 31-byte displacement limit. */
 void CampaignIntro_ShowPrologueText(void)
 {
-    sub_08014740(6, 5, gBG0TilemapBuffer, 0, 0x8000, 0x41)->unk3a = 6;
+    StartTextBox(6, 5, gBG0TilemapBuffer, 0, 0x8000, 0x41)->unk3a = 6;
 }
 asm(".global sub_0808A6A0\n.thumb_set sub_0808A6A0, CampaignIntro_ShowPrologueText\n");

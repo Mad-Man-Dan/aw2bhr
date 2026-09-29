@@ -21,7 +21,7 @@ struct Unk674D0Proc
 void sub_080674D0(struct Unk674D0Proc *proc)
 {
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
 
     proc->unk58--;
 

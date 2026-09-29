@@ -10,8 +10,8 @@
  * linker alias below so every other unit keeps resolving it unchanged.
  */
 
-/* Best-fit allocator for a heap laid out by sub_08014D7C. sub_08014E44 is the
- * wrapper that passes gUnknown_03000050; sub_08014E68 frees and sub_08014EF4
+/* Best-fit allocator for a heap laid out by HeapInitBuffer. HeapMalloc is the
+ * wrapper that passes gUnknown_03000050; HeapFreeBlock frees and HeapRealloc
  * reallocates. The header layout is the one c_08014E68.c established.
  *
  * Rounds the request up to 16 bytes, walks the block list for the smallest

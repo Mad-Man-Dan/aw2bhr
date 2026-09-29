@@ -72,7 +72,7 @@ void MapSelectPreview_FillTilemap(void)
     sub_08037A20(gBG1TilemapBuffer, 0x6200);
     gUnknown_03005918 = ((u8 *)gUnknown_03003F68)[0];
     gUnknown_030058F4 = ((u8 *)gUnknown_03003F68)[1];
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 
 /* The third user of WarRoomScroll_08086DB5's address expression: unpack a

@@ -43,7 +43,7 @@ asm(".global sub_08071E40\n.thumb_set sub_08071E40, FadeFromCommon_OnLoopUnused\
  * three coefficient shadows.
  *
  * `.bits.effect = 2` is `ldrb; ands #0x3f; orrs #0x80; strb` -- the AND is
- * present because 2 does not fill the 2-bit field. sub_08010FE0's `= 3` fills
+ * present because 2 does not fill the 2-bit field. ForceScreenBlack's `= 3` fills
  * it and agbcc drops the AND, which is the discriminator hardware.h's note on
  * this field already records. */
 void FadeToWhite_OnInit(struct Unk08071CF4 *proc)

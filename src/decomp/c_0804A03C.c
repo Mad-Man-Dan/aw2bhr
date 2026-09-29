@@ -17,5 +17,5 @@
 
 void sub_0804A03C(void)
 {
-    sub_0801A5B0(0);
+    LoadBg1WindowFrame(0);
 }

@@ -7,14 +7,14 @@
  * sub_0801B9C8 @ 0x0801B9C8
  */
 
-/* One line of the gUnknown_0808EF64 text stream: sub_0801B7C0 resolves the
+/* One line of the gUnknown_0808EF64 text stream: CacheTextString resolves the
  * cursor to a slot (-1 when there is none), the slot's 4-byte record supplies
- * an x offset and a byte, and sub_0801BA1C paints with them. The return value
+ * an x offset and a byte, and PutTextTileRows paints with them. The return value
  * is sub_0808B6B0's, i.e. how far the cursor advanced.
  *
  * TWO measured facts hold this together.
  *   (1) `p` must be BOUND BEFORE the call. The base address is live across
- * `bl sub_0801B7C0` in a callee-saved register -- that is the fourth entry in
+ * `bl CacheTextString` in a callee-saved register -- that is the fourth entry in
  * the push list -- and referencing gUnknown_03002B80 only inside the argument
  * list creates the pseudo after the call, giving `push {r4,r5,r6}` and a
  * 4-byte-short function. Read the push list first.
@@ -40,15 +40,16 @@ struct Unk1B9C8Blk /* the gUnknown_03002B80 block seen by this function */
     /* 0x358 */ u16 unk358;
 };
 
-int sub_0801B9C8(int a, u32 b, int c, int d)
+int PutCachedTextString(int a, u32 b, int c, int d)
 {
     struct Unk1B9C8Blk *p = (struct Unk1B9C8Blk *)&gUnknown_03002B80;
     int i;
 
-    i = sub_0801B7C0((const char *)b, d);
+    i = CacheTextString((const char *)b, d);
     if (i == -1)
         return 0;
 
-    sub_0801BA1C((void *)a, p->unk258[i].unk00 + c, p->unk258[i].unk02);
+    PutTextTileRows((void *)a, p->unk258[i].unk00 + c, p->unk258[i].unk02);
     return sub_0808B6B0((const char *)b);
 }
+asm(".global sub_0801B9C8\n.thumb_set sub_0801B9C8, PutCachedTextString\n");

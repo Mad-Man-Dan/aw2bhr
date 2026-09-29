@@ -9,7 +9,7 @@
 
 
 /*
- * sub_080151B0 -- fill in a gUnknown_03001470 script slot.
+ * InitSlotScript -- fill in a gUnknown_03001470 script slot.
  *
  * Slot `b` is pointed at the script blob `a` (kept both as a pointer and as
  * the integer in the slot's first word), takes `c` in .unk14, and has
@@ -22,7 +22,7 @@
  * reuses the register, where the original computes all four addresses first
  * and then stores right to left -- which is a chain's evaluation order.
  */
-void sub_080151B0(const void *a, u8 b, u8 c)
+void InitSlotScript(const void *a, u8 b, u8 c)
 {
     gUnknown_03001470[b].unk00 = (u32)a;
     gUnknown_03001470[b].unk04 = a;
@@ -41,14 +41,15 @@ void sub_080151B0(const void *a, u8 b, u8 c)
     gUnknown_03001470[b].unk20 = 0;
     gUnknown_03001470[b].unk1e = 0;
 }
+asm(".global sub_080151B0\n.thumb_set sub_080151B0, InitSlotScript\n");
 
 
 /*
  * sub_08015224 -- install a script blob in slot `b` and start it, mode 0.
  *
  * gUnknown_03001FBC holds the slot the script system is currently working on:
- * it is saved, pointed at this slot while sub_080151B0 fills the slot in and
- * sub_08015A30 starts it, then restored. Returns the slot index.
+ * it is saved, pointed at this slot while InitSlotScript fills the slot in and
+ * StepSlotScript starts it, then restored. Returns the slot index.
  * sub_0801527C below is the same function storing 4 in the mode word.
  *
  * Why the C looks odd: the slot index is s16 here and u8 in sub_0801527C. Both
@@ -61,9 +62,9 @@ s8 sub_08015224(const void *a, s16 b, u8 c)
     s16 saved = gUnknown_03001FBC;
 
     gUnknown_03001FBC = b;
-    sub_080151B0(a, b, c);
+    InitSlotScript(a, b, c);
     gUnknown_03001470[b].unk12 = 0;
-    sub_08015A30(b);
+    StepSlotScript(b);
     gUnknown_03001FBC = saved;
 
     return b;
@@ -82,9 +83,9 @@ s8 sub_0801527C(const void *a, u8 b, u8 c)
     s16 saved = gUnknown_03001FBC;
 
     gUnknown_03001FBC = b;
-    sub_080151B0(a, b, c);
+    InitSlotScript(a, b, c);
     gUnknown_03001470[b].unk12 = 4;
-    sub_08015A30(b);
+    StepSlotScript(b);
     gUnknown_03001FBC = saved;
 
     return b;
@@ -94,7 +95,7 @@ s8 sub_0801527C(const void *a, u8 b, u8 c)
 /*
  * sub_080152C0 -- start a script in the first free slot, mode 0.
  *
- * sub_08015BD0 scans the thirty gUnknown_03001470 slots for one whose script
+ * FindSlotScript scans the thirty gUnknown_03001470 slots for one whose script
  * pointer equals its argument; with 0 that is the first unused slot, or -1 when
  * they are all taken. On success sub_08015224 fills the slot in and starts it.
  * Returns the slot index, or -1.
@@ -105,7 +106,7 @@ s8 sub_0801527C(const void *a, u8 b, u8 c)
  */
 s8 sub_080152C0(s32 a, u8 b)
 {
-    s8 i = sub_08015BD0(0);
+    s8 i = FindSlotScript(0);
 
     if (i != -1)
         sub_08015224((const void *)a, i, b);
@@ -131,7 +132,7 @@ struct Unk03001470 *sub_080152EC(const void *a, u8 b)
 {
     s8 i;
 
-    i = sub_08015BD0(0);
+    i = FindSlotScript(0);
 
     if (i != -1)
     {

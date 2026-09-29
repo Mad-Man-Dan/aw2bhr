@@ -80,7 +80,7 @@ void RunSpriteScript(int id, int tick)
                 frame = (u32 *)e->unk20;
                 frame += e->unk24;
                 if (((struct SpriteScriptFlags *)&e->unk30)->hidden == 0)
-                    sub_0801D348(e->unk26, (e->unk14 + e->unk0c) / 256,
+                    SubmitSpriteScriptFrame(e->unk26, (e->unk14 + e->unk0c) / 256,
                                  (e->unk18 + e->unk10) / 256, *frame,
                                  e->unk1e, e->unk28,
                                  *(long long *)&e->unk30, e->unk38);
@@ -97,7 +97,7 @@ void RunSpriteScript(int id, int tick)
                     break;
                 }
                 e->unk02 |= 8;
-                sub_0801E294(e->unk28, arg, *(s16 *)p++);
+                StartObjAffineAngleTween(e->unk28, arg, *(s16 *)p++);
             }
             else
             {
@@ -107,7 +107,7 @@ void RunSpriteScript(int id, int tick)
                     break;
                 }
                 e->unk02 |= 4;
-                sub_0801E264(e->unk28, *(s16 *)p++);
+                SetObjAffineRecordAngle(e->unk28, *(s16 *)p++);
             }
             break;
         case 0x6000:
@@ -122,7 +122,7 @@ void RunSpriteScript(int id, int tick)
                     break;
                 }
                 e->unk02 |= 0x20;
-                sub_0801E27C(e->unk28, arg, first * 0x100 / 100,
+                StartObjAffineScaleTween(e->unk28, arg, first * 0x100 / 100,
                              *(s16 *)p++ * 0x100 / 100);
             }
             else
@@ -133,7 +133,7 @@ void RunSpriteScript(int id, int tick)
                     break;
                 }
                 e->unk02 |= 0x10;
-                sub_0801E248(e->unk28, first * 0x100 / 100,
+                SetObjAffineRecordScale(e->unk28, first * 0x100 / 100,
                              *(s16 *)p++ * 0x100 / 100);
             }
             break;
@@ -156,14 +156,14 @@ void RunSpriteScript(int id, int tick)
                 frame = (u32 *)e->unk20;
                 frame += e->unk24;
                 if (((struct SpriteScriptFlags *)&e->unk30)->hidden == 0)
-                    sub_0801D348(e->unk26, (e->unk14 + e->unk0c) / 256,
+                    SubmitSpriteScriptFrame(e->unk26, (e->unk14 + e->unk0c) / 256,
                                  (e->unk18 + e->unk10) / 256, *frame,
                                  e->unk1e, e->unk28,
                                  *(long long *)&e->unk30, e->unk38);
                 return;
             case 0xE00:
                 if (tick != 0)
-                    sub_0801D81C(id);
+                    EndSpriteScript(id);
                 return;
             case 0xA00:
                 e->unk1e = *p;

@@ -22,7 +22,7 @@ struct Unk806A2F8
 void IntroT3_0806A2F9(struct Unk806A2F8 *proc)
 {
     proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
-    sub_0801237C();
+    ResetWindowShadows();
 }
 
 asm(".global sub_0806A2F8\n.thumb_set sub_0806A2F8, IntroT3_0806A2F9\n");

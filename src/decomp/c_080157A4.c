@@ -15,7 +15,8 @@
  * is the `u16 -> s16` conversion and is two instructions of real code. A `u16`
  * parameter emits nothing there and leaves those two callers short. This
  * function's own bytes are unchanged -- re-verified with trymatch. */
-void sub_080157A4(s16 a, s16 b)
+void SetSlotSpriteScaleX(s16 a, s16 b)
 {
     gUnknown_0200E438[gUnknown_03001470[a].unk26].unk3c = b;
 }
+asm(".global sub_080157A4\n.thumb_set sub_080157A4, SetSlotSpriteScaleX\n");

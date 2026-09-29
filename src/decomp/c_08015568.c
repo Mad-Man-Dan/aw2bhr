@@ -30,7 +30,8 @@
  * as the weaker contract, and the choice has no oracle.
  */
 
-void sub_08015568(int a)
+void FreeSpriteScript2(int a)
 {
     FreeSpriteScript((s16)a);
 }
+asm(".global sub_08015568\n.thumb_set sub_08015568, FreeSpriteScript2\n");

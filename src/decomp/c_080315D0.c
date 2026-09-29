@@ -9,6 +9,6 @@
 
 void sub_080315D0(void)
 {
-    sub_0801A444(10, 5, 13, 10);
+    DrawWindowBackgroundOnBg2(10, 5, 13, 10);
     sub_08030F60(0);
 }

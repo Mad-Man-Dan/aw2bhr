@@ -7,28 +7,28 @@
  * sub_0802C260 @ 0x0802C260, sub_0802C270 @ 0x0802C270, sub_0802C280 @ 0x0802C280, sub_0802C290 @ 0x0802C290
  */
 
-/* Registers a function with the 16-slot gUnknown_03002FA0 list. sub_08011AAC
+/* Registers a function with the 16-slot gUnknown_03002FA0 list. QueueVBlankCallback
  * takes its entry as `void *` (that is how src/decomp/c_08011AAC.c defines it),
  * so a function address has to be cast -- exactly the note carried on the
- * sibling pair sub_08011B34/sub_08011B5C. The pool word is the ADDRESS of
- * sub_080184C8, not a call to it.
+ * sibling pair AddVBlankHook/RemoveVBlankHook. The pool word is the ADDRESS of
+ * DisableCoScreenHBlankAndSoundVSync, not a call to it.
  */
 
 void sub_0802C260(void)
 {
-    sub_08011AAC((void *)sub_080184C8);
+    QueueVBlankCallback((void *)DisableCoScreenHBlankAndSoundVSync);
 }
 
-/* Registers a function with the 16-slot gUnknown_03002FA0 list. sub_08011AAC
+/* Registers a function with the 16-slot gUnknown_03002FA0 list. QueueVBlankCallback
  * takes its entry as `void *` (that is how src/decomp/c_08011AAC.c defines it),
  * so a function address has to be cast -- exactly the note carried on the
- * sibling pair sub_08011B34/sub_08011B5C. The pool word is the ADDRESS of
- * sub_080184A4, not a call to it.
+ * sibling pair AddVBlankHook/RemoveVBlankHook. The pool word is the ADDRESS of
+ * EnableCoScreenHBlankAndSoundVSync, not a call to it.
  */
 
 void sub_0802C270(void)
 {
-    sub_08011AAC((void *)sub_080184A4);
+    QueueVBlankCallback((void *)EnableCoScreenHBlankAndSoundVSync);
 }
 
 /* Installs one gUnknown_0200C528 list script. StartEventScript returns the slot it

@@ -14,14 +14,14 @@
  *
  * The handler is bound to a LOCAL before the call. That is load-bearing: as a
  * single call expression agbcc computes the slot address before loading the
- * handler and the two `ldr`s come out in the wrong order. See sub_08015E80 in
+ * handler and the two `ldr`s come out in the wrong order. See SlotOp_StartEventScript in
  * src/decomp/c_08015E80.c for why `gUnknown_03001470[a].unk04` is named twice
  * rather than bound to a pointer.
  *
  * The `!= 0` sense is read off the block order: the branch is taken to the
  * block AFTER the literal pool, and that block is `movs r0,#1`, so the
  * TRUE-returning arm is the one under the `if`. */
-bool8 sub_08015DC8(u8 a)
+bool8 SlotOp_CallHandler(u8 a)
 {
     bool8 (*handler)(struct Unk03001470 *) =
         *(bool8 (**)(struct Unk03001470 *))gUnknown_03001470[a].unk04;
@@ -32,3 +32,4 @@ bool8 sub_08015DC8(u8 a)
         return TRUE;
     return FALSE;
 }
+asm(".global sub_08015DC8\n.thumb_set sub_08015DC8, SlotOp_CallHandler\n");

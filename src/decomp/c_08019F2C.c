@@ -22,10 +22,11 @@ int sub_08019F2C(const void *a, u16 b, u16 c, u16 d, u16 e)
     return CreateMenu(a, b, c, d, e);
 }
 
-/* sub_08019F50 -- sub_08019F2C above with a sub_0801A604() call in front of it.
+/* CreateRootMenu -- sub_08019F2C above with a sub_0801A604() call in front of it.
  * Same five parameters, same forwarded return value. */
-int sub_08019F50(const void *a, u16 b, u16 c, u16 d, u16 e)
+int CreateRootMenu(const void *a, u16 b, u16 c, u16 d, u16 e)
 {
     sub_0801A604();
     return CreateMenu(a, b, c, d, e);
 }
+asm(".global sub_08019F50\n.thumb_set sub_08019F50, CreateRootMenu\n");

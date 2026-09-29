@@ -17,7 +17,7 @@ void LanderPart_Init(void)
     u16 pal;
     u16 prio;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
     gUnknown_03001470[gUnknown_03001FBC].unk28 = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk2c = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
@@ -28,10 +28,10 @@ void LanderPart_Init(void)
     oam.tileNum = gUnknown_0300453C * 0x100 + 0x80;
     prio = gUnknown_085523A4[gUnknown_0300453C ^ gUnknown_0300450C];
     oam.priority = prio;
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_080155C0(gUnknown_03001FBC,
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpritePosition(gUnknown_03001FBC,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
-    sub_08015928(gUnknown_03001FBC, (u32)LanderPart_StreamHook);
+    SetSlotSpriteHook(gUnknown_03001FBC, (u32)LanderPart_StreamHook);
 }
 asm(".global sub_0804CC38\n.thumb_set sub_0804CC38, LanderPart_Init\n");

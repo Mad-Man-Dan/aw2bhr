@@ -14,16 +14,16 @@
  *
  * Two things in the ROM look authored and are not. The dead `ldrb` in front of
  * the `strb` is gUnknown_030024F0's volatile-element tell -- the same one
- * sub_0801E17C and sub_0801DF94 carry, already recorded on the declaration in
+ * FreeObjAffineRecord and InitOamRequestsAndObjAffine carry, already recorded on the declaration in
  * include/unknown-globals.h. And the two `strh` stores use the register holding
  * the LOADED BYTE rather than a fresh zero, because cse knows the flag compared
  * equal to 0 on this path; writing `= 0` is what produces that.
  *
  * gUnknown_0200F720 is referenced TWICE here and gets a plain text pool word.
- * Its neighbour sub_0801E2A4 references the same object ONCE and gets a
+ * Its neighbour StepObjAffineTweens references the same object ONCE and gets a
  * -fforce-addr .rodata address constant instead. The two make a controlled pair
  * for that threshold. */
-int sub_0801E13C(void)
+int AllocObjAffineRecord(void)
 {
     int i;
 
@@ -39,3 +39,4 @@ int sub_0801E13C(void)
     }
     return -1;
 }
+asm(".global sub_0801E13C\n.thumb_set sub_0801E13C, AllocObjAffineRecord\n");

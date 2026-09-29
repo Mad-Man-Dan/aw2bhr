@@ -26,12 +26,12 @@ void NameEntry_Loop(void)
         switch (gUnknown_030044E0->unk67)
         {
         case 0:
-            sub_0801B768(0);
+            ResetTextTileCache(0);
         case 1:
         case 2:
         case 3:
         case 4:
-            sub_080149C0(6, (s16)(gUnknown_030044E0->unk67 * 2 + 6),
+            PutTextScriptImmediate(6, (s16)(gUnknown_030044E0->unk67 * 2 + 6),
                          gBG0TilemapBuffer,
                          gUnknown_084C3B3C[gUnknown_030044E0->unk67
                                            + (gUnknown_030044E0->unk66 & 1) * 5],
@@ -44,11 +44,11 @@ void NameEntry_Loop(void)
                 Decompress(gUnknown_0813593C, (void *)0x060103E0);
             else
                 Decompress(gUnknown_081358A0, (void *)0x060103E0);
-            sub_0801B768(0xb0);
+            ResetTextTileCache(0xb0);
             break;
         }
         gUnknown_030044E0->unk67++;
-        sub_08013AEC();
+        BG_EnableSyncBG0();
     }
     else
     {

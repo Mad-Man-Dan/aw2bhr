@@ -16,7 +16,7 @@
  * `movs r0, #0xfc; lsls #8; ands` -- a 16-bit 0xfc00 mask and an `adds`.
  * Through OamData's `tileNum : 10` bitfield agbcc extracts the field on the read
  * side too and masks with the 32-bit 0xfffffc00 on the write side, which is four
- * bytes wrong. The stack copy sub_0801566C fills IS an OamData -- its tileNum
+ * bytes wrong. The stack copy CopySlotSpriteAttrs fills IS an OamData -- its tileNum
  * read is the `lsls #0x16; lsrs #0x16` extract -- so the two objects are
  * deliberately typed differently here.
  *
@@ -34,7 +34,7 @@ void sub_0804E334(s16 a, struct Unk4E334 *p)
     u16 d;
     u16 g;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
 
     d = (p->attr2 - oam.tileNum) & 0x3ff;
     g = gUnknown_03001470[a].unk30;

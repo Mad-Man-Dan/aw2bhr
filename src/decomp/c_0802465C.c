@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* SetMapLayersDefault without the trailing sub_0801237C -- see
+/* SetMapLayersDefault without the trailing ResetWindowShadows -- see
  * src/decomp/c_08024404.c for the 2-bit-field reading. */
 
 void sub_0802465C(void)
@@ -18,5 +18,5 @@ void sub_0802465C(void)
     gUnknown_03001FE8.bits.priority = 2;
     gUnknown_030030B4.bits.priority = 1;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08012358();
+    SetDefaultColorEffects();
 }

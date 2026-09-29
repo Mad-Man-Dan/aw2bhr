@@ -41,7 +41,7 @@
  *    (r3/r2/r0 -> r0/r3/r4). With the int read both come out right without it.
  *
  * Settled earlier and still load-bearing: `[c * 10 + f * 2]` and not
- * `[(c * 5 + f) * 2]`; the last sub_080155C0 entry as `(e3 = ...)->x` inside
+ * `[(c * 5 + f) * 2]`; the last SetSlotSpritePosition entry as `(e3 = ...)->x` inside
  * argument 1; `p = *(u16 **)(c * sizeof(u16 *) + (u8 *)gUnknown_084C3F78)`;
  * `(row = gUnknown_02028E5C[c])[1]`. */
 void TCopterFigure_Loop(void)
@@ -117,7 +117,7 @@ void TCopterFigure_Loop(void)
         req.unk0c = 0x64;
         SetFigureSlide(&req);
     }
-    sub_080155C0(gUnknown_03001FBC,
+    SetSlotSpritePosition(gUnknown_03001FBC,
                  (e3 = (struct Unk02029A10 *)(e * sizeof(struct Unk02029A10)
                                               + c * sizeof(struct Unk02029A10Group)
                                               + (u8 *)gUnknown_02029A10))->x,

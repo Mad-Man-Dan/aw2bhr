@@ -23,6 +23,6 @@ void sub_0802DBD0(void)
 
 void ShowUnitLimitMessage(void)
 {
-    sub_08019818(0xC9E, 0, 0);
+    StartCoSpeechScript(0xC9E, 0, 0);
 }
 asm(".global sub_0802DBE4\n.thumb_set sub_0802DBE4, ShowUnitLimitMessage\n");

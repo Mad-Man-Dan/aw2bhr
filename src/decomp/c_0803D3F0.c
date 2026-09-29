@@ -75,7 +75,7 @@ void MainMenu2_0803D48D(void)
 
 /* `p` must be bound BEFORE the guard, not at first use: the ROM loads
  * gUnknown_02000000 in the entry block, ahead of `cmp r5,#3`, which only
- * happens when the pseudo's live range crosses the `bl sub_0801AD70` and so
+ * happens when the pseudo's live range crosses the `bl IsSaveSlotInvalid` and so
  * earns a callee-saved register. Naming the global at each use instead puts
  * the `ldr` inside the success block and reorders the literal pool.
  *
@@ -90,7 +90,7 @@ int sub_0803D4A8(u8 a)
     u8 b;
     u8 i;
 
-    if (a > 3 || sub_0801AD70(b = a + 5) != 0) {
+    if (a > 3 || IsSaveSlotInvalid(b = a + 5) != 0) {
         gUnknown_020280C0[a].unk13 = 0xff;
         return 0;
     }

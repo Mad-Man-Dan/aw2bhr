@@ -9,7 +9,7 @@
 
 /* One command of the gUnknown_03001470[a].unk04 script stream: the halfword at
  * +4 of the current 8-byte command is the argument, and the cursor then steps
- * one command forward. Same shape as sub_08015DA0 next door, which reads the
+ * one command forward. Same shape as SlotOp_Wait next door, which reads the
  * same halfword into .unk10.
  */
 bool8 SlotOp_StartFadeToBlack(u8 a)
@@ -22,7 +22,7 @@ asm(".global sub_08015FE4\n.thumb_set sub_08015FE4, SlotOp_StartFadeToBlack\n");
 
 /* One command of the gUnknown_03001470[a].unk04 script stream: the halfword at
  * +4 of the current 8-byte command is the argument, and the cursor then steps
- * one command forward. Same shape as sub_08015DA0 next door, which reads the
+ * one command forward. Same shape as SlotOp_Wait next door, which reads the
  * same halfword into .unk10.
  */
 bool8 SlotOp_StartFadeFromBlack(u8 a)
@@ -35,34 +35,34 @@ asm(".global sub_08016010\n.thumb_set sub_08016010, SlotOp_StartFadeFromBlack\n"
 
 /* One command of the gUnknown_03001470[a].unk04 script stream: the halfword at
  * +4 of the current 8-byte command is the argument, and the cursor then steps
- * one command forward. Same shape as sub_08015DA0 next door, which reads the
+ * one command forward. Same shape as SlotOp_Wait next door, which reads the
  * same halfword into .unk10.
  */
 bool8 sub_0801603C(u8 a)
 {
-    sub_08011588(((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    StartFadeToWhite(((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return FALSE;
 }
 
 /* One command of the gUnknown_03001470[a].unk04 script stream: the halfword at
  * +4 of the current 8-byte command is the argument, and the cursor then steps
- * one command forward. Same shape as sub_08015DA0 next door, which reads the
+ * one command forward. Same shape as SlotOp_Wait next door, which reads the
  * same halfword into .unk10.
  */
 bool8 sub_08016068(u8 a)
 {
-    sub_080115B4(((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    StartFadeFromWhite(((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return FALSE;
 }
 
-/* The conditional twin of sub_080160DC: gUnknown_03002F1C is a one-shot flag
+/* The conditional twin of SlotOp_SetFlag: gUnknown_03002F1C is a one-shot flag
  * that turns the next command into a JUMP -- when it is set, the flag is
  * cleared and the cursor is replaced by the word the current command points
  * at, instead of stepping the usual 8 bytes forward.
  */
-bool8 sub_08016094(u8 a)
+bool8 SlotOp_JumpIfFlag(u8 a)
 {
     if (gUnknown_03002F1C == 0)
     {
@@ -76,3 +76,4 @@ bool8 sub_08016094(u8 a)
 
     return TRUE;
 }
+asm(".global sub_08016094\n.thumb_set sub_08016094, SlotOp_JumpIfFlag\n");

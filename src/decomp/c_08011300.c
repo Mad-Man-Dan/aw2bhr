@@ -15,7 +15,7 @@
  * reuses the `movs r3, #0x20` set up for gDispIo's win0_enable at the top.
  * Both shadows are written at byte 0, which is the win0_* group of
  * struct WinCnt. */
-void sub_08011300(void)
+void SetupWipeWindow(void)
 {
     gDispIo.disp_ct.win0_enable = 1;
 
@@ -32,3 +32,4 @@ void sub_08011300(void)
     gUnknown_030030DC.bits.win0_enable_obj = 1;
     gUnknown_030030DC.bits.win0_enable_blend = 1;
 }
+asm(".global sub_08011300\n.thumb_set sub_08011300, SetupWipeWindow\n");

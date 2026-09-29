@@ -94,8 +94,8 @@ void MapSelectList_HandleInput(ProcPtr procp)
 
         if (p->unk4e != 0 || p->unk52 != 0)
         {
-            sub_08013C54();
-            sub_08013AFC();
+            ClearBg1Tilemap();
+            BG_EnableSyncBG1();
             gUnknown_03002F18 = sub_08087298() + p->unk4e * 0x100;
             p->unk4c = 8;
             p->unk52 = 0;
@@ -148,8 +148,8 @@ void MapSelectList_HandleInput(ProcPtr procp)
 
         if (p->unk4e != 0 || p->unk52 != 0)
         {
-            sub_08013C54();
-            sub_08013AFC();
+            ClearBg1Tilemap();
+            BG_EnableSyncBG1();
             gUnknown_03002F18 = sub_08087298() + p->unk4e * 0x100;
             p->unk4c = 8;
             p->unk52 = 0;
@@ -236,8 +236,8 @@ void MapSelectList_HandleInput(ProcPtr procp)
 
         if (p->unk4e != 0 || p->unk52 != 0)
         {
-            sub_08013C54();
-            sub_08013AFC();
+            ClearBg1Tilemap();
+            BG_EnableSyncBG1();
             gUnknown_03002B34 = sub_08087248() + (p->unk52 << 8);
             p->unk4c = 8;
             p->unk4e = 0;
@@ -276,8 +276,8 @@ void MapSelectList_HandleInput(ProcPtr procp)
 
         if (p->unk4e != 0 || p->unk52 != 0)
         {
-            sub_08013C54();
-            sub_08013AFC();
+            ClearBg1Tilemap();
+            BG_EnableSyncBG1();
             gUnknown_03002B34 = sub_08087248() + (p->unk52 << 8);
             p->unk4c = 8;
             p->unk4e = 0;

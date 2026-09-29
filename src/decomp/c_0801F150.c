@@ -12,7 +12,7 @@
  * the `strb` at +4 is the member truncating. The `strh` at +8 lands on
  * unk08[0].unk00, the first entry of the array src/decomp/c_0801F114.c
  * sweeps. */
-void sub_0801F150(int a, void *b, u16 c, int d)
+void InitTilePool(int a, void *b, u16 c, int d)
 {
     gUnknown_0200F920[a].unk00 = b;
     gUnknown_0200F920[a].unk04 = d;
@@ -20,6 +20,7 @@ void sub_0801F150(int a, void *b, u16 c, int d)
     gUnknown_0200F920[a].unk08[0].unk00 = c;
     LoadTilePoolPalette(a, d);
 }
+asm(".global sub_0801F150\n.thumb_set sub_0801F150, InitTilePool\n");
 
 /* `lsls #0x15; lsrs #0x10` is a NET LEFT SHIFT OF FIVE under a `(u16)` cast,
  * and it must be spelled as the MULTIPLY `b * 0x20`: shorten_binary_op folds a

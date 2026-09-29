@@ -8,10 +8,10 @@
  */
 
 /* The claim half of the affine-matrix slot allocator whose release half is
- * sub_0801DA94: scan gUnknown_03001430 downwards for a free slot, mark it and
+ * ClearObjAffineSlots: scan gUnknown_03001430 downwards for a free slot, mark it and
  * return its index, or -1 when all 0x20 are taken.
  */
-int sub_0801DAB0()
+int AllocObjAffineSlot()
 {
     s16 i;
 
@@ -25,3 +25,4 @@ int sub_0801DAB0()
     }
     return -1;
 }
+asm(".global sub_0801DAB0\n.thumb_set sub_0801DAB0, AllocObjAffineSlot\n");

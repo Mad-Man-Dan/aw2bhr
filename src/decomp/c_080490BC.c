@@ -20,7 +20,7 @@
  * breaks.
  *
  * `v` is not cosmetic: the ROM passes the sub_08048EC4 result straight back as
- * sub_08012BC8's sixth argument (`str r2, [sp, #4]` reusing the register the
+ * FillTilemapRect's sixth argument (`str r2, [sp, #4]` reusing the register the
  * `lsr #0x10` left it in), which is also what proves sub_08048EC4 returns a
  * value rather than a flag.
  *
@@ -54,7 +54,7 @@ void BattleMaps_IDLE_080490BD(ProcPtr proc)
     gUnknown_084C30F8->unk839++;
 
     if (gUnknown_084C30F8->unk836 != 0)
-        sub_08012BC8(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, v);
+        FillTilemapRect(gBG0TilemapBuffer, 7, 0xf, 0x17, 4, v);
 
     sub_0803B4DC(0x71);
     Proc_Break(proc);

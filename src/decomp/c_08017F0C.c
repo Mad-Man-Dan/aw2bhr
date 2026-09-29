@@ -7,7 +7,7 @@
  * sub_08017F0C @ 0x08017F0C
  */
 
-/* Clears the gUnknown_03001FF0 callback, runs sub_080192EC over every
+/* Clears the gUnknown_03001FF0 callback, runs EndEventScriptSlot over every
  * gUnknown_0200C528 slot EXCEPT `a`, then advances slot `a`'s own list cursor
  * by one node.
  *
@@ -23,7 +23,7 @@
  * The `return 0` is a guess in one respect only: the function has no callers
  * anywhere in the tree, so nothing constrains the width and nothing would
  * observe the value. `movs r0,#0` before the pop is what the ROM does. */
-int sub_08017F0C(s16 a)
+int EventOp_EndOtherScripts(s16 a)
 {
     u8 i;
 
@@ -32,9 +32,10 @@ int sub_08017F0C(s16 a)
     for (i = 0; i <= 9; i++)
     {
         if (i != a)
-            sub_080192EC(i);
+            EndEventScriptSlot(i);
     }
 
     gUnknown_0200C528[a].unk04++;
     return 0;
 }
+asm(".global sub_08017F0C\n.thumb_set sub_08017F0C, EventOp_EndOtherScripts\n");

@@ -13,13 +13,13 @@
  * `adds r1, #0x62` before the `ldrb`/`strb` pair is strb's 31-byte
  * displacement limit; unk62 is a plain u8 counter.
  *
- * gUnknown_03001FBC is s16 and sub_08015C30 takes u8, so the `ldrb` is the
+ * gUnknown_03001FBC is s16 and ClearSlotScriptCallback takes u8, so the `ldrb` is the
  * prototype's conversion reading the low half. */
 void sub_0804AE20(void)
 {
     if (sub_08019260() == 0)
     {
         gUnknown_030044E0->unk62++;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

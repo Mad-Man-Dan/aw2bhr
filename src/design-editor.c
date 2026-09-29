@@ -11,9 +11,9 @@ void sub_08003640(void)
     sub_0808B6E8(v, gUnknown_0808D77C, 4);
     for (i = 0; i < 4; i++)
     {
-        sub_08011E54((void *)(sub_0802A880(v[i], 0) + 0x40),
+        RegisterDataMove((void *)(sub_0802A880(v[i], 0) + 0x40),
                      (void *)(gUnknown_08485C9C[i + 1] * 32 + 0x06010000), 0xC0);
-        sub_08011E54(gUnknown_08485A2C,
+        RegisterDataMove(gUnknown_08485A2C,
                      (void *)(gUnknown_08485C9C[i + 1] * 32 + 0x060100C0), 0x40);
     }
 }
@@ -29,7 +29,7 @@ void sub_080036A4(void)
 
 void sub_08003704(void)
 {
-    sub_0801F150(0, (void *)0x06010000, 0x28D, 0x1D);
+    InitTilePool(0, (void *)0x06010000, 0x28D, 0x1D);
     LoadTilePoolGraphic(0x02);
     LoadTilePoolGraphic(0x0C);
     LoadTilePoolGraphic(0x2F);
@@ -54,7 +54,7 @@ void sub_0800376C(void)
 
 void sub_080037AC(void)
 {
-    sub_0801F150(0, (void *)0x06010000, 0x28D, 0x1D);
+    InitTilePool(0, (void *)0x06010000, 0x28D, 0x1D);
     LoadTilePoolGraphic(0x02);
     LoadTilePoolGraphic(0x0C);
     LoadTilePoolGraphic(0x2F);
@@ -147,7 +147,7 @@ void sub_0800396C(void)
     if (v > 6)
     {
         v = 6;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
     gUnknown_03001FFC = v;
@@ -160,7 +160,7 @@ void sub_08003994(void)
     if (v <= 0)
     {
         v = 0;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
     gUnknown_03001FFC = v;
@@ -178,7 +178,7 @@ void sub_080039D0(void)
 
 void sub_080039E4(void)
 {
-    sub_08012358();
+    SetDefaultColorEffects();
 
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_030030E0.bits.target1_enable_bg0 = 0;
@@ -209,7 +209,7 @@ void sub_08003A80(int a1, int a2, int a3, int a4)
 {
     u16 v;
 
-    sub_08012358();
+    SetDefaultColorEffects();
 
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_030030E0.bits.target1_enable_bg1 = 0;

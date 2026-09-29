@@ -10,7 +10,7 @@
 /*
  * StartEventScript -- start a script in a free gUnknown_0200C528 slot.
  *
- * Runs the three openers sub_08013D40, sub_08017E74 and sub_080198AC, asks
+ * Runs the three openers ClearTextSkipFlag, EnableScriptedInput and ClearCoScreenDrawHook, asks
  * FindEventScriptSlot for a free slot, and seeds it: both .unk00 and .unk04 point at
  * `script`, with no callback and a zero counter. Returns the slot, or NULL when
  * FindEventScriptSlot reports -1.
@@ -26,9 +26,9 @@ struct Unk0200C528 *StartEventScript(const u8 *script)
     s16 r;
     u16 idx;
 
-    sub_08013D40();
-    sub_08017E74();
-    sub_080198AC();
+    ClearTextSkipFlag();
+    EnableScriptedInput();
+    ClearCoScreenDrawHook();
 
     r = FindEventScriptSlot(NULL);
     idx = r;

@@ -12,9 +12,9 @@
 
 void SyncAllBgTilemaps(void)
 {
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
 }
 asm(".global sub_08078AF0\n.thumb_set sub_08078AF0, SyncAllBgTilemaps\n");

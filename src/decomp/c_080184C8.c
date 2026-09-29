@@ -16,8 +16,9 @@
  * would be byte-identical only if `g` had a parameter, and none of the 19
  * second callees does -- see the F005 block in unknown-functions.h. */
 
-void sub_080184C8(void)
+void DisableCoScreenHBlankAndSoundVSync(void)
 {
     sub_08012A74();
     DisableSoundVSync();
 }
+asm(".global sub_080184C8\n.thumb_set sub_080184C8, DisableCoScreenHBlankAndSoundVSync\n");

@@ -10,17 +10,19 @@
 /* Family F068: one call, two literal arguments, nothing else. `pop {r0}` is
  * the void epilogue. The argument types are not recoverable from here --
  * `movs rN,#K` is the same two bytes for every integer width -- so the
- * spelling follows sub_08019940's declaration in unknown-functions.h. */
+ * spelling follows DefeatOtherTeamsAndEndMatch's declaration in unknown-functions.h. */
 
-void sub_080199A4(void)
+void DeclareArmy1Winner(void)
 {
-    sub_08019940(1, 8);
+    DefeatOtherTeamsAndEndMatch(1, 8);
 }
+asm(".global sub_080199A4\n.thumb_set sub_080199A4, DeclareArmy1Winner\n");
 
-/* Family F068, second member -- same shape as sub_080199A4, first argument 2
+/* Family F068, second member -- same shape as DeclareArmy1Winner, first argument 2
  * instead of 1. */
 
-void sub_080199B4(void)
+void DeclareArmy2Winner(void)
 {
-    sub_08019940(2, 8);
+    DefeatOtherTeamsAndEndMatch(2, 8);
 }
+asm(".global sub_080199B4\n.thumb_set sub_080199B4, DeclareArmy2Winner\n");

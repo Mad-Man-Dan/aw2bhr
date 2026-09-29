@@ -7,8 +7,9 @@
  * sub_08015844 @ 0x08015844
  */
 
-void sub_08015844(s16 a, u16 b, u16 c)
+void SetSlotSpriteScale(s16 a, u16 b, u16 c)
 {
     gUnknown_0200E438[gUnknown_03001470[a].unk26].unk3c = b;
     gUnknown_0200E438[gUnknown_03001470[a].unk26].unk3e = c;
 }
+asm(".global sub_08015844\n.thumb_set sub_08015844, SetSlotSpriteScale\n");

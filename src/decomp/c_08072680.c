@@ -16,7 +16,7 @@
  *
  * The two clip tests are unsigned so one compare covers both ends of the
  * range -- `cmp #0x1f; bhi` is `(unsigned)v <= 0x1f`. */
-void sub_08072680(u16 *map, int x, int y, u16 tile, int w, int h)
+void TmPutSequentialTilesClipped(u16 *map, int x, int y, u16 tile, int w, int h)
 {
     int ix;
     int iy;
@@ -26,3 +26,4 @@ void sub_08072680(u16 *map, int x, int y, u16 tile, int w, int h)
             if ((unsigned) ix < 0x20 && (unsigned) iy < 0x20)
                 map[iy * 0x20 + ix] = tile;
 }
+asm(".global sub_08072680\n.thumb_set sub_08072680, TmPutSequentialTilesClipped\n");

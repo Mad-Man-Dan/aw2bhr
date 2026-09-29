@@ -13,7 +13,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The VRAM address handed to sub_0801F150 is built from the live BG control
+/* The VRAM address handed to InitTilePool is built from the live BG control
  * shadow: `lsls #0x1c; lsrs #0x1e` is the 2-bit field at bit 2 -- chr_block --
  * read out of a 32-bit `ldr`, which is the width hardware.h records this shadow
  * being used at for bitfield access. `lsls #0xe` then scales it by the 0x4000
@@ -34,7 +34,7 @@ struct Unk80760B4
 void WM_Listener_080760B5(struct Unk80760B4 *proc)
 {
     sub_0801F114();
-    sub_0801F150(1,
+    InitTilePool(1,
                  (void *)(0x6000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  0x29, 1);
     LoadTilePoolGraphic(0x3E);

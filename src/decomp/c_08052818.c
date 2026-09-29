@@ -50,7 +50,7 @@ void sub_08052818(u16 a1, u16 a2)
 
                 if (gUnknown_02029A10[a1].entries[a2].unk18 != -1)
                 {
-                    if (sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+                    if (IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
                     {
                         sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                                      gUnknown_02029BA8[a1].unk14);
@@ -77,7 +77,7 @@ void sub_08052818(u16 a1, u16 a2)
 
             if (gUnknown_02029A10[a1].entries[a2].unk18 != -1)
             {
-                if (sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
+                if (IsSlotScriptActiveAt(gUnknown_02029A10[a1].entries[a2].unk18))
                     sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                                  gUnknown_02029BA8[a1].unk14);
             }

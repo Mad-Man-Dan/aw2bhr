@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08010FA0(void)
+void InitFadeBlend(void)
 {
     gUnknown_030030E0.raw = 0;
     gUnknown_030030E0.bits.target1_enable_bg0 = 1;
@@ -23,3 +23,4 @@ void sub_08010FA0(void)
     gUnknown_03002B28 = 0;
     gUnknown_03001FFC = 0;
 }
+asm(".global sub_08010FA0\n.thumb_set sub_08010FA0, InitFadeBlend\n");

@@ -13,7 +13,7 @@ void sub_08004DD4(int a1, int a2, u8 * a3, int a4)
 
     y = a1 == 0 ? 5 : 7;
     y += a2 * 2;
-    sub_08012BC8(gBG0TilemapBuffer, a4 + 3, y, 9, 2, 0);
-    sub_080149C0((s16)(a4 + 3), (s16)y, gBG0TilemapBuffer, a3, 0x8000, 0);
-    sub_08013AEC();
+    FillTilemapRect(gBG0TilemapBuffer, a4 + 3, y, 9, 2, 0);
+    PutTextScriptImmediate((s16)(a4 + 3), (s16)y, gBG0TilemapBuffer, a3, 0x8000, 0);
+    BG_EnableSyncBG0();
 }

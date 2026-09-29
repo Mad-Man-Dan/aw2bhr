@@ -7,16 +7,16 @@
  * sub_08044924 @ 0x08044924, sub_08044940 @ 0x08044940
  */
 
-/* The `(void *)` casts are the price of sub_08011B34/sub_08011B5C taking the
+/* The `(void *)` casts are the price of AddVBlankHook/RemoveVBlankHook taking the
  * list entry as `void *` -- C89 needs one to hand it a function. */
 void sub_08044924(void)
 {
-    sub_08011B5C((void *)sub_080246B4);
-    sub_08011B5C((void *)sub_08024720);
+    RemoveVBlankHook((void *)sub_080246B4);
+    RemoveVBlankHook((void *)sub_08024720);
 }
 
 void sub_08044940(void)
 {
-    sub_08011B34((void *)sub_080246B4);
-    sub_08011B34((void *)sub_08024720);
+    AddVBlankHook((void *)sub_080246B4);
+    AddVBlankHook((void *)sub_08024720);
 }

@@ -26,6 +26,6 @@ asm(".global sub_0808006C\n.thumb_set sub_0808006C, CoPowerSceneEnd_WaitForBlend
 
 void sub_08080094(void)
 {
-    sub_0801A5B0(gUnknown_030033EC);
+    LoadBg1WindowFrame(gUnknown_030033EC);
     sub_08043834(gUnknown_030033EC);
 }

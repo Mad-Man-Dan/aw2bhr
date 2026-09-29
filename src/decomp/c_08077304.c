@@ -166,7 +166,7 @@ void sub_08077304(struct Unk8077304Proc * proc)
         if (j != 0)
         {
             sub_0801F114();
-            sub_0801F150(4,
+            InitTilePool(4,
                          (void *)(0x06000000 + (gUnknown_03002B6C.bits.chr_block << 14)),
                          0x6a, 2);
             LoadTilePoolGraphic(gUnknown_086145CE[j]);
@@ -176,7 +176,7 @@ void sub_08077304(struct Unk8077304Proc * proc)
             for (k = 0; k < 4; k++)
                 p[0x29a + k] = 0x29 + k;
 
-            sub_0801F2AC(gUnknown_086145CE[j], gBG0TilemapBuffer + 0x2bc);
+            PutTilePoolGraphicTilemap(gUnknown_086145CE[j], gBG0TilemapBuffer + 0x2bc);
         }
     }
 

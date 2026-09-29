@@ -7,7 +7,8 @@
  * sub_08013028 @ 0x08013028
  */
 
-void sub_08013028(void)
+void SetSlotScriptFlag(void)
 {
     gUnknown_03002F1C = 1;
 }
+asm(".global sub_08013028\n.thumb_set sub_08013028, SetSlotScriptFlag\n");

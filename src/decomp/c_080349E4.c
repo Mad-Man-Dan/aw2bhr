@@ -18,7 +18,7 @@ void sub_080349E4(void)
 
     v = gPlayers[GetNextActiveArmy(gUnknown_030033EC)].teamColor;
 
-    sub_0801F150(1, (void *)0x06010000, 0x1ca, 0x13);
+    InitTilePool(1, (void *)0x06010000, 0x1ca, 0x13);
     LoadTilePoolGraphic(v + 0x3d);
 
     gUnknown_030032D8 = 3;

@@ -8,11 +8,12 @@
  */
 
 /* Parameter two is `s16`, not the `u16` this file first declared -- the same
- * argument as on its twin sub_080157A4, from the same two callers. The bare
+ * argument as on its twin SetSlotSpriteScaleX, from the same two callers. The bare
  * `strh` setter cannot distinguish int/u32/u16/s16, so the caller's
  * `lsls #0x10; asrs #0x10` is the only evidence there is. This function's own
  * bytes are unchanged -- re-verified with trymatch. */
-void sub_080157F4(s16 a, s16 b)
+void SetSlotSpriteScaleY(s16 a, s16 b)
 {
     gUnknown_0200E438[gUnknown_03001470[a].unk26].unk3e = b;
 }
+asm(".global sub_080157F4\n.thumb_set sub_080157F4, SetSlotSpriteScaleY\n");

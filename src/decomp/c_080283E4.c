@@ -12,12 +12,12 @@
 
 #include "hardware.h"
 
-/* The debug versus-mode pause screen: a text overlay drawn with sub_08013428
+/* The debug versus-mode pause screen: a text overlay drawn with DebugPrintf
  * that lets the tester flip fog of war ("SAKUTEKI") and choose whether player 1
  * and player 2 are human ("1P"/"2P") or computer ("CP").
  *
  *   A / Start      apply: copy the 1P/CP choices into gPlayers and resume
- *                  (sub_08015C30 with gUnknown_03001FBC)
+ *                  (ClearSlotScriptCallback with gUnknown_03001FBC)
  *   R              toggle fog of war
  *   Left / Right   move the "--" cursor between the two player columns
  *   Up / Down      toggle the column under the cursor between human (1) and
@@ -52,7 +52,7 @@ void DebugVersusPauseScreen(void)
     {
         gPlayers[1].aiControlled = gPlaySt.aiControlled[1];
         gPlayers[2].aiControlled = gPlaySt.aiControlled[2];
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
     if (gpKeySt->pressed & R_BUTTON)
@@ -74,25 +74,25 @@ void DebugVersusPauseScreen(void)
     }
 
     if (gPlaySt.fog == 1)
-        sub_08013428(8, 13, "R: SAKUTEKI  ON");
+        DebugPrintf(8, 13, "R: SAKUTEKI  ON");
     else
-        sub_08013428(8, 13, "R: SAKUTEKI  OFF");
+        DebugPrintf(8, 13, "R: SAKUTEKI  OFF");
 
     if (gPlaySt.aiControlled[1] == 1)
-        sub_08013428(11, 10, "1P");
+        DebugPrintf(11, 10, "1P");
     else
-        sub_08013428(11, 10, "CP");
+        DebugPrintf(11, 10, "CP");
 
     if (gPlaySt.aiControlled[2] == 1)
-        sub_08013428(17, 10, "2P");
+        DebugPrintf(17, 10, "2P");
     else
-        sub_08013428(17, 10, "CP");
+        DebugPrintf(17, 10, "CP");
 
-    sub_08013428(14, 10, "VS");
+    DebugPrintf(14, 10, "VS");
 
     slot = &gUnknown_03001470[gUnknown_03001FBC];
-    sub_08013428((s16)(*(s16 *)&slot->unk38 * 6 + 11), 11, "--");
-    sub_08013428(12, 6, "PAUSE");
+    DebugPrintf((s16)(*(s16 *)&slot->unk38 * 6 + 11), 11, "--");
+    DebugPrintf(12, 6, "PAUSE");
 }
 
 asm(".global sub_080283E4\n.thumb_set sub_080283E4, DebugVersusPauseScreen\n");

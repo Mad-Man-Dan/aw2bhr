@@ -13,7 +13,7 @@
  * void epilogue.
  *
  * gUnknown_0849E600 is a gUnknown_03001470 script blob -- sub_0803ACD0 next
- * door is its matching `sub_08015BD0(script) != -1` liveness predicate. */
+ * door is its matching `FindSlotScript(script) != -1` liveness predicate. */
 void sub_0803ACB8(void)
 {
     sub_080116E8();

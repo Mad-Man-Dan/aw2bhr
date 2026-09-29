@@ -45,7 +45,7 @@ void sub_080436DC(int x, int y, int pid)
     gUnknown_030005D0 = pid;
 
     if (gPlaySt.fog != 0 && (gPlayers[pid].turnState & 2) == 0)
-        sub_080119A0((x + 0x34) & 0x1ff, y + 3, gUnknown_0809136C);
+        PutAsciiStringSprites((x + 0x34) & 0x1ff, y + 3, gUnknown_0809136C);
     else
         sub_0802BD54((x + 0x34) & 0x1ff, y + 3, gPlayers[pid].funds);
 
@@ -54,7 +54,7 @@ void sub_080436DC(int x, int y, int pid)
 
     sub_08043AA0(gPlayers[pid].co, 0x1e);
     off = ((gPlayers[pid].co * 8) & 0x3ff) * 0x20;
-    sub_08011E54(gUnknown_08102F64 + off, (void *)0x06010740, 0x100);
+    RegisterDataMove(gUnknown_08102F64 + off, (void *)0x06010740, 0x100);
 
     if (gPlaySt.coPowersEnabled != 0)
     {

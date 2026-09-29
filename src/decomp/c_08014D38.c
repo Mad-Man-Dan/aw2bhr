@@ -9,7 +9,7 @@
 
 /* Measures a string in pixels: gUnknown_084C36E4[c] per character plus one
  * pixel of spacing before every character after the first, with 9 and 0xa
- * treated as two-byte escapes worth a fixed 16 pixels. sub_08014D20 converts
+ * treated as two-byte escapes worth a fixed 16 pixels. GetStringWidthInTiles converts
  * the result to tiles.
  *
  * The 9..0xa test MUST be a `switch`, not `if (c >= 9 && c <= 0xa)`. The
@@ -19,9 +19,9 @@
  * r0, which is why the `&&` spelling reloads it for the table index and the
  * ROM does not.
  *
- * The accumulator is a full `int` here, unlike sub_08014CEC's u16: nothing
+ * The accumulator is a full `int` here, unlike GetStringPixelWidthSimple's u16: nothing
  * truncates it. */
-int sub_08014D38(const char *s)
+int GetStringPixelWidth(const char *s)
 {
     int w;
     int seen;
@@ -51,3 +51,4 @@ int sub_08014D38(const char *s)
 
     return w;
 }
+asm(".global sub_08014D38\n.thumb_set sub_08014D38, GetStringPixelWidth\n");

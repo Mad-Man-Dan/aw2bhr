@@ -36,7 +36,7 @@ void sub_0802966C(void)
 
     if (gpKeySt->pressed & 2)
     {
-        sub_08015328(gUnknown_03001FBC);
+        EndSlotScriptAt(gUnknown_03001FBC);
         DecrementMapLock();
         sub_0802D558();
         gUnknown_030033E4.unk00 = gUnknown_03003F24.pos.unk00;
@@ -69,7 +69,7 @@ void sub_0802966C(void)
         sub_080357E0(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
                      (((struct Unit *)gUnknown_030040D8 - gUnits) & 0xc0) >> 6,
                      unit->type, gUnknown_03003110);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         sub_08029868(unit->type);
     }
 }

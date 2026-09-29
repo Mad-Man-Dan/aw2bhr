@@ -23,25 +23,25 @@ void LoadGameplayGraphics(int a)
     sub_08011B18();
 
     if (a == 1)
-        sub_08010FE0();
+        ForceScreenBlack();
 
     if (a == 0)
-        sub_08011018();
+        ForceScreenWhite();
 
-    sub_08012C58(gUnknown_0849D16C);
+    SetupBackgrounds(gUnknown_0849D16C);
     sub_08023860();
-    sub_080128D0();
+    FlushLCDControl();
 
-    sub_08011C68(gUnknown_0809175C, (void *)0x06003600, 0xa0);
-    sub_08011C68(sub_08026190(), (void *)0x060046A0, ((u16)sub_080261A0() & 0x3ff) * 0x20);
-    sub_08011C68(sub_08026198(), (void *)0x06005440, 0x200);
+    CpuCopyAuto(gUnknown_0809175C, (void *)0x06003600, 0xa0);
+    CpuCopyAuto(sub_08026190(), (void *)0x060046A0, ((u16)sub_080261A0() & 0x3ff) * 0x20);
+    CpuCopyAuto(sub_08026198(), (void *)0x06005440, 0x200);
 
     Decompress(gUnknown_080BD1EC, (void *)0x06008000);
 
-    sub_08011C68(gUnknown_0809175C + 0xa0, (void *)0x0600E780, 0x20);
-    sub_08011C68(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
-    sub_08011C68(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
-    sub_08011C68(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
+    CpuCopyAuto(gUnknown_0809175C + 0xa0, (void *)0x0600E780, 0x20);
+    CpuCopyAuto(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
+    CpuCopyAuto(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
+    CpuCopyAuto(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
 
     ApplyPalette((u16 *)(gUnknown_0810E6E0 + (gPlayers[1].teamColor - 1) * 0x20), 12);
     ApplyPalette((u16 *)(gUnknown_0810E6E0 + (gPlayers[2].teamColor - 1) * 0x20), 13);
@@ -57,7 +57,7 @@ void LoadGameplayGraphics(int a)
     sub_08024268();
     HideRangeOverlay();
 
-    sub_08011C68(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
+    CpuCopyAuto(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
 
     ClearMoveSlideSlots();
     sub_080116E8();
@@ -65,9 +65,9 @@ void LoadGameplayGraphics(int a)
     sub_08035020(gPlaySt.weather);
     sub_08022A34();
 
-    sub_0801A5B0(gUnknown_030033EC);
+    LoadBg1WindowFrame(gUnknown_030033EC);
     sub_08043834(gUnknown_030033EC);
-    sub_0801A57C(gUnknown_030033EC);
+    LoadArmyObjPalette(gUnknown_030033EC);
 }
 
 asm(".global sub_08023360\n.thumb_set sub_08023360, LoadGameplayGraphics\n");

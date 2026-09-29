@@ -22,7 +22,7 @@ void sub_0806D4DC(struct Unk08580934_Obj *obj)
         if (--obj->unk26 < 0)
         {
             gUnknown_08580934->unk2d--;
-            sub_08015C30(gUnknown_03001FBC);
+            ClearSlotScriptCallback(gUnknown_03001FBC);
         }
     }
 }

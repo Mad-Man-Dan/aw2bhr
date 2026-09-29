@@ -13,8 +13,8 @@
  * forward. */
 void HideRangeOverlay(void)
 {
-    sub_08013C00();
-    sub_08013AEC();
+    ClearBg0Tilemap();
+    BG_EnableSyncBG0();
     RedrawUnitIconLayer();
     SetMapLayersDefault();
     gUnknown_03000559 = 0;
@@ -49,6 +49,6 @@ void sub_08022A34(void)
  * calls, which is what pays for r5. */
 void sub_08022A6C(void)
 {
-    sub_0801368C(gUnknown_08101984 + (((u32)gGameClock >> 2) & 0xF), 0x228, 2);
-    sub_0801368C(gUnknown_08101984 + 0x10 + (((u32)gGameClock >> 2) & 0xF), 0x238, 2);
+    ApplyPaletteAndUploadNow(gUnknown_08101984 + (((u32)gGameClock >> 2) & 0xF), 0x228, 2);
+    ApplyPaletteAndUploadNow(gUnknown_08101984 + 0x10 + (((u32)gGameClock >> 2) & 0xF), 0x238, 2);
 }

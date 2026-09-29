@@ -7,7 +7,7 @@
  * sub_0801A700 @ 0x0801A700
  */
 
-u32 sub_0801A700(void)
+u32 PopSpriteRequest(void)
 {
     struct Unk0808E5C8 *p = gUnknown_030020A8.unk04;
 
@@ -17,3 +17,4 @@ u32 sub_0801A700(void)
     gUnknown_030020A8.unk04 = p->unk04;
     return p->unk00;
 }
+asm(".global sub_0801A700\n.thumb_set sub_0801A700, PopSpriteRequest\n");

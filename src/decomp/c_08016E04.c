@@ -28,7 +28,7 @@ bool8 sub_08016E04(u16 a)
  * grouping by operand class. */
 void WriteProfile(void)
 {
-    sub_08016A14();
+    MarkProfileSaved();
     sub_0801A7D8(0, gUnknown_02000000, PackProfileRecord(gUnknown_02000000));
     sub_0803D48C();
 }

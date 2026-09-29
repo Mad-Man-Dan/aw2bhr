@@ -12,7 +12,7 @@
  *
  * MATCHES -- but only when compiled WITHOUT `-fforce-addr`. It does NOT match
  * under the default build flags, so `try_match` and a plain
- * `python tools/trymatch.py sub_0808AD6C` both still report 85.7% and fail.
+ * `python tools/trymatch.py SetReadFlash1` both still report 85.7% and fail.
  *
  * Verified byte-for-byte (bytes and relocations) with:
  *
@@ -23,17 +23,17 @@
  * flag, where the m4a pair (MPlayTempoControl, MP_clear_modM) is purely a binary.
  *
  * The flag is exactly the axis the parked note said was missing. The ROM loads
- * the `sub_0808AD68` pool word TWICE -- once as the eor's destination, which
+ * the `ReadFlash1` pool word TWICE -- once as the eor's destination, which
  * the eor clobbers, and once again for the subtraction:
  *
- *     ldr r3,=sub_0808AD68 ; movs r0,#1 ; eors r3,r0
- *     ldr r0,=sub_0808AD6C ; ldr r1,=sub_0808AD68 ; subs r0,r0,r1
+ *     ldr r3,=ReadFlash1 ; movs r0,#1 ; eors r3,r0
+ *     ldr r0,=SetReadFlash1 ; ldr r1,=ReadFlash1 ; subs r0,r0,r1
  *
  * With `-fforce-addr` the symbol's address is forced into a pseudo before the
  * loop's MEM is built, CSE unifies the second reference with it, and the
  * clobber has to be paid for with a register copy:
  *
- *     ldr r3,=sub_0808AD68 ; adds r1,r3,#0 ; movs r0,#1 ; eors r3,r0
+ *     ldr r3,=ReadFlash1 ; adds r1,r3,#0 ; movs r0,#1 ; eors r3,r0
  *
  * Same 56 bytes, same instruction count, two wrong instructions. Twenty-three
  * source spellings, five probes and a permuter run could not reach the
@@ -50,16 +50,16 @@
  * in. No promoted function above 0x08063A3C is `-fforce-addr`-sensitive, so an
  * override here costs nothing.
  */
-void sub_0808AD6C(u16 *dst)
+void SetReadFlash1(u16 *dst)
 {
     const u16 *src;
     u16 n;
 
     gUnknown_03000F6C = (u8 (*)(u8 *))((u8 *)dst + 1);
 
-    src = (const u16 *)sub_0808AD68;
+    src = (const u16 *)ReadFlash1;
     src = (const u16 *)((u32)src ^ 1);
-    n = (u16 *)sub_0808AD6C - (u16 *)sub_0808AD68;
+    n = (u16 *)SetReadFlash1 - (u16 *)ReadFlash1;
 
     while (n != 0)
     {
@@ -67,3 +67,4 @@ void sub_0808AD6C(u16 *dst)
         n--;
     }
 }
+asm(".global sub_0808AD6C\n.thumb_set sub_0808AD6C, SetReadFlash1\n");

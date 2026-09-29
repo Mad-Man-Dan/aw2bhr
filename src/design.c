@@ -816,14 +816,14 @@ void DesignRoomDrawUnitIcon(int a1, int a2, int a3, int a4, int a5, int a6, int 
   a4 &= 0x3F;
   if (a4 != 0x19) {
     if (a7) {
-      sub_08011E54(
+      RegisterDataMove(
           sub_08026190() + ((sub_080261A4(cls, a4) & 0x3FF) << 5),
           (void *)(0x06010000 + ((gUnknown_08485D20[a1] & 0x3FF) << 5)), 0x80);
     }
     ApplyPalette(
         (u16 *)(gUnknown_0810E6E0 + (gPlayers[cls].teamColor - 1) * 0x20), 22);
   } else {
-    sub_0801F19C(0x12, (void *)0x06010000, gUnknown_08485D20[a1]);
+    CopyGraphicToPoolTiles(0x12, (void *)0x06010000, gUnknown_08485D20[a1]);
     ApplyPalette(gUnknown_081268D8, 30);
   }
 
@@ -851,7 +851,7 @@ void DesignRoomDrawTerrainName(int a1, int a2, int a3, int a4, int a5, int a6) {
     idx = 0x262;
 
   if (a6)
-    sub_08011E54((void *)GetTerrainNameGraphic(a4 & 0x1F),
+    RegisterDataMove((void *)GetTerrainNameGraphic(a4 & 0x1F),
                  (void *)(0x06010000 + (idx << 5)), 0x100);
 
   attr1 = (a2 - 4) & 0x1FF;
@@ -881,7 +881,7 @@ void DesignRoomDrawUnitName(int a1, int a2, int a3, int a4, int a5, int a6) {
       else
         src = gUnknown_08489190[t];
 
-      sub_08011E54(src, (void *)0x06014BC0, 0x100);
+      RegisterDataMove(src, (void *)0x06014BC0, 0x100);
     } else {
       if (k != 0x19)
         src = (void *)GetUnitNameGraphic(k);
@@ -889,7 +889,7 @@ void DesignRoomDrawUnitName(int a1, int a2, int a3, int a4, int a5, int a6) {
         src = gUnknown_08489190[t];
 
       t = (a1 - 1) * 8;
-      sub_08011E54(
+      RegisterDataMove(
           src, (void *)(0x06010000 + ((((a1 - 1) * 8) + idxBase) << 5)), 0x100);
     }
   }
@@ -993,12 +993,12 @@ asm(".global sub_08002C38\n.thumb_set sub_08002C38, DesignRoomDrawUnitRing\n");
 
 void sub_08002D7C(void) {
   sub_0801F114();
-  sub_0801F150(1, (void *)0x06010000, 0x31C, 0x14);
+  InitTilePool(1, (void *)0x06010000, 0x31C, 0x14);
   LoadTilePoolGraphic(0x3E);
   LoadTilePoolGraphic(0x3F);
   LoadTilePoolGraphic(0x40);
   LoadTilePoolGraphic(0x41);
-  sub_0801F150(2, (void *)0x06010000, 0x32C, 0x1D);
+  InitTilePool(2, (void *)0x06010000, 0x32C, 0x1D);
   LoadTilePoolGraphic(0x54);
   LoadTilePoolGraphic(0x90);
   LoadTilePoolGraphic(0x91);
@@ -1017,16 +1017,16 @@ void DesignRoomLoadTerrainNamePalettes(void) {
 asm(".global sub_08002DEC\n.thumb_set sub_08002DEC, DesignRoomLoadTerrainNamePalettes\n");
 
 void sub_08002E3C(void) {
-  sub_08011E54(gUnknown_0808D8AC, (void *)0x06014D40, 0x460);
+  RegisterDataMove(gUnknown_0808D8AC, (void *)0x06014D40, 0x460);
   sub_08002EF8();
 }
 
 void sub_08002E5C(void) {
-  sub_08011E54(gUnknown_0808D8AC, (void *)0x06014D40, 0x460);
+  RegisterDataMove(gUnknown_0808D8AC, (void *)0x06014D40, 0x460);
   sub_08002EF8();
-  sub_08011E54(gUnknown_0808DD0C, (void *)0x06016180, 0x200);
-  sub_08011E54(gUnknown_0808DF0C, (void *)0x06016140, 0x20);
-  sub_08011E54(gUnknown_0808DF2C, (void *)0x06016160, 0x20);
+  RegisterDataMove(gUnknown_0808DD0C, (void *)0x06016180, 0x200);
+  RegisterDataMove(gUnknown_0808DF0C, (void *)0x06016140, 0x20);
+  RegisterDataMove(gUnknown_0808DF2C, (void *)0x06016160, 0x20);
 }
 
 void DesignRoomLoadGraphics(void) {
@@ -1056,7 +1056,7 @@ void sub_08002EF8(void) {
   else
     v = 0xAA;
 
-  sub_0801F1EC(0xAA, v);
+  ReloadTilePoolGraphic(0xAA, v);
 }
 
 void DesignRoomDrawPropertyCounts(void) {
@@ -1087,7 +1087,7 @@ void sub_08002FE4(void) {
   int i;
 
   sub_0808B6E8(buf, gUnknown_0808D750, 4);
-  sub_0801A444(9, 2, 0xB, 0x11);
+  DrawWindowBackgroundOnBg2(9, 2, 0xB, 0x11);
   BG_EnableSync(2);
   for (i = 0; i <= 3; i++) {
     sub_0803F6BC(buf[i] & 0x1F, 0,

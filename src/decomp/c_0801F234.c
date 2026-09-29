@@ -13,7 +13,7 @@
  * GetTilePoolForGraphic picks the pool entry for `a`; the entry keeps a list of loaded
  * graphics (unk08[]) and a count (unk05). The next list slot already holds the
  * first free tile number. The graphic is gUnknown_0848B780[a].unk00 by .unk01
- * tiles; its data (from sub_0801F444) is copied with CpuFastSet to the pool's
+ * tiles; its data (from GetGraphicSourceAddress) is copied with CpuFastSet to the pool's
  * VRAM base (unk00) plus 32 bytes per tile. The slot then records `a`, the
  * count goes up, and the following slot gets the next free tile number.
  *
@@ -41,7 +41,7 @@ void LoadTilePoolGraphic(int a)
   dims = gUnknown_0848B780 + a;
   tileCopy = tile;
   n = (*dims).unk00 * gUnknown_0848B780[a].unk01;
-  CpuFastSet(sub_0801F444(a, i), dst = ((u8 *) e->unk00) + ((tileCopy & 0x3FF) * 32), (wordCount = (n & 0x3FF) * 32) / 4);
+  CpuFastSet(GetGraphicSourceAddress(a, i), dst = ((u8 *) e->unk00) + ((tileCopy & 0x3FF) * 32), (wordCount = (n & 0x3FF) * 32) / 4);
   e->unk08[e->unk05].unk02 = a;
   e->unk05++;
   e->unk08[e->unk05].unk00 = tileCopy + n;

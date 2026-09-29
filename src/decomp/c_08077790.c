@@ -92,8 +92,8 @@ void sub_08077870(struct Unk77870Proc *proc)
     CpuFastSet(&a, gBG0TilemapBuffer + 0x80, 0x01000070);
     b = 0;
     CpuFastSet(&b, gBG2TilemapBuffer + 0x80, 0x01000070);
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 
     x = gUnknown_086145E2[proc->unk44];
     sub_08071900(gUnknown_08551A00, gBG0TilemapBuffer + (0x9E - x), x, 7);
@@ -122,8 +122,8 @@ void sub_08077954(struct Unk77954Proc *proc)
     CpuFastSet(&a, gBG0TilemapBuffer + 0x80, 0x01000070);
     b = 0;
     CpuFastSet(&b, gBG2TilemapBuffer + 0x80, 0x01000070);
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 
     x = gUnknown_086145E2[proc->unk44];
     sub_08071900(gUnknown_08551A00, gBG0TilemapBuffer + (0x9E - x), x, 7);

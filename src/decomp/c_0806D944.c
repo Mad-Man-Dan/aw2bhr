@@ -13,7 +13,7 @@
  * mode calls and the eight scroll zeros, then it diverges. Differences, all of
  * them local: sub_0806D850 stands in for the
  * `Decompress(sub_0801F49C(), 0x06015200)` / MatchSetupInitState / gUnknown_08580CB4
- * group; the three sub_0801F150 sizes are 0x290 / 0x2a0 / 0x2e0 rather than
+ * group; the three InitTilePool sizes are 0x290 / 0x2a0 / 0x2e0 rather than
  * 0x298 / 0x2a8 / 0x2d2; the second glyph run ends 0x8c, 0x8d instead of 0x68;
  * and the tail is a different set of calls with gUnknown_08580934->unk30 only
  * cleared, never set back.
@@ -26,8 +26,8 @@ void RulesScreen_Init(void)
 {
     sub_080366D0(DefaultVBlankCallback);
     sub_080366C4(DefaultMainLoopCallback);
-    sub_08012C58(gUnknown_0849D16C);
-    sub_0801237C();
+    SetupBackgrounds(gUnknown_0849D16C);
+    ResetWindowShadows();
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg0 = 0;
@@ -43,13 +43,13 @@ void RulesScreen_Init(void)
     gUnknown_03002020 = 0xf;
     gUnknown_03002B28 = 6;
 
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
 
     gUnknown_03001FF8 = 0;
     gUnknown_03001418 = 0;
@@ -63,20 +63,20 @@ void RulesScreen_Init(void)
     Decompress(gUnknown_0822FEF0, (void *)((gUnknown_0300251C.bits.chr_block << 14) + 0x06000000));
     Decompress(gUnknown_0822F9AC, gBG3TilemapBuffer);
     ApplyPaletteExt(gUnknown_082344CC, 0x20, 0xa0);
-    sub_08013B1C();
+    BG_EnableSyncBG3();
     sub_0802D5A0((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 8);
-    sub_0801A444(0, 0x10, 0x1e, 4);
+    DrawWindowBackgroundOnBg2(0, 0x10, 0x1e, 4);
     sub_0802D5CC(0, 3);
     sub_0806D850();
     sub_0801F114();
 
-    sub_0801F150(1, (void *)0x06010000, 0x290, 0x19);
+    InitTilePool(1, (void *)0x06010000, 0x290, 0x19);
     LoadTilePoolGraphic(0x3e);
     LoadTilePoolGraphic(0x3f);
     LoadTilePoolGraphic(0x40);
     LoadTilePoolGraphic(0x41);
 
-    sub_0801F150(2, (void *)0x06010000, 0x2a0, 0x1a);
+    InitTilePool(2, (void *)0x06010000, 0x2a0, 0x1a);
     LoadTilePoolGraphic(0x4a);
     LoadTilePoolGraphic(0x4b);
     LoadTilePoolGraphic(0x4c);
@@ -97,7 +97,7 @@ void RulesScreen_Init(void)
     LoadTilePoolGraphic(0x8c);
     LoadTilePoolGraphic(0x8d);
 
-    sub_0801F150(5, (void *)0x06010000, 0x2e0, 0x1b);
+    InitTilePool(5, (void *)0x06010000, 0x2e0, 0x1b);
     LoadTilePoolGraphic(0xbc);
     LoadTilePoolGraphic(0xbd);
     LoadTilePoolGraphic(0xbe);

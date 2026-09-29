@@ -25,7 +25,7 @@ struct Unk67498Proc
 void sub_08067498(struct Unk67498Proc *proc)
 {
     sub_080718F0();
-    sub_080135A4();
+    EnablePaletteSync();
 
     proc->unk58--;
 

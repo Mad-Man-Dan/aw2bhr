@@ -38,7 +38,7 @@ void BattleshipFigure_Init(void)
     u16 *ox;
     u16 *oy;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     gUnknown_03001470[gUnknown_03001FBC].unk2c = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
@@ -71,15 +71,15 @@ void BattleshipFigure_Init(void)
 
     StartFigureEntrySlide(gUnknown_0300453C, 0, 0, 0);
 
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 
     ox = gUnknown_084C3F70[gUnknown_0300453C];
     oy = gUnknown_084C3F78[gUnknown_0300453C];
-    sub_080155C0(gUnknown_03001FBC,
+    SetSlotSpritePosition(gUnknown_03001FBC,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x - *ox,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y - *oy);
 
-    sub_08015928(gUnknown_03001FBC,
+    SetSlotSpriteHook(gUnknown_03001FBC,
         gUnknown_08552FB8[gUnknown_03004582[gUnknown_0300453C][0]]
                          [gUnknown_03004580[gUnknown_0300453C][2]][2]);
 }

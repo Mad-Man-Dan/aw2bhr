@@ -32,8 +32,8 @@ void WM_Listener_IDLE_08076299(ProcPtr procv)
     b = 0;
     CpuFastSet(&b, gBG2TilemapBuffer + 0x200, 0x01000040);
 
-    sub_08013AEC();
-    sub_08013B0C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 
     n = gUnknown_0861445C[proc->unk40];
 

@@ -15,7 +15,7 @@
  * zero-fan-in callbacks.
  *
  * It re-syncs one OBJ's tile number against the slot's stashed attributes: read
- * the current attributes with sub_0801566C, take the 10-bit delta between the
+ * the current attributes with CopySlotSpriteAttrs, take the 10-bit delta between the
  * caller's attr2 and them, write the fetched tileNum back into the caller's
  * attr2, and if that delta is new for this proc AND the proc still owns the
  * gUnknown_02029A10 entry, publish it.
@@ -43,7 +43,7 @@ void sub_08050134(s16 a, u16 *p)
     u16 side;
     u16 slot;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
 
     v = (p[2] - oam.tileNum) & 0x3FF;
     w = v >> 4;
@@ -129,7 +129,7 @@ void FootFigure_Loop(void)
     entry->x += dx;
     entry->y += dy;
 
-    sub_080155C0(gUnknown_03001FBC, entry->x - *p1, entry->y - *p2);
+    SetSlotSpritePosition(gUnknown_03001FBC, entry->x - *p1, entry->y - *p2);
 }
 
 /* MATCHED. Byte-for-byte the same function as sub_08050134 -- identical
@@ -145,7 +145,7 @@ void FigureTileHook_WholePose(s16 a, u16 *p)
     u16 side;
     u16 slot;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
 
     v = (p[2] - oam.tileNum) & 0x3FF;
     w = v >> 4;

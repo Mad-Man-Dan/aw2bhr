@@ -13,7 +13,7 @@
  * unk31[], then sizes the window from the widest label and draws it.
  *
  * `w` starts at 0x10 and grows 0x10 per available entry; it reaches
- * sub_0801A444 as `w >> 3`, i.e. in tiles. `maxw` is the widest label in
+ * DrawWindowBackgroundOnBg2 as `w >> 3`, i.e. in tiles. `maxw` is the widest label in
  * pixels and arrives as `(s16)(maxw + 2)`.
  *
  * The counter `n` is `s16` and that is what the two shift pairs around it are:
@@ -21,7 +21,7 @@
  * lsrs #0x10`) and sign-extends it at each use (`lsls #0x10; asrs #0x10`), so
  * seeing both around one `++` is one variable, not two. `p->unk20` is RELOADED
  * every iteration because the indirect call through unk04 may have moved it. */
-void sub_08019E68(void)
+void RebuildMenuItems(void)
 {
     struct Unk8019A60 *p;
     struct Unk8019A60Item *e;
@@ -48,7 +48,7 @@ void sub_08019E68(void)
         {
             p->unk31[n++] = i;
 
-            t = sub_08014D20((const char *)gTextTable[e->unk1c]);
+            t = GetStringWidthInTiles((const char *)gTextTable[e->unk1c]);
 
             if (maxw < t)
                 maxw = t;
@@ -62,5 +62,6 @@ void sub_08019E68(void)
 
     DrawMenuItems(p);
 
-    sub_0801A444(p->unk48, p->unk4a, (s16)(maxw + 2), w >> 3);
+    DrawWindowBackgroundOnBg2(p->unk48, p->unk4a, (s16)(maxw + 2), w >> 3);
 }
+asm(".global sub_08019E68\n.thumb_set sub_08019E68, RebuildMenuItems\n");

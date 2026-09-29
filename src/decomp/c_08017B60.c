@@ -7,7 +7,8 @@
  * sub_08017B60 @ 0x08017B60
  */
 
-s16 sub_08017B60(s16 a)
+s16 EventOp_Halt(s16 a)
 {
     return 0;
 }
+asm(".global sub_08017B60\n.thumb_set sub_08017B60, EventOp_Halt\n");

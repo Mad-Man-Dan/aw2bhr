@@ -13,7 +13,7 @@ void sub_08038568(void)
 
     if (gPlaySt.savingEnabled == 0)
     {
-        sub_0803D73C(sub_08016D04(gPlaySt.gameMode), sub_0803B8B8);
+        sub_0803D73C(GetSuspendIdForGameMode(gPlaySt.gameMode), sub_0803B8B8);
     }
     else
     {

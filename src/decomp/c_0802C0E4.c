@@ -38,7 +38,7 @@ void sub_0802C0E8(u8 a)
     switch (gPlaySt.gameMode)
     {
     case 1:
-        sub_08016ED8();
+        ReloadProgressFromProfile();
         /* fallthrough */
     case 2:
         StartMainMenu();

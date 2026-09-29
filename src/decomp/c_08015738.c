@@ -7,7 +7,7 @@
  * sub_08015738 @ 0x08015738
  */
 
-void sub_08015738(s16 a, u32 *b, u16 c)
+void SetSlotSpriteScriptTable(s16 a, u32 *b, u16 c)
 {
     struct Unk0200E438 *p = &gUnknown_0200E438[gUnknown_03001470[a].unk26];
     u32 v;
@@ -19,3 +19,4 @@ void sub_08015738(s16 a, u32 *b, u16 c)
     p->unk48 = b;
     p->unk20 = b[0];
 }
+asm(".global sub_08015738\n.thumb_set sub_08015738, SetSlotSpriteScriptTable\n");

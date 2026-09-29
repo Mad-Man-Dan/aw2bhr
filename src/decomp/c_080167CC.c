@@ -22,12 +22,12 @@ bool8 sub_080167CC(u8 a)
 
 /* sub_080167CC's neighbour, one command along: the operand is the UNSIGNED
  * halfword at +4 of the 8-byte command (`ldrh r1,[r1,#4]`), which agrees with
- * sub_080156FC's declared `u16` second parameter. Its signed twin is
- * src/decomp/c_08015EAC.c's sub_08015EE0, which uses `ldrsh` for an s16
+ * SetSlotSpriteScriptIndex's declared `u16` second parameter. Its signed twin is
+ * src/decomp/c_08015EAC.c's SlotOp_EndSlotAt, which uses `ldrsh` for an s16
  * callee. */
 bool8 sub_080167F8(u8 a)
 {
-    sub_080156FC(a, ((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    SetSlotSpriteScriptIndex(a, ((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u8 *)gUnknown_03001470[a].unk04 + 8;
     return TRUE;
 }

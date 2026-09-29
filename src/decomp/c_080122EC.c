@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_080122EC(void)
+void ResetBgShadows(void)
 {
     gUnknown_03001FF8 = 0;
     gUnknown_03001418 = 0;
@@ -24,10 +24,11 @@ void sub_080122EC(void)
      * the zero -- one extra `mov r1, #0` at the type change, which is where
      * this function grew by four bytes the first time. The ROM keeps the same
      * constant in r1 across all thirteen stores, so stay on a u16 lvalue.
-     * sub_08012358 and sub_0801237C do not need this: their shadow stores are
+     * SetDefaultColorEffects and ResetWindowShadows do not need this: their shadow stores are
      * not in the middle of a run of plain u16 ones. */
     *(u16 *)&gUnknown_03002B6C = 0;
     *(u16 *)&gUnknown_03001FE8 = 0;
     *(u16 *)&gUnknown_030030B4 = 0;
     *(u16 *)&gUnknown_0300251C = 0;
 }
+asm(".global sub_080122EC\n.thumb_set sub_080122EC, ResetBgShadows\n");

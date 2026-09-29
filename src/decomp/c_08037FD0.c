@@ -42,7 +42,7 @@ void EndOfGame_StartResultFlow(ProcPtr parent)
             sub_080265D0(i, gPlaySt.mapID);
     }
     UpdateAllArmyScores();
-    sub_08017720(gPlayers[sub_0807A908()].co,
+    InsertBestScoreRecord(gPlayers[sub_0807A908()].co,
                  gPlaySt.mapID,
                  gPlayers[sub_0807A908()].totalScore,
                  gUnknown_03004080);

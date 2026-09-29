@@ -85,15 +85,15 @@ void MainMenuCarousel_Init(ProcPtr proc)
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
     ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
 
-    sub_08013B1C();
+    BG_EnableSyncBG3();
 
     Decompress(gUnknown_0823BF28, (void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06000000));
     Decompress(gUnknown_0823BE40, gBG2TilemapBuffer);
     ApplyPaletteExt(gUnknown_0823BFD4, 0x20, 0x20);
 
-    sub_08013B0C();
-    sub_08013AEC();
-    sub_08013AFC();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
 
     gUnknown_03005920 = 0;
 
@@ -128,7 +128,7 @@ void MainMenuCarousel_Init(ProcPtr proc)
     ApplyPaletteExt(gUnknown_0823DDB8, 0x340, 0x60);
 
     sub_08043BA4(0, 0, 1);
-    sub_0801B780(0);
+    InitTextTileCache(0);
 
     ApplyPaletteExt(gUnknown_081320AC, 0x100, 0x20);
 

@@ -10,7 +10,7 @@
 #include "hardware.h"
 
 /*
- * sub_08018254 -- set up the screen that shows a CO, from the current script
+ * SetUpCoScreen -- set up the screen that shows a CO, from the current script
  * node.
  *
  * Runs on gUnknown_0200C528 slot `a`, whose .unk04 points at the node that
@@ -28,12 +28,12 @@
  *      stepped by 24 for each unit of the node's .unk0a (which counts from 1,
  *      so 0 or 1 means no step). Otherwise .unk08 is the CO index itself.
  *   4. Draw through gUnknown_03002F20 if a callback is installed, otherwise
- *      through sub_08071948 with a palette built from gUnknown_03002F08.unk00.
- *      sub_08011E54 uploads 0x200 bytes to BG VRAM at 0x0600E000, and
- *      sub_08018194 loads the chosen CO's graphics.
+ *      through TmApplyTsaClipped with a palette built from gUnknown_03002F08.unk00.
+ *      RegisterDataMove uploads 0x200 bytes to BG VRAM at 0x0600E000, and
+ *      DrawCoPortrait loads the chosen CO's graphics.
  *   5. Arm the wipe: the slot's counter and gUnknown_03001420 both start at
- *      0x2f, sub_08011AAC installs sub_08017EEC as the HBlank handler, and the
- *      slot's callback becomes sub_0801820C, which steps the wipe from there.
+ *      0x2f, QueueVBlankCallback installs sub_08017EEC as the HBlank handler, and the
+ *      slot's callback becomes CoScreenWipe_Step, which steps the wipe from there.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
  * the original compiler only produces identical output with them.
@@ -48,7 +48,7 @@
  *     so the callback test compares against a local, and `v` is s16 rather than
  *     u16. All three were needed to make the output match; leave them.
  */
-void sub_08018254(s16 a)
+void SetUpCoScreen(s16 a)
 {
     struct Unk0200C528Node *node;
     int t;
@@ -99,13 +99,14 @@ void sub_08018254(s16 a)
     if (gUnknown_03002F20 != null)
         gUnknown_03002F20();
     else
-        sub_08071948(gUnknown_0849958C, 0, 0, gUnknown_080D445C,
+        TmApplyTsaClipped(gUnknown_0849958C, 0, 0, gUnknown_080D445C,
                      (u16)((gUnknown_03002F08.unk00 << 12) | 0x360));
-    sub_08011E54(gUnknown_0849958C, (void *)0x0600E000, 0x200);
+    RegisterDataMove(gUnknown_0849958C, (void *)0x0600E000, 0x200);
     sub_080179AC();
-    sub_08018194(gUnknown_03002F08.unk02);
+    DrawCoPortrait(gUnknown_03002F08.unk02);
     gUnknown_0200C528[a].unk0e = 0x2f;
     gUnknown_03001420 = 0x2f;
-    sub_08011AAC((void *)sub_08017EEC);
-    gUnknown_0200C528[a].unk08 = (void *)sub_0801820C;
+    QueueVBlankCallback((void *)sub_08017EEC);
+    gUnknown_0200C528[a].unk08 = (void *)CoScreenWipe_Step;
 }
+asm(".global sub_08018254\n.thumb_set sub_08018254, SetUpCoScreen\n");

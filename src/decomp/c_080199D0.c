@@ -7,7 +7,8 @@
  * sub_080199D0 @ 0x080199D0
  */
 
-void sub_080199D0(u8 a)
+void SetChoiceResult(u8 a)
 {
     gUnknown_03002EE4 = a;
 }
+asm(".global sub_080199D0\n.thumb_set sub_080199D0, SetChoiceResult\n");

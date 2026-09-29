@@ -46,10 +46,10 @@ void sub_08075BF4(struct Unk8075BF4 *proc)
 
     if (proc->unk5c != 0)
     {
-        sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
-        sub_080135F4(gUnknown_081D1504 + (proc->unk64 - 1) * 0x10, 0x1E0, 0x20);
+        RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
+        CopyToPaletteBufferNoSync(gUnknown_081D1504 + (proc->unk64 - 1) * 0x10, 0x1E0, 0x20);
         ColorFadeInit();
         sub_08075A54(0xF, 1);
-        sub_080135A4();
+        EnablePaletteSync();
     }
 }

@@ -12,11 +12,11 @@
  * `if (x < 0) x += 7` followed by `lsls #0xd; lsrs #0x10` is a SIGNED divide by
  * 8, not a mask: the bias makes the shift round toward zero, and the shift pair
  * reads as `(u32)v << 13 >> 16`, which is `v / 8` truncated to 16 bits. The
- * truncation is sub_08012BC8's u16 parameter fusing with the divide, so no cast
+ * truncation is FillTilemapRect's u16 parameter fusing with the divide, so no cast
  * belongs in the source. */
 void sub_080468D4(int x)
 {
-    sub_08012BC8(gBG0TilemapBuffer, (x + gUnknown_084C211C[0] * 8) / 8,
+    FillTilemapRect(gBG0TilemapBuffer, (x + gUnknown_084C211C[0] * 8) / 8,
                  gUnknown_084C211C[1], 8, 8, 0);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }

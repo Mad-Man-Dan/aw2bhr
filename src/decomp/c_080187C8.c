@@ -7,20 +7,22 @@
  * sub_080187C8 @ 0x080187C8, sub_08018800 @ 0x08018800
  */
 
-/* sub_08018800's twin, differing only in the constant stored to
+/* EventOp_DisableMiniPanel's twin, differing only in the constant stored to
  * gPlaySt.dispMiniPanel. */
-bool8 sub_080187C8(s16 a)
+bool8 EventOp_EnableMiniPanel(s16 a)
 {
     gPlaySt.dispMiniPanel = 1;
     sub_0802DCA4();
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_080187C8\n.thumb_set sub_080187C8, EventOp_EnableMiniPanel\n");
 
-bool8 sub_08018800(s16 a)
+bool8 EventOp_DisableMiniPanel(s16 a)
 {
     gPlaySt.dispMiniPanel = 0;
     sub_0802DCA4();
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08018800\n.thumb_set sub_08018800, EventOp_DisableMiniPanel\n");

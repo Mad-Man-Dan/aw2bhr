@@ -36,7 +36,7 @@ void IntroT3_IDLE_08069045(struct Unk69044Proc *proc)
     case 0x40:
         for (i = 1; i < 16; i++)
             gPal[i] = 0x7fff;
-        sub_080135A4();
+        EnablePaletteSync();
         sub_080677E8();
         break;
 
@@ -49,7 +49,7 @@ void IntroT3_IDLE_08069045(struct Unk69044Proc *proc)
     case 0x74:
         for (i = 1; i < 16; i++)
             gPal[i] = 0x7fff;
-        sub_080135A4();
+        EnablePaletteSync();
         break;
 
     case 0x78:

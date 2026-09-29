@@ -30,7 +30,7 @@
  * re-loads with `ldrsh` only because PutSpriteExt clobbers memory first.
  *
  * gUnknown_03001FBC is declared s16 and read here with `ldrb`; that is
- * sub_08015C30's u8 parameter folding the truncation into the load, not
+ * ClearSlotScriptCallback's u8 parameter folding the truncation into the load, not
  * evidence about the global. */
 void sub_08066470(struct Unk08580934_Obj *obj)
 {
@@ -53,6 +53,6 @@ void sub_08066470(struct Unk08580934_Obj *obj)
     if (obj->unk26 == 0)
     {
         gUnknown_08580934->unk70[obj->unk1c] = 0;
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

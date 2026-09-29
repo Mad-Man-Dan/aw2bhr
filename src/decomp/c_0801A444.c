@@ -11,7 +11,8 @@
  * buffers DrawWindowBackground recognises, and it is DEREFERENCED here (`ldr r4,[r4]`),
  * so what goes on the stack is the u16 * it holds. The four `lsls #0x10;
  * asrs #0x10` pairs are PROMOTE_MODE on the declared s16 parameters. */
-void sub_0801A444(s16 a1, s16 a2, s16 a3, s16 a4)
+void DrawWindowBackgroundOnBg2(s16 a1, s16 a2, s16 a3, s16 a4)
 {
     DrawWindowBackground(a1, a2, a3, a4, gBG2TilemapBuffer, 8);
 }
+asm(".global sub_0801A444\n.thumb_set sub_0801A444, DrawWindowBackgroundOnBg2\n");

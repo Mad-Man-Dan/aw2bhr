@@ -7,7 +7,8 @@
  * sub_0801E0BC @ 0x0801E0BC
  */
 
-u16 sub_0801E0BC(void)
+u16 GetHiOamCursor(void)
 {
     return gUnknown_03002B54;
 }
+asm(".global sub_0801E0BC\n.thumb_set sub_0801E0BC, GetHiOamCursor\n");

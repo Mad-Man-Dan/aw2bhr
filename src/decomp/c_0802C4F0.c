@@ -13,7 +13,7 @@ void sub_0802C4F0(ProcPtr proc)
 {
     struct Unk03003338 *p;
 
-    if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
+    if (FindSlotScript((s32)gUnknown_0849A00C) != -1)
         return;
 
     if (gUnknown_03003F40 < 0)

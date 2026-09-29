@@ -13,22 +13,24 @@
  * branch on the same global, so the six are one source block: three
  * frame-teardown routines, each an if/else pair followed by a bare if.
  *
- * The else-arm callee here is sub_0801E0F0, the F069 representative matched in
+ * The else-arm callee here is ClearOamShadow, the F069 representative matched in
  * the same batch. */
 
-void sub_0801F050(void)
+void BeginOamFrameForMode(void)
 {
     if (gUnknown_03001FE0)
         SyncHiOamNoCopy();
     else
-        sub_0801E0F0();
+        ClearOamShadow();
 }
+asm(".global sub_0801F050\n.thumb_set sub_0801F050, BeginOamFrameForMode\n");
 
 /* Family F071: the bare-if half of the F070/F071 interleave -- see
- * sub_0801F050. `cmp r0,#0; bne` past a single `bl` is `if (!g) f();`. */
+ * BeginOamFrameForMode. `cmp r0,#0; bne` past a single `bl` is `if (!g) f();`. */
 
-void sub_0801F06C(void)
+void DrawSimpleSpriteScriptsForMode(void)
 {
     if (!gUnknown_03001FE0)
-        sub_08015550();
+        DrawSimpleSpriteScripts2();
 }
+asm(".global sub_0801F06C\n.thumb_set sub_0801F06C, DrawSimpleSpriteScriptsForMode\n");

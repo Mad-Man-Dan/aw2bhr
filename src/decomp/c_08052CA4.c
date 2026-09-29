@@ -14,7 +14,7 @@
  * exactly three places: priority 2 rather than 1, the full runtime
  * gUnknown_08552D80 row (indexed by gUnknown_02029808[..].unk30[..], the same
  * row the exemplar uses) on BOTH x and y rather than a constant row on x only,
- * and the extra DeathHandler_Fall call ahead of sub_08015608.
+ * and the extra DeathHandler_Fall call ahead of SetSlotSpriteAttrs.
  *
  * DeathHandler_Fall's third argument is dead in the callee and every caller still
  * passes an explicit 0 -- see include/unknown-functions.h. Dropping it from the
@@ -26,7 +26,7 @@ void BombEffect_Init(void)
     u16 x;
     u16 y;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     gUnknown_03001470[gUnknown_03001FBC].unk28 = 0;
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
@@ -43,7 +43,7 @@ void BombEffect_Init(void)
         + gUnknown_08552D80[gUnknown_02029808[gUnknown_0300453C].unk30[gUnknown_0300451C]].unk06;
 
     DeathHandler_Fall(gUnknown_0300453C, gUnknown_0300451C, 0);
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
 asm(".global sub_08052CA4\n.thumb_set sub_08052CA4, BombEffect_Init\n");

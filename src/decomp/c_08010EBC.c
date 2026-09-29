@@ -7,9 +7,10 @@
  * sub_08010EBC @ 0x08010EBC, sub_08010EC0 @ 0x08010EC0
  */
 
-void sub_08010EBC(void)
+void DummyIntFunc(void)
 {
 }
+asm(".global sub_08010EBC\n.thumb_set sub_08010EBC, DummyIntFunc\n");
 
 void sub_08010EC0(void)
 {

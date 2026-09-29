@@ -36,11 +36,11 @@ void sub_08027FF4(struct Unk08027FF4Proc *proc)
     sub_08027FBC(gUnknown_0200FC50, 0xC, 2);
     sub_08027FBC(gUnknown_0200FC50, 0xD, 3);
     ApplyPaletteExt(gUnknown_081268B8, 0x260, 0x20);
-    sub_08011E54(gUnknown_080A1178, (void *)0x060045E0, 0xC0);
+    RegisterDataMove(gUnknown_080A1178, (void *)0x060045E0, 0xC0);
     ApplyPaletteExt(&gUnknown_080A1238[0][(gPlayers[gUnknown_030033EC].teamColor - 1) * 16],
                     0x120, 0x20);
     sub_08012B70(gBG0TilemapBuffer, gUnknown_080A12B8, 0, 7, 0x922F);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
     sub_08024378();
     d = 1;
     if (gUnknown_03004080 > 9)

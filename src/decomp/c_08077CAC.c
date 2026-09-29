@@ -106,16 +106,16 @@ void sub_08077CAC(struct Unk8077CAC *proc)
     sub_08071900(gUnknown_08551A04 + 0x100,
                  gBG1TilemapBuffer + (proc->unk4a * 32 + t), n, proc->unk4e);
 
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 
     if (proc->unk44 > 4)
     {
         proc->unk44 = zero_saved;
         sub_0803CEAC();
-        sub_08012358();
+        SetDefaultColorEffects();
         SetDifficultyStarsPalette(2);
         SetWorldMapScopePalette(2);
-        sub_08013C54();
+        ClearBg1Tilemap();
         HideMapPreview();
         sub_0807548C(gUnknown_08615194[gUnknown_0202FDFC.unk0c].flagX
                          - gUnknown_0202FDFC.unk00 + 1,

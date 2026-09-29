@@ -42,11 +42,11 @@ void IntroT3_0806A055(struct Unk0806A054 *proc)
     gUnknown_0300251C.bits.priority = 1;
     gUnknown_030030B4.bits.priority = 2;
     gUnknown_03001FE8.bits.priority = 3;
-    sub_08012358();
+    SetDefaultColorEffects();
     ApplyPalettes(gUnknown_0822FE50, 1, 5);
     Decompress(gUnknown_0822FEF0, (void *)0x06000000);
     Decompress(gUnknown_0822F9AC, gBG1TilemapBuffer);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
     sub_08069FD0();
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(1, 0, 0);

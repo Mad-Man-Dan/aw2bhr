@@ -47,12 +47,12 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
     int y;
 
     sub_08077620(0, 0xa8 - gUnknown_0300064C);
-    sub_08012358();
+    SetDefaultColorEffects();
     EndWorldMapSelectionFrame();
-    sub_08013C54();
+    ClearBg1Tilemap();
     SetBgScrollShadow(1, 0, 0);
     ClearAllUnits();
-    sub_08011C68(gUnknown_080A0F38,
+    CpuCopyAuto(gUnknown_080A0F38,
                  (void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)),
                  0x200);
     ApplyPaletteExt(gUnknown_080A1138, 0x80, 0x40);

@@ -18,7 +18,7 @@ void ArmyColumnExitDown_Loop(struct Unk08580934_Obj *o)
     {
         gUnknown_08580934->unk2d--;
         sub_08030178();
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
     sub_08064E5C(o);

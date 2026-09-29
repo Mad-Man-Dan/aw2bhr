@@ -44,14 +44,14 @@ void sub_08024720(void)
             if (IsCoPowerActive(i) && (j = idx) >= 0)
             {
                 p = gUnknown_0809139C + j;
-                sub_0801368C(p, (i + 0xb) * 32 + 0x1e, 2);
+                ApplyPaletteAndUploadNow(p, (i + 0xb) * 32 + 0x1e, 2);
             }
             else
             {
                 j = -1;
                 v = (i + 0xb) * 32 + 0x1e;
                 p = gUnknown_0809139C;
-                sub_0801368C(p, v, 2);
+                ApplyPaletteAndUploadNow(p, v, 2);
             }
         }
     }

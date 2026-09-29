@@ -142,7 +142,7 @@ void CoSelect_IDLE_0807CAFD(struct Unk807CAFC * proc)
 
         if (proc->unk4c >= 0xC && proc->unk4c <= 0x12)
         {
-            sub_0801A444(0x13 - proc->unk4c, 0xC, proc->unk4c * 2 - 0x15, sub_0803BD14() * 2 + 2);
+            DrawWindowBackgroundOnBg2(0x13 - proc->unk4c, 0xC, proc->unk4c * 2 - 0x15, sub_0803BD14() * 2 + 2);
             sub_0807F238();
         }
     }

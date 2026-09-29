@@ -25,6 +25,6 @@ void sub_08064660(struct Unk08580934_Obj *obj)
     {
         gUnknown_08580934->unk2d--;
         sub_08030178();
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

@@ -56,9 +56,9 @@ void ProjectileEffect_Loop(void)
         if (gUnknown_0300454C[1] == 1)
             gUnknown_0300454C[1] = 1;
 
-        sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+        CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
         oam.priority = 3;
-        sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+        SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 
         gUnknown_02029710[c].unk26[d] += gUnknown_02029710[c].unk30[d];
         gUnknown_0202972C[c][d] += gUnknown_02029710[c].unk26[d] >> 8;

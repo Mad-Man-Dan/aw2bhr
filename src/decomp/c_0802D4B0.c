@@ -59,6 +59,6 @@ void sub_0802D558(void)
         v = 0x14;
 
     sub_08024268();
-    sub_0801A104(gUnknown_0849AE28, v, 1, 1);
+    CreateRootMenuWithSfx(gUnknown_0849AE28, v, 1, 1);
     IncrementMapLock();
 }

@@ -34,8 +34,8 @@ void sub_0806C52C(struct Unk0806C52CProc *proc)
     int v;
 
     Proc_EndEach(gUnknown_085819D4);
-    sub_0801237C();
-    sub_08012358();
+    ResetWindowShadows();
+    SetDefaultColorEffects();
     SetDispEnable(1, 0, 0, 0, 1);
     gUnknown_03002B6C.bits.color_depth = 1;
     gUnknown_03002B6C.bits.priority = 0;

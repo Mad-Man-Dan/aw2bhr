@@ -95,7 +95,7 @@ void sub_08028580(struct Unk28580 *p)
     u8 v;
     struct Unit *unit;
 
-    sub_08019818(gUnknown_08499FA0[gPlayers[p->unk64].teamColor - 1], 0, 0);
+    StartCoSpeechScript(gUnknown_08499FA0[gPlayers[p->unk64].teamColor - 1], 0, 0);
 
     if (p->unk66 == 2)
     {

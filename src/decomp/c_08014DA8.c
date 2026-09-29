@@ -8,7 +8,7 @@
  */
 
 /* Installs the arena and reports failure. Both arguments are forwarded
- * untouched to sub_08014D7C(void *, u32), which is the only place the arity
+ * untouched to HeapInitBuffer(void *, u32), which is the only place the arity
  * shows -- neither register is written before the `bl`.
  *
  * THE ADDRESS OF gUnknown_03000050 IS BOUND TO A LOCAL. The ROM materialises
@@ -22,14 +22,15 @@
  * list, so this prototyped definition is what now fixes the types; `void *`
  * and `u32` are unchanged by the default argument promotions, so AgbMain's
  * existing call stays compatible. */
-int sub_08014DA8(void *buf, u32 size)
+int HeapInit(void *buf, u32 size)
 {
     int *p = &gUnknown_03000050;
 
-    *p = sub_08014D7C(buf, size);
+    *p = HeapInitBuffer(buf, size);
 
     if (*p == -1)
         return *p;
 
     return 0;
 }
+asm(".global sub_08014DA8\n.thumb_set sub_08014DA8, HeapInit\n");

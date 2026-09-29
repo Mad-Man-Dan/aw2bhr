@@ -13,22 +13,22 @@
 void sub_0803B8E0(void)
 {
     if (gUnknown_03003F30[3] != 0)
-        sub_08017688(4);
+        StartResumeScript(4);
     else
         sub_0803B8C4();
 }
 
 /* Same guard as sub_0803B8E0 one element down, but the argument is computed
  * rather than literal, and the three-shift run `lsls #0x18; asrs #8; lsrs #0x10`
- * is exactly the two conversions folded together: sub_08016D04 returns s8, so
+ * is exactly the two conversions folded together: GetSuspendIdForGameMode returns s8, so
  * its result is re-narrowed at the call site (`lsls #24; asrs #24`), and
- * sub_08017688's parameter is u16, so it is then zero-extended (`lsls #16;
+ * StartResumeScript's parameter is u16, so it is then zero-extended (`lsls #16;
  * lsrs #16`). agbcc collapses the adjacent `asrs #24; lsls #16` into `asrs #8`.
  * Nothing here is a mask plus a shift. */
 void sub_0803B904(void)
 {
     if (gUnknown_03003F30[2] != 0)
-        sub_08017688(sub_08016D04(2));
+        StartResumeScript(GetSuspendIdForGameMode(2));
     else
         StartWarRoom();
 }

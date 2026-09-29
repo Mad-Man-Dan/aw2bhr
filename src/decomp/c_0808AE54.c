@@ -11,10 +11,10 @@
 
 /* MATCHED, wave 79 (W79-B), under the compiler override recorded for this
  * function in data/compiler-overrides.json (-O2 and -fforce-addr removed, -O1
- * added) -- the same configuration its two matched siblings sub_0808AF00 and
- * sub_0808AF74 carry.
+ * added) -- the same configuration its two matched siblings VerifyFlashSector and
+ * VerifyFlashSectorNBytes carry.
  *
- * The relocating trampoline for sub_0808AE30 (the SRAM read): it copies a
+ * The relocating trampoline for ReadFlash_Core (the SRAM read): it copies a
  * SIBLING FUNCTION'S MACHINE CODE onto the stack and calls it from there so the
  * SRAM access runs out of RAM.
  *
@@ -54,7 +54,7 @@
  * its own subexpression inside a larger sum, assign it to a fresh local IN
  * PLACE inside the expression. A separate statement computes it too early, and
  * `x += C` gets the association at the cost of x's register. */
-void sub_0808AE54(u16 a1, int a2, int a3, int a4)
+void ReadFlash(u16 a1, int a2, int a3, int a4)
 {
     u16 buf[0x40];
     const u16 *s;
@@ -64,10 +64,10 @@ void sub_0808AE54(u16 a1, int a2, int a3, int a4)
 
     REG_WAITCNT = (REG_WAITCNT & 0xFFFC) | 3;
 
-    s = (const u16 *)sub_0808AE30;
+    s = (const u16 *)ReadFlash_Core;
     s = (const u16 *)((u32)s ^ 1);
     d = buf;
-    n = ((u32)sub_0808AE54 - (u32)sub_0808AE30) / 2;
+    n = ((u32)ReadFlash - (u32)ReadFlash_Core) / 2;
 
     while (n != 0)
     {
@@ -79,3 +79,4 @@ void sub_0808AE54(u16 a1, int a2, int a3, int a4)
         (const u8 *)((a1 << gUnknown_08485550.unk1c) + (t = a2 + 0x0E000000)),
         (u8 *)a3, a4);
 }
+asm(".global sub_0808AE54\n.thumb_set sub_0808AE54, ReadFlash\n");

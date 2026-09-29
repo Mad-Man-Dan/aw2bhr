@@ -35,7 +35,7 @@
  *
  * Return type is byte-neutral (u32 and u8 emit the same bytes here); spelled
  * u32 to agree with the locals. */
-u32 sub_08012E4C(void)
+u32 GetClockPhase(void)
 {
     u32 v = gGameClock & 0x1F;
     u32 w = v;
@@ -51,3 +51,4 @@ u32 sub_08012E4C(void)
 
     return 1;
 }
+asm(".global sub_08012E4C\n.thumb_set sub_08012E4C, GetClockPhase\n");

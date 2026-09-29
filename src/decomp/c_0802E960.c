@@ -12,10 +12,10 @@
 
 void OnMain_SioError(void)
 {
-    sub_08012C58(gUnknown_0849D16C);
+    SetupBackgrounds(gUnknown_0849D16C);
     sub_0803B37C();
     Proc_Init();
-    sub_08015184();
+    InitSlotScripts();
 
     gDispIo.disp_ct.bg0_enable = 1;
     gDispIo.disp_ct.bg1_enable = 0;
@@ -39,7 +39,7 @@ void OnMain_SioError(void)
     gUnknown_03001FF8 = 0;
     gUnknown_03001418 = 0;
 
-    sub_080128D0();
+    FlushLCDControl();
     sub_080366C4(OnMain_SioErrorWait);
 }
 asm(".global sub_0802E960\n.thumb_set sub_0802E960, OnMain_SioError\n");

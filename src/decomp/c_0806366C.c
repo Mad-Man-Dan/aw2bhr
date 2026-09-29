@@ -15,5 +15,5 @@ void sub_0806366C(int a1, int a2)
     int t = a2 & 0x3FF;
 
     if (a1 < 0)
-        sub_08011D7C((void *)(t * 0x20 + 0x06010000), 0x100);
+        RegisterFillZero16((void *)(t * 0x20 + 0x06010000), 0x100);
 }

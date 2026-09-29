@@ -15,7 +15,7 @@
  * steps on one node. Returns FALSE, which ends the slot's turn for this frame
  * (see the dispatcher in src/decomp/c_08019404.c).
  *
- * The s16 return type comes from the caller and not from this body: sub_08017D30
+ * The s16 return type comes from the caller and not from this body: EventOp_WaitSkippable
  * (src/decomp/c_08017C4C.c) passes the result straight on and sign-extends it
  * as a halfword, which a bool8 return could not produce. See the family note in
  * include/unknown-functions.h.

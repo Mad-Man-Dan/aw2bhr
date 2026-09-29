@@ -15,7 +15,7 @@ void sub_080453CC(void)
 {
     Decompress(gUnknown_08112704, (void *)(gUnknown_03002B6C.bits.chr_block * 0x4000 + 0x06005600));
     Decompress(gUnknown_0811315C, gBG0TilemapBuffer);
-    sub_08012B00(gBG0TilemapBuffer, 0x800, 0x82b0);
+    AddToHalfwords(gBG0TilemapBuffer, 0x800, 0x82b0);
     ApplyPaletteExt(gUnknown_08113BA0, 0x100, 0x20);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }

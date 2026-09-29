@@ -10,18 +10,18 @@
 /* src/decomp/c_0803AA78.c's other twin, and the only structural difference is
  * what the two sub_0803A190 / sub_0803A2BC calls are handed: sub_0803AA78
  * passes &gUnknown_03004100 itself, this one passes the unk18 word of the
- * gUnknown_03001470 slot that sub_08015BD0 just found.
+ * gUnknown_03001470 slot that FindSlotScript just found.
  *
  * The `lsls #0x18; asrs #8; lsrs #0x10` triple is ONE narrowing, not a mask
  * plus a shift: left 24, arithmetic right 8, logical right 16 leaves the
  * sign-extended byte zero-extended into 16 bits, i.e. `(u16)(s8)`. That is an
- * s16 LOCAL holding sub_08015BD0's s8 return and living across the
+ * s16 LOCAL holding FindSlotScript's s8 return and living across the
  * InitUnit call -- the wave-29 (W29-C) round trip -- which is why the use
  * re-signs it with `lsls #0x10; asrs #0x10` before the x0x60 index scaling. */
 
 void sub_0803AA08(u8 a)
 {
-    s16 slot = sub_08015BD0((s32)gUnknown_0849E240);
+    s16 slot = FindSlotScript((s32)gUnknown_0849E240);
 
     InitUnit(&gUnknown_03004100, a);
 

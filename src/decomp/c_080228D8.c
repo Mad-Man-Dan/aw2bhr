@@ -33,7 +33,7 @@ void sub_080228D8(struct Unk80228D8Proc *proc)
 {
     if (proc->unk20 <= 7)
     {
-        sub_08011E54(gUnknown_0809181C + proc->unk20 * 0x80, (void *)0x06003600, 0x80);
+        RegisterDataMove(gUnknown_0809181C + proc->unk20 * 0x80, (void *)0x06003600, 0x80);
         proc->unk20++;
     }
 

@@ -58,7 +58,7 @@
  * reusing the parameter for the square as well as the reduced value (+12
  * bytes -- one long live range instead of two that share r4).
  */
-float sub_0808B91C(float x)
+float cosf(float x)
 {
     int n;
     float u;
@@ -84,3 +84,4 @@ float sub_0808B91C(float x)
 
     return v;
 }
+asm(".global sub_0808B91C\n.thumb_set sub_0808B91C, cosf\n");

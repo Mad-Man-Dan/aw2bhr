@@ -37,7 +37,7 @@
  * removing it would be churn on a matched function. */
 void sub_080399F8(int a, int b)
 {
-    sub_08011E54(gUnknown_080A29A4,
+    RegisterDataMove(gUnknown_080A29A4,
                  (void *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000
                           + (a & 0x3ff) * 0x20),
                  0x800);

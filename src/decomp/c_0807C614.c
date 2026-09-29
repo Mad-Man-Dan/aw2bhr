@@ -88,7 +88,7 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
     Decompress(gUnknown_0823456C, gBG1TilemapBuffer);
     ApplyPaletteExt((u16 *)8, 0, 0x20);
 
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 
     Decompress(gUnknown_082346D0, gUnknown_0200FC50);
 
@@ -98,8 +98,8 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
     ApplyPaletteExt(gUnknown_08234AD0, 0x200, 0x20);
 
     sub_0801F114();
-    sub_0801F150(1, (void *)0x06010000, 0x3e4, 0x1c);
-    sub_0801F150(2, (void *)0x06010000, 0x344, 0x1d);
+    InitTilePool(1, (void *)0x06010000, 0x3e4, 0x1c);
+    InitTilePool(2, (void *)0x06010000, 0x344, 0x1d);
 
     LoadTilePoolGraphic(0x3e);
     LoadTilePoolGraphic(0x3f);
@@ -124,7 +124,7 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
     LoadTilePoolGraphic(0x62);
     LoadTilePoolGraphic(0x65);
 
-    sub_0801A5B0(1);
+    LoadBg1WindowFrame(1);
 
     sub_0802D5CC(gUnknown_03005958[proc->unk58], 8);
 

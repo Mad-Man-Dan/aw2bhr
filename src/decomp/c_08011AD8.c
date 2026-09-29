@@ -10,7 +10,7 @@
 typedef void (*Func8011AD8)(void);
 
 /* Runs every callback registered on the 16-slot gUnknown_03002FA0 list by
- * sub_08011AAC, then clears the list with sub_08011A84 -- a one-shot
+ * QueueVBlankCallback, then clears the list with ClearVBlankCallbackQueue -- a one-shot
  * "deferred work" queue.
  *
  * gUnknown_030030E8 is the volatile count, read once for the zero-trip guard
@@ -24,12 +24,13 @@ typedef void (*Func8011AD8)(void);
  * `((Func *)g)[i]()` -- creates that pseudo before the guard, swaps the two
  * pool words and pushes gUnknown_030030E8's address into a -fforce-addr
  * .rodata word reached through one extra `ldr`. */
-void sub_08011AD8(void)
+void RunVBlankCallbackQueue(void)
 {
     u8 i;
 
     for (i = 0; i < (s16)gUnknown_030030E8; i++)
         ((Func8011AD8)gUnknown_03002FA0[i])();
 
-    sub_08011A84();
+    ClearVBlankCallbackQueue();
 }
+asm(".global sub_08011AD8\n.thumb_set sub_08011AD8, RunVBlankCallbackQueue\n");

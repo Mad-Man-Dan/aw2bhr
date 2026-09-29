@@ -7,7 +7,7 @@
  * sub_080314A4 @ 0x080314A4
  */
 
-/* Draws the four army rows of the status window: one sub_08012BC8 frame per
+/* Draws the four army rows of the status window: one FillTilemapRect frame per
  * army at y = 6, 8, 10, 12, then either the icon at gUnknown_08090CF4's
  * halfword (when gUnknown_0849B018->unk0a[i] is a small code) or the army's
  * 13-byte name row out of gUnknown_020257E4.
@@ -20,8 +20,8 @@
  *
  * THE y COORDINATE IS NOT A VARIABLE. r8 holds `(2 * i + 6) << 16` -- base
  * 0x60000, step 0x20000 -- and every read is one shift out of it: `lsrs #16`
- * for sub_08012BC8's u16 parameter, `asrs #16` for the int parameters of
- * sub_08014A5C and sub_080149C0. That is a giv of the loop counter with no
+ * for FillTilemapRect's u16 parameter, `asrs #16` for the int parameters of
+ * PutTextTableEntryImmediate and PutTextScriptImmediate. That is a giv of the loop counter with no
  * biv of its own. Spelled as an s16 local it costs a truncation per
  * iteration; spelled as an int local the plain biv survives beside the
  * shifted giv and gcc rebuilds one from the other (`ldr/adds #2/str`) --
@@ -39,32 +39,32 @@ void sub_080314A4(s16 a)
 
     for (i = 0; i < 4; i++)
     {
-        sub_08012BC8(gBG0TilemapBuffer, 0xe, 2 * i + 6, 8, 2, 0);
+        FillTilemapRect(gBG0TilemapBuffer, 0xe, 2 * i + 6, 8, 2, 0);
 
         if (a == 0 || sub_0802F460(i))
         {
             if (gUnknown_0849B018->unk0a[i] <= 4)
             {
-                sub_08014A5C(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
+                PutTextTableEntryImmediate(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
                     buf[gUnknown_0849B018->unk0a[i]], 0x8000, 0);
             }
             else
             {
-                sub_080149C0(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
+                PutTextScriptImmediate(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
                     (u8 *)gUnknown_020257E4[i], 0x8000, 0);
 
                 if (a == 1)
                 {
                     if (gUnknown_0300449C[i] != 0)
-                        sub_080149C0(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
+                        PutTextScriptImmediate(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
                             (u8 *)gUnknown_020257E4[i], 0x8000, 0);
                     else
-                        sub_080149C0(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
+                        PutTextScriptImmediate(0xe, (s16)(2 * i + 6), gBG0TilemapBuffer,
                             (u8 *)gUnknown_020257E4[i], 0x7000, 0);
                 }
             }
         }
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }

@@ -22,5 +22,5 @@ void sub_0806BD6C(u16 *p, u16 v)
 {
     p[0] = v;
     p[0x20] = v + 1;
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }

@@ -27,9 +27,10 @@ asm(".global sub_0801BCA8\n.thumb_set sub_0801BCA8, SyncHiOamNoCopy\n");
  * between two `bl`s is a narrowing. What settles it is that InitOam's
  * argument is set up with a fresh `movs r0, #0x10`, which overwrites whatever
  * ClearSprites returned. */
-void sub_0801BCE0(void)
+void InitSpriteEngine(void)
 {
-    sub_0801DF94();
+    InitOamRequestsAndObjAffine();
     ClearSprites();
     InitOam(0x10);
 }
+asm(".global sub_0801BCE0\n.thumb_set sub_0801BCE0, InitSpriteEngine\n");

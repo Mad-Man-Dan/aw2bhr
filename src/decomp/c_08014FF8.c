@@ -11,7 +11,7 @@
  */
 
 /* Aligned allocate from the gUnknown_03000050 heap, the sibling of HeapAlloc
- * (sub_08014DCC). Alignments of 16 or less defer to sub_08014E44. Otherwise
+ * (sub_08014DCC). Alignments of 16 or less defer to HeapMalloc. Otherwise
  * it best-fits the smallest free block that can hold `size` (rounded up to 16)
  * at an `align`-aligned address past its header. The gap in front of the
  * aligned address goes back to the heap, as a free block when it is large
@@ -65,7 +65,7 @@ void *HeapAllocAligned(int align, u32 size)
     if (gUnknown_03000050 != -1 && size != 0)
     {
         if (align <= 16)
-            return sub_08014E44(size);
+            return HeapMalloc(size);
 
         size = (size + 15) & ~15;
         bestSize = 0;

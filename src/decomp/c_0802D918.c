@@ -22,7 +22,7 @@ void DeploymentScreen_Init(void)
     proc->unk22 = gUnknown_0300055A - 1;
 
     sub_0802D7B0();
-    sub_0801A444(1, 4, 0xf, 0x10);
+    DrawWindowBackgroundOnBg2(1, 4, 0xf, 0x10);
     DrawDeploymentList(0);
     sub_08022AD0(8, 0x28);
     sub_0803B4DC(0x65);

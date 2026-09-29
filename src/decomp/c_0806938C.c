@@ -47,9 +47,9 @@ void IntroT3_0806938D(struct Unk6938CProc *proc)
     gUnknown_03002B6C.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
 
-    sub_08012358();
+    SetDefaultColorEffects();
     sub_08063994();
-    sub_08012C48((struct Unk8012C30 *)&gUnknown_030030B4, 2);
+    SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 2);
 
     Decompress(gUnknown_08183B14, gBG2TilemapBuffer);
     ApplyPaletteExt(gUnknown_08183C28, 0, 0x80);
@@ -60,9 +60,9 @@ void IntroT3_0806938D(struct Unk6938CProc *proc)
     for (i = 0; i < 0x400; i++)
         gBG0TilemapBuffer[i] += 0x140;
 
-    sub_08013AEC();
-    sub_08013B0C();
-    sub_08013B1C();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
 
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(1, 0, 0);

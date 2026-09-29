@@ -15,13 +15,13 @@ void sub_08074038(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u8 a6, u16 a7)
     int k;
 
     if (a6 != 0)
-        sub_08012BC8(gBG0TilemapBuffer, a4 - 5, a5, 6, 2, 0);
+        FillTilemapRect(gBG0TilemapBuffer, a4 - 5, a5, 6, 2, 0);
 
     switch (a3)
     {
     case 0:
         if (a6 != 0)
-            sub_08014B0C((s16)a4, (s16)a5, gBG0TilemapBuffer, 0, a7, a3);
+            DrawTallNumberRightAligned((s16)a4, (s16)a5, gBG0TilemapBuffer, 0, a7, a3);
 
         break;
 
@@ -69,7 +69,7 @@ void sub_08074038(u16 a1, u16 a2, u16 a3, u16 a4, u16 a5, u8 a6, u16 a7)
             a5 * 8 + 6, gUnknown_0848B688, (a1 + 4) | (a2 << 12));
 
         if (a6 != 0)
-            sub_08014B0C((s16)a4, (s16)a5, gBG0TilemapBuffer, a3, a7, 0);
+            DrawTallNumberRightAligned((s16)a4, (s16)a5, gBG0TilemapBuffer, a3, a7, 0);
 
         break;
     }

@@ -19,7 +19,7 @@
  * The index is re-read from the volatile gUnknown_03002F30 and re-scaled for
  * every member, which is what the volatile buys; a bound local index collapses
  * all four to one address. */
-s16 sub_08011D10(void *a, void *b)
+s16 RegisterDecompress(void *a, void *b)
 {
     if (gUnknown_03002F30 == 0x30)
         return -1;
@@ -31,9 +31,10 @@ s16 sub_08011D10(void *a, void *b)
 
     return gUnknown_03002F30 - 1;
 }
+asm(".global sub_08011D10\n.thumb_set sub_08011D10, RegisterDecompress\n");
 
-/* gUnknown_0200B3B4 queue push, tag 4. See sub_08011D10 for the shape. */
-s16 sub_08011D7C(void *a, int b)
+/* gUnknown_0200B3B4 queue push, tag 4. See RegisterDecompress for the shape. */
+s16 RegisterFillZero16(void *a, int b)
 {
     if (gUnknown_03002F30 == 0x30)
         return -1;
@@ -45,10 +46,11 @@ s16 sub_08011D7C(void *a, int b)
 
     return gUnknown_03002F30 - 1;
 }
+asm(".global sub_08011D7C\n.thumb_set sub_08011D7C, RegisterFillZero16\n");
 
-/* gUnknown_0200B3B4 queue push, tag 5 -- byte-for-byte sub_08011D7C with a
- * different tag. See sub_08011D10 for the shape. */
-s16 sub_08011DE8(void *a, int b)
+/* gUnknown_0200B3B4 queue push, tag 5 -- byte-for-byte RegisterFillZero16 with a
+ * different tag. See RegisterDecompress for the shape. */
+s16 RegisterFillZero32(void *a, int b)
 {
     if (gUnknown_03002F30 == 0x30)
         return -1;
@@ -60,20 +62,21 @@ s16 sub_08011DE8(void *a, int b)
 
     return gUnknown_03002F30 - 1;
 }
+asm(".global sub_08011DE8\n.thumb_set sub_08011DE8, RegisterFillZero32\n");
 
 /* gUnknown_0200B3B4 queue push, tag 0, plus the immediate-mode bypass: when
  * gUnknown_030044D0 is set the request is performed on the spot through
- * sub_08011C68 and 0 is returned instead of a slot index. The three arguments
+ * CpuCopyAuto and 0 is returned instead of a slot index. The three arguments
  * need no setup at that call -- they are still in r0/r1/r2 -- which is why the
- * bypass costs one `adds r0, r3, #0`. See sub_08011D10 for the queue shape.
+ * bypass costs one `adds r0, r3, #0`. See RegisterDecompress for the queue shape.
  *
  * Returns s16, not the `int` its declaration carried: the epilogue narrows the
  * index with `lsls #0x10; asrs #0x10`, exactly as the five siblings do. */
-s16 sub_08011E54(void *a, void *b, u16 c)
+s16 RegisterDataMove(void *a, void *b, u16 c)
 {
     if (gUnknown_030044D0 != 0)
     {
-        sub_08011C68(a, b, c);
+        CpuCopyAuto(a, b, c);
         return 0;
     }
 
@@ -88,8 +91,9 @@ s16 sub_08011E54(void *a, void *b, u16 c)
 
     return gUnknown_03002F30 - 1;
 }
+asm(".global sub_08011E54\n.thumb_set sub_08011E54, RegisterDataMove\n");
 
-/* gUnknown_0200B3B4 queue push, tag 1. See sub_08011D10 for the shape. */
+/* gUnknown_0200B3B4 queue push, tag 1. See RegisterDecompress for the shape. */
 s16 sub_08011EF0(void *a, void *b, u16 c)
 {
     if (gUnknown_03002F30 == 0x30)
@@ -105,7 +109,7 @@ s16 sub_08011EF0(void *a, void *b, u16 c)
 }
 
 /* gUnknown_0200B3B4 queue push, tag 2 -- byte-for-byte sub_08011EF0 with a
- * different tag. See sub_08011D10 for the shape. */
+ * different tag. See RegisterDecompress for the shape. */
 s16 sub_08011F70(void *a, void *b, u16 c)
 {
     if (gUnknown_03002F30 == 0x30)

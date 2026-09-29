@@ -17,12 +17,12 @@
  *      stack buffer so it can run out of RAM while the chip is busy. The
  *      length is the BYTE distance to the next function, sub_0808B304, so the
  *      counter steps by 2 per halfword copied.
- *   3. Issue the erase (sub_0808B0E8) and check it took, retrying up to 0x51
+ *   3. Issue the erase (EraseFlashSector_MX) and check it took, retrying up to 0x51
  *      times; then re-issue it once more, or six more times if it did not take
  *      first try.
- *   4. Relocate the OTHER RAM routine over the same buffer with sub_0808AD6C,
+ *   4. Relocate the OTHER RAM routine over the same buffer with SetReadFlash1,
  *      set the chip's WAITCNT bits, and walk the sector one byte at a time
- *      through sub_0808B184, counting gUnknown_03005C7C down.
+ *      through ProgramByte_MX, counting gUnknown_03005C7C down.
  *
  * MATCHES (wave 60, W60-I) -- byte-for-byte, relocations included, at -O1.
  * Verified at -O1 both WITH and WITHOUT `-fforce-addr`: it matches either way,
@@ -46,11 +46,11 @@
  * The two-statement form assigns back to the same variable, the XOR clobbers
  * that pseudo, and the address is RE-LOADED from the same pool word at its
  * second use. This ROM wants the copy, so it wants ONE statement -- the
- * opposite of its three neighbours sub_0808AE54 / AF00 / AF74, which want the
+ * opposite of its three neighbours ReadFlash / AF00 / AF74, which want the
  * reload and therefore two. Both axes matter and neither decides it alone; see
  * the "-O1 versus -O2" chapter in docs/agbcc-codegen.md.
  */
-u16 sub_0808B1BC(u16 sectorNum, u8 *src)
+u16 ProgramFlashSector_SST(u16 sectorNum, u8 *src)
 {
     u16 readFlash1Buffer[0x30];
     const u16 *p;
@@ -80,7 +80,7 @@ u16 sub_0808B1BC(u16 sectorNum, u8 *src)
 
     while (1)
     {
-        result = sub_0808B0E8(sectorNum);
+        result = EraseFlashSector_MX(sectorNum);
 
         if (result == 0)
         {
@@ -103,16 +103,16 @@ u16 sub_0808B1BC(u16 sectorNum, u8 *src)
         count = 6;
 
     for (tries = 1; tries <= count; tries++)
-        sub_0808B0E8(sectorNum);
+        EraseFlashSector_MX(sectorNum);
 
-    sub_0808AD6C(readFlash1Buffer);
+    SetReadFlash1(readFlash1Buffer);
 
     REG_WAITCNT = (REG_WAITCNT & 0xfffc) | gUnknown_03005C78->unk10;
     gUnknown_03005C7C = gUnknown_03005C78->unk04;
 
     while (gUnknown_03005C7C != 0)
     {
-        result = sub_0808B184(src, dest);
+        result = ProgramByte_MX(src, dest);
 
         if (result != 0)
             break;
@@ -126,3 +126,4 @@ u16 sub_0808B1BC(u16 sectorNum, u8 *src)
 
     return result;
 }
+asm(".global sub_0808B1BC\n.thumb_set sub_0808B1BC, ProgramFlashSector_SST\n");

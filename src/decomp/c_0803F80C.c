@@ -50,7 +50,7 @@ void sub_0803F80C(int a1)
  * induction variable. struct PlayerStruct is 0x3c bytes, so an 0x56 member would
  * not fit it in the first place.
  *
- * sub_0801368C's second parameter is `u16`, and that is what makes the whole
+ * ApplyPaletteAndUploadNow's second parameter is `u16`, and that is what makes the whole
  * offset expression a single giv: gcc strength-reduces the narrowing's own
  * `lsls #0x10` into the induction variable, so r4 carries the value pre-shifted
  * left 16 (init `((a2 + 0x11) << 21) + 0xc0000`, step 0x200000) and the use is a
@@ -67,5 +67,5 @@ void sub_0803F880(int a1, int a2)
 
     pal = a1 ? gUnknown_080D3DE4 : gUnknown_080D3EE4;
     for (i = 0; i < sub_08026340(); i++)
-        sub_0801368C(&pal[gPlayers[i + 1].teamColor][6], (a2 + 0x11 + i) * 0x20 + 0xc, 2);
+        ApplyPaletteAndUploadNow(&pal[gPlayers[i + 1].teamColor][6], (a2 + 0x11 + i) * 0x20 + 0xc, 2);
 }

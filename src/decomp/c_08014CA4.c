@@ -16,7 +16,7 @@
  * so it is a statement there and not a `return unk40 != 0;` -- a returned
  * comparison would go through do_store_flag and never place the constant
  * before the loop. */
-int sub_08014CA4(struct Unk08014074 *p, int a2)
+int TextWriterAdvanceCursor(struct Unk08014074 *p, int a2)
 {
     int r;
 
@@ -35,6 +35,7 @@ int sub_08014CA4(struct Unk08014074 *p, int a2)
 
     return r;
 }
+asm(".global sub_08014CA4\n.thumb_set sub_08014CA4, TextWriterAdvanceCursor\n");
 
 /* Measures a string in pixels with one pixel of inter-character spacing:
  * gUnknown_084C36E4[c] per character, plus 1 before every character after the
@@ -44,7 +45,7 @@ int sub_08014CA4(struct Unk08014074 *p, int a2)
  * The accumulator is u16: both `+= ` steps round-trip through
  * `lsls #0x10; lsrs #0x10`. It is returned as `int` without re-narrowing
  * because it is already zero-extended. */
-int sub_08014CEC(u8 *s)
+int GetStringPixelWidthSimple(u8 *s)
 {
     u16 w;
 
@@ -61,3 +62,4 @@ int sub_08014CEC(u8 *s)
 
     return w;
 }
+asm(".global sub_08014CEC\n.thumb_set sub_08014CEC, GetStringPixelWidthSimple\n");

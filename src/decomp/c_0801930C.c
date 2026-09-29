@@ -8,7 +8,7 @@
  */
 
 /* FindEventScriptSlot's scan with the hit handled instead of returned: every slot
- * holding this script is torn down through sub_080192EC, and the function
+ * holding this script is torn down through EndEventScriptSlot, and the function
  * still returns the not-found -1 unconditionally. The loop does NOT stop at
  * the first hit -- there is no branch out of the body -- so the counter has to
  * survive the call and moves from r1 to callee-saved r4, which is the only
@@ -20,7 +20,7 @@ int EndEventScript(const u8 *a)
     for (i = 0; i < 10; i++)
     {
         if (gUnknown_0200C528[i].unk00 == (struct Unk0200C528Node *)a)
-            sub_080192EC(i);
+            EndEventScriptSlot(i);
     }
     return -1;
 }

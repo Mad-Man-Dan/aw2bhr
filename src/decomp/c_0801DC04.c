@@ -8,16 +8,17 @@
  */
 
 /* Find-first-free over the gUnknown_0200E438 slot array, then hand the slot to
- * sub_0801DC50 to initialise. The `(s16)` on the result is real: the return
+ * InitSpriteScriptFromTable to initialise. The `(s16)` on the result is real: the return
  * type is `int` (see unknown-functions.h -- the ROM narrows here at #0x10,
  * which an s8 return could not produce), so nothing else would emit it.
  */
-int sub_0801DC04(void *a1, s16 a2, s16 a3)
+int StartSpriteScriptFromTable(void *a1, s16 a2, s16 a3)
 {
     s16 i;
 
     for (i = 0; i <= 0x1E; i++)
         if (gUnknown_0200E438[i].unk08 == 0)
-            return (s16)sub_0801DC50(i, a1, a2, a3);
+            return (s16)InitSpriteScriptFromTable(i, a1, a2, a3);
     return -1;
 }
+asm(".global sub_0801DC04\n.thumb_set sub_0801DC04, StartSpriteScriptFromTable\n");

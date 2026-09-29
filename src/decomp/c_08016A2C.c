@@ -7,12 +7,12 @@
  * sub_08016A2C @ 0x08016A2C
  */
 
-/* sub_08016D04's inverse (1,2,4 -> 0,1,2 where that one maps 1,2,3 -> 2,3,4),
+/* GetSuspendIdForGameMode's inverse (1,2,4 -> 0,1,2 where that one maps 1,2,3 -> 2,3,4),
  * and a `switch`, not an if/else chain: the repeated `cmp r0,#2` with `beq`
  * then `bgt` is gcc's binary-search decision tree. The parameter is NOT
- * narrowed at entry, so it is `int` and not the `u8` sub_08016D04 takes. The
+ * narrowed at entry, so it is `int` and not the `u8` GetSuspendIdForGameMode takes. The
  * function has no callers in the tree, so the `s8` return is by analogy with
- * sub_08016D04's -- the constants are byte-identical under any width. */
+ * GetSuspendIdForGameMode's -- the constants are byte-identical under any width. */
 s8 sub_08016A2C(int a)
 {
     switch (a) {

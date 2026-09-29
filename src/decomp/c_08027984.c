@@ -12,20 +12,20 @@ void sub_08027984(void)
     int v;
     s16 w;
 
-    v = sub_080157D0(gUnknown_03001FBC);
-    sub_080157A4(gUnknown_03001FBC, v - 0x10);
+    v = GetSlotSpriteScaleX(gUnknown_03001FBC);
+    SetSlotSpriteScaleX(gUnknown_03001FBC, v - 0x10);
 
-    v = sub_08015820(gUnknown_03001FBC);
-    sub_080157F4(gUnknown_03001FBC, v - 0x10);
+    v = GetSlotSpriteScaleY(gUnknown_03001FBC);
+    SetSlotSpriteScaleY(gUnknown_03001FBC, v - 0x10);
 
-    v = sub_08015900(gUnknown_03001FBC);
+    v = GetSlotSpriteRotation(gUnknown_03001FBC);
     w = v - 2;
-    sub_080158D4(gUnknown_03001FBC, w);
+    SetSlotSpriteRotation(gUnknown_03001FBC, w);
 
     if (w == 0)
     {
-        sub_08016974(gUnknown_03001FBC);
-        sub_080156FC(gUnknown_03001FBC, 1);
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotSpriteDoubleSize(gUnknown_03001FBC);
+        SetSlotSpriteScriptIndex(gUnknown_03001FBC, 1);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

@@ -11,10 +11,10 @@
  * TextWriterDisableDelay -- switch the text writer's per-character delay off.
  *
  * unk3a is the delay in frames and unk39 the counter that runs it. With unk3a at
- * 0 and unk39 at -2, sub_08014400's loop never waits and the rest of the text
+ * 0 and unk39 at -2, TextBox_Loop's loop never waits and the rest of the text
  * appears in one frame. struct Unk08014074 is declared in
  * include/unknown-globals.h; gUnknown_0200C020 is one instance of it and
- * sub_080147B4 the routine that fills one in.
+ * InitTextWriter the routine that fills one in.
  */
 
 void TextWriterDisableDelay(struct Unk08014074 *s)

@@ -52,5 +52,5 @@ void sub_0806A5B8(void)
             }
         }
     }
-    sub_080135A4();
+    EnablePaletteSync();
 }

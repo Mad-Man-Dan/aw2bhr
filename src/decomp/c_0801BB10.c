@@ -33,10 +33,10 @@
  * propagation off the `cmp; beq` and needs no special spelling.
  *
  * NOTE for the header sweep: include/unknown-functions.h declares this as
- * `void sub_0801BB10();` at ~line 98, i.e. with NO arity checking at all.
+ * `void UpdateInterruptEnable();` at ~line 98, i.e. with NO arity checking at all.
  * Arity 2 is read off the body: r0 selects the switch and r1 is copied to r3
  * and used as a word mask. */
-void sub_0801BB10(int op, u32 mask)
+void UpdateInterruptEnable(int op, u32 mask)
 {
     switch (op)
     {
@@ -57,3 +57,4 @@ void sub_0801BB10(int op, u32 mask)
     else
         REG_IME = 0;
 }
+asm(".global sub_0801BB10\n.thumb_set sub_0801BB10, UpdateInterruptEnable\n");

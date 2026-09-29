@@ -22,7 +22,7 @@
 
 
 /* Forwards into sub_0803B4DC, which is the F066 member above and is already
- * declared `void(int)`, so -- as in sub_08015568 -- the narrowing has to be
+ * declared `void(int)`, so -- as in FreeSpriteScript2 -- the narrowing has to be
  * spelled. This function has no callers anywhere in asm/ or src/, so nothing
  * constrains its own parameter and `s16` with no cast would be byte-identical.
  */

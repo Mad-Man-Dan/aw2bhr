@@ -14,7 +14,7 @@ void BuildMapSelectPreviewNow(int a1)
     u8 *p;
     int i, j, k;
 
-    sub_08013C54();
+    ClearBg1Tilemap();
     p = (u8 *)&gUnknown_02027F74;
     p += 4;
 
@@ -39,6 +39,6 @@ void BuildMapSelectPreviewNow(int a1)
         gUnknown_03005918 = 0x14;
         gUnknown_030058F4 = 0x10;
     }
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 }
 asm(".global sub_08086F3C\n.thumb_set sub_08086F3C, BuildMapSelectPreviewNow\n");

@@ -57,5 +57,5 @@ void sub_08075AC4(int a1, int a2)
         n--;
     }
 
-    sub_080135A4();
+    EnablePaletteSync();
 }

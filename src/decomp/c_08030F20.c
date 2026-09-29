@@ -21,7 +21,7 @@
  * swaps the two `movs`. */
 void sub_08030F20(void)
 {
-    sub_08012358();
+    SetDefaultColorEffects();
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg2 = 1;
     gUnknown_030030E0.bits.target2_enable_obj = 1;

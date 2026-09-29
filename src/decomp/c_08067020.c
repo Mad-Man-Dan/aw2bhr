@@ -20,5 +20,5 @@ void sub_08067020(void)
     sub_08065700();
     sub_08014878();
 
-    sub_08012BC8(gBG0TilemapBuffer, 3, 0x11, 0x1a, 3, 0);
+    FillTilemapRect(gBG0TilemapBuffer, 3, 0x11, 0x1a, 3, 0);
 }

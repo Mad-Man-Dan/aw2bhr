@@ -7,7 +7,7 @@
  * sub_0808ADA4 @ 0x0808ADA4
  */
 
-/* sub_0808ADA4 -- the flash WaitForFlashWrite poll/timeout loop.
+/* WaitForFlashWrite_Common -- the flash WaitForFlashWrite poll/timeout loop.
  * PARKED at 14.3%, candidate 148 vs 140 (+8). Every branch, every compare and
  * the whole control-flow skeleton are already right; read the diff, not the
  * score.
@@ -16,7 +16,7 @@
  * u8 lastData -- the two u8s from the entry `lsls/lsrs #24` pair, the pointer
  * from `gUnknown_03000F6C`'s declared `u8 (*)(u8 *)`), the u16 return,
  * `gUnknown_03005C78->unk14` as the 0x1CC2 chip-id test, the FLASH_WRITE
- * spelling, and `void sub_0808AD24(void)`.
+ * spelling, and `void StopFlashTimer(void)`.
  *
  * THE RESIDUAL IS ONE MISSING LICM HOIST. The ROM hoists `phase | 0xC000` into
  * the loop preheader (`movs r0,#0xc0; lsls r0,#8; orrs r4,r0; lsls r4,#0x10`)
@@ -54,11 +54,11 @@
  * order.
  */
 
-u16 sub_0808ADA4(u8 phase, u8 *addr, u8 lastData)
+u16 WaitForFlashWrite_Common(u8 phase, u8 *addr, u8 lastData)
 {
     u16 result = 0;
 
-    sub_0808AC7C(phase);
+    StartFlashTimer(phase);
 
     while (gUnknown_03000F6C(addr) != lastData)
     {
@@ -75,7 +75,8 @@ u16 sub_0808ADA4(u8 phase, u8 *addr, u8 lastData)
         }
     }
 
-    sub_0808AD24();
+    StopFlashTimer();
 
     return result;
 }
+asm(".global sub_0808ADA4\n.thumb_set sub_0808ADA4, WaitForFlashWrite_Common\n");

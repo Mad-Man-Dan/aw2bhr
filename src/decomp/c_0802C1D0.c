@@ -8,11 +8,11 @@
  */
 
 /* One nested call. The `lsls #0x18; asrs #8; lsrs #0x10` triple between the two
- * `bl`s is a single conversion, not two: sub_08016D04 returns s8 and
+ * `bl`s is a single conversion, not two: GetSuspendIdForGameMode returns s8 and
  * WriteSuspendSave's first parameter is u16, so the value is sign-extended from 8
  * bits and then truncated to 16, which agbcc fuses into one left shift and two
  * rights. Both widths are independently confirmed on the callee side --
- * sub_08016D04's declaration in unknown-functions.h and WriteSuspendSave's own
+ * GetSuspendIdForGameMode's declaration in unknown-functions.h and WriteSuspendSave's own
  * prologue (`lsls r0,#0x10; lsrs r4,#0x10` then `lsls r1,#0x18; lsrs r7,#0x18`).
  * An `int` parameter would have left a bare `lsls #0x18; asrs #0x18` pair and an
  * s8 one nothing at all.
@@ -23,5 +23,5 @@
 
 void sub_0802C1D0(void)
 {
-    WriteSuspendSave(sub_08016D04(gPlaySt.gameMode), 0);
+    WriteSuspendSave(GetSuspendIdForGameMode(gPlaySt.gameMode), 0);
 }

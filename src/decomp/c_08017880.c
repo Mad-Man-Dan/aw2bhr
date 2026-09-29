@@ -10,7 +10,7 @@
 #include "hardware.h"
 
 /*
- * sub_08017880 -- the HBlank handler: reprogram display registers part-way
+ * CoScreenHBlankHandler -- the HBlank handler: reprogram display registers part-way
  * down the frame.
  *
  * Reads the current scanline out of REG_VCOUNT and acts on three of them:
@@ -31,7 +31,7 @@
  * gUnknown_030030A8 is already declared volatile, and these two are its
  * neighbours in the same set of HBlank shadow registers.
  */
-void sub_08017880(void)
+void CoScreenHBlankHandler(void)
 {
     int v;
 
@@ -62,3 +62,4 @@ void sub_08017880(void)
         REG_BG1HOFS = 0;
     }
 }
+asm(".global sub_08017880\n.thumb_set sub_08017880, CoScreenHBlankHandler\n");

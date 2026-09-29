@@ -19,7 +19,7 @@ void sub_08076ADC(ProcPtr proc)
     Decompress(gUnknown_081D0BAC, gUnknown_08614280);
     sub_08076858();
     sub_0807681C();
-    sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
+    RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
     sub_08076C8C(proc);
     StartWorldMapNationPanel(proc);
 }

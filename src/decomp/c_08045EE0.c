@@ -9,10 +9,10 @@
 
 void sub_08045EE0(void)
 {
-    sub_080130DC(0x1e, 0, 0, 0);
+    StartWhiteFlash(0x1e, 0, 0, 0);
 }
 
 void sub_08045EF4(void)
 {
-    sub_080130DC(0, 0, 0x3c, 0);
+    StartWhiteFlash(0, 0, 0x3c, 0);
 }

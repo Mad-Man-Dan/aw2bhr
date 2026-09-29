@@ -26,12 +26,12 @@ void UpdateMapDisplay(void)
                          (gMap->scrollX >> 4) + 0xf,
                          gMap->scrollY >> 4);
 
-        sub_08013AFC();
-        sub_08013B0C();
-        sub_08013B1C();
+        BG_EnableSyncBG1();
+        BG_EnableSyncBG2();
+        BG_EnableSyncBG3();
 
         if (gUnknown_03000559 == 1)
-            sub_08013AEC();
+            BG_EnableSyncBG0();
     }
 
     if ((gMap->scrollY < (s16)gMap->unk0a
@@ -50,12 +50,12 @@ void UpdateMapDisplay(void)
                          gMap->scrollX >> 4,
                          (gMap->scrollY >> 4) + 0xa);
 
-        sub_08013AFC();
-        sub_08013B0C();
-        sub_08013B1C();
+        BG_EnableSyncBG1();
+        BG_EnableSyncBG2();
+        BG_EnableSyncBG3();
 
         if (gUnknown_03000559 == 1)
-            sub_08013AEC();
+            BG_EnableSyncBG0();
     }
 
     gMap->unk08 = gMap->scrollX;

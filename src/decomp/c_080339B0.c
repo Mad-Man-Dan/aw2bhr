@@ -39,26 +39,26 @@ void LinkC2_080339B1(struct Unk339B0Proc *proc)
 {
     struct Unk339B0Child *child;
 
-    sub_08012C58(gUnknown_0849D16C);
-    sub_0801B780(0x70);
+    SetupBackgrounds(gUnknown_0849D16C);
+    InitTextTileCache(0x70);
     sub_08033930();
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
 
     ApplyPalettes(gUnknown_081D3E88, 17, 3);
     Decompress(gUnknown_081D8A54, (void *)0x06015780);
-    sub_08011C68(gUnknown_0812B49C, (void *)0x06010200, 0x180);
-    sub_08011C68(gUnknown_0812B61C, (void *)0x06010380, 0xe0);
-    sub_08011C68(gUnknown_0812B6FC, (void *)0x06010460, 0x120);
+    CpuCopyAuto(gUnknown_0812B49C, (void *)0x06010200, 0x180);
+    CpuCopyAuto(gUnknown_0812B61C, (void *)0x06010380, 0xe0);
+    CpuCopyAuto(gUnknown_0812B6FC, (void *)0x06010460, 0x120);
     ApplyPalette(gUnknown_0809165C, 21);
 
     sub_0801F114();
-    sub_0801F150(2, (void *)0x06010000, 0, 0x16);
+    InitTilePool(2, (void *)0x06010000, 0, 0x16);
     LoadTilePoolGraphic(0x50);
 
     ApplyPalette(gUnknown_081320AC, 3);
@@ -67,7 +67,7 @@ void LinkC2_080339B1(struct Unk339B0Proc *proc)
     Decompress(gUnknown_0823A3D4,
                BG_CHAR_ADDR(((union BgCntBuf *)&gUnknown_0300251C)->bits.chr_block));
     Decompress(gUnknown_08239FA4, gBG3TilemapBuffer);
-    sub_08013B1C();
+    BG_EnableSyncBG3();
 
     StartHeaderBanner(gUnknown_085802F0, gUnknown_02010C50, 0xec, 0xf, 0, 0, (int)proc);
 

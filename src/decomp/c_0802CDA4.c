@@ -58,7 +58,7 @@ void OptionsMenu_CycleVisual(u8 a1, u8 a2, u8 a3)
         gPlaySt.animOpts = 0;
 
     fns[gPlaySt.animOpts](a1, a2, a3);
-    sub_08019E68();
+    RebuildMenuItems();
     gUnknown_0200C420.unk0e = gPlaySt.animOpts;
 }
 asm(".global sub_0802CDA4\n.thumb_set sub_0802CDA4, OptionsMenu_CycleVisual\n");

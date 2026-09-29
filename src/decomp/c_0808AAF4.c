@@ -10,7 +10,7 @@
 /* Reads the save flash chip's ID.
  *
  * It sends the chip's enter-ID-mode command sequence, waits, reads the device
- * and maker codes through a tiny read routine that sub_0808AD6C copies onto
+ * and maker codes through a tiny read routine that SetReadFlash1 copies onto
  * the stack, sends the exit sequence, waits again, and returns
  * (device << 8) | maker.
  */
@@ -31,7 +31,7 @@ u16 ReadFlashId(void)
     u16 readFlash1Buffer[0x20];
     u8 (*readFlash1)(u8 *);
 
-    sub_0808AD6C(readFlash1Buffer);
+    SetReadFlash1(readFlash1Buffer);
     readFlash1 = (u8 (*)(u8 *))((s32)readFlash1Buffer + 1);
 
     FLASH_WRITE(0x5555, 0xAA);

@@ -57,7 +57,7 @@ void sub_08077B74(struct Unk77B74Proc *proc)
 
     sub_08071900(gUnknown_08551A04 + 0x100,
                  gBG1TilemapBuffer + (proc->unk4a * 32 + t), n, proc->unk4e);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
 
     if (proc->unk44 > 4)
     {

@@ -58,7 +58,7 @@ void FigureTileHook_Cruiser(s16 a, u16 *p)
     u16 g;
     u16 h;
 
-    sub_0801566C(a, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(a, (struct UnkVec *)&oam);
     d = (p[2] - oam.tileNum) & 0x3ff;
     g = gUnknown_03001470[a].unk30;
     h = gUnknown_03001470[a].unk34;

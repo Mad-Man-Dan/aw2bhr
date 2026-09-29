@@ -8,12 +8,12 @@
  */
 
 /*
- * sub_08018E24 -- script command: start the gUnknown_0848A378 script and pass
+ * EventOp_StartCursorScript -- script command: start the gUnknown_0848A378 script and pass
  * it this node.
  *
  * Skipped while gUnknown_03002514 is 1. StartEventScript puts the script in a free
  * gUnknown_0200C528 slot, and that slot's .unk14 is pointed at this script's
- * current node, which is where sub_08018DF8 and its neighbours read their
+ * current node, which is where EventCursorScript_Draw and its neighbours read their
  * parameters from. The cursor then steps one node on and TRUE comes back, so
  * the dispatcher runs the next command in the same frame.
  *
@@ -21,10 +21,11 @@
  * rather than the member retyped; src/decomp/c_08018DF8.c casts it back the
  * same way.
  */
-bool8 sub_08018E24(s16 a)
+bool8 EventOp_StartCursorScript(s16 a)
 {
     if (gUnknown_03002514 != 1)
         StartEventScript(gUnknown_0848A378)->unk14 = (u32)gUnknown_0200C528[a].unk04;
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
+asm(".global sub_08018E24\n.thumb_set sub_08018E24, EventOp_StartCursorScript\n");

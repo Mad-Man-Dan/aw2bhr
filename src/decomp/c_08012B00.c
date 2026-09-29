@@ -7,7 +7,7 @@
  * sub_08012B00 @ 0x08012B00
  */
 
-void sub_08012B00(u16 *dst, u16 size, u16 delta)
+void AddToHalfwords(u16 *dst, u16 size, u16 delta)
 {
     while (size != 0)
     {
@@ -16,3 +16,4 @@ void sub_08012B00(u16 *dst, u16 size, u16 delta)
         size -= 2;
     }
 }
+asm(".global sub_08012B00\n.thumb_set sub_08012B00, AddToHalfwords\n");

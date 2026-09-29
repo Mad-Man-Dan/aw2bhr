@@ -25,7 +25,7 @@
  * COLOUR into the AND's destination (`adds r0, r1, #0; ands r0, r7`); reading
  * the memory each time it copies the MASK instead (`adds r0, r7, #0; ands
  * r0, r1`), which is what the ROM has. */
-void sub_08072BCC(int pal)
+void DimPaletteByQuarter(int pal)
 {
     u16 *p = gPal + pal * 0x10;
     int i;
@@ -39,3 +39,4 @@ void sub_08072BCC(int pal)
         p[i] = (r & 0x1F) | (g & 0x3E0) | (b & 0x7C00);
     }
 }
+asm(".global sub_08072BCC\n.thumb_set sub_08072BCC, DimPaletteByQuarter\n");

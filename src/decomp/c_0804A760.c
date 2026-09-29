@@ -79,15 +79,15 @@ void NameEntry_HandleInput(void)
             break;
         }
         dst = (u8 *)gUnknown_030044E0->unk58;
-        sub_08013034(gUnknown_030044E0->unk2c);
+        TrimTrailingFullWidthSpaces(gUnknown_030044E0->unk2c);
         for (i = 0; i < gUnknown_030044E0->unk5f; i++)
             dst[i] = gUnknown_030044E0->unk2c[i];
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
         return;
     case 3:
         if (gUnknown_03002EE4 != 1)
         {
-            sub_08015C30(gUnknown_03001FBC);
+            ClearSlotScriptCallback(gUnknown_03001FBC);
             return;
         }
         gUnknown_030044E0->unk63 = flag;

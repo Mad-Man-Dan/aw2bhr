@@ -12,24 +12,24 @@
  * into gUnknown_02000000. The same `(u8)(unk02 + 0x4c) <= 0xb` wrapping range
  * test on the mode byte guards the SaveDesignRoomSlot call there too.
  *
- * `a` is a u16 the body reads BOTH ways: `(s8)a` for the sub_08016CD8 /
- * sub_08016CEC pair (both take s8) and `(u8)a` for sub_0801A7D8, and agbcc
+ * `a` is a u16 the body reads BOTH ways: `(s8)a` for the GetSuspendFlag /
+ * SetSuspendFlag pair (both take s8) and `(u8)a` for sub_0801A7D8, and agbcc
  * shares the single `lsls #0x18` between them -- the ROM's `lsls r5,r4,#0x18;
  * asrs r4,r5,#0x18` ... `lsrs r0,r5,#0x18` is one shifted value with two
- * extensions, not two casts. The bare `lsls #0x18; cmp #0` on sub_08016CD8's
+ * extensions, not two casts. The bare `lsls #0x18; cmp #0` on GetSuspendFlag's
  * result is the truth test of its s8 return. */
 void WriteSuspendSave(u16 a, u8 b)
 {
     if (a != 0 && gPlaySt.savingEnabled == 0) {
-        sub_08016A14();
-        if (sub_08016CD8(a) == 0)
-            sub_08016CEC(a, 1);
+        MarkProfileSaved();
+        if (GetSuspendFlag(a) == 0)
+            SetSuspendFlag(a, 1);
         if ((u8)(gPlaySt.mapID + 0x4c) <= 0xb)
             SaveDesignRoomSlot(3, gMap->unk421a, 1);
         sub_08016F38(b);
         sub_0801A7D8(a, gUnknown_02000000, 0xE28);
         if (gPlaySt.gameMode == 1)
-            sub_08016E74();
+            BackupBattleMapPoints();
     }
 }
 asm(".global sub_08016D30\n.thumb_set sub_08016D30, WriteSuspendSave\n");
@@ -50,7 +50,7 @@ void LoadSuspendSave(u16 a)
         RestoreBattleSaveState();
         if ((u8)(gPlaySt.mapID + 0x4c) <= 0xb)
             sub_0803CF04(3, (int)gMap->unk421a);
-        sub_0801759C();
+        RebuildTerrainPlaneFromTiles();
     }
 }
 asm(".global sub_08016DB8\n.thumb_set sub_08016DB8, LoadSuspendSave\n");

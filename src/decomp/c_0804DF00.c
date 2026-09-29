@@ -40,7 +40,7 @@ void BattleshipFigure_Loop(void)
             gUnknown_020296B0[side].unk1a++;
         }
         else if (gUnknown_02029A10[side].entries[slot].unk18 != -1
-                 && sub_080153F0(gUnknown_02029A10[side].entries[slot].unk18))
+                 && IsSlotScriptActiveAt(gUnknown_02029A10[side].entries[slot].unk18))
         {
             sub_080156E8(gUnknown_02029A10[side].entries[slot].unk18,
                          gUnknown_02029BA8[side].unk04);

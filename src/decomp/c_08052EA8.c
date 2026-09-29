@@ -14,19 +14,19 @@
 void sub_08052EA8(void)
 {
     sub_0808BBA4();
-    sub_080123EC();
-    sub_08012420();
+    ResetDisplayState();
+    FlushDisplayRegisters();
     ClearTileRigistry();
-    sub_08015184();
+    InitSlotScripts();
     sub_080152C0((s32)gUnknown_08553754, 0);
 
     while (1)
     {
-        sub_0801E0F0();
-        sub_08015954();
+        ClearOamShadow();
+        RunAllSlotScripts();
         DrawSpriteScripts();
-        sub_08011FF0();
-        sub_08012420();
+        FlushTiles();
+        FlushDisplayRegisters();
         TickSpriteScripts();
     }
 }

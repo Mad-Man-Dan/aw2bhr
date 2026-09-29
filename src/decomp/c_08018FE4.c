@@ -19,7 +19,7 @@
  * `int x`, not `s16`: the load is `ldrsh`, i.e. an `(s16)` cast on the `u16`
  * member reaching an int context, and PlayMusicAfterFade's parameter is word-width
  * (its prologue is a bare `adds r4, r0, #0`), so nothing re-narrows it. */
-bool8 sub_08018FE4(s16 a)
+bool8 EventOp_PlayMusic(s16 a)
 {
     bool8 r;
     int x;
@@ -36,3 +36,4 @@ bool8 sub_08018FE4(s16 a)
     gUnknown_0200C528[a].unk04++;
     return r;
 }
+asm(".global sub_08018FE4\n.thumb_set sub_08018FE4, EventOp_PlayMusic\n");

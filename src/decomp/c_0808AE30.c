@@ -7,7 +7,7 @@
  * sub_0808AE30 @ 0x0808AE30
  */
 
-void sub_0808AE30(const u8 *src, u8 *dst, int n)
+void ReadFlash_Core(const u8 *src, u8 *dst, int n)
 {
     int i;
 
@@ -26,3 +26,4 @@ void sub_0808AE30(const u8 *src, u8 *dst, int n)
         } while (i-- != 0);
     }
 }
+asm(".global sub_0808AE30\n.thumb_set sub_0808AE30, ReadFlash_Core\n");

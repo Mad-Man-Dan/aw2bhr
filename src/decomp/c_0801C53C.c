@@ -20,7 +20,7 @@
  * signed `ble`. A `for` loop over the same range gives agbcc's other dbra
  * form -- an unsigned `beq` guard and a 3-instruction `sub; cmp; bne` bottom.
  *
- * gDispIo is re-read every iteration because sub_08011E54 is a call and
+ * gDispIo is re-read every iteration because RegisterDataMove is a call and
  * clobbers memory; for the same reason both table lookups are recomputed after
  * the call rather than CSEd, which is why the index expression is written out
  * twice rather than bound to a local.
@@ -57,7 +57,7 @@ void AP_QueueObjGraphics(struct Unk0801C210 *a1)
         {
             if (gDispIo.disp_ct.obj_mapping)
             {
-                sub_08011E54((u8 *)a1->unk24 + ((*chr & 0x3ff) << 5),
+                RegisterDataMove((u8 *)a1->unk24 + ((*chr & 0x3ff) << 5),
                     (u8 *)((a1->unk22 & 0x3ff) << 5) + (off + 0x06010000),
                     gUnknown_0848B5C4[OBJ_SZ_IDX(oam)]
                         * (gUnknown_0848B5C4[OBJ_SZ_IDX(oam) + 1] << 5));

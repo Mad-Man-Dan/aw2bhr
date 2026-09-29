@@ -23,7 +23,7 @@ struct Unk08075E3C
 void sub_08075E0C(struct Unk08075E0C *proc)
 {
     sub_08075AC4(proc->unk4c, 0x10);
-    sub_080135A4();
+    EnablePaletteSync();
 
     proc->unk4c++;
 
@@ -34,6 +34,6 @@ void sub_08075E0C(struct Unk08075E0C *proc)
 void sub_08075E3C(struct Unk08075E3C *proc)
 {
     sub_08075904(proc->unk58);
-    sub_08011E54(gUnknown_08614280, (void *)0x0600F000, 0x1000);
+    RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
     AP_Delete(proc->unk54);
 }

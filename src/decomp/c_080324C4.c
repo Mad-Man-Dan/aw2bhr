@@ -14,21 +14,21 @@ void sub_080324C4(int a1, int a2, u8 a3)
     int i;
     int zero;
 
-    sub_0801A5B0(0);
-    sub_08013C00();
-    sub_08013C54();
-    sub_08013CA8();
-    sub_08013AEC();
-    sub_08013AFC();
-    sub_08013B0C();
-    sub_08013B1C();
+    LoadBg1WindowFrame(0);
+    ClearBg0Tilemap();
+    ClearBg1Tilemap();
+    ClearBg2Tilemap();
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG1();
+    BG_EnableSyncBG2();
+    BG_EnableSyncBG3();
     sub_08034290();
     sub_080733B8();
 
     SetBgScrollShadow(0, 0xFFD0, 8);
     SetBgScrollShadow(3, 0, 0);
 
-    sub_0801237C();
+    ResetWindowShadows();
 
     if ((gGameClock & 1) || a2 == -1)
     {

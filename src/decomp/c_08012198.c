@@ -11,13 +11,13 @@ void sub_08012198(void)
 {
     int i;
 
-    sub_080119D4(8, 0, (s16)gUnknown_03002F30);
+    PutHexNumberSprites(8, 0, (s16)gUnknown_03002F30);
 
     for (i = 0; i <= 3; i++)
     {
-        sub_080119D4(0x40, i * 8 + 8, gUnknown_0200B3B4[i].unk00);
-        sub_080119D4(0x84, i * 8 + 8, gUnknown_0200B3B4[i].unk04);
-        sub_080119D4(0x98, i * 8 + 8,
+        PutHexNumberSprites(0x40, i * 8 + 8, gUnknown_0200B3B4[i].unk00);
+        PutHexNumberSprites(0x84, i * 8 + 8, gUnknown_0200B3B4[i].unk04);
+        PutHexNumberSprites(0x98, i * 8 + 8,
                      gUnknown_0200B3B4[i].unk08 * (gUnknown_0200B3B4[i].unk0a + 1) * 2);
     }
 }

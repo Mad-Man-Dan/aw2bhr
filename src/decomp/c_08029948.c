@@ -34,7 +34,7 @@
  * This is the same recipe as the three already-promoted functions that
  * contain the identical interleave against the identical global -- read
  * src/decomp/c_08035BC4.c, whose own comment states the s8/int/s16 result
- * outright, and src/decomp/c_080149C0.c (sub_080149C0 and sub_08014A5C).
+ * outright, and src/decomp/c_080149C0.c (PutTextScriptImmediate and PutTextTableEntryImmediate).
  * W60-A's scan of asm/ found 92 interleaved extend pairs across 67 distinct
  * functions with the large majority already matched, so this placement is
  * ordinary compiler output, not an unreachable artefact.

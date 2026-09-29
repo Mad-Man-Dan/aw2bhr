@@ -15,7 +15,7 @@ void sub_0802D35C(int a1)
     x = a1;
 
     v = sub_0802D33C();
-    sub_0801A444(v, 0xe, 0xd, 6);
+    DrawWindowBackgroundOnBg2(v, 0xe, 0xd, 6);
     sub_0801537C(gUnknown_08489568);
     sub_080146D4((s16)(v + 1), 0xf, gBG0TilemapBuffer, x, 0x8000, 0x100);
 }
@@ -26,8 +26,8 @@ void sub_0802D3B0(void)
 
     v = sub_0802D33C();
     sub_0801537C(gUnknown_08489568);
-    sub_08012BC8(gBG0TilemapBuffer, v, 0xe, 0xd, 6, 0);
-    sub_08012BC8(gBG2TilemapBuffer, v, 0xe, 0xd, 6, 0x360);
-    sub_08013AEC();
-    sub_08013B0C();
+    FillTilemapRect(gBG0TilemapBuffer, v, 0xe, 0xd, 6, 0);
+    FillTilemapRect(gBG2TilemapBuffer, v, 0xe, 0xd, 6, 0x360);
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 }

@@ -7,13 +7,13 @@
  * sub_08012A84 @ 0x08012A84
  */
 
-/* sub_08012A54's twin: the same two lines, but it CALLS sub_08012A24 directly
+/* sub_08012A54's twin: the same two lines, but it CALLS EnableHBlankInterrupt directly
  * instead of registering it into the gUnknown_03002FA0 list. That is the whole
- * difference, and it is visible only as `bl sub_08012A24` where the sibling
- * has `ldr r0,=sub_08012A24; bl sub_08011AAC`. */
+ * difference, and it is visible only as `bl EnableHBlankInterrupt` where the sibling
+ * has `ldr r0,=EnableHBlankInterrupt; bl QueueVBlankCallback`. */
 void sub_08012A84(void *handler)
 {
     SetIRQHandler(1, handler);
-    sub_0801BB10(2, 2);
-    sub_08012A24();
+    UpdateInterruptEnable(2, 2);
+    EnableHBlankInterrupt();
 }

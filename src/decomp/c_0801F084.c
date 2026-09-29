@@ -9,13 +9,14 @@
 
 /* Family F070's shape one more time (see src/decomp/c_0801F050.c): an if/else
  * on gUnknown_03001FE0, the "is there a deferred execution context" word. */
-void sub_0801F084(void)
+void FlushSpritesForMode(void)
 {
     if (gUnknown_03001FE0) {
         PushSpriteLayerObjects(0);
         PushSpriteLayerObjects(5);
         ClearSprites();
     } else {
-        sub_0801EE10();
+        FlushSpriteRequests();
     }
 }
+asm(".global sub_0801F084\n.thumb_set sub_0801F084, FlushSpritesForMode\n");

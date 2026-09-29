@@ -11,6 +11,6 @@
  * callback goes through a `(void *)` cast. */
 void sub_0803A440(void)
 {
-    sub_0801F024((void *)sub_0803A07C, 1);
-    sub_0801F024((void *)UnitInfoPanel_DrawAmmoAndRange, 1);
+    RunOrQueueDrawCallback((void *)sub_0803A07C, 1);
+    RunOrQueueDrawCallback((void *)UnitInfoPanel_DrawAmmoAndRange, 1);
 }

@@ -10,7 +10,7 @@
 /* The reset for the 16-entry pointer list gUnknown_03002FA0 and its count.
  * Same loop as sub_08011B18, which does list B (gUnknown_03000000).
  */
-void sub_08011A84(void)
+void ClearVBlankCallbackQueue(void)
 {
     u8 i;
 
@@ -19,3 +19,4 @@ void sub_08011A84(void)
     for (i = 0; i < 16; i++)
         gUnknown_03002FA0[i] = 0;
 }
+asm(".global sub_08011A84\n.thumb_set sub_08011A84, ClearVBlankCallbackQueue\n");

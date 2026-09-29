@@ -56,7 +56,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
     u16 zero;
 
     sub_0807898C(proc);
-    sub_08013B0C();
+    BG_EnableSyncBG2();
 
     gUnknown_0300251C.bits.tm_block = 0x1b;
 
@@ -82,7 +82,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
 
     SetWinEnable(0, 1, 0);
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 
     Decompress(gUnknown_0823A3D4,
         (void *)(gUnknown_0300251C.bits.chr_block * 0x4000 + 0x06000000));
@@ -92,7 +92,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
         gBG3TilemapBuffer[i] += 0x2000;
 
     ApplyPaletteExt(gUnknown_0823BE20, 0x40, 0x20);
-    sub_08013B1C();
+    BG_EnableSyncBG3();
 
     gUnknown_03002F18 = 0xff28;
 
@@ -102,7 +102,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
     Decompress(gUnknown_0823468C,
         (void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x06000000));
     Decompress(gUnknown_0823456C, gBG1TilemapBuffer);
-    sub_08013AFC();
+    BG_EnableSyncBG1();
     sub_0802D5CC(0, 0);
 
     Decompress(gUnknown_082346D0, gUnknown_0200FC50);
@@ -125,8 +125,8 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
     LoadCoFace(gUnknown_030058E0[DivRem(2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014B00, 0x18);
 
     sub_0801F114();
-    sub_0801F150(1, (void *)0x06010000, 0x2d8, 0x1b);
-    sub_0801F150(2, (void *)0x06010000, 0x2ec, 0x1c);
+    InitTilePool(1, (void *)0x06010000, 0x2d8, 0x1b);
+    InitTilePool(2, (void *)0x06010000, 0x2ec, 0x1c);
 
     LoadTilePoolGraphic(0x3e);
     LoadTilePoolGraphic(0x3f);

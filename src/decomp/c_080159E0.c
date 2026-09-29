@@ -21,7 +21,7 @@
  * unknown-globals.h records for the same members. Binding `&g[a]` to a local
  * pointer folds the 8 into the load displacement instead.
  */
-void sub_080159E0(u8 a)
+void RunSlotScriptFrame(u8 a)
 {
     if (gUnknown_03001470[a].unk12 & 1)
     {
@@ -31,6 +31,7 @@ void sub_080159E0(u8 a)
         if (gUnknown_03001470[a].unk08 != 0)
             ((void (*)(struct Unk03001470 *))gUnknown_03001470[a].unk08)(&gUnknown_03001470[a]);
 
-        sub_08015A30(a);
+        StepSlotScript(a);
     }
 }
+asm(".global sub_080159E0\n.thumb_set sub_080159E0, RunSlotScriptFrame\n");

@@ -15,7 +15,7 @@ void sub_0802788C(void)
     gUnknown_03002B28 = 0x10 - gUnknown_03001470[gUnknown_03001FBC].unk1e / 4;
 
     if (++gUnknown_03001470[gUnknown_03001FBC].unk1e > 0x20)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 
 void sub_08027904(void)
@@ -24,5 +24,5 @@ void sub_08027904(void)
     gUnknown_03002B28 = gUnknown_03001470[gUnknown_03001FBC].unk1e / 4 + 8;
 
     if (++gUnknown_03001470[gUnknown_03001FBC].unk1e > 0x20)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }

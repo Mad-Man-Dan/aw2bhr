@@ -23,7 +23,7 @@ void sub_080743B8(ProcPtr proc)
     if (!sub_08019260())
     {
         gUnknown_03002F08.unk00 = 8;
-        sub_0801A57C(gUnknown_030033EC);
+        LoadArmyObjPalette(gUnknown_030033EC);
         Proc_Break(proc);
     }
 }

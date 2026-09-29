@@ -16,7 +16,7 @@
  * copy (`ix = nx`) rather than `ix++`. That stops the compiler treating `ix`
  * as a simple counter and strength-reducing the two addresses, which the
  * original does not do. */
-void sub_080726E8(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, u8 flip)
+void TmCopyRectClipped(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src, u8 flip)
 {
   const u16 *p = src;
   int ix;
@@ -54,3 +54,4 @@ void sub_080726E8(u16 *map, int x, int y, u16 base, int w, int h, const u16 *src
     }
   }
 }
+asm(".global sub_080726E8\n.thumb_set sub_080726E8, TmCopyRectClipped\n");

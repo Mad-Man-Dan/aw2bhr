@@ -14,7 +14,7 @@
  * instead of falling through to the next node. Returns TRUE, which makes the
  * dispatcher in src/decomp/c_08019404.c run the next command in the same frame.
  *
- * The int return type comes from the callers, not from this body: sub_08018BCC,
+ * The int return type comes from the callers, not from this body: EventOp_JumpIfCallTrue,
  * EventOp_JumpIfCompletionFlagSet and EventOp_JumpIfCompletionFlagClear each sign-extend the result as a halfword into
  * their own s16 return, which neither a bool8 nor an s16 callee would produce.
  * See the note in include/unknown-functions.h.

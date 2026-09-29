@@ -27,7 +27,7 @@ struct Unk806A6B8
 /* Loads the frame budget the sub_0806A680 / sub_0806A6B8 loops count down. */
 void sub_0806A668(struct Unk806A668 *proc)
 {
-    sub_08013928(1);
+    ColFadeToWhite(1);
     proc->unk44 = 8;
 }
 
@@ -54,7 +54,7 @@ void sub_0806A6B8(struct Unk806A6B8 *proc)
     if (!(gGameClock & 1))
     {
         sub_080718F0();
-        sub_080135A4();
+        EnablePaletteSync();
         if (--proc->unk44 == 0)
             Proc_Break(proc);
     }

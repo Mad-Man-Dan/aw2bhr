@@ -7,8 +7,9 @@
  * sub_0801B768 @ 0x0801B768
  */
 
-void sub_0801B768(int a)
+void ResetTextTileCache(int a)
 {
     gUnknown_03002B80.unk358 = a + 1;
     gUnknown_03002B80.unk00 = 1;
 }
+asm(".global sub_0801B768\n.thumb_set sub_0801B768, ResetTextTileCache\n");

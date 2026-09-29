@@ -10,7 +10,7 @@
 #include "hardware.h"
 /* The same 0x48-byte object src/decomp/c_08019B50.c walks -- this is the
  * D-pad handler that moves its cursor and then re-dispatches through
- * sub_08019B50.
+ * Menu_CallCursorHook.
  *
  * Neither `p->unk41` nor `p->unk42` may be bound to a local: the stores to
  * unk42 invalidate every memory value cse.c is holding, so the ROM re-reads
@@ -35,7 +35,7 @@ struct Unk08019B80 /* 0x48 */
 };
 #define Q ((struct Unk08019B80 *)arg)
 
-u8 sub_08019B80(void *arg)
+u8 Menu_MoveCursorFromDpad(void *arg)
 {
     int hit = 0;
 
@@ -70,9 +70,10 @@ u8 sub_08019B80(void *arg)
 
     if (hit == 1)
     {
-        sub_08019B50(arg);
+        Menu_CallCursorHook(arg);
         return 1;
     }
 
     return 0;
 }
+asm(".global sub_08019B80\n.thumb_set sub_08019B80, Menu_MoveCursorFromDpad\n");

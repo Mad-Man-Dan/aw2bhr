@@ -25,19 +25,19 @@ void sub_08039338(void)
     int t;
     s16 v;
 
-    t = (s16)sub_080157D0(gUnknown_03001FBC);
+    t = (s16)GetSlotSpriteScaleX(gUnknown_03001FBC);
     v = t - (t - 0x100) / 2;
 
     if (v - 0x100 == 1)
         v = 0x100;
 
-    sub_080157A4(gUnknown_03001FBC, v);
-    sub_080157F4(gUnknown_03001FBC, v);
+    SetSlotSpriteScaleX(gUnknown_03001FBC, v);
+    SetSlotSpriteScaleY(gUnknown_03001FBC, v);
 
     if (v == 0x100)
     {
-        sub_080168BC(gUnknown_03001FBC);
-        sub_080156FC(gUnknown_03001FBC, 1);
-        sub_08015C30(gUnknown_03001FBC);
+        DisableSlotSpriteAffine(gUnknown_03001FBC);
+        SetSlotSpriteScriptIndex(gUnknown_03001FBC, 1);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

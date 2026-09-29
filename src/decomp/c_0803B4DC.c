@@ -28,7 +28,7 @@
  * conversion at a use inside the body but does not say the source has no cast.
  *
  * The `int` parameter is NOT a free choice and was settled before this wave:
- * sub_08016104/sub_08016130 pass a `u16` out of a script stream with a bare
+ * SlotOp_PlayMusic/SlotOp_PlaySfx pass a `u16` out of a script stream with a bare
  * `ldrh`, which an `s16` parameter would fold into `movs r1,#4; ldrsh`, and
  * src/proc.c passes an `s16` dataImm, which rules out `u16`.
  */

@@ -31,7 +31,7 @@ void MissileHitEffect_Init(void)
   int mem_x;
   int mem_y;
   struct Unk85D6A48Row *tbl;
-  sub_0801566C(gUnknown_03001FBC, (struct UnkVec *) (&oam));
+  CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *) (&oam));
   gUnknown_020298E0[gUnknown_0300453C].unk80[gUnknown_020298E0[gUnknown_0300453C].unk16 - 1] = 0;
   gUnknown_020298E0[gUnknown_0300453C].unk8a = gUnknown_08553660[1] / gUnknown_08553664[1];
   gUnknown_03001470[gUnknown_03001FBC].unk28 = 0;
@@ -48,7 +48,7 @@ void MissileHitEffect_Init(void)
   if (((tbl = (struct Unk85D6A48Row *)gUnknown_085D6A48,
         tbl[gUnknown_03004580[gUnknown_0300453C ^ 1][1]].unk02) == 2) && ((gUnknown_03004580[gUnknown_0300453C ^ 1][1] == 0x17) || (gUnknown_03004580[gUnknown_0300453C ^ 1][1] == 0x11)))
   {
-    sub_08012358();
+    SetDefaultColorEffects();
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target2_enable_obj = 1;
     gUnknown_030030E0.bits.target2_enable_bg2 = 1;
@@ -57,7 +57,7 @@ void MissileHitEffect_Init(void)
     gUnknown_03002B28 = 0xA;
     oam.objMode = 1;
   }
-  sub_08015608(gUnknown_03001FBC, *((struct UnkVec *) (&oam)));
+  SetSlotSpriteAttrs(gUnknown_03001FBC, *((struct UnkVec *) (&oam)));
   asm("" : : "r"(gUnknown_08553C18));
   asm("" : : "r"(gUnknown_085D6A48));
   dx = gUnknown_08553C18[((struct Unk85D6A48Row *)gUnknown_085D6A48)[((struct Unk85D6A48Row *)gUnknown_085D6A48)[gUnknown_03004580[gUnknown_0300453C ^ 1][1]].unk00].unk14].unk16;

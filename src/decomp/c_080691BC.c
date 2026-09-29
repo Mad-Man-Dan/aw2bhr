@@ -36,7 +36,7 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     case 0x26:
         for (i = 1; i < 16; i++)
             gPal[i] = 0x7fff;
-        sub_080135A4();
+        EnablePaletteSync();
         sub_080677E8();
         break;
 
@@ -49,7 +49,7 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     case 0x5c:
         for (i = 1; i < 16; i++)
             gPal[i] = 0x7fff;
-        sub_080135A4();
+        EnablePaletteSync();
         break;
 
     case 0x60:
@@ -63,7 +63,7 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     case 0x8c:
         SetDispEnable(1, 1, 0, 0, 1);
         sub_08063994();
-        sub_08012C48((struct Unk8012C30 *)&gUnknown_030030B4, 1);
+        SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 1);
         sub_080673D0(0x30, 1, proc);
         break;
 
@@ -74,11 +74,11 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     case 0xba:
         Decompress(gUnknown_0817E208, gBG2TilemapBuffer);
         ApplyPaletteExt(gUnknown_0817DA18, 0x20, 0x20);
-        sub_08013B0C();
+        BG_EnableSyncBG2();
         break;
 
     case 0xbe:
-        sub_08012358();
+        SetDefaultColorEffects();
         SetDispEnable(0, 0, 1, 0, 1);
         EndIntroBgScroll();
         break;

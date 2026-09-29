@@ -10,7 +10,7 @@
 
 /* The gBG2TilemapBuffer twin of ClearUnitTileQuadAt -- same 2x2 block, same address
  * form (see the comment there), but filled with 0x360, the same value
- * sub_08013CA8 clears that whole tilemap to. */
+ * ClearBg2Tilemap clears that whole tilemap to. */
 void ClearUnitIconTileQuadAt(u16 x, u16 y)
 {
     int cx;

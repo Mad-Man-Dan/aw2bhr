@@ -9,15 +9,16 @@
 
 #include "hardware.h"
 
-void sub_08012358(void)
+void SetDefaultColorEffects(void)
 {
     gUnknown_030030E0.raw = 0;
     gUnknown_03002020 = 0;
     gUnknown_03002B28 = 0;
     gUnknown_03001FFC = 0;
 }
+asm(".global sub_08012358\n.thumb_set sub_08012358, SetDefaultColorEffects\n");
 
-void sub_0801237C(void)
+void ResetWindowShadows(void)
 {
     SetWinEnable(0, 0, 0);
 
@@ -33,3 +34,4 @@ void sub_0801237C(void)
     gUnknown_030030A4.raw = 0;
     gUnknown_030030DC.raw = 0;
 }
+asm(".global sub_0801237C\n.thumb_set sub_0801237C, ResetWindowShadows\n");

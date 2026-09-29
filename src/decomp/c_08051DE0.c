@@ -40,7 +40,7 @@ void SmokeEffect_Init(void)
     u16 x;
     u16 y;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
@@ -57,7 +57,7 @@ void SmokeEffect_Init(void)
         + gUnknown_08552D80[gUnknown_02029808[gUnknown_0300453C].unk30[gUnknown_0300451C]].unk06
         + gUnknown_085D7E28[gUnknown_03004580[gUnknown_0300453C][1]][gUnknown_0300451C].unk04;
 
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
 asm(".global sub_08051DE0\n.thumb_set sub_08051DE0, SmokeEffect_Init\n");

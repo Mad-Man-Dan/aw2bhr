@@ -7,7 +7,7 @@
  * sub_08011AAC @ 0x08011AAC
  */
 
-void sub_08011AAC(void *a1)
+void QueueVBlankCallback(void *a1)
 {
     void **p;
     s16 i;
@@ -19,3 +19,4 @@ void sub_08011AAC(void *a1)
     i = gUnknown_030030E8++;
     p[i] = a1;
 }
+asm(".global sub_08011AAC\n.thumb_set sub_08011AAC, QueueVBlankCallback\n");

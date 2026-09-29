@@ -43,7 +43,7 @@ struct Unk8075C98Proc
 void sub_08075C98(struct Unk8075C98Proc *proc)
 {
     sub_08075AC4(proc->unk4c, 0x20);
-    sub_080135A4();
+    EnablePaletteSync();
 
     if ((u32)(proc->unk2c + 0x10) <= 0x100
         && proc->unk30 >= -0x10

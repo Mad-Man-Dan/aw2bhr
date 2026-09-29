@@ -29,5 +29,5 @@ void sub_0806D7A4(struct Unk6D7A4 *p)
         DrawOamObject(0x8d, p->unk24 & 0x1ff, p->unk28 & 0xff, 0, 1);
 
     if (p->unk24 + 0x30 > 0x120)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }

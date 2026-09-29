@@ -20,10 +20,10 @@
  * so the element scale is applied once, after the row/column add. */
 void DrawShopItemRow(u8 a1, u8 a2, u16 *a3, u16 a4, u16 a5)
 {
-    sub_0801F2AC(gUnknown_0849EDB0[a4].unk00, &a3[a2 * 32 + a1]);
-    sub_080149C0(a1 + 2, a2, a3, gTextTable[gUnknown_0849EDB0[a4].unk02],
+    PutTilePoolGraphicTilemap(gUnknown_0849EDB0[a4].unk00, &a3[a2 * 32 + a1]);
+    PutTextScriptImmediate(a1 + 2, a2, a3, gTextTable[gUnknown_0849EDB0[a4].unk02],
         (u16)(a5 * 0x1000), 0);
-    sub_08014B0C(a1 + 14, a2, a3, gUnknown_0849EDB0[a4].unk04,
+    DrawTallNumberRightAligned(a1 + 14, a2, a3, gUnknown_0849EDB0[a4].unk04,
         (u16)(a5 * 0x1000), 0);
 }
 asm(".global sub_080487B4\n.thumb_set sub_080487B4, DrawShopItemRow\n");

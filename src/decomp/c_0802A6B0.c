@@ -47,5 +47,5 @@ void sub_0802A6B0(void)
     }
 
     if ((s16)gUnknown_03001470[gUnknown_03001FBC].unk38 > 0x32)
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }

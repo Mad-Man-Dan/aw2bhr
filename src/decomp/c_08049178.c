@@ -54,7 +54,7 @@ struct Unk8049178
  * The downward twin of BattleMaps_IDLE_08049179: while unk1e + 2 is still within 9 it
  * blanks a row and copies rows 0..(5 - unk1e) of the tilemap scratch
  * gUnknown_084C30F8->unk032 into gBG0TilemapBuffer at a fixed halfword offset
- * of 0x100; past that it hands off to sub_08015C30 instead. unk1e advances
+ * of 0x100; past that it hands off to ClearSlotScriptCallback instead. unk1e advances
  * every frame either way.
  *
  * unk1e is s16, from the three `movs rI, #0x1e; ldrsh` reads (THUMB ldrsh has
@@ -119,7 +119,7 @@ void BattleMaps_IDLE_08049179(struct Unk8049178 *proc)
         break;
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 
     proc->unk64++;
 
@@ -134,7 +134,7 @@ void sub_08049264(struct Unk8049264 *proc)
 
     if (proc->unk1e + 2 <= 9)
     {
-        sub_08012BC8(gBG0TilemapBuffer, 0, proc->unk1e + 7, 0x12, 1, 0);
+        FillTilemapRect(gBG0TilemapBuffer, 0, proc->unk1e + 7, 0x12, 1, 0);
 
         for (row = 0; row < 5 - proc->unk1e; row++)
             for (col = 0; col < 0x14; col++)
@@ -143,10 +143,10 @@ void sub_08049264(struct Unk8049264 *proc)
     }
     else
     {
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 
     proc->unk1e++;
 }

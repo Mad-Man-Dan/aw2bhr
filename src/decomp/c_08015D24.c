@@ -32,7 +32,7 @@
  * `a * 2` across the loop (the ROM keeps it in r2 and reuses it in the
  * epilogue) and drops from `push {r4,r5,r6,lr}` to `push {r4,r5,lr}`.
  */
-bool8 sub_08015D24(u8 a)
+bool8 SlotOp_WaitForScriptEnd(u8 a)
 {
     u8 i;
 
@@ -46,3 +46,4 @@ bool8 sub_08015D24(u8 a)
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return TRUE;
 }
+asm(".global sub_08015D24\n.thumb_set sub_08015D24, SlotOp_WaitForScriptEnd\n");

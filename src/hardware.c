@@ -3,59 +3,64 @@
 
 /* BG tilemap dirty tracking, flushing, clearing, and cell access. */
 
-void sub_08013AC8(void)
+void BG_ClearSync(void)
 {
     sModifiedBGs = 0;
 }
+asm(".global sub_08013AC8\n.thumb_set sub_08013AC8, BG_ClearSync\n");
 
 void BG_EnableSync(u8 a1)
 {
     sModifiedBGs |= 1 << a1;
 }
 
-void sub_08013AEC(void)
+void BG_EnableSyncBG0(void)
 {
     BG_EnableSyncByMask(1);
 }
+asm(".global sub_08013AEC\n.thumb_set sub_08013AEC, BG_EnableSyncBG0\n");
 
-void sub_08013AFC(void)
+void BG_EnableSyncBG1(void)
 {
     BG_EnableSyncByMask(2);
 }
+asm(".global sub_08013AFC\n.thumb_set sub_08013AFC, BG_EnableSyncBG1\n");
 
-void sub_08013B0C(void)
+void BG_EnableSyncBG2(void)
 {
     BG_EnableSyncByMask(4);
 }
+asm(".global sub_08013B0C\n.thumb_set sub_08013B0C, BG_EnableSyncBG2\n");
 
-void sub_08013B1C(void)
+void BG_EnableSyncBG3(void)
 {
     BG_EnableSyncByMask(8);
 }
+asm(".global sub_08013B1C\n.thumb_set sub_08013B1C, BG_EnableSyncBG3\n");
 
 void FlushBgTilemaps(void)
 {
     if (sModifiedBGs & 1)
-        sub_08011C68(gBG0TilemapBuffer,
+        CpuCopyAuto(gBG0TilemapBuffer,
             (void *)(gUnknown_03002B6C.bits.tm_block * 0x800 + 0x06000000), 0x800);
 
     if (sModifiedBGs & 2)
-        sub_08011C68(gBG1TilemapBuffer,
+        CpuCopyAuto(gBG1TilemapBuffer,
             (void *)(gUnknown_03001FE8.bits.tm_block * 0x800 + 0x06000000), 0x800);
 
     if (sModifiedBGs & 4)
-        sub_08011C68(gBG2TilemapBuffer,
+        CpuCopyAuto(gBG2TilemapBuffer,
             (void *)(gUnknown_030030B4.bits.tm_block * 0x800 + 0x06000000), 0x800);
 
     if (sModifiedBGs & 8)
-        sub_08011C68(gBG3TilemapBuffer,
+        CpuCopyAuto(gBG3TilemapBuffer,
             (void *)(gUnknown_0300251C.bits.tm_block * 0x800 + 0x06000000), 0x800);
 
     sModifiedBGs = 0;
     gUnknown_03000048 = 0;
 }
 
-void sub_08013C00(void)
+void ClearBg0Tilemap(void)
 {
     u16 i;
 
@@ -65,8 +70,9 @@ void sub_08013C00(void)
     for (i = 0; i < 0x10; i++)
         *(u16 *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000 + i * 2) = 0;
 }
+asm(".global sub_08013C00\n.thumb_set sub_08013C00, ClearBg0Tilemap\n");
 
-void sub_08013C54(void)
+void ClearBg1Tilemap(void)
 {
     u16 i;
 
@@ -76,8 +82,9 @@ void sub_08013C54(void)
     for (i = 0; i < 0x10; i++)
         *(u16 *)(0x06000000 + gUnknown_03001FE8.bits.chr_block * 0x4000 + i * 2) = 0;
 }
+asm(".global sub_08013C54\n.thumb_set sub_08013C54, ClearBg1Tilemap\n");
 
-void sub_08013CA8(void)
+void ClearBg2Tilemap(void)
 {
     u16 i;
 
@@ -87,6 +94,7 @@ void sub_08013CA8(void)
     for (i = 0; i < 0x10; i++)
         *(u16 *)(0x0600D800 + gUnknown_030030B4.bits.chr_block * 0x4000 + i * 2) = 0;
 }
+asm(".global sub_08013CA8\n.thumb_set sub_08013CA8, ClearBg2Tilemap\n");
 
 u16 *BG_GetMapTilePointer(int which, int x, int y)
 {

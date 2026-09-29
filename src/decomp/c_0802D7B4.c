@@ -80,8 +80,8 @@ void DrawDeploymentList(int a1)
 
         row = i * 2 + 5;
 
-        sub_080149C0(4, row, gBG0TilemapBuffer, buf, 0x8000, flag);
-        sub_08014B0C(0xe, row, gBG0TilemapBuffer,
+        PutTextScriptImmediate(4, row, gBG0TilemapBuffer, buf, 0x8000, flag);
+        DrawTallNumberRightAligned(0xe, row, gBG0TilemapBuffer,
                      GetUnitCostWithCoBonus(gUnknown_030033EC,
                                   gUnknown_02023830[((s16)base + i) * 4]) * 10,
                      0x8000, flag);
@@ -89,6 +89,6 @@ void DrawDeploymentList(int a1)
                      gUnknown_02023830[((s16)base + i) * 4], v, 0, 0);
     }
 
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 asm(".global sub_0802D7B4\n.thumb_set sub_0802D7B4, DrawDeploymentList\n");

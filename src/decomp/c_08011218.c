@@ -16,7 +16,7 @@
  */
 
 
-/* The stop half of a start/stop pair: sub_080111C8 Proc_Start's
+/* The stop half of a start/stop pair: StartFadeScreenLines Proc_Start's
  * ProcScr_FadeScreenLines and this ends every instance of it.
  */
 

@@ -7,28 +7,29 @@
  * sub_08012E9C @ 0x08012E9C
  */
 
-void sub_08012E9C(u16 x, u16 y, u8 c)
+void PutBg0AsciiChar(u16 x, u16 y, u8 c)
 {
     if (c == 0x2e || c == 0x2c)
-        sub_08012E74(x, y, 0x3c);
+        PutBg0Tile(x, y, 0x3c);
     else if (c == 0x2d || c == 0x3d || c == 0x5f)
-        sub_08012E74(x, y, 0x3d);
+        PutBg0Tile(x, y, 0x3d);
     else if (c == 0x28)
-        sub_08012E74(x, y, 0x3a);
+        PutBg0Tile(x, y, 0x3a);
     else if (c == 0x29)
-        sub_08012E74(x, y, 0x3b);
+        PutBg0Tile(x, y, 0x3b);
     else if (c == 0x3a)
-        sub_08012E74(x, y, 0x3d);
+        PutBg0Tile(x, y, 0x3d);
     else if (c == 0x20)
-        sub_08012E74(x, y, 0x3f);
+        PutBg0Tile(x, y, 0x3f);
     else if (c == 0x2f)
-        sub_08012E74(x, y, 0x3d);
+        PutBg0Tile(x, y, 0x3d);
     else if (c == 0x25)
-        sub_08012E74(x, y, 0x3e);
+        PutBg0Tile(x, y, 0x3e);
     else if (c > 0x60)
-        sub_08012E74(x, y, c + 0xffbf);
+        PutBg0Tile(x, y, c + 0xffbf);
     else if (c > 0x40)
-        sub_08012E74(x, y, c + 0xffdf);
+        PutBg0Tile(x, y, c + 0xffdf);
     else
-        sub_08012E74(x, y, c + 0xffe0);
+        PutBg0Tile(x, y, c + 0xffe0);
 }
+asm(".global sub_08012E9C\n.thumb_set sub_08012E9C, PutBg0AsciiChar\n");

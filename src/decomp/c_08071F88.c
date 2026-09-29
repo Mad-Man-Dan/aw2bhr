@@ -153,78 +153,87 @@ asm(".global sub_08072040\n.thumb_set sub_08072040, StartSlowLockingFadeFromWhit
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
  * relocation instead of a bare constant. Argument 0 selects the
  * gUnknown_081CBF68 record, argument 1 is the fade speed. */
-void sub_08072050(ProcPtr parent)
+void FadeCoreToBlackWithCallBack_Speed04(ProcPtr parent)
 {
     StartFadeCore(1, 4, parent, Fade_CommonCallBack);
 }
+asm(".global sub_08072050\n.thumb_set sub_08072050, FadeCoreToBlackWithCallBack_Speed04\n");
 
 /* Fade wrapper. The fourth argument comes out of the literal pool because it
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
  * relocation instead of a bare constant. Argument 0 selects the
  * gUnknown_081CBF68 record, argument 1 is the fade speed. */
-void sub_08072068(ProcPtr parent)
+void FadeCoreToBlackWithCallBack_Speed08(ProcPtr parent)
 {
     StartFadeCore(1, 8, parent, Fade_CommonCallBack);
 }
+asm(".global sub_08072068\n.thumb_set sub_08072068, FadeCoreToBlackWithCallBack_Speed08\n");
 
 /* Fade wrapper. The fourth argument comes out of the literal pool because it
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
  * relocation instead of a bare constant. Argument 0 selects the
  * gUnknown_081CBF68 record, argument 1 is the fade speed. */
-void sub_08072080(ProcPtr parent)
+void FadeCoreToBlackWithCallBack_Speed10(ProcPtr parent)
 {
     StartFadeCore(1, 0x10, parent, Fade_CommonCallBack);
 }
+asm(".global sub_08072080\n.thumb_set sub_08072080, FadeCoreToBlackWithCallBack_Speed10\n");
 
 /* Fade wrapper. The fourth argument comes out of the literal pool because it
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
  * relocation instead of a bare constant. Argument 0 selects the
  * gUnknown_081CBF68 record, argument 1 is the fade speed. */
-void sub_08072098(ProcPtr parent)
+void FadeCoreToBlackWithCallBack_Speed20(ProcPtr parent)
 {
     StartFadeCore(1, 0x20, parent, Fade_CommonCallBack);
 }
+asm(".global sub_08072098\n.thumb_set sub_08072098, FadeCoreToBlackWithCallBack_Speed20\n");
 
 /* Fade wrapper. The fourth argument comes out of the literal pool because it
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
  * relocation instead of a bare constant. Argument 0 selects the
  * gUnknown_081CBF68 record, argument 1 is the fade speed. */
-void sub_080720B0(ProcPtr parent)
+void FadeCoreToBlackWithCallBack_Speed40(ProcPtr parent)
 {
     StartFadeCore(1, 0x40, parent, Fade_CommonCallBack);
 }
+asm(".global sub_080720B0\n.thumb_set sub_080720B0, FadeCoreToBlackWithCallBack_Speed40\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_080720C8(ProcPtr parent)
+void FadeCoreFromBlack_Speed08(ProcPtr parent)
 {
     StartFadeCore(0, 8, parent, NULL);
 }
+asm(".global sub_080720C8\n.thumb_set sub_080720C8, FadeCoreFromBlack_Speed08\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_080720DC(ProcPtr parent)
+void FadeCoreFromBlack_Speed10(ProcPtr parent)
 {
     StartFadeCore(0, 0x10, parent, NULL);
 }
+asm(".global sub_080720DC\n.thumb_set sub_080720DC, FadeCoreFromBlack_Speed10\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_080720F0(ProcPtr parent)
+void FadeCoreFromBlack_Speed20(ProcPtr parent)
 {
     StartFadeCore(0, 0x20, parent, NULL);
 }
+asm(".global sub_080720F0\n.thumb_set sub_080720F0, FadeCoreFromBlack_Speed20\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_08072104(ProcPtr parent)
+void FadeCoreFromBlack_Speed40(ProcPtr parent)
 {
     StartFadeCore(0, 0x40, parent, NULL);
 }
+asm(".global sub_08072104\n.thumb_set sub_08072104, FadeCoreFromBlack_Speed40\n");
 
 /* Fade wrapper. The fourth argument comes out of the literal pool because it
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
@@ -297,11 +306,11 @@ asm(".global sub_080721A4\n.thumb_set sub_080721A4, FadeInBlackSpeed08\n");
 /* The only two-statement member of the family: it is the 24-byte outlier
  * sitting among the 20-byte NULL-callback wrappers, and the extra 4 bytes
  * are a second `bl`, not a pool word. Same call as FadeInBlackSpeed08 (2, 8),
- * followed by sub_08072394. */
+ * followed by ExcludeObjPalettesFromFadeCore. */
 void FadeInBlackSpeed08Unk(ProcPtr parent)
 {
     StartFadeCore(2, 8, parent, NULL);
-    sub_08072394();
+    ExcludeObjPalettesFromFadeCore();
 }
 asm(".global sub_080721B8\n.thumb_set sub_080721B8, FadeInBlackSpeed08Unk\n");
 
@@ -335,51 +344,57 @@ asm(".global sub_080721F8\n.thumb_set sub_080721F8, FadeInBlackSpeed40\n");
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_0807220C(ProcPtr parent)
+void FadeCoreFromWhiteLocking_Speed10(ProcPtr parent)
 {
     StartFadeCore(6, 0x10, parent, NULL);
 }
+asm(".global sub_0807220C\n.thumb_set sub_0807220C, FadeCoreFromWhiteLocking_Speed10\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_08072220(ProcPtr parent)
+void FadeCoreToWhiteLocking_Speed10(ProcPtr parent)
 {
     StartFadeCore(7, 0x10, parent, NULL);
 }
+asm(".global sub_08072220\n.thumb_set sub_08072220, FadeCoreToWhiteLocking_Speed10\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_08072234(ProcPtr parent)
+void FadeCoreFromWhiteLocking_Speed08(ProcPtr parent)
 {
     StartFadeCore(6, 8, parent, NULL);
 }
+asm(".global sub_08072234\n.thumb_set sub_08072234, FadeCoreFromWhiteLocking_Speed08\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_08072248(ProcPtr parent)
+void FadeCoreFromWhite_Speed04(ProcPtr parent)
 {
     StartFadeCore(4, 4, parent, NULL);
 }
+asm(".global sub_08072248\n.thumb_set sub_08072248, FadeCoreFromWhite_Speed04\n");
 
 /* Fade wrapper with no completion callback: the NULL fourth argument is a
  * `movs r3, #0`, which is also why r3 is set LAST here and second in the
  * pool-loaded variants -- agbcc expands the memory operand first. */
-void sub_0807225C(ProcPtr parent)
+void FadeCoreFromWhite_Speed08(ProcPtr parent)
 {
     StartFadeCore(4, 8, parent, NULL);
 }
+asm(".global sub_0807225C\n.thumb_set sub_0807225C, FadeCoreFromWhite_Speed08\n");
 
 /* Fade wrapper. The fourth argument comes out of the literal pool because it
  * is a FUNCTION POINTER; passing it by name is what makes the pool word carry a
  * relocation instead of a bare constant. Argument 0 selects the
  * gUnknown_081CBF68 record, argument 1 is the fade speed. */
-void sub_08072270(ProcPtr parent)
+void FadeCoreToWhiteLockingWithCallBack_Speed08(ProcPtr parent)
 {
-    StartFadeCore(7, 8, parent, sub_08072454);
+    StartFadeCore(7, 8, parent, Fade_WhiteCallBack);
 }
+asm(".global sub_08072270\n.thumb_set sub_08072270, FadeCoreToWhiteLockingWithCallBack_Speed08\n");
 
 /* The tail of the family and a different shape entirely: not a forwarder.
  * `lsls r0, r0, #0x18` between the `bl` and the `cmp` is the narrowing of a

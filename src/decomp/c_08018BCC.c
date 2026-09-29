@@ -17,7 +17,7 @@
  * The trailing `lsls r0, #0x10; asrs r0, #0x10` on EventOp_Jump's result is an
  * INT converted to this function's own `s16` return type, which is what retyped
  * EventOp_Jump from `bool8`. */
-s16 sub_08018BCC(s16 a)
+s16 EventOp_JumpIfCallTrue(s16 a)
 {
     s16 (*f)(void);
 
@@ -30,3 +30,4 @@ s16 sub_08018BCC(s16 a)
         return TRUE;
     }
 }
+asm(".global sub_08018BCC\n.thumb_set sub_08018BCC, EventOp_JumpIfCallTrue\n");

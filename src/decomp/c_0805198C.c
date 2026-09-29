@@ -31,7 +31,7 @@ void FireEffect_Init(void)
     struct OamData oam;
     int tile;
 
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
+    CopySlotSpriteAttrs(gUnknown_03001FBC, (struct UnkVec *)&oam);
     gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
     gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
     oam.hFlip = gUnknown_0300453C ^ 1;
@@ -39,7 +39,7 @@ void FireEffect_Init(void)
     tile = gUnknown_020297C0[gUnknown_0300453C].unk00;
     oam.tileNum = tile;
     oam.priority = 3;
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
+    SetSlotSpriteAttrs(gUnknown_03001FBC, *(struct UnkVec *)&oam);
     SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
@@ -60,7 +60,7 @@ void FireEffect_Loop(void)
 
     if (gUnknown_020297C0[a].unk0c[b] == 1)
     {
-        if (gUnknown_03001FBC != -1 && sub_080153F0(gUnknown_03001FBC))
+        if (gUnknown_03001FBC != -1 && IsSlotScriptActiveAt(gUnknown_03001FBC))
             sub_080156E8(gUnknown_03001FBC, gUnknown_020297C0[a].unk1c);
 
         gUnknown_020297C0[a].unk0c[b] = 0;

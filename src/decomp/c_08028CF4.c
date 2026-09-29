@@ -8,7 +8,7 @@
  */
 
 /* GetCaptureLimitWinner returns `int`: the result is tested with a BARE `cmp r0, #0` and
- * only then cast to u8 (`lsls #0x18; lsrs #0x18`) for sub_08019940's u8 first
+ * only then cast to u8 (`lsls #0x18; lsrs #0x18`) for DefeatOtherTeamsAndEndMatch's u8 first
  * parameter. A narrow return would have been re-narrowed before the compare
  * instead. IsOnlyOneTeamLeft does return a byte -- `lsls r0, #0x18; cmp r0, #0`. */
 void RunWinLossCheck(void)
@@ -25,7 +25,7 @@ void RunWinLossCheck(void)
         r = GetCaptureLimitWinner();
 
         if (r != 0)
-            sub_08019940(r, 0x20);
+            DefeatOtherTeamsAndEndMatch(r, 0x20);
         else
             sub_08028A68();
     }

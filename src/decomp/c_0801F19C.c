@@ -7,12 +7,12 @@
  * sub_0801F19C @ 0x0801F19C
  */
 
-/* sub_0801F19C @ 0x0801F19C, 80 bytes, THUMB.
+/* CopyGraphicToPoolTiles @ 0x0801F19C, 80 bytes, THUMB.
  * Signature below is DECLARED in include/unknown-functions.h -- it is authoritative.
  * The compiler sees that header too, so a definition that
  * disagrees will not compile.
  */
-void sub_0801F19C(int a1, void *a2, int a3)
+void CopyGraphicToPoolTiles(int a1, void *a2, int a3)
 {
     u32 tileCount;
     int index;
@@ -20,7 +20,7 @@ void sub_0801F19C(int a1, void *a2, int a3)
     index = GetTilePoolForGraphic(a1);
     tileCount = gUnknown_0848B780[a1].unk00 * gUnknown_0848B780[a1].unk01;
 
-    sub_0801F444(a1, index);
+    GetGraphicSourceAddress(a1, index);
 
     /* Preserve the ROM's r4/r5/r6 allocation before the fixed call setup. */
     asm("" : : "r"(a3));
@@ -44,3 +44,4 @@ void sub_0801F19C(int a1, void *a2, int a3)
         :
         : "r0", "r1", "r2", "r3", "cc", "memory");
 }
+asm(".global sub_0801F19C\n.thumb_set sub_0801F19C, CopyGraphicToPoolTiles\n");

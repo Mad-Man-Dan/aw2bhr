@@ -32,7 +32,7 @@ struct Unk39BDCProc
 
 void sub_08039BDC(struct Unk39BDCProc *proc)
 {
-    proc->unk32 = sub_0801DAB0(proc);
+    proc->unk32 = AllocObjAffineSlot(proc);
 
     if (proc->unk32 == -1)
         Proc_End(proc);

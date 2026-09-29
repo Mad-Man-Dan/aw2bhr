@@ -29,8 +29,8 @@ asm(".global sub_0800517C\n.thumb_set sub_0800517C, DesignRoomClearName\n");
  * `movs r1,#0xd8; lsls r1,#2` is just the constant 0x360. */
 void sub_0800518C(void)
 {
-    sub_08012BC8(gBG0TilemapBuffer, 0, 0xE, 0x1E, 0x14, 0);
-    sub_08012BC8(gBG2TilemapBuffer, 0, 0xE, 0x1E, 0x14, 0x360);
-    sub_08013AEC();
-    sub_08013B0C();
+    FillTilemapRect(gBG0TilemapBuffer, 0, 0xE, 0x1E, 0x14, 0);
+    FillTilemapRect(gBG2TilemapBuffer, 0, 0xE, 0x1E, 0x14, 0x360);
+    BG_EnableSyncBG0();
+    BG_EnableSyncBG2();
 }

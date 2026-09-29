@@ -27,7 +27,7 @@
  * Binding the ADDRESS of the pointer variable to a local is what suppresses
  * force-addr: the address reaches the MEM through a register from the TEXT
  * pool, so no .rodata word is created, and the load itself is not hoisted
- * because the loop's `bl sub_080119A0` may clobber a non-const global.
+ * because the loop's `bl PutAsciiStringSprites` may clobber a non-const global.
  *
  * The last 4 bytes were WHERE the bind lands, and it is a three-way readout
  * of the preheader boundary:
@@ -63,15 +63,15 @@ void DebugBackupUtility_Loop(struct Unk0803AFA0 *p)
     const char ***tbl;
 
     DebugScreenNoOp();
-    sub_080119A0(0, 0, gUnknown_080910D4);
+    PutAsciiStringSprites(0, 0, gUnknown_080910D4);
     for (i = 0, tbl = &gUnknown_080910E0; i <= 2; i++) {
         if (p->unk20 == i)
-            v = sub_08012E4C();
+            v = GetClockPhase();
         else
             v = 0;
-        sub_080119A0(v, i * 8 + 8, (*tbl)[i]);
+        PutAsciiStringSprites(v, i * 8 + 8, (*tbl)[i]);
     }
-    sub_080119A0(0, p->unk20 * 8 + 8, gUnknown_08091064);
+    PutAsciiStringSprites(0, p->unk20 * 8 + 8, gUnknown_08091064);
     switch (p->unk20) {
     case 0:
         if (gpKeySt->pressed & 1) {

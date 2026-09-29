@@ -21,9 +21,9 @@ void sub_0803FE50(int a1, int a2)
 
         if (FindInventionOfKind(2) != NULL)
         {
-            sub_08011E54(gUnknown_081245F8 + ((t & 0x3FF) << 5),
+            RegisterDataMove(gUnknown_081245F8 + ((t & 0x3FF) << 5),
                          (void *)(0x06010000 + (((a1 + 0xEA) & 0x3FF) << 5)), 0x80);
-            sub_08011E54(gUnknown_081245F8 + (((t + 4) & 0x3FF) << 5),
+            RegisterDataMove(gUnknown_081245F8 + (((t + 4) & 0x3FF) << 5),
                          (void *)(0x06010000 + (((a1 + 0xF2) & 0x3FF) << 5)), 0x80);
         }
     }

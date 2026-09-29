@@ -18,7 +18,7 @@ void MainMenuCarousel_ShowOverwriteWarning(void)
     gDispIo.disp_ct.win0_enable = 0;
     gDispIo.disp_ct.win1_enable = 0;
     gDispIo.disp_ct.objwin_enable = 0;
-    sub_0801A5B0(0);
-    sub_08019818(0xca0, 0, 0);
+    LoadBg1WindowFrame(0);
+    StartCoSpeechScript(0xca0, 0, 0);
 }
 asm(".global sub_08084974\n.thumb_set sub_08084974, MainMenuCarousel_ShowOverwriteWarning\n");

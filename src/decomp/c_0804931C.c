@@ -14,6 +14,6 @@ void RedrawSelectedShopRow(void)
                  gBG0TilemapBuffer,
                  gUnknown_02028E1C[gUnknown_084C30F8->unk01e],
                  3);
-    sub_08013AEC();
+    BG_EnableSyncBG0();
 }
 asm(".global sub_0804931C\n.thumb_set sub_0804931C, RedrawSelectedShopRow\n");

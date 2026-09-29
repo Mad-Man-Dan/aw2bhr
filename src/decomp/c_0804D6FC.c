@@ -32,6 +32,6 @@ void sub_0804D6FC(u16 a, int unused, u16 c)
     u16 src = c * 0x400;
     u16 dest = a * 0x2000 + 0x400;
 
-    sub_08011E54((u8 *)gUnknown_02029BA8[a].unk18[0] + src,
+    RegisterDataMove((u8 *)gUnknown_02029BA8[a].unk18[0] + src,
                  (void *)(0x06010000 + dest), 0x400);
 }

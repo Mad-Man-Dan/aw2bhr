@@ -13,10 +13,10 @@
  * `p` is the list object. .unk41 is the number of visible rows, .unk31 maps a
  * row to an item index, .unk24 holds one flags byte per item, and .unk20 is the
  * item array, whose .unk1c is the item's string id. Two globals are cleared,
- * sub_08019C24 goes over the tilemap buffer, and then for each row
- * sub_08014A5C draws the string at cell (.unk48 + 1, .unk4a + row * 2 + 1) in
+ * ClearBg0TilemapBuffer goes over the tilemap buffer, and then for each row
+ * PutTextTableEntryImmediate draws the string at cell (.unk48 + 1, .unk4a + row * 2 + 1) in
  * gBG0TilemapBuffer. Its last argument is 1 when bit 1 of the item's flags is
- * set and 0 otherwise; what sub_08014A5C does with it is not visible here. The
+ * set and 0 otherwise; what PutTextTableEntryImmediate does with it is not visible here. The
  * whole 0x800-byte buffer then goes to BG VRAM at 0x06007000.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
@@ -40,7 +40,7 @@ void DrawMenuItems(struct Unk8019A60 *p)
 
     gUnknown_03001FF8 = gUnknown_03001418 = 0;
 
-    sub_08019C24();
+    ClearBg0TilemapBuffer();
 
     for (i = 0; i < p->unk41; i++)
     {
@@ -52,7 +52,7 @@ void DrawMenuItems(struct Unk8019A60 *p)
         flag = p->unk24[k] & 2;
         neg = -flag;
 
-        sub_08014A5C((s16)(p->unk48 + 1),
+        PutTextTableEntryImmediate((s16)(p->unk48 + 1),
                      (s16)(p->unk4a + (i * 2 + 1)),
                      gBG0TilemapBuffer,
                      p->unk20[k].unk1c,
@@ -60,6 +60,6 @@ void DrawMenuItems(struct Unk8019A60 *p)
                      (u32)neg >> 31);
     }
 
-    sub_08011E54(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
+    RegisterDataMove(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
 }
 asm(".global sub_08019C40\n.thumb_set sub_08019C40, DrawMenuItems\n");

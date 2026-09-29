@@ -31,7 +31,7 @@
  * Top-level qualifiers on a parameter are ignored when checking type
  * compatibility, so this needs no change to the prototype in
  * include/unknown-functions.h and no caller is affected. */
-int sub_0801E338(int a1, int a2, int a3, int a4, long long a5, volatile int a6)
+int QueueSpriteRequest(int a1, int a2, int a3, int a4, long long a5, volatile int a6)
 {
     int t;
 
@@ -49,3 +49,4 @@ int sub_0801E338(int a1, int a2, int a3, int a4, long long a5, volatile int a6)
     gUnknown_03002510++;
     return 0;
 }
+asm(".global sub_0801E338\n.thumb_set sub_0801E338, QueueSpriteRequest\n");

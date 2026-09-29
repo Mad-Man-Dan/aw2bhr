@@ -47,7 +47,8 @@ void sub_0801B724(int a, int b, u16 c)
  * `pop {r1}; bx r1` preserves r0 across the return where the void form would
  * have popped into r0 and clobbered it. Both are 24 bytes, so size does not
  * discriminate -- the register does. No re-narrowing, so `int`. */
-int sub_0801B738(u8 a, int b, int c, int d)
+int DrawGlyphRam(u8 a, int b, int c, int d)
 {
     return ((int (*)(u8, int, int, int))&gUnknown_03005C89)(a, b, c, d);
 }
+asm(".global sub_0801B738\n.thumb_set sub_0801B738, DrawGlyphRam\n");

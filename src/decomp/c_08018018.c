@@ -7,7 +7,7 @@
  * sub_08018018 @ 0x08018018
  */
 
-/* The guarded twin of sub_08018194: the same 6x6 fill of the gUnknown_08499588
+/* The guarded twin of DrawCoPortrait: the same 6x6 fill of the gUnknown_08499588
  * tilemap, but cells whose `col + a` runs past 5 are blanked instead of drawn,
  * so `a` slides a six-wide window along the row.
  *
@@ -19,17 +19,17 @@
  *     computed first and the truncation folds into the `strh`. Binding the u16
  *     temp also flips the two LICM hoists (`row * 32` ahead of `row * 6`) into
  *     the ROM's order -- one fact, not two.
- *   - `pal << 12` stays inside the loop here, where sub_08018194 hoists it
+ *   - `pal << 12` stays inside the loop here, where DrawCoPortrait hoists it
  *     clear of both, because the guard puts it on a conditional path.
  *
  * BOTH counters are u8 (`lsls #0x18; lsrs #0x18` re-narrowing and unsigned
- * `bls`), where sub_08018194's are u16. Read the width off each function's own
+ * `bls`), where DrawCoPortrait's are u16. Read the width off each function's own
  * narrowing shifts; the two siblings genuinely differ. The `col + a <= 5` test
  * is signed (`bgt`) -- both operands promote to int.
  *
  * The `v = 9` preset with a conditional override to 1 is this block's house
- * idiom, shared with sub_0801815C and sub_08018194. */
-void sub_08018018(u8 a)
+ * idiom, shared with LoadPortraitFace and DrawCoPortrait. */
+void DrawCoPortraitClipped(u8 a)
 {
     u8 row;
     u8 col;
@@ -49,5 +49,6 @@ void sub_08018018(u8 a)
         }
     }
 
-    sub_080185A0();
+    UploadEventTilemap();
 }
+asm(".global sub_08018018\n.thumb_set sub_08018018, DrawCoPortraitClipped\n");

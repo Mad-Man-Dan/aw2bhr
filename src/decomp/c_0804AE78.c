@@ -37,12 +37,12 @@ void NameEntry_SlideIn_Step(void)
             gBG2TilemapBuffer[(i * 0x20) + j] = gBG1TilemapBuffer[(i * 0x20) + j];
     }
 
-    sub_08013B0C();
+    BG_EnableSyncBG2();
 
     p = gUnknown_030044E0;
     p->unk2a = (gUnknown_030044E0->unk2a > 0xef) ? (0xf0) : (gUnknown_030044E0->unk2a + 3);
 
     if ((gUnknown_030030A0 == 0x1d8) && (gUnknown_030044E0->unk2a == lim))
-        sub_08015C30(gUnknown_03001FBC);
+        ClearSlotScriptCallback(gUnknown_03001FBC);
 }
 asm(".global sub_0804AE78\n.thumb_set sub_0804AE78, NameEntry_SlideIn_Step\n");

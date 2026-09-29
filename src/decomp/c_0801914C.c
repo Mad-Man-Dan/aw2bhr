@@ -8,13 +8,13 @@
  */
 
 /*
- * sub_0801914C -- script command: repaint a palette from the current node.
+ * EventOp_SetFramePalette -- script command: repaint a palette from the current node.
  *
  * Skipped while gUnknown_03002514 is 1. The node's .unk08 is a palette number,
  * standing in as 5 when it is 0; sub_0802D5CC gets that number less one, and
  * gUnknown_03002F08.unk00. The cursor then steps one node on and TRUE comes
  * back, so the dispatcher runs the next command in the same frame.
- * sub_080188D0 next door does the same repaint, but reaches its stand-in value
+ * EventOp_ApplyFramePaletteForArmy next door does the same repaint, but reaches its stand-in value
  * with two calls instead of a preset.
  *
  * Why the C looks odd: `...unk04->unk08 += 0;` adds nothing to the member, but
@@ -23,7 +23,7 @@
  * preset `v = 5` that the test overwrites, not a `?:`; with a `?:` the compiler
  * folds the `- 1` into both arms and loses the shared subtraction.
  */
-bool8 sub_0801914C(s16 a)
+bool8 EventOp_SetFramePalette(s16 a)
 {
   int w;
   int v;
@@ -41,3 +41,4 @@ bool8 sub_0801914C(s16 a)
   gUnknown_0200C528[a].unk04++;
   return 1;
 }
+asm(".global sub_0801914C\n.thumb_set sub_0801914C, EventOp_SetFramePalette\n");
