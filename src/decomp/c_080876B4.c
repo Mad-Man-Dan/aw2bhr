@@ -12,7 +12,7 @@
 /* Sets up the map-view window layout. Sibling of SetDefaultDisplayState, which resets
  * the same shadows. The three branches differ only in which of the four
  * scroll/extent bytes they load and whether win0 is enabled. */
-void sub_080876B4(void)
+void MapSelectList_SetupWindows(void)
 {
     SetDispEnable(1, 1, 1, 1, 1);
 
@@ -69,3 +69,4 @@ void sub_080876B4(void)
         SetWinEnable(1, 1, 0);
     }
 }
+asm(".global sub_080876B4\n.thumb_set sub_080876B4, MapSelectList_SetupWindows\n");

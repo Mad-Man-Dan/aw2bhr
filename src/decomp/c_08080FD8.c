@@ -7,7 +7,8 @@
  * sub_08080FD8 @ 0x08080FD8
  */
 
-void sub_08080FD8(u16 *p)
+void MainMenuCarouselShimmer_Init(u16 *p)
 {
     p[0x32] = 0;
 }
+asm(".global sub_08080FD8\n.thumb_set sub_08080FD8, MainMenuCarouselShimmer_Init\n");

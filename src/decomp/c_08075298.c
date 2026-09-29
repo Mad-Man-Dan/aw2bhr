@@ -19,7 +19,7 @@ struct Unk08075298
 };
 
 /* Wave 54 (W54-F): a3 and a4 retyped u16 -> s16, settled from the only caller
- * in the ROM. sub_08076F34 narrows both arguments with `lsls #0x10; asrs #0x10`
+ * in the ROM. SnapWorldMapCursorToMarker narrows both arguments with `lsls #0x10; asrs #0x10`
  * -- a SIGNED narrowing, which a `u16` parameter cannot produce (it would emit
  * `lsls; lsrs`). Byte-neutral here: PROMOTE_MODE zero-extends every sub-word
  * parameter at entry regardless of signedness, and both are only ever `strh`-ed

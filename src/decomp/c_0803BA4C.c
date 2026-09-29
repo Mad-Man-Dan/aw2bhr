@@ -14,12 +14,12 @@
  *
  * The two SetHardCampaignFlag calls are an if/else and NOT a ternary: a ternary
  * computes one constant and falls into a shared tail, whereas this has two
- * separate `bl`s. sub_080846F4's u8 return is tested with a bare `lsls #24`
+ * separate `bl`s. GetHardCampaignToggle's u8 return is tested with a bare `lsls #24`
  * and no `lsrs`, which is all a zero test needs. */
 void MainMenuCampaign_NewGame(void)
 {
     ClearCampaignFlags60To9F();
-    if (sub_080846F4() != 0)
+    if (GetHardCampaignToggle() != 0)
         SetHardCampaignFlag(1);
     else
         SetHardCampaignFlag(0);

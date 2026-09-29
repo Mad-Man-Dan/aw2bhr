@@ -17,7 +17,7 @@ struct Unk806C28C
     /* 0x60 */ int unk60;
 };
 
-void sub_0806C28C(struct Unk806C28C *proc)
+void CreditsRank_StampLoop(struct Unk806C28C *proc)
 {
     s32 t;
     int y;
@@ -49,3 +49,4 @@ void sub_0806C28C(struct Unk806C28C *proc)
         proc->unk5c++;
     }
 }
+asm(".global sub_0806C28C\n.thumb_set sub_0806C28C, CreditsRank_StampLoop\n");

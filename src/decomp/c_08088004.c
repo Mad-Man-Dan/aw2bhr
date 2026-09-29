@@ -20,7 +20,7 @@ void CoDesignRoot_StartEditor(ProcPtr proc)
     CoDesignEditor_DrawHelpText();
     LoadBg1WindowFrame(1);
     ApplyWindowFramePalette(gUnknown_03005958[0], 8);
-    sub_0808A47C();
+    CoDesignEditor_SetupBlend();
     Proc_Start(ProcScr_CoDesignC2, proc);
 }
 

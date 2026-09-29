@@ -7,7 +7,7 @@
  * sub_0807B51C @ 0x0807B51C
  */
 
-void sub_0807B51C(int x, int y, int value, int idx)
+void PutSpriteNumberRightAligned(int x, int y, int value, int idx)
 {
     while (value != 0) {
         PutSprite(0, x, y, gUnknown_0848B690,
@@ -16,3 +16,4 @@ void sub_0807B51C(int x, int y, int value, int idx)
         x -= 0xc;
     }
 }
+asm(".global sub_0807B51C\n.thumb_set sub_0807B51C, PutSpriteNumberRightAligned\n");

@@ -19,15 +19,15 @@ struct Unk0807B574Proc
     /* 0x60 */ int unk60;
 };
 
-void sub_0807B574(struct Unk0807B574Proc * proc)
+void MatchSummaryPanel_CountPoints_Loop(struct Unk0807B574Proc * proc)
 {
     int i;
 
     ApplyPaletteExt((u16 *)(DivRem(Div((u16)proc->unk38, 3), 0x10) * 2 + (int)gUnknown_0822AC60), 0x238, 2);
     proc->unk38++;
 
-    sub_0807B51C(0x5b, 0x54, proc->unk58, 0);
-    sub_0807B51C(0x5b, 0x67, proc->unk5c, 1);
+    PutSpriteNumberRightAligned(0x5b, 0x54, proc->unk58, 0);
+    PutSpriteNumberRightAligned(0x5b, 0x67, proc->unk5c, 1);
 
     PutSprite(0, 0x14, 0x54, gUnknown_0848B690, 0x1058);
     PutSprite(0, 0xa, 0x67, gUnknown_0848B6C6, 0x105c);
@@ -73,3 +73,4 @@ void sub_0807B574(struct Unk0807B574Proc * proc)
             PlayMusicOrSfx2(0x7c);
     }
 }
+asm(".global sub_0807B574\n.thumb_set sub_0807B574, MatchSummaryPanel_CountPoints_Loop\n");

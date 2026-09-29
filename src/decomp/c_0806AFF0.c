@@ -8,7 +8,7 @@
  */
 
 #include "hardware.h"
-/* Same blend-shadow shape as sub_0806C7B4. Here nothing separates the two
+/* Same blend-shadow shape as CreditsResultFade_Init. Here nothing separates the two
  * target-group writes, so agbcc forwards the first store into the second read
  * and both collapse into one `strh` -- which is exactly why the scalar `u16 *`
  * cast is load-bearing: through `.raw` the merge picks up the live zero left
@@ -20,7 +20,7 @@ struct Unk806AFF0
     /* 0x58 */ int unk58;
 };
 
-void sub_0806AFF0(struct Unk806AFF0 *proc)
+void CreditsListFade_Init(struct Unk806AFF0 *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -34,3 +34,4 @@ void sub_0806AFF0(struct Unk806AFF0 *proc)
 
     proc->unk58 = 0xE;
 }
+asm(".global sub_0806AFF0\n.thumb_set sub_0806AFF0, CreditsListFade_Init\n");

@@ -15,7 +15,8 @@ struct Unk67A24Proc
     /* 50 */ u8 unk50;
 };
 
-void sub_08067A24(void)
+void TriggerIntroBgAffineTween(void)
 {
     ((struct Unk67A24Proc *)Proc_Find(gUnknown_08581014))->unk50 = 1;
 }
+asm(".global sub_08067A24\n.thumb_set sub_08067A24, TriggerIntroBgAffineTween\n");

@@ -16,11 +16,11 @@
  * returned comparison.
  *
  * RETURN TYPE CORRECTED to u8 in the second pass of wave 24, from the caller:
- * sub_08078E94 re-narrows the result with a BARE `lsls r0, #0x18` before
+ * ResultsScreen_StartMusic re-narrows the result with a BARE `lsls r0, #0x18` before
  * `cmp r0, #0`. The body is byte-identical either way -- 0 and 1 need no
  * narrowing on the way out -- so nothing here could have settled it. */
 
-u8 sub_08078E20(void)
+u8 IsCampaignMilestoneMission(void)
 {
     s32 x = GetCampaignMissionId();
 
@@ -29,44 +29,47 @@ u8 sub_08078E20(void)
 
     return 0;
 }
+asm(".global sub_08078E20\n.thumb_set sub_08078E20, IsCampaignMilestoneMission\n");
 
 /* `movs r0, #3; rsbs r0, r0, #0; ands` is -3 == ~2, so this clears ONE bit --
  * bit 1 of gDispIo's byte 1, i.e. DISPCNT bit 9, bg1_enable. It is not `& ~3`.
  * The negation form rather than a direct `movs #0xfd` is the bitfield tell
  * described on gUnknown_03000564 in include/unknown-globals.h: the mask is
- * built in SImode, where ~2 is not an imm8. sub_080780E4's `movs r0, #0x7f`
+ * built in SImode, where ~2 is not an imm8. BootIntoWorldMap's `movs r0, #0x7f`
  * for forced_blank is the same construct with a mask that happens to narrow.
  *
- * sub_0807A908's result is re-narrowed `lsls #0x10; lsrs #0x10` and consumed
+ * GetResultsArmy's result is re-narrowed `lsls #0x10; lsrs #0x10` and consumed
  * by LoadBg1WindowFrame(u16), so it is a nest and the callee returns u16. */
 
-/* WAVE 53, W53-D: the ProcPtr parameter is forced by sub_0807898C gaining one
+/* WAVE 53, W53-D: the ProcPtr parameter is forced by SetupMenuScreenBgs gaining one
  * (see include/unknown-functions.h) and costs nothing -- r0 already holds it at
- * the call. Nothing in C calls sub_08078E48; it is reached as a proc-script
+ * the call. Nothing in C calls ResultsScreen_Init; it is reached as a proc-script
  * function pointer, so no caller needed updating. Re-verified byte-for-byte. */
-void sub_08078E48(ProcPtr proc)
+void ResultsScreen_Init(ProcPtr proc)
 {
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     SyncAllBgTilemaps();
     gDispIo.disp_ct.bg1_enable = 0;
     BG_EnableSyncBG2();
-    LoadBg1WindowFrame(sub_0807A908());
-    sub_0807A99C(gUnknown_085C77A0[gPlaySt.mapID].unk16, 0);
+    LoadBg1WindowFrame(GetResultsArmy());
+    LoadBg3MapBackdrop(gUnknown_085C77A0[gPlaySt.mapID].unk16, 0);
 }
+asm(".global sub_08078E48\n.thumb_set sub_08078E48, ResultsScreen_Init\n");
 
 /* `movs r0, #0xd1; lsls r0, r0, #1` is a plain 0x1a2 -- minimal shift, one
  * register -- not wave 23's named constant local.
  *
- * The bare `lsls r0, #0x18` on sub_08078E20's result is what retyped that
+ * The bare `lsls r0, #0x18` on IsCampaignMilestoneMission's result is what retyped that
  * function's return from s32 to u8; see the note on its prototype in
  * include/unknown-functions.h. */
 
-void sub_08078E94(ProcPtr parent)
+void ResultsScreen_StartMusic(ProcPtr parent)
 {
     SetSoundMixerChannelCount(9);
 
-    if (sub_08078E20())
+    if (IsCampaignMilestoneMission())
         PlayMusic(0x1a2);
     else
         Proc_Start(gUnknown_08615D70, parent);
 }
+asm(".global sub_08078E94\n.thumb_set sub_08078E94, ResultsScreen_StartMusic\n");

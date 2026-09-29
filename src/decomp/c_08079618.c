@@ -54,7 +54,7 @@ struct Unk8079B04
  * promoted c_08027B68.c, but with d = 0x200 - proc->unk34, which agbcc strength-
  * reduces to `cmp unk34, #0x200` -- so the ROM's `movs r1,#2; cmp r2,r4; beq;
  * subs r1,r4,r2` is that one conditional expression and not a range test.
- * The angle is the literal 0 here, unlike sub_0807567C: no `ands #0xff`.
+ * The angle is the literal 0 here, unlike WorldMapReticle_ShrinkLoop: no `ands #0xff`.
  */
 
 struct Unk8079EA4Proc
@@ -73,7 +73,7 @@ struct Unk8079EA4Proc
 /* PARKED at 99.29%, SIZE EXACT (280/280). The residual is TWO bytes and it is
  * the immediate field of ONE `bl`. This function is BELIEVED CORRECT as C.
  *
- * THE RESIDUAL IS IDENTICAL TO ITS SIBLING sub_0807A0C4's, byte for byte and
+ * THE RESIDUAL IS IDENTICAL TO ITS SIBLING ResultsSubScreen_SlideOutShowCo_Loop's, byte for byte and
  * cause for cause. Confirmed this wave (W52-E) by running both diffs together:
  *
  *     original    bl 3ec <_08079B38>       (no relocation)
@@ -97,10 +97,10 @@ struct Unk8079EA4Proc
  *
  * NOT a park to be re-attacked at the C level, and NOT a candidate for the
  * permuter. The two remaining bytes disappear the moment the whole
- * sub_0807974C.s unit is built as one translation unit, because the assembler
+ * ResultsSubScreen_CountUpScores_Loop.s unit is built as one translation unit, because the assembler
  * then resolves the branch locally. `trymatch --unit` is the oracle that can
  * gate it; that needs drafts for every function in the unit. Still missing as
- * of this wave: sub_0807974C, sub_08079B04. (sub_08079EA4, sub_0807A0C4 and
+ * of this wave: ResultsSubScreen_CountUpScores_Loop, sub_08079B04. (ResultsSubScreen_RankStamp_Loop, ResultsSubScreen_SlideOutShowCo_Loop and
  * this one are drafted.)
  *
  * The underlying cause is a SPLITTER artefact worth fixing centrally:
@@ -123,7 +123,7 @@ struct Unk8079FACProc
 /* PARKED at 99.18%, SIZE EXACT (244/244), and the TWO differing bytes are the
  * immediate field of ONE `bl`. This function is BELIEVED CORRECT as C.
  *
- * CONFIRMED THIS WAVE (W52-E) BY DIFFING IT AGAINST ITS SIBLING: sub_08079FAC
+ * CONFIRMED THIS WAVE (W52-E) BY DIFFING IT AGAINST ITS SIBLING: ResultsSubScreen_WaitForButton_Loop
  * has the IDENTICAL two-byte residual, same callee, same cause. Whatever else
  * is true of these two functions, they stand or fall together, and neither one
  * has anything open at the C level.
@@ -150,10 +150,10 @@ struct Unk8079FACProc
  * fails to link, because no global symbol exists at that address in either
  * build.
  *
- * The two bytes disappear the moment the whole sub_0807974C.s unit is built as
+ * The two bytes disappear the moment the whole ResultsSubScreen_CountUpScores_Loop.s unit is built as
  * one translation unit. `trymatch --unit` is the oracle that can gate it, and
- * that needs a draft for every function in the unit. Drafted: sub_08079EA4,
- * sub_08079FAC, this one. Still missing: sub_0807974C, sub_08079B04.
+ * that needs a draft for every function in the unit. Drafted: ResultsSubScreen_RankStamp_Loop,
+ * ResultsSubScreen_WaitForButton_Loop, this one. Still missing: ResultsSubScreen_CountUpScores_Loop, sub_08079B04.
  * The root cause is a tools/split_asm.py artefact -- it did not recognise
  * 0x08079B38 as a function start, because what precedes it is two bytes of
  * `b _08079B38` in front of the previous function's 13-word literal pool
@@ -171,7 +171,7 @@ struct Unk8079FACProc
  *     `(proc->unk40 + 0x58) - proc->unk34` and the two `subs` come out with
  *     their operands swapped. A separate statement blocks the association.
  *
- * Also settled: `sub_080795A8(proc, v)` takes the Interpolate result that is
+ * Also settled: `PutResultsBanner(proc, v)` takes the Interpolate result that is
  * already in r1 -- the ROM spends no instruction on it, which is why the
  * result is bound to a local and not re-read from +0x34 (the NEXT call,
  * sub_08079B38, does re-read it). */
@@ -189,12 +189,12 @@ struct Unk807A0C4
     /* 0x52 */ u16 unk52;
 };
 
-void sub_08079618(struct Unk8079618 *proc)
+void ResultsSubScreen_LabelsSlideIn_Loop(struct Unk8079618 *proc)
 {
     int off;
     int i;
 
-    sub_080795A8(proc, 0);
+    PutResultsBanner(proc, 0);
 
     off = DivRem(Div((u16)proc->unk38, 3), 0x10) * 2;
     ApplyPaletteExt((u16 *)((u8 *)gUnknown_0822AC60 + off), 0x2b8, 2);
@@ -229,8 +229,9 @@ void sub_08079618(struct Unk8079618 *proc)
         proc->unk2c++;
     }
 }
+asm(".global sub_08079618\n.thumb_set sub_08079618, ResultsSubScreen_LabelsSlideIn_Loop\n");
 
-void sub_0807974C(struct Unk807974C *proc)
+void ResultsSubScreen_CountUpScores_Loop(struct Unk807974C *proc)
 {
     int off;
 
@@ -239,7 +240,7 @@ void sub_0807974C(struct Unk807974C *proc)
 
     proc->unk38++;
 
-    sub_080795A8(proc, 0);
+    PutResultsBanner(proc, 0);
 
     PutSprite(0, 8, 0x50, gUnknown_08615C20, 0x5300);
     PutSprite(0, 8, 0x60, gUnknown_08615C20, 0x5310);
@@ -331,18 +332,19 @@ void sub_0807974C(struct Unk807974C *proc)
 
     proc->unk4c++;
 }
+asm(".global sub_0807974C\n.thumb_set sub_0807974C, ResultsSubScreen_CountUpScores_Loop\n");
 
-/* The slide-in twin of sub_0807974C @ 0x0807974C: the same results panel with
+/* The slide-in twin of ResultsSubScreen_CountUpScores_Loop @ 0x0807974C: the same results panel with
  * every row's Y displaced by a scroll offset `a`, and each row suppressed once
- * it would have slid past its own threshold. No sub_080795A8 call, no
+ * it would have slid past its own threshold. No PutResultsBanner call, no
  * gUnknown_03002B28 drain and no Proc_Break -- those belong to the static
  * version.
  *
  * THE ENTRY POINT IS 0x08079B38, NOT 0x08079B04. The 52 bytes at 0x08079B04
- * (`b _08079B38`, alignment, twelve pool words) are sub_0807974C's literal
+ * (`b _08079B38`, alignment, twelve pool words) are ResultsSubScreen_CountUpScores_Loop's literal
  * pool, which agbcc emits after that function's `bx r0` and inside this unit's
  * next function. tools/split_asm.py read the `b` as a function start. Compiled
- * as one translation unit with sub_0807974C in address order, the label
+ * as one translation unit with ResultsSubScreen_CountUpScores_Loop in address order, the label
  * `sub_08079B04` lands at 0x08079B38 and the whole 2,668-byte unit reproduces
  * -- which is also what turns the three callers' `bl` into the local,
  * unrelocated branch the ROM has.
@@ -442,9 +444,9 @@ static void sub_08079B04(ProcPtr proc, u32 a)
                   (DivRem(((struct Unk8079B04 *)proc)->unk6a, 10) * 4 + 0x280) | 0x5000);
 }
 
-void sub_08079EA4(struct Unk8079EA4Proc *proc)
+void ResultsSubScreen_RankStamp_Loop(struct Unk8079EA4Proc *proc)
 {
-    sub_080795A8(proc, 0);
+    PutResultsBanner(proc, 0);
     sub_08079B04(proc, 0);
 
     proc->unk34 = Interpolate(0, 0, 0x100, proc->unk30, 8);
@@ -470,10 +472,11 @@ void sub_08079EA4(struct Unk8079EA4Proc *proc)
 
     proc->unk30++;
 }
+asm(".global sub_08079EA4\n.thumb_set sub_08079EA4, ResultsSubScreen_RankStamp_Loop\n");
 
-void sub_08079FAC(struct Unk8079FACProc *proc)
+void ResultsSubScreen_WaitForButton_Loop(struct Unk8079FACProc *proc)
 {
-    sub_080795A8(proc, 0);
+    PutResultsBanner(proc, 0);
     sub_08079B04(proc, 0);
 
     PutSpriteExt(0, 0xA8, (proc->unk40 + 0x58) | 0x400, gUnknown_0848B6A0,
@@ -507,15 +510,16 @@ void sub_08079FAC(struct Unk8079FACProc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08079FAC\n.thumb_set sub_08079FAC, ResultsSubScreen_WaitForButton_Loop\n");
 
-void sub_0807A0C4(struct Unk807A0C4 *proc)
+void ResultsSubScreen_SlideOutShowCo_Loop(struct Unk807A0C4 *proc)
 {
     int v;
     int d;
 
     v = Interpolate(4, 0, 0xF0, proc->unk4c, 0x30);
     proc->unk34 = v;
-    sub_080795A8(proc, v);
+    PutResultsBanner(proc, v);
     sub_08079B04(proc, proc->unk34);
 
     if (proc->unk34 <= proc->unk40 + 0x98)
@@ -539,9 +543,10 @@ void sub_0807A0C4(struct Unk807A0C4 *proc)
 
     if (proc->unk4c > 0x2F)
     {
-        sub_0807A860();
+        ResultsScreen_ShowVictoryQuote();
         Proc_Break(proc);
     }
 
     proc->unk4c++;
 }
+asm(".global sub_0807A0C4\n.thumb_set sub_0807A0C4, ResultsSubScreen_SlideOutShowCo_Loop\n");

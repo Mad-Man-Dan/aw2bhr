@@ -7,12 +7,12 @@
  * sub_08069FD0 @ 0x08069FD0
  */
 
-/* The near-twin of sub_080697CC: same seven steps, but the first blob goes to
+/* The near-twin of LoadIntroScreenGraphicsWithBg1: same seven steps, but the first blob goes to
  * 0x06008000 instead of 0x06000000, the gBG1TilemapBuffer blob is absent, and
  * there is no BG_EnableSyncBG1 call. 0x06000000 is reachable as `0xc0 << 19` and
  * 0x06008000 is not, which is why that one destination is a pool word here and
  * a shifted immediate there. */
-void sub_08069FD0(void)
+void LoadIntroScreenGraphics(void)
 {
     int zero;
 
@@ -26,3 +26,4 @@ void sub_08069FD0(void)
     BG_EnableSyncBG2();
     RegisterDataMove(gUnknown_08580E60, (void *)0x0600F000, 0x1000);
 }
+asm(".global sub_08069FD0\n.thumb_set sub_08069FD0, LoadIntroScreenGraphics\n");

@@ -45,7 +45,7 @@ struct Unk0807B360Proc
     /* 0x60 */ int unk60;
 };
 
-void sub_0807B360(struct Unk0807B360Proc * proc)
+void MatchSummaryPanel_LoadGraphics(struct Unk0807B360Proc * proc)
 {
     int i;
 
@@ -85,3 +85,4 @@ void sub_0807B360(struct Unk0807B360Proc * proc)
     proc->unk4c = 0;
     proc->unk60 = 0x1e;
 }
+asm(".global sub_0807B360\n.thumb_set sub_0807B360, MatchSummaryPanel_LoadGraphics\n");

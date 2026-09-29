@@ -48,14 +48,14 @@ struct Unk87C94Proc
  * counts 7 down to 0 -- check_dbra_loop reverses it, and the two `i * K` terms
  * become the two givs.
  *
- * sub_0807898C's ProcPtr parameter: see work/sub_0808A6CC/sub_0808A6CC.c. Here
+ * SetupMenuScreenBgs's ProcPtr parameter: see work/sub_0808A6CC/sub_0808A6CC.c. Here
  * it is invisible, because r0 already holds proc at the call. */
 void CoDesignRoot_Init(struct Unk87C94Proc *proc)
 {
     int i;
     u16 zero;
 
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     BG_EnableSyncBG2();
 
     gUnknown_0300251C.bits.tm_block = 0x1b;

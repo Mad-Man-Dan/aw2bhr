@@ -22,11 +22,11 @@
  * say they should.
  *
  * Load-bearing, from earlier waves:
- *  - `sub_08087298() + p->unk4e * 0x100`, not `<< 8`: the multiply keeps
+ *  - `GetMapPreviewScrollY() + p->unk4e * 0x100`, not `<< 8`: the multiply keeps
  *    the signed HImode operand (`ldrsh`); the shift is narrowed to `ldrh`.
  *  - `*(u16 *)&p->unk4e = w;` with `w = 0xFFFF;` in an int local, in both
  *    arms, so the shared `strh` cross-jumps.
- *  - the `size = 2; sub_080876B4(); PlayMusicOrSfx2(0x67)` tail written out at
+ *  - the `size = 2; MapSelectList_SetupWindows(); PlayMusicOrSfx2(0x67)` tail written out at
  *    the end of both of the first two arms, not once after the if-chain.
  * Promotion needs "rodata": ["0x081D9410", "0x081D9414", "0x081D9418",
  * "0x081D941C", "0x081D9420"]. */
@@ -96,7 +96,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         {
             ClearBg1Tilemap();
             BG_EnableSyncBG1();
-            gUnknown_03002F18 = sub_08087298() + p->unk4e * 0x100;
+            gUnknown_03002F18 = GetMapPreviewScrollY() + p->unk4e * 0x100;
             p->unk4c = 8;
             p->unk52 = 0;
         }
@@ -106,7 +106,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         w = 0xFFFF;
         *(u16 *)&p->unk4e = w;
         gUnknown_03001FE8.bits.size = 2;
-        sub_080876B4();
+        MapSelectList_SetupWindows();
         PlayMusicOrSfx2(0x67);
         return;
     }
@@ -150,7 +150,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         {
             ClearBg1Tilemap();
             BG_EnableSyncBG1();
-            gUnknown_03002F18 = sub_08087298() + p->unk4e * 0x100;
+            gUnknown_03002F18 = GetMapPreviewScrollY() + p->unk4e * 0x100;
             p->unk4c = 8;
             p->unk52 = 0;
         }
@@ -159,7 +159,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
 
         *(u16 *)&p->unk4e = 1;
         gUnknown_03001FE8.bits.size = 2;
-        sub_080876B4();
+        MapSelectList_SetupWindows();
         PlayMusicOrSfx2(0x67);
         return;
     }
@@ -238,7 +238,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         {
             ClearBg1Tilemap();
             BG_EnableSyncBG1();
-            gUnknown_03002B34 = sub_08087248() + (p->unk52 << 8);
+            gUnknown_03002B34 = GetMapPreviewScrollX() + (p->unk52 << 8);
             p->unk4c = 8;
             p->unk4e = 0;
         }
@@ -248,7 +248,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         p->unk2c = 0;
         p->unk52 = 0xFFFF;
         gUnknown_03001FE8.bits.size = 1;
-        sub_080876B4();
+        MapSelectList_SetupWindows();
         PlayMusicOrSfx2(0x76);
         return;
     }
@@ -278,7 +278,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         {
             ClearBg1Tilemap();
             BG_EnableSyncBG1();
-            gUnknown_03002B34 = sub_08087248() + (p->unk52 << 8);
+            gUnknown_03002B34 = GetMapPreviewScrollX() + (p->unk52 << 8);
             p->unk4c = 8;
             p->unk4e = 0;
         }
@@ -288,7 +288,7 @@ void MapSelectList_HandleInput(ProcPtr procp)
         p->unk2c = 0;
         p->unk52 = 1;
         gUnknown_03001FE8.bits.size = 1;
-        sub_080876B4();
+        MapSelectList_SetupWindows();
         PlayMusicOrSfx2(0x76);
     }
 }

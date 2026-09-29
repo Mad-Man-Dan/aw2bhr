@@ -13,7 +13,7 @@
  * word is emitted before gUnknown_085809D8's, the reverse of the order the code
  * uses them, so its address constant was created FIRST in RTL. Binding that
  * address to a local at the top of the function is what creates it there. */
-void sub_08064C34(struct Unk08580934_Obj *obj)
+void TeamBadgeEnter_Loop(struct Unk08580934_Obj *obj)
 {
     struct Unk08580934 **stp;
 
@@ -40,3 +40,4 @@ void sub_08064C34(struct Unk08580934_Obj *obj)
         }
     }
 }
+asm(".global sub_08064C34\n.thumb_set sub_08064C34, TeamBadgeEnter_Loop\n");

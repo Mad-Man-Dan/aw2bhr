@@ -15,7 +15,7 @@
  * not a `do/while` -- a zero `n` draws nothing. DrawOamObject's fifth argument
  * (the constant 2) arrives on the stack as `str r1, [sp]`. */
 
-void sub_08087B20(int x, int y, int n, int base)
+void DrawOamObjectNumber(int x, int y, int n, int base)
 {
     while (n != 0)
     {
@@ -24,3 +24,4 @@ void sub_08087B20(int x, int y, int n, int base)
         x -= 8;
     }
 }
+asm(".global sub_08087B20\n.thumb_set sub_08087B20, DrawOamObjectNumber\n");

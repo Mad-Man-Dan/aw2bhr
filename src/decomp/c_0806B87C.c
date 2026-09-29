@@ -36,7 +36,7 @@ struct Unk6B87CChild
     /* 0x5c */ int unk5c;
     /* 0x60 */ int unk60;
 };
-/* A four-case timeline on +0x30. The `(u8)` cast on sub_0806AF44's result is
+/* A four-case timeline on +0x30. The `(u8)` cast on StartCreditsIllustration's result is
  * what produces the `lsl #0x18` before the test: the shared declaration says
  * `int`, and its only other caller discards the value, so the cast lives here
  * rather than in the header.
@@ -56,7 +56,7 @@ struct Unk6B910Proc
     /* 0x30 */ u32 unk30;
 };
 
-void sub_0806B87C(ProcPtr parent)
+void StartCreditsFadeProc(ProcPtr parent)
 {
     struct Unk6B87CChild *proc = Proc_Start(gUnknown_085819C4, parent);
 
@@ -72,17 +72,18 @@ void sub_0806B87C(ProcPtr parent)
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xffe0) | 2;
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xe0ff) | 0x800;
 }
+asm(".global sub_0806B87C\n.thumb_set sub_0806B87C, StartCreditsFadeProc\n");
 
-void sub_0806B910(struct Unk6B910Proc *proc)
+void CreditsMissionList_Loop(struct Unk6B910Proc *proc)
 {
     switch (proc->unk30)
     {
     case 0:
-        sub_0806AD04(proc);
+        StartCreditsMissionLine(proc);
         break;
 
     case 0x1d0:
-        if ((u8)sub_0806AF44(proc) == 0)
+        if ((u8)StartCreditsIllustration(proc) == 0)
         {
             Proc_Break(proc);
             return;
@@ -95,7 +96,7 @@ void sub_0806B910(struct Unk6B910Proc *proc)
             Proc_Break(proc);
             return;
         }
-        sub_0806B87C(proc);
+        StartCreditsFadeProc(proc);
         break;
 
     case 0x1e0:
@@ -105,11 +106,12 @@ void sub_0806B910(struct Unk6B910Proc *proc)
 
     proc->unk30++;
 }
+asm(".global sub_0806B910\n.thumb_set sub_0806B910, CreditsMissionList_Loop\n");
 
 /* Two independent tests on the same word: the `ldr` is issued once and the
  * address stays in r2 across both, which is why the second test reloads the
  * value but not the address. */
-void sub_0806B980(void)
+void CreditsBgScroll_Loop(void)
 {
     if (gGameClock & 1)
     {
@@ -121,3 +123,4 @@ void sub_0806B980(void)
     if ((gGameClock & 3) == 0)
         gUnknown_03002000--;
 }
+asm(".global sub_0806B980\n.thumb_set sub_0806B980, CreditsBgScroll_Loop\n");

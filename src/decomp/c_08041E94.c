@@ -7,13 +7,13 @@
  * sub_08041E94 @ 0x08041E94
  */
 
-/* Family F031. sub_080743E8's parameter is `struct Unk030040D8 *` and not the
+/* Family F031. RunMapEventsAfterUnitAction's parameter is `struct Unk030040D8 *` and not the
  * `int` a pass-through would suggest: its other caller CommitUnitMove reaches it
  * the same way, `ldr r0,[r4]` off &gUnknown_030040D8. `pop {r0}` discards the
  * callee's u8 result, so this is void. */
 
 void RunMapEventsForCurrentUnit(void)
 {
-    sub_080743E8(gUnknown_030040D8);
+    RunMapEventsAfterUnitAction(gUnknown_030040D8);
 }
 asm(".global sub_08041E94\n.thumb_set sub_08041E94, RunMapEventsForCurrentUnit\n");

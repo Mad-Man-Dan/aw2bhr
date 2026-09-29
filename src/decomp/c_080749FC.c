@@ -27,10 +27,11 @@ struct Unk8074AAC
     /* 0x2c */ const u8 *unk_2c;
 };
 
-void sub_080749FC(struct Unk8074AAC *proc)
+void MarkerReveal_PanToMarker(struct Unk8074AAC *proc)
 {
     const u8 *p = proc->unk_2c;
     const struct Unk08615194 *r = &gUnknown_08615194[(s8)*p];
 
     StartWorldMapCameraPan(proc, r->flagX, r->flagY, 1);
 }
+asm(".global sub_080749FC\n.thumb_set sub_080749FC, MarkerReveal_PanToMarker\n");

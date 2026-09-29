@@ -52,7 +52,7 @@ struct Unk806AD04Sub
     /* 0x52 */ u16 unk52;
 };
 
-void sub_0806AD04(ProcPtr a1)
+void StartCreditsMissionLine(ProcPtr a1)
 {
     struct Unk806AD04 *proc = a1;
     struct Unk806AD04Sub *sub;
@@ -85,3 +85,4 @@ void sub_0806AD04(ProcPtr a1)
         proc->unk2c++;
     }
 }
+asm(".global sub_0806AD04\n.thumb_set sub_0806AD04, StartCreditsMissionLine\n");

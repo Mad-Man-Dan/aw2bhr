@@ -24,7 +24,7 @@
  * changed; if a second function turns up subscripting the same pair, that is
  * the evidence to promote it to an array in the header.
  *
- * `ok` is `int`: the `lsls #0x18; lsrs #0x18` after sub_0807821C is agbcc
+ * `ok` is `int`: the `lsls #0x18; lsrs #0x18` after MissionTriggersUnlockScript is agbcc
  * re-narrowing that function's bool8 return, not a narrow local. The else arm
  * stores `ok` rather than a literal 0 -- the ROM reuses r4 there instead of
  * emitting a fresh `movs r0,#0`, which is what naming the variable produces. */
@@ -44,11 +44,11 @@ void EndOfGame_FinishCampaignMap(void)
     if (IsPlayer1TeamAlive())
     {
         SaveCampaignMissionResult(gPlaySt.mapID - 0x8a, gUnknown_03004080,
-                     gPlayers[sub_0807A908()].totalScore);
+                     gPlayers[GetResultsArmy()].totalScore);
         CampaignMapNoOp(gPlaySt.mapID - 0x8a);
         gUnknown_0202FDFC.unk0c = gPlaySt.mapID - 0x8a;
         gUnknown_0202FDFC.unk11 = 1;
-        ok = sub_0807821C(gPlaySt.mapID - 0x8a);
+        ok = MissionTriggersUnlockScript(gPlaySt.mapID - 0x8a);
     }
     else
     {

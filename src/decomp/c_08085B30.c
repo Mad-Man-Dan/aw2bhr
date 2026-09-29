@@ -39,7 +39,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     int i;
     u16 clear[2];
 
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     SyncAllBgTilemaps();
 
     sub_0801F114();
@@ -62,7 +62,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     LoadTilePoolGraphic(0xba);
     LoadTilePoolGraphic(0xbb);
 
-    sub_08087938();
+    LoadMapSelectPanelGraphics();
     InitTextTileCache(0);
     StartMapPreviewPalette(6);
 
@@ -95,7 +95,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     *(volatile u16 *)clear = 0;
     CpuSet(clear, (void *)((gUnknown_03001FE8.bits.tm_block << 11) + 0x06000000), 0x01000800);
 
-    sub_08078D80(proc);
+    StartScrollingBackdrop(proc);
 
     StartHeaderBanner(gUnknown_085802CC, gUnknown_0200FC50, 0, 0, 1, 1, (int)proc);
 
@@ -152,10 +152,10 @@ void sub_08085B30(struct Unk8085B30 *proc)
 
     {
         register int result asm("r0");
-        result = sub_08087248();
+        result = GetMapPreviewScrollX();
         gUnknown_03002B34 = result;
     }
-    gUnknown_03002F18 = sub_08087298();
+    gUnknown_03002F18 = GetMapPreviewScrollY();
 
     MapSelect_SetBlend();
 

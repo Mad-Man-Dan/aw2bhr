@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* One of three identical starters over three consecutive 0x18-byte scripts:
- * sub_080673B0 (08580E94), sub_080673D0 (08580EAC) and sub_080673F0 (08580EC4).
+ * StartBlendRampWhite8To0 (08580E94), StartBlendRampWhite0To16 (08580EAC) and StartBlendRampBlack0To16 (08580EC4).
  */
 struct Unk673F0Proc
 {
@@ -21,7 +21,7 @@ struct Unk673F0Proc
     /* 3c */ u32 unk3c;
 };
 
-void sub_080673F0(u32 a, u32 b, ProcPtr parent)
+void StartBlendRampBlack0To16(u32 a, u32 b, ProcPtr parent)
 {
     struct Unk673F0Proc *proc = Proc_Start(gUnknown_08580EC4, parent);
 
@@ -29,3 +29,4 @@ void sub_080673F0(u32 a, u32 b, ProcPtr parent)
     proc->unk38 = 0;
     proc->unk3c = b;
 }
+asm(".global sub_080673F0\n.thumb_set sub_080673F0, StartBlendRampBlack0To16\n");

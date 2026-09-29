@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_0806A4CC(void)
+void EndIntroBlendFade(void)
 {
     Proc_EndEach(gUnknown_08581138);
 }
+asm(".global sub_0806A4CC\n.thumb_set sub_0806A4CC, EndIntroBlendFade\n");

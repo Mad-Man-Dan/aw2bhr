@@ -36,7 +36,7 @@ void CoInfoScreen_Init(struct UnkBD4Proc *proc)
     proc->unk4e = 0;
     proc->unk58 = 0;
     proc->unk4c = 0;
-    sub_08085298(proc);
+    CoInfoScreen_ClearBg0(proc);
     CoInfoScreen_DrawPageText((struct Unk080852A8 *)proc);
     LoadCoPanelGraphics(proc->unk66);
 }

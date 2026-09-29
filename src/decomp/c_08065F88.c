@@ -21,7 +21,7 @@ void MatchSetupHandleArmyStageInput(void)
 
     if (v != 0)
     {
-        sub_08063A30(sub_08063A3C(), gUnknown_08580D90);
+        sub_08063A30(GetCurrentSlotScript(), gUnknown_08580D90);
 
         ForEachSlotRunningScript(gUnknown_08580AF0, ArmyColumn_StartExitDown);
         ForEachSlotRunningScript(gUnknown_08580B90, ArmyColumn_StartExitDown);
@@ -38,7 +38,7 @@ void MatchSetupHandleArmyStageInput(void)
             gUnknown_08580934->unk30 = 0;
             gUnknown_08580934->unk26 = 2;
             ForEachSlotRunningScript(gUnknown_08580AF0, ArmyColumn_StartExitUp);
-            sub_080654E8();
+            MatchSetupDismissArmyColumns();
             MatchSetupSpawnRuleOptions();
         }
         else

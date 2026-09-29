@@ -26,7 +26,7 @@ struct Unk6B828Proc
  *
  * The `>> 3` result is kept live and reused for the 0xe subtraction, so the
  * source really does write `proc->unk58 >> 3` twice and lets CSE do it. */
-void sub_0806B828(struct Unk6B828Proc *proc)
+void CreditsFadeProc_Loop(struct Unk6B828Proc *proc)
 {
     proc->unk58 += proc->unk5c;
 
@@ -41,3 +41,4 @@ void sub_0806B828(struct Unk6B828Proc *proc)
     if (proc->unk60 > 0x6F)
         Proc_Break(proc);
 }
+asm(".global sub_0806B828\n.thumb_set sub_0806B828, CreditsFadeProc_Loop\n");

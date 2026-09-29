@@ -16,7 +16,7 @@
  * &gUnknown_0202FDE4 -- it is this unit's own -fforce-addr copy of that address,
  * not an object (verified against baserom.gba; 0x081CC024 and 0x081CC02C hold
  * the same value and are the private copies belonging to BgWave_Loop and
- * sub_08073930). Naming the global directly is the honest spelling and agbcc
+ * PolygonWipe_HBlankHandler). Naming the global directly is the honest spelling and agbcc
  * rebuilds the word.
  *
  * Points the HBlank slot at gUnknown_0202F8DC, refills the BOTTOM 28 of its
@@ -25,7 +25,7 @@
  * function -- the store, the per-pass reload inside the loop and the
  * REG_DMA0SAD read -- goes through that one .rodata word. */
 
-void sub_08073658(void)
+void ScanlineDarkenBg0_Loop(void)
 {
     int i;
 
@@ -40,3 +40,4 @@ void sub_08073658(void)
     REG_DMA0CNT_L = 1;
     REG_DMA0CNT_H = 0xA240;
 }
+asm(".global sub_08073658\n.thumb_set sub_08073658, ScanlineDarkenBg0_Loop\n");

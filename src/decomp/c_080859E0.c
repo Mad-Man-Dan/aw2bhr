@@ -7,7 +7,8 @@
  * sub_080859E0 @ 0x080859E0
  */
 
-void sub_080859E0(u16 *p)
+void CoInfoPopup_Init(u16 *p)
 {
     p[0x32] = 0;
 }
+asm(".global sub_080859E0\n.thumb_set sub_080859E0, CoInfoPopup_Init\n");

@@ -24,8 +24,9 @@ void CoPowerSceneEnd_WaitForBlend(struct Unk0808006C *proc)
 }
 asm(".global sub_0808006C\n.thumb_set sub_0808006C, CoPowerSceneEnd_WaitForBlend\n");
 
-void sub_08080094(void)
+void CoPowerSceneEnd_ReloadCoPanel(void)
 {
     LoadBg1WindowFrame(gUnknown_030033EC);
     LoadCoPanelGraphics(gUnknown_030033EC);
 }
+asm(".global sub_08080094\n.thumb_set sub_08080094, CoPowerSceneEnd_ReloadCoPanel\n");

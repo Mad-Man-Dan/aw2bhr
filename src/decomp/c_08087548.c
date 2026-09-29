@@ -10,7 +10,7 @@
 /* Draws every unit in a contiguous run of the gUnknown_02027F74.unk04[]
  * candidate list, skipping the ones whose record is empty.
  *
- * The `subs r0, #0x6c` bias is the same idiom sub_080848D8 matched over this
+ * The `subs r0, #0x6c` bias is the same idiom AreAllWarRoomMapsRecorded matched over this
  * table: gUnknown_0200C078 is indexed by (id - 0x6c) with the 0x14 stride, and
  * the bias belongs in the SUBSCRIPT, not in a separate variable.
  *
@@ -32,7 +32,7 @@ void DrawWarRoomRanks(int a, int n, int c)
 
     for (i = 0; i < n; i++)
         if (gUnknown_0200C078[gUnknown_02027F74.unk04[a + i] - 0x6c].unk00[0].unk00_08 != 0)
-            sub_08087514(
+            DrawMapListRankIcon(
                 GetRankFromScore(gUnknown_0200C078[gUnknown_02027F74.unk04[a + i] - 0x6c].unk00[0].unk00_14),
                 i, c);
 }

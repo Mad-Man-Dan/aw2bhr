@@ -60,7 +60,7 @@ asm(".global sub_08074754\n.thumb_set sub_08074754, AddWorldMapMarker\n");
  * The `lsls #0x10; asrs #0x10` in front of the `bl` is the s16 conversion of
  * the plain `int` counter; see AddWorldMapMarker in include/unknown-functions.h.
  */
-void sub_080747FC(void)
+void RestoreWorldMapMarkers(void)
 {
     int i;
 
@@ -73,6 +73,7 @@ void sub_080747FC(void)
         }
     }
 }
+asm(".global sub_080747FC\n.thumb_set sub_080747FC, RestoreWorldMapMarkers\n");
 
 /* The lookup-and-remove half of the 12-byte record list AddWorldMapMarker appends
  * to; see gUnknown_0202FE38 in include/unknown-globals.h. The record base is
@@ -82,7 +83,7 @@ void sub_080747FC(void)
  * there. The compaction loop needs its OWN counter: sharing `i` with the
  * search loop makes one long-lived allocno and swaps three registers.
  */
-int sub_08074834(s32 id, struct Unk0202FE38 *out)
+int RemoveWorldMapMarker(s32 id, struct Unk0202FE38 *out)
 {
     struct Unk0202FE38 *p;
     int i;
@@ -114,3 +115,4 @@ int sub_08074834(s32 id, struct Unk0202FE38 *out)
 
     return 1;
 }
+asm(".global sub_08074834\n.thumb_set sub_08074834, RemoveWorldMapMarker\n");

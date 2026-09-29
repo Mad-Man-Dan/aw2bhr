@@ -23,7 +23,7 @@
  * insert, which is the FadeFromBlack_OnInitUnused shape the rule predicts must diverge. It
  * does not. BOTH spellings -- `.raw` and `*(u16 *)&gUnknown_030030E0` -- match
  * byte-for-byte. See the wave-23 section of docs/agbcc-codegen.md. */
-void sub_08078F60(void)
+void ResultsScreen_SetupBlend(void)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -44,3 +44,4 @@ void sub_08078F60(void)
     gUnknown_030030DC.bits.win0_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 }
+asm(".global sub_08078F60\n.thumb_set sub_08078F60, ResultsScreen_SetupBlend\n");

@@ -36,7 +36,7 @@
  */
 void RulesScreenUpdate(void)
 {
-    sub_0806DF20();
+    RulesScreenPulseGreyPaletteColor();
 
     if (gUnknown_08580934->unk2d != 0)
         return;
@@ -59,7 +59,7 @@ void RulesScreenUpdate(void)
         PlayMusicOrSfx2(0x73);
         sub_080733B8();
         StartHeaderBanner(gUnknown_085802A4, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
-        sub_0806D34C();
+        RulesScreenDismissRuleOptions();
         RulesScreenSpawnArmyColumns();
         gUnknown_08580934->unk30 = 1;
         return;
@@ -70,15 +70,15 @@ void RulesScreenUpdate(void)
         PlayMusicOrSfx2(0x73);
         sub_080733B8();
         StartHeaderBanner(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
-        sub_0806D620();
+        RulesScreenDismissArmyColumns();
         RulesScreenSpawnRuleOptions();
         gUnknown_08580934->unk30 = 0;
         return;
     }
 
     if (gUnknown_08580934->unk30 == 0)
-        sub_0806DE38();
+        RulesScreenHandleRulesPageInput();
 
-    sub_0806DF58();
+    RulesScreenShowHelpText();
 }
 asm(".global sub_0806DFF0\n.thumb_set sub_0806DFF0, RulesScreenUpdate\n");

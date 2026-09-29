@@ -7,11 +7,11 @@
  * sub_0807A8B4 @ 0x0807A8B4
  */
 
-void sub_0807A8B4(ProcPtr proc)
+void ResultsScreen_BeginClose(ProcPtr proc)
 {
     int i;
 
-    if (sub_08078E20() == 0)
+    if (IsCampaignMilestoneMission() == 0)
         FadeOutMusic(0);
 
     for (i = 0; i <= 6; i++)
@@ -20,3 +20,4 @@ void sub_0807A8B4(ProcPtr proc)
     StartPalFadeToWhite(8, 0x10, proc);
     StartPalFadeToWhite(0x1b, 0x10, proc);
 }
+asm(".global sub_0807A8B4\n.thumb_set sub_0807A8B4, ResultsScreen_BeginClose\n");

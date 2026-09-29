@@ -8,10 +8,11 @@
  */
 
 /* Both `movs rN, #0x80; lsls rN, #k` pairs are constants -- 0x200 and 0x100 --
- * not shifts in the source. The same wrap-and-draw shape as sub_0806A534, one
+ * not shifts in the source. The same wrap-and-draw shape as MeteorImpactGlow_DrawCallback, one
  * object along. */
-void sub_08066340(struct Unk08580934_Obj *o)
+void ReadyMarker_Draw(struct Unk08580934_Obj *o)
 {
     PutOamHi((o->unk28 + 0x200) & 0x1FF, (o->unk2a + 0x100) & 0xFF,
                  gUnknown_08580CD4, 0);
 }
+asm(".global sub_08066340\n.thumb_set sub_08066340, ReadyMarker_Draw\n");

@@ -11,7 +11,7 @@
 
 /* Proc_BreakEach open-coded over proc.c's sProcArray instead of walking the
  * proc tree: all 32 slots at stride 0x6c, selecting on proc_script and calling
- * Proc_Break. sub_0806752C next door is the same scan with the guard sense
+ * Proc_Break. Proc_EndAllExceptScript next door is the same scan with the guard sense
  * flipped and Proc_End as the action. sub_0806A444 is the only caller.
  *
  * sProcArray is NOT static in src/proc.c -- see include/proc.h, where it is now
@@ -46,7 +46,7 @@ asm(".global sub_08067504\n.thumb_set sub_08067504, Proc_BreakEachOpenCoded\n");
  * an "end everything except" sweep, not a Proc_EndEach. Free slots have a NULL
  * proc_script and so are swept too; Proc_End on an already-dead slot is a
  * no-op, which is presumably why the original could get away with it. */
-void sub_0806752C(const struct ProcCmd * script)
+void Proc_EndAllExceptScript(const struct ProcCmd * script)
 {
     s32 i;
 
@@ -60,3 +60,4 @@ void sub_0806752C(const struct ProcCmd * script)
         }
     }
 }
+asm(".global sub_0806752C\n.thumb_set sub_0806752C, Proc_EndAllExceptScript\n");

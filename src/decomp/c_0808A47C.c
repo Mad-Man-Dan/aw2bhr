@@ -28,7 +28,7 @@
  * win0_enable_bg0..obj writes that follow into one read-modify-write, which is
  * the same A4/DC interleave already recorded on these two shadows in
  * include/unknown-globals.h. */
-void sub_0808A47C(void)
+void CoDesignEditor_SetupBlend(void)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -70,3 +70,4 @@ void sub_0808A47C(void)
     gDispIo.disp_ct.win1_enable = 1;
     gDispIo.disp_ct.objwin_enable = 0;
 }
+asm(".global sub_0808A47C\n.thumb_set sub_0808A47C, CoDesignEditor_SetupBlend\n");

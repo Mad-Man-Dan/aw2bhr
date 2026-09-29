@@ -28,7 +28,7 @@
  * what hands gPal the callee-saved register: written inline, gUnknown_0200B5F4's
  * address pseudo is created first and wins sl instead, moving the pool word
  * order with it. */
-void sub_0806A5B8(void)
+void StepPaletteRedTint(void)
 {
     int i, j;
     s16 r;
@@ -54,3 +54,4 @@ void sub_0806A5B8(void)
     }
     EnablePaletteSync();
 }
+asm(".global sub_0806A5B8\n.thumb_set sub_0806A5B8, StepPaletteRedTint\n");

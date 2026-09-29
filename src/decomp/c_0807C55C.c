@@ -9,12 +9,14 @@
 
 #include "proc.h"
 
-void sub_0807C55C(void)
+void StartMissionTitle(void)
 {
     Proc_Start(gUnknown_086164A0, PROC_TREE_3);
 }
+asm(".global sub_0807C55C\n.thumb_set sub_0807C55C, StartMissionTitle\n");
 
-int sub_0807C570(void)
+int IsMissionTitleRunning(void)
 {
     return Proc_Find(gUnknown_086164A0) != 0;
 }
+asm(".global sub_0807C570\n.thumb_set sub_0807C570, IsMissionTitleRunning\n");

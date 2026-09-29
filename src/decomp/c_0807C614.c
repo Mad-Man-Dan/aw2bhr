@@ -42,7 +42,7 @@
  * the roles swap to `mov r1, sp; movs r0, #0` and the argument copy comes
  * back. Only "array" is proved; the extent is not.
  *
- * sub_0807F8E4 returns `int` (src/decomp/c_0807F8E4.c). The `lsls #24;
+ * IsBlockWarRoomSelectionActive returns `int` (src/decomp/c_0807F8E4.c). The `lsls #24;
  * lsrs #24` after the `bl` is this caller storing the result in a u8, which is
  * the reading include/unknown-functions.h already records for sub_0807C9EC.
  *
@@ -69,12 +69,12 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
     u8 v;
     u16 clear[2];
 
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     SyncAllBgTilemaps();
 
     gUnknown_0300251C.bits.tm_block = 0x1b;
 
-    sub_08078D80(proc);
+    StartScrollingBackdrop(proc);
 
     gUnknown_03001FE8.bits.size = 2;
     gUnknown_03001FE8.bits.chr_block = 1;
@@ -128,7 +128,7 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
 
     ApplyWindowFramePalette(gUnknown_03005958[proc->unk58], 8);
 
-    v = sub_0807F8E4();
+    v = IsBlockWarRoomSelectionActive();
 
     if (v != 0)
     {

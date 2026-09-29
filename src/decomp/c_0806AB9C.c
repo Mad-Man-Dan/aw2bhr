@@ -22,7 +22,7 @@ struct UnkAB9CProc
     /* 0x52 */ u16 unk52;
 };
 
-void sub_0806AB9C(struct UnkAB9CProc *proc)
+void CreditsMissionLine_Loop(struct UnkAB9CProc *proc)
 {
     int i;
     u16 y;
@@ -67,3 +67,4 @@ void sub_0806AB9C(struct UnkAB9CProc *proc)
     if (((s16)proc->unk44 >> 1) < -0x7c)
         Proc_Break(proc);
 }
+asm(".global sub_0806AB9C\n.thumb_set sub_0806AB9C, CreditsMissionLine_Loop\n");

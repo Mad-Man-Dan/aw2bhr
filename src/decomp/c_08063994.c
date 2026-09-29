@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08063994(void)
+void ResetBgAffineToScreenCentre(void)
 {
     struct BgAffineSrcData src;
 
@@ -23,3 +23,4 @@ void sub_08063994(void)
     BgAffineSet(&src, (struct BgAffineDstData *)gUnknown_030024D0, 1);
     BgAffineSet(&src, (struct BgAffineDstData *)gUnknown_03003020, 1);
 }
+asm(".global sub_08063994\n.thumb_set sub_08063994, ResetBgAffineToScreenCentre\n");

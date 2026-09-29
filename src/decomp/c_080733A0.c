@@ -14,9 +14,10 @@ struct Unk80733A0
     /* 0x68 */ u8 unk_68;
 };
 
-void sub_080733A0(int arg)
+void SetHeaderBannerTransitionFrames(int arg)
 {
     struct Unk80733A0 * proc = Proc_Find(ProcScr_MainMenuPutSelectModeSprite);
 
     proc->unk_68 = arg;
 }
+asm(".global sub_080733A0\n.thumb_set sub_080733A0, SetHeaderBannerTransitionFrames\n");

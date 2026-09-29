@@ -7,7 +7,7 @@
  * sub_08078758 @ 0x08078758, sub_08078770 @ 0x08078770
  */
 
-void sub_08078758(void)
+void SetCoSelectGroupSwitchAll(void)
 {
     u32 *base;
     u32 *p;
@@ -21,8 +21,9 @@ void sub_08078758(void)
         *p-- = v;
     while ((int)p >= (int)base);
 }
+asm(".global sub_08078758\n.thumb_set sub_08078758, SetCoSelectGroupSwitchAll\n");
 
-void sub_08078770(void)
+void SetCoSelectGroupSwitchAllButFirst(void)
 {
     int i;
 
@@ -33,3 +34,4 @@ void sub_08078770(void)
             gUnknown_030059C0[i] = 1;
     }
 }
+asm(".global sub_08078770\n.thumb_set sub_08078770, SetCoSelectGroupSwitchAllButFirst\n");

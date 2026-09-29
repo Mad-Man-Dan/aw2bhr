@@ -55,7 +55,7 @@ void EnemyCoMinimugs_Loop(struct Unk080878A8Proc *proc)
  * biased arguments in the first loop are separate expressions in the counter,
  * not one induction variable. No data refs at all. */
 
-void sub_08087938(void)
+void LoadMapSelectPanelGraphics(void)
 {
     int i;
 
@@ -71,5 +71,6 @@ void sub_08087938(void)
     for (i = 0; i < 5; i++)
         LoadTilePoolGraphic(i + 0x6a);
 }
+asm(".global sub_08087938\n.thumb_set sub_08087938, LoadMapSelectPanelGraphics\n");
 
 asm(".global sub_080878A8\n.thumb_set sub_080878A8, EnemyCoMinimugs_Loop\n");

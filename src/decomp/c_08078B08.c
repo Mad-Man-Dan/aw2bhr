@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08078B08(void)
+void BeginFadeToWhite(void)
 {
     gUnknown_030030E0.bits.effect = 2;
 
@@ -25,8 +25,9 @@ void sub_08078B08(void)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 }
+asm(".global sub_08078B08\n.thumb_set sub_08078B08, BeginFadeToWhite\n");
 
-void sub_08078B74(void)
+void BeginFadeToBlack(void)
 {
     gUnknown_030030E0.bits.effect = 3;
 
@@ -42,3 +43,4 @@ void sub_08078B74(void)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 }
+asm(".global sub_08078B74\n.thumb_set sub_08078B74, BeginFadeToBlack\n");

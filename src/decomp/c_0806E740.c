@@ -45,7 +45,7 @@ struct Unk6E780Proc
     /* 29 */ STRUCT_PAD(0x29, 0x34);
     /* 34 */ s32 unk34;
 };
-/* Starts the scroll proc sub_0806E740 steps -- same four word fields -- and
+/* Starts the scroll proc SoundRoomTitleScroll_Loop steps -- same four word fields -- and
  * seeds its start and end positions from two caller arguments.
  *
  * `b & 1` is computed ONCE and reused three times (stored to unk34, shifted by
@@ -64,7 +64,7 @@ struct Unk6E7C0Proc
 };
 #include "hardware.h"
 
-void sub_0806E740(struct Unk6E740Proc *proc)
+void SoundRoomTitleScroll_Loop(struct Unk6E740Proc *proc)
 {
     SetBgScrollShadow(0, Interpolate(4, proc->unk2c, proc->unk30, proc->unk38, 0x10), 0);
 
@@ -73,8 +73,9 @@ void sub_0806E740(struct Unk6E740Proc *proc)
     else
         proc->unk38++;
 }
+asm(".global sub_0806E740\n.thumb_set sub_0806E740, SoundRoomTitleScroll_Loop\n");
 
-void sub_0806E780(struct Unk6E780Proc *proc)
+void SoundRoomTitleScroll_OnScrollEnd(struct Unk6E780Proc *proc)
 {
     int pal = 0x10;
 
@@ -84,8 +85,9 @@ void sub_0806E780(struct Unk6E780Proc *proc)
     FillTilemapRect(gBG0TilemapBuffer, pal, 0x10, 0x10, 2, 0);
     BG_EnableSyncBG0();
 }
+asm(".global sub_0806E780\n.thumb_set sub_0806E780, SoundRoomTitleScroll_OnScrollEnd\n");
 
-void sub_0806E7C0(int a, int b, ProcPtr parent)
+void StartSoundRoomTitleScroll(int a, int b, ProcPtr parent)
 {
     struct Unk6E7C0Proc *proc = Proc_StartBlocking(gUnknown_08582BFC, parent);
 
@@ -95,6 +97,7 @@ void sub_0806E7C0(int a, int b, ProcPtr parent)
     proc->unk38 = 0;
     SoundRoomDrawTrackTitle(b, ((b & 1) << 5) + 0x40);
 }
+asm(".global sub_0806E7C0\n.thumb_set sub_0806E7C0, StartSoundRoomTitleScroll\n");
 
 /* Pokes one palette entry from a ROM table keyed on the frame counter, then
  * flushes.
@@ -115,10 +118,11 @@ void sub_0806E7C0(int a, int b, ProcPtr parent)
  * reference into an earlier statement and leaves the rest of the second
  * statement's order untouched, which is the only arrangement that puts gPal in
  * the middle slot. */
-void sub_0806E7FC(void)
+void SoundRoomCycleArrowPalette(void)
 {
     const u16 *tbl = gUnknown_081A47E4;
 
     gPal[0x1EC] = tbl[((u32)gGameClock & 0x1F) / 2];
     EnablePaletteSync();
 }
+asm(".global sub_0806E7FC\n.thumb_set sub_0806E7FC, SoundRoomCycleArrowPalette\n");

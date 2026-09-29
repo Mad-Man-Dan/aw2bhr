@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* sub_08080D30 @ 0x08080D30, 204 bytes, THUMB. Matched.
+/* SuperCoPowerBg_Init @ 0x08080D30, 204 bytes, THUMB. Matched.
  *
  * Straight-line display-shadow setup: same family as the
  * 0x0806717C/08067300/08067410/08067F5C/0806A4DC group noted next to
@@ -21,7 +21,7 @@
  * gUnknown_03001FFC = gUnknown_03001FFC; is a genuine self-store -- only
  * spellable because the global is volatile.
  */
-void sub_08080D30(void)
+void SuperCoPowerBg_Init(void)
 {
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_03002020 = 0;
@@ -40,3 +40,4 @@ void sub_08080D30(void)
 
     SetDispEnable(1, 1, 1, 1, 1);
 }
+asm(".global sub_08080D30\n.thumb_set sub_08080D30, SuperCoPowerBg_Init\n");

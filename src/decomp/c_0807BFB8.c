@@ -17,7 +17,7 @@ struct Proc7BFB8
     /* 0x64 */ s16 unk_64;
 };
 
-void sub_0807BFB8(ProcPtr proc)
+void MissionTitleName_PutFlyingLetters(ProcPtr proc)
 {
     struct Proc7BFB8 *p = proc;
     int i;
@@ -34,3 +34,4 @@ void sub_0807BFB8(ProcPtr proc)
 
     p->unk_64 -= 0x18;
 }
+asm(".global sub_0807BFB8\n.thumb_set sub_0807BFB8, MissionTitleName_PutFlyingLetters\n");

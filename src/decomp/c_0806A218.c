@@ -26,15 +26,15 @@ void IntroT3_IDLE_0806A219(struct Unk806A218 *proc)
     switch (0x128 - proc->unk2c)
     {
     case 0:
-        sub_08069FAC(0, 1, 0x61, proc);
+        StartIntroCoReveal(0, 1, 0x61, proc);
         break;
 
     case 0x62:
-        sub_08069FAC(1, 4, 0x61, proc);
+        StartIntroCoReveal(1, 4, 0x61, proc);
         break;
 
     case 0xc4:
-        sub_08069FAC(0, 2, 0x61, proc);
+        StartIntroCoReveal(0, 2, 0x61, proc);
         break;
 
     case 0x11c:

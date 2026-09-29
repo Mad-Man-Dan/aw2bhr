@@ -20,7 +20,7 @@ struct Unk80758BC
     /* 0x40 */ s32 unk_40;
 };
 
-void sub_080758BC(s32 a, s32 b, s32 c, ProcPtr parent)
+void StartWorldMapReticle(s32 a, s32 b, s32 c, ProcPtr parent)
 {
     struct Unk80758BC * proc = Proc_Start(gUnknown_086143E0, parent);
 
@@ -32,3 +32,4 @@ void sub_080758BC(s32 a, s32 b, s32 c, ProcPtr parent)
     proc->unk_3c = 0;
     proc->unk_40 = 0;
 }
+asm(".global sub_080758BC\n.thumb_set sub_080758BC, StartWorldMapReticle\n");

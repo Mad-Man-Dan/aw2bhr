@@ -25,7 +25,7 @@ struct Unk806C7B4
     /* 0x58 */ int unk58;
 };
 
-void sub_0806C7B4(struct Unk806C7B4 *proc)
+void CreditsResultFade_Init(struct Unk806C7B4 *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -40,3 +40,4 @@ void sub_0806C7B4(struct Unk806C7B4 *proc)
 
     proc->unk58 = 0;
 }
+asm(".global sub_0806C7B4\n.thumb_set sub_0806C7B4, CreditsResultFade_Init\n");

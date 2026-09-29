@@ -20,7 +20,7 @@ struct Unk8078CC8
     u16 unk_68;
 };
 
-void sub_08078C54(struct Unk8078C54 * proc)
+void BeginFadeToBlackFrom6(struct Unk8078C54 * proc)
 {
     gUnknown_030030E0.bits.effect = 3;
 
@@ -38,6 +38,7 @@ void sub_08078C54(struct Unk8078C54 * proc)
 
     proc->unk_68 = 0;
 }
+asm(".global sub_08078C54\n.thumb_set sub_08078C54, BeginFadeToBlackFrom6\n");
 
 void sub_08078CC8(struct Unk8078CC8 * proc)
 {

@@ -14,7 +14,8 @@ struct UnkProc8615AAC
     void *unk_54;
 };
 
-void sub_08078540(void *arg, ProcPtr parent)
+void StartBlockingEventScript(void *arg, ProcPtr parent)
 {
     ((struct UnkProc8615AAC *)Proc_StartBlocking(gUnknown_08615AAC, parent))->unk_54 = arg;
 }
+asm(".global sub_08078540\n.thumb_set sub_08078540, StartBlockingEventScript\n");

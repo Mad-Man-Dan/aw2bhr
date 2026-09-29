@@ -15,7 +15,7 @@
  *
  * All three parameters are `int` -- the prologue is three bare
  * `adds rN, rM, #0` copies with no PROMOTE_MODE narrowing. */
-void sub_08066580(int a1, int a2, int a3)
+void StartReadyMarker(int a1, int a2, int a3)
 {
     struct Unk03001470 *p;
 
@@ -26,3 +26,4 @@ void sub_08066580(int a1, int a2, int a3)
     gUnknown_08580934->unk74[a1] = p;
     gUnknown_08580934->unk70[a1] = 0xFF;
 }
+asm(".global sub_08066580\n.thumb_set sub_08066580, StartReadyMarker\n");

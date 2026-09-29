@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* Same blend-shadow shape as sub_0806C7B4, with no proc argument and the
+/* Same blend-shadow shape as CreditsResultFade_Init, with no proc argument and the
  * first target group cleared outright rather than set. */
 
 void sub_0806C700(void)

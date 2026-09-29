@@ -13,7 +13,7 @@
  * -- and the sign test is an explicit `(s16)` cast at the use.  A bare
  * `lsls #0x10; cmp #0; bge` with no `asrs` is the sign-BIT test: agbcc knows
  * only bit 15 matters, so it never materialises the sign-extended value.  Its
- * twin sub_08074648 compares against 0xf and therefore does get the `asrs`.
+ * twin DarkenRampUp_Loop compares against 0xf and therefore does get the `asrs`.
  */
 struct Unk8074628
 {
@@ -21,7 +21,7 @@ struct Unk8074628
     /* 0x4c */ u16 unk_4c;
 };
 
-void sub_08074600(struct Unk8074628 *proc)
+void DarkenRampDown_Loop(struct Unk8074628 *proc)
 {
     gUnknown_03001FFC = proc->unk_4c;
     proc->unk_4c--;
@@ -29,3 +29,4 @@ void sub_08074600(struct Unk8074628 *proc)
     if ((s16)proc->unk_4c < 0)
         Proc_Break(proc);
 }
+asm(".global sub_08074600\n.thumb_set sub_08074600, DarkenRampDown_Loop\n");

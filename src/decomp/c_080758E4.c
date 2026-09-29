@@ -14,7 +14,7 @@ struct Unk080758E4
     /* 0x40 */ int unk40;
 };
 
-int sub_080758E4(void)
+int IsWorldMapReticleShrinkDone(void)
 {
     struct Unk080758E4 *proc = Proc_Find(gUnknown_086143E0);
 
@@ -23,3 +23,4 @@ int sub_080758E4(void)
     else
         return 0;
 }
+asm(".global sub_080758E4\n.thumb_set sub_080758E4, IsWorldMapReticleShrinkDone\n");

@@ -8,13 +8,13 @@
  */
 
 /* WAVE 31 (W31-C). Inherited at 93.5%; the draft did not compile any more --
- * its local prototypes for sub_0808B6E8 and sub_08087298 had been overtaken by
+ * its local prototypes for sub_0808B6E8 and GetMapPreviewScrollY had been overtaken by
  * include/unknown-functions.h. Deleting them is half the fix: the header types
- * sub_08087298 `u16`, and the re-narrow that forces at each call site is real
+ * GetMapPreviewScrollY `u16`, and the re-narrow that forces at each call site is real
  * code the `int` spelling was missing.
  *
  * The other half: at the three sites in the unk52 branch that assign
- * gUnknown_03002B34 from sub_08087248(), the ROM loads the DESTINATION address
+ * gUnknown_03002B34 from GetMapPreviewScrollX(), the ROM loads the DESTINATION address
  * before the `bl` and keeps it across. Writing the store as
  * `*(u16 *)&gUnknown_03002B34 = f() ...` puts that `ldr` after the call
  * instead; binding the destination to a pointer local first reproduces the ROM.
@@ -37,7 +37,7 @@ struct Unk080867BCProc
     /* 0x5c */ u32 unk5c;
 };
 
-void sub_080867BC(struct Unk080867BCProc *proc)
+void MapSelectList_StepTransition(struct Unk080867BCProc *proc)
 {
     u16 buf[9];
     u16 *dst;
@@ -46,24 +46,24 @@ void sub_080867BC(struct Unk080867BCProc *proc)
     if (proc->unk4e != 0)
     {
         if (proc->unk4c <= 8)
-            gUnknown_03002F18 = sub_08087298() + buf[proc->unk4c] * proc->unk4e;
+            gUnknown_03002F18 = GetMapPreviewScrollY() + buf[proc->unk4c] * proc->unk4e;
         else if (proc->unk4c == 0xc)
             StartMapSelectPreview(proc->unk58);
         else if (proc->unk4c > 0x13)
         {
             if (proc->unk4c == 0x14)
             {
-                gUnknown_03002F18 = sub_08087298() - proc->unk4e * 0x100;
-                *(u16 *)&gUnknown_03002B34 = sub_08087248();
+                gUnknown_03002F18 = GetMapPreviewScrollY() - proc->unk4e * 0x100;
+                *(u16 *)&gUnknown_03002B34 = GetMapPreviewScrollX();
             }
             else if (proc->unk4c <= 0x1b)
-                gUnknown_03002F18 = sub_08087298() - buf[0x1c - proc->unk4c] * proc->unk4e;
+                gUnknown_03002F18 = GetMapPreviewScrollY() - buf[0x1c - proc->unk4c] * proc->unk4e;
         }
         proc->unk4c++;
         if (proc->unk4c == 0x1c)
         {
             UpdateMapSelectPropertyCounts(proc);
-            gUnknown_03002F18 = sub_08087298();
+            gUnknown_03002F18 = GetMapPreviewScrollY();
             proc->unk4e = 0;
         }
     }
@@ -72,7 +72,7 @@ void sub_080867BC(struct Unk080867BCProc *proc)
         if (proc->unk4c <= 8)
         {
             dst = (u16 *)&gUnknown_03002B34;
-            *dst = sub_08087248() + buf[proc->unk4c] * proc->unk52;
+            *dst = GetMapPreviewScrollX() + buf[proc->unk4c] * proc->unk52;
         }
         else if (proc->unk4c == 0xc)
             StartMapSelectPreview(proc->unk58);
@@ -81,13 +81,13 @@ void sub_080867BC(struct Unk080867BCProc *proc)
             if (proc->unk4c == 0x14)
             {
                 dst = (u16 *)&gUnknown_03002B34;
-                *dst = sub_08087248() - (proc->unk52 << 8);
-                gUnknown_03002F18 = sub_08087298();
+                *dst = GetMapPreviewScrollX() - (proc->unk52 << 8);
+                gUnknown_03002F18 = GetMapPreviewScrollY();
             }
             else if (proc->unk4c <= 0x1b)
             {
                 dst = (u16 *)&gUnknown_03002B34;
-                *dst = sub_08087248() - buf[0x1c - proc->unk4c] * proc->unk52;
+                *dst = GetMapPreviewScrollX() - buf[0x1c - proc->unk4c] * proc->unk52;
             }
         }
         switch (proc->unk2c)
@@ -128,9 +128,10 @@ void sub_080867BC(struct Unk080867BCProc *proc)
         if (proc->unk4c == 0x1c)
         {
             UpdateMapSelectPropertyCounts(proc);
-            *(u16 *)&gUnknown_03002B34 = sub_08087248();
+            *(u16 *)&gUnknown_03002B34 = GetMapPreviewScrollX();
         }
         if (proc->unk4c > 0x1b && proc->unk2c > 0x11)
             proc->unk52 = 0;
     }
 }
+asm(".global sub_080867BC\n.thumb_set sub_080867BC, MapSelectList_StepTransition\n");

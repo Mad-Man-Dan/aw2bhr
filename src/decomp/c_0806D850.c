@@ -27,7 +27,7 @@
  * is what makes it `ldrb` rather than the `ldrsb` the s8 member would give.
  * Probed: `|=` folds, `x = x | 0xff` folds, and a volatile cast drops the OR
  * instead. */
-void sub_0806D850(void)
+void RulesScreenInitState(void)
 {
     int i;
     int v;
@@ -58,3 +58,4 @@ void sub_0806D850(void)
 
     gUnknown_08580934->unk2d = 0;
 }
+asm(".global sub_0806D850\n.thumb_set sub_0806D850, RulesScreenInitState\n");

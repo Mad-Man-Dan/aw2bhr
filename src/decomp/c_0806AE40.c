@@ -32,7 +32,7 @@ struct Unk806AE40
     /* 0x39 */ u8 unk39;
 };
 
-void sub_0806AE40(struct Unk806AE40 *proc)
+void CreditsIllustration_LoadTilemapAndPalette(struct Unk806AE40 *proc)
 {
     u16 *dst;
     int i;
@@ -50,3 +50,4 @@ void sub_0806AE40(struct Unk806AE40 *proc)
 
     sub_08013AD4(proc->unk39);
 }
+asm(".global sub_0806AE40\n.thumb_set sub_0806AE40, CreditsIllustration_LoadTilemapAndPalette\n");

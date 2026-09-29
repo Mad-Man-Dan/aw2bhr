@@ -39,7 +39,7 @@ struct Unk08069EAC
     /* 0x40 */ int unk40;
 };
 
-void sub_08069EAC(struct Unk08069EAC *proc)
+void IntroCoReveal_Loop(struct Unk08069EAC *proc)
 {
     if (proc->unk38 == 0)
     {
@@ -56,7 +56,7 @@ void sub_08069EAC(struct Unk08069EAC *proc)
                 proc->unk2c = 0;
             SetBgScrollShadow(3, proc->unk2c, proc->unk30);
             if (proc->unk40 == 0x1E)
-                sub_08069D3C(0);
+                SetIntroSplitWindow(0);
         }
     }
     else
@@ -74,10 +74,11 @@ void sub_08069EAC(struct Unk08069EAC *proc)
                 proc->unk2c = 0;
             SetBgScrollShadow(3, proc->unk2c, proc->unk30);
             if (proc->unk40 == 0x1E)
-                sub_08069D3C(1);
+                SetIntroSplitWindow(1);
         }
     }
     proc->unk40++;
     if (proc->unk40 == proc->unk3c)
         Proc_Break(proc);
 }
+asm(".global sub_08069EAC\n.thumb_set sub_08069EAC, IntroCoReveal_Loop\n");

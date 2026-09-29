@@ -16,13 +16,14 @@ struct Unk6B050Proc
 };
 #include "proc.h"
 
-void sub_0806B09C(struct Unk6B050Proc *proc)
+void CreditsFadeOut_Init(struct Unk6B050Proc *proc)
 {
     ColFadeToBlack(-1);
     proc->unk58 = 0x80;
 }
+asm(".global sub_0806B09C\n.thumb_set sub_0806B09C, CreditsFadeOut_Init\n");
 
-void sub_0806B0B4(struct Unk6B050Proc *proc)
+void CreditsFadeOut_Loop(struct Unk6B050Proc *proc)
 {
     if (!(proc->unk58 & 3))
     {
@@ -35,16 +36,18 @@ void sub_0806B0B4(struct Unk6B050Proc *proc)
     if (proc->unk58 == 0)
         Proc_Break(proc);
 }
+asm(".global sub_0806B0B4\n.thumb_set sub_0806B0B4, CreditsFadeOut_Loop\n");
 
-/* sub_0806B09C's twin: the other end of the same fade, half the frames. */
-void sub_0806B0E0(struct Unk6B050Proc *proc)
+/* CreditsFadeOut_Init's twin: the other end of the same fade, half the frames. */
+void CreditsFadeIn_Init(struct Unk6B050Proc *proc)
 {
     ColFadeFromBlack(1);
     proc->unk58 = 0x40;
 }
+asm(".global sub_0806B0E0\n.thumb_set sub_0806B0E0, CreditsFadeIn_Init\n");
 
-/* sub_0806B0B4's twin, ticking every other frame instead of every fourth. */
-void sub_0806B0F4(struct Unk6B050Proc *proc)
+/* CreditsFadeOut_Loop's twin, ticking every other frame instead of every fourth. */
+void CreditsFadeIn_Loop(struct Unk6B050Proc *proc)
 {
     if (!(proc->unk58 & 1))
     {
@@ -57,3 +60,4 @@ void sub_0806B0F4(struct Unk6B050Proc *proc)
     if (proc->unk58 == 0)
         Proc_Break(proc);
 }
+asm(".global sub_0806B0F4\n.thumb_set sub_0806B0F4, CreditsFadeIn_Loop\n");

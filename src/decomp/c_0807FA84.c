@@ -7,6 +7,7 @@
  * sub_0807FA84 @ 0x0807FA84
  */
 
-void sub_0807FA84(void)
+void CoPowerScene_Idle(void)
 {
 }
+asm(".global sub_0807FA84\n.thumb_set sub_0807FA84, CoPowerScene_Idle\n");

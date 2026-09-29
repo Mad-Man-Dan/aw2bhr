@@ -47,7 +47,7 @@ void MainMenuCarouselWheel_AnimatePalettes(struct Unk08084700 *proc)
                             0x30A, 0x10);
 
         ApplyPaletteExt(
-            sub_0808488C(gUnknown_0861696C[DivRem(proc->unk52 + 2, 6)])
+            GetMainMenuTileHighlightPalette(gUnknown_0861696C[DivRem(proc->unk52 + 2, 6)])
                 + (((s16)proc->unk4a >> 2) & 0xf),
             0x31E, 2);
 

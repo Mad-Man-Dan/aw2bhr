@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_080735B0(void)
+void ResetDma0Registers(void)
 {
     REG_DMA0CNT_H = 0;
 
@@ -17,3 +17,4 @@ void sub_080735B0(void)
     REG_DMA0DAD = 0;
     REG_DMA0CNT_L = 0;
 }
+asm(".global sub_080735B0\n.thumb_set sub_080735B0, ResetDma0Registers\n");

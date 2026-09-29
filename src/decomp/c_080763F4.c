@@ -11,12 +11,12 @@
 /* Loads the per-variant tile blob for the overlay and arms the blend registers.
  * The variant index at +0x58 selects an 8-byte record: its first word is the
  * blob for Decompress, its second is copied to +0x60, which c_0807662C.c and
- * sub_080765D8 both read as the x-offset of the second sprite. The ROM reaches
+ * WorldMapCallout_HoldLoop both read as the x-offset of the second sprite. The ROM reaches
  * the second word by bumping the record base (`adds r4, #4`) instead of loading
  * a second address, which is what a struct-array subscript gives and two
  * parallel tables would not.
  *
- * The tail is sub_080755F0's minus the target1_enable_bd clear -- the `& 0xFFE0`
+ * The tail is WorldMapReticle_Init's minus the target1_enable_bd clear -- the `& 0xFFE0`
  * with no OR, then the `& 0xE0FF | 0xF00`, both folded into one `ldrh`/`strh`
  * pair, and target2_enable_bd set as a single bit on byte 1. */
 struct Unk80763F4
@@ -27,7 +27,7 @@ struct Unk80763F4
     /* 0x60 */ int unk60;
 };
 
-void sub_080763F4(struct Unk80763F4 *proc)
+void WorldMapCallout_Init(struct Unk80763F4 *proc)
 {
     ApplyPaletteExt(gUnknown_081D2284, 0x2A0, 0x20);
 
@@ -44,3 +44,4 @@ void sub_080763F4(struct Unk80763F4 *proc)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0xF00;
     gUnknown_030030E0.bits.target2_enable_bd = 1;
 }
+asm(".global sub_080763F4\n.thumb_set sub_080763F4, WorldMapCallout_Init\n");

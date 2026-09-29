@@ -15,8 +15,9 @@ struct Unk67AD4Proc
     /* 38 */ u32 unk38;
 };
 
-void sub_08067AD4(struct Unk67AD4Proc *proc)
+void IntroSlidePanel_WaitExit(struct Unk67AD4Proc *proc)
 {
     if (proc->unk38 != 0)
         Proc_Break(proc);
 }
+asm(".global sub_08067AD4\n.thumb_set sub_08067AD4, IntroSlidePanel_WaitExit\n");

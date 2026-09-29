@@ -46,12 +46,12 @@ void IntroT3_IDLE_08069B91(struct Unk69B90Proc *proc)
         SetDispEnable(0, 0, 1, 0, 1);
         /* fall through */
     case 0:
-        sub_080678BC(1);
+        SetIntroBgZoomEnabled(1);
         break;
 
     case 42:
         SetDispEnable(0, 0, 1, 0, 1);
-        sub_080678BC(1);
+        SetIntroBgZoomEnabled(1);
         break;
     }
 

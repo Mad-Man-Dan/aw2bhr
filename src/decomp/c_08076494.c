@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08076494.
- * sub_08076494 @ 0x08076494
+ * WorldMapCallout_PopInLoop @ 0x08076494
  */
 
 #include "hardware.h"
@@ -19,7 +19,7 @@ struct Unk08076494
     /* 0x60 */ int unk60;
 };
 
-void sub_08076494(struct Unk08076494 *proc)
+void WorldMapCallout_PopInLoop(struct Unk08076494 *proc)
 {
     int a;
     int b;
@@ -47,5 +47,6 @@ void sub_08076494(struct Unk08076494 *proc)
         PlayMusicOrSfx2(0x1CC);
         Proc_Break(proc);
     }
-    sub_080763C0();
+    CycleWorldMapCalloutColor();
 }
+asm(".global sub_08076494\n.thumb_set sub_08076494, WorldMapCallout_PopInLoop\n");

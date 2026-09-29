@@ -14,9 +14,10 @@ struct Unk806E728
     /* 0x54 */ ProcPtr unk_54;
 };
 
-void sub_0806E728(ProcPtr parent)
+void StartSoundRoomLevelPulse(ProcPtr parent)
 {
     struct Unk806E728 * proc = Proc_Start(gUnknown_08582BE4, parent);
 
     proc->unk_54 = parent;
 }
+asm(".global sub_0806E728\n.thumb_set sub_0806E728, StartSoundRoomLevelPulse\n");

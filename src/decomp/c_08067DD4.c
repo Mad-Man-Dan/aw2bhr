@@ -11,7 +11,8 @@
 
 /* The parent arrives in r0 and is moved to r1 for the call, so it is this
  * function's only parameter; nothing is written to the new proc. */
-void sub_08067DD4(ProcPtr parent)
+void StartIntroBgBounceIn(ProcPtr parent)
 {
     Proc_Start(gUnknown_085810E4, parent);
 }
+asm(".global sub_08067DD4\n.thumb_set sub_08067DD4, StartIntroBgBounceIn\n");

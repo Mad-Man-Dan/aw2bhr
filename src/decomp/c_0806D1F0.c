@@ -17,8 +17,9 @@ struct Unk6D1F0
     /* 0x28 */ u16 unk28;
 };
 
-void sub_0806D1F0(struct Unk6D1F0 *a)
+void RulesScreenRuleOptionEnter_Init(struct Unk6D1F0 *a)
 {
     gUnknown_08580934->unk2d++;
     a->unk26 = 0x10;
 }
+asm(".global sub_0806D1F0\n.thumb_set sub_0806D1F0, RulesScreenRuleOptionEnter_Init\n");

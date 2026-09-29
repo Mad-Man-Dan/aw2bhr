@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Kicks one of two timers on the proc sub_0806E8C8 starts -- the same script,
+/* Kicks one of two timers on the proc StartSoundRoomArrows starts -- the same script,
  * so the layout is that starter's, which zeroes unk58 and unk5c and is the
  * producer for both fields read here.
  *
@@ -24,7 +24,7 @@ struct Unk6E8E4Proc
     /* 5c */ s32 unk5c;
 };
 
-void sub_0806E8E4(int a)
+void FlickSoundRoomArrow(int a)
 {
     struct Unk6E8E4Proc *proc = Proc_Find(gUnknown_08582C24);
 
@@ -33,3 +33,4 @@ void sub_0806E8E4(int a)
     else
         proc->unk58 = 0x10;
 }
+asm(".global sub_0806E8E4\n.thumb_set sub_0806E8E4, FlickSoundRoomArrow\n");

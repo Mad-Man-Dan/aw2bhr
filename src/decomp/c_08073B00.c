@@ -20,7 +20,7 @@ struct Unk73B00Proc
     /* 5C */ int unk5c; /* duration */
 };
 
-void sub_08073B00(struct Unk73B00Proc *proc)
+void PolygonWipe_Loop(struct Unk73B00Proc *proc)
 {
     s32 a = Interpolate(4, 0, 360, proc->unk58, proc->unk5c);
     s32 b = Interpolate(4, 0, 0xf0, proc->unk58, proc->unk5c);
@@ -77,3 +77,4 @@ void sub_08073B00(struct Unk73B00Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08073B00\n.thumb_set sub_08073B00, PolygonWipe_Loop\n");

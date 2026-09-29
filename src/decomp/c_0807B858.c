@@ -12,7 +12,7 @@
  * gUnknown_03002F18 is declared volatile for sub_0804BA4C's sake; a plain
  * `--` on it is byte-identical either way. */
 
-void sub_0807B858(void)
+void MissionTitle_ScrollBackdrop_Loop(void)
 {
     if (gGameClock & 1)
     {
@@ -20,3 +20,4 @@ void sub_0807B858(void)
         gUnknown_03002F18--;
     }
 }
+asm(".global sub_0807B858\n.thumb_set sub_0807B858, MissionTitle_ScrollBackdrop_Loop\n");

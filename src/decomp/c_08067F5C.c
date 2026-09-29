@@ -22,7 +22,7 @@ struct Unk67F5CProc
  * they belong to two different statements. The first store is dead and is
  * eliminated, which is why only one `strh` comes out.
  */
-void sub_08067F5C(struct Unk67F5CProc *proc)
+void IntroBlendFade_Init(struct Unk67F5CProc *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -34,3 +34,4 @@ void sub_08067F5C(struct Unk67F5CProc *proc)
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xe0ff) | 0xf00;
     gUnknown_030030E0.bits.target2_enable_bd = 1;
 }
+asm(".global sub_08067F5C\n.thumb_set sub_08067F5C, IntroBlendFade_Init\n");

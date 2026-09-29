@@ -14,7 +14,8 @@ struct Unk8078480
     /* 0x54 */ void * unk_54;
 };
 
-void sub_08078480(void * arg, ProcPtr parent)
+void StartWorldMapReturn(void * arg, ProcPtr parent)
 {
     ((struct Unk8078480 *)Proc_StartBlocking(gUnknown_0861598C, parent))->unk_54 = arg;
 }
+asm(".global sub_08078480\n.thumb_set sub_08078480, StartWorldMapReturn\n");

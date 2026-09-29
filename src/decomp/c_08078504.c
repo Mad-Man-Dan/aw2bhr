@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Same head as sub_08078498 -- clear gUnknown_03002F08.unk00, hand the proc to
+/* Same head as BlockingCoSpeech_Init -- clear gUnknown_03002F08.unk00, hand the proc to
  * StartDialogueBlock -- and then install the script stashed at +0x54 by
  * src/decomp/c_08078540.c's starter. That starter types +0x54 as `void *`
  * because it only stores it; here it is dereferenced by StartEventScript's
@@ -21,9 +21,10 @@ struct UnkProc8615AAC
     /* 0x54 */ const u8 *unk_54;
 };
 
-void sub_08078504(struct UnkProc8615AAC *proc)
+void BlockingEventScript_Init(struct UnkProc8615AAC *proc)
 {
     gUnknown_03002F08.unk00 = 0;
     StartDialogueBlock(proc);
     StartEventScript(proc->unk_54);
 }
+asm(".global sub_08078504\n.thumb_set sub_08078504, BlockingEventScript_Init\n");

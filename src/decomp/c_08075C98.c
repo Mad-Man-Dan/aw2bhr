@@ -40,9 +40,9 @@ struct Unk8075C98Proc
     /* 54 */ struct Unk0801C210 *unk54;
 };
 
-void sub_08075C98(struct Unk8075C98Proc *proc)
+void WorldMapMissionClear_FlashLoop(struct Unk8075C98Proc *proc)
 {
-    sub_08075AC4(proc->unk4c, 0x20);
+    StepBank15WhiteFade(proc->unk4c, 0x20);
     EnablePaletteSync();
 
     if ((u32)(proc->unk2c + 0x10) <= 0x100
@@ -68,3 +68,4 @@ void sub_08075C98(struct Unk8075C98Proc *proc)
     if (proc->unk4c > 0x20)
         Proc_Break(proc);
 }
+asm(".global sub_08075C98\n.thumb_set sub_08075C98, WorldMapMissionClear_FlashLoop\n");

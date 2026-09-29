@@ -36,7 +36,7 @@ struct Unk807567CProc
     /* 40 */ int unk40;
 };
 
-void sub_0807567C(struct Unk807567CProc *proc)
+void WorldMapReticle_ShrinkLoop(struct Unk807567CProc *proc)
 {
     int scale = Interpolate(5, 0x200, 0x100, proc->unk3c, proc->unk38);
     int step = Interpolate(0, 0xa, 1, proc->unk3c, proc->unk38);
@@ -68,3 +68,4 @@ void sub_0807567C(struct Unk807567CProc *proc)
         proc->unk3c++;
     }
 }
+asm(".global sub_0807567C\n.thumb_set sub_0807567C, WorldMapReticle_ShrinkLoop\n");

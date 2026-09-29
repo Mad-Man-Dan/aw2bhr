@@ -15,22 +15,24 @@
  * `!= 0`. That is the opposite of the reading a returning `if/else` would get --
  * see the arm-placement note in docs/agbcc-codegen.md. Both spellings are 48
  * bytes, so nothing but the branch sense separates them. */
-void sub_0806E11C(void)
+void RulesScreen_Close(void)
 {
     if (gUnknown_0202F2C8 != 0)
         PlayMusicOrSfx2(0x66);
     else
         PlayMusicOrSfx2(0x71);
 
-    sub_0806D34C();
-    sub_0806D620();
+    RulesScreenDismissRuleOptions();
+    RulesScreenDismissArmyColumns();
     sub_0806D840();
 }
+asm(".global sub_0806E11C\n.thumb_set sub_0806E11C, RulesScreen_Close\n");
 
 /* Two sequential calls and no nesting: sub_0801537C's argument is set up with a
  * fresh pool `ldr` into r0, which overwrites anything sub_080733B8 returned. */
-void sub_0806E14C(void)
+void RulesScreen_Finish(void)
 {
     sub_080733B8();
     sub_0801537C(gUnknown_08580CC4);
 }
+asm(".global sub_0806E14C\n.thumb_set sub_0806E14C, RulesScreen_Finish\n");

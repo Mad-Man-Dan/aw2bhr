@@ -15,7 +15,7 @@ struct Unk674D0Proc
     /* 58 */ int unk58;
 };
 
-/* MATCHED. Byte-for-byte the same function as sub_08067498 -- identical
+/* MATCHED. Byte-for-byte the same function as PaletteFade_Loop -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
 void sub_080674D0(struct Unk674D0Proc *proc)

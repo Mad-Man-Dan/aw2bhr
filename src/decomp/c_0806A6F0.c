@@ -10,10 +10,10 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* Sets up the pan/zoom proc sub_0806AA80 just started: clears the top palette
+/* Sets up the pan/zoom proc StartMeteorImpact just started: clears the top palette
  * row, records a start and an end position in 12-bit fixed point, derives the
  * per-frame step for each axis by dividing the span by the 0x33-frame duration,
- * and hands the proc to gUnknown_085815D0 (whose sub_0806A578 reads unk5a back
+ * and hands the proc to gUnknown_085815D0 (whose MeteorImpactGlow_Loop reads unk5a back
  * through its own +0x2c -- see src/decomp/c_0806A534.c).
  *
  * The divides are `__divsi3`, not Div, so they are the plain `/` operator.
@@ -60,7 +60,7 @@ struct Unk806A6F0Sub
 };
 #define PROC ((struct Unk806A6F0 *)a1)
 
-void sub_0806A6F0(ProcPtr a1, int a2, int a3)
+void SetupMeteorImpact(ProcPtr a1, int a2, int a3)
 {
     struct Unk806A6F0Sub *sub;
     int i;
@@ -88,3 +88,4 @@ void sub_0806A6F0(ProcPtr a1, int a2, int a3)
     PROC->unk5e = gMap->scrollX;
     PROC->unk60 = gMap->scrollY;
 }
+asm(".global sub_0806A6F0\n.thumb_set sub_0806A6F0, SetupMeteorImpact\n");

@@ -29,7 +29,7 @@ void ClearCampaignFlags60To9F(void)
 {
     int i;
 
-    sub_080745C0();
+    ClearWorldMapMarkers();
     gUnknown_0200C420.unk38[0].unk00_08 = 0;
 
     for (i = 0x60; i <= 0x9f; i++)

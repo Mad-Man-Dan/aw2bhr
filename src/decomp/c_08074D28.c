@@ -18,7 +18,7 @@ struct Unk8074D28Proc
     /* 0x54 */ int unk54;
 };
 
-void sub_08074D28(struct Unk8074D28Proc *proc)
+void WorldMapScope_Init(struct Unk8074D28Proc *proc)
 {
     struct Unk0801C210 *sprite;
     int i;
@@ -34,3 +34,4 @@ void sub_08074D28(struct Unk8074D28Proc *proc)
         proc->unk34[i] = gUnknown_0202FDFC.unk06 + gUnknown_0202FDFC.unk02;
     }
 }
+asm(".global sub_08074D28\n.thumb_set sub_08074D28, WorldMapScope_Init\n");

@@ -8,7 +8,7 @@
  */
 
 /* Return retyped from `int` to `u8` in wave 20 (W20-B). Byte-identical here --
- * `ldrb` either way -- but GetMainMenuTilePalette and sub_0808488C both re-narrow the
+ * `ldrb` either way -- but GetMainMenuTilePalette and GetMainMenuTileHighlightPalette both re-narrow the
  * result with a bare `lsls r0, r0, #0x18`, which an `int` return does not
  * produce. See include/unknown-functions.h for the full evidence and for the
  * one model this does NOT rule out. */

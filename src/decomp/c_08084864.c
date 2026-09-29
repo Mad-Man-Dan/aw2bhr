@@ -7,7 +7,7 @@
  * sub_08084864 @ 0x08084864, sub_0808488C @ 0x0808488C
  */
 
-/* One shape instantiated twice with sub_0808488C: IsMainMenuTileComplete(i) selects
+/* One shape instantiated twice with GetMainMenuTileHighlightPalette: IsMainMenuTileComplete(i) selects
  * between a per-index 32-byte record and one fixed record. Two things in here
  * are not free:
  *   - The `!= 0` with an explicit `else` is load-bearing. `if (x == 0) return
@@ -35,10 +35,11 @@ asm(".global sub_08084864\n.thumb_set sub_08084864, GetMainMenuTilePalette\n");
  * `adds r0, r4, #6` disappears; and hoisting it into its own statement
  * (`j = i + 6;`) emits that add BEFORE the pool `ldr` instead of after it. */
 
-u16 *sub_0808488C(int i)
+u16 *GetMainMenuTileHighlightPalette(int i)
 {
     if (IsMainMenuTileComplete(i) != 0)
         return gUnknown_0812598C;
     else
         return gUnknown_0823DC38 + (i + 6) * 16;
 }
+asm(".global sub_0808488C\n.thumb_set sub_0808488C, GetMainMenuTileHighlightPalette\n");

@@ -22,7 +22,7 @@ struct Unk80794E8
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_08079470(struct Unk8079470 *proc)
+void ResultsSubScreen_BannerHold_Loop(struct Unk8079470 *proc)
 {
     int i;
 
@@ -39,14 +39,15 @@ void sub_08079470(struct Unk8079470 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08079470\n.thumb_set sub_08079470, ResultsSubScreen_BannerHold_Loop\n");
 
-void sub_080794E8(struct Unk80794E8 *proc)
+void ResultsSubScreen_BannerSlideUp_Loop(struct Unk80794E8 *proc)
 {
     int i;
 
     if (proc->unk4c > 0x13)
     {
-        sub_080795A8(proc, 0);
+        PutResultsBanner(proc, 0);
     }
     else
     {
@@ -67,8 +68,9 @@ void sub_080794E8(struct Unk80794E8 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080794E8\n.thumb_set sub_080794E8, ResultsSubScreen_BannerSlideUp_Loop\n");
 
-void sub_080795A8(ProcPtr proc, u32 a2)
+void PutResultsBanner(ProcPtr proc, u32 a2)
 {
     int i;
 
@@ -82,3 +84,4 @@ void sub_080795A8(ProcPtr proc, u32 a2)
     if (a2 <= 0x1C)
         PutSprite(0, 0x32, 0xC - a2, gUnknown_08615BE4, 0x52D8);
 }
+asm(".global sub_080795A8\n.thumb_set sub_080795A8, PutResultsBanner\n");

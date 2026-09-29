@@ -21,5 +21,5 @@
 void sub_0806F2C0(void)
 {
     Proc_EndEach(gUnknown_08614200);
-    QueueVBlankCallback((void *)sub_080735B0);
+    QueueVBlankCallback((void *)ResetDma0Registers);
 }

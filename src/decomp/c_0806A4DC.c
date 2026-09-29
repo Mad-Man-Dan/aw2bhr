@@ -15,7 +15,7 @@
  * `mov #0x11; neg` is materialised separately because ~0x10 is wanted twice --
  * once for target1_enable_obj in byte 0 and once for target2_enable_obj in
  * byte 1 -- so it lives in r3 across both halves. */
-void sub_0806A4DC(void)
+void MeteorImpactGlow_Init(void)
 {
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg0 = 0;
@@ -32,3 +32,4 @@ void sub_0806A4DC(void)
     gUnknown_03002020 = 0;
     gUnknown_03002B28 = 0x10;
 }
+asm(".global sub_0806A4DC\n.thumb_set sub_0806A4DC, MeteorImpactGlow_Init\n");

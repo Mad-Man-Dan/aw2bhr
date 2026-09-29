@@ -10,8 +10,9 @@
 #include "hardware.h"
 #include "proc.h"
 
-void sub_0806C76C(ProcPtr proc)
+void WaitForAOrStart(ProcPtr proc)
 {
     if (gpKeySt->pressed & 9)
         Proc_Break(proc);
 }
+asm(".global sub_0806C76C\n.thumb_set sub_0806C76C, WaitForAOrStart\n");

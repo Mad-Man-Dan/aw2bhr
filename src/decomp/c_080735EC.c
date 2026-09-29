@@ -27,7 +27,7 @@
  * is the bitfield tell, where a scalar `&= ~0x20` would emit a bare
  * `movs #0xdf`. */
 
-void sub_080735EC(void)
+void ScanlineDarkenBg0_Init(void)
 {
     int i;
 
@@ -45,3 +45,4 @@ void sub_080735EC(void)
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xFFE0) | 1;
     gUnknown_030030E0.bits.target1_enable_bd = 0;
 }
+asm(".global sub_080735EC\n.thumb_set sub_080735EC, ScanlineDarkenBg0_Init\n");

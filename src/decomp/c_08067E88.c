@@ -20,7 +20,7 @@ struct Unk67E88Proc
     /* 3c */ u8 unk3c;
 };
 
-/* Puts one OBJ out for the entry sub_08067DF8 loaded, sharing its +0x2a index
+/* Puts one OBJ out for the entry IntroCoSlide_Init loaded, sharing its +0x2a index
  * into gUnknown_08581104. The third argument is the OAM attribute-2 word built
  * the way the ROM builds it: 0x2000 (`movs #0x80; lsls #6`) OR the tile id OR
  * the palette at bit 10, left-associative, which is exactly the two `orrs`.
@@ -29,9 +29,10 @@ struct Unk67E88Proc
  * The fifth argument goes on the stack (`str r0,[sp]`); it is a u8 field
  * reaching sub_08043C28's u8 parameter, so the `ldrb` is the whole conversion
  * and no PROMOTE_MODE pair appears. */
-void sub_08067E88(struct Unk67E88Proc *proc)
+void IntroCoSlide_HoldLoop(struct Unk67E88Proc *proc)
 {
     sub_08043C28(proc->unk30 & 0x1ff, 0x4a0,
                  0x2000 | gUnknown_08581104[proc->unk2a] | (proc->unk38 << 10),
                  0, proc->unk3c);
 }
+asm(".global sub_08067E88\n.thumb_set sub_08067E88, IntroCoSlide_HoldLoop\n");

@@ -50,7 +50,7 @@ struct Unk86EB0Proc
  * [r0]`) because it is named directly and is not const -- the same tell
  * src/decomp/c_080858C0.c documents. */
 
-void sub_08086E54(void)
+void MapSelectPreview_FillPlaceholderTilemap(void)
 {
     int i;
     int j;
@@ -65,6 +65,7 @@ void sub_08086E54(void)
     gUnknown_030058F4 = 0x10;
     BG_EnableSyncBG1();
 }
+asm(".global sub_08086E54\n.thumb_set sub_08086E54, MapSelectPreview_FillPlaceholderTilemap\n");
 
 void StartMapSelectPreview(int a1)
 {

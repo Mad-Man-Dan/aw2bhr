@@ -16,7 +16,7 @@ struct Unk0806974CProc
     /* 0x36 */ u8 unk36;
 };
 
-void sub_0806974C(ProcPtr parent)
+void StartIntroParallaxScroll(ProcPtr parent)
 {
     struct Unk0806974CProc *proc = Proc_Start(gUnknown_08581420, parent);
     int i;
@@ -28,3 +28,4 @@ void sub_0806974C(ProcPtr parent)
 
     proc->unk36 = 1;
 }
+asm(".global sub_0806974C\n.thumb_set sub_0806974C, StartIntroParallaxScroll\n");

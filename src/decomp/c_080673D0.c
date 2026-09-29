@@ -18,7 +18,7 @@ struct Unk673D0Proc
     /* 3c */ u32 unk3c;
 };
 
-void sub_080673D0(u32 a, u32 b, ProcPtr parent)
+void StartBlendRampWhite0To16(u32 a, u32 b, ProcPtr parent)
 {
     struct Unk673D0Proc *proc = Proc_Start(gUnknown_08580EAC, parent);
 
@@ -26,3 +26,4 @@ void sub_080673D0(u32 a, u32 b, ProcPtr parent)
     proc->unk38 = 0;
     proc->unk3c = b;
 }
+asm(".global sub_080673D0\n.thumb_set sub_080673D0, StartBlendRampWhite0To16\n");

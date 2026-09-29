@@ -35,7 +35,7 @@ struct Unk6E6F4Proc
     /* 54 */ struct Unk6E6F4Owner *unk54;
 };
 
-void sub_0806E6F4(struct Unk6E6F4Proc *proc)
+void SoundRoomLevelPulse_Loop(struct Unk6E6F4Proc *proc)
 {
     struct Unk6E6F4Owner *owner = proc->unk54;
     struct Unk6E6F4Sprite *sprite;
@@ -48,3 +48,4 @@ void sub_0806E6F4(struct Unk6E6F4Proc *proc)
     sprite = owner->unk4c;
     sprite->unk3c = 0x100 + y;
 }
+asm(".global sub_0806E6F4\n.thumb_set sub_0806E6F4, SoundRoomLevelPulse_Loop\n");

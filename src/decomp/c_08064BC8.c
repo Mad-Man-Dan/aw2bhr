@@ -7,7 +7,7 @@
  * sub_08064BC8 @ 0x08064BC8
  */
 
-void sub_08064BC8(struct Unk08580934_Obj *obj, int a, int index, int c)
+void TeamBadge_Setup(struct Unk08580934_Obj *obj, int a, int index, int c)
 {
     obj->unk26 = 0xb;
     obj->unk1c = index;
@@ -16,3 +16,4 @@ void sub_08064BC8(struct Unk08580934_Obj *obj, int a, int index, int c)
     gUnknown_08580934->unk44[index] = obj;
     gUnknown_08580934->unk2d++;
 }
+asm(".global sub_08064BC8\n.thumb_set sub_08064BC8, TeamBadge_Setup\n");

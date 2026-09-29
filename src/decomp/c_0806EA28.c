@@ -49,7 +49,7 @@ void sub_0806EA28(struct Unk0806EA28 *proc)
  * neither is volatile. Source order is exactly as written below --
  * the `.bits.win0_enable_blend = 1` really does come after the second
  * shadow's block. */
-void sub_0806EA88(void)
+void SoundRoomSetTitleTextWindow(void)
 {
     gDispIo.disp_ct.win0_enable = 1;
 
@@ -73,3 +73,4 @@ void sub_0806EA88(void)
     gUnknown_030030A4.bits.win0_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 }
+asm(".global sub_0806EA88\n.thumb_set sub_0806EA88, SoundRoomSetTitleTextWindow\n");

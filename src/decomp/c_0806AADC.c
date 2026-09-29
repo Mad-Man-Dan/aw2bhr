@@ -20,10 +20,11 @@ struct Unk806AADC
  * shorten_binary_op folds a MULT into the narrow mode where a shift needs a
  * third instruction. The second transfer's `lsls #5` carries no cast and is
  * an ordinary int shift, so the two are not the same expression. */
-void sub_0806AADC(struct Unk806AADC *proc)
+void CreditsMissionLine_LoadRankGraphics(struct Unk806AADC *proc)
 {
     ApplyPaletteExt(gUnknown_085816F0[proc->unk4c].unk04,
                     (u16)((proc->unk50 + 0x10) * 0x20), 0x20);
     Decompress(gUnknown_085816F0[proc->unk4c].unk00,
                (void *)(proc->unk52 * 0x20 + 0x06011200));
 }
+asm(".global sub_0806AADC\n.thumb_set sub_0806AADC, CreditsMissionLine_LoadRankGraphics\n");

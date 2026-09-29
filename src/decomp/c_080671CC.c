@@ -25,7 +25,7 @@ struct Unk671CCProc
  * The `cmp r0, #0` reuses the value already in r0 rather than reloading +0x58:
  * a volatile HImode store to a different object does not invalidate the SImode
  * load. The reload after the `bl` is Proc_Break clobbering memory. */
-void sub_080671CC(struct Unk671CCProc *proc)
+void BlendFromWhite_Loop(struct Unk671CCProc *proc)
 {
     gUnknown_03001FFC = proc->unk58;
 
@@ -34,3 +34,4 @@ void sub_080671CC(struct Unk671CCProc *proc)
 
     proc->unk58--;
 }
+asm(".global sub_080671CC\n.thumb_set sub_080671CC, BlendFromWhite_Loop\n");

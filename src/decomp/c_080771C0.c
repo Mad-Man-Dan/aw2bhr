@@ -10,34 +10,36 @@
 #include "hardware.h"
 
 /* Half of an HBlank scroll ping-pong: push the offset to BG0 and BG2, set the
- * next compare line, and register sub_080771F0 as the next handler -- which
+ * next compare line, and register SplitScroll_BottomHandler as the next handler -- which
  * registers this one back. The pair alternates every scanline pair.
  *
- * Two separate pool words for the two registers, where sub_080771F0 derives the
+ * Two separate pool words for the two registers, where SplitScroll_BottomHandler derives the
  * second with `adds r0, #8` from the first: the difference is that here the
  * value being stored occupies a register of its own, so agbcc has one free for
  * a second address and does not need to reuse the first.
  *
  * The `(int)` cast is what SetVCountInterruptHandler's declared parameter forces. */
-void sub_080771C0(void)
+void SplitScroll_TopHandler(void)
 {
     REG_BG0VOFS = gUnknown_0300064C;
     REG_BG2VOFS = gUnknown_0300064C;
     SetVCountCompareLine(0);
-    SetVCountInterruptHandler((int)sub_080771F0);
+    SetVCountInterruptHandler((int)SplitScroll_BottomHandler);
 }
+asm(".global sub_080771C0\n.thumb_set sub_080771C0, SplitScroll_TopHandler\n");
 
-/* The other half of sub_080771C0's ping-pong: zero the two scroll registers,
+/* The other half of SplitScroll_TopHandler's ping-pong: zero the two scroll registers,
  * arm the compare at line 0x80, and hand control back.
  *
  * `adds r0, #8` reaches REG_BG2VOFS from REG_BG0VOFS's address here because the
  * stored value is a constant and leaves a register free; the two are 8 bytes
  * apart, which fits an add-immediate. Not a different addressing decision from
- * sub_080771C0, just a different register pressure. */
-void sub_080771F0(void)
+ * SplitScroll_TopHandler, just a different register pressure. */
+void SplitScroll_BottomHandler(void)
 {
     REG_BG0VOFS = 0;
     REG_BG2VOFS = 0;
     SetVCountCompareLine(0x80);
-    SetVCountInterruptHandler((int)sub_080771C0);
+    SetVCountInterruptHandler((int)SplitScroll_TopHandler);
 }
+asm(".global sub_080771F0\n.thumb_set sub_080771F0, SplitScroll_BottomHandler\n");

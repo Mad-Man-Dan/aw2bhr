@@ -11,7 +11,7 @@
 /* r1 is never written before the `bl`, so the parent is this starter's own
  * fourth parameter, passed straight through. `pop {r1}` rather than `pop {r0}`
  * says the proc pointer is returned.
- * Same script as sub_0806780C, which finds it and writes the same +0x5c = 1. */
+ * Same script as ResumeIntroBgScroll, which finds it and writes the same +0x5c = 1. */
 struct Unk677BCProc
 {
     /* 00 */ PROC_HEADER;

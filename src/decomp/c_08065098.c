@@ -7,9 +7,10 @@
  * sub_08065098 @ 0x08065098
  */
 
-void sub_08065098(struct Unk08580934_Obj *obj)
+void ArmyColumnExitDown_Init(struct Unk08580934_Obj *obj)
 {
     obj->unk3c = 2;
     obj->unk3a = 0;
     gUnknown_08580934->unk2d++;
 }
+asm(".global sub_08065098\n.thumb_set sub_08065098, ArmyColumnExitDown_Init\n");

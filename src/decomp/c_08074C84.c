@@ -27,8 +27,8 @@ s32 StartWorldMapCameraPan(ProcPtr a1, s32 a2, s32 a3, u8 a4)
 
     if (a4 == 0)
     {
-        x = sub_08074BDC(a2);
-        y = sub_08074C1C(a3);
+        x = GetWorldMapCameraXKeepInBand(a2);
+        y = GetWorldMapCameraYKeepInBand(a3);
     }
     else
     {

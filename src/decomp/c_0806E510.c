@@ -28,16 +28,17 @@ struct Unk0806E510Proc
     /* 0x3c */ ProcPtr unk3c[6];
 };
 
-void sub_0806E510(ProcPtr proc)
+void SpawnSoundRoomButtons(ProcPtr proc)
 {
     int i;
 
     for (i = 0; i < 6; i++)
         ((struct Unk0806E510Proc *)proc)->unk3c[i] =
-            sub_0806E4BC(gUnknown_08582A7C[i].unk00,
+            StartSoundRoomButton(gUnknown_08582A7C[i].unk00,
                          gUnknown_08582A7C[i].unk04,
                          gUnknown_08582A7C[i].unk08,
                          gUnknown_08582A7C[i].unk10,
                          gUnknown_08582A7C[i].unk0c,
                          i, proc);
 }
+asm(".global sub_0806E510\n.thumb_set sub_0806E510, SpawnSoundRoomButtons\n");

@@ -128,7 +128,7 @@ void IntroT3_IDLE_08068BE5(struct Unk08068BE4Proc *proc)
         BG_EnableSyncBG3();
         break;
     case 102:
-        sub_080673B0(0x20, 1, proc);
+        StartBlendRampWhite8To0(0x20, 1, proc);
         REG_BLDCNT = 0xff;
         REG_BLDY = 0x1f;
         Proc_Break(proc);

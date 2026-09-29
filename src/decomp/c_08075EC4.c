@@ -45,7 +45,7 @@
  * +0x04/+0x06 cursor offset. `/ 8` really is a signed divide (the
  * `cmp #0; bge; adds #7` bias is in the ROM), and `b` is measured from y = 0x14.
  */
-int sub_08075EC4(void)
+int GetWorldMapNationPanelSide(void)
 {
     int a;
     int b;
@@ -64,3 +64,4 @@ int sub_08075EC4(void)
     else
         return 0;
 }
+asm(".global sub_08075EC4\n.thumb_set sub_08075EC4, GetWorldMapNationPanelSide\n");

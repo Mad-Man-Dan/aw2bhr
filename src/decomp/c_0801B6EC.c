@@ -24,7 +24,7 @@
  * 2. The register is r1 and not r0 because r0 is OCCUPIED. gcc puts the
  *    pointer in the first free scratch register, so `_call_via_r1` is itself
  *    evidence that this is a ONE-ARGUMENT call. There are SIX callers
- *    (MapPreviewPictureScript_Loop, DrawMapPreviewToBg, RenderMapPreviewToVram, sub_08077A14, sub_08086DB4,
+ *    (MapPreviewPictureScript_Loop, DrawMapPreviewToBg, RenderMapPreviewToVram, WorldMapMapPreview_Init, sub_08086DB4,
  *    BuildMapSelectPreviewNow) and every one passes a word loaded from offset 0x18 of the
  *    struct in its own first parameter -- MapPreviewPictureScript_Loop is `ldr r0,[r2,#0x18]`.
  *    Hence `void *`.
@@ -70,7 +70,7 @@ void sub_0801B6EC(void *dst)
  * 2. The register is r1 and not r0 because r0 is OCCUPIED. gcc puts the
  *    pointer in the first free scratch register, so `_call_via_r1` is itself
  *    evidence that this is a ONE-ARGUMENT call. There are SIX callers
- *    (MapPreviewPictureScript_Loop, DrawMapPreviewToBg, RenderMapPreviewToVram, sub_08077A14, sub_08086DD4,
+ *    (MapPreviewPictureScript_Loop, DrawMapPreviewToBg, RenderMapPreviewToVram, WorldMapMapPreview_Init, sub_08086DD4,
  *    BuildMapSelectPreviewNow) and every one passes a word loaded from offset 0x18 of the
  *    struct in its own first parameter -- MapPreviewPictureScript_Loop is `ldr r0,[r2,#0x18]`.
  *    Hence `void *`.

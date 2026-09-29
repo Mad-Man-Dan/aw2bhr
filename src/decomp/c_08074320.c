@@ -9,11 +9,11 @@
 
 #include "proc.h"
 
-/* The seventh member of the sub_080742FC null-guard family, with a caller
+/* The seventh member of the RunMapEventsAfterTurnSupply null-guard family, with a caller
  * filter in front: the argument's slot index in gUnits must have
  * neither of bits 6-7 set.
  */
-u8 sub_08074320(struct Unk030040D8 *a1)
+u8 RunMapEventsOnUnitSelected(struct Unk030040D8 *a1)
 {
     const struct Unk08074584 *p = GetMapEventTable();
     int r;
@@ -31,3 +31,4 @@ u8 sub_08074320(struct Unk030040D8 *a1)
 
     return 0;
 }
+asm(".global sub_08074320\n.thumb_set sub_08074320, RunMapEventsOnUnitSelected\n");

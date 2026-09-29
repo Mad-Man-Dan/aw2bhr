@@ -29,7 +29,7 @@ struct Unk0806B708
     /* 0x30 */ u32 unk30;
 };
 
-void sub_0806B708(struct Unk0806B708 *proc)
+void CreditsMissionList_Init(struct Unk0806B708 *proc)
 {
     u32 fill;
 
@@ -54,7 +54,8 @@ void sub_0806B708(struct Unk0806B708 *proc)
     proc->unk2c = 0;
     proc->unk2a = 0;
     proc->unk30 = 0;
-    sub_0806AF44(proc);
+    StartCreditsIllustration(proc);
     BG_EnableSyncBG1();
     Proc_Start(gUnknown_0858193C, proc);
 }
+asm(".global sub_0806B708\n.thumb_set sub_0806B708, CreditsMissionList_Init\n");

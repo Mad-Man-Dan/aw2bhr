@@ -13,8 +13,9 @@
  * Same callee, two different proc scripts. */
 #include "proc.h"
 
-void sub_0806AA64(void)
+void EndMeteorImpactSubProcs(void)
 {
     Proc_EndEach(gUnknown_085815D0);
     Proc_EndEach(gUnknown_085815E8);
 }
+asm(".global sub_0806AA64\n.thumb_set sub_0806AA64, EndMeteorImpactSubProcs\n");

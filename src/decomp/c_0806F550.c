@@ -28,7 +28,7 @@ struct Unk0806F550Proc
     /* 0x38 */ s8 unk38;
 };
 
-void sub_0806F550(struct Unk0806F550Proc *proc)
+void SoundRoomGallery_Input(struct Unk0806F550Proc *proc)
 {
     u16 t;
 
@@ -49,7 +49,7 @@ void sub_0806F550(struct Unk0806F550Proc *proc)
             if (proc->unk38 < 0)
                 proc->unk38 = 0x19;
 
-            sub_0806E8E4(0);
+            FlickSoundRoomArrow(0);
             Proc_Goto(proc, 0);
         }
         else if (gpKeySt->repeated & DPAD_RIGHT)
@@ -59,8 +59,9 @@ void sub_0806F550(struct Unk0806F550Proc *proc)
             if (proc->unk38 > 0x19)
                 proc->unk38 = 0;
 
-            sub_0806E8E4(1);
+            FlickSoundRoomArrow(1);
             Proc_Goto(proc, 0);
         }
     }
 }
+asm(".global sub_0806F550\n.thumb_set sub_0806F550, SoundRoomGallery_Input\n");

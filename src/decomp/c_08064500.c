@@ -9,13 +9,13 @@
 
 /* MATCHED, wave 46 (W46-K). 172/172 bytes.
  *
- * ON PROMOTION this function needs, like its siblings sub_08064474 and
- * sub_0806CFC8:
+ * ON PROMOTION this function needs, like its siblings DrawUpArrow and
+ * RulesScreenDrawUpArrow:
  *     "rodata": ["0x0816E0B8", "0x0816E0BC"]
  *
  * Those two words are agbcc's own -fforce-addr address-constant pool, NOT
  * globals the source names. The splitter invented the two gUnknown_<addr>
- * names for them; the matched sibling sub_08064474 is promoted with the
+ * names for them; the matched sibling DrawUpArrow is promoted with the
  * adjacent pair 0x0816E0B0 / 0x0816E0B4 from the same run. try_match reports
  * `relocs: name different symbols that resolve to the same address`, which is
  * the documented false-mismatch case, not a defect. Do NOT go looking for a
@@ -42,7 +42,7 @@
  * still loses the race. Binding `result * 2` puts the shift in the earlier
  * statement, and the base load lands after it.
  */
-void sub_08064500(int a1, int a2)
+void DrawDownArrow(int a1, int a2)
 {
     int i;
 
@@ -61,3 +61,4 @@ void sub_08064500(int a1, int a2)
     i = DivRem(Div(gGameClock, 4), 0x10) * 2;
     ApplyPaletteExt((u16 *)((u8 *)gUnknown_08239F84 + i), 0x358, 2);
 }
+asm(".global sub_08064500\n.thumb_set sub_08064500, DrawDownArrow\n");

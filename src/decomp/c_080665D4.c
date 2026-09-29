@@ -15,7 +15,7 @@
  * handlers use.
  *
  * The ROM reaches gUnknown_08580934 through a ROM word at 0x0816E14C rather
- * than naming it, i.e. `ldr =0x0816E14C; ldr; ldr` where sub_080665D4 next door
+ * than naming it, i.e. `ldr =0x0816E14C; ldr; ldr` where MatchSetupHandleColumnReadyKeys next door
  * has a plain `ldr =gUnknown_08580934; ldr`. That is agbcc's own -fforce-addr
  * address-constant pool, not a global: this function reads the symbol four
  * times, which is the threshold at which the address gets parked instead of
@@ -33,12 +33,12 @@ struct Unk66710Proc
  * slot whose unk70[] mark is 0 it installs a cursor at the slot object's
  * +0x28/+0x2a position offset by (8, 0x10); on B (0x2) over a mark of 1 it
  * tears the slot's node down. Either way it plays a sound and RETURNS -- the
- * loop only continues while nothing has happened. sub_0806666C is the same
+ * loop only continues while nothing has happened. MatchSetupHandleBadgeReadyKeys is the same
  * sweep over unk44[] instead of unk34[].
  *
  * unk70[] is declared `u8` in include/unknown-globals.h but is read here with
  * `ldrb; lsls #24; asrs #24`, i.e. SIGNED, and the writers agree it is: 0xFF
- * (src/decomp/c_08066580.c), 1 (c_08066374.c) and 0 (sub_08066710) are 0, 1 and
+ * (src/decomp/c_08066580.c), 1 (c_08066374.c) and 0 (MatchSetupConfirm_Init) are 0, 1 and
  * -1 as s8. The cast is at the use rather than on the member: two other
  * promoted files read the same member zero-extended and retyping it would
  * change their bytes. Recorded in the header, not acted on.
@@ -51,7 +51,7 @@ struct Unk66710Proc
  * with only two references in two basic blocks CSE will not hold the address.
  * Block scope makes it an LICM hoist instead, and LICM hoists land exactly
  * there. Same lever as src/decomp/c_08064410.c's, read the other way round. */
-void sub_080665D4(void)
+void MatchSetupHandleColumnReadyKeys(void)
 {
     int i;
 
@@ -65,32 +65,33 @@ void sub_080665D4(void)
             int x = obj->unk28;
             int y = obj->unk2a;
 
-            sub_08066580(i, x + 8, y + 0x10);
+            StartReadyMarker(i, x + 8, y + 0x10);
             PlayMusicOrSfx2(0x71);
             return;
         }
 
         if ((s8)gUnknown_08580934->unk70[i] == 1 && (keys[i].pressed & 2))
         {
-            sub_080665BC(i);
+            DismissReadyMarker(i);
             PlayMusicOrSfx2(0x66);
             return;
         }
     }
 }
+asm(".global sub_080665D4\n.thumb_set sub_080665D4, MatchSetupHandleColumnReadyKeys\n");
 
-/* sub_080665D4's twin, and every note on that function applies here. The two
+/* MatchSetupHandleColumnReadyKeys's twin, and every note on that function applies here. The two
  * differences are real: the slot object comes from unk44[] rather than unk34[],
  * and the cursor position is offset by (1, 8) plus `unk11[i] * 4` on the Y --
  * unk11[] being the per-slot byte table that unk44[] itself is indexed by, so
  * the extra term is "one row per sub-entry of this slot".
  *
  * The two position reads are bound to locals before the call. Written inline as
- * `sub_08066580(i, obj->unk28 + 1, ...)` agbcc interleaves each load with its
+ * `StartReadyMarker(i, obj->unk28 + 1, ...)` agbcc interleaves each load with its
  * own constant add; the ROM does both `ldrsh`s first and then both adds, which
  * is what separate bindings produce. The `+ 8` on Y is likewise outside the
  * binding, because the ROM's `adds r2, #8` comes after `adds r1, #1`. */
-void sub_0806666C(void)
+void MatchSetupHandleBadgeReadyKeys(void)
 {
     int i;
 
@@ -104,21 +105,22 @@ void sub_0806666C(void)
             int x = obj->unk28;
             int y = obj->unk2a + (gUnknown_08580934->unk11[i] << 2);
 
-            sub_08066580(i, x + 1, y + 8);
+            StartReadyMarker(i, x + 1, y + 8);
             PlayMusicOrSfx2(0x71);
             return;
         }
 
         if ((s8)gUnknown_08580934->unk70[i] == 1 && (keys[i].pressed & 2))
         {
-            sub_080665BC(i);
+            DismissReadyMarker(i);
             PlayMusicOrSfx2(0x66);
             return;
         }
     }
 }
+asm(".global sub_0806666C\n.thumb_set sub_0806666C, MatchSetupHandleBadgeReadyKeys\n");
 
-void sub_08066710(struct Unk66710Proc *proc)
+void MatchSetupConfirm_Init(struct Unk66710Proc *proc)
 {
     int i;
 
@@ -131,3 +133,4 @@ void sub_08066710(struct Unk66710Proc *proc)
     gUnknown_08580934->unk31 = 0;
     gUnknown_08580934->unk2d++;
 }
+asm(".global sub_08066710\n.thumb_set sub_08066710, MatchSetupConfirm_Init\n");

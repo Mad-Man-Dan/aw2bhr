@@ -69,10 +69,11 @@ void LoadMainMenuSideTileGraphic(int i, int a2)
 }
 asm(".global sub_080845C4\n.thumb_set sub_080845C4, LoadMainMenuSideTileGraphic\n");
 
-void sub_080845E8(int a1, int a2)
+void LoadMainMenuLabelPlateGraphic(int a1, int a2)
 {
     Decompress(gUnknown_0823D980, (void *)0x06015300);
 }
+asm(".global sub_080845E8\n.thumb_set sub_080845E8, LoadMainMenuLabelPlateGraphic\n");
 
 void MainMenuCarousel_DrawDescriptionText(struct Unk8084600 *p)
 {

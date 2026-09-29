@@ -23,7 +23,7 @@ struct Unk677E8Proc
  * positions and the enable flag, then republishes the base value. The zero in
  * r1 is written three times and then serves as SetBgScrollShadow's second argument
  * unchanged -- constant CSE, not evidence about argument order. */
-void sub_080677E8(void)
+void ResetIntroBgScroll(void)
 {
     struct Unk677E8Proc *proc = Proc_Find(gUnknown_08580FE4);
 
@@ -32,3 +32,4 @@ void sub_080677E8(void)
     proc->unk5c = 0;
     SetBgScrollShadow(proc->unk58, 0, 0);
 }
+asm(".global sub_080677E8\n.thumb_set sub_080677E8, ResetIntroBgScroll\n");

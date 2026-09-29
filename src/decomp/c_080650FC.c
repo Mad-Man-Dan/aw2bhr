@@ -7,9 +7,10 @@
  * sub_080650FC @ 0x080650FC
  */
 
-void sub_080650FC(struct Unk08580934_Obj *obj)
+void ArmyColumnEnterCurve_Init(struct Unk08580934_Obj *obj)
 {
     gUnknown_08580934->unk2d++;
     obj->unk26 = 0xb;
     obj->unk38 = 0;
 }
+asm(".global sub_080650FC\n.thumb_set sub_080650FC, ArmyColumnEnterCurve_Init\n");

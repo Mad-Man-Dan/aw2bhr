@@ -29,20 +29,21 @@ struct Unk67D94Proc
     /* 4c */ s16 unk4c;
 };
 
-/* Arms the sub_08067D6C slide-out: +0x30 starts at 0x140 (one screen width,
+/* Arms the IntroBgBounceIn_ScrollToRest slide-out: +0x30 starts at 0x140 (one screen width,
  * built as `movs #0xa0; lsls #1` rather than a pool word) and +0x4c is the
- * frame index sub_08067D94 walks. No frame, no calls -- `bx lr` straight out. */
-void sub_08067D5C(struct Unk67D5CProc *proc)
+ * frame index IntroBgBounceIn_Settle walks. No frame, no calls -- `bx lr` straight out. */
+void IntroBgBounceIn_Init(struct Unk67D5CProc *proc)
 {
     proc->unk30 = 0x140;
     proc->unk4c = 0;
 }
+asm(".global sub_08067D5C\n.thumb_set sub_08067D5C, IntroBgBounceIn_Init\n");
 
 /* Slides +0x30 in by 5 a frame and breaks once it reaches zero, publishing the
  * remaining offset each tick. The argument setup is the grouped-by-operand-class
  * order from docs/agbcc-codegen.md: the third argument's narrowing first
  * (it is a value already in a register), then the two `mov #imm8` zeroes. */
-void sub_08067D6C(struct Unk67D6CProc *proc)
+void IntroBgBounceIn_ScrollToRest(struct Unk67D6CProc *proc)
 {
     proc->unk30 -= 5;
     SetBgScrollShadow(0, 0, proc->unk30);
@@ -50,6 +51,7 @@ void sub_08067D6C(struct Unk67D6CProc *proc)
     if (proc->unk30 <= 0)
         Proc_Break(proc);
 }
+asm(".global sub_08067D6C\n.thumb_set sub_08067D6C, IntroBgBounceIn_ScrollToRest\n");
 
 /* A 13-frame canned animation: step a frame index 0..0xc and publish that
  * frame's level from the gUnknown_085810D4 table. +0x4c is s16 (`movs r2,#0;
@@ -59,7 +61,7 @@ void sub_08067D6C(struct Unk67D6CProc *proc)
  * The increment comes out as `ldrh; adds #1; strh` -- unsigned even though the
  * field is signed, which is agbcc's normal read-modify-write on a HImode
  * lvalue and carries no signedness information. */
-void sub_08067D94(struct Unk67D94Proc *proc)
+void IntroBgBounceIn_Settle(struct Unk67D94Proc *proc)
 {
     SetBgScrollShadow(0, 0, gUnknown_085810D4[proc->unk4c]);
 
@@ -68,3 +70,4 @@ void sub_08067D94(struct Unk67D94Proc *proc)
 
     proc->unk4c++;
 }
+asm(".global sub_08067D94\n.thumb_set sub_08067D94, IntroBgBounceIn_Settle\n");

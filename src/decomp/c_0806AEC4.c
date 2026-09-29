@@ -15,7 +15,7 @@
  * record_jump_equiv knows a == 7 there. That is a constant fold, not a
  * different expression, and writing the literal 7 in the source is what
  * produces it. */
-void sub_0806AEC4(int a)
+void LoadIllustrationToBg0(int a)
 {
     Decompress(gUnknown_0858178C[a].unk00, (void *)0x06000000);
     Decompress(gUnknown_0858178C[a].unk04, (void *)0x06001B00);
@@ -27,3 +27,4 @@ void sub_0806AEC4(int a)
     else
         ApplyPaletteExt(gUnknown_0858178C[a].unk10, 0, 0xc0);
 }
+asm(".global sub_0806AEC4\n.thumb_set sub_0806AEC4, LoadIllustrationToBg0\n");

@@ -9,15 +9,17 @@
 
 #include "proc.h"
 
-void sub_0807F524(void)
+void StartWarRoomMapSelected(void)
 {
     Proc_Start(gUnknown_086165C0, PROC_TREE_3);
 }
+asm(".global sub_0807F524\n.thumb_set sub_0807F524, StartWarRoomMapSelected\n");
 
-int sub_0807F538(void)
+int IsWarRoomMapSelectedRunning(void)
 {
     return Proc_Find(gUnknown_086165C0) != 0;
 }
+asm(".global sub_0807F538\n.thumb_set sub_0807F538, IsWarRoomMapSelectedRunning\n");
 
 void sub_0807F550(void)
 {

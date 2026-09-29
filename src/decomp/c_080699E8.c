@@ -25,39 +25,39 @@ void IntroT3_IDLE_080699E9(struct Unk699E8Proc *proc)
     {
     case 6:
         SetDispEnable(0, 1, 1, 1, 1);
-        sub_0806974C(proc);
+        StartIntroParallaxScroll(proc);
         break;
     case 0x1f:
-        sub_08067ED0(0, 0xa, 0x78, 0x78, 0xa, 0, 1, 1, proc);
+        StartIntroCoSlide(0, 0xa, 0x78, 0x78, 0xa, 0, 1, 1, proc);
         break;
     case 0x20:
-        sub_08068014(0, 0xa, 0x28, proc);
+        StartIntroBlendFade(0, 0xa, 0x28, proc);
         break;
     case 0x2c:
         SetDispEnable(1, 1, 1, 1, 1);
-        sub_0806978C();
+        PauseIntroParallaxScroll();
         break;
     case 0x4a:
         SetDispEnable(0, 1, 1, 1, 1);
     case 0x90:
-        sub_080697A4();
+        ResumeIntroParallaxScroll();
         break;
     case 0x68:
         SetDispEnable(1, 1, 1, 1, 0);
-        sub_0806978C();
+        PauseIntroParallaxScroll();
         break;
     case 0x74:
         SetDispEnable(0, 0, 1, 0, 0);
-        sub_08069924(1);
+        SetupIntroBg2Screen(1);
         StartIntroBgZoom(0x100, 0x200, 0, proc);
         break;
     case 0x9a:
-        sub_08069924(0);
-        sub_080678BC(1);
+        SetupIntroBg2Screen(0);
+        SetIntroBgZoomEnabled(1);
         break;
     case 0xa4:
         Proc_EndEach(gUnknown_08581108);
-        sub_080697BC();
+        EndIntroParallaxScroll();
         break;
     }
 

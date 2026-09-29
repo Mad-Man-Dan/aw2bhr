@@ -50,7 +50,7 @@ void MapCursor_OnPressA(s16 x, s16 y)
         return;
     }
 
-    sub_08074320(gUnknown_030040D8);
+    RunMapEventsOnUnitSelected(gUnknown_030040D8);
     gUnknown_03003110[0] = 4;
     CreateMoveSlideForActiveUnit(gUnknown_030040D8);
     SetMapLayersRangeBlend();

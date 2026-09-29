@@ -16,7 +16,7 @@ struct Unk6F5ECProc
     /* 58 */ s32 unk58;
 };
 
-void sub_0806F5EC(struct Unk6F5ECProc * proc)
+void SoundRoomFadeToBlack_Init(struct Unk6F5ECProc * proc)
 {
     gUnknown_030030E0.bits.effect = 3;
 
@@ -29,3 +29,4 @@ void sub_0806F5EC(struct Unk6F5ECProc * proc)
 
     proc->unk58 = 0;
 }
+asm(".global sub_0806F5EC\n.thumb_set sub_0806F5EC, SoundRoomFadeToBlack_Init\n");

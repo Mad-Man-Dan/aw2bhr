@@ -14,7 +14,7 @@
 #include "proc.h"
 /* A 0x58-tick cutscene script driven off `0x58 - unk2c`, so the switch counts
  * UP while the field counts down. Four beats, each starting a text/portrait
- * pair (sub_08067ED0) and its graphics proc (sub_08068810); the first beat is
+ * pair (StartIntroCoSlide) and its graphics proc (StartIntroCoNameWobble); the first beat is
  * the only one that does not clear the previous 0x08581108 procs first.
  *
  * The tail is the usual `tick or break`, but the break arm also clears
@@ -31,23 +31,23 @@ void IntroT3_IDLE_0806A31D(struct Unk6A31CProc *proc)
     switch (0x58 - proc->unk2c)
     {
     case 0:
-        sub_08067ED0(0, 0xb, 0x3c, 0x46, 0x15, 0, 0, 1, proc);
-        sub_08068810(0xb, 0x68, 0x78, 0x15, 0x280, 3, proc);
+        StartIntroCoSlide(0, 0xb, 0x3c, 0x46, 0x15, 0, 0, 1, proc);
+        StartIntroCoNameWobble(0xb, 0x68, 0x78, 0x15, 0x280, 3, proc);
         break;
     case 0x16:
         Proc_EndEach(gUnknown_08581108);
-        sub_08067ED0(1, 0xc, 0xb4, 0xaa, 0x15, 0, 1, 1, proc);
-        sub_08068810(0xc, 8, 0x78, 0x15, 0x280, 3, proc);
+        StartIntroCoSlide(1, 0xc, 0xb4, 0xaa, 0x15, 0, 1, 1, proc);
+        StartIntroCoNameWobble(0xc, 8, 0x78, 0x15, 0x280, 3, proc);
         break;
     case 0x2c:
         Proc_EndEach(gUnknown_08581108);
-        sub_08067ED0(0, 0xd, 0x3c, 0x46, 0x15, 0, 0, 1, proc);
-        sub_08068810(0xd, 0x48, 0x78, 0x15, 0x280, 3, proc);
+        StartIntroCoSlide(0, 0xd, 0x3c, 0x46, 0x15, 0, 0, 1, proc);
+        StartIntroCoNameWobble(0xd, 0x48, 0x78, 0x15, 0x280, 3, proc);
         break;
     case 0x42:
         Proc_EndEach(gUnknown_08581108);
-        sub_08067ED0(1, 0xe, 0xb4, 0xaa, 0x15, 0, 1, 1, proc);
-        sub_08068810(0xe, 8, 0x78, 0x15, 0x280, 3, proc);
+        StartIntroCoSlide(1, 0xe, 0xb4, 0xaa, 0x15, 0, 1, 1, proc);
+        StartIntroCoNameWobble(0xe, 8, 0x78, 0x15, 0x280, 3, proc);
         break;
     }
 

@@ -23,7 +23,7 @@ struct Unk7D918
     /* 60 */ int unk60;
 };
 
-void sub_0807D918(struct Unk7D918 *p)
+void CoSelect_ReloadFacesOnGroupSwitch(struct Unk7D918 *p)
 {
     if (p->unk4c == 13)
         LoadCoFullBodyAndPalette(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], 0x40, 1);
@@ -51,3 +51,4 @@ void sub_0807D918(struct Unk7D918 *p)
             LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013900, 0x14);
     }
 }
+asm(".global sub_0807D918\n.thumb_set sub_0807D918, CoSelect_ReloadFacesOnGroupSwitch\n");

@@ -48,7 +48,7 @@ struct Unk68770Proc
     /* 0x4f */ u8 unk4f;
 };
 
-void sub_08068770(struct Unk68770Proc *proc)
+void IntroCoNameWobble_Loop(struct Unk68770Proc *proc)
 {
     int i;
     int x;
@@ -70,3 +70,4 @@ void sub_08068770(struct Unk68770Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08068770\n.thumb_set sub_08068770, IntroCoNameWobble_Loop\n");

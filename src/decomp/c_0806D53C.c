@@ -7,7 +7,7 @@
  * sub_0806D53C @ 0x0806D53C, sub_0806D620 @ 0x0806D620
  */
 
-/* The install half of sub_0806D620's teardown: one sub_080152EC(3) object per
+/* The install half of RulesScreenDismissArmyColumns's teardown: one sub_080152EC(3) object per
  * live gUnknown_08580934->unk08 slot into unk34[], each given a tile block
  * uploaded by LoadCoFace.
  *
@@ -54,8 +54,8 @@ void RulesScreenSpawnArmyColumns(void)
 }
 asm(".global sub_0806D53C\n.thumb_set sub_0806D53C, RulesScreenSpawnArmyColumns\n");
 
-/* The third of the trio. It shares ONLY the frame with sub_08064B68 and
- * sub_0806D34C -- the loop body is genuinely different:
+/* The third of the trio. It shares ONLY the frame with MatchSetupDismissRuleOptions and
+ * RulesScreenDismissRuleOptions -- the loop body is genuinely different:
  *   - the table is unk34[], not unk54[];
  *   - the bound is DYNAMIC. `gUnknown_08580934->unk08` is re-read every
  *     iteration, so it stays in the `for` condition and must not be hoisted
@@ -64,7 +64,7 @@ asm(".global sub_0806D53C\n.thumb_set sub_0806D53C, RulesScreenSpawnArmyColumns\
  *   - `o->unk28 / 32` on the s16 member is what emits `cmp #0; bge; adds #0x1f;
  *     asrs #5`. The +0x1f is agbcc's round-toward-zero bias for a signed power
  *     of two divide -- write the divide, not the bias. */
-void sub_0806D620(void)
+void RulesScreenDismissArmyColumns(void)
 {
     struct Unk08580934 *g;
     struct Unk08580934_Obj *o;
@@ -83,3 +83,4 @@ void sub_0806D620(void)
         ClearCallbackOfSlotsRunningScript(gUnknown_08581ECC);
     }
 }
+asm(".global sub_0806D620\n.thumb_set sub_0806D620, RulesScreenDismissArmyColumns\n");

@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Three near-identical scroll steps on the proc sub_0806978C/sub_080697A4
+/* Three near-identical scroll steps on the proc PauseIntroParallaxScroll/ResumeIntroParallaxScroll
  * gate with +0x36: each advances a position pair, wraps one of the two on a
  * bound, then pushes both to SetBgScrollShadow halved.
  *
@@ -28,7 +28,7 @@ struct Unk696A4Proc
     /* 0x36 */ u8 unk36;
 };
 
-void sub_080696A4(struct Unk696A4Proc *proc)
+void IntroParallaxScroll_Loop(struct Unk696A4Proc *proc)
 {
     if (proc->unk36 != 0)
     {
@@ -49,3 +49,4 @@ void sub_080696A4(struct Unk696A4Proc *proc)
         SetBgScrollShadow(3, (s16)proc->unk2e >> 1, (s16)proc->unk34 >> 1);
     }
 }
+asm(".global sub_080696A4\n.thumb_set sub_080696A4, IntroParallaxScroll_Loop\n");

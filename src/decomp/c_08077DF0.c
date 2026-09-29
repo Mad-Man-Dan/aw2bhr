@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Wave 35 (W35-B). sub_08077690 without the scroll write -- it reads
+/* Wave 35 (W35-B). WorldMapMissionInfo_SlideInLoop without the scroll write -- it reads
  * gUnknown_0300064C rather than setting it, which is the only difference. */
 struct Unk77DF0Proc
 {
@@ -16,7 +16,7 @@ struct Unk77DF0Proc
     /* 44 */ int unk44;
 };
 
-void sub_08077DF0(struct Unk77DF0Proc *proc)
+void WorldMapMissionInfo_ReturnSlideInLoop(struct Unk77DF0Proc *proc)
 {
     int x;
 
@@ -29,7 +29,7 @@ void sub_08077DF0(struct Unk77DF0Proc *proc)
     sub_08071900(gUnknown_08551A00, gBG0TilemapBuffer + (0x9E - x), x, 7);
     sub_08071900(gUnknown_08551A04, gBG2TilemapBuffer + (0x9E - x), x, 7);
 
-    sub_08077620(0, 0xA8 - gUnknown_0300064C);
+    WorldMapMissionInfo_PutSprites(0, 0xA8 - gUnknown_0300064C);
 
     if (++proc->unk44 == 5)
     {
@@ -37,3 +37,4 @@ void sub_08077DF0(struct Unk77DF0Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08077DF0\n.thumb_set sub_08077DF0, WorldMapMissionInfo_ReturnSlideInLoop\n");

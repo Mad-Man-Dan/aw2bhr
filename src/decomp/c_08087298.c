@@ -7,10 +7,11 @@
  * sub_08087298 @ 0x08087298
  */
 
-u16 sub_08087298(void)
+u16 GetMapPreviewScrollY(void)
 {
     if (gPlaySt.gameMode == 2)
         return gUnknown_030058F4 * 2 - 0x54;
 
     return gUnknown_030058F4 * 2 - 0x5f;
 }
+asm(".global sub_08087298\n.thumb_set sub_08087298, GetMapPreviewScrollY\n");

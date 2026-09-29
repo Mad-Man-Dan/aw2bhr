@@ -7,7 +7,7 @@
  * sub_08064660 @ 0x08064660
  */
 
-void sub_08064660(struct Unk08580934_Obj *obj)
+void RuleOptionLeave_Loop(struct Unk08580934_Obj *obj)
 {
     if (obj->unk24 == 0)
     {
@@ -19,7 +19,7 @@ void sub_08064660(struct Unk08580934_Obj *obj)
         obj->unk24--;
     }
 
-    sub_080645AC(obj);
+    RuleOption_Draw(obj);
 
     if ((u16)(obj->unk2a + 0x20) > 0xC0)
     {
@@ -28,3 +28,4 @@ void sub_08064660(struct Unk08580934_Obj *obj)
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }
+asm(".global sub_08064660\n.thumb_set sub_08064660, RuleOptionLeave_Loop\n");

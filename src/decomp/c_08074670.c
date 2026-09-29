@@ -24,7 +24,7 @@ struct Unk8074670Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_08074670(struct Unk8074670Proc *proc)
+void WorldMapMarkers_Draw(struct Unk8074670Proc *proc)
 {
     struct Unk0202FE38 *p;
 
@@ -43,3 +43,4 @@ void sub_08074670(struct Unk8074670Proc *proc)
         }
     }
 }
+asm(".global sub_08074670\n.thumb_set sub_08074670, WorldMapMarkers_Draw\n");

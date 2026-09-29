@@ -24,7 +24,7 @@
  * bit 2 is Select:
  *
  *   - Select runs the item's .unk10 callback.
- *   - A runs .unk14, but only if sub_08074410 lets the item through. A sound
+ *   - A runs .unk14, but only if RunMapEventsForAction lets the item through. A sound
  *     plays first: 0x68 when bit 1 of the item's flags is set, 0x65 otherwise.
  *   - B stops the gUnknown_08489568 script, runs .unk18, then plays sound 0x66.
  *
@@ -37,7 +37,7 @@
  *     pointer. A local costs a second register holding the same pointer, and
  *     that pushes a further value into a high register.
  *   - In the A branch `idx` and `tbl` hold the cursor's address and the row
- *     table, and `new_var` holds the cursor value read before the sub_08074410
+ *     table, and `new_var` holds the cursor value read before the RunMapEventsForAction
  *     test. Without them that branch recomputes both addresses, which the
  *     original does not.
  *   - The `do { } while (0)` around the last call in that branch is
@@ -66,7 +66,7 @@ void Menu_HandleButtons(void *arg)
         new_var = *idx;
         tbl = P->unk31;
 
-        if (sub_08074410(P->unk20[tbl[new_var]].unk00, 0) == 0)
+        if (RunMapEventsForAction(P->unk20[tbl[new_var]].unk00, 0) == 0)
         {
             if (P->unk24[tbl[*idx]] & 2)
                 PlayMusicOrSfx2(0x68);

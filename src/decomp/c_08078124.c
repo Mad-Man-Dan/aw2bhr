@@ -28,7 +28,7 @@
  * this discards it. */
 void Campaign_08078125(void)
 {
-    sub_080745C0();
+    ClearWorldMapMarkers();
     Proc_Start(gUnknown_086147FC, PROC_TREE_3);
 }
 

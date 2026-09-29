@@ -39,7 +39,7 @@ void MatchSetupHandleArmyStageInputLink(void)
 
     if (cnt != 0)
     {
-        sub_08063A30(sub_08063A3C(), gUnknown_08580D90);
+        sub_08063A30(GetCurrentSlotScript(), gUnknown_08580D90);
         ForEachSlotRunningScript(gUnknown_08580AF0, ArmyColumn_StartExitDown);
         ForEachSlotRunningScript(gUnknown_08580B90, ArmyColumn_StartExitDown);
         ForEachSlotRunningScript(gUnknown_08580BC8, ArmyColumn_StartExitDown);
@@ -47,8 +47,8 @@ void MatchSetupHandleArmyStageInputLink(void)
     }
     else
     {
-        sub_08065E5C();
-        sub_080665D4();
+        MatchSetupCycleCosByOwnKeys();
+        MatchSetupHandleColumnReadyKeys();
 
         if ((s8)gUnknown_08580934->unk70[gUnknown_08580934->unk25] == 0)
             MatchSetupDrawSelectionArrows();

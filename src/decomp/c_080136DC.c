@@ -9,7 +9,7 @@
 
 /* Unpacks `h` palettes of 16 colours from `src` into the RGB shadow
  * gUnknown_0200B614 (three bytes per colour at `(row * 16 + i) * 3`, the same
- * layout sub_08075A54 writes -- see src/decomp/c_08075904.c), and stamps `pal`
+ * layout LoadFadeComponentsFromPalette writes -- see src/decomp/c_08075904.c), and stamps `pal`
  * into gUnknown_0200B5F4 for each row touched.
  *
  * `pal` is SIGNED 8-bit and its sign bit is a flag: the ROM shares one

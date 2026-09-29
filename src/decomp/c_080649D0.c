@@ -11,7 +11,7 @@
  * the function does, not an artefact -- so the id lands in r0 from the buffer
  * and is reused as DrawOamObject's first argument without being reloaded. The
  * two arms differ only in the +8 bias on the x coordinate. */
-void sub_080649D0(struct Unk08580934_Obj *obj)
+void RuleValue_DrawBattleAnimation(struct Unk08580934_Obj *obj)
 {
     u16 buf[4];
 
@@ -24,3 +24,4 @@ void sub_080649D0(struct Unk08580934_Obj *obj)
         DrawOamObject(buf[obj->unk48], obj->unk28 & 0x1FF,
                      (obj->unk2a + 0xC) & 0xFF, 0, 0);
 }
+asm(".global sub_080649D0\n.thumb_set sub_080649D0, RuleValue_DrawBattleAnimation\n");

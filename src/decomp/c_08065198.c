@@ -7,7 +7,7 @@
  * sub_08065198 @ 0x08065198
  */
 
-void sub_08065198(struct Unk08580934_Obj *obj)
+void ArmyColumnEnterSlide_Loop(struct Unk08580934_Obj *obj)
 {
     if (obj->unk24 != 0)
     {
@@ -16,7 +16,7 @@ void sub_08065198(struct Unk08580934_Obj *obj)
     else
     {
         obj->unk2a = Interpolate(1, 0x34, -0x30, obj->unk26, 0xc);
-        sub_08064E5C(obj);
+        ArmyColumn_Draw(obj);
         obj->unk26--;
         if (obj->unk26 < 0)
         {
@@ -26,3 +26,4 @@ void sub_08065198(struct Unk08580934_Obj *obj)
         }
     }
 }
+asm(".global sub_08065198\n.thumb_set sub_08065198, ArmyColumnEnterSlide_Loop\n");

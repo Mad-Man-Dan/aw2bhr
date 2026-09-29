@@ -16,7 +16,8 @@
  * include/unknown-globals.h.
  */
 
-void sub_08067D4C(void)
+void EndIntroSlideSprite(void)
 {
     Proc_EndEach(gUnknown_085810B8);
 }
+asm(".global sub_08067D4C\n.thumb_set sub_08067D4C, EndIntroSlideSprite\n");

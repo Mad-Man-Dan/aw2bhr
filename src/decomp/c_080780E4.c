@@ -20,13 +20,14 @@
  * of the low half of a `struct DispCnt`, which is what the bitfield write emits
  * and what a `u16`-wide spelling would not. */
 
-void sub_080780E4(void)
+void BootIntoWorldMap(void)
 {
     EnableSpriteLayerMode();
     sub_080366D0(DefaultVBlankCallback);
     sub_080366C4(DefaultMainLoopCallback);
     InitGameSystems();
-    sub_080745C0();
+    ClearWorldMapMarkers();
     gDispIo.disp_ct.forced_blank = 0;
     Proc_Start(gUnknown_086147FC, PROC_TREE_3);
 }
+asm(".global sub_080780E4\n.thumb_set sub_080780E4, BootIntoWorldMap\n");

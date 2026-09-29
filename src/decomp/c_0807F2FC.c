@@ -25,7 +25,7 @@
  * bitfield idiom from c_080688E4.c, sitting between two `.raw` inserts on
  * the same object -- `ldrh` with a pool mask either side of an `ldrb` with a
  * `movs`/`neg` mask, which is the hardware.h rule in one statement run. */
-void sub_0807F2FC(void)
+void CoSelectConfirm_BeginFadeToWhite(void)
 {
     gUnknown_030030E0.bits.effect = 2;
 
@@ -40,3 +40,4 @@ void sub_0807F2FC(void)
     gUnknown_030030A4.bits.win0_enable_blend = 1;
     gUnknown_030030DC.bits.win0_enable_blend = 1;
 }
+asm(".global sub_0807F2FC\n.thumb_set sub_0807F2FC, CoSelectConfirm_BeginFadeToWhite\n");

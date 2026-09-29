@@ -9,12 +9,14 @@
 
 #include "proc.h"
 
-void sub_0807A970(void)
+void StartResultsScreen(void)
 {
     Proc_Start(gUnknown_08615CB0, PROC_TREE_3);
 }
+asm(".global sub_0807A970\n.thumb_set sub_0807A970, StartResultsScreen\n");
 
-int sub_0807A984(void)
+int IsResultsScreenRunning(void)
 {
     return Proc_Find(gUnknown_08615CB0) != 0;
 }
+asm(".global sub_0807A984\n.thumb_set sub_0807A984, IsResultsScreenRunning\n");

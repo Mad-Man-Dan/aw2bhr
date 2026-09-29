@@ -15,11 +15,12 @@ struct Unk674BCProc
     /* 58 */ int unk58;
 };
 
-/* The sibling of sub_08067480 four instructions shorter: same 0x20-frame arm,
+/* The sibling of PaletteFadeFromWhite_Init four instructions shorter: same 0x20-frame arm,
  * but the palette call takes a plain 1 so there is no `rsbs`. */
-void sub_080674BC(struct Unk674BCProc *proc)
+void PaletteFadeToWhite_Init(struct Unk674BCProc *proc)
 {
     proc->unk58 = 0x20;
     ColFadeToWhite(1);
     EnablePaletteSync();
 }
+asm(".global sub_080674BC\n.thumb_set sub_080674BC, PaletteFadeToWhite_Init\n");

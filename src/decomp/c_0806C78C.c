@@ -23,8 +23,9 @@
  * matching source, which must not be edited; the type is copied from there.
  */
 
-void sub_0806C78C(void)
+void ResetProcsAndStartTitleScreen(void)
 {
     Proc_Init();
     StartTitleScreen(1);
 }
+asm(".global sub_0806C78C\n.thumb_set sub_0806C78C, ResetProcsAndStartTitleScreen\n");

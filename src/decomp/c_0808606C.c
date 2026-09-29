@@ -33,7 +33,7 @@ struct Unk8606CProc
     /* 0x5c */ int unk5c;
 };
 
-void sub_0808606C(struct Unk8606CProc *proc)
+void MapSelectList_StepScrollRedraw(struct Unk8606CProc *proc)
 {
     if (proc->unk30 == 0)
         return;
@@ -56,3 +56,4 @@ void sub_0808606C(struct Unk8606CProc *proc)
         proc->unk30++;
     }
 }
+asm(".global sub_0808606C\n.thumb_set sub_0808606C, MapSelectList_StepScrollRedraw\n");

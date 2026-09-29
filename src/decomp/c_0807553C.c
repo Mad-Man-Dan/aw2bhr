@@ -31,7 +31,7 @@
  * preference, and it is also the confirmation that the permuter DOES reach
  * pure register-allocation residuals -- see docs/agbcc-codegen.md.
  *
- * sub_0807548C is the re-entry twin (src/decomp/c_0807548C.c): identical
+ * StartWorldMapSelectionFrame is the re-entry twin (src/decomp/c_0807548C.c): identical
  * coordinate head -- see that file for why the parameters are s16 and the
  * locals are s16-with-an-explicit-(u16) -- and an identical blend tail, but it
  * Proc_FINDs the already-running gUnknown_086143B8 proc instead of starting
@@ -39,7 +39,7 @@
  * existing +0x2a/+0x2c pair up into +0x2e/+0x30 before writing the new target
  * into +0x32/+0x34: the old destination becomes the new origin, which is what
  * makes c_08075368.c's Interpolate arms read +0x2e..+0x34 as two endpoint
- * pairs. Those two extra field-to-field copies, which sub_0807548C does not
+ * pairs. Those two extra field-to-field copies, which StartWorldMapSelectionFrame does not
  * have, are exactly what consumed the r1 scratch and shifted the tie-break.
  */
 struct Unk807553C
@@ -56,7 +56,7 @@ struct Unk807553C
     /* 0x3c */ int unk3c;
 };
 
-void sub_0807553C(s16 a1, s16 a2, int a3)
+void MoveWorldMapSelectionFrame(s16 a1, s16 a2, int a3)
 {
     struct Unk807553C *proc;
     s16 x;
@@ -88,3 +88,4 @@ void sub_0807553C(s16 a1, s16 a2, int a3)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xFFE0) | 2;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0x1800;
 }
+asm(".global sub_0807553C\n.thumb_set sub_0807553C, MoveWorldMapSelectionFrame\n");

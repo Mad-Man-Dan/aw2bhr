@@ -24,7 +24,7 @@ struct Unk08067A4C
     /* 0x3c */ int unk3c;
 };
 
-void sub_08067A4C(struct Unk08067A4C *proc)
+void IntroSlidePanel_SlideIn(struct Unk08067A4C *proc)
 {
     int a;
     int b;
@@ -46,3 +46,4 @@ void sub_08067A4C(struct Unk08067A4C *proc)
 
     proc->unk3c++;
 }
+asm(".global sub_08067A4C\n.thumb_set sub_08067A4C, IntroSlidePanel_SlideIn\n");

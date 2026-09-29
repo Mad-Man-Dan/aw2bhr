@@ -17,12 +17,12 @@
  * gUnknown_08615984 is a 0xFF-terminated u8 id list ({8, 9, 0xa, 0xff} in the
  * ROM); see the comment on it in include/unknown-globals.h for why it and its
  * neighbour four bytes later are two symbols rather than one array, and for
- * what that reading does and does not prove. sub_08074AAC's first parameter was
+ * what that reading does and does not prove. StartWorldMapMarkerReveal's first parameter was
  * retyped from `s32` to `const u8 *` on the same evidence. */
 
 void WorldMapReturn_RevealMissions08To0A(ProcPtr parent)
 {
-    sub_08074AAC(gUnknown_08615984, parent);
+    StartWorldMapMarkerReveal(gUnknown_08615984, parent);
 }
 asm(".global sub_08078440\n.thumb_set sub_08078440, WorldMapReturn_RevealMissions08To0A\n");
 
@@ -31,6 +31,6 @@ asm(".global sub_08078440\n.thumb_set sub_08078440, WorldMapReturn_RevealMission
 
 void WorldMapReturn_RevealMissions10To12(ProcPtr parent)
 {
-    sub_08074AAC(gUnknown_08615988, parent);
+    StartWorldMapMarkerReveal(gUnknown_08615988, parent);
 }
 asm(".global sub_08078454\n.thumb_set sub_08078454, WorldMapReturn_RevealMissions10To12\n");

@@ -25,7 +25,7 @@
  * `*(struct KeySt *)((u8 *)&gUnknown_03002040 + 0x14)` -- folds base and offset
  * into a symbol+addend relocation and emits THREE pool words with no adds
  * (both measured, wave 34). */
-void sub_08064410(void)
+void CopyKeysToPlayerSlotUnused(void)
 {
     if (gpKeySt->held & L_BUTTON)
     {
@@ -51,8 +51,9 @@ void sub_08064410(void)
         dst[0] = *gpKeySt;
     }
 }
+asm(".global sub_08064410\n.thumb_set sub_08064410, CopyKeysToPlayerSlotUnused\n");
 
-void sub_08064474(int a1, int a2)
+void DrawUpArrow(int a1, int a2)
 {
     if (gUnknown_030005FC == gGameClock - 1)
     {
@@ -66,3 +67,4 @@ void sub_08064474(int a1, int a2)
     gUnknown_03000600 = a1;
     gUnknown_03000602 = a2 + 1;
 }
+asm(".global sub_08064474\n.thumb_set sub_08064474, DrawUpArrow\n");

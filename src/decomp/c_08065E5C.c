@@ -24,7 +24,7 @@
  * moves ahead of the guard (+2 bytes); written inline as
  * `((struct KeySt *)&gUnknown_03002040)[i]` the base is not folded into the giv
  * at all and is rematerialised inside the `if`. All three probed. */
-void sub_08065E5C(void)
+void MatchSetupCycleCosByOwnKeys(void)
 {
     int i;
 
@@ -36,3 +36,4 @@ void sub_08065E5C(void)
             MatchSetupCycleCo(i, ks[i].repeated, i == gUnknown_08580934->unk25);
     }
 }
+asm(".global sub_08065E5C\n.thumb_set sub_08065E5C, MatchSetupCycleCosByOwnKeys\n");

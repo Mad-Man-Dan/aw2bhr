@@ -13,8 +13,8 @@
  * what forces the `lsls #0x18 / lsrs #0x18` re-narrowing each iteration.
  * The tile value is computed into a temp BEFORE the store address -- authoring
  * the store as one statement emits the address first and swaps the two givs.
- * sub_08077180 is this function with a 4-row outer bound. */
-void sub_08077140(u16 *dest, u16 base, int pal)
+ * PutTileBlock6x4 is this function with a 4-row outer bound. */
+void PutTileBlock6x6(u16 *dest, u16 base, int pal)
 {
     u8 i, j;
     int val;
@@ -26,9 +26,10 @@ void sub_08077140(u16 *dest, u16 base, int pal)
             dest[i * 32 + j] = val;
         }
 }
+asm(".global sub_08077140\n.thumb_set sub_08077140, PutTileBlock6x6\n");
 
-/* sub_08077140 with a 4-row outer bound; identical otherwise. */
-void sub_08077180(u16 *dest, u16 base, int pal)
+/* PutTileBlock6x6 with a 4-row outer bound; identical otherwise. */
+void PutTileBlock6x4(u16 *dest, u16 base, int pal)
 {
     u8 i, j;
     int val;
@@ -40,3 +41,4 @@ void sub_08077180(u16 *dest, u16 base, int pal)
             dest[i * 32 + j] = val;
         }
 }
+asm(".global sub_08077180\n.thumb_set sub_08077180, PutTileBlock6x4\n");

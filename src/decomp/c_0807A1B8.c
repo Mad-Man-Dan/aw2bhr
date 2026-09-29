@@ -33,7 +33,7 @@ struct Unk0807A1B8Proc
  * carries "rodata": ["0x081D92F8"].
  *
  * Only bg2_enable is cleared -- `movs r0,#5; rsbs` is the single mask ~4. */
-void sub_0807A1B8(struct Unk0807A1B8Proc *proc)
+void ResultsVersus_WaitForButton_Loop(struct Unk0807A1B8Proc *proc)
 {
     int i;
 
@@ -55,3 +55,4 @@ void sub_0807A1B8(struct Unk0807A1B8Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0807A1B8\n.thumb_set sub_0807A1B8, ResultsVersus_WaitForButton_Loop\n");

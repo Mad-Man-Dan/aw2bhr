@@ -44,7 +44,7 @@
  * declaration in include/unknown-functions.h: sub_0808A6CC reloads its spilled
  * proc into r0 immediately before the `bl`, which only a callee with an
  * argument can explain. Re-verified byte-for-byte after the change. */
-void sub_0807898C(ProcPtr proc)
+void SetupMenuScreenBgs(ProcPtr proc)
 {
     gDispIo.disp_ct.mode = 0;
     SetDispEnable(1, 1, 1, 1, 1);
@@ -91,3 +91,4 @@ void sub_0807898C(ProcPtr proc)
 
     gDispIo.disp_ct.obj_mapping = 1;
 }
+asm(".global sub_0807898C\n.thumb_set sub_0807898C, SetupMenuScreenBgs\n");

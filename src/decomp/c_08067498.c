@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08067498.
- * sub_08067498 @ 0x08067498
+ * PaletteFade_Loop @ 0x08067498
  */
 
 #include "proc.h"
@@ -22,7 +22,7 @@ struct Unk67498Proc
  * `sub_080718F0` is one of the ARM interworking thunks in
  * data/asm-resident.json (`bx pc; nop` into an ARM `b`), and calling it needs
  * nothing special -- it is an ordinary `bl` from C. */
-void sub_08067498(struct Unk67498Proc *proc)
+void PaletteFade_Loop(struct Unk67498Proc *proc)
 {
     sub_080718F0();
     EnablePaletteSync();
@@ -32,3 +32,4 @@ void sub_08067498(struct Unk67498Proc *proc)
     if (proc->unk58 < 0)
         Proc_Break(proc);
 }
+asm(".global sub_08067498\n.thumb_set sub_08067498, PaletteFade_Loop\n");

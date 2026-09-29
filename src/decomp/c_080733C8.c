@@ -35,7 +35,7 @@
  * is re-read at both loop bounds rather than bound to a local -- ordinary
  * output for a `void *` global that a store might alias. */
 
-void sub_080733C8(int a1, const void * a2, void * a3)
+void CountMapTilesOfTerrainKinds(int a1, const void * a2, void * a3)
 {
     const u8 *str = a2;
     u8 *counts = a3;
@@ -68,3 +68,4 @@ void sub_080733C8(int a1, const void * a2, void * a3)
         }
     }
 }
+asm(".global sub_080733C8\n.thumb_set sub_080733C8, CountMapTilesOfTerrainKinds\n");

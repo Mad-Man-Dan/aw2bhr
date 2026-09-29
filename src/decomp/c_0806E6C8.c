@@ -14,9 +14,10 @@ struct Unk806E6C8
     /* 0x5c */ s32 unk_5c;
 };
 
-void sub_0806E6C8(s32 arg, ProcPtr parent)
+void StartSoundRoomCoSwap(s32 arg, ProcPtr parent)
 {
     struct Unk806E6C8 * proc = Proc_StartBlocking(gUnknown_08582BB4, parent);
 
     proc->unk_5c = arg;
 }
+asm(".global sub_0806E6C8\n.thumb_set sub_0806E6C8, StartSoundRoomCoSwap\n");

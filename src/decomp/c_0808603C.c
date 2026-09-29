@@ -17,12 +17,12 @@
  * r0 still holds it on entry -- that is a pass-through, not a nullary call, and
  * the two `adds r0, r4, #0` after it are what a saved parameter costs.
  *
- * Wave 44 (W44-C) retyped sub_0808606C's parameter from `ProcPtr` to
+ * Wave 44 (W44-C) retyped MapSelectList_StepScrollRedraw's parameter from `ProcPtr` to
  * `struct Unk8606CProc *`; ProcPtr is `void *`, so the argument converts
  * implicitly and this stays byte-for-byte identical. Re-verified. */
 void MapSelectList_InputLoop(ProcPtr proc)
 {
-    sub_0808606C(proc);
+    MapSelectList_StepScrollRedraw(proc);
     MapSelectList_HandleInput(proc);
     MapSelectList_DrawFrame(proc);
 }

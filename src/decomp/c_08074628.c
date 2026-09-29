@@ -14,10 +14,11 @@ struct Unk8074628
     /* 0x4c */ u16 unk_4c;
 };
 
-void sub_08074628(struct Unk8074628 * proc)
+void DarkenRampUp_Init(struct Unk8074628 * proc)
 {
     proc->unk_4c = 0;
 
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_03001FFC = 0;
 }
+asm(".global sub_08074628\n.thumb_set sub_08074628, DarkenRampUp_Init\n");

@@ -65,7 +65,7 @@ struct Unk6A8E4Proc
     /* 0x60 */ u16 unk60;
 };
 
-void sub_0806A7B4(struct Unk6A7B4Proc *proc)
+void MeteorImpact_FallLoop(struct Unk6A7B4Proc *proc)
 {
     proc->unk40 += proc->unk48;
     proc->unk44 += proc->unk4c;
@@ -93,8 +93,9 @@ void sub_0806A7B4(struct Unk6A7B4Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0806A7B4\n.thumb_set sub_0806A7B4, MeteorImpact_FallLoop\n");
 
-void sub_0806A8E4(struct Unk6A8E4Proc *proc)
+void MeteorImpact_ShakeLoop(struct Unk6A8E4Proc *proc)
 {
     int x;
     int y;
@@ -169,3 +170,4 @@ void sub_0806A8E4(struct Unk6A8E4Proc *proc)
     PutOamHi((gUnknown_0300060C + 0x200) & 0x1FF,
         (gUnknown_0202F210 + 0x100) & 0xFF, gUnknown_085815C0, 0);
 }
+asm(".global sub_0806A8E4\n.thumb_set sub_0806A8E4, MeteorImpact_ShakeLoop\n");

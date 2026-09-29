@@ -18,9 +18,10 @@
  * `lsls #0x10; lsrs #0x10` at entry is PROMOTE_MODE on a `u16` parameter --
  * zero-extending, so the signedness is not settled by it, but the value is
  * only ever stored back as a halfword. */
-void sub_0806BD6C(u16 *p, u16 v)
+void WriteBg0TilePair(u16 *p, u16 v)
 {
     p[0] = v;
     p[0x20] = v + 1;
     BG_EnableSyncBG0();
 }
+asm(".global sub_0806BD6C\n.thumb_set sub_0806BD6C, WriteBg0TilePair\n");

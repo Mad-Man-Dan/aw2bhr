@@ -26,7 +26,7 @@ struct Unk6EB28Proc
     /* 36 */ u16 unk36;
 };
 
-void sub_0806EB28(ProcPtr procArg)
+void SoundRoomCycleBgPalette(ProcPtr procArg)
 {
     struct Unk6EB28Proc *proc = procArg;
     int index = gGameClock & 3;
@@ -37,3 +37,4 @@ void sub_0806EB28(ProcPtr procArg)
     proc->unk36 = index;
     ApplyPaletteExt(gUnknown_08582754[index], 0x20, 0x20);
 }
+asm(".global sub_0806EB28\n.thumb_set sub_0806EB28, SoundRoomCycleBgPalette\n");

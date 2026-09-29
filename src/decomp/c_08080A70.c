@@ -32,7 +32,7 @@ struct Unk08080A70
     /* 0x4e */ u8 filler_4e[0x58 - 0x4e];
     /* 0x58 */ int unk58;
 };
-/* sub_08080AF8 @ 0x08080AF8, 248 bytes, THUMB. Matched.
+/* SuperCoPowerName_BarsExtendLoop @ 0x08080AF8, 248 bytes, THUMB. Matched.
  *
  * The long-form sibling of SuperCoPowerName_HoldLoop (src/decomp/c_08080A70.c): same
  * sub_08043C28 setup with the same 0x11CA, and its second loop is
@@ -82,7 +82,7 @@ void SuperCoPowerName_HoldLoop(struct Unk08080A70 *proc)
 }
 asm(".global sub_08080A70\n.thumb_set sub_08080A70, SuperCoPowerName_HoldLoop\n");
 
-void sub_08080AF8(struct Unk08080AF8 *proc)
+void SuperCoPowerName_BarsExtendLoop(struct Unk08080AF8 *proc)
 {
     int i;
 
@@ -111,3 +111,4 @@ void sub_08080AF8(struct Unk08080AF8 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08080AF8\n.thumb_set sub_08080AF8, SuperCoPowerName_BarsExtendLoop\n");

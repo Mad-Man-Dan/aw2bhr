@@ -28,7 +28,7 @@ struct Unk6F634Proc
     /* 58 */ s32 unk58;
 };
 
-void sub_0806F634(struct Unk6F634Proc *proc)
+void SoundRoomFadeToBlack_Loop(struct Unk6F634Proc *proc)
 {
     int t;
 
@@ -39,3 +39,4 @@ void sub_0806F634(struct Unk6F634Proc *proc)
 
     proc->unk58++;
 }
+asm(".global sub_0806F634\n.thumb_set sub_0806F634, SoundRoomFadeToBlack_Loop\n");

@@ -8,7 +8,7 @@
  */
 
 /* Bresenham circle rasteriser: walks the octant writing each row's x extent
- * through sub_080736F4 into the gUnknown_0202F8DC scanline table, twice per
+ * through SetCircleWindowEdge into the gUnknown_0202F8DC scanline table, twice per
  * step -- (x, y) and (y, x).
  *
  * TWO GIV LEVERS, and the function is exactly the interaction between them
@@ -37,7 +37,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The HBlank window-table teardown, and sub_080735EC's opposite number: it
+/* The HBlank window-table teardown, and ScanlineDarkenBg0_Init's opposite number: it
  * re-points the gUnknown_0202FDE4 slot at gUnknown_0202F8DC and fills all 0xA0
  * scanlines with 0 rather than 0x10.  The fill re-loads the pointer from the
  * global on every pass for the reason recorded in include/unknown-globals.h --
@@ -77,8 +77,8 @@ void BuildCircleWindowTable(int a1)
 
     while (x >= y)
     {
-        sub_080736F4(x, y >> 1, gUnknown_0202FDE4);
-        sub_080736F4(y, x >> 1, gUnknown_0202FDE4);
+        SetCircleWindowEdge(x, y >> 1, gUnknown_0202FDE4);
+        SetCircleWindowEdge(y, x >> 1, gUnknown_0202FDE4);
 
         u = d + 1;
         d = u - y * 2;
@@ -96,7 +96,7 @@ void BuildCircleWindowTable(int a1)
 }
 asm(".global sub_08073714\n.thumb_set sub_08073714, BuildCircleWindowTable\n");
 
-void sub_08073770(struct Unk08073770Proc *proc)
+void CircleWipe_Init(struct Unk08073770Proc *proc)
 {
     int i;
 
@@ -117,3 +117,4 @@ void sub_08073770(struct Unk08073770Proc *proc)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 }
+asm(".global sub_08073770\n.thumb_set sub_08073770, CircleWipe_Init\n");

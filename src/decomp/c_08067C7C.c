@@ -15,7 +15,8 @@ struct Unk67C7CProc
     /* 38 */ u32 unk38;
 };
 
-void sub_08067C7C(u32 a)
+void SetIntroSlidePanelExitFrames(u32 a)
 {
     ((struct Unk67C7CProc *)Proc_Find(gUnknown_08581068))->unk38 = a;
 }
+asm(".global sub_08067C7C\n.thumb_set sub_08067C7C, SetIntroSlidePanelExitFrames\n");

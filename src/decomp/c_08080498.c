@@ -15,9 +15,9 @@ struct Unk08080498
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_08080498(struct Unk08080498 *proc)
+void SuperCoPowerScene_StartNameStage(struct Unk08080498 *proc)
 {
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     BG_EnableSyncBG0();
     BG_EnableSyncBG1();
     BG_EnableSyncBG2();
@@ -41,3 +41,4 @@ void sub_08080498(struct Unk08080498 *proc)
     Proc_Start(gUnknown_086168BC, proc);
     StartBgWave(0x200, 0x100, 0x180, 0x100, 2, 2);
 }
+asm(".global sub_08080498\n.thumb_set sub_08080498, SuperCoPowerScene_StartNameStage\n");

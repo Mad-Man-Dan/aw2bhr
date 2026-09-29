@@ -38,7 +38,7 @@
  * ADD) does apply in principle but is about the address ADD, and this residual
  * has no address ADD -- it is a bare constant with no pool word.
  *   Lever 1 is additionally unreachable from C for a different reason: see
- * work/sub_08064500 and the pointer_int_sum chapter -- the front end rewrites
+ * work/DrawDownArrow and the pointer_int_sum chapter -- the front end rewrites
  * `int + ptr` to `ptr + int` before any tree survives, so the `*(i + p)`
  * spelling only bites where the two competing values are hoisted invariants,
  * never on an ordinary in-block access.

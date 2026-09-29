@@ -37,7 +37,7 @@
  * carry the round-toward-zero fixup, and there is none.
  *
  * The two id tables are newly declared in include/unknown-globals.h; the two
- * callees sub_080859A0 / GetFirepowerIcon (and GetMovementBonusIcon / GetRangeBonusIcon) were
+ * callees PutArmyUnitSprite / GetFirepowerIcon (and GetMovementBonusIcon / GetRangeBonusIcon) were
  * already promoted and matching in src/decomp but had never been declared,
  * because this function was their only caller and it was still asm. The
  * declarations added to include/unknown-functions.h copy the promoted
@@ -57,7 +57,7 @@ void CoInfoScreen_DrawUnitBonusGrid(s16 *a1, int a2)
 
         if (t != 0)
         {
-            sub_080859A0(DivRem(i, 4) * 0x36 + 0x13, (i >> 2) * 0x18 + 0x28, 0, a2, t, 2);
+            PutArmyUnitSprite(DivRem(i, 4) * 0x36 + 0x13, (i >> 2) * 0x18 + 0x28, 0, a2, t, 2);
 
             if (GetUnitCombatClassColumn(t) != 7)
                 DrawOamObject(GetFirepowerIcon(a2, t), DivRem(i, 4) * 0x36 + 0x24,

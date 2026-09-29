@@ -36,7 +36,7 @@ struct Unk08582B14Proc
     /* 0x4c */ int unk4c;
 };
 
-ProcPtr sub_0806E4BC(int a1, int a2, int a3, u16 a4, int a5, int a6, ProcPtr parent)
+ProcPtr StartSoundRoomButton(int a1, int a2, int a3, u16 a4, int a5, int a6, ProcPtr parent)
 {
     struct Unk08582B14Proc *p;
 
@@ -54,3 +54,4 @@ ProcPtr sub_0806E4BC(int a1, int a2, int a3, u16 a4, int a5, int a6, ProcPtr par
 
     return p;
 }
+asm(".global sub_0806E4BC\n.thumb_set sub_0806E4BC, StartSoundRoomButton\n");

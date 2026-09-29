@@ -14,10 +14,11 @@
  * The literal pool sitting BETWEEN the two return blocks is the if/return
  * form's signature -- a ternary would put it after the `bx lr`. */
 
-bool8 sub_0807821C(int i)
+bool8 MissionTriggersUnlockScript(int i)
 {
     if (gUnknown_08615194[i].specialProperty & 0x10)
         return 1;
 
     return 0;
 }
+asm(".global sub_0807821C\n.thumb_set sub_0807821C, MissionTriggersUnlockScript\n");

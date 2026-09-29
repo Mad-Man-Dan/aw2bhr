@@ -55,7 +55,7 @@ struct UnkB1A8Proc
  *    pair -- the group masks 0xFFE0 and 0xE0FF are the tell, since five 1-bit
  *    field writes give five separate `mov #N; neg; and` steps.
  */
-void sub_0806B1A8(struct UnkB1A8Proc *proc)
+void CreditsEpilogue_Init(struct UnkB1A8Proc *proc)
 {
     int i;
     int x;
@@ -120,3 +120,4 @@ void sub_0806B1A8(struct UnkB1A8Proc *proc)
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xffe0) | 4;
     gUnknown_030030E0.raw = (gUnknown_030030E0.raw & 0xe0ff) | 0x800;
 }
+asm(".global sub_0806B1A8\n.thumb_set sub_0806B1A8, CreditsEpilogue_Init\n");

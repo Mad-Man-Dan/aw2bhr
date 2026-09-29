@@ -24,7 +24,7 @@
  * &gUnknown_03005934, which is why each is reached with TWO `ldr`s. See the
  * note in include/unknown-globals.h.
  *
- * LoadMainMenuSideTileGraphic and sub_080845E8 each take a SECOND argument that neither
+ * LoadMainMenuSideTileGraphic and LoadMainMenuLabelPlateGraphic each take a SECOND argument that neither
  * callee reads. src/decomp/c_08084580.c defined them without it, because an
  * ignored argument costs the callee nothing; this function is their only
  * caller in the ROM and sets up r1 at all ten call sites, so the caller is the
@@ -50,7 +50,7 @@ void MainMenuCarousel_Init(ProcPtr proc)
 {
     int i;
 
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     SyncAllBgTilemaps();
 
     SetDispEnable(1, 1, 0, 1, 1);
@@ -111,10 +111,10 @@ void MainMenuCarousel_Init(ProcPtr proc)
 
     for (i = 0; i < 2; i++)
     {
-        sub_080845E8(0, 0x1d0);
-        sub_080845E8(1, 0x1d6);
-        sub_080845E8(2, 0x212);
-        sub_080845E8(3, 0x20c);
+        LoadMainMenuLabelPlateGraphic(0, 0x1d0);
+        LoadMainMenuLabelPlateGraphic(1, 0x1d6);
+        LoadMainMenuLabelPlateGraphic(2, 0x212);
+        LoadMainMenuLabelPlateGraphic(3, 0x20c);
     }
 
     if (IsCampaignCompletionFlagSet(0x20) != 0)

@@ -21,6 +21,6 @@ void ArmyColumnExitDown_Loop(struct Unk08580934_Obj *o)
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 
-    sub_08064E5C(o);
+    ArmyColumn_Draw(o);
 }
 asm(".global sub_080650B4\n.thumb_set sub_080650B4, ArmyColumnExitDown_Loop\n");

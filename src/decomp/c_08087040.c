@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08087040 -- draw a row of four two-part sprites.
+ * MapSelectList_DrawPropertyIcons -- draw a row of four two-part sprites.
  *
  * Four sprites are drawn side by side, 0x18 pixels apart, the first at x 0x97.
  * Each is drawn in two halves: the top half at y 0 from the sprite data
@@ -19,7 +19,7 @@
  * 0x58, 0x60 and 0x68 and the bottom halves 0x54, 0x5c, 0x64 and 0x6c. Bit
  * 0x2000 is set on all of them.
  */
-void sub_08087040(void)
+void MapSelectList_DrawPropertyIcons(void)
 {
     int i;
 
@@ -29,3 +29,4 @@ void sub_08087040(void)
         PutSprite(1, 0x97 + i * 0x18, 0x10, gUnknown_0848B6A8, (0x54 + i * 8) | 0x2000);
     }
 }
+asm(".global sub_08087040\n.thumb_set sub_08087040, MapSelectList_DrawPropertyIcons\n");

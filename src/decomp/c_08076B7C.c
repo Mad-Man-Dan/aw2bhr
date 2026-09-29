@@ -9,57 +9,61 @@
 
 #include "proc.h"
 
-/* sub_08076ADC's twin without the proc tail, plus one guarded extra step.
- * The proc is taken and forwarded to sub_08076888 and nothing else, which costs
- * zero instructions -- see the sub_08076888 note in unknown-functions.h for why
+/* SetupWorldMapForResume's twin without the proc tail, plus one guarded extra step.
+ * The proc is taken and forwarded to SetupWorldMapScreen and nothing else, which costs
+ * zero instructions -- see the SetupWorldMapScreen note in unknown-functions.h for why
  * wave 34 gave that callee a parameter. */
-void sub_08076B7C(ProcPtr proc)
+void SetupWorldMapAfterMission(ProcPtr proc)
 {
-    sub_08076888(proc);
+    SetupWorldMapScreen(proc);
     Decompress(gUnknown_081D0BAC, gUnknown_08614280);
 
     if (gUnknown_0202FDFC.unk11 != 0)
         sub_08076B20();
 
-    sub_08076858();
-    sub_0807681C();
+    RestoreWorldMapMarkers2();
+    PaintClearedWorldMapSections();
     RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
 }
+asm(".global sub_08076B7C\n.thumb_set sub_08076B7C, SetupWorldMapAfterMission\n");
 
 /* A five-argument forwarder: the fifth goes on the stack, which is what the
  * `sub sp, #4` / `str r0, [sp]` frame is -- not a local. */
-void sub_08076BC4(ProcPtr parent)
+void StartWorldMapIntroScene(ProcPtr parent)
 {
-    sub_080785CC(0, 0x78, 0, gUnknown_084BA6D0, parent);
+    StartWorldMapScene(0, 0x78, 0, gUnknown_084BA6D0, parent);
 }
+asm(".global sub_08076BC4\n.thumb_set sub_08076BC4, StartWorldMapIntroScene\n");
 
 /* A pass-through wrapper: r0 is never written, so the proc arrives and is
  * forwarded unchanged and costs zero instructions -- the arity is read off the
  * callee, not off this body. StartWorldMapCameraPan returns s32 and the result is
  * dropped (`pop {r0}; bx r0`). */
-void sub_08076BE0(ProcPtr proc)
+void PanWorldMapCameraToStartCorner(ProcPtr proc)
 {
     StartWorldMapCameraPan(proc, 0, 0xAF, 1);
 }
+asm(".global sub_08076BE0\n.thumb_set sub_08076BE0, PanWorldMapCameraToStartCorner\n");
 
 /* The table read happens BEFORE the guard in the ROM -- a local bound outside
  * the `if`, the same shape as sub_0806366C. `lsls #3` is the 8-byte record
  * stride of gUnknown_0861500C. */
-void sub_08076BF0(ProcPtr parent)
+void StartWorldMapReturnIfMissionWon(ProcPtr parent)
 {
     void *p;
 
     p = gUnknown_0861500C[gUnknown_0202FDFC.unk0c].unk_04;
 
     if (gUnknown_0202FDFC.unk11 == 1)
-        sub_08078480(p, parent);
+        StartWorldMapReturn(p, parent);
 }
+asm(".global sub_08076BF0\n.thumb_set sub_08076BF0, StartWorldMapReturnIfMissionWon\n");
 
 /* `lsls #1; adds; lsls #4` is a MULTIPLY by 3 << 4 == 0x30, i.e. an index into
  * an array of 0x30-byte structs -- which is exactly sizeof(struct Unk08615194)
  * -- rather than hand-rolled address arithmetic. Both arms compute an address
  * and agbcc tail-merges the single `ldr` that follows the join. */
-void sub_08076C1C(ProcPtr parent)
+void StartWorldMapAfterMissionScript(ProcPtr parent)
 {
     void *p;
 
@@ -69,19 +73,22 @@ void sub_08076C1C(ProcPtr parent)
         p = gUnknown_08615194[gUnknown_0202FDFC.unk0c].unk18;
 
     if (p != NULL)
-        sub_08078540(p, parent);
+        StartBlockingEventScript(p, parent);
 }
+asm(".global sub_08076C1C\n.thumb_set sub_08076C1C, StartWorldMapAfterMissionScript\n");
 
-/* sub_08076BC4 behind a guard, with a different (x, y). */
-void sub_08076C64(ProcPtr parent)
+/* StartWorldMapIntroScene behind a guard, with a different (x, y). */
+void StartWorldMapHardModeIntroScene(ProcPtr parent)
 {
     if (IsHardCampaignMode())
-        sub_080785CC(0x50, 0x70, 0, gUnknown_084BA6D0, parent);
+        StartWorldMapScene(0x50, 0x70, 0, gUnknown_084BA6D0, parent);
 }
+asm(".global sub_08076C64\n.thumb_set sub_08076C64, StartWorldMapHardModeIntroScene\n");
 
 /* Two starters under the caller's own proc. */
-void sub_08076C8C(ProcPtr proc)
+void StartWorldMapCursorProcs(ProcPtr proc)
 {
     StartWorldMapScope(NULL, proc);
-    sub_0807548C(0, 0, 0, proc);
+    StartWorldMapSelectionFrame(0, 0, 0, proc);
 }
+asm(".global sub_08076C8C\n.thumb_set sub_08076C8C, StartWorldMapCursorProcs\n");

@@ -19,7 +19,8 @@
  * `movs r1, #0x80; lsls r1, r1, #1` is just the constant 0x100 -- THUMB
  * immediates stop at 0xFF. The OAM word is `(c << 12) | (GetUnitSpriteTile(...) +
  * 0x100)`, with the shifted value as the OR's first operand (`orrs r4, r0`). */
-void sub_080859A0(u16 a, u16 b, int c, int d, int e, int f)
+void PutArmyUnitSprite(u16 a, u16 b, int c, int d, int e, int f)
 {
     PutSprite(f, a, b, gUnknown_0848B690, (c << 12) | (GetUnitSpriteTile(d, e) + 0x100));
 }
+asm(".global sub_080859A0\n.thumb_set sub_080859A0, PutArmyUnitSprite\n");

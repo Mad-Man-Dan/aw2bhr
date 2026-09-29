@@ -16,7 +16,7 @@ struct Unk67410Proc
     /* 58 */ u32 unk58;
 };
 
-/* Same body as sub_0806717C with the blend_y and the proc field zeroed instead
+/* Same body as BlendFromWhite_Init with the blend_y and the proc field zeroed instead
  * of 0x1f. The `do { } while (0)` around the raw read-modify-write is not
  * decoration: without it agbcc materialises the final `proc->unk58 = 0` early,
  * inside that statement, which costs a callee-saved register and four bytes of
@@ -24,7 +24,7 @@ struct Unk67410Proc
  * r1, #0` to its own store. See MatchSetupHighlightSelectedRuleOption for the other function in this
  * batch that needs the same construct, for the opposite effect.
  */
-void sub_08067410(struct Unk67410Proc *proc)
+void BlendToWhite_Init(struct Unk67410Proc *proc)
 {
     gUnknown_030030E0.bits.effect = 2;
 
@@ -37,3 +37,4 @@ void sub_08067410(struct Unk67410Proc *proc)
 
     proc->unk58 = 0;
 }
+asm(".global sub_08067410\n.thumb_set sub_08067410, BlendToWhite_Init\n");

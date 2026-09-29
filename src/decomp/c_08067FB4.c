@@ -26,7 +26,7 @@ struct Unk08067FB4
     /* 0x40 */ int unk40;
 };
 
-void sub_08067FB4(struct Unk08067FB4 *proc)
+void IntroBlendFade_Loop(struct Unk08067FB4 *proc)
 {
     int v;
 
@@ -39,3 +39,4 @@ void sub_08067FB4(struct Unk08067FB4 *proc)
     if (proc->unk40 == proc->unk34)
         Proc_Break(proc);
 }
+asm(".global sub_08067FB4\n.thumb_set sub_08067FB4, IntroBlendFade_Loop\n");

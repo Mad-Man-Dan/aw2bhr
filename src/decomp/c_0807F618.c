@@ -12,7 +12,8 @@
 
 #include "proc.h"
 
-int sub_0807F618(void)
+int IsEndCoSelectRunning(void)
 {
     return Proc_Find(gUnknown_08616710) != 0;
 }
+asm(".global sub_0807F618\n.thumb_set sub_0807F618, IsEndCoSelectRunning\n");

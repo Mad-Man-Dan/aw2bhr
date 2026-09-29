@@ -37,7 +37,7 @@ void MatchSetupHandleRulesStageInput(void)
     {
         gUnknown_08580934->unk31 = 1;
         sub_080733B8();
-        sub_08064B68(2);
+        MatchSetupDismissRuleOptions(2);
         gUnknown_08580934->unk30 = 1;
         PlayMusicOrSfx2(0x66);
 

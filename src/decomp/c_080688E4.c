@@ -40,7 +40,7 @@ void IntroT3_080688E5(struct Unk080688E4 *proc)
     gUnknown_03001FE8.bits.priority = 1;
     gUnknown_03002B6C.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08063994();
+    ResetBgAffineToScreenCentre();
     SetBgCntChrBlock((struct Unk8012C30 *)&gUnknown_030030B4, 0x06008000);
     SetBgCntTilemapBlock((struct Unk8012C30 *)&gUnknown_030030B4, 0x0600F000);
     SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 1);

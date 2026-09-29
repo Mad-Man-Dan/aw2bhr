@@ -58,7 +58,7 @@ struct Unk0807BA90Proc
     /* 0x64 */ u16 unk64;
 };
 
-void sub_0807BA90(struct Unk0807BA90Proc * proc)
+void MissionTitleName_Init(struct Unk0807BA90Proc * proc)
 {
     int i;
     u8 * p;
@@ -112,3 +112,4 @@ void sub_0807BA90(struct Unk0807BA90Proc * proc)
 
     BgAffineSet(&src, (struct BgAffineDstData *)gUnknown_030024D0, 1);
 }
+asm(".global sub_0807BA90\n.thumb_set sub_0807BA90, MissionTitleName_Init\n");

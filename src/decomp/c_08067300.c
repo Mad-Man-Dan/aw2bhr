@@ -24,7 +24,7 @@ struct Unk67300Proc
  * 0xf) | (unk3c << 4)`, which puts the `movs #0xf` before the shift instead of
  * after it. Masking first, then building the value into a local, then ORing it
  * in, is the only spelling that keeps the ROM's order. The `do { } while (0)`
- * around the group is the same code-motion barrier sub_08067410 needs: without
+ * around the group is the same code-motion barrier BlendToWhite_Init needs: without
  * it the final `proc->unk30 = 0` is materialised early, inside the group, and
  * takes a second callee-saved register.
  *
@@ -32,7 +32,7 @@ struct Unk67300Proc
  * and drops the AND -- that is why this one is `orr #0xc0` alone where its
  * neighbours mask with 0x3f first.
  */
-void sub_08067300(struct Unk67300Proc *proc)
+void BlendRampBlack0To16_Init(struct Unk67300Proc *proc)
 {
     u32 v;
 
@@ -54,3 +54,4 @@ void sub_08067300(struct Unk67300Proc *proc)
     proc->unk30 = 0;
     proc->unk34 = 0x10;
 }
+asm(".global sub_08067300\n.thumb_set sub_08067300, BlendRampBlack0To16_Init\n");

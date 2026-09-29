@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0807857C(void)
+void DismissWorldMapCallout2(void)
 {
-    sub_080767A8();
+    DismissWorldMapCallout();
 }
+asm(".global sub_0807857C\n.thumb_set sub_0807857C, DismissWorldMapCallout2\n");

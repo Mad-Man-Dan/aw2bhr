@@ -49,7 +49,7 @@ struct Proc7B690
     /* 0x5C */ int unk_5c;
 };
 
-void sub_0807B690(struct Proc7B690 *proc)
+void MatchSummaryPanel_Hold_Loop(struct Proc7B690 *proc)
 {
     int off;
     int i;
@@ -59,8 +59,8 @@ void sub_0807B690(struct Proc7B690 *proc)
 
     proc->unk_38++;
 
-    sub_0807B51C(0x5b, 0x54, proc->unk_58, 0);
-    sub_0807B51C(0x5b, 0x67, proc->unk_5c, 1);
+    PutSpriteNumberRightAligned(0x5b, 0x54, proc->unk_58, 0);
+    PutSpriteNumberRightAligned(0x5b, 0x67, proc->unk_5c, 1);
 
     PutSprite(0, 0x14, 0x54, gUnknown_0848B690, 0x1058);
     PutSprite(0, 0xa, 0x67, gUnknown_0848B6C6, 0x105c);
@@ -70,3 +70,4 @@ void sub_0807B690(struct Proc7B690 *proc)
 
     sub_0807B738(proc);
 }
+asm(".global sub_0807B690\n.thumb_set sub_0807B690, MatchSummaryPanel_Hold_Loop\n");

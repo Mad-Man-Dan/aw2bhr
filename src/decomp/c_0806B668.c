@@ -22,7 +22,7 @@ struct Unk0806B668
     /* 0x5c */ int unk5c;
 };
 
-void sub_0806B668(struct Unk0806B668 *proc)
+void CreditsEpilogue_FadeOut(struct Unk0806B668 *proc)
 {
     int a;
     int b;
@@ -41,3 +41,4 @@ void sub_0806B668(struct Unk0806B668 *proc)
     else
         proc->unk5c++;
 }
+asm(".global sub_0806B668\n.thumb_set sub_0806B668, CreditsEpilogue_FadeOut\n");

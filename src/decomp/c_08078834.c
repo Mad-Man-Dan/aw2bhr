@@ -23,7 +23,7 @@
 
 
 /* The gUnknown_030058E0 display-list variant: ClearArmyCount resets the cursor
- * and sub_08078740 clears the five words of gUnknown_030059C0, and both are
+ * and SetCoSelectGroupSwitchNone clears the five words of gUnknown_030059C0, and both are
  * nullary. AddCoSelectGroupGreenEarth returns the advanced byte index (`pop {r1}; bx r1`) and
  * that result is DISCARDED here -- unlike SetupCoSelectHotPursuit, which chains the four
  * builders and does consume it.
@@ -33,7 +33,7 @@ void SetupCoSelectNeotanksGe(void)
 {
     ClearArmyCount();
     AddCoSelectGroupGreenEarth(0);
-    sub_08078740();
+    SetCoSelectGroupSwitchNone();
 }
 
 asm(".global sub_08078834\n.thumb_set sub_08078834, SetupCoSelectNeotanksGe\n");

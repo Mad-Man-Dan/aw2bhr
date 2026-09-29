@@ -15,10 +15,11 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_0806C79C(void)
+void StartCreditsCircleWipe(void)
 {
     StartCircleWipe(0x30);
 }
+asm(".global sub_0806C79C\n.thumb_set sub_0806C79C, StartCreditsCircleWipe\n");
 
 /* Family F003 (data/families.json): 34 twelve-byte forwarders shaped
  * `push {lr}; movs r0,#K; bl S; pop {r0}; bx r0`, i.e. one call with one

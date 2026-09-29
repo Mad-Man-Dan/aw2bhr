@@ -16,11 +16,12 @@
  * the callee returned, so nothing about the callee is visible from
  * here. Everything below was read off the callee's own body instead.
  *
- * One pointer passed through. sub_0807BF74 opens `ldr r2,[r0,#0x58]` and
+ * One pointer passed through. MissionTitleName_UpdateSpin opens `ldr r2,[r0,#0x58]` and
  * writes the decremented value back, so r0 is read before it is written;
  * +0x58 is past PROC_HEADER.
  */
-void sub_0807BD50(ProcPtr proc)
+void MissionTitleName_UpdateSpin2(ProcPtr proc)
 {
-    sub_0807BF74(proc);
+    MissionTitleName_UpdateSpin(proc);
 }
+asm(".global sub_0807BD50\n.thumb_set sub_0807BD50, MissionTitleName_UpdateSpin2\n");

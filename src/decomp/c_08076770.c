@@ -20,7 +20,7 @@ struct Unk8076770
     /* 0x64 */ u16 unk_64;
 };
 
-void sub_08076770(s32 a, s32 b, s32 c, ProcPtr parent)
+void StartWorldMapCallout(s32 a, s32 b, s32 c, ProcPtr parent)
 {
     struct Unk8076770 * proc = Proc_Start(gUnknown_086144FC, parent);
 
@@ -31,3 +31,4 @@ void sub_08076770(s32 a, s32 b, s32 c, ProcPtr parent)
     proc->unk_5c = 0;
     proc->unk_64 = 0;
 }
+asm(".global sub_08076770\n.thumb_set sub_08076770, StartWorldMapCallout\n");

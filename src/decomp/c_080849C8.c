@@ -53,10 +53,10 @@ void CoInfoScreen_LoadGraphics(ProcPtr parent)
     int i;
     register ProcPtr savedParent asm("r9") = parent;
 
-    sub_0807898C(savedParent);
+    SetupMenuScreenBgs(savedParent);
     gDispIo.disp_ct.bg1_enable = 0;
-    sub_08078D80(savedParent);
-    sub_08085950(0, gUnknown_030033EC);
+    StartScrollingBackdrop(savedParent);
+    LoadCoInfoUnitSheet(0, gUnknown_030033EC);
     LoadWindowFrameGraphics((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00),
                  gUnknown_08616B1C[gPlayers[gUnknown_030033EC].teamColor], 0);
     CoInfoScreen_LoadBg2Backdrop();

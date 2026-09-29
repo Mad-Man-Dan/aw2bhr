@@ -26,23 +26,23 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
     switch (0xc6 - proc->unk2c)
     {
     case 5:
-        sub_08067BD0(1, -1, 0x20, proc);
+        StartIntroSlidePanel(1, -1, 0x20, proc);
         break;
 
     case 0x1a:
-        sub_08067A24();
+        TriggerIntroBgAffineTween();
         break;
 
     case 0x26:
         for (i = 1; i < 16; i++)
             gPal[i] = 0x7fff;
         EnablePaletteSync();
-        sub_080677E8();
+        ResetIntroBgScroll();
         break;
 
     case 0x2a:
         ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-        sub_08067D04(1, 1, 0xc, proc);
+        StartIntroSlideSprite(1, 1, 0xc, proc);
         StartIntroBgAffineTween(0, -1, 0, 0x88, 0, 0x4000, 0x100, 0xc0, 0xc, proc);
         break;
 
@@ -54,17 +54,17 @@ void IntroT3_IDLE_080691BD(struct Unk691BCProc *proc)
 
     case 0x60:
         ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-        sub_08067C7C(0x28);
-        sub_0806780C();
-        sub_08067A24();
-        sub_08067D4C();
+        SetIntroSlidePanelExitFrames(0x28);
+        ResumeIntroBgScroll();
+        TriggerIntroBgAffineTween();
+        EndIntroSlideSprite();
         break;
 
     case 0x8c:
         SetDispEnable(1, 1, 0, 0, 1);
-        sub_08063994();
+        ResetBgAffineToScreenCentre();
         SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 1);
-        sub_080673D0(0x30, 1, proc);
+        StartBlendRampWhite0To16(0x30, 1, proc);
         break;
 
     case 0xb9:

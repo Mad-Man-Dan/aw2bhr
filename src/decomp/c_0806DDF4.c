@@ -27,7 +27,7 @@
  * r3/r4 order. Presumably the original wrote the body through a do/while(0)
  * macro. See docs/agbcc-codegen.md.
  */
-void sub_0806DDF4(void)
+void RulesScreenHighlightSelectedRuleOption(void)
 {
     struct Unk0816E1B8 *const *pp;
     struct Unk08580934 *rec;
@@ -44,3 +44,4 @@ void sub_0806DDF4(void)
 
     (*pp)->unk00->unk54[(*pp)->unk00->unk33]->unk46 = 1;
 }
+asm(".global sub_0806DDF4\n.thumb_set sub_0806DDF4, RulesScreenHighlightSelectedRuleOption\n");

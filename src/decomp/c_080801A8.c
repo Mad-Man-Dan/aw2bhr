@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* sub_080801A8 @ 0x080801A8, 172 bytes, THUMB. Matched.
+/* SuperCoPowerScene_UploadBgTilemaps @ 0x080801A8, 172 bytes, THUMB. Matched.
  *
  * Blits one EWRAM tile buffer into the screen blocks of the two BG shadows
  * gUnknown_03002B6C and gUnknown_030030B4: four 0x400-byte pages of
@@ -23,7 +23,7 @@
  * the ASCENDING `for (i = 0; i < 4; i++)`; the address accumulator counts UP
  * by 0x400, which is what fixes the direction.
  */
-void sub_080801A8(void)
+void SuperCoPowerScene_UploadBgTilemaps(void)
 {
     int i;
 
@@ -40,3 +40,4 @@ void sub_080801A8(void)
     CpuFastSet(gUnknown_0200FC50 + 0x200,
         (void *)((gUnknown_030030B4.bits.tm_block << 11) + 0x06000200), 0x80);
 }
+asm(".global sub_080801A8\n.thumb_set sub_080801A8, SuperCoPowerScene_UploadBgTilemaps\n");

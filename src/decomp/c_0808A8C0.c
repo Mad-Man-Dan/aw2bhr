@@ -8,7 +8,7 @@
  */
 
 #include "hardware.h"
-/* Sibling of sub_0807F238 and sub_0807F2FC: the same blend/BG shadow setup run,
+/* Sibling of CoSelect_SetupBlend and CoSelectConfirm_BeginFadeToWhite: the same blend/BG shadow setup run,
  * ending in a `proc->unk4c = 0` rather than the window writes.
  *
  * The raw-view spelling here MUST be the `*(u16 *)&` cast, not `.raw`, and this
@@ -23,7 +23,7 @@ struct Unk0808A8C0
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_0808A8C0(struct Unk0808A8C0 *proc)
+void CampaignIntroFrame_Init(struct Unk0808A8C0 *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -43,3 +43,4 @@ void sub_0808A8C0(struct Unk0808A8C0 *proc)
 
     proc->unk4c = 0;
 }
+asm(".global sub_0808A8C0\n.thumb_set sub_0808A8C0, CampaignIntroFrame_Init\n");

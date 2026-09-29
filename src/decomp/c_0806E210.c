@@ -17,7 +17,8 @@ struct UnkE210Proc
     /* 58 */ u32 unk58;
 };
 
-void sub_0806E210(int a, ProcPtr parent)
+void StartSoundRoomGalleryNumber(int a, ProcPtr parent)
 {
     ((struct UnkE210Proc *)Proc_Start(gUnknown_08582AF4, parent))->unk58 = a + 1;
 }
+asm(".global sub_0806E210\n.thumb_set sub_0806E210, StartSoundRoomGalleryNumber\n");

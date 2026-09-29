@@ -16,7 +16,7 @@ struct Unk6978CProc
     /* 29 */ STRUCT_PAD(0x29, 0x36);
     /* 36 */ u8 unk36;
 };
-/* The clearing twin of this is sub_0806978C, on the same field of the same
+/* The clearing twin of this is PauseIntroParallaxScroll, on the same field of the same
  * proc script. */
 struct Unk697A4Proc
 {
@@ -25,12 +25,14 @@ struct Unk697A4Proc
     /* 36 */ u8 unk36;
 };
 
-void sub_0806978C(void)
+void PauseIntroParallaxScroll(void)
 {
     ((struct Unk6978CProc *)Proc_Find(gUnknown_08581420))->unk36 = 0;
 }
+asm(".global sub_0806978C\n.thumb_set sub_0806978C, PauseIntroParallaxScroll\n");
 
-void sub_080697A4(void)
+void ResumeIntroParallaxScroll(void)
 {
     ((struct Unk697A4Proc *)Proc_Find(gUnknown_08581420))->unk36 = 1;
 }
+asm(".global sub_080697A4\n.thumb_set sub_080697A4, ResumeIntroParallaxScroll\n");

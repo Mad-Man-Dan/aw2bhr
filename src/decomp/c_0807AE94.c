@@ -59,7 +59,7 @@ struct Unk0807B148Proc
     /* 0x3c */ int unk3c;
 };
 
-void sub_0807AE94(struct Unk0807AE94Proc * proc)
+void MatchSummary_SlideIn_Loop(struct Unk0807AE94Proc * proc)
 {
     int i;
     int t0;
@@ -100,7 +100,7 @@ void sub_0807AE94(struct Unk0807AE94Proc * proc)
 
         ClearBg2Tilemap();
         BG_EnableSyncBG2();
-        LoadBg1WindowFrame(sub_0807A908());
+        LoadBg1WindowFrame(GetResultsArmy());
         Proc_Break(proc);
     }
 
@@ -140,8 +140,9 @@ void sub_0807AE94(struct Unk0807AE94Proc * proc)
                          0);
     }
 }
+asm(".global sub_0807AE94\n.thumb_set sub_0807AE94, MatchSummary_SlideIn_Loop\n");
 
-void sub_0807B148(struct Unk0807B148Proc * proc)
+void MatchSummaryFaces_Loop(struct Unk0807B148Proc * proc)
 {
     int i;
 
@@ -171,3 +172,4 @@ void sub_0807B148(struct Unk0807B148Proc * proc)
                          0);
     }
 }
+asm(".global sub_0807B148\n.thumb_set sub_0807B148, MatchSummaryFaces_Loop\n");

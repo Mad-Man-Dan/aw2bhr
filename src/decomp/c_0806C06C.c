@@ -14,8 +14,9 @@ struct Unk0806C06C /* >= 0x38 */
     /* 0x34 */ u32 unk34;
 };
 
-void sub_0806C06C(struct Unk0806C06C *p)
+void CreditsPage_ResetCounters(struct Unk0806C06C *p)
 {
     p->unk34 = 0;
     p->unk30 = 0;
 }
+asm(".global sub_0806C06C\n.thumb_set sub_0806C06C, CreditsPage_ResetCounters\n");

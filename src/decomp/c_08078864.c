@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08078864.
- * SetupCoSelectHotPursuit @ 0x08078864, SetupCoSelectFinalFront @ 0x08078884, sub_08078890 @ 0x08078890
+ * SetupCoSelectHotPursuit @ 0x08078864, SetupCoSelectFinalFront @ 0x08078884, SetupCoSelectLiberation2 @ 0x08078890
  */
 
 /* Six `bl`s with a single `movs r0, #0` between the first and the second, and
@@ -18,13 +18,13 @@
  * `bl`s, and there is none, so every link is int-wide.
  *
  * SetupCoSelectLiberation, 0xd4 bytes above, is the short version of the same source --
- * `ClearArmyCount(); sub_08078740(AddCoSelectGroupOrangeStar(0));`.
+ * `ClearArmyCount(); SetCoSelectGroupSwitchNone(AddCoSelectGroupOrangeStar(0));`.
  */
 void SetupCoSelectHotPursuit(void)
 {
     ClearArmyCount();
     AddCoSelectGroupYellowComet(AddCoSelectGroupGreenEarth(AddCoSelectGroupBlueMoon(AddCoSelectGroupOrangeStar(0))));
-    sub_08078758();
+    SetCoSelectGroupSwitchAll();
 }
 
 asm(".global sub_08078864\n.thumb_set sub_08078864, SetupCoSelectHotPursuit\n");
@@ -60,7 +60,8 @@ asm(".global sub_08078884\n.thumb_set sub_08078884, SetupCoSelectFinalFront\n");
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_08078890(void)
+void SetupCoSelectLiberation2(void)
 {
     SetupCoSelectLiberation();
 }
+asm(".global sub_08078890\n.thumb_set sub_08078890, SetupCoSelectLiberation2\n");

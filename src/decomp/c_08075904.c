@@ -8,7 +8,7 @@
  */
 
 /* MATCHED (wave 38, W38-E), first attempt. Unassigned extra. Twin of
- * sub_080759A0, which is the same walk writing a CALLER-supplied id instead of
+ * ColorWorldMapSectionWithBank, which is the same walk writing a CALLER-supplied id instead of
  * the blob's own and echoing each id through an out-pointer.
  *
  * Stamps a rectangular tile-id blob into the top nibble of gUnknown_08614280's
@@ -45,7 +45,7 @@ struct Unk8075904Map
 };
 #include "hardware.h"
 
-int sub_08075904(int a1)
+int ColorWorldMapSection(int a1)
 {
     const struct Unk8075904Map *p;
     const u8 *src;
@@ -82,8 +82,9 @@ int sub_08075904(int a1)
 
     return 1;
 }
+asm(".global sub_08075904\n.thumb_set sub_08075904, ColorWorldMapSection\n");
 
-u8 sub_080759A0(int a1, int a2, u8 *a3)
+u8 ColorWorldMapSectionWithBank(int a1, int a2, u8 *a3)
 {
     const struct Unk8075904Map *p;
     const u8 *src;
@@ -125,6 +126,7 @@ u8 sub_080759A0(int a1, int a2, u8 *a3)
 
     return 1;
 }
+asm(".global sub_080759A0\n.thumb_set sub_080759A0, ColorWorldMapSectionWithBank\n");
 
 /* MATCHED (wave 38, W38-E), first attempt. Unassigned extra.
  *
@@ -153,7 +155,7 @@ u8 sub_080759A0(int a1, int a2, u8 *a3)
  * `lsls r4, r2, #1; adds r2, r4, r2`), so the two indices must be written from
  * the SAME `c * 16 + i` expression rather than bound separately.
  */
-void sub_08075A54(int a1, int a2)
+void LoadFadeComponentsFromPalette(int a1, int a2)
 {
     u8 c;
     s8 i;
@@ -168,3 +170,4 @@ void sub_08075A54(int a1, int a2)
         gUnknown_0200B614[(c * 16 + i) * 3 + 2] = (gPal[c * 16 + i] >> 10) & 0x1F;
     }
 }
+asm(".global sub_08075A54\n.thumb_set sub_08075A54, LoadFadeComponentsFromPalette\n");

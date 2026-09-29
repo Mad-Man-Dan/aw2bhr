@@ -23,7 +23,7 @@ struct Unk69FACProc
     /* 40 */ s32 unk40;
 };
 
-void sub_08069FAC(s32 a, s32 b, s32 c, ProcPtr parent)
+void StartIntroCoReveal(s32 a, s32 b, s32 c, ProcPtr parent)
 {
     struct Unk69FACProc * proc = Proc_Start(gUnknown_08581480, parent);
 
@@ -32,3 +32,4 @@ void sub_08069FAC(s32 a, s32 b, s32 c, ProcPtr parent)
     proc->unk3c = c;
     proc->unk40 = 0;
 }
+asm(".global sub_08069FAC\n.thumb_set sub_08069FAC, StartIntroCoReveal\n");

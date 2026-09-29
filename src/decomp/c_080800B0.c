@@ -28,7 +28,7 @@ void SuperCoPowerScene_InitBackground(struct Unk080800B0 *proc)
     Decompress(gUnknown_082352FC, gUnknown_0200FC50);
     AddToHalfwords((u16 *)gUnknown_0200FC50, 0x800, 0x9001);
     ApplyPalettes(gUnknown_08235D10, 9, 1);
-    QueueVBlankCallback((void *)sub_080801A8);
+    QueueVBlankCallback((void *)SuperCoPowerScene_UploadBgTilemaps);
     gUnknown_03001FF8 = 0x100;
     gUnknown_03001418 = 0xFFF0;
     gUnknown_030030A0 = 0xFF00;

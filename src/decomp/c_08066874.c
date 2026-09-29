@@ -65,8 +65,8 @@ dispatch:
         ForEachSlotRunningScript(gUnknown_08580AF0, sub_08066200);
         ForEachSlotRunningScript(gUnknown_08580B90, sub_08066200);
         ForEachSlotRunningScript(gUnknown_08580BC8, sub_08066200);
-        ForEachSlotRunningScript(gUnknown_08580A38, sub_08066210);
-        ForEachSlotRunningScript(gUnknown_08580A08, sub_08066210);
+        ForEachSlotRunningScript(gUnknown_08580A38, TeamBadge_StartExitDown);
+        ForEachSlotRunningScript(gUnknown_08580A08, TeamBadge_StartExitDown);
         return;
     }
 
@@ -79,7 +79,7 @@ dispatch:
         }
     }
 
-    sub_0806666C();
+    MatchSetupHandleBadgeReadyKeys();
 
     if ((s8)gUnknown_08580934->unk70[gUnknown_08580934->unk25] == 0)
         MatchSetupDrawTeamArrows();

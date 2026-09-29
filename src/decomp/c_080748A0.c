@@ -30,7 +30,7 @@ struct Unk80748A0Proc
     /* 38 */ int unk38;
 };
 
-void sub_080748A0(struct Unk80748A0Proc *proc)
+void WorldMapMarkerPopIn_Loop(struct Unk80748A0Proc *proc)
 {
     int x = proc->unk2c - gUnknown_0202FDFC.unk00;
     int y = proc->unk2e - gUnknown_0202FDFC.unk02;
@@ -61,3 +61,4 @@ void sub_080748A0(struct Unk80748A0Proc *proc)
 
     proc->unk38++;
 }
+asm(".global sub_080748A0\n.thumb_set sub_080748A0, WorldMapMarkerPopIn_Loop\n");

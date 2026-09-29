@@ -22,7 +22,7 @@
  *
  * The `subs r0, r1, r0` reuses the 0x1F still sitting in r1 from the mask --
  * that is the constant-reuse rule, not a second literal. 0x290 / 2 == 0x148. */
-void sub_0806DF20(void)
+void RulesScreenPulseGreyPaletteColor(void)
 {
     int n = gGameClock & 0x1F;
 
@@ -32,3 +32,4 @@ void sub_0806DF20(void)
     gPal[0x148] = ((n + 10) << 10) + ((n + 10) << 5) + (n + 10);
     EnablePaletteSync();
 }
+asm(".global sub_0806DF20\n.thumb_set sub_0806DF20, RulesScreenPulseGreyPaletteColor\n");

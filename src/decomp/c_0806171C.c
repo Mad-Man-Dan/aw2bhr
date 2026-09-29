@@ -97,7 +97,7 @@ void AiLoadPersonality(u16 a)
 asm(".global sub_08061788\n.thumb_set sub_08061788, AiLoadPersonality\n");
 
 /* The record selection is a TERNARY over one store, exactly as the matched
- * sub_08077F30 (src/decomp/c_08077F30.c) spells the same idiom: each arm
+ * WorldMap_CommitMissionAndEndProcs (src/decomp/c_08077F30.c) spells the same idiom: each arm
  * computes only `index * 0x30` and a base biased by 0x24 or 0x28, and the two
  * fall into a shared `adds r0,r0,r2; ldr r0,[r0]; str r0,[r5]`.
  *

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_0807A99C(s32 a1, u8 a2)
+void LoadBg3MapBackdrop(s32 a1, u8 a2)
 {
     if (a1 != 0)
         a1--;
@@ -31,3 +31,4 @@ void sub_0807A99C(s32 a1, u8 a2)
     else
         ApplyPaletteExt(gUnknown_08615E4C[a1].unk10, a2 * 0x20, 0xC0);
 }
+asm(".global sub_0807A99C\n.thumb_set sub_0807A99C, LoadBg3MapBackdrop\n");

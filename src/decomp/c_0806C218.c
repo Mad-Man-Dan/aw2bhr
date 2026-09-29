@@ -26,7 +26,7 @@ struct Unk0806C218Proc
     /* 0x60 */ int unk60;
 };
 
-void sub_0806C218(struct Unk0806C218Proc *proc)
+void CreditsRank_Init(struct Unk0806C218Proc *proc)
 {
     proc->unk58 = 5 - GetAverageCampaignRank();
     proc->unk60 = (proc->unk58 != 3) ? 0x20 : 0x10;
@@ -39,3 +39,4 @@ void sub_0806C218(struct Unk0806C218Proc *proc)
     gUnknown_0202F2C0 = 0;
     proc->unk5c = 0;
 }
+asm(".global sub_0806C218\n.thumb_set sub_0806C218, CreditsRank_Init\n");

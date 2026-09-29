@@ -27,26 +27,29 @@ struct Proc7BE90
     u16 unk_68;
 };
 
-void sub_0807BE44(struct Proc7BE44 *proc)
+void MissionTitleLetters_Reveal_Loop(struct Proc7BE44 *proc)
 {
-    sub_0807C034(proc);
+    MissionTitleLetters_PutRevealingLetters(proc);
     if (proc->unk_66 >= proc->unk_4c * 10)
         Proc_Break(proc);
 }
+asm(".global sub_0807BE44\n.thumb_set sub_0807BE44, MissionTitleLetters_Reveal_Loop\n");
 
-void sub_0807BE70(struct Proc7BE70 *proc)
+void MissionTitleLetters_BarExpand_Loop(struct Proc7BE70 *proc)
 {
-    sub_0807C278(proc);
-    sub_0807C2D4(proc);
+    MissionTitleLetters_PutLetterRow(proc);
+    MissionTitleLetters_PutMissionLabelAndBar(proc);
     if (proc->unk_60 > 0xe)
         Proc_Break(proc);
 }
+asm(".global sub_0807BE70\n.thumb_set sub_0807BE70, MissionTitleLetters_BarExpand_Loop\n");
 
-void sub_0807BE90(struct Proc7BE90 *proc)
+void MissionTitleLetters_Hold_Loop(struct Proc7BE90 *proc)
 {
-    sub_0807C278(proc);
-    sub_0807C46C(proc);
+    MissionTitleLetters_PutLetterRow(proc);
+    MissionTitleLetters_PutFinalLabelAndBar(proc);
     proc->unk_68++;
     if (proc->unk_68 == 0x1e0 || (gpKeySt->pressed & 1))
         Proc_Start(gUnknown_08616570, proc);
 }
+asm(".global sub_0807BE90\n.thumb_set sub_0807BE90, MissionTitleLetters_Hold_Loop\n");

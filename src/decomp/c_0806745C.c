@@ -22,11 +22,11 @@ struct Unk67480Proc
     /* 58 */ int unk58;
 };
 
-/* The count-UP twin of sub_080671CC: same publish-then-test-then-step shape
+/* The count-UP twin of BlendFromWhite_Loop: same publish-then-test-then-step shape
  * against the same volatile blend coefficient, running 0 -> 0x1f instead of
- * down to zero. See sub_080671CC for the derivation of the reused `cmp`
+ * down to zero. See BlendFromWhite_Loop for the derivation of the reused `cmp`
  * operand. */
-void sub_0806745C(struct Unk6745CProc *proc)
+void BlendToWhite_Loop(struct Unk6745CProc *proc)
 {
     gUnknown_03001FFC = proc->unk58;
 
@@ -35,14 +35,16 @@ void sub_0806745C(struct Unk6745CProc *proc)
 
     proc->unk58++;
 }
+asm(".global sub_0806745C\n.thumb_set sub_0806745C, BlendToWhite_Loop\n");
 
 /* Arms a 0x20-frame counter and kicks off a fade. The store puts the value in
  * r1 and keeps the proc in r0 only because r0 is about to become the call's
  * argument register; -1 then materialises as `movs r0,#1; rsbs r0,r0,#0`,
  * which is how THUMB spells a small negative constant. */
-void sub_08067480(struct Unk67480Proc *proc)
+void PaletteFadeFromWhite_Init(struct Unk67480Proc *proc)
 {
     proc->unk58 = 0x20;
     ColFadeFromWhite(-1);
     EnablePaletteSync();
 }
+asm(".global sub_08067480\n.thumb_set sub_08067480, PaletteFadeFromWhite_Init\n");

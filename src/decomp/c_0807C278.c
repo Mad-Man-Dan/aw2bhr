@@ -15,7 +15,7 @@ struct Unk807C278
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_0807C278(void *arg)
+void MissionTitleLetters_PutLetterRow(void *arg)
 {
     struct Unk807C278 *proc = arg;
     int i;
@@ -24,3 +24,4 @@ void sub_0807C278(void *arg)
         PutSprite(0, gUnknown_0202FF78[i] - gUnknown_0202FF78[proc->unk4c] + 0xE0,
                   0x18, gUnknown_0848B6E6, i * 8 + 0x80);
 }
+asm(".global sub_0807C278\n.thumb_set sub_0807C278, MissionTitleLetters_PutLetterRow\n");

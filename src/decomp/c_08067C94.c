@@ -28,7 +28,7 @@ struct Unk08067C94Proc
     /* 0x3c */ s32 unk3c;
 };
 
-void sub_08067C94(struct Unk08067C94Proc *proc)
+void IntroSlideSprite_Loop(struct Unk08067C94Proc *proc)
 {
     int v;
 
@@ -51,3 +51,4 @@ void sub_08067C94(struct Unk08067C94Proc *proc)
 
     PutSprite(0, proc->unk2c, proc->unk30, gUnknown_085810A8, 0);
 }
+asm(".global sub_08067C94\n.thumb_set sub_08067C94, IntroSlideSprite_Loop\n");

@@ -20,18 +20,19 @@ struct Unk0806F0A0Proc
     /* 0x34 */ u16 unk34;
 };
 
-void sub_0806F0A0(struct Unk0806F0A0Proc *proc)
+void SoundRoom_RefreshCoPortrait(struct Unk0806F0A0Proc *proc)
 {
     u16 v;
 
     v = gUnknown_08582764[proc->unk30].unk04;
 
     if (v & 0x8000)
-        v = sub_0806F064(proc->unk34, gUnknown_0858273C[v & 0xff]);
+        v = PickRandomCoFromList(proc->unk34, gUnknown_0858273C[v & 0xff]);
 
     if (proc->unk34 != v)
     {
         proc->unk34 = v;
-        sub_0806E6C8(proc->unk34, proc);
+        StartSoundRoomCoSwap(proc->unk34, proc);
     }
 }
+asm(".global sub_0806F0A0\n.thumb_set sub_0806F0A0, SoundRoom_RefreshCoPortrait\n");

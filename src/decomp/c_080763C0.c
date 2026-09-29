@@ -32,7 +32,7 @@
  * the rest: declared before `i` the `ldr` hoists to the very first instruction
  * of the function, ahead of the gGameClock load; declared after `i` it
  * lands exactly where the ROM has it. */
-void sub_080763C0(void)
+void CycleWorldMapCalloutColor(void)
 {
     int i = ((u32)gGameClock & 0x3F) / 4;
     u16 *src = gUnknown_081D22A4;
@@ -40,3 +40,4 @@ void sub_080763C0(void)
     gPal[0x157] = src[i];
     EnablePaletteSync();
 }
+asm(".global sub_080763C0\n.thumb_set sub_080763C0, CycleWorldMapCalloutColor\n");

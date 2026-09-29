@@ -35,7 +35,7 @@ struct Unk0806A054
 void IntroT3_0806A055(struct Unk0806A054 *proc)
 {
     proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
-    sub_080670F8(gUnknown_085814A8);
+    ApplyBgControlTable(gUnknown_085814A8);
     gDispIo.disp_ct.mode = 0;
     SetDispEnable(0, 1, 1, 1, 1);
     gUnknown_03002B6C.bits.priority = 0;
@@ -47,7 +47,7 @@ void IntroT3_0806A055(struct Unk0806A054 *proc)
     Decompress(gUnknown_0822FEF0, (void *)0x06000000);
     Decompress(gUnknown_0822F9AC, gBG1TilemapBuffer);
     BG_EnableSyncBG1();
-    sub_08069FD0();
+    LoadIntroScreenGraphics();
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(1, 0, 0);
     SetBgScrollShadow(2, 0, 0);

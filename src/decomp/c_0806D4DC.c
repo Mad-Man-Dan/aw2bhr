@@ -7,7 +7,7 @@
  * sub_0806D4DC @ 0x0806D4DC
  */
 
-void sub_0806D4DC(struct Unk08580934_Obj *obj)
+void RulesScreenArmyColumnEnterSlide_Loop(struct Unk08580934_Obj *obj)
 {
     if (obj->unk24 != 0)
     {
@@ -17,7 +17,7 @@ void sub_0806D4DC(struct Unk08580934_Obj *obj)
     {
         obj->unk28 = obj->unk2c - gUnknown_08581E70[obj->unk26];
 
-        sub_0806D3AC(obj);
+        RulesScreenArmyColumn_Draw(obj);
 
         if (--obj->unk26 < 0)
         {
@@ -26,3 +26,4 @@ void sub_0806D4DC(struct Unk08580934_Obj *obj)
         }
     }
 }
+asm(".global sub_0806D4DC\n.thumb_set sub_0806D4DC, RulesScreenArmyColumnEnterSlide_Loop\n");

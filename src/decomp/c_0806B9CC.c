@@ -9,14 +9,14 @@
 
 #include "hardware.h"
 
-/* sub_0806B9CC @ 0x0806B9CC, 160 bytes, THUMB. No prototype existed;
+/* SetCreditsWindow1Rect @ 0x0806B9CC, 160 bytes, THUMB. No prototype existed;
  * declared in include/unknown-functions.h. Sets the win1_* group on
  * gUnknown_030030A4 and the win0_* group on gUnknown_030030DC (same
  * shape as LinkScreenSetupMessageWindow's shadow writes, mirrored bg0), stores the
  * four byte parameters, then sets win1_enable_blend on both shadows
  * and gDispIo.disp_ct.win1_enable.
  */
-void sub_0806B9CC(int a1, int a2, int a3, int a4)
+void SetCreditsWindow1Rect(int a1, int a2, int a3, int a4)
 {
     gUnknown_030030A4.bits.win1_enable_bg0 = 0;
     gUnknown_030030A4.bits.win1_enable_bg1 = 1;
@@ -40,3 +40,4 @@ void sub_0806B9CC(int a1, int a2, int a3, int a4)
 
     gDispIo.disp_ct.win1_enable = 1;
 }
+asm(".global sub_0806B9CC\n.thumb_set sub_0806B9CC, SetCreditsWindow1Rect\n");

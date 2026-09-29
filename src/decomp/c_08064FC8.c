@@ -7,10 +7,10 @@
  * sub_08064FC8 @ 0x08064FC8
  */
 
-/* MATCHED. F092 sibling of sub_080646D4 -- identical apart from the curve
- * (gUnknown_08580A88) and the emitter (sub_08064E5C). See sub_080646D4 for the
+/* MATCHED. F092 sibling of RuleOptionEnter_Loop -- identical apart from the curve
+ * (gUnknown_08580A88) and the emitter (ArmyColumn_Draw). See RuleOptionEnter_Loop for the
  * addend-order note. */
-void sub_08064FC8(struct Unk08580934_Obj *obj)
+void ArmyColumnEnter_Loop(struct Unk08580934_Obj *obj)
 {
     if (obj->unk24 != 0)
     {
@@ -19,7 +19,7 @@ void sub_08064FC8(struct Unk08580934_Obj *obj)
     else
     {
         obj->unk2a = obj->unk38 + gUnknown_08580A88[obj->unk26];
-        sub_08064E5C(obj);
+        ArmyColumn_Draw(obj);
 
         obj->unk26--;
         if (obj->unk26 < 0)
@@ -30,3 +30,4 @@ void sub_08064FC8(struct Unk08580934_Obj *obj)
         }
     }
 }
+asm(".global sub_08064FC8\n.thumb_set sub_08064FC8, ArmyColumnEnter_Loop\n");

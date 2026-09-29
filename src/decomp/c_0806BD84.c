@@ -19,7 +19,7 @@
  * separate &gCosLut would not do.
  *
  * +0x64 is s16: PutSpriteExt's fifth argument reads it with a bare `ldrsh` and
- * sub_0806BD6C's u16 parameter reads the same offset with a bare `ldrh`, and
+ * WriteBg0TilePair's u16 parameter reads the same offset with a bare `ldrh`, and
  * only an s16 member serves both without a shift pair. */
 struct Unk6BD84Proc
 {
@@ -32,9 +32,9 @@ struct Unk6BD84Proc
     /* 0x60 */ u8 filler_60[0x04];
     /* 0x64 */ s16 unk64;
 };
-/* Spawns one sub_0806BD84 sprite proc every eighth frame, walking a u16 table
+/* Spawns one CreditsNameLetter_Loop sprite proc every eighth frame, walking a u16 table
  * that starts at +0x2a, and ends itself once the index reaches +0x54. The five
- * members it writes into the child are exactly the five sub_0806BD84 reads,
+ * members it writes into the child are exactly the five CreditsNameLetter_Loop reads,
  * which is how the child's layout is settled independently of that function.
  *
  * `proc->unk60 & 7` is still live in r5 when the child's +0x58 is zeroed, so
@@ -60,7 +60,7 @@ struct Unk6BE7CChild
     /* 0x64 */ s16 unk64;
 };
 
-void sub_0806BD84(struct Unk6BD84Proc *proc)
+void CreditsNameLetter_Loop(struct Unk6BD84Proc *proc)
 {
     int scale;
 
@@ -80,7 +80,7 @@ void sub_0806BD84(struct Unk6BD84Proc *proc)
 
     if (proc->unk58 > 5)
     {
-        sub_0806BD6C(gBG0TilemapBuffer + ((proc->unk30 >> 3) * 0x20 + (proc->unk2c >> 3)), proc->unk64);
+        WriteBg0TilePair(gBG0TilemapBuffer + ((proc->unk30 >> 3) * 0x20 + (proc->unk2c >> 3)), proc->unk64);
         Proc_Break(proc);
     }
     else
@@ -88,8 +88,9 @@ void sub_0806BD84(struct Unk6BD84Proc *proc)
         proc->unk58++;
     }
 }
+asm(".global sub_0806BD84\n.thumb_set sub_0806BD84, CreditsNameLetter_Loop\n");
 
-void sub_0806BE7C(struct Unk6BE7CParent *proc)
+void CreditsNameLine_Loop(struct Unk6BE7CParent *proc)
 {
     struct Unk6BE7CChild *child;
 
@@ -110,3 +111,4 @@ void sub_0806BE7C(struct Unk6BE7CParent *proc)
 
     proc->unk60++;
 }
+asm(".global sub_0806BE7C\n.thumb_set sub_0806BE7C, CreditsNameLine_Loop\n");

@@ -14,7 +14,7 @@ struct Unk0806F27CProc
     /* 0x3c */ ProcPtr unk3c[6];
 };
 
-void sub_0806F27C(struct Unk0806F27CProc *proc)
+void SoundRoomMusicPage_End(struct Unk0806F27CProc *proc)
 {
     int i;
 
@@ -28,3 +28,4 @@ void sub_0806F27C(struct Unk0806F27CProc *proc)
     Proc_EndEach(gUnknown_08582BE4);
     EndBgScrollAnimator();
 }
+asm(".global sub_0806F27C\n.thumb_set sub_0806F27C, SoundRoomMusicPage_End\n");

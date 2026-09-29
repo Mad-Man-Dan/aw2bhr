@@ -9,7 +9,7 @@
 
 #include "proc.h"
 #include "hardware.h"
-/* The fade-OUT twin of sub_0806F634: same shape, counting down from 16 and
+/* The fade-OUT twin of SoundRoomFadeToBlack_Loop: same shape, counting down from 16 and
  * breaking at 0. Read that function's header for why the assignment is
  * chained. Diffed against it rather than assumed: the compare is <= 0 (ROM
  * bgt) and the step is --, so the two differ in more than a constant. */
@@ -51,7 +51,7 @@ struct Unk6F6D8Proc
     /* 64 */ s16 unk64;
 };
 
-void sub_0806F6A0(struct Unk6F6A0Proc *proc)
+void SoundRoomFadeFromBlack_Loop(struct Unk6F6A0Proc *proc)
 {
     int t;
 
@@ -62,14 +62,16 @@ void sub_0806F6A0(struct Unk6F6A0Proc *proc)
 
     proc->unk58--;
 }
+asm(".global sub_0806F6A0\n.thumb_set sub_0806F6A0, SoundRoomFadeFromBlack_Loop\n");
 
-void sub_0806F6C4(struct Unk6F6C4Proc *proc)
+void SoundRoomMusicSwitch_Init(struct Unk6F6C4Proc *proc)
 {
     FadeOutMusicDefault();
     proc->unk64 = 0;
 }
+asm(".global sub_0806F6C4\n.thumb_set sub_0806F6C4, SoundRoomMusicSwitch_Init\n");
 
-void sub_0806F6D8(struct Unk6F6D8Proc *proc)
+void SoundRoomMusicSwitch_Loop(struct Unk6F6D8Proc *proc)
 {
     if (proc->unk64 > 0x2F)
     {
@@ -83,3 +85,4 @@ void sub_0806F6D8(struct Unk6F6D8Proc *proc)
         proc->unk64++;
     }
 }
+asm(".global sub_0806F6D8\n.thumb_set sub_0806F6D8, SoundRoomMusicSwitch_Loop\n");

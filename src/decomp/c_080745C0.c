@@ -26,7 +26,7 @@ struct Unk80745E0
     /* 0x4c */ u16 unk_4c;
 };
 
-void sub_080745C0(void)
+void ClearWorldMapMarkers(void)
 {
     s32 i;
     struct Unk80745C0 * p = (struct Unk80745C0 *)&gUnknown_0202FDFC.unk3c;
@@ -36,11 +36,13 @@ void sub_080745C0(void)
 
     p->unk_00 = -1;
 }
+asm(".global sub_080745C0\n.thumb_set sub_080745C0, ClearWorldMapMarkers\n");
 
-void sub_080745E0(struct Unk80745E0 * proc)
+void DarkenRampDown_Init(struct Unk80745E0 * proc)
 {
     proc->unk_4c = 16;
 
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_03001FFC = 16;
 }
+asm(".global sub_080745E0\n.thumb_set sub_080745E0, DarkenRampDown_Init\n");

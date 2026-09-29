@@ -16,7 +16,7 @@ struct Unk80784E4
     /* 0x60 */ s32 unk_60;
 };
 
-void sub_080784E4(s32 a, s32 b, s32 c, ProcPtr parent)
+void StartBlockingCoSpeech(s32 a, s32 b, s32 c, ProcPtr parent)
 {
     struct Unk80784E4 * proc = Proc_StartBlocking(gUnknown_08615A8C, parent);
 
@@ -24,3 +24,4 @@ void sub_080784E4(s32 a, s32 b, s32 c, ProcPtr parent)
     proc->unk_5c = b;
     proc->unk_60 = c;
 }
+asm(".global sub_080784E4\n.thumb_set sub_080784E4, StartBlockingCoSpeech\n");

@@ -93,7 +93,7 @@ struct Unk8077304Proc
     /* 0x44 */ int unk44;
 };
 
-void sub_08077304(struct Unk8077304Proc * proc)
+void WorldMapMissionInfo_Init(struct Unk8077304Proc * proc)
 {
     int i;
     int j;
@@ -109,7 +109,7 @@ void sub_08077304(struct Unk8077304Proc * proc)
 
     gUnknown_0300064C = 0;
     SetVCountCompareLine(0xa0);
-    SetVCountInterruptHandler((int)sub_080771F0);
+    SetVCountInterruptHandler((int)SplitScroll_BottomHandler);
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(2, 0, 0);
 
@@ -181,18 +181,19 @@ void sub_08077304(struct Unk8077304Proc * proc)
     }
 
     if (proc->unk3c != 0)
-        sub_08077140(gUnknown_08551A00 + 1, 0x46, 1);
+        PutTileBlock6x6(gUnknown_08551A00 + 1, 0x46, 1);
     else
-        sub_08077180(gUnknown_08551A00 + 0x41, 0x46, 1);
+        PutTileBlock6x4(gUnknown_08551A00 + 0x41, 0x46, 1);
 
     q = gBG0TilemapBuffer;
 
     for (m = 0; m < 4; m++)
         q[0x281 + m] = 0x2e + m;
 
-    sub_080772B8((struct Unk080772B8 *)(gBG0TilemapBuffer + 0x280));
+    WorldMapMissionInfo_DrawPropertyCounts((struct Unk080772B8 *)(gBG0TilemapBuffer + 0x280));
     sub_080718F8(gUnknown_08551A04 + 0x20, gUnknown_081D2330, 0x360);
     sub_080718F8(gBG2TilemapBuffer + 0x280, gUnknown_081D249C, 0x360);
 
     proc->unk44 = 0;
 }
+asm(".global sub_08077304\n.thumb_set sub_08077304, WorldMapMissionInfo_Init\n");

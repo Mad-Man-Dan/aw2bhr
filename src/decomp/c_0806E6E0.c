@@ -9,8 +9,9 @@
 
 #include "proc.h"
 
-/* Byte-identical to sub_0806E6B4, which starts the same script. */
-void sub_0806E6E0(ProcPtr parent)
+/* Byte-identical to SoundRoomCoSwap_StartSlideIn, which starts the same script. */
+void StartSoundRoomCoSlideIn(ProcPtr parent)
 {
     Proc_StartBlocking(gUnknown_08582B94, parent);
 }
+asm(".global sub_0806E6E0\n.thumb_set sub_0806E6E0, StartSoundRoomCoSlideIn\n");

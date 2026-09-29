@@ -50,7 +50,7 @@ void BuildWarRoomCoSelectGroupList(void)
     i = 0;
     k = 0;
     gUnknown_03005944 = 0;
-    sub_08078758();
+    SetCoSelectGroupSwitchAll();
 
     while (gUnknown_086166F0[i] != 0xff)
     {

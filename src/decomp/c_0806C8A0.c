@@ -7,7 +7,7 @@
  * sub_0806C8A0 @ 0x0806C8A0
  */
 
-void sub_0806C8A0(void)
+void ClearCreditsPageArea(void)
 {
     int i;
     int j;
@@ -18,3 +18,4 @@ void sub_0806C8A0(void)
 
     BG_EnableSyncBG0();
 }
+asm(".global sub_0806C8A0\n.thumb_set sub_0806C8A0, ClearCreditsPageArea\n");

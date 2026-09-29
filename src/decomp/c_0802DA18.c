@@ -82,7 +82,7 @@ void DeploymentScreen_Loop(void)
             SendActionCommand(1, ((struct Unk2023830 *)gUnknown_02023830)[ent->unk20].unk00,
                          0, 0);
 
-        sub_08074410(0xe, p);
+        RunMapEventsForAction(0xe, p);
     }
 
     if (gpKeySt->pressed & 2)

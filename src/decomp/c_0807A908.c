@@ -21,7 +21,7 @@
  * call is a lone `lsrs r0, r5, #0x18` instead of a shift pair. Hoisting the
  * `+ 1` into a second variable, or writing the counter as `u8`, loses the giv
  * and costs 8 bytes -- see docs/agbcc-codegen.md. */
-int sub_0807A908(void)
+int GetResultsArmy(void)
 {
     int i;
 
@@ -39,3 +39,4 @@ int sub_0807A908(void)
 
     return 0;
 }
+asm(".global sub_0807A908\n.thumb_set sub_0807A908, GetResultsArmy\n");

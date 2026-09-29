@@ -73,7 +73,7 @@ void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
     {
         PlayMusicOrSfx2(0x71);
         proc->unk3c->unk48 = 1;
-        sub_0806EB28(proc);
+        SoundRoomCycleBgPalette(proc);
 
         if (proc->unk2c != 0)
         {
@@ -103,9 +103,9 @@ void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
         if (proc->unk30 == 0)
             proc->unk30 = 0x2e;
 
-        sub_0806E8E4(1);
-        sub_0806F0A0((struct Unk0806F0A0Proc *)proc);
-        sub_0806E7C0(1, proc->unk30, proc);
+        FlickSoundRoomArrow(1);
+        SoundRoom_RefreshCoPortrait((struct Unk0806F0A0Proc *)proc);
+        StartSoundRoomTitleScroll(1, proc->unk30, proc);
     }
     else if (keys & 0x10)
     {
@@ -114,9 +114,9 @@ void SoundRoomMusicPage_Input(struct Unk6F0ECProc *proc)
         if (proc->unk30 == 0x2f)
             proc->unk30 = 1;
 
-        sub_0806E8E4(0);
-        sub_0806F0A0((struct Unk0806F0A0Proc *)proc);
-        sub_0806E7C0(-1, proc->unk30, proc);
+        FlickSoundRoomArrow(0);
+        SoundRoom_RefreshCoPortrait((struct Unk0806F0A0Proc *)proc);
+        StartSoundRoomTitleScroll(-1, proc->unk30, proc);
     }
 }
 asm(".global sub_0806F0EC\n.thumb_set sub_0806F0EC, SoundRoomMusicPage_Input\n");

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The 16-frame slide-in twin of sub_0806C410: same two sprites, but the second
+/* The 16-frame slide-in twin of CreditsRank_HoldLoop: same two sprites, but the second
  * one's x is interpolated instead of fixed, and the frame counter drives a
  * Proc_Break at the end.
  *
@@ -23,23 +23,23 @@ struct Unk0806C380Proc
     /* 0x58 */ int unk58;
     /* 0x5c */ int unk5c;
 };
-/* The settled-state twin of sub_0806C380: the same two sprites with the second
+/* The settled-state twin of CreditsRank_SlideInLoop: the same two sprites with the second
  * one's x pinned at 0xa4 and no frame counter, so the second draw is PutSprite
- * rather than PutSpriteExt. See sub_0806C380 for the attribute-0 expression. */
+ * rather than PutSpriteExt. See CreditsRank_SlideInLoop for the attribute-0 expression. */
 struct Unk0806C410Proc
 {
     /* 0x00 */ u8 filler_00[0x58];
     /* 0x58 */ int unk58;
 };
 
-void sub_0806C380(struct Unk0806C380Proc *proc)
+void CreditsRank_SlideInLoop(struct Unk0806C380Proc *proc)
 {
     int a;
 
     a = Interpolate(5, 0xf0, 0xa4, proc->unk5c, 0x10);
 
     if (gUnknown_0202F2C0 != 0)
-        sub_0806C1E4();
+        CreditsRank_CycleBlinkPalette();
 
     PutSpriteExt(0, 0xa4, ((gUnknown_085816F0[proc->unk58].unk0c + 0x54) & 0xff) | 0x400,
                  gUnknown_085816F0[proc->unk58].unk08, 0x1090);
@@ -50,13 +50,15 @@ void sub_0806C380(struct Unk0806C380Proc *proc)
     else
         proc->unk5c++;
 }
+asm(".global sub_0806C380\n.thumb_set sub_0806C380, CreditsRank_SlideInLoop\n");
 
-void sub_0806C410(struct Unk0806C410Proc *proc)
+void CreditsRank_HoldLoop(struct Unk0806C410Proc *proc)
 {
     if (gUnknown_0202F2C0 != 0)
-        sub_0806C1E4();
+        CreditsRank_CycleBlinkPalette();
 
     PutSpriteExt(0, 0xa4, ((gUnknown_085816F0[proc->unk58].unk0c + 0x54) & 0xff) | 0x400,
                  gUnknown_085816F0[proc->unk58].unk08, 0x1090);
     PutSprite(0, 0xa4, 0x40, gUnknown_08581A98, 0xd0);
 }
+asm(".global sub_0806C410\n.thumb_set sub_0806C410, CreditsRank_HoldLoop\n");

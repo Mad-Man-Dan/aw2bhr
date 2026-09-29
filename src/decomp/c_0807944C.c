@@ -9,6 +9,6 @@
 
 void ResultsScreen_LoadCoFullBody(void)
 {
-    LoadCoFullBodyAndPalette(gPlayers[sub_0807A908()].co, 0, 11);
+    LoadCoFullBodyAndPalette(gPlayers[GetResultsArmy()].co, 0, 11);
 }
 asm(".global sub_0807944C\n.thumb_set sub_0807944C, ResultsScreen_LoadCoFullBody\n");

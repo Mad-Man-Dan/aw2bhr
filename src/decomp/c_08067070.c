@@ -15,7 +15,7 @@
  * `pop {r0}` fixes this as void even though sub_0801537C returns an int, so
  * both calls are bare statements. */
 
-void sub_08067070(void)
+void MatchSetupScreen_Finish(void)
 {
     sub_080733B8();
     sub_0801537C(gUnknown_08580CC4);
@@ -26,3 +26,4 @@ void sub_08067070(void)
         sub_0801537C(gUnknown_08580DD8);
     }
 }
+asm(".global sub_08067070\n.thumb_set sub_08067070, MatchSetupScreen_Finish\n");

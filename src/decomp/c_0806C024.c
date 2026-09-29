@@ -22,9 +22,9 @@ struct Unk6C024Proc
  * well costs a second `movs #2; rsbs; ands` chain in front (measured).
  *
  * The counter is UNSIGNED: `bls` after `cmp r0, #0x20`. */
-void sub_0806C024(struct Unk6C024Proc *proc)
+void CreditsPage_RevealLoop(struct Unk6C024Proc *proc)
 {
-    sub_0806B9CC(Interpolate(0, 0x48, 0xF0, proc->unk30, 0x20), 0, 0xF0, 0xA0);
+    SetCreditsWindow1Rect(Interpolate(0, 0x48, 0xF0, proc->unk30, 0x20), 0, 0xF0, 0xA0);
 
     proc->unk30++;
 
@@ -35,3 +35,4 @@ void sub_0806C024(struct Unk6C024Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0806C024\n.thumb_set sub_0806C024, CreditsPage_RevealLoop\n");

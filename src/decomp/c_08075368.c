@@ -17,13 +17,13 @@
  *
  * A data_refs-subset target and the one W20-B's pre-registration expected to be
  * dearest: 13 branches and the only undeclared callee of its batch
- * (sub_08075340, now in include/unknown-functions.h). It cost one attempt, the
+ * (SetWorldMapSelectionFrameColor, now in include/unknown-functions.h). It cost one attempt, the
  * same as the 180-byte straight-line sibling -- see docs/agbcc-codegen.md for
  * why that kills the branches-plus-undeclared-callees proxy.
  *
  * Two things are cse's `record_jump_equiv` rather than source: arm 0 stores the
  * still-live comparison zero into gUnknown_03002B28 and gUnknown_03001FFC
- * (`strh r3` where r3 is proc->unk38), and arm 1's `sub_08075340(proc->unk40)`
+ * (`strh r3` where r3 is proc->unk38), and arm 1's `SetWorldMapSelectionFrameColor(proc->unk40)`
  * reuses the 0x18 it just stored instead of reloading. `gUnknown_030030E0.bits
  * .effect = 0` is one `ldrb; and #0x3f; strb` because the two bits are adjacent
  * -- the same fold the wave-19 bitfield rule describes, here wanted rather than
@@ -44,7 +44,7 @@ struct Unk8075368
     /* 0x40 */ int unk40;
 };
 
-void sub_08075368(struct Unk8075368 *proc)
+void WorldMapSelectionFrame_Loop(struct Unk8075368 *proc)
 {
     switch (proc->unk38)
     {
@@ -60,7 +60,7 @@ void sub_08075368(struct Unk8075368 *proc)
         proc->unk2c = Interpolate(4, proc->unk30, proc->unk34, proc->unk3c, 0x10);
         SetBgScrollShadow(1, proc->unk2a, proc->unk2c);
         proc->unk40 = 0x18;
-        sub_08075340(proc->unk40);
+        SetWorldMapSelectionFrameColor(proc->unk40);
 
         if (proc->unk3c == 0x10)
         {
@@ -75,7 +75,7 @@ void sub_08075368(struct Unk8075368 *proc)
 
     case 2:
         proc->unk40 = (proc->unk40 + 1) & 0x1F;
-        sub_08075340(proc->unk40);
+        SetWorldMapSelectionFrameColor(proc->unk40);
         break;
 
     case 3:
@@ -94,9 +94,10 @@ void sub_08075368(struct Unk8075368 *proc)
             proc->unk40++;
 
         proc->unk40 &= 0x1F;
-        sub_08075340(proc->unk40);
+        SetWorldMapSelectionFrameColor(proc->unk40);
 
         proc->unk3c++;
         break;
     }
 }
+asm(".global sub_08075368\n.thumb_set sub_08075368, WorldMapSelectionFrame_Loop\n");

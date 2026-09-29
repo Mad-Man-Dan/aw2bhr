@@ -29,13 +29,13 @@ struct Unk130DCProc
  * second ProcCmd is PROC_CMD_ONEND with dataPtr 0x0801311D. StartWhiteFlash is
  * the starter that fills +0x64/+0x66/+0x68, and this reads +0x68 back.
  *
- * Same shape as the promoted sub_08067410 with every value zeroed instead of
+ * Same shape as the promoted BlendToWhite_Init with every value zeroed instead of
  * set: `effect = 0` rather than 2, `raw & 0xffe0` with no `| 0x1f`, and
  * `target1_enable_bd = 0` rather than 1. That last one is why the ROM has
  * `movs r0, #0x21; rsbs r0, r0, #0` -- agbcc materialises the 32-bit mask
  * ~0x20 = 0xFFFFFFDF as the negation of 0x21, not as a `movs r0, #0xDF`.
  *
- * sub_08067410 needed a `do { } while (0)` around the raw read-modify-write to
+ * BlendToWhite_Init needed a `do { } while (0)` around the raw read-modify-write to
  * stop agbcc hoisting the trailing proc-field store into it. There is no
  * trailing store here, so the barrier is unnecessary and the plain statement
  * matches. */

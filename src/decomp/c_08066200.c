@@ -28,7 +28,8 @@ void sub_08066200(void *a)
  * The object in r0 gets no struct type: nothing here or in the callee
  * constrains anything but those three offsets, so `void *` is the weakest
  * model and keeps this file free of a struct it cannot name. */
-void sub_08066210(void *a)
+void TeamBadge_StartExitDown(void *a)
 {
     sub_08063A30(a, gUnknown_08580A68);
 }
+asm(".global sub_08066210\n.thumb_set sub_08066210, TeamBadge_StartExitDown\n");

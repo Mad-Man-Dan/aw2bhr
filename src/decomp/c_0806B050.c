@@ -19,7 +19,7 @@ struct Unk6B050Proc
  * `if` -- the ROM reloads +0x58 after the Proc_Break call rather than reusing
  * the register the compare left it in, which is what a statement following the
  * conditional looks like. One `movs r3, #0` feeds both zero stores. */
-void sub_0806B050(struct Unk6B050Proc *proc)
+void CreditsListFade_Loop(struct Unk6B050Proc *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -32,3 +32,4 @@ void sub_0806B050(struct Unk6B050Proc *proc)
 
     proc->unk58--;
 }
+asm(".global sub_0806B050\n.thumb_set sub_0806B050, CreditsListFade_Loop\n");

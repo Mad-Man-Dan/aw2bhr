@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* A blend FADE-IN step, and the twin of sub_08078C18. The apparent double
+/* A blend FADE-IN step, and the twin of FadeInBrightness_Loop. The apparent double
  * indirection -- `ldr r2, =gUnknown_081D92D8; ldr r1, [r2]; ldrh r0, [r1]` --
  * is NOT a pointer variable: 0x081D92D8 is one of four consecutive
  * `-fforce-addr` address-constant words that all hold 0x03001FFC, so the
@@ -26,7 +26,7 @@ struct Unk8078BDC
     /* 0x4c */ u16 unk_4c;
 };
 
-void sub_08078BDC(struct Unk8078BDC *proc)
+void FadeOutBrightness_Loop(struct Unk8078BDC *proc)
 {
     if (gGameClock & 1)
         gUnknown_03001FFC++;
@@ -37,8 +37,9 @@ void sub_08078BDC(struct Unk8078BDC *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08078BDC\n.thumb_set sub_08078BDC, FadeOutBrightness_Loop\n");
 
-void sub_08078C18(struct Unk8078BDC *proc)
+void FadeInBrightness_Loop(struct Unk8078BDC *proc)
 {
     if (gGameClock & 1)
         gUnknown_03001FFC--;
@@ -49,3 +50,4 @@ void sub_08078C18(struct Unk8078BDC *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_08078C18\n.thumb_set sub_08078C18, FadeInBrightness_Loop\n");

@@ -9,7 +9,7 @@
 
 #include "proc.h"
 
-/* Walks the same 12-byte record list as sub_08074670 (see gUnknown_0202FE38 in
+/* Walks the same 12-byte record list as WorldMapMarkers_Draw (see gUnknown_0202FE38 in
  * include/unknown-globals.h) looking for the record the camera is currently
  * closing on. The record base and the struct base are ONE symbol: the ROM
  * materialises 0x0202FE38 in a single pool word and derives 0x0202FDFC with
@@ -17,7 +17,7 @@
  *
  * `dx` and `dy` are s16 OBJECTS, not casts. The ROM keeps `value << 16` in a
  * callee-saved register across both calls and re-extracts with `asr #0x10` at
- * the sub_08076F14 call and `asr #0x12` for `>> 2` -- an unextended HImode
+ * the IsWorldMapMarkerNearCursor call and `asr #0x12` for `>> 2` -- an unextended HImode
  * local extended at the use, per the W51-P chapter. An `int` local would
  * narrow once at the assignment and read out free thereafter.
  *
@@ -29,7 +29,7 @@
  * spends no instruction on it because each arm already has a register known to
  * hold zero (unk10 in the then arm, IsHardCampaignMode's result in the else arm). */
 
-void sub_08076F34(ProcPtr proc)
+void SnapWorldMapCursorToMarker(ProcPtr proc)
 {
     struct Unk0202FE38 *p;
     s16 dx;
@@ -40,7 +40,7 @@ void sub_08076F34(ProcPtr proc)
         dx = p->unk02 - (gUnknown_0202FDFC.unk04 + gUnknown_0202FDFC.unk00);
         dy = p->unk04 - (gUnknown_0202FDFC.unk06 + gUnknown_0202FDFC.unk02);
 
-        if (sub_08076F14(dx, dy))
+        if (IsWorldMapMarkerNearCursor(dx, dy))
         {
             MoveWorldMapCursorX(dx >> 2);
             MoveWorldMapCursorY(dy >> 2);
@@ -57,7 +57,7 @@ void sub_08076F34(ProcPtr proc)
             gUnknown_0202FDFC.unk10 = 1;
             gUnknown_0202FDFC.unk0c = p->unk00;
 
-            sub_0807553C(p->unk02 - gUnknown_0202FDFC.unk00 + 1,
+            MoveWorldMapSelectionFrame(p->unk02 - gUnknown_0202FDFC.unk00 + 1,
                          p->unk04 - gUnknown_0202FDFC.unk02 + 2,
                          1);
 
@@ -74,3 +74,4 @@ void sub_08076F34(ProcPtr proc)
         }
     }
 }
+asm(".global sub_08076F34\n.thumb_set sub_08076F34, SnapWorldMapCursorToMarker\n");

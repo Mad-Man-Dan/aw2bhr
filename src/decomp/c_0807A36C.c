@@ -16,10 +16,11 @@
  *
  * `gpKeySt->pressed & 1` and not `pressed`: the read is `ldrh [r0, #4]`, and +4 is
  * the held mask. */
-void sub_0807A36C(ProcPtr proc)
+void ResultsScreen_WaitForClose_Loop(ProcPtr proc)
 {
     sub_08043C28(0x40, 0xA0, 0xB000, 0, 0);
 
     if (gpKeySt->pressed & 1)
         Proc_Start(gUnknown_08615E08, proc);
 }
+asm(".global sub_0807A36C\n.thumb_set sub_0807A36C, ResultsScreen_WaitForClose_Loop\n");

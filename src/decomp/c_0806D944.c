@@ -11,7 +11,7 @@
 
 /* The near-twin of MatchSetupScreen_Init: identical through the blend setup, the seven
  * mode calls and the eight scroll zeros, then it diverges. Differences, all of
- * them local: sub_0806D850 stands in for the
+ * them local: RulesScreenInitState stands in for the
  * `Decompress(sub_0801F49C(), 0x06015200)` / MatchSetupInitState / gUnknown_08580CB4
  * group; the three InitTilePool sizes are 0x290 / 0x2a0 / 0x2e0 rather than
  * 0x298 / 0x2a8 / 0x2d2; the second glyph run ends 0x8c, 0x8d instead of 0x68;
@@ -67,7 +67,7 @@ void RulesScreen_Init(void)
     LoadWindowFrameGraphics((void *)((gUnknown_030030B4.bits.chr_block << 14) + 0x06006C00), 0, 8);
     DrawWindowBackgroundOnBg2(0, 0x10, 0x1e, 4);
     ApplyWindowFramePalette(0, 3);
-    sub_0806D850();
+    RulesScreenInitState();
     sub_0801F114();
 
     InitTilePool(1, (void *)0x06010000, 0x290, 0x19);
@@ -131,7 +131,7 @@ void RulesScreen_Init(void)
     sub_080152EC(gUnknown_08580CC4, 3);
     sub_080733B8();
     StartHeaderBanner(gUnknown_085802AC, gUnknown_0200FC50, 0x230, 0xf, 1, 1, 3);
-    sub_0806D620();
+    RulesScreenDismissArmyColumns();
     RulesScreenSpawnRuleOptions();
     gUnknown_08580934->unk30 = 0;
 }

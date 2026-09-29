@@ -15,7 +15,8 @@ struct Unk6780CProc
     /* 5c */ u32 unk5c;
 };
 
-void sub_0806780C(void)
+void ResumeIntroBgScroll(void)
 {
     ((struct Unk6780CProc *)Proc_Find(gUnknown_08580FE4))->unk5c = 1;
 }
+asm(".global sub_0806780C\n.thumb_set sub_0806780C, ResumeIntroBgScroll\n");

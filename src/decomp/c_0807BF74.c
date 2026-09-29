@@ -15,7 +15,7 @@ struct Proc7BF74
     int unk_58;
 };
 
-void sub_0807BF74(ProcPtr proc)
+void MissionTitleName_UpdateSpin(ProcPtr proc)
 {
     struct BgAffineSrcData src;
 
@@ -31,3 +31,4 @@ void sub_0807BF74(ProcPtr proc)
 
     BgAffineSet(&src, (struct BgAffineDstData *)gUnknown_030024D0, 1);
 }
+asm(".global sub_0807BF74\n.thumb_set sub_0807BF74, MissionTitleName_UpdateSpin\n");

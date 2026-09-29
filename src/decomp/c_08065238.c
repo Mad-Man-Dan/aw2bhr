@@ -47,9 +47,9 @@ asm(".global sub_08065238\n.thumb_set sub_08065238, MatchSetupSpawnArmyColumns\n
 /* The third member of the MatchSetupSpawnArmyColumns / MatchSetupSpawnArmyColumnsSlide set in this block: same
  * loop, same two 0x24-stepped givs, same (0x230, 0xf, 1, 1, 3) StartHeaderBanner
  * call. It differs by allocating a SECOND Proc per slot (gUnknown_08580A08)
- * and handing it to sub_08064D44 -- the same shape SpawnTeamBadgeForColumn uses on
- * sub_08064BC8. `obj` is reused for both allocations, which is what puts both
- * in r5, and `i * 2` is written twice (the +0x24 field and sub_08064D44's
+ * and handing it to TeamBadge_SetupAtBase -- the same shape SpawnTeamBadgeForColumn uses on
+ * TeamBadge_Setup. `obj` is reused for both allocations, which is what puts both
+ * in r5, and `i * 2` is written twice (the +0x24 field and TeamBadge_SetupAtBase's
  * fourth argument) and CSEd into r4 across the LoadCoFace call. */
 void MatchSetupSpawnArmyColumnsWithBadges(void)
 {
@@ -72,7 +72,7 @@ void MatchSetupSpawnArmyColumnsWithBadges(void)
                      (void *)(0x06010000 + (((i * 0x24 + 0x190) & 0x3ff) << 5)),
                      i + 0x10);
         obj = (struct Unk08580934_Obj *)sub_080152EC(gUnknown_08580A08, 3);
-        sub_08064D44(obj, GetArmyColumnX(i) + 8, i, i * 2);
+        TeamBadge_SetupAtBase(obj, GetArmyColumnX(i) + 8, i, i * 2);
     }
 }
 asm(".global sub_0806530C\n.thumb_set sub_0806530C, MatchSetupSpawnArmyColumnsWithBadges\n");
@@ -122,7 +122,7 @@ asm(".global sub_0806540C\n.thumb_set sub_0806540C, MatchSetupSpawnArmyColumnsSl
  * than a fresh -1: inside the `&&` chain the earlier results are already known
  * to be -1 and CSE substitutes them. That is not a comparison between the
  * three results in the source. */
-void sub_080654E8(void)
+void MatchSetupDismissArmyColumns(void)
 {
     struct Unk08580934_Obj *obj;
     int i;
@@ -148,3 +148,4 @@ void sub_080654E8(void)
     ClearCallbackOfSlotsRunningScript(gUnknown_08580A38);
     ClearCallbackOfSlotsRunningScript(gUnknown_08580A08);
 }
+asm(".global sub_080654E8\n.thumb_set sub_080654E8, MatchSetupDismissArmyColumns\n");

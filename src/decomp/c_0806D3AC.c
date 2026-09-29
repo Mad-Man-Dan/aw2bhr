@@ -7,12 +7,12 @@
  * sub_0806D3AC @ 0x0806D3AC
  */
 
-void sub_0806D3AC(struct Unk08580934_Obj *obj)
+void RulesScreenArmyColumn_Draw(struct Unk08580934_Obj *obj)
 {
     int y;
 
-    sub_08064DDC(obj->unk28 + 0x20, obj->unk2a, obj->unk1c);
-    sub_08064E1C(obj->unk28 + 0x20, obj->unk2a + 0x10, obj->unk1c);
+    DrawArmySlotControllerIcon(obj->unk28 + 0x20, obj->unk2a, obj->unk1c);
+    DrawArmySlotColorIcon(obj->unk28 + 0x20, obj->unk2a + 0x10, obj->unk1c);
 
     sub_08043FD8((obj->unk28 + 0x18) & 0x1ff, (obj->unk2a + 0x30) & 0xff,
         0xc00 | obj->unk44, 2);
@@ -25,3 +25,4 @@ void sub_0806D3AC(struct Unk08580934_Obj *obj)
 
     obj->unk49 = obj->unk48;
 }
+asm(".global sub_0806D3AC\n.thumb_set sub_0806D3AC, RulesScreenArmyColumn_Draw\n");

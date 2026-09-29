@@ -15,7 +15,7 @@
  * in hardware.h: a scalar `&= ~0x20` would emit a bare `movs #0xdf`, whereas
  * arriving at 0xDF by negating 0x21 is what `bits.target1_enable_bd = 0` does
  * on byte 0. The `orrs #0x20` on byte 1 is bit 13, target2_enable_bd. */
-void sub_080755F0(void)
+void WorldMapReticle_Init(void)
 {
     ApplyPaletteExt(gUnknown_081D20AC, 0x2C0, 0x20);
     Decompress(gUnknown_081D18E8, (void *)0x06011480);
@@ -31,3 +31,4 @@ void sub_080755F0(void)
 
     PlayMusicOrSfx2(0x1DF);
 }
+asm(".global sub_080755F0\n.thumb_set sub_080755F0, WorldMapReticle_Init\n");

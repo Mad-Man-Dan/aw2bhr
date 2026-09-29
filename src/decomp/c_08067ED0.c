@@ -32,7 +32,7 @@ struct Unk08581108Proc
     /* 0x40 */ s32 unk40;
 };
 
-void sub_08067ED0(u8 a1, u16 a2, int a3, int a4, int a5, int a6, u8 a7, u8 a8,
+void StartIntroCoSlide(u8 a1, u16 a2, int a3, int a4, int a5, int a6, u8 a7, u8 a8,
                   ProcPtr parent)
 {
     struct Unk08581108Proc *p;
@@ -52,3 +52,4 @@ void sub_08067ED0(u8 a1, u16 a2, int a3, int a4, int a5, int a6, u8 a7, u8 a8,
     p->unk3d = a8;
     p->unk40 = 0;
 }
+asm(".global sub_08067ED0\n.thumb_set sub_08067ED0, StartIntroCoSlide\n");

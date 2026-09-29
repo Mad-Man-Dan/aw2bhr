@@ -10,7 +10,7 @@
 /* MATCHED in wave 73 (W73-C). The wave-48 park was correct that the two writes
  * at +0x02 are `store_bit_field` output and genuinely want a bitfield
  * declaration -- and correct that gUnknown_0202F214's SHARED declaration must
- * not be reshaped, because sub_0806AD04 (promoted, matched wave 48) reads the
+ * not be reshaped, because StartCreditsMissionLine (promoted, matched wave 48) reads the
  * same halfword and a bitfield READ widens to the enclosing word (`ldr`), which
  * that ROM does not have.
  *
@@ -18,7 +18,7 @@
  * not actually in conflict, because a bitfield view can be LOCAL TO THE WRITER.
  * `struct Unk0202F214Rec` below is declared in this .c and reached by a cast.
  * The shared `struct Unk0202F214 { u16 unk00; u16 unk02; }` is UNCHANGED, so
- * sub_0806AD04 is untouched and still matches (re-verified this wave). The
+ * StartCreditsMissionLine is untouched and still matches (re-verified this wave). The
  * wave-48 ruled-out list only covered a UNION carrying a bitfield struct --
  * which does inflate the element from 4 to 8 bytes -- and a unilateral reshape
  * of the shared struct. A local view type is neither.
@@ -66,7 +66,7 @@
 
 /* Local VIEW of gUnknown_0202F214's element, for the two +0x02 writes only.
  * The shared declaration in unknown-globals.h stays `u16 unk02` because
- * sub_0806AD04 reads it as a byte and a halfword. Same 4-byte size and
+ * StartCreditsMissionLine reads it as a byte and a halfword. Same 4-byte size and
  * alignment either way, so the `lsls #2` index is unaffected. */
 struct Unk0202F214Rec
 {

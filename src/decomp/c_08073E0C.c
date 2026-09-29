@@ -104,7 +104,7 @@ struct Unk73E0CProc
     /* 58 */ int unk58;
 };
 
-void sub_08073E0C(struct Unk73E0CProc *proc)
+void SoundScope_Loop(struct Unk73E0CProc *proc)
 {
     int i;
     int y;
@@ -213,3 +213,4 @@ void sub_08073E0C(struct Unk73E0CProc *proc)
         REG_DMA0CNT_H = output;
     }
 }
+asm(".global sub_08073E0C\n.thumb_set sub_08073E0C, SoundScope_Loop\n");

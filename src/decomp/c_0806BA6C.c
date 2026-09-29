@@ -10,10 +10,10 @@
 #include "hardware.h"
 
 /* Window 0 setup taking its four edges as arguments -- the parameterised
- * sibling of sub_0806EA88 (src/decomp/c_0806EA28.c). Same two window shadows,
+ * sibling of SoundRoomSetTitleTextWindow (src/decomp/c_0806EA28.c). Same two window shadows,
  * same accumulate-in-a-register behaviour; it differs in which layer bit the
  * second shadow masks out (bg3 here, bg0 there) and in DISPCNT coming last. */
-void sub_0806BA6C(int left, int top, int right, int bottom)
+void SetCreditsWindow0Rect(int left, int top, int right, int bottom)
 {
     gUnknown_030030A4.bits.win0_enable_bg0 = 1;
     gUnknown_030030A4.bits.win0_enable_bg1 = 1;
@@ -36,3 +36,4 @@ void sub_0806BA6C(int left, int top, int right, int bottom)
     gUnknown_030030DC.bits.win1_enable_blend = 1;
     gDispIo.disp_ct.win0_enable = 1;
 }
+asm(".global sub_0806BA6C\n.thumb_set sub_0806BA6C, SetCreditsWindow0Rect\n");

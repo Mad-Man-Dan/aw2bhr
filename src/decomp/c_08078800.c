@@ -23,11 +23,11 @@ void SetupCoSelectHuntsEnd(void)
     if (IsCampaignCompletionFlagSet(0x6a))
     {
         AddCoSelectGroupBlueMoon(i);
-        sub_08078770();
+        SetCoSelectGroupSwitchAllButFirst();
     }
     else
     {
-        sub_08078740();
+        SetCoSelectGroupSwitchNone();
     }
 }
 

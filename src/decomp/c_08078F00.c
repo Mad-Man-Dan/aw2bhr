@@ -19,10 +19,11 @@
 #include "hardware.h"
 #include "proc.h"
 
-void sub_08078F00(ProcPtr proc)
+void ResultsScreen_FadeToWhite_Loop(ProcPtr proc)
 {
     gUnknown_03001FFC += 2;
 
     if (gUnknown_03001FFC > 0xf)
         Proc_Break(proc);
 }
+asm(".global sub_08078F00\n.thumb_set sub_08078F00, ResultsScreen_FadeToWhite_Loop\n");

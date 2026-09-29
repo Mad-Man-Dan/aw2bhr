@@ -20,7 +20,7 @@ struct Unk6E5CCProc
     /* 34 */ u16 unk34;
 };
 
-void sub_0806E5CC(u16 a, ProcPtr parent)
+void StartSoundRoomCoPortrait(u16 a, ProcPtr parent)
 {
     struct Unk6E5CCProc * proc = Proc_Start(gUnknown_08582B2C, parent);
 
@@ -28,3 +28,4 @@ void sub_0806E5CC(u16 a, ProcPtr parent)
     proc->unk2c = 0x140;
     proc->unk30 = 0xa0;
 }
+asm(".global sub_0806E5CC\n.thumb_set sub_0806E5CC, StartSoundRoomCoPortrait\n");

@@ -37,7 +37,7 @@ struct Unk8075F44
     /* 0x3c */ int unk3c;
 };
 
-void sub_08075F44(void *proc)
+void WorldMapNationPanel_Refresh(void *proc)
 {
     u16 *base;
     int v;
@@ -69,3 +69,4 @@ void sub_08075F44(void *proc)
                  gTextTable[gUnknown_081CC578[t]], 0, 0);
     PutTilePoolGraphicTilemap(gUnknown_081CC538[v], gUnknown_08551A00 + 0x161);
 }
+asm(".global sub_08075F44\n.thumb_set sub_08075F44, WorldMapNationPanel_Refresh\n");

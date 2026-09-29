@@ -30,7 +30,7 @@ void CommitUnitMove(void)
         gUnknown_030040D8->unk01 |= 2;
 
     RebuildMapUnitLayers();
-    sub_080743E8(gUnknown_030040D8);
+    RunMapEventsAfterUnitAction(gUnknown_030040D8);
     sub_080198D0();
 }
 asm(".global sub_080424FC\n.thumb_set sub_080424FC, CommitUnitMove\n");

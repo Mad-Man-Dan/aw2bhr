@@ -18,10 +18,11 @@ struct UnkProc7BE24
     u16 unk_68;
 };
 
-void sub_0807BE24(struct UnkProc7BE24 *proc)
+void MissionTitleLetters_Init(struct UnkProc7BE24 *proc)
 {
     proc->unk_4c = gUnknown_0300592C;
     proc->unk_66 = 0;
     proc->unk_68 = 0;
     proc->unk_60 = 0;
 }
+asm(".global sub_0807BE24\n.thumb_set sub_0807BE24, MissionTitleLetters_Init\n");

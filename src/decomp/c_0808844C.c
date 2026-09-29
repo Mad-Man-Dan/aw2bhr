@@ -179,7 +179,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     proc->unk2c = proc->unk4e * Interpolate(4, 0xF, 0x1D, proc->unk4c - 8, 8);
                 }
 
-                sub_08088CDC((struct Unk08088CDC *)proc);
+                CoDesignEditor_LoadCoGraphicsMidSlide((struct Unk08088CDC *)proc);
 
                 if (proc->unk4c == 0x10)
                     proc->unk4e = 0;
@@ -198,7 +198,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                     proc->unk30 = proc->unk60 * Interpolate(4, 0x78, 0xFF, proc->unk4c - 0xC, 0xC);
                 }
 
-                sub_08088DA4((struct Unk08088DA4 *)proc);
+                CoDesignEditor_LoadCoGraphicsMidGroupSlide((struct Unk08088DA4 *)proc);
 
                 if (proc->unk4c == 0x18)
                     proc->unk60 = 0;
@@ -295,7 +295,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
         CoDesignEditor_DrawConfirmToPicker((struct Unk08089F90 *)proc);
 
     if (gUnknown_03005908 != -1 && gUnknown_03005908 != 0)
-        sub_0808A2F4((struct Unk8A2F4Proc *)proc);
+        CoDesignEditor_DrawCoBody((struct Unk8A2F4Proc *)proc);
 
     proc->unk3c--;
 

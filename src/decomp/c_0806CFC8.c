@@ -7,7 +7,7 @@
  * sub_0806CFC8 @ 0x0806CFC8
  */
 
-void sub_0806CFC8(int a1, int a2)
+void RulesScreenDrawUpArrow(int a1, int a2)
 {
     if (gUnknown_03000610 == gGameClock - 1)
     {
@@ -21,3 +21,4 @@ void sub_0806CFC8(int a1, int a2)
     gUnknown_03000614 = a1;
     gUnknown_03000616 = a2;
 }
+asm(".global sub_0806CFC8\n.thumb_set sub_0806CFC8, RulesScreenDrawUpArrow\n");

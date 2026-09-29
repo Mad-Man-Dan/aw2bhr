@@ -35,7 +35,7 @@ struct Unk68810Proc
     /* 0x4f */ u8 unk4f;
 };
 
-void sub_08068810(int a1, int a2, int a3, int a4, u16 a5, u8 a6, ProcPtr parent)
+void StartIntroCoNameWobble(int a1, int a2, int a3, int a4, u16 a5, u8 a6, ProcPtr parent)
 {
     struct Unk68810Proc *proc;
     const struct CoData *tbl;
@@ -51,3 +51,4 @@ void sub_08068810(int a1, int a2, int a3, int a4, u16 a5, u8 a6, ProcPtr parent)
     proc->unk4e = a4;
     proc->unk4f = 0;
 }
+asm(".global sub_08068810\n.thumb_set sub_08068810, StartIntroCoNameWobble\n");

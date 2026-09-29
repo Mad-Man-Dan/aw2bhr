@@ -7,7 +7,7 @@
  * sub_0806DF58 @ 0x0806DF58
  */
 
-void sub_0806DF58(void)
+void RulesScreenShowHelpText(void)
 {
     u16 id;
 
@@ -31,3 +31,4 @@ void sub_0806DF58(void)
         gUnknown_08580934->unk2e = id;
     }
 }
+asm(".global sub_0806DF58\n.thumb_set sub_0806DF58, RulesScreenShowHelpText\n");

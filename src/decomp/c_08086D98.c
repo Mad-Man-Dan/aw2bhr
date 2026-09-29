@@ -46,7 +46,7 @@ void MapSelectPreview_LoadMap(struct Unk86D98Proc *proc)
  * bit 2 comes out as `ldr` plus `lsls #0x1c; lsrs #0x1e`. Reading it as a mask
  * and a shift instead would be three instructions.
  *
- * WarRoomScroll_08086DD5 and sub_08086E2C repeat the same address expression
+ * WarRoomScroll_08086DD5 and MapSelectPreview_LoadPlaceholderPicture repeat the same address expression
  * with a different consumer. */
 void WarRoomScroll_08086DB5(void)
 {
@@ -79,11 +79,12 @@ void MapSelectPreview_FillTilemap(void)
  * blob into the tile block BG1 currently points at. Decompress takes the
  * destination second, so the address arithmetic lands in r1 here rather than
  * r0. */
-void sub_08086E2C(void)
+void MapSelectPreview_LoadPlaceholderPicture(void)
 {
     Decompress(gUnknown_0823FD7C,
                (void *)(0x06004000 + gUnknown_03001FE8.bits.chr_block * 0x4000));
 }
+asm(".global sub_08086E2C\n.thumb_set sub_08086E2C, MapSelectPreview_LoadPlaceholderPicture\n");
 
 asm(".global sub_08086D98\n.thumb_set sub_08086D98, MapSelectPreview_LoadMap\n"
     ".global sub_08086DB4\n.thumb_set sub_08086DB4, WarRoomScroll_08086DB5\n"

@@ -19,7 +19,7 @@ struct Unk807A268
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_0807A268(struct Unk807A268 *proc)
+void ResultsVersus_SlideOutShowCo_Loop(struct Unk807A268 *proc)
 {
     int i;
 
@@ -47,9 +47,10 @@ void sub_0807A268(struct Unk807A268 *proc)
 
     if (proc->unk4c > 0x2F)
     {
-        sub_0807A860();
+        ResultsScreen_ShowVictoryQuote();
         Proc_Break(proc);
     }
 
     proc->unk4c++;
 }
+asm(".global sub_0807A268\n.thumb_set sub_0807A268, ResultsVersus_SlideOutShowCo_Loop\n");

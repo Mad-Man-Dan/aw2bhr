@@ -7,7 +7,7 @@
  * sub_08065960 @ 0x08065960
  */
 
-void sub_08065960(void)
+void MatchSetupBg3AutoScroll_Loop(void)
 {
     if (gGameClock & 1)
     {
@@ -15,3 +15,4 @@ void sub_08065960(void)
         gUnknown_03002000--;
     }
 }
+asm(".global sub_08065960\n.thumb_set sub_08065960, MatchSetupBg3AutoScroll_Loop\n");

@@ -25,7 +25,7 @@ struct Unk806AF44Child
     /* 0x39 */ u8 unk39;
 };
 
-int sub_0806AF44(ProcPtr a1)
+int StartCreditsIllustration(ProcPtr a1)
 {
     struct Unk806AF44Child *child;
     int unit;
@@ -58,3 +58,4 @@ int sub_0806AF44(ProcPtr a1)
 
     return 1;
 }
+asm(".global sub_0806AF44\n.thumb_set sub_0806AF44, StartCreditsIllustration\n");

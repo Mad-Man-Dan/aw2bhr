@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0806E240.
- * sub_0806E240 @ 0x0806E240
+ * SoundRoomButton_Loop @ 0x0806E240
  */
 
 #include "hardware.h"
@@ -39,7 +39,7 @@ struct Unk0806E240Proc
     /* 0x4c */ int unk4c;
 };
 
-void sub_0806E240(struct Unk0806E240Proc *proc)
+void SoundRoomButton_Loop(struct Unk0806E240Proc *proc)
 {
     u16 scale;
 
@@ -93,3 +93,4 @@ void sub_0806E240(struct Unk0806E240Proc *proc)
                      proc->unk38, proc->unk40);
     }
 }
+asm(".global sub_0806E240\n.thumb_set sub_0806E240, SoundRoomButton_Loop\n");

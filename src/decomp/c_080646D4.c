@@ -7,8 +7,8 @@
  * sub_080646D4 @ 0x080646D4
  */
 
-/* MATCHED. Representative of family F092 (sub_080646D4, sub_08064FC8,
- * sub_08065118), the per-frame tick of a falling/arcing effect object: count
+/* MATCHED. Representative of family F092 (RuleOptionEnter_Loop, ArmyColumnEnter_Loop,
+ * ArmyColumnEnterCurve_Loop), the per-frame tick of a falling/arcing effect object: count
  * down a delay, then read the next vertical offset out of a ROM curve, hand
  * the object to its emitter, and when the curve runs out decrement the owner's
  * live count and end the whole effect.
@@ -24,7 +24,7 @@
  * unknown-globals.h; see the note there. `obj->unk24--` still emitting `ldrh`
  * on a signed member is the documented "the sign bits cannot survive the
  * strh" narrowing and is not a contradiction. */
-void sub_080646D4(struct Unk08580934_Obj *obj)
+void RuleOptionEnter_Loop(struct Unk08580934_Obj *obj)
 {
     if (obj->unk24 != 0)
     {
@@ -33,7 +33,7 @@ void sub_080646D4(struct Unk08580934_Obj *obj)
     else
     {
         obj->unk2a = obj->unk38 + gUnknown_08580948[obj->unk26];
-        sub_080645AC(obj);
+        RuleOption_Draw(obj);
 
         obj->unk26--;
         if (obj->unk26 < 0)
@@ -44,3 +44,4 @@ void sub_080646D4(struct Unk08580934_Obj *obj)
         }
     }
 }
+asm(".global sub_080646D4\n.thumb_set sub_080646D4, RuleOptionEnter_Loop\n");

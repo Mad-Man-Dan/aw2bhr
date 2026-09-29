@@ -14,7 +14,7 @@
 #include "hardware.h"
 #include "proc.h"
 /* A screen-setup proc entry in the sub_08068AC4 family: take a ticket, rebuild
- * the display state, load graphics through sub_080697CC and reset all four
+ * the display state, load graphics through LoadIntroScreenGraphicsWithBg1 and reset all four
  * scroll channels.
  *
  * The five bg/obj enables are ONE ldrb/strb pair around five `orr`s because
@@ -31,14 +31,14 @@ struct Unk69864Proc
     /* 0x2c */ int unk2c;
 };
 
-/* Graphics loader; sub_08069FD0 is its near-twin, differing only in the first
+/* Graphics loader; LoadIntroScreenGraphics is its near-twin, differing only in the first
  * Decompress destination (0x06000000 here, 0x06008000 there), one extra blob
  * into *gBG1TilemapBuffer, and the extra BG_EnableSyncBG1 call.
  *
  * The zero word CpuFastSet fills from is a STACK local, which is what the
  * `sub sp, #4` and `mov r0, sp` are for. gUnknown_08580E60's address stays in
  * r4 across the whole body because it is dereferenced three times. */
-void sub_080697CC(void)
+void LoadIntroScreenGraphicsWithBg1(void)
 {
     int zero;
 
@@ -54,11 +54,12 @@ void sub_080697CC(void)
     BG_EnableSyncBG2();
     RegisterDataMove(gUnknown_08580E60, (void *)0x0600F000, 0x1000);
 }
+asm(".global sub_080697CC\n.thumb_set sub_080697CC, LoadIntroScreenGraphicsWithBg1\n");
 
 void IntroT3_08069865(struct Unk69864Proc *proc)
 {
     proc->unk2c = GetIntroSceneDuration(gUnknown_0202F204++);
-    sub_080670F8(gUnknown_08581438);
+    ApplyBgControlTable(gUnknown_08581438);
     gDispIo.disp_ct.mode = 0;
     SetDispEnable(1, 1, 1, 1, 1);
     gUnknown_03002B6C.bits.priority = 0;
@@ -66,7 +67,7 @@ void IntroT3_08069865(struct Unk69864Proc *proc)
     gUnknown_0300251C.bits.priority = 2;
     gUnknown_030030B4.bits.priority = 3;
     SetDefaultColorEffects();
-    sub_080697CC();
+    LoadIntroScreenGraphicsWithBg1();
     SetBgScrollShadow(0, 0, 0);
     SetBgScrollShadow(1, 0, 0);
     SetBgScrollShadow(2, 0, 0);
@@ -84,7 +85,7 @@ void IntroT3_08069865(struct Unk69864Proc *proc)
  * `ldrb [r,#1]; orr #0x20; strb` is bit 13 of the halfword, which is BgCnt's
  * `wrap`. Wave 23's note in hardware.h said nothing had yet reached that field;
  * this is the first site that does. */
-void sub_08069924(u8 a1)
+void SetupIntroBg2Screen(u8 a1)
 {
     int zero;
 
@@ -93,7 +94,7 @@ void sub_08069924(u8 a1)
     gUnknown_030030B4.bits.priority = 1;
     gUnknown_03001FE8.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
-    sub_08063994();
+    ResetBgAffineToScreenCentre();
     SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 1);
     zero = 0;
     CpuFastSet(&zero, gBG2TilemapBuffer, 0x01000200);
@@ -104,5 +105,6 @@ void sub_08069924(u8 a1)
     Decompress(gUnknown_0817E208, gBG2TilemapBuffer);
     BG_EnableSyncBG2();
 }
+asm(".global sub_08069924\n.thumb_set sub_08069924, SetupIntroBg2Screen\n");
 
 asm(".global sub_08069864\n.thumb_set sub_08069864, IntroT3_08069865\n");

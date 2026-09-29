@@ -23,18 +23,19 @@ struct Unk806A578
     /* 0x2c */ struct Unk806A578Obj *unk2c;
 };
 
-/* An H-blank callback registered by sub_0806A578. Both `movs #K; lsls #n`
+/* An H-blank callback registered by MeteorImpactGlow_Loop. Both `movs #K; lsls #n`
  * pairs are plain constants -- 0x82 << 1 is 0x104 and 0x80 << 5 is 0x1000 --
  * not shifts in the source; Thumb immediates stop at 0xFF, so that is how
  * agbcc builds every larger literal. */
-void sub_0806A534(void)
+void MeteorImpactGlow_DrawCallback(void)
 {
     PutOamHi((gUnknown_0300060C + 0x206) & 0x1FF,
                  (gUnknown_0202F210 + 0x104) & 0xFF,
                  gUnknown_085815C8, 0x1000);
 }
+asm(".global sub_0806A534\n.thumb_set sub_0806A534, MeteorImpactGlow_DrawCallback\n");
 
-void sub_0806A578(struct Unk806A578 *proc)
+void MeteorImpactGlow_Loop(struct Unk806A578 *proc)
 {
     int v = proc->unk2c->unk5a / 4;
 
@@ -42,6 +43,7 @@ void sub_0806A578(struct Unk806A578 *proc)
     {
         gUnknown_03002020 = 4 - v;
         gUnknown_03002B28 = v + 0xC;
-        RunOrQueueDrawCallback((void *)sub_0806A534, 0x7F);
+        RunOrQueueDrawCallback((void *)MeteorImpactGlow_DrawCallback, 0x7F);
     }
 }
+asm(".global sub_0806A578\n.thumb_set sub_0806A578, MeteorImpactGlow_Loop\n");

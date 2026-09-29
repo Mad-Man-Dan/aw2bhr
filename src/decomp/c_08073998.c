@@ -8,7 +8,7 @@
  */
 
 /* Walks one edge of a polygon down the scanline table, handing each row to
- * sub_08073974.  The endpoints are sorted by y first, the slope is a 16.16
+ * SetWipeEdge.  The endpoints are sorted by y first, the slope is a 16.16
  * fixed-point `dx/dy` -- a real signed `/`, which is where __divsi3 comes from
  * (do not author the helper call) -- and x is stepped by it once per row.
  *
@@ -21,7 +21,7 @@
  * and it is spelled as a negate-then-multiply, not `x -= slope * y1`.
  *
  * gUnknown_0202FDE0 is re-loaded from the global inside the loop because
- * sub_08073974 may store through it; only the address is hoisted (r8). */
+ * SetWipeEdge may store through it; only the address is hoisted (r8). */
 
 void DrawWipeEdgeLine(int x1, int y1, int x2, int y2, int c)
 {
@@ -53,7 +53,7 @@ void DrawWipeEdgeLine(int x1, int y1, int x2, int y2, int c)
 
     for (; y1 < y2; y1++)
     {
-        sub_08073974(x >> 16, y1, c, gUnknown_0202FDE0);
+        SetWipeEdge(x >> 16, y1, c, gUnknown_0202FDE0);
         x += slope;
     }
 }

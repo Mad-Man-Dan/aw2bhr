@@ -46,7 +46,7 @@ struct Unk680E4Proc
     /* 0x4e */ u8 unk4e;
 };
 
-void sub_080680E4(struct Unk680E4Proc *proc)
+void IntroCoNameBanner_Init(struct Unk680E4Proc *proc)
 {
     int i;
     int lo;
@@ -105,3 +105,4 @@ void sub_080680E4(struct Unk680E4Proc *proc)
         }
     }
 }
+asm(".global sub_080680E4\n.thumb_set sub_080680E4, IntroCoNameBanner_Init\n");

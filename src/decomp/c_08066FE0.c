@@ -12,7 +12,7 @@
  * short-circuit expression looks like -- nested `if`s would reload it. */
 void MatchSetupUpdate(void)
 {
-    sub_08066EBC();
+    MatchSetupCyclePaletteColors();
 
     if (gUnknown_08580934->unk2d == 0 && gUnknown_0202F200 != 1)
     {

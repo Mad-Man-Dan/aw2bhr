@@ -14,7 +14,7 @@ struct Unk806F334
     /* 0x38 */ u8 unk38;
 };
 
-void sub_0806F334(struct Unk806F334 *proc)
+void SoundRoomGallery_Init(struct Unk806F334 *proc)
 {
     gDispIo.disp_ct.bg0_enable = 1;
     gDispIo.disp_ct.bg1_enable = 0;
@@ -27,7 +27,7 @@ void sub_0806F334(struct Unk806F334 *proc)
     gUnknown_030030B4.bits.priority = 2;
     gUnknown_0300251C.bits.priority = 3;
 
-    sub_080670F8(gUnknown_085819E4);
+    ApplyBgControlTable(gUnknown_085819E4);
     SetBgScrollShadow(0, 0, 0);
 
     gUnknown_030030A4.bits.win1_enable_bg0 = 1;
@@ -45,7 +45,8 @@ void sub_0806F334(struct Unk806F334 *proc)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 
-    sub_0806E8C8(1, proc);
+    StartSoundRoomArrows(1, proc);
 
     proc->unk38 = gUnknown_0202F2D8;
 }
+asm(".global sub_0806F334\n.thumb_set sub_0806F334, SoundRoomGallery_Init\n");

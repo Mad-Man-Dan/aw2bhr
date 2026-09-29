@@ -16,20 +16,20 @@
 
 /* Wave 53, W53-D. MATCHED.
  *
- * THIS FUNCTION RETYPED A PROTOTYPE. sub_0807898C was declared `void
- * sub_0807898C(void)` and promoted that way; it actually takes one argument.
+ * THIS FUNCTION RETYPED A PROTOTYPE. SetupMenuScreenBgs was declared `void
+ * SetupMenuScreenBgs(void)` and promoted that way; it actually takes one argument.
  * The body never reads r0, so at every previously-matched call site the
  * argument was already in the right register and cost zero instructions --
  * the wave-51 arity rule exactly. CampaignIntro_Init is the differently-shaped
  * caller that exposes it: it SPILLS its proc to [sp] because the two
  * CpuFastSet loops use every callee-saved register including r8/sb/sl, and
  * then reloads it into r0 for nothing but the `bl` --
- *   `str r0,[sp]; movs r0,#9; bl SetSoundMixerChannelCount; ldr r0,[sp]; bl sub_0807898C`
+ *   `str r0,[sp]; movs r0,#9; bl SetSoundMixerChannelCount; ldr r0,[sp]; bl SetupMenuScreenBgs`
  * A `(void)` callee emits no such reload. include/unknown-functions.h,
  * src/decomp/c_0807898C.c, src/decomp/c_08080498.c and
- * src/decomp/c_08078E20.c were all updated; sub_0807898C (356 B),
- * sub_08080498 (324 B) and sub_08078E48 (76 B) were each re-verified
- * byte-for-byte afterwards. Nothing in C calls sub_08078E48, so gaining its
+ * src/decomp/c_08078E20.c were all updated; SetupMenuScreenBgs (356 B),
+ * SuperCoPowerScene_StartNameStage (324 B) and ResultsScreen_Init (76 B) were each re-verified
+ * byte-for-byte afterwards. Nothing in C calls ResultsScreen_Init, so gaining its
  * own forwarded ProcPtr parameter cascaded no further.
  *
  * The two loops are tile-index arithmetic, not pointer arithmetic: the
@@ -42,7 +42,7 @@ void CampaignIntro_Init(ProcPtr proc)
     int i;
 
     SetSoundMixerChannelCount(9);
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
 
     Decompress(gUnknown_0822FEF0,
         (void *)(gUnknown_0300251C.bits.chr_block * 0x4000 + 0x06000000));

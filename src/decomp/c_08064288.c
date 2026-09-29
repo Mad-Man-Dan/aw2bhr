@@ -21,7 +21,7 @@ static inline int Add(int a0, int a1)
     return a0 + a1;
 }
 
-void sub_08064288(int a1, int a2)
+void UnusedDrawCubeFrame(int a1, int a2)
 {
     struct Unk0202F110Entry *e;
     struct Unk0202F140Entry *v[4];
@@ -67,3 +67,4 @@ void sub_08064288(int a1, int a2)
         PutOamHi(a1 + sx, a2 + sy, gUnknown_0858092C, 0);
     }
 }
+asm(".global sub_08064288\n.thumb_set sub_08064288, UnusedDrawCubeFrame\n");

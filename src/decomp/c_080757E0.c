@@ -22,7 +22,7 @@ struct Unk80757E0
     /* 0x34 */ u16 unk34;
 };
 
-void sub_080757E0(struct Unk80757E0 *proc)
+void WorldMapReticle_SpinLoop(struct Unk80757E0 *proc)
 {
     proc->unk34++;
 
@@ -36,3 +36,4 @@ void sub_080757E0(struct Unk80757E0 *proc)
                  ((proc->unk30 - 0x20) & 0xFF) | 0x700,
                  gUnknown_086143D8, 0);
 }
+asm(".global sub_080757E0\n.thumb_set sub_080757E0, WorldMapReticle_SpinLoop\n");

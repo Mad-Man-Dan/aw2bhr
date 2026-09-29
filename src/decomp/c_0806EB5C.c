@@ -90,12 +90,12 @@ void SoundRoomMusicPage_Init(struct Unk0806EB5CProc *proc)
     SetBgScrollShadow(0, 0xFFC8, 0);
     proc->unk2c = 0;
     proc->unk34 = gUnknown_08582764[proc->unk30].unk04;
-    sub_0806EB28(proc);
+    SoundRoomCycleBgPalette(proc);
     StartHeaderBanner(gUnknown_085826E0, gUnknown_02010C50, 0x50, 0xe, 0xa, 0, (int)proc);
-    sub_0806E5CC(proc->unk34, proc);
-    sub_0806E8C8(0, proc);
-    sub_0806E510(proc);
-    sub_0806E728(proc);
+    StartSoundRoomCoPortrait(proc->unk34, proc);
+    StartSoundRoomArrows(0, proc);
+    SpawnSoundRoomButtons(proc);
+    StartSoundRoomLevelPulse(proc);
     StartBgScrollAnimator(8, gUnknown_08582C7C, proc);
     Proc_Start(gUnknown_08614200, 0);
 }
@@ -173,12 +173,12 @@ void SoundRoomMusicPage_Resume(struct Unk0806ED7CProc *proc)
     proc->unk36 = gUnknown_0202F2D6;
     SoundRoomDrawTrackTitle(proc->unk30, 0x40);
     SetBgScrollShadow(0, 0x48 - ((proc->unk30 & 1) << 7), 0);
-    sub_0806EB28(proc);
+    SoundRoomCycleBgPalette(proc);
     StartHeaderBanner(gUnknown_085826E0, gUnknown_02010C50, 0x50, 0xe, 0xa, 0, (int)proc);
-    sub_0806E5CC(proc->unk34, proc);
-    sub_0806E8C8(0, proc);
-    sub_0806E510(proc);
-    sub_0806E728(proc);
+    StartSoundRoomCoPortrait(proc->unk34, proc);
+    StartSoundRoomArrows(0, proc);
+    SpawnSoundRoomButtons(proc);
+    StartSoundRoomLevelPulse(proc);
     StartBgScrollAnimator(8, gUnknown_08582C7C, proc);
     if (proc->unk2c != 0)
         Proc_Start(gUnknown_08582C5C, proc);

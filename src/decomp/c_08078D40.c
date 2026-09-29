@@ -13,8 +13,8 @@
  * gates the blend coefficient through DivRem(counter, 2).
  *
  * gUnknown_081D92E0 is NOT a global -- it is a third `-fforce-addr`
- * address-constant word holding 0x03001FFC, like 081D92D8/DC on sub_08078BDC
- * and sub_08078C18. The global is gUnknown_03001FFC, the volatile BLDY shadow.
+ * address-constant word holding 0x03001FFC, like 081D92D8/DC on FadeOutBrightness_Loop
+ * and FadeInBrightness_Loop. The global is gUnknown_03001FFC, the volatile BLDY shadow.
  * Needs "rodata": ["0x081D92E0"] in promoted.json.
  *
  * +0x68 is `s16`: the increment is `ldrh`/`strh`, but the value handed to
@@ -29,7 +29,7 @@ struct Unk8078D40
     /* 0x68 */ s16 unk_68;
 };
 
-void sub_08078D40(struct Unk8078D40 *proc)
+void FadeToBlackFrom6_Loop(struct Unk8078D40 *proc)
 {
     proc->unk_68++;
 
@@ -39,6 +39,7 @@ void sub_08078D40(struct Unk8078D40 *proc)
     if (gUnknown_03001FFC == 0x10)
         Proc_Break(proc);
 }
+asm(".global sub_08078D40\n.thumb_set sub_08078D40, FadeToBlackFrom6_Loop\n");
 
 /* A screen setup. The first Decompress destination is the BG char-base idiom
  * already written out verbatim in src/decomp/c_08065990.c line for line --
@@ -48,7 +49,7 @@ void sub_08078D40(struct Unk8078D40 *proc)
  * (gUnknown_0822FEF0) to the same place, so this is one shared statement and
  * not a rederivation. */
 
-void sub_08078D80(ProcPtr parent)
+void StartScrollingBackdrop(ProcPtr parent)
 {
     Decompress(gUnknown_0822FEF0, (void *)((gUnknown_0300251C.bits.chr_block << 14) + 0x06000000));
     Decompress(gUnknown_0822F9AC, gBG3TilemapBuffer);
@@ -56,3 +57,4 @@ void sub_08078D80(ProcPtr parent)
     ApplyPaletteExt(gUnknown_082344CC, 0x20, 0xa0);
     Proc_Start(gUnknown_08615CA0, parent);
 }
+asm(".global sub_08078D80\n.thumb_set sub_08078D80, StartScrollingBackdrop\n");

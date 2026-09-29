@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* A near-copy of sub_08077F30 (src/decomp/c_08077F30.c): the same
+/* A near-copy of WorldMap_CommitMissionAndEndProcs (src/decomp/c_08077F30.c): the same
  * gUnknown_08615194 record lookup and the same IsHardCampaignMode()-selected
  * unk28/unk24 ternary, published to gFactoryUnitSchedule. That file's comment
  * works out why the differing 0x24 / 0x28 constant folds into the base pointer
@@ -28,7 +28,7 @@ struct Unk8077F9C
     /* 0x3c */ int unk3c;
 };
 
-void sub_08077F9C(struct Unk8077F9C *proc)
+void WorldMap_CommitMissionThenCoSelect(struct Unk8077F9C *proc)
 {
     SetVCountInterruptHandler(0);
 
@@ -46,3 +46,4 @@ void sub_08077F9C(struct Unk8077F9C *proc)
         Proc_Goto(proc, 8);
     }
 }
+asm(".global sub_08077F9C\n.thumb_set sub_08077F9C, WorldMap_CommitMissionThenCoSelect\n");

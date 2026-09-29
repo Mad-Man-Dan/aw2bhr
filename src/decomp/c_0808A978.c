@@ -29,7 +29,7 @@ struct Unk8A978Proc
     /* 4C */ u16 unk4C;
 };
 
-void sub_0808A978(struct Unk8A978Proc *proc)
+void CampaignIntroFrame_Loop(struct Unk8A978Proc *proc)
 {
     int i;
 
@@ -47,3 +47,4 @@ void sub_0808A978(struct Unk8A978Proc *proc)
 
     proc->unk4C++;
 }
+asm(".global sub_0808A978\n.thumb_set sub_0808A978, CampaignIntroFrame_Loop\n");

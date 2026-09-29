@@ -32,20 +32,20 @@ void WorldMapCursor_Loop(ProcPtr proc)
 
     if (gUnknown_0202FDFC.unk08 > 3)
     {
-        sub_08076F34(proc);
+        SnapWorldMapCursorToMarker(proc);
         gUnknown_0202FDFC.unk08 = 4;
     }
     else if (gUnknown_0202FDFC.unk10 == 1)
     {
         gUnknown_0202FDFC.unk10 = 0;
         gUnknown_0202FDFC.unk0c = -1;
-        sub_0807553C(0x20, 0x20, 3);
+        MoveWorldMapSelectionFrame(0x20, 0x20, 3);
         EndDifficultyStars();
     }
 
     if ((gpKeySt->pressed & 1) && gUnknown_0202FDFC.unk10 != 0)
     {
-        sub_080733A0(5);
+        SetHeaderBannerTransitionFrames(5);
         SetDifficultyStarsPalette(2);
         SetWorldMapScopePalette(2);
         EndWorldMapNationPanel();

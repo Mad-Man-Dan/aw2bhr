@@ -10,7 +10,7 @@
 #include "hardware.h"
 #include "proc.h"
 
-void sub_0806C474(void)
+void CreditsClosingPicture_Init(void)
 {
     Proc_EndEach(gUnknown_085819D4);
 
@@ -34,3 +34,4 @@ void sub_0806C474(void)
 
     SetBgScrollShadow(3, 0, 0);
 }
+asm(".global sub_0806C474\n.thumb_set sub_0806C474, CreditsClosingPicture_Init\n");

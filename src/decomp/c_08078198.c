@@ -19,7 +19,7 @@ bool8 IsAnyWorldMapProcRunning(void)
 asm(".global sub_08078198\n.thumb_set sub_08078198, IsAnyWorldMapProcRunning\n");
 
 /* "Does any of the 42 bytes of gUnknown_0202FDFC.unk12 have bit 1 set?" --
- * the any-of version of sub_080782C0's count. 0x2a is exactly unk12's length,
+ * the any-of version of WorldMapReturn_CheckRevealCondition's count. 0x2a is exactly unk12's length,
  * which is the corroboration that the array bound in that struct is right.
  *
  * The early `return 1` is a real return, not a flag: `movs r0, #1; b` jumps

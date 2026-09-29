@@ -155,7 +155,7 @@ void EndOfGame_PrepareSummary(void)
     }
     else
     {
-        gUnknown_0202FDEC.unk0a = gPlayers[sub_0807A908()].totalScore;
+        gUnknown_0202FDEC.unk0a = gPlayers[GetResultsArmy()].totalScore;
 
         if (IsHardCampaignMode())
             gUnknown_0202FDEC.unk0a = gUnknown_0202FDEC.unk0a * 2;

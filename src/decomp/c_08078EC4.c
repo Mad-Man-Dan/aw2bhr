@@ -16,7 +16,8 @@
  * `pop {r0}; bx r0`, so void.
  */
 
-void sub_08078EC4(void)
+void ResultsScreen_PlayDelayedMusic(void)
 {
     PlayMusic(0x1A1);
 }
+asm(".global sub_08078EC4\n.thumb_set sub_08078EC4, ResultsScreen_PlayDelayedMusic\n");

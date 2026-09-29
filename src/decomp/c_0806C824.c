@@ -20,7 +20,7 @@ struct Unk6C824Proc
  * self-assignment (an `ldrh` immediately followed by a `strh` to the same
  * address, which is the only thing that produces a load whose value is stored
  * straight back), same `> 0x1f` bound. */
-void sub_0806C824(struct Unk6C824Proc *proc)
+void CreditsResultFade_Loop(struct Unk6C824Proc *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -33,3 +33,4 @@ void sub_0806C824(struct Unk6C824Proc *proc)
     else
         proc->unk58++;
 }
+asm(".global sub_0806C824\n.thumb_set sub_0806C824, CreditsResultFade_Loop\n");

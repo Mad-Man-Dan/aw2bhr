@@ -29,7 +29,7 @@ struct Unk08067E1CProc
     /* 0x40 */ s32 unk40;
 };
 
-void sub_08067E1C(struct Unk08067E1CProc *proc)
+void IntroCoSlide_MoveLoop(struct Unk08067E1CProc *proc)
 {
     int v;
 
@@ -44,3 +44,4 @@ void sub_08067E1C(struct Unk08067E1CProc *proc)
     if (proc->unk40 == proc->unk34)
         Proc_Break(proc);
 }
+asm(".global sub_08067E1C\n.thumb_set sub_08067E1C, IntroCoSlide_MoveLoop\n");

@@ -7,6 +7,7 @@
  * sub_08079020 @ 0x08079020
  */
 
-void sub_08079020(void)
+void ResultsScreen_Idle(void)
 {
 }
+asm(".global sub_08079020\n.thumb_set sub_08079020, ResultsScreen_Idle\n");

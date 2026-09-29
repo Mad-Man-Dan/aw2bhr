@@ -37,10 +37,10 @@ void PreviewMapRecords_Loop(struct Unk08087A10 *proc)
     {
         if (gUnknown_0200C078[gUnknown_02027F74.unk04[v] - 0x6c].unk00[i].unk00_08 != 0)
         {
-            sub_08087B20(0xc4, i * 0x10 + 0x28,
+            DrawOamObjectNumber(0xc4, i * 0x10 + 0x28,
                 gUnknown_0200C078[gUnknown_02027F74.unk04[v] - 0x6c].unk00[i].unk00_08,
                 0x79);
-            sub_08087B20(0xe4, i * 0x10 + 0x28,
+            DrawOamObjectNumber(0xe4, i * 0x10 + 0x28,
                 gUnknown_0200C078[gUnknown_02027F74.unk04[v] - 0x6c].unk00[i].unk00_14,
                 0x6f);
             PutCoMinimugSprite(0xa0, i * 0x10 + 0x38,

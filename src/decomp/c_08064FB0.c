@@ -7,8 +7,9 @@
  * sub_08064FB0 @ 0x08064FB0
  */
 
-void sub_08064FB0(struct Unk08580934_Obj *obj)
+void ArmyColumnEnter_Init(struct Unk08580934_Obj *obj)
 {
     gUnknown_08580934->unk2d++;
     obj->unk26 = 0xe;
 }
+asm(".global sub_08064FB0\n.thumb_set sub_08064FB0, ArmyColumnEnter_Init\n");

@@ -30,7 +30,7 @@ struct Unk08088DA4
     /* 0x60 */ int unk60;
 };
 
-void sub_08088CDC(struct Unk08088CDC *p)
+void CoDesignEditor_LoadCoGraphicsMidSlide(struct Unk08088CDC *p)
 {
     int v0;
     int v1;
@@ -59,8 +59,9 @@ void sub_08088CDC(struct Unk08088CDC *p)
         LoadCoFace(v2, (void *)0x06013900, 0x14);
     }
 }
+asm(".global sub_08088CDC\n.thumb_set sub_08088CDC, CoDesignEditor_LoadCoGraphicsMidSlide\n");
 
-void sub_08088DA4(struct Unk08088DA4 *p)
+void CoDesignEditor_LoadCoGraphicsMidGroupSlide(struct Unk08088DA4 *p)
 {
     int v0;
     int v1;
@@ -105,3 +106,4 @@ void sub_08088DA4(struct Unk08088DA4 *p)
             LoadCoFace(v2, (void *)0x06013900, 0x14);
     }
 }
+asm(".global sub_08088DA4\n.thumb_set sub_08088DA4, CoDesignEditor_LoadCoGraphicsMidGroupSlide\n");

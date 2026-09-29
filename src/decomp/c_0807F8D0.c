@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_0807F8D0(ProcPtr parent)
+void StartBlockWarRoomSelection(ProcPtr parent)
 {
     Proc_Start(gUnknown_08616740, parent);
 }
+asm(".global sub_0807F8D0\n.thumb_set sub_0807F8D0, StartBlockWarRoomSelection\n");

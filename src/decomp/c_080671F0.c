@@ -32,7 +32,7 @@ struct Unk6724CProc
  * unk30/unk34 constants -- everything else, including the `do { } while (0)`
  * code-motion barrier around the blend-target group, is the same source.
  *
- * `effect = 2` masks with 0x3f first where sub_08067300's `= 3` does not: 3
+ * `effect = 2` masks with 0x3f first where BlendRampBlack0To16_Init's `= 3` does not: 3
  * fills the two-bit field, so store_fixed_bit_field sets all_one and drops the
  * AND. That asymmetry between the two functions is the compiler's, not the
  * source's.
@@ -40,7 +40,7 @@ struct Unk6724CProc
  * The group write must stay three statements -- mask, build into a local, OR
  * in -- because fold would otherwise reassociate `(raw & 0xffe0) |
  * ((unk3c << 4) | 0xf)` and put the `movs #0xf` before the shift. */
-void sub_080671F0(struct Unk671F0Proc *proc)
+void BlendRampWhite8To0_Init(struct Unk671F0Proc *proc)
 {
     u32 v;
 
@@ -62,11 +62,12 @@ void sub_080671F0(struct Unk671F0Proc *proc)
     proc->unk30 = 8;
     proc->unk34 = 0;
 }
+asm(".global sub_080671F0\n.thumb_set sub_080671F0, BlendRampWhite8To0_Init\n");
 
 /* Character-for-character src/decomp/c_08067300.c except for `effect = 2`
  * in place of `effect = 3`. The two functions are 92 and 88 bytes; the four
  * bytes are the `movs #0x3f; ands` that a non-full bitfield value needs. */
-void sub_0806724C(struct Unk6724CProc *proc)
+void BlendRampWhite0To16_Init(struct Unk6724CProc *proc)
 {
     u32 v;
 
@@ -88,3 +89,4 @@ void sub_0806724C(struct Unk6724CProc *proc)
     proc->unk30 = 0;
     proc->unk34 = 0x10;
 }
+asm(".global sub_0806724C\n.thumb_set sub_0806724C, BlendRampWhite0To16_Init\n");

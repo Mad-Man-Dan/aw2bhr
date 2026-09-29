@@ -23,37 +23,40 @@ struct Unk806A1D0
 /* One half of a BG0 scroll ping-pong. The pool word for the partner is a
  * relocation, not a literal, so the address has to be named -- `(int)` is
  * only there because SetVCountInterruptHandler's declared parameter is `int`. */
-void sub_0806A158(void)
+void IntroBg0SplitScroll_TopHalfHandler(void)
 {
     REG_BG0HOFS = -gUnknown_0202F20C;
     SetVCountCompareLine(0x50);
-    SetVCountInterruptHandler((int)sub_0806A180);
+    SetVCountInterruptHandler((int)IntroBg0SplitScroll_BottomHalfHandler);
 }
+asm(".global sub_0806A158\n.thumb_set sub_0806A158, IntroBg0SplitScroll_TopHalfHandler\n");
 
-/* The other half of the sub_0806A158 ping-pong: same shape, no negate, and
+/* The other half of the IntroBg0SplitScroll_TopHalfHandler ping-pong: same shape, no negate, and
  * scanline 0 instead of 0x50. */
-void sub_0806A180(void)
+void IntroBg0SplitScroll_BottomHalfHandler(void)
 {
     REG_BG0HOFS = gUnknown_0202F20C;
     SetVCountCompareLine(0);
-    SetVCountInterruptHandler((int)sub_0806A158);
+    SetVCountInterruptHandler((int)IntroBg0SplitScroll_TopHalfHandler);
 }
+asm(".global sub_0806A180\n.thumb_set sub_0806A180, IntroBg0SplitScroll_BottomHalfHandler\n");
 
-/* Arms the sub_0806A158/sub_0806A180 ping-pong: parks the scroll offset off
+/* Arms the IntroBg0SplitScroll_TopHalfHandler/IntroBg0SplitScroll_BottomHalfHandler ping-pong: parks the scroll offset off
  * the left edge and resets the proc's frame counter. */
-void sub_0806A1A8(struct Unk806A1A8 *proc)
+void IntroBg0SplitScroll_Init(struct Unk806A1A8 *proc)
 {
     proc->unk58 = 0;
     gUnknown_0202F20C = -0xF0;
     SetVCountCompareLine(0);
-    SetVCountInterruptHandler((int)sub_0806A158);
+    SetVCountInterruptHandler((int)IntroBg0SplitScroll_TopHalfHandler);
 }
+asm(".global sub_0806A1A8\n.thumb_set sub_0806A1A8, IntroBg0SplitScroll_Init\n");
 
-/* The per-frame body of the sub_0806A1A8 slide: eases the scroll offset from
+/* The per-frame body of the IntroBg0SplitScroll_Init slide: eases the scroll offset from
  * -0xF0 back to 0 over ten frames, then tears the H-blank handler down. The
  * `cmp r0, #0xa` tests the value already written back, so the increment is
  * before the test and not a post-increment inside it. */
-void sub_0806A1D0(struct Unk806A1D0 *proc)
+void IntroBg0SplitScroll_Loop(struct Unk806A1D0 *proc)
 {
     gUnknown_0202F20C = Interpolate(0, -0xF0, 0, proc->unk58, 10);
     proc->unk58++;
@@ -64,3 +67,4 @@ void sub_0806A1D0(struct Unk806A1D0 *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0806A1D0\n.thumb_set sub_0806A1D0, IntroBg0SplitScroll_Loop\n");

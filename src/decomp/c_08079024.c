@@ -28,14 +28,14 @@ struct Unk8079024
     /* 0x6a */ s16 unk6a;
 };
 
-void sub_08079024(struct Unk8079024 *p)
+void ResultsSubScreen_Init(struct Unk8079024 *p)
 {
     int n;
     u16 *q;
 
-    p->unk58 = gPlayers[sub_0807A908()].speedScore;
-    p->unk5c = gPlayers[sub_0807A908()].powerScore;
-    p->unk60 = gPlayers[sub_0807A908()].techScore;
+    p->unk58 = gPlayers[GetResultsArmy()].speedScore;
+    p->unk5c = gPlayers[GetResultsArmy()].powerScore;
+    p->unk60 = gPlayers[GetResultsArmy()].techScore;
     p->unk4c = 0;
     p->unk64 = 0;
     p->unk66 = 0;
@@ -43,7 +43,7 @@ void sub_08079024(struct Unk8079024 *p)
     p->unk6a = p->unk58 + p->unk5c + p->unk60;
     p->unk2c = 0;
     p->unk30 = 0;
-    n = gPlayers[sub_0807A908()].rank;
+    n = gPlayers[GetResultsArmy()].rank;
     q = &p->unk52;
     *q = 5 - n;
     if (*q > 3)
@@ -53,3 +53,4 @@ void sub_08079024(struct Unk8079024 *p)
     else
         p->unk40 = 0;
 }
+asm(".global sub_08079024\n.thumb_set sub_08079024, ResultsSubScreen_Init\n");

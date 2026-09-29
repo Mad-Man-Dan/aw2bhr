@@ -21,7 +21,7 @@ void MapState_PlayTurnMusic(void)
     if (gUnknown_03004080 != 1)
         PlayArmyCoMusic(gUnknown_030033EC);
 
-    sub_08074460();
+    RunMapEventsAtTurnStart();
     gUnknown_030032D8 = 6;
 }
 asm(".global sub_08034DCC\n.thumb_set sub_08034DCC, MapState_PlayTurnMusic\n");

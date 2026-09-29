@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Same script and same +0x58 = arg + 1 as sub_0806E210, which starts the proc
+/* Same script and same +0x58 = arg + 1 as StartSoundRoomGalleryNumber, which starts the proc
  * instead of finding it. */
 struct Unk6E228Proc
 {

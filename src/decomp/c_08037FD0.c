@@ -42,9 +42,9 @@ void EndOfGame_StartResultFlow(ProcPtr parent)
             AwardSpeedBonusPoints(i, gPlaySt.mapID);
     }
     UpdateAllArmyScores();
-    InsertBestScoreRecord(gPlayers[sub_0807A908()].co,
+    InsertBestScoreRecord(gPlayers[GetResultsArmy()].co,
                  gPlaySt.mapID,
-                 gPlayers[sub_0807A908()].totalScore,
+                 gPlayers[GetResultsArmy()].totalScore,
                  gUnknown_03004080);
     sub_08030574();
     switch (gPlaySt.gameMode)

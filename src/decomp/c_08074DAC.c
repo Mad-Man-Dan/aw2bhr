@@ -19,7 +19,7 @@ struct Unk8074DACProc
     /* 0x58 */ int unk58;
 };
 
-void sub_08074DAC(struct Unk8074DACProc *proc)
+void WorldMapScope_Loop(struct Unk8074DACProc *proc)
 {
     int i;
     s16 x;
@@ -52,3 +52,4 @@ void sub_08074DAC(struct Unk8074DACProc *proc)
 
     proc->unk58++;
 }
+asm(".global sub_08074DAC\n.thumb_set sub_08074DAC, WorldMapScope_Loop\n");

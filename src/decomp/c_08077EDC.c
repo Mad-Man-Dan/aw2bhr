@@ -19,9 +19,9 @@
  *
  * The predicate arm is the FALLTHROUGH and the null arm is the branch target,
  * so the `if` has to be spelled `f != NULL` with the plain call in the `else`.
- * Spelled the other way round the two arms swap and the second sub_08078540
+ * Spelled the other way round the two arms swap and the second StartBlockingEventScript
  * lands on the wrong side of the literal pool, which is -4 bytes of alignment. */
-void sub_08077EDC(ProcPtr proc)
+void WorldMap_StartPreBattleDialogue(ProcPtr proc)
 {
     void *p = gUnknown_08615194[gUnknown_0202FDFC.unk0c].preBattleDialogue;
     u8 (*f)(void) = gUnknown_08615194[gUnknown_0202FDFC.unk0c].unk2c;
@@ -31,11 +31,12 @@ void sub_08077EDC(ProcPtr proc)
         if (f != NULL)
         {
             if (f())
-                sub_08078540(p, proc);
+                StartBlockingEventScript(p, proc);
         }
         else
         {
-            sub_08078540(p, proc);
+            StartBlockingEventScript(p, proc);
         }
     }
 }
+asm(".global sub_08077EDC\n.thumb_set sub_08077EDC, WorldMap_StartPreBattleDialogue\n");

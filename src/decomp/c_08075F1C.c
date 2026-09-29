@@ -7,7 +7,7 @@
  * sub_08075F1C @ 0x08075F1C
  */
 
-void sub_08075F1C(u16 *dst, int a)
+void PutIndexedTileBlock2x2(u16 *dst, int a)
 {
     u16 v;
 
@@ -22,3 +22,4 @@ void sub_08075F1C(u16 *dst, int a)
     v++;
     dst[1] = v;
 }
+asm(".global sub_08075F1C\n.thumb_set sub_08075F1C, PutIndexedTileBlock2x2\n");

@@ -31,7 +31,7 @@ void StartCannonFire(int a1, int a2, int a3, int a4, int a5, int a6, ProcPtr par
 {
     struct UnkF0A4Proc *proc;
 
-    sub_08074410(0x2c, 0);
+    RunMapEventsForAction(0x2c, 0);
     proc = Proc_StartBlocking(gUnknown_0849F830, parent);
     proc->unk54 = a1;
     proc->unk58 = a2;

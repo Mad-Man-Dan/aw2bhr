@@ -21,7 +21,7 @@ struct Unk68014Proc
     /* 40 */ s32 unk40;
 };
 
-void sub_08068014(s32 a, s32 b, s32 c, ProcPtr parent)
+void StartIntroBlendFade(s32 a, s32 b, s32 c, ProcPtr parent)
 {
     struct Unk68014Proc * proc = Proc_Start(gUnknown_08581138, parent);
 
@@ -30,3 +30,4 @@ void sub_08068014(s32 a, s32 b, s32 c, ProcPtr parent)
     proc->unk34 = c;
     proc->unk40 = 0;
 }
+asm(".global sub_08068014\n.thumb_set sub_08068014, StartIntroBlendFade\n");

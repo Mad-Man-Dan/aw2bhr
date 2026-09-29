@@ -21,7 +21,7 @@
  *    numbers, and the allocno tie-break follows them: with `i` first the two
  *    counters land in r3/r1, with `j` first they land in r1/r3 as the ROM has
  *    them. Same instruction stream either way. */
-void sub_0806384C(u16 *dst, const u16 *src, u16 x, u16 y, u16 h, u16 add)
+void UnusedBlitTilemapRectWithBias(u16 *dst, const u16 *src, u16 x, u16 y, u16 h, u16 add)
 {
     u16 *base;
     u16 j;
@@ -44,3 +44,4 @@ void sub_0806384C(u16 *dst, const u16 *src, u16 x, u16 y, u16 h, u16 add)
         }
     }
 }
+asm(".global sub_0806384C\n.thumb_set sub_0806384C, UnusedBlitTilemapRectWithBias\n");

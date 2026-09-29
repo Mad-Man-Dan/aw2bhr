@@ -7,7 +7,7 @@
  * sub_08066D30 @ 0x08066D30
  */
 
-/* The twin of sub_0806DDF4 over the other gUnknown_08580934 wrapper slot, and
+/* The twin of RulesScreenHighlightSelectedRuleOption over the other gUnknown_08580934 wrapper slot, and
  * it wants the same four things:
  *
  *   - `const` on the wrapper, so loop-invariant motion can hoist its load into

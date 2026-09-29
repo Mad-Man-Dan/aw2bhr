@@ -17,7 +17,7 @@ void MatchSetupDrawTeamArrows(void)
     struct Unk08580934_Obj *o;
 
     o = gUnknown_08580934->unk44[gUnknown_08580934->unk32];
-    sub_08064474(o->unk28 + 9, o->unk2a + 8);
-    sub_08064500(o->unk28 + 9, o->unk2a + 0x28);
+    DrawUpArrow(o->unk28 + 9, o->unk2a + 8);
+    DrawDownArrow(o->unk28 + 9, o->unk2a + 0x28);
 }
 asm(".global sub_08066078\n.thumb_set sub_08066078, MatchSetupDrawTeamArrows\n");

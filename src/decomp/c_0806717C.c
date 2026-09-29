@@ -23,7 +23,7 @@ struct Unk6717CProc
  * `ldrh`/`ldr =0xffe0`/`ands`/`orrs`/`strh` sequence can only come from the
  * raw member. target1_enable_bd, by contrast, really is a single-bit field.
  */
-void sub_0806717C(struct Unk6717CProc *proc)
+void BlendFromWhite_Init(struct Unk6717CProc *proc)
 {
     gUnknown_030030E0.bits.effect = 2;
 
@@ -36,3 +36,4 @@ void sub_0806717C(struct Unk6717CProc *proc)
 
     proc->unk58 = 0x1f;
 }
+asm(".global sub_0806717C\n.thumb_set sub_0806717C, BlendFromWhite_Init\n");

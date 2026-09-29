@@ -91,7 +91,7 @@ struct Unk807AA84
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_0807AA84(struct Unk807AA84 *proc)
+void MatchSummary_Init(struct Unk807AA84 *proc)
 {
     int i;
     int dst;
@@ -99,7 +99,7 @@ void sub_0807AA84(struct Unk807AA84 *proc)
     u16 b;
     u16 c;
 
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
     BG_EnableSyncBG0();
 
     gUnknown_03002B6C.bits.priority = 0;
@@ -112,7 +112,7 @@ void sub_0807AA84(struct Unk807AA84 *proc)
     gUnknown_030030A0 = 0xFF10;
     gUnknown_0300251C.bits.tm_block = 0x1B;
 
-    sub_08078D80(proc);
+    StartScrollingBackdrop(proc);
 
     {
         u16 a;
@@ -225,3 +225,4 @@ void sub_0807AA84(struct Unk807AA84 *proc)
     proc->unk4c = 0;
     }
 }
+asm(".global sub_0807AA84\n.thumb_set sub_0807AA84, MatchSummary_Init\n");

@@ -7,7 +7,7 @@
  * sub_08084938 @ 0x08084938
  */
 
-/* sub_080848FC's shape run twice back to back over two disjoint id ranges
+/* AreAllCosSelectable's shape run twice back to back over two disjoint id ranges
  * against HasMapBeenPlayed's bitset. The two loops are not symmetric in the
  * assembly -- the first reaches the shared `movs r0, #0` with `beq` and the
  * second skips it with `bne` -- because jump.c cross-jumped the two identical
@@ -17,7 +17,7 @@
  * The `lsls r0, r0, #0x18` at both call sites is what re-typed HasMapBeenPlayed's
  * return from `int` to `u8`; see include/unknown-functions.h. */
 
-bool8 sub_08084938(void)
+bool8 HaveAllMapsBeenPlayed(void)
 {
     int i;
 
@@ -29,3 +29,4 @@ bool8 sub_08084938(void)
             return FALSE;
     return TRUE;
 }
+asm(".global sub_08084938\n.thumb_set sub_08084938, HaveAllMapsBeenPlayed\n");

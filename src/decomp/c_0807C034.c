@@ -17,7 +17,7 @@ struct Unk807C034
     /* 0x66 */ s16 unk66;
 };
 
-void sub_0807C034(void *arg)
+void MissionTitleLetters_PutRevealingLetters(void *arg)
 {
     struct Unk807C034 *proc = arg;
     int i;
@@ -64,3 +64,4 @@ void sub_0807C034(void *arg)
 
     proc->unk66++;
 }
+asm(".global sub_0807C034\n.thumb_set sub_0807C034, MissionTitleLetters_PutRevealingLetters\n");

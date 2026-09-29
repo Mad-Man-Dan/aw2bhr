@@ -14,8 +14,9 @@ struct Unk08087C7C
     /* 0x64 */ s16 unk64;
 };
 
-void sub_08087C7C(struct Unk08087C7C *proc)
+void CoDesignExit_SaveIfFlagSet(struct Unk08087C7C *proc)
 {
     if (proc->unk64 != 0)
         sub_0803D960(proc);
 }
+asm(".global sub_08087C7C\n.thumb_set sub_08087C7C, CoDesignExit_SaveIfFlagSet\n");

@@ -13,7 +13,7 @@
  *
  * `gUnknown_081CC4D8` is NOT a global.  The ROM word there holds 0x0202FDFC --
  * checked against baserom.gba -- so it is agbcc's own `-fforce-addr` address
- * constant for &gUnknown_0202FDFC, and sub_08074C1C's `gUnknown_081CC4DC` is
+ * constant for &gUnknown_0202FDFC, and GetWorldMapCameraYKeepInBand's `gUnknown_081CC4DC` is
  * the private second copy of the very same address.  The honest spelling names
  * the global and lets the build place the pool word.
  *
@@ -21,7 +21,7 @@
  * first block may already have overwritten `v`; that is why the ROM has two
  * `ldrsh` off one address register rather than one.
  */
-int sub_08074BDC(int x)
+int GetWorldMapCameraXKeepInBand(int x)
 {
     int v = gUnknown_0202FDFC.unk00;
 
@@ -43,12 +43,13 @@ int sub_08074BDC(int x)
 
     return v;
 }
+asm(".global sub_08074BDC\n.thumb_set sub_08074BDC, GetWorldMapCameraXKeepInBand\n");
 
-/* sub_08074BDC on the other axis: unk02 instead of unk00, and 0x28 / 0x78 /
+/* GetWorldMapCameraXKeepInBand on the other axis: unk02 instead of unk00, and 0x28 / 0x78 /
  * 0x60 instead of 0x50 / 0xa0 / 0xc0 -- the same 0x50-vs-0x28 and 0xc0-vs-0x60
  * pairing GetWorldMapCameraXCentered and GetWorldMapCameraYCentered already show.
  */
-int sub_08074C1C(int x)
+int GetWorldMapCameraYKeepInBand(int x)
 {
     int v = gUnknown_0202FDFC.unk02;
 
@@ -70,3 +71,4 @@ int sub_08074C1C(int x)
 
     return v;
 }
+asm(".global sub_08074C1C\n.thumb_set sub_08074C1C, GetWorldMapCameraYKeepInBand\n");

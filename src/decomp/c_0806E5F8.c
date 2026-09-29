@@ -49,7 +49,7 @@ struct Unk6E638Proc
     /* 29 */ STRUCT_PAD(0x29, 0x5c);
     /* 5c */ s32 unk5c;
 };
-/* sub_0806E5F8's slide-OUT twin: the same four-frame step over the same proc
+/* SoundRoomCoSlideOut_Loop's slide-OUT twin: the same four-frame step over the same proc
  * and the same field, with the endpoints exchanged (0x140 down to 0xb4) and a
  * different easing selector.
  *
@@ -72,7 +72,7 @@ struct Unk6E658Proc
     /* 58 */ s32 unk58;
 };
 
-void sub_0806E5F8(struct Unk6E5F8Proc *proc)
+void SoundRoomCoSlideOut_Loop(struct Unk6E5F8Proc *proc)
 {
     struct Unk6E5F8Target *target = Proc_Find(gUnknown_08582B2C);
 
@@ -83,16 +83,18 @@ void sub_0806E5F8(struct Unk6E5F8Proc *proc)
     else
         proc->unk58++;
 }
+asm(".global sub_0806E5F8\n.thumb_set sub_0806E5F8, SoundRoomCoSlideOut_Loop\n");
 
-void sub_0806E638(struct Unk6E638Proc *proc)
+void SoundRoomCoSlideOut_ReloadPortrait(struct Unk6E638Proc *proc)
 {
     struct Unk6E638Target *target = Proc_Find(gUnknown_08582B2C);
 
     target->unk34 = proc->unk5c;
     Proc_Goto(target, 0);
 }
+asm(".global sub_0806E638\n.thumb_set sub_0806E638, SoundRoomCoSlideOut_ReloadPortrait\n");
 
-void sub_0806E658(struct Unk6E658Proc *proc)
+void SoundRoomCoSlideIn_Loop(struct Unk6E658Proc *proc)
 {
     struct Unk6E658Target *target = Proc_Find(gUnknown_08582B2C);
 
@@ -103,3 +105,4 @@ void sub_0806E658(struct Unk6E658Proc *proc)
     else
         proc->unk58++;
 }
+asm(".global sub_0806E658\n.thumb_set sub_0806E658, SoundRoomCoSlideIn_Loop\n");

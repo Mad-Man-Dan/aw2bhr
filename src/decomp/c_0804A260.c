@@ -133,7 +133,7 @@ void NameEntry_Init(void)
 
     gUnknown_030044E0->unk5d = i;
     RedrawNameEntryText(0);
-    sub_080741C4(0, 0, 0);
+    LoadBg3Backdrop(0, 0, 0);
     sub_080152C0((s32)gUnknown_0849D55C, 0);
     Decompress(gUnknown_084C3B2C[gUnknown_02028E40], (void *)0x06010000);
     Decompress(gUnknown_081358A0, (void *)0x060103E0);

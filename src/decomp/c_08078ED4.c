@@ -14,10 +14,11 @@
  * sub_0803B8C4. Both arms forward the incoming parent unchanged, which is why
  * `adds r1, r0, #0` is the only thing in the prologue. */
 
-void sub_08078ED4(ProcPtr parent)
+void StartResultsSubScreen(ProcPtr parent)
 {
     if (gPlaySt.gameMode == 3)
         Proc_Start(gUnknown_08615DD8, parent);
     else
         Proc_Start(gUnknown_08615D88, parent);
 }
+asm(".global sub_08078ED4\n.thumb_set sub_08078ED4, StartResultsSubScreen\n");

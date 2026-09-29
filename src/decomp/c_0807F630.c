@@ -18,7 +18,7 @@
  * then copies eleven fields of this proc onto the one it starts.
  *
  * `struct Unk807CE5C` is copied VERBATIM from src/decomp/c_0807CE5C.c, which is
- * the sole caller and already declares `void sub_0807F630(struct Unk807CE5C *)`
+ * the sole caller and already declares `void CoSelect_AssignRemainingAndFinish(struct Unk807CE5C *)`
  * locally. Same tag, same layout, nothing reshaped.
  *
  * The `+ 1` on every gPlayers subscript rides in the 0x56 / 0x59 / 0x3c
@@ -80,9 +80,9 @@ struct Unk807CE5C
     /* 0x6a */ u16 unk6a;
 };
 /* Promoted but undeclared; signature taken from src/decomp/c_0807F8D0.c. */
-void sub_0807F8D0(ProcPtr);
+void StartBlockWarRoomSelection(ProcPtr);
 
-void sub_0807F630(struct Unk807CE5C *p)
+void CoSelect_AssignRemainingAndFinish(struct Unk807CE5C *p)
 {
     struct Unk807CE5C *q;
     int i;
@@ -152,7 +152,7 @@ void sub_0807F630(struct Unk807CE5C *p)
 
         q = (struct Unk807CE5C *)Proc_Find(gUnknown_086165C0);
         Proc_Goto(q, 0);
-        sub_0807F8D0(q);
+        StartBlockWarRoomSelection(q);
         Proc_StartBlocking(gUnknown_08616710, q);
 
         q->unk52 = p->unk52;
@@ -168,3 +168,4 @@ void sub_0807F630(struct Unk807CE5C *p)
         q->unk6a = p->unk6a;
     }
 }
+asm(".global sub_0807F630\n.thumb_set sub_0807F630, CoSelect_AssignRemainingAndFinish\n");

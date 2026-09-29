@@ -41,7 +41,7 @@ struct Unk80875A4Proc
     /* 0x38 */ int unk38;
 };
 
-void sub_080875A4(int a, int n, struct Unk80875A4Proc *proc)
+void DrawWarRoomRecordSummary(int a, int n, struct Unk80875A4Proc *proc)
 {
     int i;
     int x;
@@ -76,3 +76,4 @@ void sub_080875A4(int a, int n, struct Unk80875A4Proc *proc)
         PutCoMinimugSprite(v, 0xa0, u | t, 6);
     }
 }
+asm(".global sub_080875A4\n.thumb_set sub_080875A4, DrawWarRoomRecordSummary\n");

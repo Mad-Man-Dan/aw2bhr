@@ -7,7 +7,8 @@
  * sub_08063A3C @ 0x08063A3C
  */
 
-struct Unk03001470 *sub_08063A3C(void)
+struct Unk03001470 *GetCurrentSlotScript(void)
 {
     return &gUnknown_03001470[gUnknown_03001FBC];
 }
+asm(".global sub_08063A3C\n.thumb_set sub_08063A3C, GetCurrentSlotScript\n");

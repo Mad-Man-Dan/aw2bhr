@@ -15,7 +15,7 @@
  * u16 STRUCT MEMBER folds into a sign-extending load rather than expanding to
  * lsls/asrs, so it costs nothing and does not need the shared member retyped.
  */
-void sub_0806DE38(void)
+void RulesScreenHandleRulesPageInput(void)
 {
     int scale;
 
@@ -27,10 +27,10 @@ void sub_0806DE38(void)
     {
         RulesScreenRuleOption_ChangeValue((struct Unk0806DD34 *)
             gUnknown_08580934->unk54[gUnknown_08580934->unk33]);
-        sub_0806DC50(gUnknown_08580934->unk33);
+        RulesScreenRuleOption_DrawArrows(gUnknown_08580934->unk33);
     }
 
-    sub_0806DDF4();
+    RulesScreenHighlightSelectedRuleOption();
 
     scale = (SinDegrees(((s16)gUnknown_08580934->unk2a * 16) % 360) >> 9) + 0x100;
 
@@ -40,3 +40,4 @@ void sub_0806DE38(void)
         Div(gSinLut[0] * 16, scale != 0 ? scale : 2),
         Div(gSinLut[0x40] * 16, scale != 0 ? scale : 2));
 }
+asm(".global sub_0806DE38\n.thumb_set sub_0806DE38, RulesScreenHandleRulesPageInput\n");

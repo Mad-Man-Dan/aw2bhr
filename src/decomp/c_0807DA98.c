@@ -8,7 +8,7 @@
  */
 
 #include "hardware.h"
-/* sub_0807DA98 @ 0x0807DA98, 3816 bytes.
+/* CoSelect_DrawSprites @ 0x0807DA98, 3816 bytes.
  *
  * The 0x081D9364 pool word is NOT a global: [0x081D9364] = 0x0808F100 = &gSinLut,
  * an agbcc -fforce-addr address constant. Spelling gSinLut honestly reproduces
@@ -46,7 +46,7 @@ struct Unk7DA98
 };
 /* Defined in src/decomp/c_0807D800.c over its own tag for this same object. */
 
-void sub_0807DA98(struct Unk7DA98 *p)
+void CoSelect_DrawSprites(struct Unk7DA98 *p)
 {
     int i;
     int j;
@@ -311,3 +311,4 @@ void sub_0807DA98(struct Unk7DA98 *p)
         DrawOamObject(0x5f, 0x6d, 0x70, 0, 0);
     }
 }
+asm(".global sub_0807DA98\n.thumb_set sub_0807DA98, CoSelect_DrawSprites\n");

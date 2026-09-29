@@ -31,17 +31,17 @@
  *
  * `song` is 0x198 on entry and every path that does not reassign it falls
  * through to PlayMusic(0x198) -- that initial assignment is a real source
- * statement placed BEFORE sub_0807898C(proc), which is where the ROM's
+ * statement placed BEFORE SetupMenuScreenBgs(proc), which is where the ROM's
  * `movs r4, #0xcc; lsls r4, r4, #1` sits.
  */
 
-void sub_0807B884(ProcPtr proc)
+void MissionTitle_Setup(ProcPtr proc)
 {
     int song;
 
     song = 0x198;
 
-    sub_0807898C(proc);
+    SetupMenuScreenBgs(proc);
 
     Decompress(gUnknown_0822FEF0, (void *)((gUnknown_03001FE8.bits.chr_block << 14) + 0x06000000));
     Decompress(gUnknown_0822F9AC, gBG1TilemapBuffer);
@@ -98,3 +98,4 @@ void sub_0807B884(ProcPtr proc)
     PlayMusic(song);
     Proc_Start(gUnknown_08616508, proc);
 }
+asm(".global sub_0807B884\n.thumb_set sub_0807B884, MissionTitle_Setup\n");

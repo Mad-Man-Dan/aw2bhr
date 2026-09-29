@@ -64,7 +64,7 @@ struct Unk684E0Proc
     /* 0x4f */ u8 unk4f;
 };
 
-void sub_080681B8(struct Unk681B8Proc *proc)
+void IntroCoNameBanner_SlideIn(struct Unk681B8Proc *proc)
 {
     int i;
     int x;
@@ -102,8 +102,9 @@ void sub_080681B8(struct Unk681B8Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080681B8\n.thumb_set sub_080681B8, IntroCoNameBanner_SlideIn\n");
 
-void sub_080682E8(struct Unk682E8Proc *proc)
+void IntroCoNameBanner_SquashLetters(struct Unk682E8Proc *proc)
 {
     int i;
     int t;
@@ -145,8 +146,9 @@ void sub_080682E8(struct Unk682E8Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080682E8\n.thumb_set sub_080682E8, IntroCoNameBanner_SquashLetters\n");
 
-void sub_080684E0(struct Unk684E0Proc *proc)
+void IntroCoNameBanner_ZoomLetters(struct Unk684E0Proc *proc)
 {
     int i;
     int t;
@@ -191,3 +193,4 @@ void sub_080684E0(struct Unk684E0Proc *proc)
         proc->unk4f = 0;
     }
 }
+asm(".global sub_080684E0\n.thumb_set sub_080684E0, IntroCoNameBanner_ZoomLetters\n");

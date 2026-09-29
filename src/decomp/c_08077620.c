@@ -14,7 +14,7 @@
  * The second check is UNSIGNED (`cmp #0xae; bhi`) on `b + 0xf`, i.e. the single
  * comparison that covers both ends of the range -- the first check is a plain
  * signed `bgt`, so the two are deliberately different tests and not a pair. */
-void sub_08077620(int a, int b)
+void WorldMapMissionInfo_PutSprites(int a, int b)
 {
     int y;
 
@@ -32,3 +32,4 @@ void sub_08077620(int a, int b)
         PutSprite(0, 0x50, b - 0x10, gUnknown_081CC5B0, 0);
     }
 }
+asm(".global sub_08077620\n.thumb_set sub_08077620, WorldMapMissionInfo_PutSprites\n");

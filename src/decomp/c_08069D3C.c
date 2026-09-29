@@ -9,13 +9,13 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* Sets up the two-sided slide sub_08069EAC drives: unk38 picks the side and
+/* Sets up the two-sided slide IntroCoReveal_Loop drives: unk38 picks the side and
  * every constant mirrors across the two arms. Same proc as
  * src/decomp/c_08069EAC.c -- unk38 is the discriminator there too.
  *
- * unk34 is an `int`, NOT a u16, even though sub_08067ED0 reads it with `ldrh`:
+ * unk34 is an `int`, NOT a u16, even though StartIntroCoSlide reads it with `ldrh`:
  * StartIntroCoNameBanner reads the SAME offset with a full `ldr` two instructions later.
- * The `ldrh` is sub_08067ED0's u16 parameter narrowing a memory operand in
+ * The `ldrh` is StartIntroCoSlide's u16 parameter narrowing a memory operand in
  * place, which agbcc does without a separate shift pair.
  *
  * `proc->unk2c = proc->unk2e = 0;` is one chained assignment, which is why
@@ -33,7 +33,7 @@ struct Unk69DE8Proc
     /* 0x3c */ int unk3c;
 };
 
-/* Window setup for the two-sided slide sub_08069EAC drives; the argument picks
+/* Window setup for the two-sided slide IntroCoReveal_Loop drives; the argument picks
  * which side and indexes a flat u16 table for the two window bounds.
  *
  * gUnknown_030030A4 is written through its win0_* group, NOT win1_* -- the ROM
@@ -47,7 +47,7 @@ struct Unk69DE8Proc
  * is holding, not a loop. That final `orr #0x20` re-uses the byte value already
  * in r2 rather than reloading it: the four stores in between are to different
  * globals, so nothing invalidates it. */
-void sub_08069D3C(int a1)
+void SetIntroSplitWindow(int a1)
 {
     SetWinEnable(1, 0, 0);
 
@@ -69,29 +69,31 @@ void sub_08069D3C(int a1)
     gUnknown_03002B44 = 0xa0;
     gUnknown_030030DC.bits.win0_enable_blend = 1;
 }
+asm(".global sub_08069D3C\n.thumb_set sub_08069D3C, SetIntroSplitWindow\n");
 
-void sub_08069DE8(struct Unk69DE8Proc *proc)
+void IntroCoReveal_Init(struct Unk69DE8Proc *proc)
 {
     Proc_EndEach(gUnknown_08581108);
 
     if (proc->unk38 == 0)
     {
-        sub_08067ED0(proc->unk38, proc->unk34, 0x3c, 0x50, proc->unk3c, 1, proc->unk38, 1, proc);
-        sub_08068014(0, 0x10, proc->unk3c - 0x18, proc);
+        StartIntroCoSlide(proc->unk38, proc->unk34, 0x3c, 0x50, proc->unk3c, 1, proc->unk38, 1, proc);
+        StartIntroBlendFade(0, 0x10, proc->unk3c - 0x18, proc);
         StartIntroCoNameBanner(proc->unk38, proc->unk34, 0x280, 3, proc);
         proc->unk2a = 0xe8;
         proc->unk2c = proc->unk2e = 0;
         proc->unk30 = 0xffc8;
-        sub_08069D3C(1);
+        SetIntroSplitWindow(1);
     }
     else
     {
-        sub_08067ED0(proc->unk38, proc->unk34, 0xb4, 0xa0, proc->unk3c, 1, 1, 1, proc);
-        sub_08068014(0, 0x10, proc->unk3c - 0x18, proc);
+        StartIntroCoSlide(proc->unk38, proc->unk34, 0xb4, 0xa0, proc->unk3c, 1, 1, 1, proc);
+        StartIntroBlendFade(0, 0x10, proc->unk3c - 0x18, proc);
         StartIntroCoNameBanner(proc->unk38, proc->unk34, 0x280, 3, proc);
         proc->unk2a = 0xffd0;
         proc->unk2c = proc->unk2e = 0;
         proc->unk30 = 0x98;
-        sub_08069D3C(0);
+        SetIntroSplitWindow(0);
     }
 }
+asm(".global sub_08069DE8\n.thumb_set sub_08069DE8, IntroCoReveal_Init\n");

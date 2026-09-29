@@ -17,7 +17,7 @@ struct Unk67D04Proc
     /* 3c */ int unk3c;
 };
 
-/* The starter for the gUnknown_085810B8 script that sub_08067D4C tears down.
+/* The starter for the gUnknown_085810B8 script that EndIntroSlideSprite tears down.
  * Four parameters: the first indexes the graphics table, the middle two are
  * stashed in the new proc, and the fourth is the parent -- r3 moves to r1 for
  * Proc_Start, which is the pass-through tell.
@@ -25,7 +25,7 @@ struct Unk67D04Proc
  * `movs r1,#0x88; lsls r1,#2` is the constant 0x220, i.e. ApplyPalettes(src,
  * 0x11, 1); it is left in the raw ApplyPaletteExt form the ROM emits because
  * the macro would hide which of the two spellings produced the shift. */
-void sub_08067D04(int a, int b, int c, ProcPtr parent)
+void StartIntroSlideSprite(int a, int b, int c, ProcPtr parent)
 {
     struct Unk67D04Proc *proc = Proc_Start(gUnknown_085810B8, parent);
 
@@ -36,3 +36,4 @@ void sub_08067D04(int a, int b, int c, ProcPtr parent)
     Decompress(gUnknown_085810C8[a], (void *)0x06010000);
     ApplyPaletteExt(gUnknown_0817D9F8, 0x220, 0x20);
 }
+asm(".global sub_08067D04\n.thumb_set sub_08067D04, StartIntroSlideSprite\n");

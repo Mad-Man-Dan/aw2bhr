@@ -19,7 +19,7 @@ struct Unk8067BD0Proc
     /* 0x3c */ int unk3c;
 };
 
-void sub_08067BD0(int a, int b, int c, ProcPtr parent)
+void StartIntroSlidePanel(int a, int b, int c, ProcPtr parent)
 {
     struct Unk8067BD0Proc *proc;
 
@@ -45,3 +45,4 @@ void sub_08067BD0(int a, int b, int c, ProcPtr parent)
 
     SetBgScrollShadow(1, proc->unk30, 0);
 }
+asm(".global sub_08067BD0\n.thumb_set sub_08067BD0, StartIntroSlidePanel\n");

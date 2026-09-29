@@ -27,7 +27,7 @@ struct Unk6C114Proc
  * out is then dereferenced at +0x30, so the elements are pointers.
  *
  * `blo` makes both counters unsigned. */
-void sub_0806C0E4(struct Unk6C0E4Proc *proc)
+void CreditsPage_HoldLoop(struct Unk6C0E4Proc *proc)
 {
     if (proc->unk30 >= gUnknown_0858265C[proc->unk38]->unk30)
     {
@@ -39,12 +39,13 @@ void sub_0806C0E4(struct Unk6C0E4Proc *proc)
         proc->unk30++;
     }
 }
+asm(".global sub_0806C0E4\n.thumb_set sub_0806C0E4, CreditsPage_HoldLoop\n");
 
 /* The cursor advance for the gUnknown_0858265C table: step +0x38, stop at the
  * NULL terminator, otherwise run the entry's sub-script under this proc and
  * jump back to label 0. Proc_StartBlocking's result is dead -- r0 is rewritten
  * by `adds r0, r4, #0` before Proc_Goto. */
-void sub_0806C114(struct Unk6C114Proc *proc)
+void CreditsPage_Advance(struct Unk6C114Proc *proc)
 {
     proc->unk38++;
 
@@ -58,3 +59,4 @@ void sub_0806C114(struct Unk6C114Proc *proc)
         Proc_Goto(proc, 0);
     }
 }
+asm(".global sub_0806C114\n.thumb_set sub_0806C114, CreditsPage_Advance\n");

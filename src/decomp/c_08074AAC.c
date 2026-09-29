@@ -9,11 +9,11 @@
 
 #include "proc.h"
 /* The first argument is a POINTER into ROM, not the `s32` this was promoted
- * with, and sub_08078358 is decisive rather than merely suggestive: it walks
+ * with, and WorldMapReturn_RevealBonusMissions is decisive rather than merely suggestive: it walks
  * four 4-byte records based at gUnknown_08615974 and calls
- * `sub_08074AAC(&record[i][2], parent)` -- an INTERIOR address formed as
+ * `StartWorldMapMarkerReveal(&record[i][2], parent)` -- an INTERIOR address formed as
  * `gUnknown_08615974 + 2 + i*4`, which no integer parameter would be spelled
- * as. The other three callers agree: sub_0807831C passes a word loaded out of
+ * as. The other three callers agree: WorldMapReturn_RevealMissions passes a word loaded out of
  * gUnknown_0861500C, and WorldMapReturn_RevealMissions08To0A / WorldMapReturn_RevealMissions10To12 pass gUnknown_08615984 and
  * gUnknown_08615988 by name. Everything so passed is a 0xFF-terminated u8 id
  * list (checked against baserom.gba), hence `const u8 *`.
@@ -25,7 +25,7 @@ struct Unk8074AAC
     /* 0x30 */ s32 unk_30;
 };
 
-void sub_08074AAC(const u8 *arg, ProcPtr parent)
+void StartWorldMapMarkerReveal(const u8 *arg, ProcPtr parent)
 {
     struct Unk8074AAC * proc;
 
@@ -36,3 +36,4 @@ void sub_08074AAC(const u8 *arg, ProcPtr parent)
     proc->unk_2c = arg;
     proc->unk_30 = 0;
 }
+asm(".global sub_08074AAC\n.thumb_set sub_08074AAC, StartWorldMapMarkerReveal\n");

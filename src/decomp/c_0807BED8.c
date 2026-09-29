@@ -20,7 +20,7 @@ struct Unk807BED8
     /* 0x5c */ int unk5c;
 };
 
-void sub_0807BED8(ProcPtr procv)
+void MissionTitleName_UpdateZoom(ProcPtr procv)
 {
     struct Unk807BED8 *proc = procv;
     struct BgAffineSrcData src;
@@ -44,3 +44,4 @@ void sub_0807BED8(ProcPtr procv)
 
     BgAffineSet(&src, (struct BgAffineDstData *)gUnknown_030024D0, 1);
 }
+asm(".global sub_0807BED8\n.thumb_set sub_0807BED8, MissionTitleName_UpdateZoom\n");

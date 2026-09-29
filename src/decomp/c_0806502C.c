@@ -17,13 +17,13 @@
  * both the third and fourth arguments.
  *
  * The `(struct Unk08580934_Obj *)` cast is the marker for the open type
- * conflict recorded beside sub_08064BC8 in include/unknown-functions.h --
+ * conflict recorded beside TeamBadge_Setup in include/unknown-functions.h --
  * sub_080152EC is declared to return `struct Unk03001470 *` and the two
  * structs are almost certainly one object. A pointer cast emits nothing, so
  * the cast costs the match nothing and does not prejudge the unification. */
 void SpawnTeamBadgeForColumn(struct Unk08580934_Obj *obj)
 {
-    sub_08064BC8((struct Unk08580934_Obj *)sub_080152EC(gUnknown_08580A38, 3),
+    TeamBadge_Setup((struct Unk08580934_Obj *)sub_080152EC(gUnknown_08580A38, 3),
                  obj->unk28 + 8, obj->unk1c, obj->unk1c * 2);
 }
 asm(".global sub_0806502C\n.thumb_set sub_0806502C, SpawnTeamBadgeForColumn\n");

@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0807D800.
- * IsCoSelectionUnique @ 0x0807D800, sub_0807D860 @ 0x0807D860
+ * IsCoSelectionUnique @ 0x0807D800, CoSelect_ReloadCarouselFaces @ 0x0807D860
  */
 
 #include "proc.h"
@@ -45,7 +45,7 @@ int IsCoSelectionUnique(struct Unk807D800 *p)
 
 asm(".global sub_0807D800\n.thumb_set sub_0807D800, IsCoSelectionUnique\n");
 
-void sub_0807D860(struct Unk807D860 *p)
+void CoSelect_ReloadCarouselFaces(struct Unk807D860 *p)
 {
     if (p->unk4c == 9)
         LoadCoFullBodyAndPalette(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], 0x40, 1);
@@ -60,3 +60,4 @@ void sub_0807D860(struct Unk807D860 *p)
                      (void *)0x06013900, 0x14);
     }
 }
+asm(".global sub_0807D860\n.thumb_set sub_0807D860, CoSelect_ReloadCarouselFaces\n");

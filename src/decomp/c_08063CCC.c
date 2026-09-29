@@ -30,7 +30,7 @@
  * earliest allocnos in the function, and t/w/the first Div result spill
  * instead -- exactly the ROM's assignment.
  */
-void sub_08063CCC(int a1, int a2, int a3, int a4, int a5)
+void DrawZoomedSpriteFromCentre(int a1, int a2, int a3, int a4, int a5)
 {
     void *t;
     u16 w;
@@ -63,3 +63,4 @@ void sub_08063CCC(int a1, int a2, int a3, int a4, int a5)
 
     PutOamHi(a1, a2, t, w);
 }
+asm(".global sub_08063CCC\n.thumb_set sub_08063CCC, DrawZoomedSpriteFromCentre\n");

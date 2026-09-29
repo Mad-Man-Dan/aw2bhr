@@ -23,7 +23,7 @@
  * triggering a transfer, and it only survives because the pointer is volatile.
  */
 
-void sub_080638A8(int tile)
+void ClearVramTileDma(int tile)
 {
     vu16 fill = 0;
     vu32 *dma = (vu32 *)(REG_BASE + REG_OFFSET_DMA3SAD);
@@ -33,3 +33,4 @@ void sub_080638A8(int tile)
     dma[2] = 0x81000010;
     dma[2];
 }
+asm(".global sub_080638A8\n.thumb_set sub_080638A8, ClearVramTileDma\n");

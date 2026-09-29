@@ -7,7 +7,7 @@
  * sub_0807681C @ 0x0807681C, sub_08076858 @ 0x08076858
  */
 
-void sub_0807681C(void)
+void PaintClearedWorldMapSections(void)
 {
     struct Unk0202FDFC *s;
     u8 *p;
@@ -20,14 +20,15 @@ void sub_0807681C(void)
             v &= 0x7f;
             v &= 0xfe;
             *p = v;
-            sub_08075904(i);
+            ColorWorldMapSection(i);
         }
 
         p++;
     }
 }
+asm(".global sub_0807681C\n.thumb_set sub_0807681C, PaintClearedWorldMapSections\n");
 
-void sub_08076858(void)
+void RestoreWorldMapMarkers2(void)
 {
     int i;
 
@@ -38,3 +39,4 @@ void sub_08076858(void)
             AddWorldMapMarker(i);
     }
 }
+asm(".global sub_08076858\n.thumb_set sub_08076858, RestoreWorldMapMarkers2\n");

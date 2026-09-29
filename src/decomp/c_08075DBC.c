@@ -26,7 +26,7 @@ struct Unk8075DBC
     /* 0x64 */ s16 unk64;
 };
 
-void sub_08075DBC(struct Unk8075DBC *proc)
+void WorldMapMissionClear_RestoreInit(struct Unk8075DBC *proc)
 {
     if (proc->unk5c == 0)
         Proc_End(proc);
@@ -36,6 +36,7 @@ void sub_08075DBC(struct Unk8075DBC *proc)
     proc->unk4c = 0;
 
     ColorFadeInit();
-    sub_08075A54(0xF, -1);
+    LoadFadeComponentsFromPalette(0xF, -1);
     EnablePaletteSync();
 }
+asm(".global sub_08075DBC\n.thumb_set sub_08075DBC, WorldMapMissionClear_RestoreInit\n");

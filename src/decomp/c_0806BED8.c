@@ -8,10 +8,10 @@
  */
 
 #include "proc.h"
-/* The string loader for the sub_0806BE7C proc (src/decomp/c_0806BD84.c): starts
+/* The string loader for the CreditsNameLine_Loop proc (src/decomp/c_0806BD84.c): starts
  * it, seeds the row it will spin in at +0x58, and converts a NUL-terminated
  * byte string into the +0x2a halfword table of sprite tiles, leaving the length
- * in +0x54 -- which is exactly the bound sub_0806BE7C counts +0x5c up to. The
+ * in +0x54 -- which is exactly the bound CreditsNameLine_Loop counts +0x5c up to. The
  * two functions agree on struct Unk6BE7CParent independently, so the layout is
  * a producer/consumer pair rather than one function's guess.
  *
@@ -59,7 +59,7 @@ struct Unk6BF40Proc
     /* 0x38 */ int unk38;
 };
 
-void sub_0806BED8(int row, u8 *src, ProcPtr parent)
+void StartCreditsNameLine(int row, u8 *src, ProcPtr parent)
 {
     struct Unk6BE7CParent *proc;
     int i;
@@ -89,8 +89,9 @@ void sub_0806BED8(int row, u8 *src, ProcPtr parent)
 
     proc->unk54 = i;
 }
+asm(".global sub_0806BED8\n.thumb_set sub_0806BED8, StartCreditsNameLine\n");
 
-void sub_0806BF40(ProcPtr a1)
+void CreditsPage_Init(ProcPtr a1)
 {
     struct Unk6BF40Proc *proc = a1;
     struct Unk0858265C *t;
@@ -134,7 +135,8 @@ void sub_0806BF40(ProcPtr a1)
         Proc_Goto(proc, 1);
     else
     {
-        sub_0806B9CC(0x48, 0, 0xf0, 0xa0);
+        SetCreditsWindow1Rect(0x48, 0, 0xf0, 0xa0);
         proc->unk30 = 0;
     }
 }
+asm(".global sub_0806BF40\n.thumb_set sub_0806BF40, CreditsPage_Init\n");

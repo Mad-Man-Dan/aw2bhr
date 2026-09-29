@@ -7,7 +7,7 @@
  * sub_08087248 @ 0x08087248
  */
 
-int sub_08087248(void)
+int GetMapPreviewScrollX(void)
 {
     int y;
 
@@ -24,3 +24,4 @@ int sub_08087248(void)
         return (u16)(gUnknown_03005918 * 4 - 0xf0);
     return (u16)(y - 0xa3);
 }
+asm(".global sub_08087248\n.thumb_set sub_08087248, GetMapPreviewScrollX\n");

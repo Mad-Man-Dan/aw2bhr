@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* The starter for the gUnknown_08615ACC proc, and the shared tail of
- * sub_080783BC, sub_08078404 and sub_08078420. Same shape as
+ * WorldMapReturn_ShowSceneIfMissions0F17Cleared, sub_08078404 and sub_08078420. Same shape as
  * src/decomp/c_080784E4.c's starter with one more field and one more argument:
  * the fifth parameter is the parent and arrives at [sp, #0x14] (0x14 = the
  * 16 bytes of `push {r4, r5, r6, lr}` plus the 4 of `push {r6}`).
@@ -27,7 +27,7 @@ struct UnkProc8615ACC
     /* 0x58 */ s32 unk_58;
 };
 
-void sub_080785CC(s32 a, s32 b, s32 c, const void *d, ProcPtr parent)
+void StartWorldMapScene(s32 a, s32 b, s32 c, const void *d, ProcPtr parent)
 {
     struct UnkProc8615ACC *proc = Proc_StartBlocking(gUnknown_08615ACC, parent);
 
@@ -36,3 +36,4 @@ void sub_080785CC(s32 a, s32 b, s32 c, const void *d, ProcPtr parent)
     proc->unk_58 = c;
     proc->unk_54 = d;
 }
+asm(".global sub_080785CC\n.thumb_set sub_080785CC, StartWorldMapScene\n");

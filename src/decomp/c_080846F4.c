@@ -7,7 +7,8 @@
  * sub_080846F4 @ 0x080846F4
  */
 
-u8 sub_080846F4(void)
+u8 GetHardCampaignToggle(void)
 {
     return gUnknown_03005968;
 }
+asm(".global sub_080846F4\n.thumb_set sub_080846F4, GetHardCampaignToggle\n");

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* Sibling of the matched sub_08066470 in src/decomp/c_08066470.c, and the case
+/* Sibling of the matched ReadyMarkerDisappear_Loop in src/decomp/c_08066470.c, and the case
  * W20-C's overlap screen flagged as its strongest joint signal: identical callee
  * set AND identical data_refs. It fell on the first draft with no probe round,
  * so the two axes did not separate here -- see docs/agbcc-codegen.md.
@@ -23,7 +23,7 @@
  * the value still in the register -- the exemplar's comment explains both and
  * neither needed re-deriving. */
 
-void sub_08066374(struct Unk08580934_Obj *obj)
+void ReadyMarkerAppear_Loop(struct Unk08580934_Obj *obj)
 {
     int s = obj->unk26 * 64 + 0x100;
 
@@ -45,3 +45,4 @@ void sub_08066374(struct Unk08580934_Obj *obj)
         gUnknown_08580934->unk70[obj->unk1c] = 1;
     }
 }
+asm(".global sub_08066374\n.thumb_set sub_08066374, ReadyMarkerAppear_Loop\n");

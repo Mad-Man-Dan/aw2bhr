@@ -7,20 +7,21 @@
  * sub_0807774C @ 0x0807774C
  */
 
-/* An eight-argument text call followed by the scroll update sub_08077C70 also
+/* An eight-argument text call followed by the scroll update WorldMapMapPreview_WaitLoop also
  * makes. Four of the arguments go on the stack, which is what `sub sp, #0x10`
  * pays for, and 0xFFFF needs a pool word of its own.
  *
  * Only one of the eight is not a literal -- proc->unk30, a `ldrh` -- so this
- * call site constrains sub_08077214's parameter widths not at all. */
+ * call site constrains ReplaceTextBoxIfTextChanged's parameter widths not at all. */
 struct Unk7774CProc
 {
     /* 00 */ u8 filler_00[0x30];
     /* 30 */ u16 unk30;
 };
 
-void sub_0807774C(struct Unk7774CProc *proc)
+void WorldMapMissionInfo_ShowText(struct Unk7774CProc *proc)
 {
-    sub_08077214(gBG0TilemapBuffer, 8, 6, 0x16, 4, 0xFFFF, proc->unk30, 1);
-    sub_08077620(0, 0xA8 - gUnknown_0300064C);
+    ReplaceTextBoxIfTextChanged(gBG0TilemapBuffer, 8, 6, 0x16, 4, 0xFFFF, proc->unk30, 1);
+    WorldMapMissionInfo_PutSprites(0, 0xA8 - gUnknown_0300064C);
 }
+asm(".global sub_0807774C\n.thumb_set sub_0807774C, WorldMapMissionInfo_ShowText\n");

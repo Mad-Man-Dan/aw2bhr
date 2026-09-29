@@ -42,7 +42,7 @@
  *   drop the two `register ... asm("rN")` pins    -> +4 bytes, 39.9%
  *   drop both                                     -> size-exact, 56.4%
  * The empty read/write constraint is the wave-75 lever (see the chapter in
- * docs/agbcc-codegen.md; it closed sub_08073E0C). The register pins are a
+ * docs/agbcc-codegen.md; it closed SoundScope_Loop). The register pins are a
  * measured COUNTEREXAMPLE to wave 77's "pinning is catastrophic" claim: here
  * they are worth the match. None of the three emits an instruction, so the
  * recorded residual was never fake in the W77-A sense -- but this body is not

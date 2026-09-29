@@ -17,7 +17,7 @@ struct Unk6B610Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_0806B610(struct Unk6B610Proc *proc)
+void CreditsEpilogue_ScrollBg(struct Unk6B610Proc *proc)
 {
     int zero;
 
@@ -34,3 +34,4 @@ void sub_0806B610(struct Unk6B610Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0806B610\n.thumb_set sub_0806B610, CreditsEpilogue_ScrollBg\n");

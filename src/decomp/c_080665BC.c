@@ -7,7 +7,8 @@
  * sub_080665BC @ 0x080665BC
  */
 
-void sub_080665BC(int index)
+void DismissReadyMarker(int index)
 {
     gUnknown_08580934->unk74[index]->unk08 = 0;
 }
+asm(".global sub_080665BC\n.thumb_set sub_080665BC, DismissReadyMarker\n");

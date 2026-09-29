@@ -16,16 +16,16 @@ struct Unk807BCF0
     /* 0x4c */ s16 unk4c;
 };
 
-void sub_0807BCF0(ProcPtr proc)
+void MissionTitleName_ZoomIn_Loop(ProcPtr proc)
 {
     if (((struct Unk807BCF0 *)proc)->unk34 == 0)
         PlayMusicOrSfx2(0x1CF);
 
-    sub_0807BED8(proc);
+    MissionTitleName_UpdateZoom(proc);
 
     if (((struct Unk807BCF0 *)proc)->unk34
         >= (8 - ((struct Unk807BCF0 *)proc)->unk4c) * 19 / 7 + 0x12)
-        sub_0807BFB8(proc);
+        MissionTitleName_PutFlyingLetters(proc);
 
     if (((struct Unk807BCF0 *)proc)->unk34 > 0x31)
     {
@@ -33,3 +33,4 @@ void sub_0807BCF0(ProcPtr proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0807BCF0\n.thumb_set sub_0807BCF0, MissionTitleName_ZoomIn_Loop\n");

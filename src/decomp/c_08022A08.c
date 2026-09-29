@@ -42,7 +42,7 @@ asm(".global sub_08022A34\n.thumb_set sub_08022A34, LoadCursorSpriteGraphics\n")
  * loading a second pool word.
  *
  * `lsrs #2` on gGameClock is a LOGICAL shift, and that is a second
- * independent proof -- alongside sub_0806F064's __umodsi3 -- that the counter
+ * independent proof -- alongside PickRandomCoFromList's __umodsi3 -- that the counter
  * is unsigned; the declaration is still `s32` for src/title-screen.c's sake, so
  * the cast carries it. See the note in unknown-globals.h.
  *

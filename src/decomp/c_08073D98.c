@@ -21,7 +21,7 @@ struct Unk73D98Proc
  * gUnknown_0202FDEA) and keeps them live across the two `strh`, storing to
  * 0x0202FDEA first. Two separate statements reuse one register for both
  * addresses and put the pool words the other way round -- 6 bytes. */
-void sub_08073D98(struct Unk73D98Proc *proc)
+void SoundScope_Init(struct Unk73D98Proc *proc)
 {
     m4aSoundInit();
 
@@ -44,3 +44,4 @@ void sub_08073D98(struct Unk73D98Proc *proc)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 }
+asm(".global sub_08073D98\n.thumb_set sub_08073D98, SoundScope_Init\n");

@@ -23,7 +23,7 @@ struct Unk806C154
     /* 0x58 */ int unk58;
 };
 
-void sub_0806C154(struct Unk806C154 *proc)
+void CreditsResultSprite_FadeInLoop(struct Unk806C154 *proc)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -43,3 +43,4 @@ void sub_0806C154(struct Unk806C154 *proc)
         proc->unk58++;
     }
 }
+asm(".global sub_0806C154\n.thumb_set sub_0806C154, CreditsResultSprite_FadeInLoop\n");

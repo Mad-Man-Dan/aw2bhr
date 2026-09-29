@@ -7,7 +7,7 @@
  * sub_08078740 @ 0x08078740
  */
 
-void sub_08078740(void)
+void SetCoSelectGroupSwitchNone(void)
 {
     u32 *base;
     u32 *p;
@@ -21,3 +21,4 @@ void sub_08078740(void)
         *p-- = v;
     while ((int)p >= (int)base);
 }
+asm(".global sub_08078740\n.thumb_set sub_08078740, SetCoSelectGroupSwitchNone\n");

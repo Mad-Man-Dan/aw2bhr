@@ -10,7 +10,7 @@
 #include "proc.h"
 /* MATCHED (wave 38, W38-E), first attempt.
  *
- * Tears down the five sprites sub_08074D28 builds into proc->unk40[]. The proc
+ * Tears down the five sprites WorldMapScope_Init builds into proc->unk40[]. The proc
  * layout is that function's, unchanged: five `struct Unk0801C210 *` at +0x40.
  *
  * The ROM's `subs r4, #1; cmp r4, #0; bge` bottom is check_dbra_loop's rewrite
@@ -24,10 +24,11 @@ struct Unk8074EB4Proc
     /* 0x40 */ struct Unk0801C210 *unk40[5];
 };
 
-void sub_08074EB4(struct Unk8074EB4Proc *proc)
+void WorldMapScope_OnEnd(struct Unk8074EB4Proc *proc)
 {
     int i;
 
     for (i = 0; i <= 4; i++)
         AP_Delete(proc->unk40[i]);
 }
+asm(".global sub_08074EB4\n.thumb_set sub_08074EB4, WorldMapScope_OnEnd\n");

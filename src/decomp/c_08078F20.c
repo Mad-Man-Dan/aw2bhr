@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* The fade-OUT counterpart of sub_08078D40, on a different counter (+0x64),
+/* The fade-OUT counterpart of FadeToBlackFrom6_Loop, on a different counter (+0x64),
  * a different period (4) and with the counter incremented at the END rather
  * than the start -- which is why r4 holds &proc->unk_64 across the whole body
  * and the `ldrh`/`adds`/`strh` sits after the Proc_Break test.
@@ -25,7 +25,7 @@ struct Unk8078D40
     /* 0x68 */ s16 unk_68;
 };
 
-void sub_08078F20(struct Unk8078D40 *proc)
+void ResultsScreen_FadeFromWhite_Loop(struct Unk8078D40 *proc)
 {
     if (DivRem(proc->unk_64, 4) == 0)
         gUnknown_03001FFC--;
@@ -35,3 +35,4 @@ void sub_08078F20(struct Unk8078D40 *proc)
 
     proc->unk_64++;
 }
+asm(".global sub_08078F20\n.thumb_set sub_08078F20, ResultsScreen_FadeFromWhite_Loop\n");

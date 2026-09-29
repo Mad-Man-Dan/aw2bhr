@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0806BB08.
- * sub_0806BB08 @ 0x0806BB08
+ * CreditsStaff_Init @ 0x0806BB08
  */
 
 #include "hardware.h"
@@ -25,11 +25,11 @@ struct Unk0806BB08Proc
  * `proc->unk38 = 0` after the three calls, and including the r0/r1 roles at
  * that store. SoundRoomMusicPage_Init had the identical residual from the identical
  * spelling. Nothing about the zero needed changing. */
-void sub_0806BB08(struct Unk0806BB08Proc *proc)
+void CreditsStaff_Init(struct Unk0806BB08Proc *proc)
 {
     SetDefaultColorEffects();
     Proc_EndEach(gUnknown_0858175C);
-    sub_080670F8(gUnknown_085819E4);
+    ApplyBgControlTable(gUnknown_085819E4);
     SetDispEnable(1, 1, 1, 1, 1);
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_03001FE8.bits.priority = 1;
@@ -62,8 +62,9 @@ void sub_0806BB08(struct Unk0806BB08Proc *proc)
     gUnknown_03001FFC = 0;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xFFE0) | 0x07;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0x1800;
-    sub_0806BA6C(0, 0, 0x40, 0xa0);
+    SetCreditsWindow0Rect(0, 0, 0x40, 0xa0);
     SetSoundMixerChannelCount(0xa);
     PlayMusic(0x1a0);
     proc->unk38 = 0;
 }
+asm(".global sub_0806BB08\n.thumb_set sub_0806BB08, CreditsStaff_Init\n");

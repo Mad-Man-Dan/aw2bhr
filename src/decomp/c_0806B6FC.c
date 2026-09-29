@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0806B6FC(void)
+void EndScanlineDarkenBg0Wrapper(void)
 {
-    sub_080736D8();
+    EndScanlineDarkenBg0();
 }
+asm(".global sub_0806B6FC\n.thumb_set sub_0806B6FC, EndScanlineDarkenBg0Wrapper\n");

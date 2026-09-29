@@ -31,11 +31,11 @@ void SetupCoSelectFactoryBlues(void)
     if (IsCampaignCompletionFlagSet(0x6b))
     {
         AddCoSelectGroupYellowComet(i);
-        sub_08078770();
+        SetCoSelectGroupSwitchAllButFirst();
     }
     else
     {
-        sub_08078740();
+        SetCoSelectGroupSwitchNone();
     }
 }
 

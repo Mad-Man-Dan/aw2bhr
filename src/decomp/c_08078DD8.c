@@ -12,7 +12,7 @@
  */
 
 /* Bumps one counter and drops another, but only on the frames bit 0 of
- * gGameClock selects. sub_0807B858 is the same function on a different
+ * gGameClock selects. MissionTitle_ScrollBackdrop_Loop is the same function on a different
  * pair of counters. */
 
 void ScrollBG3_IDLE_08078DD9(void)

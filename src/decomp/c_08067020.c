@@ -9,16 +9,17 @@
 
 /* Teardown for the 0x08067 screen: one of two sound cues depending on
  * gUnknown_0202F200's mode flag, then the three stops and a window redraw. */
-void sub_08067020(void)
+void MatchSetupScreen_Close(void)
 {
     if (gUnknown_0202F200 != 0)
         PlayMusicOrSfx2(0x66);
     else
         PlayMusicOrSfx2(0x71);
 
-    sub_08064B68(-2);
+    MatchSetupDismissRuleOptions(-2);
     sub_08065700();
     sub_08014878();
 
     FillTilemapRect(gBG0TilemapBuffer, 3, 0x11, 0x1a, 3, 0);
 }
+asm(".global sub_08067020\n.thumb_set sub_08067020, MatchSetupScreen_Close\n");

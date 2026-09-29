@@ -41,12 +41,12 @@ struct Unk8077A14Proc
     /* 0x4e */ s16 unk4e;
 };
 
-void sub_08077A14(struct Unk8077A14Proc * proc)
+void WorldMapMapPreview_Init(struct Unk8077A14Proc * proc)
 {
     int i;
     int y;
 
-    sub_08077620(0, 0xa8 - gUnknown_0300064C);
+    WorldMapMissionInfo_PutSprites(0, 0xa8 - gUnknown_0300064C);
     SetDefaultColorEffects();
     EndWorldMapSelectionFrame();
     ClearBg1Tilemap();
@@ -90,3 +90,4 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
     SetDifficultyStarsPalette(3);
     SetWorldMapScopePalette(3);
 }
+asm(".global sub_08077A14\n.thumb_set sub_08077A14, WorldMapMapPreview_Init\n");

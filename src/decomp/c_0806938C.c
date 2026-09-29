@@ -48,7 +48,7 @@ void IntroT3_0806938D(struct Unk6938CProc *proc)
     gUnknown_0300251C.bits.priority = 3;
 
     SetDefaultColorEffects();
-    sub_08063994();
+    ResetBgAffineToScreenCentre();
     SetBgCntScreenSize((struct Unk8012C30 *)&gUnknown_030030B4, 2);
 
     Decompress(gUnknown_08183B14, gBG2TilemapBuffer);

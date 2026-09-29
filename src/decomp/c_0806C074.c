@@ -17,7 +17,7 @@ struct Unk806C074
     /* 0x38 */ int unk38;
 };
 
-void sub_0806C074(struct Unk806C074 *proc)
+void CreditsPage_SpawnNameLines(struct Unk806C074 *proc)
 {
     struct Unk0858265C *t;
 
@@ -37,9 +37,10 @@ void sub_0806C074(struct Unk806C074 *proc)
             }
         }
 
-        sub_0806BED8(proc->unk34, t->unk00[proc->unk34].unk04, proc);
+        StartCreditsNameLine(proc->unk34, t->unk00[proc->unk34].unk04, proc);
         proc->unk34++;
     }
 
     proc->unk30++;
 }
+asm(".global sub_0806C074\n.thumb_set sub_0806C074, CreditsPage_SpawnNameLines\n");

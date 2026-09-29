@@ -27,7 +27,7 @@ struct Unk77B74Proc
     /* 4e */ s16 unk4e;
 };
 
-void sub_08077B74(struct Unk77B74Proc *proc)
+void WorldMapMapPreview_OpenLoop(struct Unk77B74Proc *proc)
 {
     int t;
     int n;
@@ -50,7 +50,7 @@ void sub_08077B74(struct Unk77B74Proc *proc)
     gUnknown_03001FFC = proc->unk44;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xFFE0) | 0x1D;
 
-    sub_08077620(0, 0xA8 - gUnknown_0300064C);
+    WorldMapMissionInfo_PutSprites(0, 0xA8 - gUnknown_0300064C);
 
     zero = 0;
     CpuFastSet(&zero, gBG1TilemapBuffer, 0x01000140);
@@ -70,3 +70,4 @@ void sub_08077B74(struct Unk77B74Proc *proc)
         proc->unk44++;
     }
 }
+asm(".global sub_08077B74\n.thumb_set sub_08077B74, WorldMapMapPreview_OpenLoop\n");

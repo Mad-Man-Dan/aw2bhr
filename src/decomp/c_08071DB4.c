@@ -26,7 +26,7 @@
  * across the insert (it comes back as a dead `orrs r1, r3`), which shuffles
  * the whole allocation and pushes an extra literal into the pool. Same
  * family as the wave-15 rule -- a probe agreeing about two spellings is
- * evidence about the PROBE's context, not a general fact. sub_0807F2FC, two
+ * evidence about the PROBE's context, not a general fact. CoSelectConfirm_BeginFadeToWhite, two
  * functions along, matches with either spelling, so this is not a property
  * of the symbol.
  *

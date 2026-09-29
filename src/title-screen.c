@@ -171,7 +171,7 @@ void TitleScreen_Init(struct ProcTitleScreen * proc)
     ResetWindowShadows();
     SetDefaultColorEffects();
 
-    sub_08063994();
+    ResetBgAffineToScreenCentre();
 
     ApplyPaletteExt(Pal_TitleScreenSprites, 0x200, 0xA0);
     ApplyPaletteExt(Pal_TitleScreenBg, 0, 0x200);
@@ -194,7 +194,7 @@ void TitleScreen_Init(struct ProcTitleScreen * proc)
 }
 asm(".global sub_0806CA98\n.thumb_set sub_0806CA98, TitleScreen_Init\n");
 
-void sub_0806CB5C(struct ProcTitleScreen * proc)
+void TitleScreen_LoopStatic(struct ProcTitleScreen * proc)
 {
     if (proc->unk_30 != 0)
     {
@@ -205,16 +205,18 @@ void sub_0806CB5C(struct ProcTitleScreen * proc)
     proc->unk_30 = 0;
     sub_0806CC4C();
 }
+asm(".global sub_0806CB5C\n.thumb_set sub_0806CB5C, TitleScreen_LoopStatic\n");
 
-void sub_0806CB88(struct ProcTitleScreen * proc)
+void TitleScreen_StartScrollIn(struct ProcTitleScreen * proc)
 {
     ColFadeFromWhite(-1);
     sub_080718F0();
     EnablePaletteSync();
     proc->unk_30 = 127;
 }
+asm(".global sub_0806CB88\n.thumb_set sub_0806CB88, TitleScreen_StartScrollIn\n");
 
-void sub_0806CBA8(struct ProcTitleScreen * proc)
+void TitleScreen_LoopScrollIn(struct ProcTitleScreen * proc)
 {
     if (proc->unk_30 >= 0)
     {
@@ -237,6 +239,7 @@ void sub_0806CBA8(struct ProcTitleScreen * proc)
 
     sub_0806CC4C();
 }
+asm(".global sub_0806CBA8\n.thumb_set sub_0806CBA8, TitleScreen_LoopScrollIn\n");
 
 // clang-format off
 
@@ -246,11 +249,11 @@ struct ProcCmd CONST_DATA ProcScr_TitleScreen[] =
     PROC_START_BUGGED(ProcScr_TitleIntro, 3),
 
     PROC_CALL(TitleScreen_Init),
-    PROC_REPEAT(sub_0806CB5C),
+    PROC_REPEAT(TitleScreen_LoopStatic),
 
 PROC_LABEL(0),
-    PROC_CALL(sub_0806CB88),
-    PROC_REPEAT(sub_0806CBA8),
+    PROC_CALL(TitleScreen_StartScrollIn),
+    PROC_REPEAT(TitleScreen_LoopScrollIn),
 
     PROC_END,
 };

@@ -34,7 +34,7 @@
  * real subtractions from gUnknown_02010450 -- whatever object that symbol sits
  * in extends backwards from it, and the -0x280 run ends exactly at the symbol.
  */
-void sub_0807BD5C(void)
+void MissionTitleName_LoadGraphics(void)
 {
     int j, i;
 
@@ -58,3 +58,4 @@ void sub_0807BD5C(void)
 
     ApplyPaletteExt(gUnknown_0822DE80, 0x200, 0x20);
 }
+asm(".global sub_0807BD5C\n.thumb_set sub_0807BD5C, MissionTitleName_LoadGraphics\n");

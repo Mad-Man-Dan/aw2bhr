@@ -7,7 +7,7 @@
  * sub_0803F374 @ 0x0803F374
  */
 
-/* MATCHED. A LOOSE duplicate of sub_080845E8 -- one Decompress call, a
+/* MATCHED. A LOOSE duplicate of LoadMainMenuLabelPlateGraphic -- one Decompress call, a
  * different blob and a different VRAM destination. */
 void sub_0803F374(void)
 {

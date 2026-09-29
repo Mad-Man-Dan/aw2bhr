@@ -14,12 +14,12 @@
 #include "proc.h"
 
 /* Family F075, third member -- see StartTargetPickList. Both `varies` entries move
- * together here: a different reset routine (sub_0807F238, which likewise reads
+ * together here: a different reset routine (CoSelect_SetupBlend, which likewise reads
  * no argument register) and Proc_Start instead of Proc_StartBlocking. */
 
 void WarRoomMapSelected_0807C979(ProcPtr parent)
 {
-    sub_0807F238();
+    CoSelect_SetupBlend();
     Proc_Start(ProcScr_CoSelect, parent);
 }
 

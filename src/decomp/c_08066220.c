@@ -35,14 +35,14 @@ void MatchSetupHandleTeamStageInput(void)
         ForEachSlotRunningScript(gUnknown_08580AF0, sub_08066200);
         ForEachSlotRunningScript(gUnknown_08580B90, sub_08066200);
         ForEachSlotRunningScript(gUnknown_08580BC8, sub_08066200);
-        ForEachSlotRunningScript(gUnknown_08580A38, sub_08066210);
-        ForEachSlotRunningScript(gUnknown_08580A08, sub_08066210);
+        ForEachSlotRunningScript(gUnknown_08580A38, TeamBadge_StartExitDown);
+        ForEachSlotRunningScript(gUnknown_08580A08, TeamBadge_StartExitDown);
 
         PlayMusicOrSfx2(0x66);
     }
     else if (gpKeySt->pressed & 1)
     {
-        sub_080654E8();
+        MatchSetupDismissArmyColumns();
         MatchSetupSpawnRuleOptions();
         gUnknown_08580934->unk30 = 0;
         PlayMusicOrSfx2(0x71);

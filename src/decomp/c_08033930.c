@@ -14,7 +14,7 @@
  * The compiler sees that header too, so a definition that
  * disagrees will not compile.
  *
- * Same shape as sub_0806B9CC's window-shadow writes but with constant
+ * Same shape as SetCreditsWindow1Rect's window-shadow writes but with constant
  * byte payloads and a plain SetWinEnable(0, 1, 0) tail instead of a
  * bare win1_enable OR -- only win0_enable/win1_enable/objwin_enable
  * are touched at gDispIo, bg0_enable is untouched here.

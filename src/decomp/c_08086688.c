@@ -27,8 +27,8 @@ void MapSelectList_DrawFrame(ProcPtr arg)
     struct Unk8086688 *p = arg;
     int i;
 
-    sub_080867BC(arg);
-    sub_08087040();
+    MapSelectList_StepTransition(arg);
+    MapSelectList_DrawPropertyIcons();
     MapSelectList_DrawPropertyCounts(p->unk64, p->unk66, p->unk68, p->unk6a);
     MapSelectList_DrawScrollArrows(p->unk5c);
     MapSelectList_DrawScrollbar(p->unk5c);

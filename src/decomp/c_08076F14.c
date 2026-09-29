@@ -14,15 +14,16 @@
  * would keep the true block as a fallthrough and never materialise the 0. */
 
 /* Wave 54 (W54-F): the RETURN type is `u8`, settled from the only caller.
- * sub_08076F34 truth-tests the result with `lsls r0, r0, #0x18; cmp r0, #0`,
+ * SnapWorldMapCursorToMarker truth-tests the result with `lsls r0, r0, #0x18; cmp r0, #0`,
  * i.e. it re-narrows to a byte, which an `int` return would not produce. The
  * change is byte-neutral in this body (the two constants need no narrowing) and
  * fan-in is 1, so nothing else moves. */
 
-u8 sub_08076F14(s16 x, s16 y)
+u8 IsWorldMapMarkerNearCursor(s16 x, s16 y)
 {
     if (x * x + y * y <= 0xff)
         return 1;
 
     return 0;
 }
+asm(".global sub_08076F14\n.thumb_set sub_08076F14, IsWorldMapMarkerNearCursor\n");

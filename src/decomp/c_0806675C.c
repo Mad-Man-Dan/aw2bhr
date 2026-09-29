@@ -18,7 +18,7 @@ struct Unk66808Proc
     /* 0x26 */ s16 unk26;
 };
 
-void sub_0806675C(struct Unk6675CProc *proc)
+void MatchSetupConfirmArmyStage_Loop(struct Unk6675CProc *proc)
 {
     if (--proc->unk26 == 6)
         ClearCallbackOfSlotsRunningScript(gUnknown_08580D0C);
@@ -30,7 +30,7 @@ void sub_0806675C(struct Unk6675CProc *proc)
             gUnknown_08580934->unk30 = 0;
             gUnknown_08580934->unk26 = 2;
             ForEachSlotRunningScript(gUnknown_08580AF0, ArmyColumn_StartExitUp);
-            sub_080654E8();
+            MatchSetupDismissArmyColumns();
             MatchSetupSpawnRuleOptions();
             return;
         }
@@ -48,8 +48,9 @@ void sub_0806675C(struct Unk6675CProc *proc)
         LinkRestartKeySync();
     }
 }
+asm(".global sub_0806675C\n.thumb_set sub_0806675C, MatchSetupConfirmArmyStage_Loop\n");
 
-void sub_08066808(struct Unk66808Proc *proc)
+void MatchSetupConfirmTeamStage_Loop(struct Unk66808Proc *proc)
 {
     if (--proc->unk26 == 6)
         ClearCallbackOfSlotsRunningScript(gUnknown_08580D0C);
@@ -57,7 +58,7 @@ void sub_08066808(struct Unk66808Proc *proc)
     if (proc->unk26 == 3)
     {
         PlayMusicOrSfx2(0x67);
-        sub_080654E8();
+        MatchSetupDismissArmyColumns();
         MatchSetupSpawnRuleOptions();
         gUnknown_08580934->unk30 = 0;
     }
@@ -69,3 +70,4 @@ void sub_08066808(struct Unk66808Proc *proc)
         LinkRestartKeySync();
     }
 }
+asm(".global sub_08066808\n.thumb_set sub_08066808, MatchSetupConfirmTeamStage_Loop\n");

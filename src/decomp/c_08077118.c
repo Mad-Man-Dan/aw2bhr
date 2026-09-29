@@ -10,7 +10,7 @@
 #include "proc.h"
 
 /* A flat teardown: clear one flag byte, then four calls with no arguments. */
-void sub_08077118(void)
+void EndWorldMapDisplayProcs(void)
 {
     gUnknown_0202FDFC.unk10 = 0;
     AP_ClearAll();
@@ -18,3 +18,4 @@ void sub_08077118(void)
     Proc_EndEach(gUnknown_086143E0);
     EndWorldMapSelectionFrame();
 }
+asm(".global sub_08077118\n.thumb_set sub_08077118, EndWorldMapDisplayProcs\n");

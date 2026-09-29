@@ -10,7 +10,7 @@
 /* MATCHED, wave 87 (W87-B).
  *
  * Wave 86 (W86-F) took this from 50.0% to 92.0% size-exact with the twin
- * sub_0807B360's "scale i, never the pointer" construct, leaving 18 bytes: the
+ * MatchSummaryPanel_LoadGraphics's "scale i, never the pointer" construct, leaving 18 bytes: the
  * two loop-invariant bases of loop 1 were emitted in the opposite order and
  * therefore traded registers.  Three things closed the rest, and the order
  * matters because each one only became visible once the previous was in place:
@@ -40,7 +40,7 @@
  *    because they are walkers and do not depend on j.
  *
  * Loop 2 keeps W86-F's scaled-index form; loops, pool and tail unchanged. */
-void sub_080790D0(void)
+void ResultsScreen_LoadGraphics(void)
 {
     u8 *p;
     u8 *src;
@@ -72,3 +72,4 @@ void sub_080790D0(void)
     CpuFastSet(gUnknown_02012790 + 0x400, (void *)0x06015F40, 0x10);
     ApplyPaletteExt(gUnknown_0822AA80, 0x280, 0x40);
 }
+asm(".global sub_080790D0\n.thumb_set sub_080790D0, ResultsScreen_LoadGraphics\n");

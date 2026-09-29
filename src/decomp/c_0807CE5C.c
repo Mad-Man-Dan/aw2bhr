@@ -49,22 +49,22 @@ struct Unk807CE5C
 };
 /* Promoted but undeclared; signatures taken from src/decomp/, not derived. */
 void SetArmyCoIdsFromList(u8 *);
-int sub_0807F618(void);
+int IsEndCoSelectRunning(void);
 void sub_0807D860(struct Unk807CE5C *);
 void sub_0807D918(struct Unk807CE5C *);
-/* sub_0807DA98 is W56-B's; since wave 56 it is declared in
- * include/unknown-functions.h as `void sub_0807DA98(struct Unk7DA98 *)`, so
+/* CoSelect_DrawSprites is W56-B's; since wave 56 it is declared in
+ * include/unknown-functions.h as `void CoSelect_DrawSprites(struct Unk7DA98 *)`, so
  * this unit casts its own proc pointer to that incomplete tag at the call site
  * rather than redeclaring it. */
 /* Not assigned to anyone this wave; signature read off the sole call site,
- * `adds r0, r7, #0; bl sub_0807F630` with the result never read. */
-void sub_0807F630(struct Unk807CE5C *);
+ * `adds r0, r7, #0; bl CoSelect_AssignRemainingAndFinish` with the result never read. */
+void CoSelect_AssignRemainingAndFinish(struct Unk807CE5C *);
 
 void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 {
     int i;
 
-    if (!(u8)sub_0807F618() && p->unk4e == 0 && p->unk60 == 0 && p->unk66 == 0)
+    if (!(u8)IsEndCoSelectRunning() && p->unk4e == 0 && p->unk60 == 0 && p->unk66 == 0)
     {
         if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_LEFT))
         {
@@ -175,7 +175,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
                 SetArmyCoIdsFromList(gUnknown_030058D4);
                 LockMainMenu();
                 Proc_Start(gUnknown_08616690, p);
-                sub_080733A0(0x10);
+                SetHeaderBannerTransitionFrames(0x10);
                 Proc_Break(p);
                 PlayMusicOrSfx2(0x71);
             }
@@ -279,7 +279,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
         }
         else if (gpKeySt->pressed & R_BUTTON)
         {
-            sub_0807F630(p);
+            CoSelect_AssignRemainingAndFinish(p);
         }
     }
 
@@ -331,7 +331,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
     }
 
     p->unk4c++;
-    sub_0807DA98((struct Unk7DA98 *)p);
+    CoSelect_DrawSprites((struct Unk7DA98 *)p);
     p->unk3c--;
 }
 

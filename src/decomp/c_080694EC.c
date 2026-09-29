@@ -31,11 +31,11 @@ void IntroT3_IDLE_080694ED(struct Unk694ECProc *proc)
         break;
 
     case 0xb:
-        sub_08067BD0(2, 1, 0x1e, proc);
+        StartIntroSlidePanel(2, 1, 0x1e, proc);
         break;
 
     case 0x1e:
-        sub_08067A24();
+        TriggerIntroBgAffineTween();
         break;
 
     case 0x2a:
@@ -47,7 +47,7 @@ void IntroT3_IDLE_080694ED(struct Unk694ECProc *proc)
 
     case 0x2e:
         ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-        sub_08067D04(2, 0, 0xc, proc);
+        StartIntroSlideSprite(2, 0, 0xc, proc);
         StartIntroBgAffineTween(2, 1, 0x120, 0x80, 0, -0x4000, 0x100, 0xc0, 0xc, proc);
         break;
 
@@ -69,10 +69,10 @@ void IntroT3_IDLE_080694ED(struct Unk694ECProc *proc)
 
     case 0x60:
         ApplyPaletteExt((u16 *)gUnknown_0823BDE0, 0, 0x20);
-        sub_08067C7C(0x32);
-        sub_08067A24();
-        sub_08067DD4(proc);
-        sub_08067D4C();
+        SetIntroSlidePanelExitFrames(0x32);
+        TriggerIntroBgAffineTween();
+        StartIntroBgBounceIn(proc);
+        EndIntroSlideSprite();
         break;
     }
 

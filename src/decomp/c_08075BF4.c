@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* The c_08075C98.c on-screen guard over a AP_Update blit, then the
- * c_08075DBC.c palette/flush tail behind the flag sub_080759A0 returned.
+ * c_08075DBC.c palette/flush tail behind the flag ColorWorldMapSectionWithBank returned.
  *
  * The 0xFF that the ROM parks in the callee-saved r6 is ONE constant with TWO
  * uses: `proc->unk64 & 0xFF` and `proc->unk30 & 0xFF`. The first folds into a
@@ -33,9 +33,9 @@ struct Unk8075BF4
     /* 0x64 */ s16 unk64;
 };
 
-void sub_08075BF4(struct Unk8075BF4 *proc)
+void WorldMapMissionClear_Init(struct Unk8075BF4 *proc)
 {
-    proc->unk5c = sub_080759A0(proc->unk58, 0xF, (u8 *)&proc->unk64);
+    proc->unk5c = ColorWorldMapSectionWithBank(proc->unk58, 0xF, (u8 *)&proc->unk64);
     proc->unk64 = proc->unk64 & 0xFF;
     proc->unk4c = 0;
 
@@ -49,7 +49,8 @@ void sub_08075BF4(struct Unk8075BF4 *proc)
         RegisterDataMove(gUnknown_08614280, (void *)0x0600F000, 0x1000);
         CopyToPaletteBufferNoSync(gUnknown_081D1504 + (proc->unk64 - 1) * 0x10, 0x1E0, 0x20);
         ColorFadeInit();
-        sub_08075A54(0xF, 1);
+        LoadFadeComponentsFromPalette(0xF, 1);
         EnablePaletteSync();
     }
 }
+asm(".global sub_08075BF4\n.thumb_set sub_08075BF4, WorldMapMissionClear_Init\n");

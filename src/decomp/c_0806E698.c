@@ -18,15 +18,17 @@ struct Unk6E698Proc
     /* 5c */ s32 unk5c;
 };
 
-void sub_0806E698(struct Unk6E698Proc * parent)
+void SoundRoomCoSwap_StartSlideOut(struct Unk6E698Proc * parent)
 {
     struct Unk6E698Proc * proc = Proc_StartBlocking(gUnknown_08582B74, parent);
 
     proc->unk5c = parent->unk5c;
 }
+asm(".global sub_0806E698\n.thumb_set sub_0806E698, SoundRoomCoSwap_StartSlideOut\n");
 
-/* Byte-identical to sub_0806E6E0, which starts the same script. */
-void sub_0806E6B4(ProcPtr parent)
+/* Byte-identical to StartSoundRoomCoSlideIn, which starts the same script. */
+void SoundRoomCoSwap_StartSlideIn(ProcPtr parent)
 {
     Proc_StartBlocking(gUnknown_08582B94, parent);
 }
+asm(".global sub_0806E6B4\n.thumb_set sub_0806E6B4, SoundRoomCoSwap_StartSlideIn\n");

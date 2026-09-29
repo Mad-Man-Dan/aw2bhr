@@ -50,7 +50,7 @@ struct Unk807548C
     /* 0x3c */ int unk3c;
 };
 
-void sub_0807548C(s16 a1, s16 a2, int a3, ProcPtr parent)
+void StartWorldMapSelectionFrame(s16 a1, s16 a2, int a3, ProcPtr parent)
 {
     struct Unk807548C *proc;
     s16 x;
@@ -82,3 +82,4 @@ void sub_0807548C(s16 a1, s16 a2, int a3, ProcPtr parent)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xFFE0) | 2;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0x1800;
 }
+asm(".global sub_0807548C\n.thumb_set sub_0807548C, StartWorldMapSelectionFrame\n");

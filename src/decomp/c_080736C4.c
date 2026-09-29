@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_080736C4(void)
+void StartScanlineDarkenBg0(void)
 {
     Proc_Start(gUnknown_0861418C, PROC_TREE_VSYNC);
 }
+asm(".global sub_080736C4\n.thumb_set sub_080736C4, StartScanlineDarkenBg0\n");

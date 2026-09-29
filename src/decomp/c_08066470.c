@@ -32,7 +32,7 @@
  * gUnknown_03001FBC is declared s16 and read here with `ldrb`; that is
  * ClearSlotScriptCallback's u8 parameter folding the truncation into the load, not
  * evidence about the global. */
-void sub_08066470(struct Unk08580934_Obj *obj)
+void ReadyMarkerDisappear_Loop(struct Unk08580934_Obj *obj)
 {
     int sx = obj->unk26 * 64;
     int sy = (3 - obj->unk26) * 64 + 0x100;
@@ -56,3 +56,4 @@ void sub_08066470(struct Unk08580934_Obj *obj)
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }
+asm(".global sub_08066470\n.thumb_set sub_08066470, ReadyMarkerDisappear_Loop\n");

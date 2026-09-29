@@ -13,8 +13,9 @@
  * Sibling of sub_0806F2C0 and EndBgWave. */
 #include "proc.h"
 
-void sub_080736D8(void)
+void EndScanlineDarkenBg0(void)
 {
     Proc_EndEach(gUnknown_0861418C);
-    QueueVBlankCallback((void *)sub_080735B0);
+    QueueVBlankCallback((void *)ResetDma0Registers);
 }
+asm(".global sub_080736D8\n.thumb_set sub_080736D8, EndScanlineDarkenBg0\n");

@@ -21,7 +21,7 @@ struct Unk0806E1B8Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_0806E1B8(struct Unk0806E1B8Proc *proc)
+void SoundRoomGalleryNumber_Loop(struct Unk0806E1B8Proc *proc)
 {
     int lo;
     int hi;
@@ -34,3 +34,4 @@ void sub_0806E1B8(struct Unk0806E1B8Proc *proc)
     PutSprite(0, 0x18, 8, gUnknown_0816E7F8, hi * 2);
     PutSprite(0, 0x20, 8, gUnknown_0816E7F8, lo * 2);
 }
+asm(".global sub_0806E1B8\n.thumb_set sub_0806E1B8, SoundRoomGalleryNumber_Loop\n");

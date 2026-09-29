@@ -16,7 +16,7 @@
  * only if the dividend is unsigned; the declaration in unknown-globals.h is
  * s32 for src/title-screen.c's sake, so the cast carries it here. The second
  * division's dividend is the plain int index, hence the signed helper. */
-u16 sub_0806F064(u16 a, u16 *list)
+u16 PickRandomCoFromList(u16 a, u16 *list)
 {
     int i;
     u16 r;
@@ -32,3 +32,4 @@ u16 sub_0806F064(u16 a, u16 *list)
 
     return r;
 }
+asm(".global sub_0806F064\n.thumb_set sub_0806F064, PickRandomCoFromList\n");

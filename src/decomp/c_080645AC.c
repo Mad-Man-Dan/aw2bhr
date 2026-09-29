@@ -11,7 +11,7 @@
  * with r0 still holding the incoming pointer. `Div(unk28 - 7, 0x20)` is
  * recomputed in each arm rather than bound -- agbcc emits the call three times
  * because a bound local would have to survive two further calls. */
-void sub_080645AC(struct Unk08580934_Obj *obj)
+void RuleOption_Draw(struct Unk08580934_Obj *obj)
 {
     obj->unk4c(obj);
 
@@ -25,3 +25,4 @@ void sub_080645AC(struct Unk08580934_Obj *obj)
         DrawOamObject(Div(obj->unk28 - 7, 0x20) + 0xD1, (obj->unk28 - 0x10) & 0x1FF,
                      ((obj->unk2a - 0x10) & 0xFF) | 0x300, 0, 3);
 }
+asm(".global sub_080645AC\n.thumb_set sub_080645AC, RuleOption_Draw\n");

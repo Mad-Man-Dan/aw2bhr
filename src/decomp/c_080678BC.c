@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* Same proc script as sub_080678D4, which writes +0x3c of the same object. */
+/* Same proc script as SetIntroBgZoomAcceleration, which writes +0x3c of the same object. */
 struct Unk678BCProc
 {
     /* 00 */ PROC_HEADER;
@@ -17,7 +17,7 @@ struct Unk678BCProc
     /* 40 */ STRUCT_PAD(0x40, 0x60);
     /* 60 */ u32 unk60;
 };
-/* Same proc script as sub_080678BC, which writes +0x60 of the same object. */
+/* Same proc script as SetIntroBgZoomEnabled, which writes +0x60 of the same object. */
 struct Unk678D4Proc
 {
     /* 00 */ PROC_HEADER;
@@ -27,12 +27,14 @@ struct Unk678D4Proc
     /* 60 */ u32 unk60;
 };
 
-void sub_080678BC(u32 a)
+void SetIntroBgZoomEnabled(u32 a)
 {
     ((struct Unk678BCProc *)Proc_Find(gUnknown_08580FF4))->unk60 = a;
 }
+asm(".global sub_080678BC\n.thumb_set sub_080678BC, SetIntroBgZoomEnabled\n");
 
-void sub_080678D4(u32 a)
+void SetIntroBgZoomAcceleration(u32 a)
 {
     ((struct Unk678D4Proc *)Proc_Find(gUnknown_08580FF4))->unk3c = a;
 }
+asm(".global sub_080678D4\n.thumb_set sub_080678D4, SetIntroBgZoomAcceleration\n");

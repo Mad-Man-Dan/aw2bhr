@@ -8,12 +8,12 @@
  */
 
 #include "proc.h"
-/* The predicate sub_0807831C guards its sub_08074AAC call with. It counts how
+/* The predicate WorldMapReturn_RevealMissions guards its StartWorldMapMarkerReveal call with. It counts how
  * many entries of a -1-terminated SIGNED byte list (`ldrsb` off a zero index
  * register, which is what makes the elements `s8` and not `u8`) have bit 1 set
  * in gUnknown_0202FDFC.unk12, then compares that count against the record's own
  * two bytes at +4 and +5. Hitting the second threshold also writes 3 to the
- * caller's proc at +0x58 -- which is why sub_0807831C re-reads that field after
+ * caller's proc at +0x58 -- which is why WorldMapReturn_RevealMissions re-reads that field after
  * the call rather than reusing the 0 it just stored.
  *
  * `gUnknown_0202FE0E` in the disassembly is `&gUnknown_0202FDFC.unk12`; see the
@@ -27,7 +27,7 @@
  * ahead of `movs r4, #0`. */
 
 /* A proc method of the same 0x54/0x58 shape as src/decomp/c_08078480.c's, one
- * field longer. sub_080782C0 is a u8 predicate -- the ROM tests its result with
+ * field longer. WorldMapReturn_CheckRevealCondition is a u8 predicate -- the ROM tests its result with
  * a BARE `lsls #0x18` (a truth test, not a value kept) -- and it also writes
  * this proc's own +0x58 to 3 on one of its paths, which is why the proc pointer
  * is its second argument and why +0x58 is re-read after the call rather than
@@ -35,7 +35,7 @@
  *
  * `lsls #3` on the index is the 8-byte stride of gUnknown_0861500C; see the
  * struct's comment in include/unknown-globals.h for why word 0 is the
- * `const u8 *` id list sub_08074AAC takes. */
+ * `const u8 *` id list StartWorldMapMarkerReveal takes. */
 
 struct Unk807831C
 {
@@ -100,13 +100,13 @@ void sub_08078260(u16 *p)
  * 0x17 / 0x29 on the high side. A written-out `if`/`else if` chain would have
  * tested the four values in source order.
  *
- * sub_08075E68 takes the same field as its first argument and forwards the
+ * StartWorldMapMissionClear takes the same field as its first argument and forwards the
  * proc as its second -- invisible in that callee's body, which never reads r1,
  * but it survives into its `bl Proc_StartBlocking` as the parent. */
 
-void sub_08078270(ProcPtr proc)
+void WorldMapReturn_Init(ProcPtr proc)
 {
-    sub_08075E68(gUnknown_0202FDFC.unk0c, proc);
+    StartWorldMapMissionClear(gUnknown_0202FDFC.unk0c, proc);
 
     switch (gUnknown_0202FDFC.unk0c)
     {
@@ -125,8 +125,9 @@ void sub_08078270(ProcPtr proc)
         break;
     }
 }
+asm(".global sub_08078270\n.thumb_set sub_08078270, WorldMapReturn_Init\n");
 
-u8 sub_080782C0(struct Unk80782C0 *a, ProcPtr proc)
+u8 WorldMapReturn_CheckRevealCondition(struct Unk80782C0 *a, ProcPtr proc)
 {
     const s8 *ids = a->unk_00;
     s32 count = 0;
@@ -150,14 +151,16 @@ u8 sub_080782C0(struct Unk80782C0 *a, ProcPtr proc)
 
     return 0;
 }
+asm(".global sub_080782C0\n.thumb_set sub_080782C0, WorldMapReturn_CheckRevealCondition\n");
 
-void sub_0807831C(struct Unk807831C *proc)
+void WorldMapReturn_RevealMissions(struct Unk807831C *proc)
 {
     proc->unk_58 = 0;
 
-    if (sub_080782C0(proc->unk_54, proc))
-        sub_08074AAC(gUnknown_0861500C[gUnknown_0202FDFC.unk0c + proc->unk_58].unk_00, proc);
+    if (WorldMapReturn_CheckRevealCondition(proc->unk_54, proc))
+        StartWorldMapMarkerReveal(gUnknown_0861500C[gUnknown_0202FDFC.unk0c + proc->unk_58].unk_00, proc);
 }
+asm(".global sub_0807831C\n.thumb_set sub_0807831C, WorldMapReturn_RevealMissions\n");
 
 /* Walks the four records of gUnknown_08615974 and starts the ones whose two
  * tags pass and whose id is not already flagged. Three guards, all in one
@@ -166,7 +169,7 @@ void sub_0807831C(struct Unk807831C *proc)
  * separate `if`s round one body.
  *
  * The record's last two bytes are both an id (read `ldrsb` to index
- * gUnknown_0202FDFC.unk12) and the 0xFF-terminated list sub_08074AAC takes --
+ * gUnknown_0202FDFC.unk12) and the 0xFF-terminated list StartWorldMapMarkerReveal takes --
  * which is why the ROM computes that one address TWICE, once as `[r4, #2]` off
  * the walking pointer for the value and once as `r5 + r8` for the call. Two
  * expressions in the source, not one CSE that failed.
@@ -174,7 +177,7 @@ void sub_0807831C(struct Unk807831C *proc)
  * `i <= 3` rather than `i < 4`: both give `cmp #3; ble`, so this is not
  * evidence either way. */
 
-void sub_08078358(ProcPtr proc)
+void WorldMapReturn_RevealBonusMissions(ProcPtr proc)
 {
     s32 i;
 
@@ -183,11 +186,12 @@ void sub_08078358(ProcPtr proc)
         if (IsCampaignCompletionFlagSet(gUnknown_08615974[i].unk_00)
          && !IsCampaignCompletionFlagSet(gUnknown_08615974[i].unk_01)
          && !(gUnknown_0202FDFC.unk12[gUnknown_08615974[i].unk_02[0]] & 3))
-            sub_08074AAC((const u8 *)gUnknown_08615974[i].unk_02, proc);
+            StartWorldMapMarkerReveal((const u8 *)gUnknown_08615974[i].unk_02, proc);
     }
 }
+asm(".global sub_08078358\n.thumb_set sub_08078358, WorldMapReturn_RevealBonusMissions\n");
 
-/* The guarded member of the sub_080785CC wrapper trio (the other two are
+/* The guarded member of the StartWorldMapScene wrapper trio (the other two are
  * sub_08078404 and sub_08078420, which are unconditional). Both guards test
  * bit 1 of a byte of gUnknown_0202FDFC.unk12[], at +0x21 and +0x29 -- eight
  * bytes apart, which hints at a record stride inside that 42-byte blob but is
@@ -199,20 +203,21 @@ void sub_08078358(ProcPtr proc)
  * constant local: the shift is minimal for that value (0x160 needs 9 bits) and
  * the `movs` and the `lsls` write the same register. */
 
-void sub_080783BC(ProcPtr proc)
+void WorldMapReturn_ShowSceneIfMissions0F17Cleared(ProcPtr proc)
 {
     if ((gUnknown_0202FDFC.unk12[0x0f] & 2) && (gUnknown_0202FDFC.unk12[0x17] & 2))
-        sub_080785CC(0x160, 0xa0, 2, gUnknown_084BA210, proc);
+        StartWorldMapScene(0x160, 0xa0, 2, gUnknown_084BA210, proc);
 }
+asm(".global sub_080783BC\n.thumb_set sub_080783BC, WorldMapReturn_ShowSceneIfMissions0F17Cleared\n");
 
-/* A five-argument forwarder to sub_080785CC; the incoming ProcPtr becomes the
+/* A five-argument forwarder to StartWorldMapScene; the incoming ProcPtr becomes the
  * fifth argument and so is `str r0, [sp]`'d before r0 is reloaded with the
  * first constant. The bare prologue is what fixes the three leading arguments
  * as wide -- see the prototype's comment in include/unknown-functions.h. */
 
 void sub_08078404(ProcPtr proc)
 {
-    sub_080785CC(0x98, 0xa0, 1, gUnknown_084B9F00, proc);
+    StartWorldMapScene(0x98, 0xa0, 1, gUnknown_084B9F00, proc);
 }
 
 /* sub_08078404's twin with different constants and a different blob.
@@ -223,5 +228,5 @@ void sub_08078404(ProcPtr proc)
 
 void sub_08078420(ProcPtr proc)
 {
-    sub_080785CC(0x100, 0x70, 3, gUnknown_084BA480, proc);
+    StartWorldMapScene(0x100, 0x70, 3, gUnknown_084BA480, proc);
 }

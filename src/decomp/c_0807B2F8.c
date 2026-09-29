@@ -14,7 +14,7 @@ struct Unk807B2F8
     /* 0x30 */ int unk30;
 };
 
-void sub_0807B2F8(ProcPtr proc)
+void MatchSummaryPanel_DrawText(ProcPtr proc)
 {
     if (gPlaySt.gameMode == 3)
         Proc_Goto(proc, 0);
@@ -25,3 +25,4 @@ void sub_0807B2F8(ProcPtr proc)
                  gBG0TilemapBuffer, gUnknown_03004080, 0x8000, 0);
     BG_EnableSyncBG0();
 }
+asm(".global sub_0807B2F8\n.thumb_set sub_0807B2F8, MatchSummaryPanel_DrawText\n");

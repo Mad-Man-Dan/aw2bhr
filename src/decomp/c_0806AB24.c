@@ -41,7 +41,7 @@ struct Unk806AB24
     /* 0x52 */ u16 unk52;
 };
 
-void sub_0806AB24(struct Unk806AB24 *proc)
+void CreditsMissionLine_LayoutMapName(struct Unk806AB24 *proc)
 {
     u16 rest;
     u16 w;
@@ -58,3 +58,4 @@ void sub_0806AB24(struct Unk806AB24 *proc)
 
     proc->unk44 = 0x140;
 }
+asm(".global sub_0806AB24\n.thumb_set sub_0806AB24, CreditsMissionLine_LayoutMapName\n");

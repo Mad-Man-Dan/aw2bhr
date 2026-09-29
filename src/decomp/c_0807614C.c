@@ -13,7 +13,7 @@
 
 #include "proc.h"
 /* Re-samples the camera-relative cursor cell each frame and, when it has moved,
- * either redraws (sub_08075F44 + sub_0807606C) or breaks the proc.
+ * either redraws (WorldMapNationPanel_Refresh + WorldMapNationPanel_Draw) or breaks the proc.
  *
  * The two sums are spelled with the FAR member first (`unk04 + unk00`), exactly
  * as c_0807610C.c spells its pair and for the reason that file records: agbcc
@@ -70,12 +70,12 @@ void WM_Listener_IDLE_0807614D(struct Unk807614C *proc)
     if (proc->unk36 == ox && proc->unk38 == oy)
         return;
 
-    v = sub_08075EC4();
+    v = GetWorldMapNationPanelSide();
 
     if (proc->unk3a == v || v == 0)
     {
-        sub_08075F44(proc);
-        sub_0807606C((struct Unk807606C *)proc);
+        WorldMapNationPanel_Refresh(proc);
+        WorldMapNationPanel_Draw((struct Unk807606C *)proc);
     }
     else
     {

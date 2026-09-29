@@ -22,7 +22,7 @@ void MatchSetupDrawSelectionArrows(void)
     struct Unk08580934_Obj *obj = gUnknown_08580934->unk34[gUnknown_08580934->unk32 / 2];
     int i = gUnknown_08580934->unk32 & 1;
 
-    sub_08064474(obj->unk28 + t.unk00[i].unk08, t.unk00[i].unk0a + 0x34);
-    sub_08064500(obj->unk28 + t.unk00[i].unk0c, t.unk00[i].unk0e + 0x34);
+    DrawUpArrow(obj->unk28 + t.unk00[i].unk08, t.unk00[i].unk0a + 0x34);
+    DrawDownArrow(obj->unk28 + t.unk00[i].unk0c, t.unk00[i].unk0e + 0x34);
 }
 asm(".global sub_08065EF4\n.thumb_set sub_08065EF4, MatchSetupDrawSelectionArrows\n");

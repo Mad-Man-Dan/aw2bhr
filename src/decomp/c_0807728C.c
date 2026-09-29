@@ -13,7 +13,7 @@ struct Unk080772B8
     /* 0x92 */ u16 unk92[5][3];
 };
 
-void sub_0807728C(u16 *dst, int val)
+void PutNumberTilesRightAligned(u16 *dst, int val)
 {
     while (1) {
         *dst = val % 10 + 0x32;
@@ -23,15 +23,17 @@ void sub_0807728C(u16 *dst, int val)
         dst--;
     }
 }
+asm(".global sub_0807728C\n.thumb_set sub_0807728C, PutNumberTilesRightAligned\n");
 
-void sub_080772B8(struct Unk080772B8 *p)
+void WorldMapMissionInfo_DrawPropertyCounts(struct Unk080772B8 *p)
 {
     u8 buf[8];
     int i;
 
-    sub_080733C8((s16)gUnknown_08615194[gUnknown_0202FDFC.unk0c].mapID,
+    CountMapTilesOfTerrainKinds((s16)gUnknown_08615194[gUnknown_0202FDFC.unk0c].mapID,
                  gUnknown_086145C8, buf);
 
     for (i = 0; i <= 4; i++)
-        sub_0807728C(&p->unk92[i][2], buf[i]);
+        PutNumberTilesRightAligned(&p->unk92[i][2], buf[i]);
 }
+asm(".global sub_080772B8\n.thumb_set sub_080772B8, WorldMapMissionInfo_DrawPropertyCounts\n");

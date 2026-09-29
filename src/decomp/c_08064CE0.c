@@ -7,9 +7,10 @@
  * sub_08064CE0 @ 0x08064CE0
  */
 
-void sub_08064CE0(struct Unk08580934_Obj *obj)
+void TeamBadgeExitDown_Init(struct Unk08580934_Obj *obj)
 {
     gUnknown_08580934->unk2d++;
     obj->unk3c = 2;
     obj->unk3a = 0;
 }
+asm(".global sub_08064CE0\n.thumb_set sub_08064CE0, TeamBadgeExitDown_Init\n");

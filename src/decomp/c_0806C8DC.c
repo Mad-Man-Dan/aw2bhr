@@ -30,10 +30,10 @@ struct Unk6C8DCProc
  * `win1_enable = 0` -- the same field-assignment reading c_0807898C.c records
  * for the ~0x20 / ~0x40 pair, not a hand-written mask.
  *
- * `-a` is negated once and reused for both window calls, and sub_0806C8A0
+ * `-a` is negated once and reused for both window calls, and ClearCreditsPageArea
  * takes no arguments (its first instruction writes r0); the zero sitting in r0
  * at that `bl` is left over from the counter reset. */
-void sub_0806C8DC(struct Unk6C8DCProc *proc)
+void CreditsPageWipe_OutLoop(struct Unk6C8DCProc *proc)
 {
     int a;
 
@@ -43,13 +43,13 @@ void sub_0806C8DC(struct Unk6C8DCProc *proc)
     gUnknown_03002B34 = a;
     gUnknown_030030A0 = a;
 
-    sub_0806B9CC(0, 0, -a, 0xa0);
-    sub_0806BA6C(-a, 0, -a + 0x40, 0xa0);
+    SetCreditsWindow1Rect(0, 0, -a, 0xa0);
+    SetCreditsWindow0Rect(-a, 0, -a + 0x40, 0xa0);
 
     if (proc->unk58 > 0x13)
     {
         proc->unk58 = 0;
-        sub_0806C8A0();
+        ClearCreditsPageArea();
         gDispIo.disp_ct.win1_enable = 0;
         Proc_Break(proc);
     }
@@ -58,3 +58,4 @@ void sub_0806C8DC(struct Unk6C8DCProc *proc)
         proc->unk58++;
     }
 }
+asm(".global sub_0806C8DC\n.thumb_set sub_0806C8DC, CreditsPageWipe_OutLoop\n");

@@ -54,7 +54,7 @@ struct Unk73930Row
  *
  * `movs r1, #0x80; lsls r1, r1, #1` is the constant 0x100. */
 
-void sub_08073930(void)
+void PolygonWipe_HBlankHandler(void)
 {
     u16 line = REG_VCOUNT + 1;
     u16 t;
@@ -68,3 +68,4 @@ void sub_08073930(void)
     REG_BG1HOFS = (t = ((struct Unk73930Row *)gUnknown_0202FDE4)[line].unk02,
         ((struct Unk73930Row *)gUnknown_0202FDE4)[0].unk02 - t + 0x100);
 }
+asm(".global sub_08073930\n.thumb_set sub_08073930, PolygonWipe_HBlankHandler\n");

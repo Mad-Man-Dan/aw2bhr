@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 #include "proc.h"
-/* sub_08074600's count-up twin: same publish-then-step-then-test shape, +1 and
+/* DarkenRampDown_Loop's count-up twin: same publish-then-step-then-test shape, +1 and
  * a 0xf ceiling instead of -1 and a sign test.
  */
 struct Unk8074628
@@ -18,7 +18,7 @@ struct Unk8074628
     /* 0x4c */ u16 unk_4c;
 };
 
-void sub_08074648(struct Unk8074628 *proc)
+void DarkenRampUp_Loop(struct Unk8074628 *proc)
 {
     gUnknown_03001FFC = proc->unk_4c;
     proc->unk_4c++;
@@ -26,3 +26,4 @@ void sub_08074648(struct Unk8074628 *proc)
     if ((s16)proc->unk_4c > 0xf)
         Proc_Break(proc);
 }
+asm(".global sub_08074648\n.thumb_set sub_08074648, DarkenRampUp_Loop\n");

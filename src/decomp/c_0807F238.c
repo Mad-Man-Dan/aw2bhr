@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* Blend/BG setup with no proc, and the immediate neighbour of sub_0807F2FC
+/* Blend/BG setup with no proc, and the immediate neighbour of CoSelectConfirm_BeginFadeToWhite
  * (already matched) -- same statement run, different constants.
  *
  * NO zero is live anywhere in this function (the coefficients are stored 8/8
@@ -24,7 +24,7 @@
  *
  * `gUnknown_03001FFC = gUnknown_03001FFC;` is real source: only a volatile
  * lvalue emits the bare `ldrh`/`strh` pair to the same address. */
-void sub_0807F238(void)
+void CoSelect_SetupBlend(void)
 {
     gUnknown_030030E0.bits.effect = 1;
 
@@ -45,3 +45,4 @@ void sub_0807F238(void)
     gUnknown_030030DC.bits.win0_enable_blend = 0;
     gUnknown_030030DC.bits.win1_enable_blend = 0;
 }
+asm(".global sub_0807F238\n.thumb_set sub_0807F238, CoSelect_SetupBlend\n");

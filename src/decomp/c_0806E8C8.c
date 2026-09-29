@@ -16,7 +16,7 @@ struct Unk806E8C8
     /* 0x60 */ s32 unk_60;
 };
 
-void sub_0806E8C8(s32 arg, ProcPtr parent)
+void StartSoundRoomArrows(s32 arg, ProcPtr parent)
 {
     struct Unk806E8C8 * proc = Proc_Start(gUnknown_08582C24, parent);
 
@@ -24,3 +24,4 @@ void sub_0806E8C8(s32 arg, ProcPtr parent)
     proc->unk_58 = 0;
     proc->unk_60 = arg;
 }
+asm(".global sub_0806E8C8\n.thumb_set sub_0806E8C8, StartSoundRoomArrows\n");

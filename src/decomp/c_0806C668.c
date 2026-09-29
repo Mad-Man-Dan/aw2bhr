@@ -30,7 +30,7 @@ struct Unk08581A80Proc
     /* 0x58 */ int unk58;
 };
 
-void sub_0806C668(struct Unk0806C668Proc *proc)
+void StartCreditsResultSprite(struct Unk0806C668Proc *proc)
 {
     struct Unk08581A80Proc *p;
 
@@ -60,3 +60,4 @@ void sub_0806C668(struct Unk0806C668Proc *proc)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0xF00;
     gUnknown_030030E0.bits.target2_enable_bd = 0;
 }
+asm(".global sub_0806C668\n.thumb_set sub_0806C668, StartCreditsResultSprite\n");

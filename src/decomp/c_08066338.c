@@ -13,7 +13,8 @@ struct Unk08066338 /* >= 0x28 */
     /* 0x26 */ u16 unk26;
 };
 
-void sub_08066338(struct Unk08066338 *p)
+void ReadyMarker_Init(struct Unk08066338 *p)
 {
     p->unk26 = 3;
 }
+asm(".global sub_08066338\n.thumb_set sub_08066338, ReadyMarker_Init\n");

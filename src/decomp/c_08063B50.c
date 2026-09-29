@@ -23,5 +23,5 @@ void sub_08063B50(struct Unk8063BE0 *p)
             gUnknown_0202F0E8[2]--;
     }
 
-    sub_08063CCC(p->unk24, p->unk28, p->unk2c, p->unk48, p->unk1c);
+    DrawZoomedSpriteFromCentre(p->unk24, p->unk28, p->unk2c, p->unk48, p->unk1c);
 }

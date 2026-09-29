@@ -27,8 +27,9 @@
  * DisableWindow0AndResetMapLayers, and those two are the only F005 members whose callers set any
  * argument register; the other seventeen really are nullary. */
 
-void sub_08085298(ProcPtr proc)
+void CoInfoScreen_ClearBg0(ProcPtr proc)
 {
     ClearBg0Tilemap();
     BG_EnableSyncBG0();
 }
+asm(".global sub_08085298\n.thumb_set sub_08085298, CoInfoScreen_ClearBg0\n");

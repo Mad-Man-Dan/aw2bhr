@@ -25,19 +25,19 @@
 
 
 /* The OPPOSITE reading to sub_0801153C, in the same family, which is why every
- * member has to be checked rather than copied: sub_0808606C really does take
+ * member has to be checked rather than copied: MapSelectList_StepScrollRedraw really does take
  * the proc -- it opens `adds r4,r0,#0` and dereferences +0x30, +0x4e and +0x5c
  * -- so both calls receive it. sub_0808603C next door drives the same object
- * through sub_0808606C, MapSelectList_HandleInput and MapSelectList_DrawFrame in a row.
+ * through MapSelectList_StepScrollRedraw, MapSelectList_HandleInput and MapSelectList_DrawFrame in a row.
  *
- * Wave 44 (W44-C) retyped sub_0808606C's parameter to its own struct; ProcPtr
+ * Wave 44 (W44-C) retyped MapSelectList_StepScrollRedraw's parameter to its own struct; ProcPtr
  * is `void *`, so the argument converts implicitly here and this stays
  * byte-for-byte identical. Re-verified with the new declaration in place.
  */
 
 void MapSelectList_DrawLoop(ProcPtr proc)
 {
-    sub_0808606C(proc);
+    MapSelectList_StepScrollRedraw(proc);
     MapSelectList_DrawFrame(proc);
 }
 

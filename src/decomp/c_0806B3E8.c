@@ -15,7 +15,7 @@ struct UnkB3E8Proc
     /* 0x5c */ int unk5c;
 };
 
-void sub_0806B3E8(struct UnkB3E8Proc *proc)
+void CreditsEpilogue_FadeToGrey(struct UnkB3E8Proc *proc)
 {
     int i;
     int a;
@@ -69,3 +69,4 @@ void sub_0806B3E8(struct UnkB3E8Proc *proc)
     else
         proc->unk5c++;
 }
+asm(".global sub_0806B3E8\n.thumb_set sub_0806B3E8, CreditsEpilogue_FadeToGrey\n");

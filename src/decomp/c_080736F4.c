@@ -13,11 +13,11 @@
  * signed for the `< 0` clamp to mean anything.
  *
  * The two clamp bounds are NOT the same constant: the high test is `> 0xEF`
- * but the value stored is 0xF0. Its 36-byte twin sub_08073974 tests `> 0xF0`
+ * but the value stored is 0xF0. Its 36-byte twin SetWipeEdge tests `> 0xF0`
  * instead, so this is a source difference and not an off-by-one to normalise
  * away. */
 
-void sub_080736F4(int x, u32 y, u16 *row)
+void SetCircleWindowEdge(int x, u32 y, u16 *row)
 {
     if (y <= 0x9f)
     {
@@ -30,3 +30,4 @@ void sub_080736F4(int x, u32 y, u16 *row)
         row[y] = x & 0xff;
     }
 }
+asm(".global sub_080736F4\n.thumb_set sub_080736F4, SetCircleWindowEdge\n");
