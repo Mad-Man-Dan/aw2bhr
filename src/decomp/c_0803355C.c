@@ -38,14 +38,14 @@ void sub_0803355C(struct Unk3355CProc *proc)
     p->unk22 = p->unk20 = 0;
     p->unk24[0] = p->unk24[1] = p->unk24[2] = p->unk24[3] = 0;
 
-    sub_0802F03C();
+    SioResetBuffers();
 
     gUnknown_03004400[0] = proc->unk28;
     gUnknown_03004400[1] = proc->unk2a >> 8;
     gUnknown_03004400[2] = proc->unk2a;
     gUnknown_03004400[3] = proc->unk2e;
 
-    sub_080308B4((u8 *)gUnknown_03004400);
+    LinkQueueCommand((u8 *)gUnknown_03004400);
 
     gUnknown_030044D8 = 1;
 }
@@ -68,7 +68,7 @@ void sub_080335CC(struct Unk335CCProc *proc)
             proc->unk2c++;
         }
 
-        sub_08030930(proc->unk24);
+        LinkQueueBlock(proc->unk24);
         gUnknown_0849B018->unk1d = t;
 
         if (proc->unk2c >= proc->unk2a)

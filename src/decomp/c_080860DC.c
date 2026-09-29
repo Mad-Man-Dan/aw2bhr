@@ -175,7 +175,7 @@ void sub_080860DC(ProcPtr procp)
         else
             gUnknown_03005990[gUnknown_0300596C] = p->unk5c;
 
-        sub_0803BCD0(gUnknown_02027F74.unk04[p->unk58]);
+        SetMapId(gUnknown_02027F74.unk04[p->unk58]);
         sub_0803BD54();
         sub_0803B4DC(0x71);
         RemoveMapPreviewPaletteHook();

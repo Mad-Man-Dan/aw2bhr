@@ -7,7 +7,7 @@
  * sub_08054598 @ 0x08054598
  */
 
-void sub_08054598(u16 a, u16 b)
+void ApplyHitToWholeUnit(u16 a, u16 b)
 {
     u16 total;
     u16 d;
@@ -35,5 +35,6 @@ void sub_08054598(u16 a, u16 b)
     if (total != 0 && gUnknown_03004580[a][5] != 0)
         gUnknown_03004580[a][5] -= total;
     gUnknown_03004548[a] = 1;
-    sub_08050F24(a, b);
+    SpawnHitEffect(a, b);
 }
+asm(".global sub_08054598\n.thumb_set sub_08054598, ApplyHitToWholeUnit\n");

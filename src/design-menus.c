@@ -112,7 +112,7 @@ asm(".global sub_080048D4\n.thumb_set sub_080048D4, DesignRoomStartNameEntry\n")
 
 void DesignRoomOnNameEntryDone(void)
 {
-    sub_0803B524(0xd8);
+    PlayMusic(0xd8);
     DesignRoomSetMode(1);
     gActiveMap->designName[0x12] = 0;
 }

@@ -18,46 +18,51 @@
  * BOTH constants and puts its literal pool between the two return blocks,
  * which the short boolean form cannot produce. A leaf: no push, and the
  * epilogue is a bare `bx lr`. */
-int sub_08045848(void)
+int MapEventCond_Army1OwnsCellX13Y5(void)
 {
     if (gMap->terrain[gMap->rowOffset[5] + 13] >> 5 == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_08045848\n.thumb_set sub_08045848, MapEventCond_Army1OwnsCellX13Y5\n");
 
 /* Sibling of the predicate above; only the rowOffset slot and cell offset differ. */
-int sub_08045874(void)
+int MapEventCond_Army1OwnsCellX15Y2(void)
 {
     if (gMap->terrain[gMap->rowOffset[2] + 15] >> 5 == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_08045874\n.thumb_set sub_08045874, MapEventCond_Army1OwnsCellX15Y2\n");
 
 /* Sibling of the predicate above; only the rowOffset slot and cell offset differ. */
-int sub_080458A0(void)
+int MapEventCond_Army1OwnsCellX3Y8(void)
 {
     if (gMap->terrain[gMap->rowOffset[8] + 3] >> 5 == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_080458A0\n.thumb_set sub_080458A0, MapEventCond_Army1OwnsCellX3Y8\n");
 
 /* Sibling of the predicate above; only the rowOffset slot and cell offset differ. */
-int sub_080458CC(void)
+int MapEventCond_Army1OwnsCellX6Y8(void)
 {
     if (gMap->terrain[gMap->rowOffset[8] + 6] >> 5 == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_080458CC\n.thumb_set sub_080458CC, MapEventCond_Army1OwnsCellX6Y8\n");
 
 /* Fifth sibling: reads gMap->terrain[gMap->rowOffset[9]] with no cell offset. */
-int sub_080458F8(void)
+int MapEventCond_Army1OwnsCellX0Y9(void)
 {
     if (gMap->terrain[gMap->rowOffset[9]] >> 5 == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_080458F8\n.thumb_set sub_080458F8, MapEventCond_Army1OwnsCellX0Y9\n");

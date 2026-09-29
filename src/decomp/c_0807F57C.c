@@ -15,24 +15,24 @@
  *
  * Walks gUnknown_086166F0, a run of byte ids split into groups by an 0xFF
  * sentinel with one label byte after each sentinel and a second 0xFF ending
- * the run. Each group's unlocked members (sub_0803CAB8) are appended to the
+ * the run. Each group's unlocked members (IsCoUnlocked) are appended to the
  * gUnknown_030058E0 display list; a non-empty group also records its label in
  * gUnknown_03005958 and its count in gUnknown_03005948 at the
  * gUnknown_03005944 cursor.
  *
  * WHAT CLOSED IT -- the bounded contract change, not a spelling:
- *   1. include/unknown-functions.h: `u8 sub_0803CAB8(u32)` -> `int` (that
+ *   1. include/unknown-functions.h: `u8 IsCoUnlocked(u32)` -> `int` (that
  *      symbol only; sub_0803CA9C and the rest of the bit-reader family stay u8)
  *   2. src/decomp/c_0803CA9C.c: the definition retyped to `int`, BYTE-UNCHANGED
  *      -- it returns `(1 << (id & 7)) & *p`, whose nonzero_bits are provably
  *      <= 0xff, so no narrowing is emitted at either width. That is the body
  *      evidence, and it permits int.
- *   3. the ten callers that DO narrow now say `(u8)sub_0803CAB8(...)`: nine
+ *   3. the ten callers that DO narrow now say `(u8)IsCoUnlocked(...)`: nine
  *      sites in c_0803C354.c and one in c_08043CA0.c.
  *
  * ALL THIRTEEN affected functions verify byte-for-byte by exit code
  * (sub_0803C474/C48C/C4B4/C4DC/C504/C52C/C598/C5C0/C5E8, BuildUnlockedCoList,
- * sub_0803CA9C, sub_0803CAB8, and this one); proto_check is clean. Details in
+ * sub_0803CA9C, IsCoUnlocked, and this one); proto_check is clean. Details in
  * work/sub_0807F57C/W88-notes.md.
  *
  * THE RULE: `(u8)f(x)` and an implicit u8 return emit the SAME narrowing, so a
@@ -58,7 +58,7 @@ void sub_0807F57C(void)
 
         while (gUnknown_086166F0[i] != 0xff)
         {
-            if (sub_0803CAB8(gUnknown_086166F0[i]))
+            if (IsCoUnlocked(gUnknown_086166F0[i]))
             {
                 n++;
                 gUnknown_030058E0[k] = gUnknown_086166F0[i];

@@ -28,7 +28,7 @@ void sub_0806574C(void)
     gUnknown_08580934->unk26 = 0;
     gUnknown_08580934->unk2c = gUnknown_0202F200;
     gUnknown_08580934->unk24 = gPlaySt.savingEnabled;
-    gUnknown_08580934->unk25 = gUnknown_08580934->unk24 ? sub_0802F4F4() : -1;
+    gUnknown_08580934->unk25 = gUnknown_08580934->unk24 ? SioGetSelfId() : -1;
     sub_0803BFBC(gUnknown_08580934);
     sub_08065818();
 

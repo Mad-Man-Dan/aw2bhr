@@ -15,7 +15,7 @@ struct Unk85D6A48Row
     /* 0x14 */ u8 filler_14[4];
 };
 
-void sub_0804C098(u16 a)
+void CopyFigureSheetToVram(u16 a)
 {
     struct Unk85D6A48Row *rows;
     u16 off;
@@ -29,3 +29,4 @@ void sub_0804C098(u16 a)
                      0x2000);
     }
 }
+asm(".global sub_0804C098\n.thumb_set sub_0804C098, CopyFigureSheetToVram\n");

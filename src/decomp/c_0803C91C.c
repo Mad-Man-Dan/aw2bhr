@@ -7,15 +7,15 @@
  * sub_0803C91C @ 0x0803C91C
  */
 
-/* The setter half of the sub_0803CA70 pair, and the same body as the promoted
- * sub_0803C8F0 with the bit id mapped through FindMapIdByMapData first.
+/* The setter half of the IsCampaignMapUnlockedByMapData pair, and the same body as the promoted
+ * SetCampaignMapUnlocked with the bit id mapped through FindMapIdByMapData first.
  *
  * The `s = &gUnknown_02028030` assignment must come AFTER the call, and this is
  * measured: written before it, agbcc keeps the address live across the `bl` in
  * a callee-saved register and pushes r5 as well. It also has to go through the
  * struct pointer rather than `&gUnknown_02028030.unk12[i]` -- the latter folds
  * the +0x12 into the relocation addend and loses the `adds r1, #0x12`. */
-void sub_0803C91C(u32 id, u8 value)
+void SetCampaignMapUnlockedByMapData(u32 id, u8 value)
 {
     struct Unk02028030 *s;
     u32 k;
@@ -33,3 +33,4 @@ void sub_0803C91C(u32 id, u8 value)
 
     *p = (*p & ~(1 << bit)) | (value << bit);
 }
+asm(".global sub_0803C91C\n.thumb_set sub_0803C91C, SetCampaignMapUnlockedByMapData\n");

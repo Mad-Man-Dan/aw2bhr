@@ -11,7 +11,7 @@
  * `.align 2, 0` behind it. It sits immediately in front of the sound-setter
  * run at 0x0803B350, so it is almost certainly the wrapper for an entry point
  * this build compiled away rather than dead code. Nothing about the signature
- * is recoverable; void(void) is the weakest model. See sub_0803B404 in
+ * is recoverable; void(void) is the weakest model. See SoundMainLoopNoOp in
  * src/decomp/c_0803B3C8.c. */
 
 void sub_0803B34C(void)

@@ -15,7 +15,7 @@
  * narrowed here. The `lsls #0x18; lsrs #0x18` on the value before the first
  * two calls is sub_0803C9D4's and sub_0803CA00's `u8` showing through, and its
  * absence before the third is sub_0803CB40's `int`. */
-void sub_0803CBA0(int id, int value)
+void SetCampaignCompletionFlag(int id, int value)
 {
     if (id >= 0x60 && id <= 0x9f)
         sub_0803C9D4(id - 0x60, value);
@@ -24,3 +24,4 @@ void sub_0803CBA0(int id, int value)
     else if ((u32)id <= 0x1f)
         sub_0803CB40(id, value);
 }
+asm(".global sub_0803CBA0\n.thumb_set sub_0803CBA0, SetCampaignCompletionFlag\n");

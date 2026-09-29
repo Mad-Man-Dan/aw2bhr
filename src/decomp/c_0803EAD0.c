@@ -7,7 +7,7 @@
  * sub_0803EAD0 @ 0x0803EAD0, sub_0803EB40 @ 0x0803EB40
  */
 
-void sub_0803EAD0(void)
+void InventionTurn_TickCountdowns(void)
 {
     struct Unk02028360 *p;
 
@@ -29,6 +29,7 @@ void sub_0803EAD0(void)
         }
     }
 }
+asm(".global sub_0803EAD0\n.thumb_set sub_0803EAD0, InventionTurn_TickCountdowns\n");
 
 void sub_0803EB40(void)
 {

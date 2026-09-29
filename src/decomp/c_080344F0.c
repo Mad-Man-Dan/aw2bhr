@@ -89,5 +89,5 @@ void sub_080344F0(int a)
   {
     goto _copy;
   }
-  sub_080308B4(*new_var);
+  LinkQueueCommand(*new_var);
 }

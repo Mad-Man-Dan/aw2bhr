@@ -9,7 +9,7 @@
 
 void sub_080320AC(void)
 {
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 11, 2);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 11, 2);
 }
 
 /* The `movs r2, #0` hoisted ahead of the first store is agbcc scheduling the

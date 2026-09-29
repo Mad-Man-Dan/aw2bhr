@@ -159,7 +159,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
 
     sub_08085F40();
 
-    sub_0803B524(0x190);
+    PlayMusic(0x190);
 
     Proc_Start(gUnknown_08616CF4, proc);
 }

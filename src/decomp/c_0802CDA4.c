@@ -17,8 +17,8 @@
  *     candidate +0x054  R_ARM_ABS32  .rodata
  *
  * The four ROM words at 0x08090BE4..0x08090BF0 are 0x0802D43D, 0x0802D40D,
- * 0x0802D41D and 0x0802D42D -- the THUMB entry points of sub_0802D43C,
- * sub_0802D40C, sub_0802D41C and sub_0802D42C, in that order. They are the
+ * 0x0802D41D and 0x0802D42D -- the THUMB entry points of OptionsMenu_HelpNoVisual,
+ * OptionsMenu_HelpVisualA, OptionsMenu_HelpVisualB and OptionsMenu_HelpVisualC, in that order. They are the
  * initialiser template for the local function-pointer table below, which agbcc
  * emits into this unit's own .rodata and copies to the stack with the
  * `ldm r0!,{r3,r4,r7}; stm r1!,{r3,r4,r7}; ldr r0,[r0]; str r0,[r1]` block move
@@ -26,8 +26,8 @@
  * template, not an object.
  *
  * try_match's "different symbols that resolve to the same address" check fires
- * for a pool word HOLDING an address (sub_0802CE04, sub_0802CEB0, sub_0802CEFC,
- * sub_0802CA78 and sub_0802DE1C in this same batch were all accepted that way)
+ * for a pool word HOLDING an address (OptionsMenu_ToggleMusic, MapMenu_Power, MapMenu_SuperPower,
+ * UnitMenu_FireUsability and MapCursorState_ChooseDestination in this same batch were all accepted that way)
  * but not for a multi-word .rodata blob. PROMOTION MUST CARRY:
  *
  *     "rodata": ["0x08090BE4"]
@@ -46,10 +46,10 @@
  * shows it is the call's third argument rather than dead.
  */
 
-void sub_0802CDA4(u8 a1, u8 a2, u8 a3)
+void OptionsMenu_CycleVisual(u8 a1, u8 a2, u8 a3)
 {
     void (*fns[4])() = {
-        sub_0802D43C, sub_0802D40C, sub_0802D41C, sub_0802D42C,
+        OptionsMenu_HelpNoVisual, OptionsMenu_HelpVisualA, OptionsMenu_HelpVisualB, OptionsMenu_HelpVisualC,
     };
 
     gPlaySt.animOpts++;
@@ -61,3 +61,4 @@ void sub_0802CDA4(u8 a1, u8 a2, u8 a3)
     sub_08019E68();
     gUnknown_0200C420.unk0e = gPlaySt.animOpts;
 }
+asm(".global sub_0802CDA4\n.thumb_set sub_0802CDA4, OptionsMenu_CycleVisual\n");

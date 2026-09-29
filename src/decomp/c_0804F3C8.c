@@ -30,12 +30,12 @@
  *    is used through a paradoxical SUBREG that local_alloc will not tie
  *    (`ands r0, r1` under every volatile spelling); an int-typed read is a
  *    `(zero_extend (mem))` that cse does not forward the store into, and it
- *    ties (`ands r1, r0`). See sub_0804EB78's header; measured on a
+ *    ties (`ands r1, r0`). See TCopterFigure_Loop's header; measured on a
  *    six-variant probe and on both twins.
  * Kept from waves 37/77: entry-first operand order in dst->x/y, the u16
  * `new_var` group stride, `[c * 10 + f * 2]`, the byte-offset-first `p`, the
  * gUnknown_085D6C88 argument expression shared with c_0804FCA4.c. */
-void sub_0804F3C8(void)
+void BomberFigure_Loop(void)
 {
   struct Unk02029A10 *e1;
   struct Unk02029A10 *entry;
@@ -65,7 +65,7 @@ void sub_0804F3C8(void)
     new_var = sizeof(struct Unk02029A10Group);
     dst->x = ((struct Unk02029A10 *) (((gUnknown_08552148[c] * (sizeof(struct Unk02029A10))) + (c * new_var)) + ((u8 *) gUnknown_02029A10)))->x + gUnknown_08553524[(c * 10) + (f * 2)];
     dst->y = ((struct Unk02029A10 *) (((gUnknown_08552148[c] * (sizeof(struct Unk02029A10))) + (c * new_var)) + ((u8 *) gUnknown_02029A10)))->y + gUnknown_08553524[((c * 10) + (f * 2)) + 1];
-    sub_080520B8(c, f);
+    SpawnDebrisEffect(c, f);
   }
   k = gUnknown_020296B0[c].unk18;
   f = gUnknown_020296B0[c].unk1e[k] + k * 5;
@@ -92,8 +92,8 @@ void sub_0804F3C8(void)
     }
     gUnknown_020296B0[c].unk18++;
   }
-  sub_08056E9C(c, e);
-  w = sub_0804BECC(c, e, gUnknown_03001FBC);
+  StepFigureSlide(c, e);
+  w = StepFigureHitFlash2(c, e, gUnknown_03001FBC);
   p = *((u16 **) ((c * (sizeof(u16 *))) + ((u8 *) gUnknown_084C3F78)));
   entry = (struct Unk02029A10 *) (((e * (sizeof(struct Unk02029A10))) + (c * (sizeof(struct Unk02029A10Group)))) + ((u8 *) gUnknown_02029A10));
   entry->x += gUnknown_08553B28[c][w];
@@ -101,3 +101,4 @@ void sub_0804F3C8(void)
   sub_0804EE08(c, e, gUnknown_03001FBC);
   sub_080155C0(gUnknown_03001FBC, entry->x, entry->y - (*p));
 }
+asm(".global sub_0804F3C8\n.thumb_set sub_0804F3C8, BomberFigure_Loop\n");

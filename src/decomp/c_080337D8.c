@@ -24,7 +24,7 @@ struct Unk337D8
     /* 0x2f */ u8 unk2f;
 };
 
-void sub_080337D8(u32 a, u32 b, ProcPtr parent)
+void StartSioBigReceive(u32 a, u32 b, ProcPtr parent)
 {
     struct Unk337D8 *proc = Proc_StartBlocking(gUnknown_0849BB28, parent);
 
@@ -33,3 +33,4 @@ void sub_080337D8(u32 a, u32 b, ProcPtr parent)
     proc->unk2f = 0;
     proc->unk2c = 0;
 }
+asm(".global sub_080337D8\n.thumb_set sub_080337D8, StartSioBigReceive\n");

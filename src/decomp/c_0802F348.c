@@ -23,7 +23,7 @@ void sub_0802F348(void)
     gUnknown_0849B018->unk1d = 0;
     gUnknown_0849B018->unk1e = 0;
     sub_0802F23C();
-    sub_0802F03C();
+    SioResetBuffers();
     sub_0802F28C();
     gUnknown_0849B018->unk1ab0 = 0;
     gUnknown_0849B018->unk1ab2 = 0;

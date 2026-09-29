@@ -13,10 +13,11 @@
  * a word access on an array global.
  *
  * The result is a NUL-terminated string: the only caller, sub_080396F4, hands
- * it straight to sub_08039544, which copies bytes until the first zero. */
-u8 *sub_08039F18(int a)
+ * it straight to StartCoPowerNameBanner, which copies bytes until the first zero. */
+u8 *GetArmyCoPowerName(int a)
 {
     return gTextTable[gUnknown_085D3DD0[gPlayers[a].co]
                                  .power[gPlayers[a].coMode]
                                  .powerNameId];
 }
+asm(".global sub_08039F18\n.thumb_set sub_08039F18, GetArmyCoPowerName\n");

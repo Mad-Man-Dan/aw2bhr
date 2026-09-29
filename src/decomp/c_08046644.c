@@ -16,7 +16,7 @@
  *
  * Every field needs `adds r0, #0xNN` rather than a displacement; strb's imm5
  * stops at 31 and all five offsets are past it. */
-void sub_08046644(void)
+void IntelStatus_Init(void)
 {
     gUnknown_084C1430->unk50 = 0;
     gUnknown_084C1430->unk53 = 0;
@@ -29,3 +29,4 @@ void sub_08046644(void)
     sub_08013AEC();
     sub_08013B0C();
 }
+asm(".global sub_08046644\n.thumb_set sub_08046644, IntelStatus_Init\n");

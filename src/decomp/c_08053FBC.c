@@ -26,7 +26,7 @@
  *     through an ordinary inline pool word later in the same function, so one
  *     source spelling really does produce both forms.
  *   - The whole first half is settled: `cmd == 0xff`, the
- *     gUnknown_03004508 == gUnknown_08551E12[cursor] gate, sub_080540F0(a1,
+ *     gUnknown_03004508 == gUnknown_08551E12[cursor] gate, StartFigureFireScript(a1,
  *     cmd), the cursor bump and the gUnknown_02029BEC flag store.
  *   - gUnknown_02029BEC[2][5] tiles exactly up to gUnknown_02029C00[2], which
  *     tiles up to gUnknown_02029C04[2]; all three are declared with that
@@ -35,7 +35,7 @@
  *     live from `cursor == 1`; that falls out on its own.
  * The configured verdict is exact with relocation-equivalent `.rodata` words
  * at 0x08136128, 0x0813612C and 0x08136130. */
-void sub_08053FBC(u16 a1)
+void StepShotFireTimeline(u16 a1)
 {
     u16 cmd;
 
@@ -46,7 +46,7 @@ void sub_08053FBC(u16 a1)
     {
         u16 v;
 
-        sub_080540F0(a1, cmd);
+        StartFigureFireScript(a1, cmd);
         gUnknown_02029C00[a1]++;
         gUnknown_02029BEC[a1][cmd] = 1;
 
@@ -72,3 +72,4 @@ void sub_08053FBC(u16 a1)
         }
     }
 }
+asm(".global sub_08053FBC\n.thumb_set sub_08053FBC, StepShotFireTimeline\n");

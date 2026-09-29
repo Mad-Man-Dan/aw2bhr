@@ -32,7 +32,7 @@
  * Promotion must carry rodata: ["0x08136068"], the -fforce-addr copy of
  * &gUnknown_02029668. Do NOT add `#include "hardware.h"` -- it is not needed
  * and tools/permute.py cannot parse a unit that has it (wave 13). */
-void sub_0804CEF8(u16 a)
+void SpawnCruiserFigure(u16 a)
 {
     int A, B;
     u16 off;
@@ -42,7 +42,7 @@ void sub_0804CEF8(u16 a)
     gUnknown_0300451C = gUnknown_08552148[a];
     A = gUnknown_03004580[a][0];
     B = gUnknown_03004580[a][4];
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
 
     if (gUnknown_03004580[a][2] <= 1)
     {
@@ -71,3 +71,4 @@ void sub_0804CEF8(u16 a)
                                            gUnknown_085579F0[A][2],
                                            gUnknown_085579F0[A][1], n);
 }
+asm(".global sub_0804CEF8\n.thumb_set sub_0804CEF8, SpawnCruiserFigure\n");

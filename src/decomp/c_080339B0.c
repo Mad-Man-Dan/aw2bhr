@@ -83,7 +83,7 @@ void LinkC2_080339B1(struct Unk339B0Proc *proc)
     child->unk37 = 1;
     proc->unk2c = child;
 
-    sub_080315E8(0, gUnknown_0849BC3E[child->unk36], 0x40);
+    LinkScreenSetMessage(0, gUnknown_0849BC3E[child->unk36], 0x40);
     sub_08085AF4();
     sub_0803D48C();
 }

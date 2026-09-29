@@ -17,7 +17,7 @@
  * same instructions in the opposite order and is 4 bytes longer.
  *
  * `int x`, not `s16`: the load is `ldrsh`, i.e. an `(s16)` cast on the `u16`
- * member reaching an int context, and sub_0803B55C's parameter is word-width
+ * member reaching an int context, and PlayMusicAfterFade's parameter is word-width
  * (its prologue is a bare `adds r4, r0, #0`), so nothing re-narrows it. */
 bool8 sub_08018FE4(s16 a)
 {
@@ -27,7 +27,7 @@ bool8 sub_08018FE4(s16 a)
     x = (s16)gUnknown_0200C528[a].unk04->unk08;
     if (gUnknown_03002514 != 1)
     {
-        sub_0803B55C(x);
+        PlayMusicAfterFade(x);
         r = FALSE;
     }
     else

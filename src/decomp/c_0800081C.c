@@ -34,7 +34,7 @@
  *     counts cursorIdleFrames up; after 0x31 of them it calls sub_08004D10.
  *   - B: redraw the ring and re-test the tile under the cursor.
  *   - START selects mode 5; SELECT mode 3; R mode 2 in terrain mode; L mode 2
- *     in unit mode. All four need sub_0802DBF8 true, and the last three also
+ *     in unit mode. All four need IsMapCursorSettled true, and the last three also
  *     need GetMapLock to be 0. When none of them is pressed the cursor
  *     position is resynchronised.
  *   - Last: play gActiveMap->soundId if it was set, otherwise the id
@@ -211,7 +211,7 @@ void DesignRoomMode_Paint(void)
         }
     }
 
-    if (sub_0802DBF8() && (keys & 8))
+    if (IsMapCursorSettled() && (keys & 8))
         DesignRoomSetMode(5);
 
     if (gActiveMap->soundId != 0)
@@ -226,7 +226,7 @@ void DesignRoomMode_Paint(void)
             gActiveMap->flags &= 0xDFFF;
     }
 
-    if (sub_0802DBF8() && GetMapLock() == 0)
+    if (IsMapCursorSettled() && GetMapLock() == 0)
     {
         t = gpKeySt->pressed & 4;
         if (t != 0)

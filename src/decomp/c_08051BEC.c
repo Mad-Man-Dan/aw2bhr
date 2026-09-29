@@ -7,32 +7,32 @@
  * sub_08051BEC @ 0x08051BEC
  */
 
-/* MATCHED. The near-twin of sub_08051F4C -- same install sequence, differing
+/* MATCHED. The near-twin of DeathHandler_Air -- same install sequence, differing
  * in the sub_08015410 blob (gUnknown_085536A4), the gUnknown_08553B10 table,
  * an extra SetSlotSpriteFlicker call, the 0x180 rather than 0x100 handed to
- * sub_080157F4, and the tail. See sub_08051F4C for the `f`, `c`/`d` and
+ * sub_080157F4, and the tail. See DeathHandler_Air for the `f`, `c`/`d` and
  * pointer-local notes; all three carry over except that this one needs no
  * `row` local, because its gUnknown_085D6A48 read is column 0 and has no
  * constant to misplace.
  *
  * The tail is an indirect call through gUnknown_08552FB8 column 1, indexed
  * `[gUnknown_085D6A48[gUnknown_03004580[a][1]][0]][gUnknown_03004580[a][2]]`
- * -- the same `[w][q][c]` shape sub_0804D290/sub_0804DCA8 use on column 2.
+ * -- the same `[w][q][c]` shape CruiserFigure_Init/BattleshipFigure_Init use on column 2.
  * `bl _call_via_r3` is ordinary compiler output for a three-argument indirect
  * THUMB call, not a veneer.
  *
  * `entries[b].unk00 = entries[b].unk01;` and NOT `= 1`, which is the one place
- * this function and sub_08051F4C disagree on an identical-looking statement.
+ * this function and DeathHandler_Air disagree on an identical-looking statement.
  * Both are semantically the same under the `unk01 == 1` guard, and each
  * matches only its own function -- probed both ways in both functions, and the
  * literal costs a surplus `movs r0,#1` here while the member read costs an
  * `adds r2,r3,#0` there. The cause is visible in the listing: here the second
  * `unk01` test is a fresh `ldrb` (the indirect call in between clobbers
  * memory), so cse's "r0 holds 1 on this edge" equivalence is still free to
- * supply the store; in sub_08051F4C the two tests share one load and the
+ * supply the store; in DeathHandler_Air the two tests share one load and the
  * register is committed. Do not "clean this up" to make the siblings look
  * alike -- it is a measured difference, not a transcription choice. */
-void sub_08051BEC(u16 a, u16 b)
+void DeathHandler_Tank(u16 a, u16 b)
 {
     u16 c;
     u16 d;
@@ -73,5 +73,6 @@ void sub_08051BEC(u16 a, u16 b)
     }
 
     if (gUnknown_02029C14[a][d] != 1 && gUnknown_02029A10[a].entries[b].unk01 == 0)
-        sub_08051D74(c, d);
+        StartFigureFall(c, d);
 }
+asm(".global sub_08051BEC\n.thumb_set sub_08051BEC, DeathHandler_Tank\n");

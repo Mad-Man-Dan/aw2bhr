@@ -10,8 +10,8 @@
 #include "hardware.h"
 
 /* The same "rebuild this slot's OBJ attributes" skeleton as
- * src/decomp/c_08051DE0.c and sub_08052154 -- read that file's header first --
- * ending in an indirect DISPATCH instead of sub_08050528. The tail is the whole
+ * src/decomp/c_08051DE0.c and AirBlastEffect_Init -- read that file's header first --
+ * ending in an indirect DISPATCH instead of SetEffectScreenPosition. The tail is the whole
  * of what is new, and it needs three separate levers that are each already
  * documented but have not had to combine before:
  *
@@ -45,7 +45,7 @@
  *
  * gUnknown_0855239C stays FLAT and indexed `[c * 2 + gUnknown_0300450C]`; wave
  * 17 confirmed that spelling byte-exact against the `[][2]` alternative. */
-void sub_08050B70(void)
+void ThirdEffect_Init(void)
 {
     struct OamData oam;
     int tile;
@@ -71,3 +71,4 @@ void sub_08050B70(void)
                             row[2])];
     fn(gUnknown_0300453C, gUnknown_0300451C);
 }
+asm(".global sub_08050B70\n.thumb_set sub_08050B70, ThirdEffect_Init\n");

@@ -11,14 +11,14 @@
 
 
 
-/* gUnknown_02023284 and sub_080456B8 are declared here rather than in a header
+/* gUnknown_02023284 and ExpandPipeSeamHpPlane are declared here rather than in a header
  * because nothing else in src/decomp uses them. The two structs are the save
  * block sub_08016F38 (src/decomp/c_08016F38.c) writes; that file carries its
  * own copy of the same declaration. SaveBlkRec is one entry of the
  * map-difference list at 0x0bb8 -- a column, a row and a tile number. */
 
 extern u8 gUnknown_02023284[];
-void sub_080456B8(u8 *);
+void ExpandPipeSeamHpPlane(u8 *);
 struct SaveBlkRec
 {
     /* 0x00 */ u8 unk00;
@@ -71,7 +71,7 @@ struct SaveBlk
  *      at the record whose tile is 0xffff.
  *   4. Copy the five 0x3c-byte records, the four armies' 51 units each and the
  *      sixteen gUnknown_02028360 entries back where sub_08016F38 took them
- *      from, and hand the last four bytes to sub_080456B8.
+ *      from, and hand the last four bytes to ExpandPipeSeamHpPlane.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
  * the original compiler only produces identical output with them.
@@ -166,6 +166,6 @@ void RestoreBattleSaveState(void)
             gUnknown_02022684[i * 64 + j] = p->unk0188[i * 51 + j];
     for (i = 0; i < 16; i++)
         gUnknown_02028360[i] = p->unk0d28[i];
-    sub_080456B8(p->unk0da8);
+    ExpandPipeSeamHpPlane(p->unk0da8);
 }
 asm(".global sub_08017208\n.thumb_set sub_08017208, RestoreBattleSaveState\n");

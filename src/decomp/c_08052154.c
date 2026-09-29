@@ -26,7 +26,7 @@
  * style choice: gUnknown_02029A10's pool word lands ahead of gUnknown_08552D80's
  * exactly when the source names it first, because agbcc expands the addresses
  * in source order and issues the loads in the opposite one. */
-void sub_08052154(void)
+void AirBlastEffect_Init(void)
 {
     struct OamData oam;
     int tile;
@@ -49,5 +49,6 @@ void sub_08052154(void)
     y = gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y;
 
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_08050528(gUnknown_0300453C, gUnknown_03001FBC, x, y);
+    SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
+asm(".global sub_08052154\n.thumb_set sub_08052154, AirBlastEffect_Init\n");

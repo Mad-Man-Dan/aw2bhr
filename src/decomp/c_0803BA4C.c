@@ -10,7 +10,7 @@
 #include "proc.h"
 
 /* The tree-3 starter for ProcScr_Campaign, mode 1 -- the fourth member of the
- * sub_0803B8C4 / sub_0803BA00 / sub_0803BADC family.
+ * sub_0803B8C4 / StartWarRoom / sub_0803BADC family.
  *
  * The two SetHardCampaignFlag calls are an if/else and NOT a ternary: a ternary
  * computes one constant and falls into a shared tail, whereas this has two

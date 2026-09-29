@@ -26,7 +26,7 @@ u8 sub_0803EED4(int a1, int a2)
     u8 ret;
 
     ret = gMap->terrain[gMap->rowOffset[a2] + a1];
-    p = sub_0803DE94(a1, a2);
+    p = FindInventionAt(a1, a2);
     if (p != NULL)
     {
         sub_0803DF98(p->unk02_6, &pos);

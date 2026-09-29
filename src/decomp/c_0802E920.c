@@ -9,16 +9,17 @@
 
 #include "hardware.h"
 
-/* The VBlank handler sub_0802EA24 installs: raise the BIOS IntrCheck flag for
+/* The VBlank handler StartSioErrorScreen installs: raise the BIOS IntrCheck flag for
  * VBlank, then drain the queues. Flat -- no guard anywhere in it. */
-void sub_0802E920(void)
+void OnVBlank_SioError(void)
 {
     gUnknown_03007FF8 = 1;
     sub_080128D0();
     sub_08011FF0();
-    sub_0803B3F8();
-    sub_0803B408();
+    RunSoundVSync();
+    RunSoundMain();
 }
+asm(".global sub_0802E920\n.thumb_set sub_0802E920, OnVBlank_SioError\n");
 
 /* Poll for A or RIGHT and then sleep to the next VBlank.
  *
@@ -29,10 +30,11 @@ void sub_0802E920(void)
  *
  * VBlankIntrWait is the BIOS IntrWait stub (`movs r2,#0; svc #5; bx lr`), not
  * game code. */
-void sub_0802E940(void)
+void OnMain_SioErrorWait(void)
 {
     if ((~REG_KEYINPUT & 9) != 0)
         sub_08036CB4();
 
     VBlankIntrWait();
 }
+asm(".global sub_0802E940\n.thumb_set sub_0802E940, OnMain_SioErrorWait\n");

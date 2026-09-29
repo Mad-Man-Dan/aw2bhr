@@ -39,5 +39,5 @@ void sub_08031948(void)
 
     sub_08031824();
 
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 3, 2);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 3, 2);
 }

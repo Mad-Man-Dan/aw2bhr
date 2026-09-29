@@ -18,14 +18,14 @@ struct UnkD8C0Proc
     /* 64 */ u16 unk64;
 };
 
-/* Two tests, one `&&`: both `bne`s land on the same sub_0803B524 arm. The
+/* Two tests, one `&&`: both `bne`s land on the same PlayMusic arm. The
  * `lsls #0x18; cmp #0` on IsPlayer1TeamAlive's result is the bool8 truth test. */
 void sub_0803D88C(ProcPtr proc)
 {
     if (gPlaySt.gameMode == 1 && !IsPlayer1TeamAlive())
         Proc_GotoScript(proc, gUnknown_0849F388);
     else
-        sub_0803B524(0xcd);
+        PlayMusic(0xcd);
 }
 
 void sub_0803D8C0(struct UnkD8C0Proc *proc)

@@ -18,7 +18,7 @@ void sub_0803C950(u32 id, u8 value)
     *p = (*p & ~(1 << bit)) | (value << bit);
 }
 
-void sub_0803C97C(u32 id, u8 value)
+void SetCoUnlocked(u32 id, u8 value)
 {
     struct Unk02028030 *s = &gUnknown_02028030;
     u32 idx = id >> 3;
@@ -28,6 +28,7 @@ void sub_0803C97C(u32 id, u8 value)
 
     *p = (*p & ~(1 << bit)) | (value << bit);
 }
+asm(".global sub_0803C97C\n.thumb_set sub_0803C97C, SetCoUnlocked\n");
 
 void sub_0803C9A8(u32 id, u8 value)
 {

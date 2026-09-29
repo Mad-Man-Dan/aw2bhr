@@ -28,7 +28,7 @@ void sub_0802D230(void)
     RebuildMapUnitLayers();
 }
 
-void sub_0802D2A0(int a1, int a2, u8 a3)
+void UnitMenu_Fire(int a1, int a2, u8 a3)
 {
     if (!(a3 & 2))
     {
@@ -41,3 +41,4 @@ void sub_0802D2A0(int a1, int a2, u8 a3)
         IncrementMapLock();
     }
 }
+asm(".global sub_0802D2A0\n.thumb_set sub_0802D2A0, UnitMenu_Fire\n");

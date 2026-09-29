@@ -18,7 +18,7 @@ void MapState_DispatchTurnByController(void)
         break;
 
     case 2:
-        if (gPlaySt.savingEnabled == 0 || !sub_0802F4F4())
+        if (gPlaySt.savingEnabled == 0 || !SioGetSelfId())
         {
             gUnknown_03004780 = 0;
             gUnknown_030032D8 = 0xe;

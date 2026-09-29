@@ -15,5 +15,5 @@ void sub_0803DE68(void)
 {
     gUnknown_02028360[0].unk02_6 = 0;
     gUnknown_020283E0[0].unk02_6 = 0;
-    sub_0803DE14();
+    ClearInventionRecords();
 }

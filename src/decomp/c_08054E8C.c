@@ -19,25 +19,25 @@ u16 sub_08054E8C(u16 a1, u16 a2, u16 a3, u16 a4)
     switch (a2)
     {
     case 0:
-        sub_08054EE0(a1, a4);
+        LoadInfantryEffectArt(a1, a4);
         a4 = 2;
         break;
     case 1:
         if (a3 == 1)
         {
-            sub_08054F50(a1, a4);
+            LoadMechEffectArt(a1, a4);
             a4 = 1;
         }
         else
         {
-            sub_08054EE0(a1, a4);
+            LoadInfantryEffectArt(a1, a4);
             a4 = 2;
         }
         break;
     case 0x12:
         if (a3 == 1)
         {
-            sub_08055004(a1, a4);
+            LoadBCopterEffectArt(a1, a4);
             a4 = 3;
         }
         break;
@@ -48,9 +48,9 @@ u16 sub_08054E8C(u16 a1, u16 a2, u16 a3, u16 a4)
 /* `off` has to be its own statement, ahead of `v`. Inlined into the CpuFastSet
  * argument it becomes part of the call's argument setup and is evaluated AFTER
  * v and after the source pool word is loaded, which is the wrong order; as a
- * leading initialiser it is evaluated first, as the ROM has it. sub_08054F50
+ * leading initialiser it is evaluated first, as the ROM has it. LoadMechEffectArt
  * next door is the same shape and confirms the ordering. */
-void sub_08054EE0(u16 a1, u16 a2)
+void LoadInfantryEffectArt(u16 a1, u16 a2)
 {
     u16 v;
 
@@ -69,8 +69,9 @@ void sub_08054EE0(u16 a1, u16 a2)
     gUnknown_020296B0[a1].unk00 = v;
     gUnknown_020298E0[a1].unk00 = v;
 }
+asm(".global sub_08054EE0\n.thumb_set sub_08054EE0, LoadInfantryEffectArt\n");
 
-void sub_08054F50(u16 a1, u16 a2)
+void LoadMechEffectArt(u16 a1, u16 a2)
 {
     u16 v;
 
@@ -92,3 +93,4 @@ void sub_08054F50(u16 a1, u16 a2)
     gUnknown_020298E0[a1].unk00 = v;
     gUnknown_02029710[a1].unk00 = v + 0x6a;
 }
+asm(".global sub_08054F50\n.thumb_set sub_08054F50, LoadMechEffectArt\n");

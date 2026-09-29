@@ -25,7 +25,7 @@
  * wave-36 draft's explicit `o` and `next` binding locals are not load-bearing
  * either -- `i * 16` and the early `adds r2, r1, #1` fall out of allocation,
  * because r1 is reused as the inner counter. */
-void sub_08054B14(void)
+void ResetBattleAnimParams(void)
 {
     int i;
     int j;
@@ -39,3 +39,4 @@ void sub_08054B14(void)
     gUnknown_0300450C = 0;
     gUnknown_03004520 = 0;
 }
+asm(".global sub_08054B14\n.thumb_set sub_08054B14, ResetBattleAnimParams\n");

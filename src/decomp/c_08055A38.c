@@ -29,7 +29,7 @@
  * `k = i + E7C[..] * 5` (not `E7C[..] * 5 + i`) is a readout of the ROM's
  * `adds r2, r6, r2`, and binding it at all is what puts the p subscript ahead
  * of the destination -- also a permuter find, at 85.7% -> 94.4%. */
-void sub_08055A38(u16 count, u16 side)
+void BuildHitListForSide(u16 count, u16 side)
 {
   u16 i;
   u16 out;
@@ -144,8 +144,9 @@ void sub_08055A38(u16 count, u16 side)
 
   }
 }
+asm(".global sub_08055A38\n.thumb_set sub_08055A38, BuildHitListForSide\n");
 
-void sub_08055D4C(u16 p0, u16 p1)
+void BuildDeathLists(u16 p0, u16 p1)
 {
     u16 v[2];
     u16 alive[2];
@@ -164,8 +165,8 @@ void sub_08055D4C(u16 p0, u16 p1)
         num[i] = 0;
         alive[i] = 0;
     }
-    v[1] = sub_08055F68(0);
-    v[0] = sub_08055F68(1);
+    v[1] = GetDeathEffectKind(0);
+    v[0] = GetDeathEffectKind(1);
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 5; j++) {
             if (gUnknown_02029A10[i].entries[j].unk00 != 0
@@ -188,11 +189,12 @@ void sub_08055D4C(u16 p0, u16 p1)
         sub_080560A4(num[side], side ^ 1, alive[side ^ flag], 2, v[side]);
     }
     if (flag == 0) {
-        sub_0805601C(0, num[0], alive[1], v[1]);
-        sub_0805601C(1, num[1], alive[0], v[0]);
+        PlanSideDeaths(0, num[0], alive[1], v[1]);
+        PlanSideDeaths(1, num[1], alive[0], v[0]);
     }
     if (mode[side] == 2)
         alive[side] = 0;
     if (mode[side ^ 1] == 2)
         alive[side] = 0;
 }
+asm(".global sub_08055D4C\n.thumb_set sub_08055D4C, BuildDeathLists\n");

@@ -14,7 +14,7 @@
  *
  * Parked since wave 37 as "frame 48 against 44, one extra spilled value" plus
  * "the ROM re-loads unk20 after the store". Both fell to reading the twin
- * sub_0804F3C8's matched first region side by side with this one, and to one
+ * BomberFigure_Loop's matched first region side by side with this one, and to one
  * construct nobody had tried:
  *
  *  - The extra stack slot WAS the `volatile unsigned int new_var2` local that
@@ -44,7 +44,7 @@
  * `[(c * 5 + f) * 2]`; the last sub_080155C0 entry as `(e3 = ...)->x` inside
  * argument 1; `p = *(u16 **)(c * sizeof(u16 *) + (u8 *)gUnknown_084C3F78)`;
  * `(row = gUnknown_02028E5C[c])[1]`. */
-void sub_0804EB78(void)
+void TCopterFigure_Loop(void)
 {
     struct Unk56E28 req;
     struct Unk02029A10 *e1;
@@ -87,10 +87,10 @@ void sub_0804EB78(void)
                                          + c * new_var
                                          + (u8 *)gUnknown_02029A10))->y
             + gUnknown_085534C4[c * 10 + f * 2 + 1];
-        sub_080520B8(c, f);
+        SpawnDebrisEffect(c, f);
     }
-    sub_08056E9C(c, e);
-    w = sub_0804BECC(c, e, gUnknown_03001FBC);
+    StepFigureSlide(c, e);
+    w = StepFigureHitFlash2(c, e, gUnknown_03001FBC);
     p = *(u16 **)(c * sizeof(u16 *) + (u8 *)gUnknown_084C3F78);
     e2 = (struct Unk02029A10 *)(e * sizeof(struct Unk02029A10)
                                 + c * sizeof(struct Unk02029A10Group)
@@ -100,7 +100,7 @@ void sub_0804EB78(void)
     if (gUnknown_02029B80[c][e] == 0)
     {
         if (e2->unk20 == 0)
-            sub_0804EDAC(c, e, gUnknown_03001FBC);
+            StepFigureBob(c, e, gUnknown_03001FBC);
     }
     else
     {
@@ -115,7 +115,7 @@ void sub_0804EB78(void)
         req.unk08 = 0x20;
         req.unk0a = 0x10;
         req.unk0c = 0x64;
-        sub_08056E28(&req);
+        SetFigureSlide(&req);
     }
     sub_080155C0(gUnknown_03001FBC,
                  (e3 = (struct Unk02029A10 *)(e * sizeof(struct Unk02029A10)
@@ -123,3 +123,4 @@ void sub_0804EB78(void)
                                               + (u8 *)gUnknown_02029A10))->x,
                  e3->y - *p);
 }
+asm(".global sub_0804EB78\n.thumb_set sub_0804EB78, TCopterFigure_Loop\n");

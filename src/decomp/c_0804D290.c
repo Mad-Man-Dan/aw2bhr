@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804D290.
- * sub_0804D290 @ 0x0804D290
+ * CruiserFigure_Init @ 0x0804D290
  */
 
 /* MATCHED -- byte-for-byte identical to the original.
@@ -12,7 +12,7 @@
  * Rebuilds the OBJ attributes of the current gUnknown_03001470 slot, reseeds
  * the gUnknown_02029A10 entry's position from the ROM table sub_08057D44 hands
  * back, then arms a continuation out of gUnknown_08552FB8. Same family as
- * sub_0804D928 / sub_0804E3B4 / sub_0804EEFC -- see those for the `* 0x100`,
+ * sub_0804D928 / sub_0804E3B4 / WholeFigure_Init -- see those for the `* 0x100`,
  * the `pal`/`prio` temporaries and the `(e1 = &pos[...])` binding.
  *
  * TWO of the three constructs below are levers, not natural source, and both
@@ -55,7 +55,7 @@ struct UnkPosPair
     u16 y;
 };
 
-void sub_0804D290(void)
+void CruiserFigure_Init(void)
 {
     struct OamData oam;
     u16 pal;
@@ -98,7 +98,7 @@ void sub_0804D290(void)
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06;
     gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk1e = 0;
 
-    sub_0804BCB8(gUnknown_0300453C, 0, 0, 0);
+    StartFigureEntrySlide(gUnknown_0300453C, 0, 0, 0);
 
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 
@@ -112,3 +112,5 @@ void sub_0804D290(void)
         gUnknown_08552FB8[gUnknown_03004582[gUnknown_0300453C][0]]
                          [gUnknown_03004580[gUnknown_0300453C][2]][2]);
 }
+
+asm(".global sub_0804D290\n.thumb_set sub_0804D290, CruiserFigure_Init\n");

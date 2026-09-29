@@ -122,13 +122,13 @@ void sub_08031F28(void)
     sub_0803B4DC(0x6c);
 
     if (gUnknown_0849B018->unk00 == 3)
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 12, 2);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 12, 2);
 }
 
 void sub_08031F5C(void)
 {
     if (gUnknown_0849B018->unk00 == 3)
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 13, 0);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 13, 0);
 }
 
 /* The `lsls #0x18; lsrs #0x18` on `unk58 + 5` is sub_0801A7D8's declared u8
@@ -140,11 +140,11 @@ void sub_08031F88(struct Unk31F88Proc *proc)
         sub_0801A7D8(proc->unk58 + 5, gUnknown_02000000, 0x724);
 }
 
-/* The bare form of the sub_080315E8 round trip this block repeats eight times:
+/* The bare form of the LinkScreenSetMessage round trip this block repeats eight times:
  * the pointer global is reloaded after the call because the call may have
  * changed it, which is what makes r4 worth saving. */
 
 void sub_08031FB8(void)
 {
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 5, 2);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 5, 2);
 }

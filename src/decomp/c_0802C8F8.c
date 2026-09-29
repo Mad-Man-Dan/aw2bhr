@@ -8,7 +8,7 @@
  * sub_0802C8F8 @ 0x0802C8F8, sub_0802C958 @ 0x0802C958
  */
 
-bool8 sub_0802C8F8(void)
+bool8 UnitMenu_JoinUsability(void)
 {
     struct Unit *e;
     int off;
@@ -25,13 +25,14 @@ bool8 sub_0802C8F8(void)
 
     return FALSE;
 }
+asm(".global sub_0802C8F8\n.thumb_set sub_0802C8F8, UnitMenu_JoinUsability\n");
 
 bool8 sub_0802C958(void)
 {
-    if (!sub_0802C8F8())
+    if (!UnitMenu_JoinUsability())
         return TRUE;
 
-    if (!sub_0802CBA0())
+    if (!UnitMenu_LoadUsability())
         return TRUE;
 
     FillMovementMap(0xff);

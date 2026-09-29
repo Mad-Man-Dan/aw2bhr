@@ -33,7 +33,7 @@ int sub_08043DAC(u8 a)
     {
     case 0:
     default:
-        sub_0803B4EC((s16)GetCoMusic(a));
+        PlayMusicIfEnabled((s16)GetCoMusic(a));
         break;
     case 1:
         sub_08043DF4(gPlayers[a].co);
@@ -51,15 +51,15 @@ int sub_08043DAC(u8 a)
 void sub_08043DF4(int a)
 {
     if (IsBlackHoleCo(a))
-        sub_0803B4EC(0x1a3);
+        PlayMusicIfEnabled(0x1a3);
     else
-        sub_0803B4EC(0x1a4);
+        PlayMusicIfEnabled(0x1a4);
 }
 
 void sub_08043E18(int a)
 {
     if (IsBlackHoleCo(a))
-        sub_0803B4EC(0x199);
+        PlayMusicIfEnabled(0x199);
     else
-        sub_0803B4EC(0x19a);
+        PlayMusicIfEnabled(0x19a);
 }

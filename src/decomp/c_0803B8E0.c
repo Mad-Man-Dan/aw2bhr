@@ -30,5 +30,5 @@ void sub_0803B904(void)
     if (gUnknown_03003F30[2] != 0)
         sub_08017688(sub_08016D04(2));
     else
-        sub_0803BA00();
+        StartWarRoom();
 }

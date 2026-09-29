@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0802CC90.
- * CanShowSubMenuItem @ 0x0802CC90, sub_0802CCCC @ 0x0802CCCC
+ * CanShowSubMenuItem @ 0x0802CC90, UnitMenu_RiseUsability @ 0x0802CCCC
  */
 
 /* Four guards, all of which must pass before this reports FALSE.
@@ -12,7 +12,7 @@
  * Written as an `if (...) return TRUE;` chain and NOT as one negated
  * disjunction: here the merged THEN block (`movs r0, #1`) sits AFTER the pool
  * and the fallthrough `movs r0, #0` before it, which is the chain's layout.
- * Its neighbour sub_0802CCCC is the same predicate with the tests reordered and
+ * Its neighbour UnitMenu_RiseUsability is the same predicate with the tests reordered and
  * comes out the other way round, so the two spellings are distinguishable and
  * this block contains one of each.
  *
@@ -35,10 +35,10 @@ bool8 CanShowSubMenuItem(void)
     if (gUnknown_030040D8->unk01 & 0x20)
         return TRUE;
 
-    if (!sub_0802C8F8())
+    if (!UnitMenu_JoinUsability())
         return TRUE;
 
-    if (!sub_0802CBA0())
+    if (!UnitMenu_LoadUsability())
         return TRUE;
 
     return FALSE;
@@ -56,10 +56,11 @@ asm(".global sub_0802CC90\n.thumb_set sub_0802CC90, CanShowSubMenuItem\n");
  * operand is the one that inverts, exactly as in sub_0802C550's `||`.
  */
 
-bool8 sub_0802CCCC(void)
+bool8 UnitMenu_RiseUsability(void)
 {
-    if (!sub_0802C8F8() || !sub_0802CBA0() || !(gUnknown_030040D8->unk01 & 0x20))
+    if (!UnitMenu_JoinUsability() || !UnitMenu_LoadUsability() || !(gUnknown_030040D8->unk01 & 0x20))
         return TRUE;
 
     return FALSE;
 }
+asm(".global sub_0802CCCC\n.thumb_set sub_0802CCCC, UnitMenu_RiseUsability\n");

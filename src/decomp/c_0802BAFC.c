@@ -15,7 +15,7 @@
  * emits it after the 0x1ff mask, the 0x400 or and the gUnknown_0849A3B8 pool
  * load -- CSE shares the value either way, but only the inline form puts it
  * where the first use is. */
-void sub_0802BAFC(u16 a1, u16 a2, int a3)
+void DrawInfoPanelTwoDigitNumber(u16 a1, u16 a2, int a3)
 {
     int d;
 
@@ -26,3 +26,4 @@ void sub_0802BAFC(u16 a1, u16 a2, int a3)
     if (d != 0)
         PutOamHi((a1 - 7) & 0x1ff, a2 | 0x400, gUnknown_0849A3B8, d + 0x10);
 }
+asm(".global sub_0802BAFC\n.thumb_set sub_0802BAFC, DrawInfoPanelTwoDigitNumber\n");

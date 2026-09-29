@@ -19,7 +19,7 @@
  * emits the word into this unit's .rodata and holds its ADDRESS in r2 across
  * the branch, which is the `adds r2, r0, #0` / `ldr r2, [r2]` pair. */
 
-void sub_0802CFFC(void)
+void UnitMenu_Wait(void)
 {
     LockUnitSelection();
     CloseTopMenu();
@@ -35,3 +35,4 @@ void sub_0802CFFC(void)
             sub_080344B4(gUnknown_03003F38, gUnknown_030033E8[0], gUnknown_030033E8[1]);
     }
 }
+asm(".global sub_0802CFFC\n.thumb_set sub_0802CFFC, UnitMenu_Wait\n");

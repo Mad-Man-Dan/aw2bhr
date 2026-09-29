@@ -7,7 +7,7 @@
  * sub_0804F8BC @ 0x0804F8BC
  */
 
-void sub_0804F8BC(void)
+void FlyerFigure_Loop(void)
 {
     struct Unk02029A10 *entry;
     u16 c, e, t, w;
@@ -17,7 +17,7 @@ void sub_0804F8BC(void)
     c = gUnknown_03001470[gUnknown_03001FBC].unk30;
     e = gUnknown_03001470[gUnknown_03001FBC].unk34;
     t = sub_080156A0(gUnknown_03001FBC);
-    sub_08056E9C(c, e);
+    StepFigureSlide(c, e);
     if (t == 2
         && (u32)gUnknown_02029BA8[c].unk14
            != gUnknown_0200E438[gUnknown_03001470[gUnknown_03001FBC].unk26].unk04)
@@ -30,7 +30,7 @@ void sub_0804F8BC(void)
         if (q->unk18 != -1 && sub_080153F0(q->unk18))
             sub_080156E8(q->unk18, gUnknown_02029BA8[c].unk04);
     }
-    w = sub_0804BDD8(c, e, gUnknown_03001FBC);
+    w = StepFigureHitFlash(c, e, gUnknown_03001FBC);
     p = *(u16 **)(c * sizeof(u16 *) + (u8 *)gUnknown_084C3F78);
     sub_080156C4(gUnknown_03001FBC);
     entry = (struct Unk02029A10 *)(e * sizeof(struct Unk02029A10)
@@ -38,6 +38,7 @@ void sub_0804F8BC(void)
                                    + (u8 *)gUnknown_02029A10);
     entry->x += gUnknown_08553B28[c][w];
     entry->y -= gUnknown_085644D4[(row = gUnknown_02028E5C[c])[1]];
-    sub_0804EDAC(c, e, gUnknown_03001FBC);
+    StepFigureBob(c, e, gUnknown_03001FBC);
     sub_080155C0(gUnknown_03001FBC, entry->x, entry->y - *p);
 }
+asm(".global sub_0804F8BC\n.thumb_set sub_0804F8BC, FlyerFigure_Loop\n");

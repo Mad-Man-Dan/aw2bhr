@@ -18,27 +18,27 @@ void sub_0803B8C4(void)
 extern void sub_0803BDBC(void);
 extern void sub_0803BE60(void);
 extern u8 GetMainMenuLock(void);
-extern void sub_0803BEF8(void);
+extern void Versus_ResetCoPickIndex(void);
 extern void sub_08043D5C(void);
 extern void sub_0803BFA4(void);
 extern void sub_08026290(void);
 extern void sub_080670A0(void);
 extern int sub_080670D8(void);
-extern void sub_0803C1D4(void);
-extern void sub_0803BF98(void);
+extern void ApplyMatchSettingsRecord(void);
+extern void Versus_AssignRandomCos(void);
 extern void sub_08037F70(void);
 extern void sub_080364F4(void);
 
 #define Versus_0803BDBD sub_0803BDBC
 #define Versus_0803BE61 sub_0803BE60
-#define Versus_0803BEF9 sub_0803BEF8
+#define Versus_0803BEF9 Versus_ResetCoPickIndex
 #define Versus_08043D5D sub_08043D5C
 #define Versus_0803BFA5 sub_0803BFA4
 #define Versus_08026291 sub_08026290
 #define Versus_080670A1 sub_080670A0
 #define Versus_WHILE_080670D9 sub_080670D8
-#define Versus_0803C1D5 sub_0803C1D4
-#define Versus_0803BF99 sub_0803BF98
+#define Versus_0803C1D5 ApplyMatchSettingsRecord
+#define Versus_0803BF99 Versus_AssignRandomCos
 #define Versus_08037F71 sub_08037F70
 #define Versus_080364F5 sub_080364F4
 

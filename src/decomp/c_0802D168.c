@@ -17,7 +17,7 @@
  * reads element 0. The two pool words for gUnknown_03000558 are -fforce-addr
  * giving each arm its own copy. */
 
-void sub_0802D168(void)
+void UnitMenu_DropFirst(void)
 {
     if (gUnknown_030033E8[0] != 0)
         gUnknown_03000558 = 1;
@@ -28,12 +28,13 @@ void sub_0802D168(void)
     CloseTopMenu();
     IncrementMapLock();
 }
+asm(".global sub_0802D168\n.thumb_set sub_0802D168, UnitMenu_DropFirst\n");
 
-/* The unconditional twin of sub_0802D168: the flag is forced to 1 and the
+/* The unconditional twin of UnitMenu_DropFirst: the flag is forced to 1 and the
  * sub_08029948 argument goes with it. The two `movs r0,#1` are not CSEd
  * because the `strb` and the argument are separate values to gcc. */
 
-void sub_0802D1A0(void)
+void UnitMenu_DropSecond(void)
 {
     gUnknown_03000558 = 1;
 
@@ -41,11 +42,12 @@ void sub_0802D1A0(void)
     CloseTopMenu();
     IncrementMapLock();
 }
+asm(".global sub_0802D1A0\n.thumb_set sub_0802D1A0, UnitMenu_DropSecond\n");
 
 /* See src/decomp/c_0802D064.c: same shape with two of the six calls dropped,
  * sub_08060684 in the middle and command id 0xb. */
 
-void sub_0802D1C0(void)
+void UnitMenu_Dive(void)
 {
     LockUnitSelection();
     CloseTopMenu();
@@ -55,11 +57,12 @@ void sub_0802D1C0(void)
     if (gPlaySt.savingEnabled != 0)
         SendActionCommand(0xB, gUnknown_03003F38, 0, 0);
 }
+asm(".global sub_0802D1C0\n.thumb_set sub_0802D1C0, UnitMenu_Dive\n");
 
 /* See src/decomp/c_0802D064.c and c_0802D1C0.c: the sub_080606A0 twin of
- * sub_0802D1C0, command id 0xc. */
+ * UnitMenu_Dive, command id 0xc. */
 
-void sub_0802D1F8(void)
+void UnitMenu_Rise(void)
 {
     LockUnitSelection();
     CloseTopMenu();
@@ -69,3 +72,4 @@ void sub_0802D1F8(void)
     if (gPlaySt.savingEnabled != 0)
         SendActionCommand(0xC, gUnknown_03003F38, 0, 0);
 }
+asm(".global sub_0802D1F8\n.thumb_set sub_0802D1F8, UnitMenu_Rise\n");

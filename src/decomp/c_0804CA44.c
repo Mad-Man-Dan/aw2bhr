@@ -12,9 +12,9 @@
  * re-read for each three-argument callee. There is no `mov r2` in front of the
  * FIRST `bl` because the allocator already had gUnknown_03001FBC in r2 for the
  * subscript above -- arity is invisible at the call and is read off each
- * callee's own prologue (sub_0804CA98 narrows three parameters, sub_08056E9C
+ * callee's own prologue (sub_0804CA98 narrows three parameters, StepFigureSlide
  * two). */
-void sub_0804CA44(void)
+void LanderFigure_Loop(void)
 {
     u16 side;
     u16 slot;
@@ -23,7 +23,8 @@ void sub_0804CA44(void)
     slot = gUnknown_03001470[gUnknown_03001FBC].unk34;
 
     sub_0804CA98(side, slot, gUnknown_03001FBC);
-    sub_0804BECC(side, slot, gUnknown_03001FBC);
-    sub_0804DC5C(side, slot, gUnknown_03001FBC);
-    sub_08056E9C(side, slot);
+    StepFigureHitFlash2(side, slot, gUnknown_03001FBC);
+    RidePartOnFigure(side, slot, gUnknown_03001FBC);
+    StepFigureSlide(side, slot);
 }
+asm(".global sub_0804CA44\n.thumb_set sub_0804CA44, LanderFigure_Loop\n");

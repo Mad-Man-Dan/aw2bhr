@@ -18,7 +18,7 @@ struct Tbl85D6A48
     u16 cells[8][12];
 };
 
-void sub_080553C8(void)
+void PlanBattleAnim(void)
 {
     u16 a;
     u16 b;
@@ -78,12 +78,13 @@ void sub_080553C8(void)
     sub_080555F0(0, gUnknown_0300450C);
     sub_080555F0(1, gUnknown_0300450C);
 
-    sub_08055654(gUnknown_02029BE8[0], gUnknown_02029BE8[1]);
+    BuildShotLists(gUnknown_02029BE8[0], gUnknown_02029BE8[1]);
     sub_08055940(gUnknown_02029BE8[0], gUnknown_02029BE8[1]);
-    sub_08055D4C(gUnknown_02029BE8[0], gUnknown_02029BE8[1]);
+    BuildDeathLists(gUnknown_02029BE8[0], gUnknown_02029BE8[1]);
 
     s = gUnknown_0300450C ^ 1;
 
     if (gUnknown_03004580[s][1] == 0x15 && gUnknown_03004580[s][2] == 1)
         gUnknown_020296B0[s].unk1e[0] += 0x20;
 }
+asm(".global sub_080553C8\n.thumb_set sub_080553C8, PlanBattleAnim\n");

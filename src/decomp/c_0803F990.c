@@ -25,7 +25,7 @@ void sub_0803F990(void) {
     w = 14;
   if (cy + 9 == gMap->height - 1)
     h = 9;
-  sub_0803FC28(cx, cy, w, h);
+  DrawInventionSprites(cx, cy, w, h);
 
   for (i = 0; i <= 0x5B; i++) {
     s8 raw = gProperty[i].flags;

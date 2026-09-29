@@ -51,7 +51,7 @@
  * 0x20` as the first test (14.1%); `u16` for the row offset (byte-identical);
  * a flat `u8 *cells = p + 0x1432` local. 0x4186/0x4188/0x418E/0x4190 are
  * rowOffset[6]/[7]/[10]/[11]. */
-int sub_08045B30(void)
+int MapEventCond_Army1OwnsEightFixedCells(void)
 {
     struct Map *m = gMap;
     int b;
@@ -83,3 +83,4 @@ int sub_08045B30(void)
 
     return 1;
 }
+asm(".global sub_08045B30\n.thumb_set sub_08045B30, MapEventCond_Army1OwnsEightFixedCells\n");

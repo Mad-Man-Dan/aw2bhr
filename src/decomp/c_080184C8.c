@@ -19,5 +19,5 @@
 void sub_080184C8(void)
 {
     sub_08012A74();
-    sub_0803B3EC();
+    DisableSoundVSync();
 }

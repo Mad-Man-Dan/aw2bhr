@@ -8,7 +8,7 @@
  */
 
 /* Publishes gUnknown_030046C0 into the 20-byte command block at
- * gUnknown_030044B0 and hands it to sub_080308B4, whose `u8 *src` parameter is
+ * gUnknown_030044B0 and hands it to LinkQueueCommand, whose `u8 *src` parameter is
  * what that global's declaration is typed from.
  *
  * gUnknown_0816DA40 is NOT a global. The ROM word there holds 0x030044B0 --
@@ -22,7 +22,7 @@
  *
  * The copy is field-by-field at matching offsets with a word at +8, so both
  * sides are one type. gUnknown_030044B0 is declared `u8 []` on the evidence of
- * sub_080344B4 / SendActionCommand / sub_080308B4 and struct Unk030046C0's
+ * sub_080344B4 / SendActionCommand / LinkQueueCommand and struct Unk030046C0's
  * +0x04/+0x05, +0x08 and +0x0c..+0x12 are still filler, so the view is
  * file-local: retyping either shared declaration to suit this one function is
  * exactly what the "never reshape a shared member" rule forbids, and nothing
@@ -81,5 +81,5 @@ void sub_0805D5EC(void)
     ((struct Unk0805D5ECCmd *) gUnknown_030044B0)->unk0c[i] = ((struct Unk0805D5ECCmd *) (&gUnknown_030046C0))->unk0c[i];
   }
 
-  sub_080308B4(gUnknown_030044B0);
+  LinkQueueCommand(gUnknown_030044B0);
 }

@@ -9,7 +9,7 @@
 
 void DesignRoomLoadFromSlot(void)
 {
-    sub_0803CEB8(gActiveMap->designSlot, gDesignRoomName);
+    LoadDesignRoomSlot(gActiveMap->designSlot, gDesignRoomName);
     sub_0800CB30(1, GetArmyColorSetIndex());
     sub_08004E38((char *)gActiveMap->designName, (const char *)gDesignRoomName);
     RecountArmyProperties();

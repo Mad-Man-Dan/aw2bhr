@@ -14,7 +14,7 @@
  */
 bool8 sub_08016104(u8 a)
 {
-    sub_0803B524(((const u16 *)gUnknown_03001470[a].unk04)[2]);
+    PlayMusic(((const u16 *)gUnknown_03001470[a].unk04)[2]);
     gUnknown_03001470[a].unk04 = (const u32 *)gUnknown_03001470[a].unk04 + 2;
     return FALSE;
 }

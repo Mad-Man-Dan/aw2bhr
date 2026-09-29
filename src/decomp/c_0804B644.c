@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804B644.
- * sub_0804B644 @ 0x0804B644
+ * GetBackdropVariantForSecondSide @ 0x0804B644
  */
 
 /* A terrain/sprite id remap, applied only when the two ids agree. Self
@@ -18,7 +18,7 @@
  * `a == b` on two u16 parameters compiles to a compare of the two `<< 16`
  * forms with `b` recovered by `lsrs #0x10` -- the shared-shift pattern, not a
  * sign of anything in the source. */
-u16 sub_0804B644(u16 a, u16 b)
+u16 GetBackdropVariantForSecondSide(u16 a, u16 b)
 {
     if (a == b)
     {
@@ -41,3 +41,5 @@ u16 sub_0804B644(u16 a, u16 b)
 
     return b;
 }
+
+asm(".global sub_0804B644\n.thumb_set sub_0804B644, GetBackdropVariantForSecondSide\n");

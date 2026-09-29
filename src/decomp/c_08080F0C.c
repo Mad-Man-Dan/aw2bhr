@@ -10,7 +10,7 @@
 void sub_08080F0C(void)
 {
     if (IsBlackHoleCo(gUnknown_03005970))
-        sub_0803B524(0x1C8);
+        PlayMusic(0x1C8);
     else
-        sub_0803B524(0x1C5);
+        PlayMusic(0x1C5);
 }

@@ -48,7 +48,7 @@
  * not one array: the ROM holds 5 words at each, and 0x0849A240 is unrelated
  * data (0x40000001). The index is `a4 - 1`, so a4 runs 1..5.
  */
-void sub_0802B91C(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7, s16 a8)
+void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7, s16 a8)
 {
     void *p;
     int n = 0;
@@ -120,3 +120,4 @@ void sub_0802B91C(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7, s16 a8)
 
     PutOamHi(a1, a2 | 0x400, p, (a8 * 4) | 0xf000);
 }
+asm(".global sub_0802B91C\n.thumb_set sub_0802B91C, DrawCursorInfoUnitIcon\n");

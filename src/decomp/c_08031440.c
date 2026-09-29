@@ -12,7 +12,7 @@
 
 /* The idle step of the gUnknown_0849B048 script: restart it if its slot is
  * gone, quit on B, and in either case advance gUnknown_0849B060->unk00 through
- * sub_080315E8. Neither `if` is exclusive -- both fall through to the
+ * LinkScreenSetMessage. Neither `if` is exclusive -- both fall through to the
  * round-trip, which is why the ROM has no branch over it. */
 void sub_08031440(ProcPtr proc)
 {
@@ -26,5 +26,5 @@ void sub_08031440(ProcPtr proc)
         Proc_Break(proc);
     }
 
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 0, 2);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 0, 2);
 }

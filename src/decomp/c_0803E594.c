@@ -37,7 +37,7 @@
 
 #define MAP gMap
 
-void sub_0803E594(int a1, int a2, int a3)
+void ScanUnitsOnCrossRays(int a1, int a2, int a3)
 {
     int x;
     int y;
@@ -47,24 +47,25 @@ void sub_0803E594(int a1, int a2, int a3)
     for (; y >= 0; y--)
     {
         if (gMap->unit[MAP->rowOffset[y] + x] != 0)
-            sub_0803E560(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
+            PushInventionFireEntry(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
     }
     y = a2;
     for (; x < MAP->width; x++)
     {
         if (gMap->unit[MAP->rowOffset[y] + x] != 0)
-            sub_0803E560(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
+            PushInventionFireEntry(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
     }
     x = a1;
     for (; y < MAP->height; y++)
     {
         if (gMap->unit[MAP->rowOffset[y] + x] != 0)
-            sub_0803E560(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
+            PushInventionFireEntry(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
     }
     y = a2;
     for (; x >= 0; x--)
     {
         if (gMap->unit[MAP->rowOffset[y] + x] != 0)
-            sub_0803E560(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
+            PushInventionFireEntry(x, y, gMap->unit[MAP->rowOffset[y] + x], a3);
     }
 }
+asm(".global sub_0803E594\n.thumb_set sub_0803E594, ScanUnitsOnCrossRays\n");

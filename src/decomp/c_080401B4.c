@@ -60,6 +60,6 @@ void sub_08040200(struct Unk02028360 *ent, ProcPtr a2)
         + ent->unk00] = 4;
 
     sub_08024268();
-    sub_0803E0D0((struct Unk3E0D0 *)ent);
+    RemoveInventionRecord((struct Unk3E0D0 *)ent);
     RecountArmyProperties();
 }

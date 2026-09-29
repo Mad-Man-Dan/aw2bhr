@@ -28,7 +28,7 @@
  * `struct Unit **` holding &gUnknown_030040D8).
  *
  * MATCHED first draft. */
-void sub_0802D0F4(void)
+void UnitMenu_Join(void)
 {
     LockUnitSelection();
     CloseTopMenu();
@@ -50,3 +50,4 @@ void sub_0802D0F4(void)
     CommitUnitMove();
     sub_0802C594();
 }
+asm(".global sub_0802D0F4\n.thumb_set sub_0802D0F4, UnitMenu_Join\n");

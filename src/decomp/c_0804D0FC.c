@@ -9,10 +9,10 @@
 
 /* gUnknown_0813606C is agbcc's own -fforce-addr address constant for
  * &gUnknown_03001FBC, not an object: the word at 0x0813606C holds 0x03001FBC
- * and so does the word at 0x08136070 (sub_0804D4E8's private copy). The honest
+ * and so does the word at 0x08136070 (CruiserFigure_Loop's private copy). The honest
  * spelling `gUnknown_03001FBC` produces the ROM's `ldr rN,=.LC; ldr rM,[rN];
  * ldrsh` pair by itself, including the reload after the call. */
-void sub_0804D0FC(void)
+void CruiserVariant2Figure_Loop(void)
 {
     u16 c;
     u16 e;
@@ -34,6 +34,7 @@ void sub_0804D0FC(void)
     }
 
     sub_0804CA98(c, e, gUnknown_03001FBC);
-    sub_0804DC5C(c, e, gUnknown_03001FBC);
-    sub_08056E9C(c, e);
+    RidePartOnFigure(c, e, gUnknown_03001FBC);
+    StepFigureSlide(c, e);
 }
+asm(".global sub_0804D0FC\n.thumb_set sub_0804D0FC, CruiserVariant2Figure_Loop\n");

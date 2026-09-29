@@ -86,7 +86,7 @@ void IntroT3_08068AC5(struct Unk08068AC4 *proc)
     sub_08072C40(3, 0, 0);
     gDispIo.disp_ct.forced_blank = 0;
     proc->unk30 = 0;
-    sub_0803B524(0x12C);
+    PlayMusic(0x12C);
 }
 
 void IntroT3_IDLE_08068BE5(struct Unk08068BE4Proc *proc)

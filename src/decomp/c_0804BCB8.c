@@ -7,7 +7,7 @@
  * sub_0804BCB8 @ 0x0804BCB8
  */
 
-/* Builds a sub_08056E28 motion request on the stack for one (group, slot) and
+/* Builds a SetFigureSlide motion request on the stack for one (group, slot) and
  * submits it, but only for the side currently on screen. Under the bit0 /
  * !bit6 combination -- the same guard c_0804E584.c uses two functions away --
  * the step and the frame count are both dropped to zero, i.e. the motion is
@@ -18,7 +18,7 @@
  * taking the struct's address forces the stores through a register base rather
  * than sp displacements. Three of its seven members are literal zeros sharing
  * one `movs r1, #0`. */
-void sub_0804BCB8(u16 a, u16 b, s16 c, u16 d)
+void StartFigureEntrySlide(u16 a, u16 b, s16 c, u16 d)
 {
     struct Unk56E28 r;
 
@@ -40,6 +40,7 @@ void sub_0804BCB8(u16 a, u16 b, s16 c, u16 d)
         r.unk08 = 0;
         r.unk0a = 0;
         r.unk0c = d;
-        sub_08056E28(&r);
+        SetFigureSlide(&r);
     }
 }
+asm(".global sub_0804BCB8\n.thumb_set sub_0804BCB8, StartFigureEntrySlide\n");

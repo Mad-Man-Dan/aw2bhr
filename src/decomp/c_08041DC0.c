@@ -17,7 +17,7 @@
 
 void sub_08041DC0(void)
 {
-    sub_0803B6E8(0xC0);
+    StartMusicDuck(0xC0);
 }
 
 /* Family F001 forwarder, 12 bytes:
@@ -34,7 +34,7 @@ void sub_08041DC0(void)
  */
 void sub_08041DCC(void)
 {
-    sub_0803B774();
+    StartMusicDuckRelease();
 }
 
 /* Family F005 (data/families.json): 19 sixteen-byte wrappers shaped

@@ -7,7 +7,7 @@
  * sub_08050C8C @ 0x08050C8C
  */
 
-void sub_08050C8C(void)
+void ThirdEffect_Loop(void)
 {
     u16 side;
     u16 slot;
@@ -33,3 +33,4 @@ void sub_08050C8C(void)
             gUnknown_02029664 |= 8;
     }
 }
+asm(".global sub_08050C8C\n.thumb_set sub_08050C8C, ThirdEffect_Loop\n");

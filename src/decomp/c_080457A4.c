@@ -67,7 +67,7 @@ asm(".global sub_08045818\n.thumb_set sub_08045818, HasNoMinicannon\n");
 
 int HasNoPipeSeams(void)
 {
-    if (sub_08045650() == 0)
+    if (AnyPipeSeamHpSet() == 0)
         return 1;
 
     return 0;

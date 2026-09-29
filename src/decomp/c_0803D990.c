@@ -25,7 +25,7 @@
  * ROM's shape -- then-arm `blt` to the shared body plus `b` past it, else-arm
  * `bge` past it and fall through -- which is why the two `cmp r0, r2`s are not
  * cross-jumped away. */
-int sub_0803D990(int a, int b, int c, int d, u8 e)
+int StepClampedWithWrap(int a, int b, int c, int d, u8 e)
 {
     if (b == 0)
         return a;
@@ -52,3 +52,4 @@ int sub_0803D990(int a, int b, int c, int d, u8 e)
 
     return a + b;
 }
+asm(".global sub_0803D990\n.thumb_set sub_0803D990, StepClampedWithWrap\n");

@@ -19,7 +19,7 @@ void sub_0804C4A8(u16 a)
     t = gUnknown_03004580[a][0];
     u = gUnknown_03004580[a][4];
 
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
 
     Decompress((u8 *)gUnknown_08557680[gUnknown_08562128[u]][0], gUnknown_08552FB0[a]);
 

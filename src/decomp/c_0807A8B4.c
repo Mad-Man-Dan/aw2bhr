@@ -12,7 +12,7 @@ void sub_0807A8B4(ProcPtr proc)
     int i;
 
     if (sub_08078E20() == 0)
-        sub_0803B5A4(0);
+        FadeOutMusic(0);
 
     for (i = 0; i <= 6; i++)
         StartPalFadeToWhite(i, 0x10, proc);

@@ -20,7 +20,7 @@ u16 sub_0803EED4(int, int);
  * in NOTES.md. Code is still two bytes short and recovered as padding.
  *
  * PARKED at 79.5%, SIZE-EXACT (596/596). Wave 50, W50-B.
- * See work/sub_0803A69C/NOTES.md for the exact remaining diff.
+ * See work/UnitClassInfo_Loop/NOTES.md for the exact remaining diff.
  *
  * THE STRUCTURAL FINDING, worth more than the score: both stepper loops are
  * `body; while (cond) { body; }`, NOT `do { body } while (cond);`. The ROM
@@ -35,7 +35,7 @@ u16 sub_0803EED4(int, int);
  * byte-identical to a declared s8, because sign_extend of a QImode mem folds
  * to ldrsb either way. The evidence is recorded on the member itself. */
 
-void sub_0803A69C(void)
+void UnitClassInfo_Loop(void)
 {
   u8 x;
   u8 y;
@@ -118,6 +118,7 @@ void sub_0803A69C(void)
     sub_0803A59C();
     sub_0801537C(gUnknown_0849E2C0);
     sub_08015C30(gUnknown_03001FBC);
-    sub_080470F8(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
+    ShowTerrainInfoWindow(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
   }
 }
+asm(".global sub_0803A69C\n.thumb_set sub_0803A69C, UnitClassInfo_Loop\n");

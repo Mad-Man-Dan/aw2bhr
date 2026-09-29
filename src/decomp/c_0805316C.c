@@ -18,7 +18,7 @@
  * shifted domain, which needs no `lsrs`; a reload would have emitted one. */
 void sub_0805316C(ProcPtr proc)
 {
-    sub_08053F0C();
+    RunBattleAnimStepHandler();
     sub_0804B3CC();
 
     if (++gUnknown_03004508 == 0x12C)

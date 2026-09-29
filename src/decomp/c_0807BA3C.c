@@ -13,7 +13,7 @@
 void sub_0807BA3C(void)
 {
     if (gUnknown_085C77A0[gPlaySt.mapID].unk58 == 3)
-        sub_0803B524(0x195);
+        PlayMusic(0x195);
 }
 
 void sub_0807BA68(ProcPtr proc)

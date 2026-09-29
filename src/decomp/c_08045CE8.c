@@ -8,10 +8,10 @@
  * sub_08045CE8 @ 0x08045CE8
  */
 
-/* sub_08045BF0's twin: a different row-pointer slot (rowOffset[1]), a different
+/* MapEventCond_Army1UnitAtX7Y2's twin: a different row-pointer slot (rowOffset[1]), a different
  * byte in the record (unit[... + 12]), and it asks for top-two-bits == 1 instead of 0.
- * See sub_08045BF0 for why the cell is held in an `int`. */
-int sub_08045CE8(void)
+ * See MapEventCond_Army1UnitAtX7Y2 for why the cell is held in an `int`. */
+int MapEventCond_Army2UnitAtX12Y1(void)
 {
     int v;
 
@@ -24,3 +24,4 @@ int sub_08045CE8(void)
 
     return 0;
 }
+asm(".global sub_08045CE8\n.thumb_set sub_08045CE8, MapEventCond_Army2UnitAtX12Y1\n");

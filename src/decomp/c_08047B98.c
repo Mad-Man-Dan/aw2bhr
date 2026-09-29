@@ -27,7 +27,7 @@ struct Unk08047B98
     /* 0x1f */ u8 unk1f;
 };
 
-void sub_08047B98(struct Unk08047B98 *p)
+void RefreshUnitList(struct Unk08047B98 *p)
 {
     sub_08047190(p, p->unk1e);
     sub_08012BC8(gBG0TilemapBuffer, 0xf, 1, 1, 2, 0);
@@ -35,6 +35,7 @@ void sub_08047B98(struct Unk08047B98 *p)
     gBG0TilemapBuffer[0x37] = 0;
     gBG0TilemapBuffer[0x57] = 0;
     sub_08014B0C(0x18, 1, gBG0TilemapBuffer, p->unk1f + 1, 0x8000, 0);
-    sub_08047920(p);
+    DrawUnitListRows(p);
     sub_08013AEC();
 }
+asm(".global sub_08047B98\n.thumb_set sub_08047B98, RefreshUnitList\n");

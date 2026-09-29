@@ -7,7 +7,7 @@
  * sub_080308B4 @ 0x080308B4
  */
 
-void sub_080308B4(u8 *src)
+void LinkQueueCommand(u8 *src)
 {
     struct Unk08090CD8 *const *pp;
     struct Unk08090CD8 *ctrl;
@@ -31,3 +31,4 @@ void sub_080308B4(u8 *src)
     ctrl->unk00->unk1aad++;
     ctrl->unk00->unk1aad &= 0x1F;
 }
+asm(".global sub_080308B4\n.thumb_set sub_080308B4, LinkQueueCommand\n");

@@ -14,14 +14,15 @@
  * a1 for the destructive THUMB `mul`, while the repeated expression gives
  * `((a2*0x24) + (a1*0xb4)) + sym` and multiplies in place. Measured on this
  * function in wave 37 (W37-B); the local costs 2 bytes. */
-void sub_080540F0(u16 a1, u16 a2)
+void StartFigureFireScript(u16 a1, u16 a2)
 {
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
      && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
         sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                      gUnknown_02029BA8[a1].unk08);
-    sub_0805198C(a1, a2);
+    SpawnFireEffect(a1, a2);
 }
+asm(".global sub_080540F0\n.thumb_set sub_080540F0, StartFigureFireScript\n");
 
 /* `row` really is a binding local here and not tidiness: the ROM computes
  * &gUnknown_085D6A48[..] BEFORE the `cmd != 0xff` branch and keeps it in r2
@@ -29,7 +30,7 @@ void sub_080540F0(u16 a1, u16 a2)
  * is also what keeps the [2] column in the `ldrh` displacement -- spelled
  * inline, agbcc reassociates the column offset onto the symbol instead and
  * spends an extra `adds rB,#4`. */
-void sub_0805414C(u16 a1)
+void StepShotReturnTimeline(u16 a1)
 {
     u16 cmd = gUnknown_020296B0[a1].unk0c[gUnknown_02029C08[a1]];
     u16 *row = gUnknown_085D6A48[gUnknown_03004580[a1][1]];
@@ -38,14 +39,15 @@ void sub_0805414C(u16 a1)
      && gUnknown_03004508 == gUnknown_08551E12[gUnknown_02029C08[a1]] + 0x32
      && row[2] != 1)
     {
-        sub_080541F0(a1, cmd);
+        StartFigureReturnScript(a1, cmd);
         gUnknown_02029C08[a1]++;
         gUnknown_02029BEC[a1][cmd] = 0;
         gUnknown_020297C0[a1].unk0c[cmd] = 1;
     }
 }
+asm(".global sub_0805414C\n.thumb_set sub_0805414C, StepShotReturnTimeline\n");
 
-void sub_080541F0(u16 a1, u16 a2)
+void StartFigureReturnScript(u16 a1, u16 a2)
 {
     PlayMusicOrSfx(gUnknown_085D6C88[gUnknown_03004580[a1][1]]
                  .unk08[gUnknown_03004580[a1][3] == 2]);
@@ -54,6 +56,7 @@ void sub_080541F0(u16 a1, u16 a2)
         sub_080156E8(gUnknown_02029A10[a1].entries[a2].unk18,
                      gUnknown_02029BA8[a1].unk0c);
 }
+asm(".global sub_080541F0\n.thumb_set sub_080541F0, StartFigureReturnScript\n");
 
 /* Two levers here, both measured in wave 37 (W37-B).
  *
@@ -68,7 +71,7 @@ void sub_080541F0(u16 a1, u16 a2)
  * order is what decides which pool word comes first; the dispatch table is the
  * last thing the expression tree reaches, so without the extra local its word
  * lands third and its `ldr` sinks past the row deref. */
-void sub_08054278(u16 a1)
+void StepThirdEffectTimeline(u16 a1)
 {
     u16 cmd = gUnknown_020296B0[a1].unk0c[gUnknown_020296B0[a1].unk18];
 
@@ -82,12 +85,13 @@ void sub_08054278(u16 a1)
         tbl[row[2]](a1, cmd);
     }
 }
+asm(".global sub_08054278\n.thumb_set sub_08054278, StepThirdEffectTimeline\n");
 
 /* gUnknown_08136134 and gUnknown_08136138 in the disassembly are NOT globals:
  * they are agbcc's own .rodata address constants, and baserom.gba holds
  * 0x03004580 and 0x020296B0 in them. Naming the two globals directly is the
  * honest spelling and reproduces both pool words. */
-void sub_080542EC(u16 a1, u16 a2)
+void StartFigureThirdScript(u16 a1, u16 a2)
 {
     u16 t;
 
@@ -110,12 +114,13 @@ void sub_080542EC(u16 a1, u16 a2)
         gUnknown_020296B0[a1].unk18++;
     }
 }
+asm(".global sub_080542EC\n.thumb_set sub_080542EC, StartFigureThirdScript\n");
 
 /* gUnknown_0813613C and gUnknown_08136140 are agbcc .rodata address constants
  * holding 0x03001470 and 0x02029A10 (checked against baserom.gba), not objects
  * in ROM -- so both are spelled as the globals themselves and agbcc rebuilds
  * the pool. */
-void sub_080543E0(u16 a1, u16 a2)
+void StartWholeFigureThirdScript(u16 a1, u16 a2)
 {
     if (gUnknown_03001470[gUnknown_02029A10[a1].entries[a2].unk18].unk2c == 1)
         return;
@@ -125,14 +130,15 @@ void sub_080543E0(u16 a1, u16 a2)
                      gUnknown_02029BA8[a1].unk10);
     gUnknown_03001470[gUnknown_02029A10[a1].entries[a2].unk18].unk2c = 1;
 }
+asm(".global sub_080543E0\n.thumb_set sub_080543E0, StartWholeFigureThirdScript\n");
 
-/* The gUnknown_020298E0 twin of sub_08054278: unk1a is this record's command
+/* The gUnknown_020298E0 twin of StepThirdEffectTimeline: unk1a is this record's command
  * row and unk0c its timestamp row, both walked by the shared unk16 cursor --
  * the same pair gUnknown_020296B0 spells as unk0c / unk1e, with the two offsets
- * swapped. See sub_08054278 for why `tbl` and `row` are locals; both
+ * swapped. See StepThirdEffectTimeline for why `tbl` and `row` are locals; both
  * assignments sit after the sub_08057BCC call because that is where the ROM
  * loads the three pool words. */
-void sub_08054488(u16 a1)
+void StepHitTimeline(u16 a1)
 {
     u16 cmd = gUnknown_020298E0[a1].unk1a[gUnknown_020298E0[a1].unk16];
 
@@ -149,8 +155,9 @@ void sub_08054488(u16 a1)
         tbl[row[2]](a1, cmd);
     }
 }
+asm(".global sub_08054488\n.thumb_set sub_08054488, StepHitTimeline\n");
 
-void sub_08054500(u16 a1, u16 a2)
+void ApplyHitToFigure(u16 a1, u16 a2)
 {
     if (gUnknown_02029A10[a1].entries[a2].unk18 != -1
      && sub_080153F0(gUnknown_02029A10[a1].entries[a2].unk18))
@@ -164,6 +171,7 @@ void sub_08054500(u16 a1, u16 a2)
             gUnknown_02029A10[a1].entries[a2].unk00 =
                 gUnknown_02029A10[a1].entries[a2].unk01;
         }
-        sub_08050F24(a1, a2);
+        SpawnHitEffect(a1, a2);
     }
 }
+asm(".global sub_08054500\n.thumb_set sub_08054500, ApplyHitToFigure\n");

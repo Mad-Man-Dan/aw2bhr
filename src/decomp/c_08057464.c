@@ -13,7 +13,7 @@
  * sixteen s16 slots in row order, which is what fixes the two blocks as the
  * same eight fields printed twice. */
 
-void sub_08057464(void)
+void DrawBattleAnimDebugReadout(void)
 {
     sub_080119A0(gUnknown_08551A4C[gUnknown_03004514], gUnknown_08551A50[gUnknown_03004524], gUnknown_08136170);
     sub_080119A0(gUnknown_08551A48[gUnknown_030045AC], 0x64, gUnknown_08136174);
@@ -51,3 +51,4 @@ void sub_08057464(void)
     sub_08011A20(0xc0, 0x48, gUnknown_03004550[1][7]);
     sub_080119A0(0x50, 0x7c, gUnknown_08551B8C[gUnknown_03004540]);
 }
+asm(".global sub_08057464\n.thumb_set sub_08057464, DrawBattleAnimDebugReadout\n");

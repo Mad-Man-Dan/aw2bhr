@@ -27,5 +27,5 @@ bool8 sub_08018464(s16 a)
 void sub_080184A4(void)
 {
     sub_08012A54(gUnknown_0848A370[(s16)gUnknown_03002F90]);
-    sub_0803B3E0();
+    EnableSoundVSync();
 }

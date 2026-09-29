@@ -18,7 +18,7 @@ void sub_08038568(void)
     else
     {
         sub_0803BCB8();
-        sub_0803B828();
-        sub_08030ED4();
+        StartMainMenu();
+        LinkShutdown();
     }
 }

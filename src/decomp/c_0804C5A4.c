@@ -72,7 +72,7 @@
 
 #include "global.h"
 
-void sub_0804C5A4(void)
+void SubmarineFigure_Loop(void)
 {
   u16 side;
   u16 slot;
@@ -97,7 +97,8 @@ void sub_0804C5A4(void)
     gUnknown_020296B0[side].unk18++;
   }
   sub_0804CA98(side, slot, gUnknown_03001FBC);
-  sub_0804BECC(side, slot, gUnknown_03001FBC);
-  sub_0804DC5C(side, slot, gUnknown_03001FBC);
-  sub_08056E9C(side, slot);
+  StepFigureHitFlash2(side, slot, gUnknown_03001FBC);
+  RidePartOnFigure(side, slot, gUnknown_03001FBC);
+  StepFigureSlide(side, slot);
 }
+asm(".global sub_0804C5A4\n.thumb_set sub_0804C5A4, SubmarineFigure_Loop\n");

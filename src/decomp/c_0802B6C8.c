@@ -20,7 +20,7 @@
  *
  * The (u8) is real, not a tidy-up: sub_0802706C's third parameter is u16 and
  * the ROM truncates with `lsls #0x18; lsrs #0x18`. The prototype is right --
- * the promoted sub_0802B91C passes an s16 there with no truncation at all. */
+ * the promoted DrawCursorInfoUnitIcon passes an s16 there with no truncation at all. */
 /* WAVE 35: CANONICAL `struct Map`. Eight drafts across blocks 0x08029-0x0802B
  * each invented their own body for this tag, with 2 to 7 named fields. Every
  * one compiles and byte-matches ALONE, so trymatch cannot see the problem;

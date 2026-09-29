@@ -39,7 +39,7 @@
  * if/else -- rather than once after it -- is what closed it: it raises that
  * pseudo's reference count enough to win the low callee-saved register under
  *     priority ~ floor_log2(n_refs) * n_refs * freq / live_length
- * (the same model that closed sub_08045B30 this wave). It costs nothing in
+ * (the same model that closed MapEventCond_Army1OwnsEightFixedCells this wave). It costs nothing in
  * code, because gcc's cross-jumping merges the two identical `unk68++; break;`
  * tails back into the single block the ROM has at 0x080447A6 -- which is why
  * the if-arm still reaches it by `b` and not by fall-through.

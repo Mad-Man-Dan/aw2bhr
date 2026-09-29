@@ -27,9 +27,10 @@ void sub_080470DC(void)
     sub_0801B780(0);
 }
 
-/* Stop half of sub_080470F8's sub_080152EC. */
+/* Stop half of ShowTerrainInfoWindow's sub_080152EC. */
 
-void sub_080470E8(void)
+void EndTerrainInfoWindowScript(void)
 {
     sub_0801537C(gUnknown_084C2198);
 }
+asm(".global sub_080470E8\n.thumb_set sub_080470E8, EndTerrainInfoWindowScript\n");

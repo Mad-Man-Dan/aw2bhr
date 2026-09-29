@@ -40,5 +40,5 @@ void sub_0804D928(void)
     prio = gUnknown_085523A4[gUnknown_0300453C ^ gUnknown_0300450C];
     oam.priority = prio;
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_08015928(gUnknown_03001FBC, (u32)sub_0804DA40);
+    sub_08015928(gUnknown_03001FBC, (u32)CruiserPart2_StreamHook);
 }

@@ -18,13 +18,13 @@
  *
  * Picks the highest-scoring occupied, visible cell on the map and appends it.
  * a3 is genuinely DEAD -- r2 is overwritten before it is ever read, and
- * sub_0803ED60's call site passes the record's s8 unk07 into it.
+ * InventionTurn_PrepareNextFire's call site passes the record's s8 unk07 into it.
  *
  * Readouts worth keeping:
  *  - `best`/`score` are unsigned (`cmp r0,r4; bhi`), while bestX/bestY/bestT are
  *    `u16` locals: PROMOTE_MODE keeps them in SImode stack slots (word `str`),
  *    so the narrowing shows up as `lsls #0x10; lsrs #0x10` AT EACH ASSIGNMENT
- *    and their reads at the sub_0803E560 call are free. Declaring them `int`
+ *    and their reads at the PushInventionFireEntry call are free. Declaring them `int`
  *    loses three shift pairs; declaring them `u16` is what puts the pairs where
  *    the ROM has them.
  *  - `(u16)a5` at sub_0801FAC4's third argument is a real narrowing in the
@@ -40,7 +40,7 @@
 
 #define MAP gMap
 
-void sub_0803E808(int a1, int a2, int a3, int a4, int a5)
+void PickBestInventionTarget(int a1, int a2, int a3, int a4, int a5)
 {
     struct Unit *u;
     u32 best;
@@ -92,7 +92,8 @@ void sub_0803E808(int a1, int a2, int a3, int a4, int a5)
         }
     }
     if (bestT == 0)
-        sub_0803E554();
+        ClearInventionFireList();
     else
-        sub_0803E560(bestX, bestY, bestT, a4 == 3 ? 0x32 : 0x1e);
+        PushInventionFireEntry(bestX, bestY, bestT, a4 == 3 ? 0x32 : 0x1e);
 }
+asm(".global sub_0803E808\n.thumb_set sub_0803E808, PickBestInventionTarget\n");

@@ -22,7 +22,7 @@
  * afterwards (`ldr r1, [r5]`), which is what a global read on both sides of a
  * call compiles to. A local pointer would have survived the call in a
  * callee-saved register instead. */
-void sub_0804A64C(void)
+void NameEntry_TypeChar(void)
 {
     u8 i = gUnknown_030044E0->unk5d;
 
@@ -30,5 +30,6 @@ void sub_0804A64C(void)
         i = gUnknown_030044E0->unk5f - 1;
 
     gUnknown_030044E0->unk2c[i] =
-        sub_0804A18C(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
+        GetNameEntryGridChar(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
 }
+asm(".global sub_0804A64C\n.thumb_set sub_0804A64C, NameEntry_TypeChar\n");

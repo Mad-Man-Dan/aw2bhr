@@ -22,11 +22,12 @@
  * proc-starter table in docs/agbcc-codegen.md distinguishes by r1 being
  * WRITTEN rather than left alone. Proc_Start returns the proc; `pop {r0}` says
  * this discards it. */
-void sub_0803B9D4(void)
+void StartCoDesign(void)
 {
     sub_08044BB0();
     Proc_Start(ProcScr_CoDesign, PROC_TREE_3);
 }
+asm(".global sub_0803B9D4\n.thumb_set sub_0803B9D4, StartCoDesign\n");
 
 extern void BattleMaps_0803B83D(void);
 extern void SoundRoom_0806F711(void);

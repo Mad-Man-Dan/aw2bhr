@@ -53,13 +53,13 @@ void sub_08039948(struct Unk39948Proc *proc)
     case 2:
         proc->unk2c = 0;
         proc->unk30 = 0x18;
-        sub_08039A58(0x2b0, 8);
+        CoPowerPanelNoOp(0x2b0, 8);
         break;
 
     case 3:
         proc->unk2c = 0;
         proc->unk30 = -0x18;
-        sub_08039A58(0x2b0, 8);
+        CoPowerPanelNoOp(0x2b0, 8);
         break;
     }
 }

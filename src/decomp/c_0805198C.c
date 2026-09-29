@@ -7,7 +7,7 @@
  * sub_0805198C @ 0x0805198C, sub_08051A44 @ 0x08051A44, sub_08051B30 @ 0x08051B30
  */
 
-void sub_0805198C(u16 a, u16 b)
+void SpawnFireEffect(u16 a, u16 b)
 {
     u16 t;
     int f;
@@ -24,8 +24,9 @@ void sub_0805198C(u16 a, u16 b)
             gUnknown_020297C0[a].unk18, gUnknown_020297C0[a].unk20, f);
     }
 }
+asm(".global sub_0805198C\n.thumb_set sub_0805198C, SpawnFireEffect\n");
 
-void sub_08051A44(void)
+void FireEffect_Init(void)
 {
     struct OamData oam;
     int tile;
@@ -39,12 +40,13 @@ void sub_08051A44(void)
     oam.tileNum = tile;
     oam.priority = 3;
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_08050528(gUnknown_0300453C, gUnknown_03001FBC,
+    SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
 }
+asm(".global sub_08051A44\n.thumb_set sub_08051A44, FireEffect_Init\n");
 
-void sub_08051B30(void)
+void FireEffect_Loop(void)
 {
     u16 a;
     u16 b;
@@ -52,7 +54,7 @@ void sub_08051B30(void)
     a = gUnknown_03001470[gUnknown_03001FBC].unk30;
     b = gUnknown_03001470[gUnknown_03001FBC].unk34;
 
-    sub_08050528(a, gUnknown_03001FBC,
+    SetEffectScreenPosition(a, gUnknown_03001FBC,
         gUnknown_02029A10[a].entries[b].x,
         gUnknown_02029A10[a].entries[b].y);
 
@@ -64,3 +66,4 @@ void sub_08051B30(void)
         gUnknown_020297C0[a].unk0c[b] = 0;
     }
 }
+asm(".global sub_08051B30\n.thumb_set sub_08051B30, FireEffect_Loop\n");

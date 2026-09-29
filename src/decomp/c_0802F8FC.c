@@ -11,7 +11,7 @@
 
 /* The multiplayer send step. It writes the caller's halfword into SIOMLT_SEND
  * and spins until the register reads back what it wrote, then either arms a
- * timeout (sub_0802ECEC) or starts the transfer directly by writing
+ * timeout (SioStartTimer3) or starts the transfer directly by writing
  * gUnknown_03000560 | 0x6080 to SIOCNT.
  *
  * -4 when the session state gUnknown_0300055C is above 3; 5 otherwise, and the
@@ -33,7 +33,7 @@
  * that block the fall-through; with the assignments in the other order agbcc
  * threads the first two and leaves the last one inline, which is the mirror
  * image of the ROM. */
-int sub_0802F8FC(u16 *reg, int flag)
+int SioSend16(u16 *reg, int flag)
 {
     int v;
 
@@ -64,7 +64,7 @@ int sub_0802F8FC(u16 *reg, int flag)
                 v = 0;
 
             if (v != 0)
-                sub_0802ECEC(v);
+                SioStartTimer3(v);
             else
                 REG_SIOCNT = gUnknown_03000560 | 0x6080;
         }
@@ -73,6 +73,7 @@ int sub_0802F8FC(u16 *reg, int flag)
     gUnknown_03000568 = 1;
     return 5;
 }
+asm(".global sub_0802F8FC\n.thumb_set sub_0802F8FC, SioSend16\n");
 
 /* Pulls one halfword per link slot out of the gUnknown_02025C18 ring into the
  * caller's four-halfword buffer. 0x7FFF is the "no sample" filler: it goes out

@@ -13,12 +13,12 @@
  * zero-extends every sub-word parameter into its pseudo at entry. `int` with
  * an explicit `(u16)` cast at the call is byte-identical here and a probe
  * cannot separate the two, so the choice is made callee-side --
- * sub_0804C400 takes the u16 unit index the rest of that family takes,
+ * SpawnWholeFigure takes the u16 unit index the rest of that family takes,
  * and a wrapper that exists only to forward it takes the same thing.
  */
 void sub_0804C488(u16 a)
 {
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
 }
 
 /* F086 -- `push {lr}; lsls #0x10; lsrs #0x10; bl` and nothing else.
@@ -27,10 +27,10 @@ void sub_0804C488(u16 a)
  * zero-extends every sub-word parameter into its pseudo at entry. `int` with
  * an explicit `(u16)` cast at the call is byte-identical here and a probe
  * cannot separate the two, so the choice is made callee-side --
- * sub_0804C400 takes the u16 unit index the rest of that family takes,
+ * SpawnWholeFigure takes the u16 unit index the rest of that family takes,
  * and a wrapper that exists only to forward it takes the same thing.
  */
 void sub_0804C498(u16 a)
 {
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
 }

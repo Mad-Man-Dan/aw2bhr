@@ -7,7 +7,7 @@
  * sub_0804FE10 @ 0x0804FE10
  */
 
-/* sub_0804FE10 and sub_0804E8F0 are the SAME SOURCE apart from which
+/* FigureTileHook_BodyCrew2 and FigureTileHook_BodyCrew are the SAME SOURCE apart from which
  * -fforce-addr pool word agbcc gave them; wave 18 proved it by diffing the
  * normalised assembly (one differing slot, the pool symbol).
  *
@@ -24,7 +24,7 @@ struct Unk0804FE10
     /* 0x04 */ u16 unk04;
 };
 
-void sub_0804FE10(s16 a, struct Unk0804FE10 *dst)
+void FigureTileHook_BodyCrew2(s16 a, struct Unk0804FE10 *dst)
 {
     struct OamData oam;
     u16 v;
@@ -44,13 +44,14 @@ void sub_0804FE10(s16 a, struct Unk0804FE10 *dst)
             && a == gUnknown_02029A10[c].entries[e].unk18)
         {
             gUnknown_03001470[a].unk28 = d;
-            sub_0804EA54(c, e, gUnknown_08552700[d]);
+            StreamBodyPose(c, e, gUnknown_08552700[d]);
         }
         if (v == 0x28 && gUnknown_03001470[a].unk2c != d
             && a == gUnknown_02029A10[c].entries[e].unk18)
         {
             gUnknown_03001470[a].unk2c = d;
-            sub_0804EAEC(c, e, gUnknown_08552700[d]);
+            StreamCrewPose(c, e, gUnknown_08552700[d]);
         }
     }
 }
+asm(".global sub_0804FE10\n.thumb_set sub_0804FE10, FigureTileHook_BodyCrew2\n");

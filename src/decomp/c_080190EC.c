@@ -20,17 +20,17 @@
  * c_08018C54.c's `ldrh` on the same member is left undisturbed. */
 bool8 EventOp_SetCampaignFlag(s16 a)
 {
-    sub_0803CBA0((s16)gUnknown_0200C528[a].unk04->unk08, 1);
+    SetCampaignCompletionFlag((s16)gUnknown_0200C528[a].unk04->unk08, 1);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }
 asm(".global sub_080190EC\n.thumb_set sub_080190EC, EventOp_SetCampaignFlag\n");
 
-/* EventOp_SetCampaignFlag with sub_0803CBA0's second argument 0 instead of 1; see the note
+/* EventOp_SetCampaignFlag with SetCampaignCompletionFlag's second argument 0 instead of 1; see the note
  * on the `(s16)` cast there. */
 bool8 EventOp_ClearCampaignFlag(s16 a)
 {
-    sub_0803CBA0((s16)gUnknown_0200C528[a].unk04->unk08, 0);
+    SetCampaignCompletionFlag((s16)gUnknown_0200C528[a].unk04->unk08, 0);
     gUnknown_0200C528[a].unk04++;
     return TRUE;
 }

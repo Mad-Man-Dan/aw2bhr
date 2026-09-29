@@ -18,7 +18,7 @@ void sub_0802CD00(void)
 {
     PushMenu();
     CloseTopMenu();
-    sub_0802D4B0();
+    OpenOptionsMenu();
 }
 
 /* F018: `push {lr}; bl a; bl b; bl c; pop {r0}; bx r0`.
@@ -32,5 +32,5 @@ void sub_0802CD14(void)
 {
     PushMenu();
     CloseTopMenu();
-    sub_0802D504();
+    OpenIntelMenu();
 }

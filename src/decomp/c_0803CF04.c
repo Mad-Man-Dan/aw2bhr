@@ -17,7 +17,7 @@ void sub_0803CF04(u8 a, int b)
 {
     if (gPlaySt.savingEnabled == 0)
         ReadSaveSlot(a + 5, gUnknown_02000000);
-    sub_0803D2F8(b, gUnknown_02000000);
+    CopyMapRecordToGMap(b, gUnknown_02000000);
 }
 
 /* Two parameters, and the second is invisible here -- r1 is forwarded to
@@ -30,5 +30,5 @@ void sub_0803CF04(u8 a, int b)
 void sub_0803CF3C(u8 a, int b)
 {
     sub_0803CF04(a, b);
-    sub_0803D238(gUnknown_02000000);
+    PlaceMapRecordUnits(gUnknown_02000000);
 }

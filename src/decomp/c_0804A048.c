@@ -40,7 +40,7 @@ void sub_0804A048(void)
  * retyped as a bitfield container: sub_08016A14 already reads bit 0 of the
  * same byte as a flag, and the mask spelling reproduces both this write and
  * sub_0804A124's `>> 6` read exactly. */
-void sub_0804A0A0(void)
+void LanguageSelect_Loop(void)
 {
     switch (gpKeySt->pressed)
     {
@@ -61,3 +61,4 @@ void sub_0804A0A0(void)
         break;
     }
 }
+asm(".global sub_0804A0A0\n.thumb_set sub_0804A0A0, LanguageSelect_Loop\n");

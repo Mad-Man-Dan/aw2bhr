@@ -4,11 +4,11 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804C828.
- * sub_0804C828 @ 0x0804C828
+ * SubmarinePart_Loop @ 0x0804C828
  */
 
-/* MATCHED, and the first of a byte-identical pair with sub_0804CD84. Re-tints
- * the current gUnknown_03001470 slot: run sub_0804DC5C for the side/slot, fetch
+/* MATCHED, and the first of a byte-identical pair with LanderPart_Loop. Re-tints
+ * the current gUnknown_03001470 slot: run RidePartOnFigure for the side/slot, fetch
  * the slot's OBJ attributes, replace paletteNum from a table indexed by a sum
  * of two per-slot halfwords, and hand the attributes back.
  *
@@ -26,11 +26,11 @@
  * addresses expand in source order and the loads come out in the opposite one,
  * the same readout src/decomp/c_08051DE0.c documents for a two-term sum.
  *
- * sub_0804DC5C's third argument is gUnknown_03001FBC and there is no `mov r2`
+ * RidePartOnFigure's third argument is gUnknown_03001FBC and there is no `mov r2`
  * at the call: the allocator had already loaded it into r2 for the
  * gUnknown_03001470 subscript above and nothing clobbers it. Arity is invisible
  * in the caller, so this is read off the callee's prologue. */
-void sub_0804C828(void)
+void SubmarinePart_Loop(void)
 {
     struct OamData oam;
     u16 side;
@@ -41,7 +41,7 @@ void sub_0804C828(void)
     side = gUnknown_03001470[gUnknown_03001FBC].unk30;
     slot = gUnknown_03001470[gUnknown_03001FBC].unk34;
 
-    sub_0804DC5C(side, slot, gUnknown_03001FBC);
+    RidePartOnFigure(side, slot, gUnknown_03001FBC);
     sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     t = gUnknown_020298E0[side].unk26[slot] + gUnknown_020298E0[side].unk30[slot];
@@ -50,3 +50,5 @@ void sub_0804C828(void)
 
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 }
+
+asm(".global sub_0804C828\n.thumb_set sub_0804C828, SubmarinePart_Loop\n");

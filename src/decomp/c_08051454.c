@@ -20,7 +20,7 @@ struct Unk85D6A48Row /* 0x18 */
     /* 0x16 */ u8 filler_16[0x02];
 };
 
-void sub_08051454(void)
+void MissileHitEffect_Init(void)
 {
   unsigned int new_var;
   struct OamData oam;
@@ -84,5 +84,6 @@ void sub_08051454(void)
   }
   gUnknown_020298E0[gUnknown_0300453C].unk44[gUnknown_020298E0[gUnknown_0300453C].unk16 - 1] = x;
   gUnknown_020298E0[gUnknown_0300453C].unk4e[gUnknown_020298E0[gUnknown_0300453C].unk16 - 1] = y;
-  sub_08050528(gUnknown_0300453C, gUnknown_03001FBC, x, y);
+  SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
+asm(".global sub_08051454\n.thumb_set sub_08051454, MissileHitEffect_Init\n");

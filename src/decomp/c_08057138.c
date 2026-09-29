@@ -7,10 +7,11 @@
  * sub_08057138 @ 0x08057138
  */
 
-void sub_08057138(void)
+void LoadFigures(void)
 {
-    sub_080566C8(0);
-    sub_0804C0FC(0);
-    sub_0804C0FC(1);
+    LoadFigureSpriteSets(0);
+    SpawnSideFigures(0);
+    SpawnSideFigures(1);
     CpuFastSet(gUnknown_08552680, (void *)0x05000340, 0x10);
 }
+asm(".global sub_08057138\n.thumb_set sub_08057138, LoadFigures\n");

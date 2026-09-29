@@ -20,7 +20,7 @@
  * everything else in it, and leave the bare variable as the second operand.
  * The complexity ranking is then untouched and the side effect rides along in
  * the operand that is already going first. */
-void sub_08050F24(u16 a, u16 b)
+void SpawnHitEffect(u16 a, u16 b)
 {
     u16 *row;
     int c2;
@@ -40,3 +40,4 @@ void sub_08050F24(u16 a, u16 b)
         sub_08015410(gUnknown_085535B8[x], 1,
                      gUnknown_02029A00[a ^ 1][0], gUnknown_02029A00[a ^ 1][1], n);
 }
+asm(".global sub_08050F24\n.thumb_set sub_08050F24, SpawnHitEffect\n");

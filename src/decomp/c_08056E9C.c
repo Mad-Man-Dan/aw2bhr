@@ -7,7 +7,7 @@
  * sub_08056E9C @ 0x08056E9C
  */
 
-void sub_08056E9C(u16 group, u16 index)
+void StepFigureSlide(u16 group, u16 index)
 {
     struct Unk02029A10 *p =
         (struct Unk02029A10 *)(index * sizeof(struct Unk02029A10)
@@ -23,3 +23,4 @@ void sub_08056E9C(u16 group, u16 index)
         p->y += (s16)p->ySub >> 8;
     }
 }
+asm(".global sub_08056E9C\n.thumb_set sub_08056E9C, StepFigureSlide\n");

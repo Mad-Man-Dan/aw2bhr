@@ -39,31 +39,35 @@
  * sub_0802D35C's parameter width; see its comment in unknown-functions.h.
  */
 
-void sub_0802D40C(void)
+void OptionsMenu_HelpVisualA(void)
 {
     sub_0802D35C(0xC9A);
 }
+asm(".global sub_0802D40C\n.thumb_set sub_0802D40C, OptionsMenu_HelpVisualA\n");
 
-/* See sub_0802D40C: same wrapper, next id. */
+/* See OptionsMenu_HelpVisualA: same wrapper, next id. */
 
-void sub_0802D41C(void)
+void OptionsMenu_HelpVisualB(void)
 {
     sub_0802D35C(0xC9B);
 }
+asm(".global sub_0802D41C\n.thumb_set sub_0802D41C, OptionsMenu_HelpVisualB\n");
 
-/* See sub_0802D40C: same wrapper, next id. */
+/* See OptionsMenu_HelpVisualA: same wrapper, next id. */
 
-void sub_0802D42C(void)
+void OptionsMenu_HelpVisualC(void)
 {
     sub_0802D35C(0xC9C);
 }
+asm(".global sub_0802D42C\n.thumb_set sub_0802D42C, OptionsMenu_HelpVisualC\n");
 
-/* See sub_0802D40C: same wrapper, next id. */
+/* See OptionsMenu_HelpVisualA: same wrapper, next id. */
 
-void sub_0802D43C(void)
+void OptionsMenu_HelpNoVisual(void)
 {
     sub_0802D35C(0xC9D);
 }
+asm(".global sub_0802D43C\n.thumb_set sub_0802D43C, OptionsMenu_HelpNoVisual\n");
 
 /* Family F001 forwarder, 12 bytes:
  *     push {lr}

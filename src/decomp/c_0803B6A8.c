@@ -28,11 +28,12 @@ struct UnkB6A8Proc
  *
  * Interpolate is a 5-argument function, so 0x14 goes on the stack (`sub sp,#4`
  * in the prologue, `str r0,[sp]` before the `bl`), and its result is consumed
- * by sub_0803B35C rather than dropped -- the two `bl`s are a nesting here
- * because sub_0803B35C takes an int and nothing sets r0 between them. */
-void sub_0803B6A8(struct UnkB6A8Proc *proc)
+ * by SetMusicVolume rather than dropped -- the two `bl`s are a nesting here
+ * because SetMusicVolume takes an int and nothing sets r0 between them. */
+void MusicDuck_Loop(struct UnkB6A8Proc *proc)
 {
     if (proc->unk64 > 0x13)
         Proc_Break(proc);
-    sub_0803B35C(Interpolate(0, 0x100, proc->unk54, proc->unk64++, 0x14));
+    SetMusicVolume(Interpolate(0, 0x100, proc->unk54, proc->unk64++, 0x14));
 }
+asm(".global sub_0803B6A8\n.thumb_set sub_0803B6A8, MusicDuck_Loop\n");

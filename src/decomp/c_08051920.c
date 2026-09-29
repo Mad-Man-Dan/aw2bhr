@@ -17,7 +17,7 @@
  * (the `!= -1` guard and both calls, whose own parameters are `s16` and cost
  * nothing on top). sub_080153F0 returns `bool8`, hence the bare
  * `lsls #0x18; cmp #0` truth test with no `lsrs`. */
-void sub_08051920(u16 a, u16 b, s16 c)
+void EndMissileHitEffect(u16 a, u16 b, s16 c)
 {
     if (gUnknown_02029A10[a ^ 1].entries[b].unk1a == 0 && a != gUnknown_0300450C)
         gUnknown_02029664 |= 0x40;
@@ -25,3 +25,4 @@ void sub_08051920(u16 a, u16 b, s16 c)
     if (c != -1 && sub_080153F0(c))
         sub_08015328(c);
 }
+asm(".global sub_08051920\n.thumb_set sub_08051920, EndMissileHitEffect\n");

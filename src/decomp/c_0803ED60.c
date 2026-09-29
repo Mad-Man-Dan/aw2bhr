@@ -9,7 +9,7 @@
 
 /* MATCHED (wave 49, W49-C), first attempt. 372/372 bytes, relocs match.
  *
- * The proc step that consumes the gUnknown_02028360 list sub_0803ED54
+ * The proc step that consumes the gUnknown_02028360 list InventionTurn_ResetCursor
  * (src/decomp/c_0803ED54.c) installs at +0x2c: it walks records until it finds
  * one whose guards pass, emits that one's decoration and RETURNS with the cursor
  * advanced, and only reaches Proc_Goto(proc, 1) when the list runs out. The two
@@ -36,9 +36,9 @@ struct Unk3ED60Proc
     /* 2c */ struct Unk02028360 *unk2c;
 };
 
-void sub_0803ED60(struct Unk3ED60Proc *proc)
+void InventionTurn_PrepareNextFire(struct Unk3ED60Proc *proc)
 {
-    sub_0803E554();
+    ClearInventionFireList();
     while (proc->unk2c->unk02_6 != 0)
     {
         switch (proc->unk2c->unk02_6)
@@ -46,8 +46,8 @@ void sub_0803ED60(struct Unk3ED60Proc *proc)
         case 1:
             if (proc->unk2c->unk06 != 0)
                 break;
-            sub_0803E560(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
-            sub_0803E594(proc->unk2c->unk00, proc->unk2c->unk01, proc->unk2c->unk07);
+            PushInventionFireEntry(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
+            ScanUnitsOnCrossRays(proc->unk2c->unk00, proc->unk2c->unk01, proc->unk2c->unk07);
             proc->unk2c++;
             return;
         case 5:
@@ -55,15 +55,15 @@ void sub_0803ED60(struct Unk3ED60Proc *proc)
                 break;
             if (proc->unk2c->unk06 != 0)
                 break;
-            sub_0803E560(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
+            PushInventionFireEntry(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
             sub_0803E6C4(proc->unk2c->unk00, proc->unk2c->unk01, proc->unk2c->unk07);
             proc->unk2c++;
             return;
         case 2:
             if (proc->unk2c->unk06 != 0)
                 break;
-            sub_0803E560(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
-            sub_0803E764(gUnknown_0849F728[gUnknown_03004080 & 1], proc->unk2c->unk07);
+            PushInventionFireEntry(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
+            ScanUnitsOnCellList(gUnknown_0849F728[gUnknown_03004080 & 1], proc->unk2c->unk07);
             proc->unk2c++;
             return;
         case 3:
@@ -74,8 +74,8 @@ void sub_0803ED60(struct Unk3ED60Proc *proc)
                 break;
             if (proc->unk2c->unk06 != 0)
                 break;
-            sub_0803E560(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
-            sub_0803E808(proc->unk2c->unk00, proc->unk2c->unk01, proc->unk2c->unk07,
+            PushInventionFireEntry(proc->unk2c->unk00, proc->unk2c->unk01, 0, proc->unk2c->unk02_6);
+            PickBestInventionTarget(proc->unk2c->unk00, proc->unk2c->unk01, proc->unk2c->unk07,
                          proc->unk2c->unk02_6, proc->unk2c->unk02_e);
             proc->unk2c++;
             return;
@@ -84,3 +84,4 @@ void sub_0803ED60(struct Unk3ED60Proc *proc)
     }
     Proc_Goto(proc, 1);
 }
+asm(".global sub_0803ED60\n.thumb_set sub_0803ED60, InventionTurn_PrepareNextFire\n");

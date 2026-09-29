@@ -7,7 +7,7 @@
  * sub_0804E4CC @ 0x0804E4CC
  */
 
-void sub_0804E4CC(s16 a, u16 *p)
+void BattleshipPart2_StreamHook(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -26,3 +26,4 @@ void sub_0804E4CC(s16 a, u16 *p)
         sub_08011E54((u8 *)gUnknown_08552FB0[side] + (e << 11),
                      (void *)(0x06011800 + (side << 13)), 0x800);
 }
+asm(".global sub_0804E4CC\n.thumb_set sub_0804E4CC, BattleshipPart2_StreamHook\n");

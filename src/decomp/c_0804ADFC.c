@@ -7,7 +7,8 @@
  * sub_0804ADFC @ 0x0804ADFC
  */
 
-void sub_0804ADFC(void)
+void NameEntry_StartSpriteScript(void)
 {
     sub_080152EC(gUnknown_084C3D6C, 1);
 }
+asm(".global sub_0804ADFC\n.thumb_set sub_0804ADFC, NameEntry_StartSpriteScript\n");

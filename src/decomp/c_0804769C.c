@@ -24,7 +24,7 @@
  * UNSIGNED, and the loop counter is u16-narrowed.
  *
  * `struct Unk0804769C` lives in include/unknown-globals.h rather than here
- * because sub_080484CC (matched this wave) passes the same record and the two
+ * because UnitList_Loop (matched this wave) passes the same record and the two
  * promote into different translation units.
  */
 

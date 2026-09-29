@@ -32,7 +32,7 @@
  * `s16 [][8]` anyway, which is what made the row-pointer spelling above possible
  * -- the old draft no longer even compiles.
  */
-void sub_08052F3C(void)
+void BattleAnimParamMenu_ResetToDefaults(void)
 {
     int i;
     int j;
@@ -53,3 +53,4 @@ void sub_08052F3C(void)
     gUnknown_030045AC = t;
     gUnknown_03004540 = t;
 }
+asm(".global sub_08052F3C\n.thumb_set sub_08052F3C, BattleAnimParamMenu_ResetToDefaults\n");

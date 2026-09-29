@@ -10,7 +10,7 @@
 /* "Suspend the BGM": stash the currently-requested song id in gUnknown_030005C8
  * so sub_0803B640 / sub_0803B660 can restart it later, blank the requested slot
  * to the 0xFFFF sentinel, then fade the mixer out and pause it over 2 frames
- * (m4aMPlayFadeOutPause, m4aMPlayFadeOutPause). Its resume counterpart is sub_0803B804
+ * (m4aMPlayFadeOutPause, m4aMPlayFadeOutPause). Its resume counterpart is MusicResumeFade_Start
  * next door, which copies the pair back the other way and calls
  * m4aMPlayFadeInContinue (m4aMPlayFadeInContinue) instead.
  * The `ldrh`/`strh` pair between the two globals is a plain copy between two
@@ -35,23 +35,25 @@
  * because it touches a shared global plus three declarations and this wave had
  * already spent a build cycle on the same collision. */
 
-void sub_0803B7D8(void)
+void MusicPauseFade_Start(void)
 {
     gUnknown_030005C8 = gUnknown_030005CA;
     gUnknown_030005CA = 0xFFFF;
 
     m4aMPlayFadeOutPause((struct MusicPlayerInfo *)gUnknown_03005AE0, 2);
 }
+asm(".global sub_0803B7D8\n.thumb_set sub_0803B7D8, MusicPauseFade_Start\n");
 
-/* The resume half of sub_0803B7D8: copy the stashed song id back into the
+/* The resume half of MusicPauseFade_Start: copy the stashed song id back into the
  * requested slot and fade the mixer in over 2 frames (m4aMPlayFadeInContinue,
  * m4aMPlayFadeInContinue). Unlike its counterpart it does NOT blank the slot it
  * read from, which is the only structural difference between the two.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B804(void)
+void MusicResumeFade_Start(void)
 {
     gUnknown_030005CA = gUnknown_030005C8;
 
     m4aMPlayFadeInContinue((struct MusicPlayerInfo *)gUnknown_03005AE0, 2);
 }
+asm(".global sub_0803B804\n.thumb_set sub_0803B804, MusicResumeFade_Start\n");

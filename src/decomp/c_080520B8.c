@@ -7,19 +7,19 @@
  * sub_080520B8 @ 0x080520B8
  */
 
-/* MATCHED. The guarded half of the sub_08051BEC / sub_08051F4C install
+/* MATCHED. The guarded half of the DeathHandler_Tank / DeathHandler_Air install
  * sequence: publish the side and slot, then allocate the sprite ONLY if the
  * slot does not already hold one (`unk24[b] == -1`). It is the function that
  * names gUnknown_085536D4, the animation descriptor whose draw slot is the
- * matched sub_08052154 -- see the descriptor table in
+ * matched AirBlastEffect_Init -- see the descriptor table in
  * include/unknown-globals.h.
  *
- * `f` is `u16` here and `int` in sub_08051BEC / sub_08051F4C, and that is
+ * `f` is `u16` here and `int` in DeathHandler_Tank / DeathHandler_Air, and that is
  * measured, not a style choice: the ROM narrows the `* 7 + 6` product at the
  * ASSIGNMENT (`lsls #0x10; lsrs #0x10` into r7) and again to u8 at the call
  * (`lsls #0x18; lsrs #0x18`). The exemplars have only the second pair, which is
  * what an `int` local gives. Two shift pairs = a narrow local, one = `int`. */
-void sub_080520B8(u16 a, u16 b)
+void SpawnDebrisEffect(u16 a, u16 b)
 {
     u16 f;
 
@@ -37,3 +37,4 @@ void sub_080520B8(u16 a, u16 b)
         sub_080504A8(a, 0x10);
     }
 }
+asm(".global sub_080520B8\n.thumb_set sub_080520B8, SpawnDebrisEffect\n");

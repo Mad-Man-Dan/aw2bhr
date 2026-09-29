@@ -18,7 +18,7 @@
  */
 
 
-/* Both `bl`s go to the SAME function here -- `varies` gives sub_0804B3E0 at
+/* Both `bl`s go to the SAME function here -- `varies` gives StepPanelBounce at
  * both index 2 and index 4 -- so this is one routine driven over its two
  * arguments, 0 then 1, and not two unrelated calls. The family is defined by
  * shape and not by callee, which is why that had to be read off the member
@@ -27,6 +27,6 @@
 
 void sub_0804B3CC(void)
 {
-    sub_0804B3E0(0);
-    sub_0804B3E0(1);
+    StepPanelBounce(0);
+    StepPanelBounce(1);
 }

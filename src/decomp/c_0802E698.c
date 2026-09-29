@@ -29,7 +29,7 @@ void sub_0802E698(void)
  * that is the tell for a u8 return, and its body is a single `ldrb`.
  *
  * unk02/unk03 are the byte halves of the cursor position (see the note on
- * struct Unk030040D8), and they feed sub_0802E4B4's two u16 parameters with no
+ * struct Unk030040D8), and they feed MapCursor_OnPressA's two u16 parameters with no
  * conversion because a u8 already arrives zero-extended. */
 void sub_0802E6C0(void)
 {
@@ -37,7 +37,7 @@ void sub_0802E6C0(void)
     {
         sub_08035810();
         RebuildMapUnitLayers();
-        sub_0802E4B4(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
+        MapCursor_OnPressA(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
     }
     else
     {

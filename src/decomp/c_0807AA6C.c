@@ -13,5 +13,5 @@
 void sub_0807AA6C(void)
 {
     if (sub_08078E20() == 0)
-        sub_0803B524(0xCD);
+        PlayMusic(0xCD);
 }

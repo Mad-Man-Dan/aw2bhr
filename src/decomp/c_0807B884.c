@@ -30,7 +30,7 @@
  *    constant ahead of the `bl`, which the ROM does not.
  *
  * `song` is 0x198 on entry and every path that does not reassign it falls
- * through to sub_0803B524(0x198) -- that initial assignment is a real source
+ * through to PlayMusic(0x198) -- that initial assignment is a real source
  * statement placed BEFORE sub_0807898C(proc), which is where the ROM's
  * `movs r4, #0xcc; lsls r4, r4, #1` sits.
  */
@@ -95,6 +95,6 @@ void sub_0807B884(ProcPtr proc)
         break;
     }
 
-    sub_0803B524(song);
+    PlayMusic(song);
     Proc_Start(gUnknown_08616508, proc);
 }

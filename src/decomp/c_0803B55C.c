@@ -20,9 +20,10 @@ struct UnkB55CProc
 /* The argument is int, not s16: it survives the bl in a bare `adds r4, r0, #0`
  * with no PROMOTE_MODE narrowing, and an s16 parameter adds `lsl #16; lsr #16`
  * ahead of the call. The caller sub_08018FE4 feeds it an `ldrsh` result. */
-void sub_0803B55C(int a)
+void PlayMusicAfterFade(int a)
 {
     struct UnkB55CProc *proc = Proc_Start(gUnknown_0849E728, PROC_TREE_3);
 
     proc->unk64 = a;
 }
+asm(".global sub_0803B55C\n.thumb_set sub_0803B55C, PlayMusicAfterFade\n");

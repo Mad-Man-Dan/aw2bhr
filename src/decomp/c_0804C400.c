@@ -25,12 +25,12 @@
  * The two `+ 2` reads fold into the `ldrh` displacement. Each source halfword
  * is loaded twice because the `strh` into gUnknown_02029A10 can alias it -- both
  * are u16 objects in RAM -- so agbcc cannot carry the value across the store. */
-void sub_0804C400(u16 a)
+void SpawnWholeFigure(u16 a)
 {
     u32 p;
     u16 i;
 
-    sub_0804C340(a, gUnknown_08552148[a]);
+    StartWholeFigureSlot(a, gUnknown_08552148[a]);
 
     p = sub_08057D44(gUnknown_085D6A48[gUnknown_03004580[a][1]][0],
         gUnknown_03004580[a][3]);
@@ -43,3 +43,4 @@ void sub_0804C400(u16 a)
         gUnknown_02029A10[a].entries[i].unk06 = *(u16 *)(p + (a * 20 + i * 4) + 2);
     }
 }
+asm(".global sub_0804C400\n.thumb_set sub_0804C400, SpawnWholeFigure\n");

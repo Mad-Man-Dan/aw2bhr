@@ -25,8 +25,8 @@ void sub_0802EA5C(struct Unk030040C0 *a1)
     REG_SIOCNT = gUnknown_03000560 | 0x2000;
     *(vu16 *)(REG_BASE + 0x10E) = 0;
 
-    SetIRQHandler(7, (void *)sub_0802ED40);
-    SetIRQHandler(6, (void *)sub_0802ED00);
+    SetIRQHandler(7, (void *)SioHandleIrq_Serial);
+    SetIRQHandler(6, (void *)SioHandleIrq_Timer3);
     sub_0801BB10(2, 0x000100C0);
 
     gUnknown_0300055C = 0xf0;

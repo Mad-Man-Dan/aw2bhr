@@ -7,9 +7,9 @@
  * sub_08052270 @ 0x08052270, sub_08052358 @ 0x08052358
  */
 
-/* MATCHED. sub_08052358 plus a tail that fires once, on the last frame
+/* MATCHED. DebrisEffect_Loop plus a tail that fires once, on the last frame
  * (`unk28 == 8`): hand the slot's sprite id to sub_080157A4 / sub_080157F4.
- * Read sub_08052358's comment first; everything above the tail is identical.
+ * Read DebrisEffect_Loop's comment first; everything above the tail is identical.
  *
  * `e` is LOAD-BEARING and it is the whole cost of this function. Written inline
  * as `sub_080157A4(gUnknown_02029808[a].unk24[b], gUnknown_08553B10[a])` agbcc
@@ -22,7 +22,7 @@
  * `&gUnknown_08553B10[a]` are byte-identical; only the inline form differs.
  * See the wave-20 section in docs/agbcc-codegen.md. The r4/r6 swap in the head
  * that goes with it is a consequence of this one edit, not a second fact. */
-void sub_08052270(void)
+void AirBlastEffect_Loop(void)
 {
     u16 a;
     u16 b;
@@ -43,7 +43,7 @@ void sub_08052270(void)
     x = gUnknown_02029A10[a].entries[b].x + gUnknown_08552D80[3].unk02[a] + dx;
     y = gUnknown_02029A10[a].entries[b].y;
 
-    sub_08050528(a, gUnknown_03001FBC, x, y);
+    SetEffectScreenPosition(a, gUnknown_03001FBC, x, y);
 
     if (gUnknown_03001470[gUnknown_03001FBC].unk28 == 8)
     {
@@ -52,12 +52,13 @@ void sub_08052270(void)
         sub_080157F4(gUnknown_02029808[a].unk24[b], 0x180);
     }
 }
+asm(".global sub_08052270\n.thumb_set sub_08052270, AirBlastEffect_Loop\n");
 
 /* MATCHED, first draft, one attempt. The slide-in animation tick that goes with
- * the matched sub_08052154: bump the slot's frame counter, then re-place the
+ * the matched AirBlastEffect_Init: bump the slot's frame counter, then re-place the
  * sprite at an x offset proportional to it, mirrored for side 0.
  *
- * It is `sub_08052270` minus that function's tail, and both are reached only as
+ * It is `AirBlastEffect_Loop` minus that function's tail, and both are reached only as
  * slot 2 of an animation descriptor (gUnknown_085536D4 and gUnknown_085536BC),
  * which is why neither has a `bl` caller anywhere in asm/.
  *
@@ -73,7 +74,7 @@ void sub_08052270(void)
  *    to `adds rB, #0x56` (3 * 0x1c + offsetof unk02) on the base.
  *  - gUnknown_03001FBC is re-read after the `unk28++` because the word store
  *    can alias it; that costs nothing and needs no local. */
-void sub_08052358(void)
+void DebrisEffect_Loop(void)
 {
     u16 a;
     u16 b;
@@ -93,5 +94,6 @@ void sub_08052358(void)
     x = gUnknown_02029A10[a].entries[b].x + gUnknown_08552D80[3].unk02[a] + dx;
     y = gUnknown_02029A10[a].entries[b].y;
 
-    sub_08050528(a, gUnknown_03001FBC, x, y);
+    SetEffectScreenPosition(a, gUnknown_03001FBC, x, y);
 }
+asm(".global sub_08052358\n.thumb_set sub_08052358, DebrisEffect_Loop\n");

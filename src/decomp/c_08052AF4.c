@@ -7,13 +7,13 @@
  * sub_08052AF4 @ 0x08052AF4
  */
 
-/* MATCHED. Byte-for-byte the same function as sub_08052650 -- same instruction
+/* MATCHED. Byte-for-byte the same function as SplashEffect_Loop -- same instruction
  * stream, same pool words in the same order, verified by diffing the two
  * listings with the local labels stripped. One C body installed from two
  * different animation descriptors (gUnknown_085536EC and gUnknown_08553704),
- * so the two copies need distinct addresses. Read sub_08052650's comment; there
+ * so the two copies need distinct addresses. Read SplashEffect_Loop's comment; there
  * is nothing here that is not there, including the `c`/`d` refutation. */
-void sub_08052AF4(void)
+void BattleAnimExplosion_Loop(void)
 {
     u16 a;
     u16 b;
@@ -29,7 +29,7 @@ void sub_08052AF4(void)
         e = gUnknown_08553B10[a];
 
         if (gUnknown_02029A10[a].entries[b].unk1c == 1)
-            sub_08052E04(a, b, 0);
+            DeathHandler_Fall(a, b, 0);
 
         gUnknown_02028E5C[a][0] = 1;
         *gUnknown_084C3F78[a] = 0;
@@ -38,3 +38,4 @@ void sub_08052AF4(void)
         sub_080157F4(gUnknown_02029808[a].unk24[b], 0x180);
     }
 }
+asm(".global sub_08052AF4\n.thumb_set sub_08052AF4, BattleAnimExplosion_Loop\n");

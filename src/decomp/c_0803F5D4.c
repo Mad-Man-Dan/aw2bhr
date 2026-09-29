@@ -7,7 +7,8 @@
  * sub_0803F5D4 @ 0x0803F5D4
  */
 
-u8 sub_0803F5D4(struct Unk02028360 *p)
+u8 GetInventionRecordIndex(struct Unk02028360 *p)
 {
     return p - gUnknown_02028360;
 }
+asm(".global sub_0803F5D4\n.thumb_set sub_0803F5D4, GetInventionRecordIndex\n");

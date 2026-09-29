@@ -51,7 +51,7 @@ void MapMainIdle(void)
         case 10: sub_08034CB8(); break;
         case 11: sub_08034CD4(); break;
         case 12: MapState_DispatchTurnByController(); break;
-        case 13: sub_0802DC2C(); break;
+        case 13: RunMapCursorState(); break;
         case 14: AiDriverStep(); break;
         case 19: sub_08034350(); break;
         case 16: MapState_RunParkedWinLossCheck(); break;

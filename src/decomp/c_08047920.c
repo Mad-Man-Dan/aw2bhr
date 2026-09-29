@@ -50,7 +50,7 @@
  * The configured verdict is exact; the three .rodata names resolve to the
  * original address-constant words. */
 
-void sub_08047920(void *arg)
+void DrawUnitListRows(void *arg)
 {
     u16 pal[2];
     u16 i;
@@ -126,3 +126,4 @@ void sub_08047920(void *arg)
         }
     }
 }
+asm(".global sub_08047920\n.thumb_set sub_08047920, DrawUnitListRows\n");

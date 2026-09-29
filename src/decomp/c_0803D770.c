@@ -14,7 +14,8 @@
  * the `return c;` row of the two-valued table in docs/agbcc-codegen.md -- the
  * `if`/`return` spelling would materialise the zero and cost four bytes.
  */
-int sub_0803D770(void)
+int IsSaveScreenRunning(void)
 {
     return Proc_Find(gUnknown_0849F330) != 0;
 }
+asm(".global sub_0803D770\n.thumb_set sub_0803D770, IsSaveScreenRunning\n");

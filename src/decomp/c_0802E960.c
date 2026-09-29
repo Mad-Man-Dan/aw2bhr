@@ -10,7 +10,7 @@
 #include "hardware.h"
 #include "proc.h"
 
-void sub_0802E960(void)
+void OnMain_SioError(void)
 {
     sub_08012C58(gUnknown_0849D16C);
     sub_0803B37C();
@@ -40,5 +40,6 @@ void sub_0802E960(void)
     gUnknown_03001418 = 0;
 
     sub_080128D0();
-    sub_080366C4(sub_0802E940);
+    sub_080366C4(OnMain_SioErrorWait);
 }
+asm(".global sub_0802E960\n.thumb_set sub_0802E960, OnMain_SioError\n");

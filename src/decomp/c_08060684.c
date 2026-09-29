@@ -9,12 +9,12 @@
 
 void sub_08060684(void)
 {
-    sub_0802C0CC();
+    StartSubmarineDiveEffectDive();
     gUnknown_030040D8->unk01 |= 0x20;
 }
 
 void sub_080606A0(void)
 {
-    sub_0802C0D8();
+    StartSubmarineDiveEffectRise();
     gUnknown_030040D8->unk01 &= ~0x20;
 }

@@ -13,7 +13,7 @@
  * y -> r2, &gUnknown_0300454C -> r0 in the ROM against x -> r2, y -> r0 here;
  * the pool address simply lands in whichever low register the second `ldrh` did
  * not take", with statement order and types declared not in question. It is not
- * an allocation at all: sub_080536D8 takes THREE u16 arguments and the wave-34
+ * an allocation at all: RunDeathBatch takes THREE u16 arguments and the wave-34
  * draft passed two. The third argument is `y`, which is already in r2 at the
  * call, so the ROM sets only r0 and r1 and the "unexplained" assignment of y to
  * r2 and x to r3 is forced by the calling convention. Adding the argument fixes
@@ -33,7 +33,7 @@
  *   - The guard is `x + y <= 0xfe` on the SUM (`adds; cmp #0xfe; bgt`), not two
  *     separate bounds tests.
  */
-void sub_08053670(u16 a)
+void StepDeathTimelineBody(u16 a)
 {
     u16 x;
     u16 y;
@@ -50,6 +50,7 @@ void sub_08053670(u16 a)
         gUnknown_0300454C[1] = y;
 
         if (x + y <= 0xfe)
-            sub_080536D8(a, x, y);
+            RunDeathBatch(a, x, y);
     }
 }
+asm(".global sub_08053670\n.thumb_set sub_08053670, StepDeathTimelineBody\n");

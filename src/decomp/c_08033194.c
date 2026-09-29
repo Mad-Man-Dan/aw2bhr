@@ -37,7 +37,7 @@ void sub_08033194(struct Unk33194Proc *proc)
     gUnknown_030030A4.bits.win1_enable_blend = 1;
     gUnknown_030030DC.bits.win1_enable_blend = 1;
 
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 0, 0);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 0, 0);
 
     proc->unk64 = 0;
 }

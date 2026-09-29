@@ -19,7 +19,7 @@
  * `v = 0` is hoisted above the test rather than living in the else arm: the
  * else stores that same register into both halves of the row, so the zero is
  * one value used three times. */
-void sub_0804B3E0(u16 a)
+void StepPanelBounce(u16 a)
 {
     u16 v;
     u16 *row;
@@ -42,3 +42,4 @@ void sub_0804B3E0(u16 a)
         *gUnknown_084C3F78[a] = v;
     }
 }
+asm(".global sub_0804B3E0\n.thumb_set sub_0804B3E0, StepPanelBounce\n");

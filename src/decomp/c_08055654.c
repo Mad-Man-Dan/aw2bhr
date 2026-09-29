@@ -12,7 +12,7 @@
  * cross-jumping merges their tails. The final zero-cost self-assignment keeps
  * only the outer counter live past the loop; using entries[j] there instead
  * rotates the inner loop's r2/r3/r4 allocation and leaves a 19-byte residual. */
-void sub_08055654(u16 a1, u16 a2)
+void BuildShotLists(u16 a1, u16 a2)
 {
   u16 counts[2];
   u16 i;
@@ -57,3 +57,4 @@ void sub_08055654(u16 a1, u16 a2)
   sub_08055768(0, counts[0]);
   sub_08055768(1, counts[1]);
 }
+asm(".global sub_08055654\n.thumb_set sub_08055654, BuildShotLists\n");

@@ -26,7 +26,7 @@ struct Unk39ACCProc
     /* 0x30 */ u16 unk30;
 };
 
-/* The general form behind sub_08039A58: two tile blobs into VRAM at 0x06010000
+/* The general form behind CoPowerPanelNoOp: two tile blobs into VRAM at 0x06010000
  * at a caller-chosen tile index, plus one palette, resetting the frame toggle.
  *
  * Parameters 3 and 4 ARE u16 -- both are narrowed at ENTRY, before the

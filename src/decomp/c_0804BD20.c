@@ -13,8 +13,9 @@
  * later is that same zero-extension combined with the * 4 element scaling, i.e.
  * a net left shift of two on sixteen bits. Reading it as `a << 2` alone loses
  * the truncation. */
-void sub_0804BD20(u16 a, u16 b, void *dst, void *d)
+void LoadFigurePalettes(u16 a, u16 b, void *dst, void *d)
 {
     CpuFastSet(gUnknown_08555D30[b][a], dst, 0x10);
-    sub_0804BD58(gUnknown_08555D30[b][a], d);
+    BuildHitFlashPalette(gUnknown_08555D30[b][a], d);
 }
+asm(".global sub_0804BD20\n.thumb_set sub_0804BD20, LoadFigurePalettes\n");

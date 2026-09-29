@@ -8,7 +8,7 @@
  * sub_0802D4B0 @ 0x0802D4B0, sub_0802D504 @ 0x0802D504, sub_0802D558 @ 0x0802D558
  */
 
-/* Byte-identical duplicate of sub_0802D504, which names gUnknown_0849ABC0 and
+/* Byte-identical duplicate of OpenIntelMenu, which names gUnknown_0849ABC0 and
  * gUnknown_030040F0 instead. Both symbols are real objects reached directly by
  * the pool word, not `.LC` reroutes, so this pair is a genuine two-source one.
  *
@@ -16,7 +16,7 @@
  * and the `bgt` skips the assignment, so the source tests `<= 6`. The fifth
  * argument's `ldrh` off a u32 global is the implicit truncation to
  * sub_08019F2C's u16 parameter, folded into a narrower load. */
-void sub_0802D4B0(void)
+void OpenOptionsMenu(void)
 {
     u16 v;
 
@@ -29,10 +29,11 @@ void sub_0802D4B0(void)
     sub_08019F2C(gUnknown_0849AC60, v, 1, 1, gUnknown_030044A0);
     IncrementMapLock();
 }
+asm(".global sub_0802D4B0\n.thumb_set sub_0802D4B0, OpenOptionsMenu\n");
 
-/* Byte-identical duplicate of sub_0802D4B0 -- see there for the shape. Only
+/* Byte-identical duplicate of OpenOptionsMenu -- see there for the shape. Only
  * the blob and the fifth argument's global differ. */
-void sub_0802D504(void)
+void OpenIntelMenu(void)
 {
     u16 v;
 
@@ -45,8 +46,9 @@ void sub_0802D504(void)
     sub_08019F2C(gUnknown_0849ABC0, v, 1, 1, gUnknown_030040F0);
     IncrementMapLock();
 }
+asm(".global sub_0802D504\n.thumb_set sub_0802D504, OpenIntelMenu\n");
 
-/* Byte-identical duplicate of sub_0802D458 -- only the blob differs. */
+/* Byte-identical duplicate of OpenMapMenu -- only the blob differs. */
 void sub_0802D558(void)
 {
     u16 v;

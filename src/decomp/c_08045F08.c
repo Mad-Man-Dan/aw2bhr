@@ -13,13 +13,13 @@
  * returns nothing. The exemplar is src/decomp/c_080733B8.c.
  */
 
-/* The sibling of sub_0803F540 on sub_0803B524, and the same caveat: 0x19D is
+/* The sibling of sub_0803F540 on PlayMusic, and the same caveat: 0x19D is
  * a pool constant, so this call site cannot discriminate the parameter width.
  */
 
 void sub_08045F08(void)
 {
-    sub_0803B524(0x19D);
+    PlayMusic(0x19D);
 }
 
 /* Family F003 (data/families.json): 34 twelve-byte forwarders shaped
@@ -32,5 +32,5 @@ void sub_08045F08(void)
 
 void sub_08045F18(void)
 {
-    sub_0803B35C(0xC0);
+    SetMusicVolume(0xC0);
 }

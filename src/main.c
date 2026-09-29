@@ -53,7 +53,7 @@ void InitGameSystems(void)
     sub_080128D0();
     sub_0803B37C();
     sub_0803B688();
-    sub_08030ED4();
+    LinkShutdown();
     sub_08085AF4();
     sub_08080F90(0);
     sub_0801F114();

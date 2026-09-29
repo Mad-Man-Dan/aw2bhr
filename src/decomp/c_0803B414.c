@@ -12,7 +12,7 @@
  * shared arguments are materialised once and kept in r5/r4 for the whole run;
  * gUnknown_030005CC is RELOADED at each call because the callee may change it,
  * which is why only its address is hoisted. */
-void sub_0803B414(void)
+void ApplySoundMasterVolume(void)
 {
     MPlayVolumeControl(gUnknown_03005B20, 0xFFFF, gUnknown_030005CC);
     MPlayVolumeControl(gUnknown_03005C30, 0xFFFF, gUnknown_030005CC);
@@ -22,6 +22,7 @@ void sub_0803B414(void)
     MPlayVolumeControl(gUnknown_03005AA0, 0xFFFF, gUnknown_030005CC);
     MPlayVolumeControl(gUnknown_03005BF0, 0xFFFF, gUnknown_030005CC);
 }
+asm(".global sub_0803B414\n.thumb_set sub_0803B414, ApplySoundMasterVolume\n");
 
 /* Guarded on gUnknown_030005CC being both non-zero and not 0x100 -- the two
  * ends of a fade -- this pokes the sound driver and makes sure the

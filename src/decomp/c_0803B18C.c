@@ -28,7 +28,7 @@ bool8 sub_0803B18C(void)
  * gUnknown_03001FBC entry; either way the tail runs. Both tail calls are
  * unconditional and neither result is used, so they are two statements and not
  * a nesting -- sequential `bl`s carry no nesting signal (docs/agbcc-codegen.md)
- * and sub_0803ABD8 is a bare `bx lr` that reads nothing.
+ * and DebugScreenNoOp is a bare `bx lr` that reads nothing.
  * `ldrb` on the `s16` gUnknown_03001FBC is sub_08015C30's `u8` parameter
  * conversion folded into the load, exactly as in sub_0803B118 above.
  * `pop {r0}; bx r0` -> void. */
@@ -42,5 +42,5 @@ void sub_0803B198(void)
     }
 
     GetNextRandomNumber();
-    sub_0803ABD8();
+    DebugScreenNoOp();
 }

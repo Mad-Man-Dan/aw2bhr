@@ -16,6 +16,6 @@ void sub_0802D9B8(struct Unk03001470 *proc)
         proc->unk1e = proc->unk1e + 1;
 
     sub_0802D76C();
-    sub_0802D7B4(proc->unk1e);
+    DrawDeploymentList(proc->unk1e);
     sub_0803AA78(gUnknown_02023830[proc->unk20 * 4]);
 }

@@ -8,8 +8,8 @@
  */
 
 /* gUnknown_08136070 is a -fforce-addr address constant holding &gUnknown_03001FBC
- * -- the same value sub_0804D0FC's gUnknown_0813606C holds. Honest spelling. */
-void sub_0804D4E8(void)
+ * -- the same value CruiserVariant2Figure_Loop's gUnknown_0813606C holds. Honest spelling. */
+void CruiserFigure_Loop(void)
 {
     u16 c;
     u16 e;
@@ -35,9 +35,10 @@ void sub_0804D4E8(void)
     }
 
     sub_0804CA98(c, e, gUnknown_03001FBC);
-    sub_0804DC5C(c, e, gUnknown_03001FBC);
-    sub_08056E9C(c, e);
+    RidePartOnFigure(c, e, gUnknown_03001FBC);
+    StepFigureSlide(c, e);
 }
+asm(".global sub_0804D4E8\n.thumb_set sub_0804D4E8, CruiserFigure_Loop\n");
 
 /* The gUnknown_03001470 continuation shape of src/decomp/c_0804D1AC.c, with a
  * threshold on `e` selecting between two loaders and an extra 0x20 on the tile
@@ -49,7 +50,7 @@ void sub_0804D4E8(void)
  * blocks fold from reassociating the constant onto the masked `p[2]`. Without
  * it the arm is `((p[2] & 0xfc00) + 0x20) + tileNum` -- same length, wrong
  * three bytes. */
-void sub_0804D5D8(s16 a, u16 *p)
+void FigureTileHook_Cruiser(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -79,3 +80,4 @@ void sub_0804D5D8(s16 a, u16 *p)
             sub_0804D6C8(g, h, e);
     }
 }
+asm(".global sub_0804D5D8\n.thumb_set sub_0804D5D8, FigureTileHook_Cruiser\n");

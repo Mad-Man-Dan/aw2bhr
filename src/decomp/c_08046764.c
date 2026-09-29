@@ -7,7 +7,8 @@
  * sub_08046764 @ 0x08046764
  */
 
-void sub_08046764(void)
+void StartIntelStatusScreen(void)
 {
     sub_080152EC(gUnknown_084C1824, 0);
 }
+asm(".global sub_08046764\n.thumb_set sub_08046764, StartIntelStatusScreen\n");

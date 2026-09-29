@@ -16,7 +16,7 @@
  * compare; with the int local it narrows only `b`, and the comparison stays on
  * the two left-shifted parameters -- `cmp r0, r1` with neither `lsrs`, which is
  * shorten_compare on an equality test and is exactly what the ROM has. */
-u16 sub_080315E8(u16 a, u16 b, int c)
+u16 LinkScreenSetMessage(u16 a, u16 b, int c)
 {
     int r;
 
@@ -30,3 +30,4 @@ u16 sub_080315E8(u16 a, u16 b, int c)
 
     return r;
 }
+asm(".global sub_080315E8\n.thumb_set sub_080315E8, LinkScreenSetMessage\n");

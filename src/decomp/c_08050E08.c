@@ -9,7 +9,7 @@
 
 /* PARKED SIZE-EXACT at 284/284 bytes, 94.4% identical (16 bytes differ).
  * Wave 63, W63-F, improving the Wave-36 draft.
- * scratch against sub_08050D44, which is the same shape and is stuck on the
+ * scratch against PlaceThirdEffectOnFigure, which is the same shape and is stuck on the
  * same residual.
  *
  * SETTLED, do not re-derive:
@@ -57,10 +57,10 @@
  *     `ldrsh` as well. Measured: 51.8%, -28. (Retyping struct Unk08553B1CPt to
  *     u16 to keep the `ldrh` was part of that test and was reverted.)
  *   - `u16` locals with an explicit `(s16)` cast fold identically -- wave 34
- *     recorded this for sub_08050D44 and it replicates here.
+ *     recorded this for PlaceThirdEffectOnFigure and it replicates here.
  * So the operand had to change, not x; the inline int assignment is that
  * spelling. Do not spend another wave on casts around x. */
-void sub_08050E08(u16 a)
+void PlaceThirdEffectOnWholeUnit(u16 a)
 {
   struct Unk08553B1CPt (*tbl)[3][4];
   struct Unk08553B1CPt (*row)[4];
@@ -93,5 +93,6 @@ void sub_08050E08(u16 a)
     x = x + w;
     y = y + h;
   }
-  sub_08050528(a, gUnknown_03001FBC, x + (mem_x = gUnknown_02029A10[a].entries[0].x), y + (mem_y = gUnknown_02029A10[a].entries[0].y));
+  SetEffectScreenPosition(a, gUnknown_03001FBC, x + (mem_x = gUnknown_02029A10[a].entries[0].x), y + (mem_y = gUnknown_02029A10[a].entries[0].y));
 }
+asm(".global sub_08050E08\n.thumb_set sub_08050E08, PlaceThirdEffectOnWholeUnit\n");

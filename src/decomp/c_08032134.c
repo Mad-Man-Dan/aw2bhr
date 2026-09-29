@@ -25,7 +25,7 @@ void sub_08032134(ProcPtr proc)
         gUnknown_0849B018->unk1e = 0;
 
         sub_0802F23C();
-        sub_0802F03C();
+        SioResetBuffers();
         sub_0802F28C();
 
         REG_RCNT = 0x8000;

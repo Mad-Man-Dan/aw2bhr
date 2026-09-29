@@ -71,7 +71,7 @@ void BattleMaps_080489CD(void)
     u32 v;
     u16 i;
 
-    sub_0803B524(0x12e);
+    PlayMusic(0x12e);
     sub_0803C784(gUnknown_02028E1C);
 
     gUnknown_084C30F8->unk030 = 0;

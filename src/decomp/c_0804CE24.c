@@ -7,7 +7,7 @@
  * sub_0804CE24 @ 0x0804CE24
  */
 
-void sub_0804CE24(s16 a, u16 *p)
+void LanderPart_StreamHook(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -26,3 +26,4 @@ void sub_0804CE24(s16 a, u16 *p)
         sub_08011E54((u8 *)gUnknown_08552FB0[side] + e * 0x700,
                      (void *)(0x06011000 + (side << 13)), 0x700);
 }
+asm(".global sub_0804CE24\n.thumb_set sub_0804CE24, LanderPart_StreamHook\n");

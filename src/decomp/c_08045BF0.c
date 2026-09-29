@@ -18,7 +18,7 @@
  * assignment is what keeps the shift arithmetic. (The `>> 6` on
  * gUnknown_03003F38 elsewhere in the tree really is `lsrs` -- the two are not
  * the same expression.) */
-int sub_08045BF0(void)
+int MapEventCond_Army1UnitAtX7Y2(void)
 {
     int v;
 
@@ -31,3 +31,4 @@ int sub_08045BF0(void)
 
     return 0;
 }
+asm(".global sub_08045BF0\n.thumb_set sub_08045BF0, MapEventCond_Army1UnitAtX7Y2\n");

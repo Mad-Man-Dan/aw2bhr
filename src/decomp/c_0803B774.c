@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_0803B774(void)
+void StartMusicDuckRelease(void)
 {
     Proc_Start(gUnknown_0849E7A0, PROC_TREE_3);
 }
+asm(".global sub_0803B774\n.thumb_set sub_0803B774, StartMusicDuckRelease\n");

@@ -10,7 +10,7 @@
 
 /* Scores the four cardinal neighbours of (x, y) on the gMap
  * and returns the terrain code of the best-scoring in-bounds one. Byte-
- * identical twin of sub_0804B4C4, which reads the adjacent table
+ * identical twin of FindBestNeighborTerrainRoad, which reads the adjacent table
  * gUnknown_08551CBD instead of gUnknown_08551CA0.
  *
  * Two things in here are not free choices:
@@ -26,7 +26,7 @@
  * the loop is strength-reduced into the same pointer but creates its address
  * LAST, after the two loop-invariant sums.
  */
-int sub_0804B42C(int x, int y)
+int FindBestNeighborTerrainPlain(int x, int y)
 {
     struct Map *p;
     const s32 *d;
@@ -67,14 +67,15 @@ int sub_0804B42C(int x, int y)
 
     return result;
 }
+asm(".global sub_0804B42C\n.thumb_set sub_0804B42C, FindBestNeighborTerrainPlain\n");
 
-/* Byte-identical twin of sub_0804B42C -- SAME SOURCE apart from the scoring
+/* Byte-identical twin of FindBestNeighborTerrainPlain -- SAME SOURCE apart from the scoring
  * table, gUnknown_08551CBD instead of gUnknown_08551CA0. That symbol's ODD
  * address is real: the two tables are adjacent 29- and 31-byte runs that tile
  * 0x08551CA0..0x08551CDC exactly, and they differ in ROM only at element 5.
- * See sub_0804B42C for the `u8 best` and pointer-materialisation notes.
+ * See FindBestNeighborTerrainPlain for the `u8 best` and pointer-materialisation notes.
  */
-int sub_0804B4C4(int x, int y)
+int FindBestNeighborTerrainRoad(int x, int y)
 {
     struct Map *p;
     const s32 *d;
@@ -115,3 +116,4 @@ int sub_0804B4C4(int x, int y)
 
     return result;
 }
+asm(".global sub_0804B4C4\n.thumb_set sub_0804B4C4, FindBestNeighborTerrainRoad\n");

@@ -13,7 +13,7 @@
  * x, into a plane base. The plane here is +0x1432, the 5-bit terrain code
  * gUnknown_08551CA0 is keyed by, and the cursor is
  * gUnknown_030040D8->unk02 / ->unk03. */
-int sub_0804599C(void)
+int MapEventCond_SelectedUnitOnHq(void)
 {
     int off;
 
@@ -24,3 +24,4 @@ int sub_0804599C(void)
 
     return 0;
 }
+asm(".global sub_0804599C\n.thumb_set sub_0804599C, MapEventCond_SelectedUnitOnHq\n");

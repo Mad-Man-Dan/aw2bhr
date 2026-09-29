@@ -8,7 +8,7 @@
  */
 
 /* The record type moved to include/unknown-globals.h in wave 32 (W32-A) so that
- * sub_0804BCB8, which builds one on its stack, can name it too. */
+ * StartFigureEntrySlide, which builds one on its stack, can name it too. */
 
 /* Copies a motion request into gUnknown_02029A10[group].entries[slot]. The
  * 0xb4 and 0x24 strides in the address arithmetic are exactly the declared
@@ -24,7 +24,7 @@
  * what makes it live across the address computation and buys the second
  * callee-saved register the ROM pushes. `int` for the local is byte-identical.
  */
-void sub_08056E28(struct Unk56E28 *p)
+void SetFigureSlide(struct Unk56E28 *p)
 {
     u16 v;
 
@@ -35,3 +35,4 @@ void sub_08056E28(struct Unk56E28 *p)
     v = p->unk0c;
     gUnknown_02029A10[p->unk00].entries[p->unk02].frameCount = v;
 }
+asm(".global sub_08056E28\n.thumb_set sub_08056E28, SetFigureSlide\n");

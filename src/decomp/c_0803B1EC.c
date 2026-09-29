@@ -11,8 +11,9 @@
  * `.align 2, 0` behind it. Nothing about the signature is recoverable -- a leaf
  * ending in a bare `bx lr` that touches no register has no return type and no
  * argument count -- so void(void) is the weakest model, exactly as for
- * sub_0803B404 in src/decomp/c_0803B3C8.c. */
+ * SoundMainLoopNoOp in src/decomp/c_0803B3C8.c. */
 
-void sub_0803B1EC(void)
+void EmptySlotHook(void)
 {
 }
+asm(".global sub_0803B1EC\n.thumb_set sub_0803B1EC, EmptySlotHook\n");

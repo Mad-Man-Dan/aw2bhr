@@ -23,7 +23,7 @@ void sub_0802C0E4(void)
  * `cmp #2; beq / cmp #2; bgt / cmp #1; beq` tree with the literal pool sitting
  * INSIDE it is agbcc's balanced switch over three case values, not an if-chain,
  * and cases 1 and 2 share a block: case 1 falls through into case 2's
- * sub_0803B828(). Case 3 is a separate block calling the same function, so the
+ * StartMainMenu(). Case 3 is a separate block calling the same function, so the
  * source lists it separately rather than folding it into case 2.
  *
  * The parameter is never read -- the body opens by loading gPlaySt
@@ -41,11 +41,11 @@ void sub_0802C0E8(u8 a)
         sub_08016ED8();
         /* fallthrough */
     case 2:
-        sub_0803B828();
+        StartMainMenu();
         break;
 
     case 3:
-        sub_0803B828();
+        StartMainMenu();
         break;
     }
 }

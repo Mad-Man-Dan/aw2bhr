@@ -12,7 +12,7 @@
  *
  * PROMOTION REQUIRES THE WHOLE .rodata BLOB PLACED -- 105 words,
  * 0x08091154 through 0x080912F4 inclusive, contiguous. Run
- * `python tools/trymatch.py sub_0803D9FC --diff` and paste the "rodata": [...]
+ * `python tools/trymatch.py DebugArmyEditor_Loop --diff` and paste the "rodata": [...]
  * list it prints into this function's data/promoted.json entry, then re-run
  * tools/split_rodata.py and tools/gen_lds.py before building. trymatch reports
  * `relocs: name different symbols that resolve to the same address`, which is
@@ -42,7 +42,7 @@
  *  - 0x03002EE0 is `gpKeySt`, NOT an unnamed global. include/unknown-globals.h
  *    records that wave 20 invented a `gUnknown_03002EE0` for it and the SPLIT
  *    build caught it. Checked before writing, deliberately.
- *  - sub_0803D990 was already promoted (src/decomp/c_0803D990.c); its prototype
+ *  - StepClampedWithWrap was already promoted (src/decomp/c_0803D990.c); its prototype
  *    was copied from the definition, not guessed from the call sites.
  *
  * The parameter is modelled as a plain struct rather than a PROC: the two
@@ -67,7 +67,7 @@ static const char *const sCoNames[] = {
     "YAMA"
 };
 
-void sub_0803D9FC(struct Unk3D9FC *proc)
+void DebugArmyEditor_Loop(struct Unk3D9FC *proc)
 {
     int delta;
     u8 army;
@@ -143,39 +143,39 @@ void sub_0803D9FC(struct Unk3D9FC *proc)
         {
         case 0:
             gPlayers[army].aiControlled =
-                sub_0803D990(gPlayers[army].aiControlled, (s8)delta, 1, 2, 1);
+                StepClampedWithWrap(gPlayers[army].aiControlled, (s8)delta, 1, 2, 1);
             break;
 
         case 1:
             gPlayers[army].funds =
-                sub_0803D990(gPlayers[army].funds,
+                StepClampedWithWrap(gPlayers[army].funds,
                              (s8)delta * 0xC350, 0, 0xF423F, 0);
             break;
 
         case 2:
             gPlayers[army].coCharge =
-                sub_0803D990(gPlayers[army].coCharge,
+                StepClampedWithWrap(gPlayers[army].coCharge,
                              (s8)delta * 0x2710, 0, GetSuperCoPowerCost(army), 0);
             break;
 
         case 3:
             gPlayers[army].co =
-                sub_0803D990(gPlayers[army].co, (s8)delta, 0, 0x12, 1);
+                StepClampedWithWrap(gPlayers[army].co, (s8)delta, 0, 0x12, 1);
             break;
 
         case 4:
             gPlayers[army].team =
-                sub_0803D990(gPlayers[army].team, (s8)delta, 0, 3, 0);
+                StepClampedWithWrap(gPlayers[army].team, (s8)delta, 0, 3, 0);
             break;
 
         case 5:
             gPlaySt.fog =
-                sub_0803D990(gPlaySt.fog, (s8)delta, 0, 1, 1);
+                StepClampedWithWrap(gPlaySt.fog, (s8)delta, 0, 1, 1);
             break;
 
         case 6:
             gUnknown_03004080 =
-                sub_0803D990(gUnknown_03004080, (s8)delta, 0, 0x3E7, 1);
+                StepClampedWithWrap(gUnknown_03004080, (s8)delta, 0, 0x3E7, 1);
             break;
         }
     }
@@ -186,3 +186,4 @@ void sub_0803D9FC(struct Unk3D9FC *proc)
         sub_08015C30(gUnknown_03001FBC);
     }
 }
+asm(".global sub_0803D9FC\n.thumb_set sub_0803D9FC, DebugArmyEditor_Loop\n");

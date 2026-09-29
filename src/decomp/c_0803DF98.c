@@ -21,7 +21,7 @@
  * file had no oracle for it. `struct Unk02028360Pos *` is the settled model:
  * wave 29 established the struct from sub_0803DF54, where the array spelling
  * measurably differs (it recomputes `sp + 2` into a scratch instead of reading
- * `ldrh r0,[r6,#2]`), and sub_0803DFE0 already takes it. Byte-for-byte
+ * `ldrh r0,[r6,#2]`), and GetInventionTargetCell already takes it. Byte-for-byte
  * unchanged by the retype -- re-verified.
  */
 void sub_0803DF98(int a, struct Unk02028360Pos *out)

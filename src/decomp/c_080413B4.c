@@ -7,7 +7,7 @@
  * sub_080413B4 @ 0x080413B4
  */
 
-/* Byte-identical duplicate of sub_0803E560 -- same array, different index
+/* Byte-identical duplicate of PushInventionFireEntry -- same array, different index
  * counter (gUnknown_030040A8). */
 void AddAttackTarget(int a, int b, int c, int d)
 {

@@ -8,12 +8,13 @@
  */
 
 /* Two calls with the same three arguments. Sequential bls carry no nesting
- * signal, but here there cannot be any: sub_0804EA54 is void, and all three
+ * signal, but here there cannot be any: StreamBodyPose is void, and all three
  * values are reloaded from callee-saved registers before the second call. The
  * six lsls/lsrs pairs are the u16 parameters' entry narrowing, which is also
  * what forces them into r4/r5/r6 in the first place. */
-void sub_0804EA24(u16 a, u16 b, u16 c)
+void ResetFigurePose_BodyCrew(u16 a, u16 b, u16 c)
 {
-    sub_0804EA54(a, b, c);
-    sub_0804EAEC(a, b, c);
+    StreamBodyPose(a, b, c);
+    StreamCrewPose(a, b, c);
 }
+asm(".global sub_0804EA24\n.thumb_set sub_0804EA24, ResetFigurePose_BodyCrew\n");

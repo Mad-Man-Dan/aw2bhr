@@ -7,7 +7,7 @@
  * sub_0804C268 @ 0x0804C268, sub_0804C340 @ 0x0804C340
  */
 
-/* MATCHED wave 51 (W51-D). Twin of sub_0804C340 -- read that file header for
+/* MATCHED wave 51 (W51-D). Twin of StartWholeFigureSlot -- read that file header for
  * the fix, which is the same one and closed both functions in a single edit:
  * gUnknown_085D6A48 must be reached as an ARRAY_REF on the bare symbol
  * (gUnknown_085D6A48[0][j * 4]), not through a cast, so that expand_expr takes
@@ -27,7 +27,7 @@
  *   - gUnknown_08552178 is u16[][5]: the index is a*5 + b built as
  *     lsls #2; add; add and then scaled by 2.
  */
-void sub_0804C268(u16 a, u16 b)
+void StartFigureSlot(u16 a, u16 b)
 {
     u16 i;
     int j;
@@ -49,8 +49,9 @@ void sub_0804C268(u16 a, u16 b)
         q,
         (u8)n);
 }
+asm(".global sub_0804C268\n.thumb_set sub_0804C268, StartFigureSlot\n");
 
-/* MATCHED wave 51 (W51-D). Twin of sub_0804C268 -- same function, different
+/* MATCHED wave 51 (W51-D). Twin of StartFigureSlot -- same function, different
  * arguments; one substitution closed both.
  *
  * THE FIX, after sixteen waves at 97.9%: the ROM materialises the
@@ -77,7 +78,7 @@ void sub_0804C268(u16 a, u16 b)
  *   - The body reads gUnknown_0300453C and gUnknown_0300451C BACK rather than
  *     using the parameters, both before the call and again after it.
  */
-void sub_0804C340(u16 a, u16 b)
+void StartWholeFigureSlot(u16 a, u16 b)
 {
     u16 i;
     int j;
@@ -100,3 +101,4 @@ void sub_0804C340(u16 a, u16 b)
             q,
             n);
 }
+asm(".global sub_0804C340\n.thumb_set sub_0804C340, StartWholeFigureSlot\n");

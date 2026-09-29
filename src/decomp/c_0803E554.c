@@ -7,7 +7,8 @@
  * sub_0803E554 @ 0x0803E554
  */
 
-void sub_0803E554(void)
+void ClearInventionFireList(void)
 {
     gUnknown_03003F40 = 0;
 }
+asm(".global sub_0803E554\n.thumb_set sub_0803E554, ClearInventionFireList\n");

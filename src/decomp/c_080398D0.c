@@ -18,11 +18,11 @@ struct Unk398D0Proc
 /* One of six random lines for the army's terrain type. `lsls #6; adds; lsls #2`
  * is the 0x104 stride of struct CoData and `adds r4, #0x20` on the bare
  * table symbol -- kept live in r4 across the __umodsi3 call -- is the
- * member-array hoist for unk20[], the same idiom sub_08039F18 uses for unk38.
+ * member-array hoist for unk20[], the same idiom GetArmyCoPowerName uses for unk38.
  *
  * __umodsi3 rather than __modsi3 because GetNextRandomNumber returns u32. */
 
-u8 sub_080398D0(ProcPtr procPtr)
+u8 ShowRandomCoPowerQuote(ProcPtr procPtr)
 {
     struct Unk398D0Proc *proc = procPtr;
 
@@ -31,3 +31,4 @@ u8 sub_080398D0(ProcPtr procPtr)
 
     return 0;
 }
+asm(".global sub_080398D0\n.thumb_set sub_080398D0, ShowRandomCoPowerQuote\n");

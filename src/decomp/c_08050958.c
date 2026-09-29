@@ -7,11 +7,11 @@
  * sub_08050958 @ 0x08050958
  */
 
-/* MATCHED. Not a sibling of the sub_08051DE0 cluster despite sharing its
+/* MATCHED. Not a sibling of the SmokeEffect_Init cluster despite sharing its
  * callees and its globals (measured shape ratio 0.16). One tick of a unit's
  * movement: bump the slot's counter, and once it passes the record's
  * threshold, step two 8.8 fixed-point axes and re-place the sprite, then fire
- * sub_08050AEC when the moving side reaches its bound.
+ * EndProjectileEffect when the moving side reaches its bound.
  *
  * Two things had to be settled before it would fall, both recorded on the
  * types rather than here:
@@ -26,7 +26,7 @@
  *    the frame comes out 8 bytes short. Four independent assignments keep four
  *    slots, and the ROM's store order (0x10, 8, 0x14, 0xc) is what fixes the
  *    order they are written in. The pair at 0x10/0x14 drives the body; the
- *    pair at 8/0xc is only ever handed to sub_08050AEC in the non-zero arm --
+ *    pair at 8/0xc is only ever handed to EndProjectileEffect in the non-zero arm --
  *    which is also the proof they are distinct variables, because in the
  *    `c == 0` arm gcc const-folds c into `movs r0,#0` and still loads [sp,#8]
  *    in the other one.
@@ -35,7 +35,7 @@
  * transcription error -- the ROM really does `ldrh; cmp #1; bne; strh` with
  * the loaded register, which is a self-assignment cse rewrote from the
  * literal. It is kept verbatim because anything else changes the bytes. */
-void sub_08050958(void)
+void ProjectileEffect_Loop(void)
 {
     struct OamData oam;
     u16 a;
@@ -65,20 +65,21 @@ void sub_08050958(void)
         gUnknown_02029710[c].unk44[d] += gUnknown_02029710[c].unk4e[d];
         gUnknown_02029710[c].unk3a[d] += gUnknown_02029710[c].unk44[d] >> 8;
 
-        sub_08050528(c, gUnknown_03001FBC, gUnknown_0202972C[c][d],
+        SetEffectScreenPosition(c, gUnknown_03001FBC, gUnknown_0202972C[c][d],
                      gUnknown_02029710[c].unk3a[d]);
 
         if (c == 0)
         {
             if (gUnknown_0202972C[c][d] >= gUnknown_02029710[c].unk18
              || gUnknown_02029710[c].unk3a[d] >= gUnknown_02029710[c].unk1a)
-                sub_08050AEC(c, d, gUnknown_03001FBC);
+                EndProjectileEffect(c, d, gUnknown_03001FBC);
         }
         else
         {
             if (gUnknown_0202972C[c][d] <= gUnknown_02029710[c].unk18
              || gUnknown_02029710[c].unk3a[d] >= gUnknown_02029710[c].unk1a)
-                sub_08050AEC(a, b, gUnknown_03001FBC);
+                EndProjectileEffect(a, b, gUnknown_03001FBC);
         }
     }
 }
+asm(".global sub_08050958\n.thumb_set sub_08050958, ProjectileEffect_Loop\n");

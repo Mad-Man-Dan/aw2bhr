@@ -16,11 +16,12 @@
  * REG_DISPCNT is the one register here built with `movs #0x80; lsls #0x13`
  * rather than a pool word: 0x04000000 is an 8-bit constant shifted, and the
  * other two addresses are not. Nothing in the source distinguishes them. */
-void sub_0802EA24(void)
+void StartSioErrorScreen(void)
 {
     REG_DISPSTAT = 8;
     REG_IME = 1;
     REG_DISPCNT = 0;
-    sub_080366D0(sub_0802E920);
-    sub_080366C4(sub_0802E960);
+    sub_080366D0(OnVBlank_SioError);
+    sub_080366C4(OnMain_SioError);
 }
+asm(".global sub_0802EA24\n.thumb_set sub_0802EA24, StartSioErrorScreen\n");

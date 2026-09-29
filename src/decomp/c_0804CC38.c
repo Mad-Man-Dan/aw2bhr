@@ -7,11 +7,11 @@
  * sub_0804CC38 @ 0x0804CC38
  */
 
-/* Twin of sub_0804C6DC -- see the note there. The two differ in exactly one
+/* Twin of SubmarinePart_Init -- see the note there. The two differ in exactly one
  * immediate (the tile base, 0x80 here against 0x50) and one pool symbol (the
- * continuation, sub_0804CE24 against sub_0804C8C8). Nothing else in 332 bytes.
+ * continuation, LanderPart_StreamHook against SubmarinePart_StreamHook). Nothing else in 332 bytes.
  */
-void sub_0804CC38(void)
+void LanderPart_Init(void)
 {
     struct OamData oam;
     u16 pal;
@@ -32,5 +32,6 @@ void sub_0804CC38(void)
     sub_080155C0(gUnknown_03001FBC,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x,
                  gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
-    sub_08015928(gUnknown_03001FBC, (u32)sub_0804CE24);
+    sub_08015928(gUnknown_03001FBC, (u32)LanderPart_StreamHook);
 }
+asm(".global sub_0804CC38\n.thumb_set sub_0804CC38, LanderPart_Init\n");

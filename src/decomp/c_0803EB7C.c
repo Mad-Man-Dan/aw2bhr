@@ -13,7 +13,8 @@ struct Unk0803EB7C /* >= 0x4e */
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_0803EB7C(struct Unk0803EB7C *p)
+void InventionFire_ResetCursor(struct Unk0803EB7C *p)
 {
     p->unk4c = 0;
 }
+asm(".global sub_0803EB7C\n.thumb_set sub_0803EB7C, InventionFire_ResetCursor\n");

@@ -21,7 +21,7 @@ struct Unk803ECE8
  * instead (the obvious order) puts that pool `ldr` six instructions later and
  * frees r1 for the zero: size-exact, 86.1%, 15 bytes of pure register naming.
  * `rec` is CSE'd back onto the same expression, so it costs nothing. */
-void sub_0803ECE8(struct Unk803ECE8 *p)
+void InventionFire_ApplyDamage(struct Unk803ECE8 *p)
 {
     struct Unk03003338 *tbl = gUnknown_03003338;
     struct Unit *unit = &gUnits[tbl[p->unk4c].unk00];
@@ -35,3 +35,4 @@ void sub_0803ECE8(struct Unk803ECE8 *p)
     p->unk4c++;
     sub_08024268();
 }
+asm(".global sub_0803ECE8\n.thumb_set sub_0803ECE8, InventionFire_ApplyDamage\n");

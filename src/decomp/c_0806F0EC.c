@@ -84,7 +84,7 @@ void sub_0806F0EC(struct Unk6F0ECProc *proc)
         {
             Proc_Start(gUnknown_08582C5C, proc);
             proc->unk2c = gUnknown_08582764[proc->unk30].unk02;
-            sub_0803B524((s16)proc->unk2c);
+            PlayMusic((s16)proc->unk2c);
         }
     }
     else if ((held & 2) && proc->unk2c != 0)

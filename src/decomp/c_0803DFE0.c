@@ -15,7 +15,7 @@
  * ORDER matters exactly as it does in src/decomp/c_0803DF98.c: gcc emits the
  * blocks in source order and cross-joins their shared `strh [r1,#2];
  * movs r0,#1` tail, so the {1,4} arm has to come first. */
-bool8 sub_0803DFE0(struct Unk02028360 *p, struct Unk02028360Pos *out)
+bool8 GetInventionTargetCell(struct Unk02028360 *p, struct Unk02028360Pos *out)
 {
     switch (p->unk02_6) {
     case 1:
@@ -31,3 +31,4 @@ bool8 sub_0803DFE0(struct Unk02028360 *p, struct Unk02028360Pos *out)
     }
     return FALSE;
 }
+asm(".global sub_0803DFE0\n.thumb_set sub_0803DFE0, GetInventionTargetCell\n");

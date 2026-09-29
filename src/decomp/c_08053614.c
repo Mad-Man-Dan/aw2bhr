@@ -37,7 +37,7 @@
  *   - The mask is the 32-bit 0xFFFFF3FF, spelled `~0xc00`, and lands in the
  *     pool as one word.
  */
-void sub_08053614(s16 a, u16 b)
+void SetSlotSpritePriority(s16 a, u16 b)
 {
     struct UnkVec v;
     int s;
@@ -50,3 +50,4 @@ void sub_08053614(s16 a, u16 b)
         sub_08015608(a, v);
     }
 }
+asm(".global sub_08053614\n.thumb_set sub_08053614, SetSlotSpritePriority\n");

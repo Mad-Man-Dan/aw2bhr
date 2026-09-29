@@ -21,7 +21,7 @@ void sub_08005080(void)
     s16 t;
 
     a = sub_0800CB30(0, 0);
-    sub_0803CF54(gActiveMap->designSlot, gActiveMap->designName, sub_0800C9E8());
+    SaveDesignRoomSlot(gActiveMap->designSlot, gActiveMap->designName, sub_0800C9E8());
     sub_0800CB30(1, a);
     t = 7;
     switch ((s8)gActiveMap->designSlot)

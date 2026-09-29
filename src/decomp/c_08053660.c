@@ -13,10 +13,11 @@
  * zero-extends every sub-word parameter into its pseudo at entry. `int` with
  * an explicit `(u16)` cast at the call is byte-identical here and a probe
  * cannot separate the two, so the choice is made callee-side --
- * sub_08053670 takes the u16 unit index the rest of that family takes,
+ * StepDeathTimelineBody takes the u16 unit index the rest of that family takes,
  * and a wrapper that exists only to forward it takes the same thing.
  */
-void sub_08053660(u16 a)
+void StepDeathTimeline(u16 a)
 {
-    sub_08053670(a);
+    StepDeathTimelineBody(a);
 }
+asm(".global sub_08053660\n.thumb_set sub_08053660, StepDeathTimeline\n");

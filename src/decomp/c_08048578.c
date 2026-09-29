@@ -21,7 +21,7 @@ struct Unk48578Proc
     /* 28 */ u16 unk28;
 };
 
-void sub_08048578(struct Unk48578Proc *proc)
+void UnitList_ScrollToSelectedUnit(struct Unk48578Proc *proc)
 {
     struct Unit *u;
 
@@ -31,3 +31,4 @@ void sub_08048578(struct Unk48578Proc *proc)
         ScrollCameraToKeepCellInView(u->x, u->y);
     }
 }
+asm(".global sub_08048578\n.thumb_set sub_08048578, UnitList_ScrollToSelectedUnit\n");

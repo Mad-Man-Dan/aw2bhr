@@ -7,7 +7,8 @@
  * sub_08047078 @ 0x08047078
  */
 
-void sub_08047078(void)
+void TerrainInfoWindow_DrawSprites(void)
 {
     sub_08046A84(gUnknown_02028DD5, gUnknown_02028DD6);
 }
+asm(".global sub_08047078\n.thumb_set sub_08047078, TerrainInfoWindow_DrawSprites\n");

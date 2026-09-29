@@ -17,9 +17,10 @@ struct UnkB6E8Proc
     /* 54 */ int unk54;
 };
 
-void sub_0803B6E8(int a)
+void StartMusicDuck(int a)
 {
     struct UnkB6E8Proc *proc = Proc_Start(gUnknown_0849E778, PROC_TREE_3);
 
     proc->unk54 = a;
 }
+asm(".global sub_0803B6E8\n.thumb_set sub_0803B6E8, StartMusicDuck\n");

@@ -16,10 +16,11 @@
  * the callee returned, so nothing about the callee is visible from
  * here. Everything below was read off the callee's own body instead.
  *
- * Byte-identical twin of sub_08045ED4, 0xe8 bytes below it: same callee,
+ * Byte-identical twin of MapEventFx_EndScreenShake, 0xe8 bytes below it: same callee,
  * same shape. Two distinct source functions is all the ROM proves.
  */
-void sub_08045FBC(void)
+void MapEventFx_EndScreenShake2(void)
 {
     EndScreenShake();
 }
+asm(".global sub_08045FBC\n.thumb_set sub_08045FBC, MapEventFx_EndScreenShake2\n");

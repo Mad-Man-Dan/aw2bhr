@@ -4,13 +4,13 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08047094.
- * sub_08047094 @ 0x08047094
+ * TerrainInfoWindow_OnEnd @ 0x08047094
  */
 
 /* MATCHED. Byte-for-byte the same function as sub_0803A460 -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
-void sub_08047094(void)
+void TerrainInfoWindow_OnEnd(void)
 {
     s16 i;
 
@@ -22,3 +22,5 @@ void sub_08047094(void)
     RedrawUnitLayer();
     RedrawUnitIconLayer();
 }
+
+asm(".global sub_08047094\n.thumb_set sub_08047094, TerrainInfoWindow_OnEnd\n");

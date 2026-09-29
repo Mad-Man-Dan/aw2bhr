@@ -86,7 +86,7 @@ asm(".global sub_0803678C\n.thumb_set sub_0803678C, UpdateFuelAmmoGraphics\n");
 
 void DefaultVBlankCallback(void)
 {
-    sub_0803B3F8();
+    RunSoundVSync();
     sub_0802FACC();
     Proc_Run(gProcTreeRootArray[0]);
     sub_08011B98();
@@ -107,7 +107,7 @@ void DefaultVBlankCallback(void)
     }
     sub_0801F0FC();
     gGameClock++;
-    sub_0803B408();
+    RunSoundMain();
 }
 asm(".global sub_08036884\n.thumb_set sub_08036884, DefaultVBlankCallback\n");
 
@@ -127,7 +127,7 @@ void DefaultMainLoopCallback(void)
         Proc_Run(gProcTreeRootArray[4]);
         sub_0801F06C();
         sub_0801F084();
-        sub_0803B404();
+        SoundMainLoopNoOp();
         gUnknown_03004094 = 1;
     }
 }
@@ -136,7 +136,7 @@ asm(".global sub_080368E8\n.thumb_set sub_080368E8, DefaultMainLoopCallback\n");
 void MapVBlankCallback(void)
 {
     gUnknown_030044D0 = 1;
-    sub_0803B3F8();
+    RunSoundVSync();
     sub_0802FACC();
     Proc_Run(gProcTreeRootArray[0]);
     sub_08011B98();
@@ -157,7 +157,7 @@ void MapVBlankCallback(void)
     }
     sub_0801F0FC();
     gGameClock++;
-    sub_0803B408();
+    RunSoundMain();
     gUnknown_030044D0 = 0;
 }
 asm(".global sub_08036944\n.thumb_set sub_08036944, MapVBlankCallback\n");
@@ -187,7 +187,7 @@ void MapMainLoopCallback(void)
         sub_0803F990();
         sub_0801F06C();
         sub_0801F084();
-        sub_0803B404();
+        SoundMainLoopNoOp();
         gUnknown_03004094 = 1;
     }
 }
@@ -195,7 +195,7 @@ asm(".global sub_080369BC\n.thumb_set sub_080369BC, MapMainLoopCallback\n");
 
 void sub_08036A50(void)
 {
-    sub_0803B3F8();
+    RunSoundVSync();
     sub_0802FACC();
     Proc_Run(gProcTreeRootArray[0]);
     sub_08011B98();
@@ -217,7 +217,7 @@ void sub_08036A50(void)
     }
     sub_0801F0FC();
     gGameClock++;
-    sub_0803B408();
+    RunSoundMain();
 }
 
 void sub_08036AB8(void)
@@ -235,7 +235,7 @@ void sub_08036AB8(void)
         Proc_Run(gProcTreeRootArray[4]);
         sub_0801F06C();
         sub_0801F084();
-        sub_0803B404();
+        SoundMainLoopNoOp();
         gUnknown_03004094 = 1;
     }
 }

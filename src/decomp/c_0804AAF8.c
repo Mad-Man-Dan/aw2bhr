@@ -17,7 +17,7 @@
  * The case-5 mask must be bound to a local: `unk66 &= 1;` followed by
  * `if (unk66 != 0)` re-`ldr`s the pointer global and re-`ldrb`s the field,
  * because the store through the pointer kills its own MEM. */
-void sub_0804AAF8(void)
+void NameEntry_Loop(void)
 {
     u8 v;
 
@@ -53,6 +53,7 @@ void sub_0804AAF8(void)
     else
     {
         if (!sub_08019260())
-            sub_0804A760();
+            NameEntry_HandleInput();
     }
 }
+asm(".global sub_0804AAF8\n.thumb_set sub_0804AAF8, NameEntry_Loop\n");

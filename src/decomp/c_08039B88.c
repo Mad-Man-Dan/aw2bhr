@@ -15,10 +15,11 @@
  * as `Proc_Find(a) != 0 || Proc_Find(b) != 0` swaps the two blocks, because
  * do_jump rewrites an `== 0` comparison by exchanging its labels. */
 
-int sub_08039B88(void)
+int IsSparkleEffectActive(void)
 {
     if (Proc_Find(gUnknown_0849D84C) == 0 && Proc_Find(gUnknown_0849D874) == 0)
         return 0;
 
     return 1;
 }
+asm(".global sub_08039B88\n.thumb_set sub_08039B88, IsSparkleEffectActive\n");

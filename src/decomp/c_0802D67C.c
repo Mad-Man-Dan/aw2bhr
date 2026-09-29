@@ -7,7 +7,7 @@
  * sub_0802D67C @ 0x0802D67C
  */
 
-void sub_0802D67C(u8 mask)
+void BuildDeploymentList(u8 mask)
 {
     u8 i;
     u8 n;
@@ -47,3 +47,4 @@ void sub_0802D67C(u8 mask)
     gUnknown_0300055A = n;
     gUnknown_02023830[n * 4] = 0;
 }
+asm(".global sub_0802D67C\n.thumb_set sub_0802D67C, BuildDeploymentList\n");

@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_0802F03C -- reset the link-cable communication state.
+ * SioResetBuffers -- reset the link-cable communication state.
  *
  * Clears the counters and flags in the link record (gUnknown_0849B018), sets
  * the per-player tables in gUnknown_0849B01C to 0xFFFF, zeroes the 4- and
@@ -23,7 +23,7 @@
  * and the empty do/while keep the buffer pointer and the descending counter
  * as separate values.
  */
-void sub_0802F03C(void)
+void SioResetBuffers(void)
 {
     struct Unk08090CD8Entry *new_var;
     struct Unk08090CD8Entry *e;
@@ -93,3 +93,4 @@ void sub_0802F03C(void)
             gUnknown_02025C18[i][j] = 0;
     }
 }
+asm(".global sub_0802F03C\n.thumb_set sub_0802F03C, SioResetBuffers\n");

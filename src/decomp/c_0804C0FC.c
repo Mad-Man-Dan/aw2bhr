@@ -7,13 +7,13 @@
  * sub_0804C0FC @ 0x0804C0FC
  */
 
-void sub_0804C0FC(u16 side)
+void SpawnSideFigures(u16 side)
 {
     u16 i;
     u16 *row0;
     u16 *row;
 
-    sub_0804BD20(gUnknown_03004500[side], gUnknown_03004580[side][1],
+    LoadFigurePalettes(gUnknown_03004500[side], gUnknown_03004580[side][1],
         gUnknown_08551CFC[side][0], gUnknown_08551CFC[side][1]);
     sub_0804FF44(side);
 
@@ -23,9 +23,9 @@ void sub_0804C0FC(u16 side)
         for (i = 0; i < 5; i++)
         {
             if (gUnknown_02029A10[side].entries[i].unk00 != 0)
-                sub_0804C268(side, i);
+                StartFigureSlot(side, i);
         }
-        sub_0804C098(side);
+        CopyFigureSheetToVram(side);
     }
 
     row = gUnknown_085D6A48[gUnknown_03004580[side][1]];
@@ -34,19 +34,20 @@ void sub_0804C0FC(u16 side)
         if (row[0] == 6)
             sub_0804C488(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x13)
-            sub_0804C400(side);
+            SpawnWholeFigure(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x10)
             sub_0804C498(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x14)
             sub_0804DB14(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x15)
-            sub_0804CEF8(side);
+            SpawnCruiserFigure(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x16)
-            sub_0804C99C(side);
+            SpawnLanderFigure(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x17)
             sub_0804C4A8(side);
         if (gUnknown_085D6A48[gUnknown_03004580[side][1]][0] == 0x11)
             sub_0804C578(side);
-        sub_0804C098(side);
+        CopyFigureSheetToVram(side);
     }
 }
+asm(".global sub_0804C0FC\n.thumb_set sub_0804C0FC, SpawnSideFigures\n");

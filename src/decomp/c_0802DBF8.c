@@ -15,7 +15,7 @@
  * through a word view, hence the 0x000F000F pool word.
  */
 
-bool8 sub_0802DBF8(void)
+bool8 IsMapCursorSettled(void)
 {
     if ((gMap->unk10 & 0xF) == 0
      && (*(u32 *)&gUnknown_030033E0 & 0x000F000F) == 0)
@@ -23,3 +23,4 @@ bool8 sub_0802DBF8(void)
 
     return FALSE;
 }
+asm(".global sub_0802DBF8\n.thumb_set sub_0802DBF8, IsMapCursorSettled\n");

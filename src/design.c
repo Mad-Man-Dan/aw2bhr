@@ -877,14 +877,14 @@ void DesignRoomDrawUnitName(int a1, int a2, int a3, int a4, int a5, int a6) {
   if (a6 != 0) {
     if (a1 == 0) {
       if (k != 0x19)
-        src = (void *)sub_0802A838(k);
+        src = (void *)GetUnitNameGraphic(k);
       else
         src = gUnknown_08489190[t];
 
       sub_08011E54(src, (void *)0x06014BC0, 0x100);
     } else {
       if (k != 0x19)
-        src = (void *)sub_0802A838(k);
+        src = (void *)GetUnitNameGraphic(k);
       else
         src = gUnknown_08489190[t];
 

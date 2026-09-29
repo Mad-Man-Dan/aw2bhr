@@ -11,7 +11,7 @@
  * Needs "rodata": ["0x08091378", "0x0809137C"] in data/promoted.json.
  *
  * Filters the 19-entry CO display order at gUnknown_084A077C down to the
- * unlocked ones (sub_0803CAB8), packs them into gUnknown_020288A0, writes the
+ * unlocked ones (IsCoUnlocked), packs them into gUnknown_020288A0, writes the
  * 0xff terminator and returns the count.
  *
  * Both globals are reached through the file's `-fforce-addr` .rodata block at
@@ -33,7 +33,7 @@ u8 BuildUnlockedCoList(void)
     n = 0;
     for (i = 0; i < 19; i++)
     {
-        if ((u8)sub_0803CAB8(gUnknown_084A077C[i]))
+        if ((u8)IsCoUnlocked(gUnknown_084A077C[i]))
             gUnknown_020288A0[n++] = gUnknown_084A077C[i];
     }
     gUnknown_020288A0[n] = 0xff;

@@ -7,7 +7,8 @@
  * sub_0804B14C @ 0x0804B14C
  */
 
-void sub_0804B14C(void)
+void FreeNameEntry(void)
 {
     sub_08014ED4(gUnknown_030044E0);
 }
+asm(".global sub_0804B14C\n.thumb_set sub_0804B14C, FreeNameEntry\n");

@@ -29,7 +29,7 @@
  * Nothing in the body is hoisted because `Div` clobbers memory, which is why the
  * bound is recomputed every iteration while the two address constants sit in
  * callee-saved registers. */
-bool8 sub_080459E4(void)
+bool8 MapEventCond_CurrentArmyHasInjuredUnit(void)
 {
     struct Unit *unit;
     int i;
@@ -54,8 +54,9 @@ bool8 sub_080459E4(void)
 
     return FALSE;
 }
+asm(".global sub_080459E4\n.thumb_set sub_080459E4, MapEventCond_CurrentArmyHasInjuredUnit\n");
 
-/* The two-counter sibling of sub_080459E4: over the current army's 0x32 slots it
+/* The two-counter sibling of MapEventCond_CurrentArmyHasInjuredUnit: over the current army's 0x32 slots it
  * counts the units of type 0x13 (n) and, among those, the ones at zero HP or
  * with a displayed HP `Div(hp - 1, 10) + 1` of 9 or less (m), returning TRUE
  * only when there are more than one of the former and at least one of the
@@ -63,11 +64,11 @@ bool8 sub_080459E4(void)
  *
  * gUnknown_0812A0F8 is NOT a global: the ROM word at 0x0812A0F8 contains
  * 0x03003F2C, so it is agbcc's own -fforce-addr .rodata copy of
- * &gUnknown_03003F2C -- the same word sub_080459E4 gets at 0x0812A0F4.  Two
+ * &gUnknown_03003F2C -- the same word MapEventCond_CurrentArmyHasInjuredUnit gets at 0x0812A0F4.  Two
  * private copies of one address, exactly as the literal-pool chapter predicts.
  * The honest spelling names gUnknown_03003F2C and lets the build place it.
  *
- * The element must be bound to a local for the same reason as sub_080459E4:
+ * The element must be bound to a local for the same reason as MapEventCond_CurrentArmyHasInjuredUnit:
  * inline, &gUnits is rematerialised from the inline pool inside the
  * loop and the address adds come out `index + pointer`; bound, the constant wins
  * the third callee-saved register (sb) and the adds come out `pointer + index`.

@@ -30,7 +30,7 @@
  *
  * The last if/else is written `<= 6` and not `> 6`: which arm FALLS THROUGH is
  * the discriminator, and the ROM falls through to the 0x80 store. */
-void sub_080470F8(u16 a1)
+void ShowTerrainInfoWindow(u16 a1)
 {
     gUnknown_02028DD6 = a1 & 0x1f;
     gUnknown_02028DD7 = sub_08024984(a1);
@@ -64,3 +64,4 @@ void sub_080470F8(u16 a1)
     else
         gUnknown_02028DD5 = 0;
 }
+asm(".global sub_080470F8\n.thumb_set sub_080470F8, ShowTerrainInfoWindow\n");

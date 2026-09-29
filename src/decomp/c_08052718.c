@@ -28,7 +28,7 @@
  * byte-identical to it, and using it for all six reads is worse (it sinks
  * +0x24 into a tail pool word). Everything else is as earlier waves recorded:
  * `a ^ 1`, `e` a local, 0x100 as movs/lsls, the control-flow merge being why
- * this twin has the .rodata word and sub_08052BBC does not. */
+ * this twin has the .rodata word and DeathHandler_Bomb does not. */
 void sub_08052718(u16 a, u16 b)
 {
     u16 e;

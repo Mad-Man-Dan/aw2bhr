@@ -7,20 +7,22 @@
  * sub_0802C0CC @ 0x0802C0CC, sub_0802C0D8 @ 0x0802C0D8
  */
 
-/* A selector wrapper: sub_0802BFD0 takes an `int` (bare `adds r6, r0, #0`
+/* A selector wrapper: StartSubmarineDiveEffect takes an `int` (bare `adds r6, r0, #0`
  * across four calls) and this pins it to 0. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C0CC(void)
+void StartSubmarineDiveEffectDive(void)
 {
-    sub_0802BFD0(0);
+    StartSubmarineDiveEffect(0);
 }
+asm(".global sub_0802C0CC\n.thumb_set sub_0802C0CC, StartSubmarineDiveEffectDive\n");
 
-/* A selector wrapper: sub_0802BFD0 takes an `int` (bare `adds r6, r0, #0`
+/* A selector wrapper: StartSubmarineDiveEffect takes an `int` (bare `adds r6, r0, #0`
  * across four calls) and this pins it to 1. `pop {r0}; bx r0`, so void.
  */
 
-void sub_0802C0D8(void)
+void StartSubmarineDiveEffectRise(void)
 {
-    sub_0802BFD0(1);
+    StartSubmarineDiveEffect(1);
 }
+asm(".global sub_0802C0D8\n.thumb_set sub_0802C0D8, StartSubmarineDiveEffectRise\n");

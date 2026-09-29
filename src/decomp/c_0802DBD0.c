@@ -17,11 +17,12 @@ void sub_0802DBD0(void)
     DecrementMapLock();
 }
 
-/* The same one-line forwarder as the sub_0802D40C group: 0xC9E is >255 so
+/* The same one-line forwarder as the OptionsMenu_HelpVisualA group: 0xC9E is >255 so
  * agbcc has no `movs #imm8` for it and the pool word is forced by the VALUE
  * alone -- no symbol and no type is involved. `pop {r0}`, so void. */
 
-void sub_0802DBE4(void)
+void ShowUnitLimitMessage(void)
 {
     sub_08019818(0xC9E, 0, 0);
 }
+asm(".global sub_0802DBE4\n.thumb_set sub_0802DBE4, ShowUnitLimitMessage\n");

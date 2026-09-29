@@ -66,7 +66,7 @@ void sub_08039674(struct Unk39674Proc *proc)
     gUnknown_03002020 = 0;
     gUnknown_03002B28 = 0x10;
 
-    sub_0803B524(0xd0);
+    PlayMusic(0xd0);
 }
 
 void sub_080396F4(struct Unk396F4Proc *proc)
@@ -81,7 +81,7 @@ void sub_080396F4(struct Unk396F4Proc *proc)
     if (gUnknown_03002020 == 8)
     {
         Proc_Break(proc);
-        sub_08039544(sub_08039F18(proc->unk54));
+        StartCoPowerNameBanner(GetArmyCoPowerName(proc->unk54));
         Proc_BreakEach(gUnknown_0849D6D4);
     }
 }

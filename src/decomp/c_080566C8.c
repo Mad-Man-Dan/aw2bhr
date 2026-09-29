@@ -7,7 +7,7 @@
  * sub_080566C8 @ 0x080566C8
  */
 
-/* sub_080566C8 -- MATCHED, wave 60 (W60-H).  The per-side setup pass: it copies
+/* LoadFigureSpriteSets -- MATCHED, wave 60 (W60-H).  The per-side setup pass: it copies
  * five columns of gUnknown_03004580 into eight two-element stack arrays, picks
  * a per-side variant out of gUnknown_08552118 both ways round, installs the
  * unit record sub_08057D58 returns (or the gUnknown_085D64A8 fallback) into
@@ -55,7 +55,7 @@ struct Unk085D6EC8Obj
     /* 0x00 */ struct Unk085D6EC8Row unk00[1];
 };
 /* The record sub_08057D58 returns, and the one gUnknown_085D64A8 holds a table
- * of.  Only sub_080566C8 dereferences it, so the tag lives here.  unk00's
+ * of.  Only LoadFigureSpriteSets dereferences it, so the tag lives here.  unk00's
  * 8-byte stride and unk18's 12-byte one are both measured off the ROM's index
  * chains; the extents are the distance between the two members and 1. */
 struct Unk080566C8Rec /* 0x0c */
@@ -74,7 +74,7 @@ struct Unk080566C8Unit
     /* 0x18 */ struct Unk080566C8Rec unk18[1];
 };
 
-void sub_080566C8(int a1)
+void LoadFigureSpriteSets(int a1)
 {
     u16 a[2];
     u16 b[2];
@@ -162,3 +162,4 @@ void sub_080566C8(int a1)
     sub_08056D8C(0, d[0], b[0]);
     sub_08056D8C(1, d[1], b[1]);
 }
+asm(".global sub_080566C8\n.thumb_set sub_080566C8, LoadFigureSpriteSets\n");

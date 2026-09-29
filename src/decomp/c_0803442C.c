@@ -59,7 +59,7 @@ void UnpackPathNibbles(u8 *src, u8 *dst)
 }
 asm(".global sub_0803442C\n.thumb_set sub_0803442C, UnpackPathNibbles\n");
 
-/* A once-per-entry snapshot into the sub_080308B4 command block: the two
+/* A once-per-entry snapshot into the LinkQueueCommand command block: the two
  * u16 cursor pairs are truncated into bytes 2..5 and the six-byte nibble-packed
  * copy PackPathNibbles does lands at +0x0c. gUnknown_030040DC is the guard and the
  * done-flag both. */
@@ -89,5 +89,5 @@ void sub_080344B4(u8 a, int b, int c)
     gUnknown_030044B0[6] = b;
     gUnknown_030044B0[7] = c;
     gUnknown_030044B0[0x12] = unit->fuel;
-    sub_080308B4(gUnknown_030044B0);
+    LinkQueueCommand(gUnknown_030044B0);
 }

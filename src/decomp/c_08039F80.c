@@ -38,7 +38,7 @@
  * order here is longest-live-range-first, and the first allocated gets r3
  * (ARM REG_ALLOC_ORDER is 3, 2, 1, 0).
  */
-void sub_08039F80(void)
+void UnitInfoPanel_DrawAmmoAndRange(void)
 {
     struct Unit *q;
     int k;
@@ -69,3 +69,4 @@ void sub_08039F80(void)
         }
     }
 }
+asm(".global sub_08039F80\n.thumb_set sub_08039F80, UnitInfoPanel_DrawAmmoAndRange\n");

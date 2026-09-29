@@ -8,15 +8,15 @@
  */
 
 /* MATCHED -- wave 80 (W80-B), byte-exact, relocs match. Same lever as
- * sub_08052718 / sub_08052BBC: a dead `k = b * 2;` after
+ * sub_08052718 / DeathHandler_Bomb: a dead `k = b * 2;` after
  * `gUnknown_0300451C = b;` with the plain subscript kept everywhere. This is
  * what the wave-73 note's "comma at a different depth" was reaching for,
  * except it is not a comma at all: the reference is created by a statement
  * that generates the pseudo and nothing else, and cse connects it to the
  * store's index after the call, where get_inner_reference has put b * 2
  * first in the offset sum so the sum ties to it. The third parameter is
- * byte-neutral (wave 51) and kept for the sub_080536D8 table evidence. */
-void sub_080523E8(u16 a, u16 b, int c)
+ * byte-neutral (wave 51) and kept for the RunDeathBatch table evidence. */
+void DeathHandler_Splash(u16 a, u16 b, int c)
 {
     u16 t;
     int k;
@@ -46,3 +46,4 @@ void sub_080523E8(u16 a, u16 b, int c)
 
     sub_08052818(a, b);
 }
+asm(".global sub_080523E8\n.thumb_set sub_080523E8, DeathHandler_Splash\n");

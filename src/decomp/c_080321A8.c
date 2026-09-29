@@ -11,7 +11,7 @@
 #include "hardware.h"
 
 /* A wait-for-both: this proc blocks until NEITHER script has a live instance.
- * Its 0x08039xxx twin is sub_08039B88, which returns the same predicate
+ * Its 0x08039xxx twin is IsSparkleEffectActive, which returns the same predicate
  * instead of acting on it. */
 
 void sub_080321A8(ProcPtr proc)
@@ -41,7 +41,7 @@ void sub_080321D4(ProcPtr proc)
 
 void sub_080321F0(ProcPtr proc)
 {
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 4, 2);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 4, 2);
     gUnknown_0849B060->unk02 = 1;
 
     if (gUnknown_0849B018->unk0a[gUnknown_0849B018->unk06] != 2)

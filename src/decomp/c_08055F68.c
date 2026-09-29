@@ -17,7 +17,7 @@ struct Unk85D6A48Row /* 0x18 */
     /* 0x0a */ u8 filler_0a[0x0e];
 };
 
-u16 sub_08055F68(u16 a)
+u16 GetDeathEffectKind(u16 a)
 {
     struct Unk85D6A48Row *tbl;
     struct Unk85D6A48Row *t2;
@@ -40,3 +40,4 @@ u16 sub_08055F68(u16 a)
     return add + (t3 = (struct Unk85D6A48Row *)gUnknown_085D6A48,
                   t3)[gUnknown_03004580[a ^ 1][1]].unk08;
 }
+asm(".global sub_08055F68\n.thumb_set sub_08055F68, GetDeathEffectKind\n");

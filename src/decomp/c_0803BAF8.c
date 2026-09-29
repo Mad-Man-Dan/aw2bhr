@@ -16,7 +16,8 @@
  * 0x0803BBA4 all sit in the proc-callback runs. The argument count is a floor
  * of zero and nothing raises it. */
 
-bool8 sub_0803BAF8(void)
+bool8 MainMenu_UsabilityAlways(void)
 {
     return TRUE;
 }
+asm(".global sub_0803BAF8\n.thumb_set sub_0803BAF8, MainMenu_UsabilityAlways\n");

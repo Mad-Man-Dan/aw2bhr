@@ -22,7 +22,7 @@
  *    * 0x30 + (u32)tbl), which is what turns the subscript spelling's
  *    `add r1, r6, r1` into the ROM's `add r1, r1, r6`. Same principle as the
  *    E7A8 entry byte-offset sum: the ROM adds the base last. */
-void sub_08050D44(u16 a, u16 b)
+void PlaceThirdEffectOnFigure(u16 a, u16 b)
 {
     struct Unk08553B1CPt (*tbl)[3][4];
     struct Unk08553B1CPt (*row)[4];
@@ -48,7 +48,8 @@ void sub_08050D44(u16 a, u16 b)
     if (a != 0)
         x = -x;
 
-    sub_08050528(a, gUnknown_03001FBC,
+    SetEffectScreenPosition(a, gUnknown_03001FBC,
                  x + (mem_x = gUnknown_02029A10[a].entries[b].x),
                  y + (mem_y = gUnknown_02029A10[a].entries[b].y));
 }
+asm(".global sub_08050D44\n.thumb_set sub_08050D44, PlaceThirdEffectOnFigure\n");

@@ -10,7 +10,7 @@
 
 #include "hardware.h"
 
-void sub_0802DCB4(void)
+void MapCursorIdle(void)
 {
     struct Unit *unit;
 
@@ -19,18 +19,18 @@ void sub_0802DCB4(void)
     HandleMoveCameraWithMapCursor(4);
     sub_08023274(0);
 
-    if (sub_0802DBF8())
+    if (IsMapCursorSettled())
     {
         if (gpKeySt->pressed & 8)
         {
-            sub_0802E250();
+            MapCursor_OnPressStart();
             return;
         }
 
         if (gpKeySt->pressed & 4)
         {
             sub_0801B780(0);
-            sub_0802D458();
+            OpenMapMenu();
             return;
         }
 
@@ -49,7 +49,7 @@ void sub_0802DCB4(void)
             }
 
             sub_0801B780(0);
-            sub_080470F8(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
+            ShowTerrainInfoWindow(sub_0803EED4(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02));
             return;
         }
 
@@ -72,14 +72,14 @@ void sub_0802DCB4(void)
 
         if (gpKeySt->pressed & 1)
         {
-            sub_0802E4B4(((struct Unk802C57CS *)&gUnknown_030033E4)->unk00,
+            MapCursor_OnPressA(((struct Unk802C57CS *)&gUnknown_030033E4)->unk00,
                          ((struct Unk802C57CS *)&gUnknown_030033E4)->unk02);
             return;
         }
 
         if (gpKeySt->pressed & 2)
         {
-            if (sub_0802E2D0(((struct Unk802C57CS *)&gUnknown_030033E4)->unk00,
+            if (MapCursor_OnPressB(((struct Unk802C57CS *)&gUnknown_030033E4)->unk00,
                              ((struct Unk802C57CS *)&gUnknown_030033E4)->unk02))
                 return;
         }
@@ -88,3 +88,4 @@ void sub_0802DCB4(void)
     RefreshMapCursorInfoPanel();
     sub_0802776C(0);
 }
+asm(".global sub_0802DCB4\n.thumb_set sub_0802DCB4, MapCursorIdle\n");

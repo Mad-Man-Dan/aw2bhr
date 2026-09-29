@@ -10,7 +10,7 @@
 #include "proc.h"
 /* Polls the link queue and, when a packet arrives, unpacks four bytes of it
  * into the proc and breaks the proc. The `!= -1` test re-narrows
- * sub_080309AC's `s16` return with `lsls #0x10; asrs #0x10`, which is that
+ * LinkReceiveCommand's `s16` return with `lsls #0x10; asrs #0x10`, which is that
  * declared width and not a cast here.
  *
  * The halfword goes through an `int` TEMPORARY, and that is load-bearing:
@@ -34,7 +34,7 @@ struct Unk33678Proc
  *
  * Every store here is preceded by a dead load of the address being stored to.
  * That is the volatile + HImode-aggregate-member signature this tree has
- * already recorded for struct Unk0849B01C, and sub_0802F03C -- still asm --
+ * already recorded for struct Unk0849B01C, and SioResetBuffers -- still asm --
  * shows the identical pattern at these same six offsets, so the qualifier is
  * a property of the object and not of this function.
  *
@@ -50,14 +50,14 @@ void sub_08033638(void)
     p->unk22 = p->unk20 = 0;
     p->unk24[0] = p->unk24[1] = p->unk24[2] = p->unk24[3] = 0;
 
-    sub_0802F03C();
+    SioResetBuffers();
 }
 
 void sub_08033678(struct Unk33678Proc *proc)
 {
     int v;
 
-    if (sub_080309AC((void *)gUnknown_03004400, 0) != -1)
+    if (LinkReceiveCommand((void *)gUnknown_03004400, 0) != -1)
     {
         proc->unk28 = gUnknown_03004400[0];
         v = (gUnknown_03004400[1] << 8) | gUnknown_03004400[2];

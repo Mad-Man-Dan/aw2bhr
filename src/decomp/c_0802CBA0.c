@@ -8,7 +8,7 @@
  */
 
 /* The cursor-position predicate the whole 0x0802CB-0x0802CD cluster is built
- * on. CanShowSubMenuItem, sub_0802CCCC, sub_0802CBC8 and sub_0802CC04 all call it.
+ * on. CanShowSubMenuItem, UnitMenu_RiseUsability, sub_0802CBC8 and sub_0802CC04 all call it.
  *
  * `movs r2,#0; ldrsh r0,[r1,r2]` and `movs r2,#2; ldrsh r1,[r1,r2]` is the
  * s16-OBJECT tell, and it is why union Unk802C57CBuf gained a signed view: the
@@ -22,15 +22,16 @@
  * sits after the pool, so this is the sub_0802C5F0 spelling.
  */
 
-bool8 sub_0802CBA0(void)
+bool8 UnitMenu_LoadUsability(void)
 {
     if (IsBoardableTransportAt(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) == TRUE)
         return FALSE;
 
     return TRUE;
 }
+asm(".global sub_0802CBA0\n.thumb_set sub_0802CBA0, UnitMenu_LoadUsability\n");
 
-/* sub_0802CBA0 gated in front of a second cursor test, in sub_0802CCCC's
+/* UnitMenu_LoadUsability gated in front of a second cursor test, in UnitMenu_RiseUsability's
  * negated-disjunction spelling (see that function for why the `&&` form does
  * not match).
  *
@@ -42,7 +43,7 @@ bool8 sub_0802CBA0(void)
 
 bool8 sub_0802CBC8(void)
 {
-    if (!sub_0802CBA0()
+    if (!UnitMenu_LoadUsability()
         || sub_080421D0(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
         return TRUE;
 
@@ -57,7 +58,7 @@ bool8 sub_0802CBC8(void)
 
 bool8 sub_0802CC04(void)
 {
-    if (!sub_0802CBA0()
+    if (!UnitMenu_LoadUsability()
         || sub_0804223C(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
         return TRUE;
 

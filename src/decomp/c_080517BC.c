@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080517BC.
- * sub_080517BC @ 0x080517BC
+ * MissileHitEffect_Loop @ 0x080517BC
  */
 
 /* PARKED SIZE-EXACT at 356/356 bytes, 21.6% identical, first difference at
@@ -34,7 +34,7 @@
  *     `unk58 += unk62; g02029924 += (s16)unk58 >> 8` and
  *     `unk6c += unk76; unk4e += (s16)unk6c >> 8`, the `>> 8` spelled
  *     `lsls #0x10; asrs #0x18`.
- *   - sub_08051920 had a promoted definition (src/decomp/c_08051920.c) and no
+ *   - EndMissileHitEffect had a promoted definition (src/decomp/c_08051920.c) and no
  *     declaration anywhere; its signature is now in unknown-functions.h.
  *
  * THE REMAINING DIFFERENCE, from the +0xa diff:
@@ -70,7 +70,7 @@
  *      work/sub_080506B0 records, and the one in src/decomp/c_080505A4.c.
  *      91.9% -> 96.6%.
  *   3. Bind `gUnknown_03001470[gUnknown_03001FBC].unk28` to a local before the
- *      sub_08050528 call.  That materialises gUnknown_03001470's address ahead
+ *      SetEffectScreenPosition call.  That materialises gUnknown_03001470's address ahead
  *      of the gUnknown_03001FBC read, which is the ROM's `ldr r2,[pc,#76]`
  *      position.  A comma anchor in the same place does NOT do it (94.4%) --
  *      it has to be a plain local binding.  96.6% -> MATCH.
@@ -94,7 +94,7 @@ struct Unk85D6A48Row /* 0x18 */
     /* 0x06 */ u8 filler_06[0x12];
 };
 
-void sub_080517BC(void)
+void MissileHitEffect_Loop(void)
 {
   struct Unk85D6A48Row *tbl;
   u16 side;
@@ -113,7 +113,7 @@ void sub_080517BC(void)
     {
       gUnknown_020298E0[side].unk26[gUnknown_08552148[side]] = 1;
     }
-    sub_08051920(side, slot, gUnknown_03001FBC);
+    EndMissileHitEffect(side, slot, gUnknown_03001FBC);
   }
   gUnknown_020298E0[side].unk80[slot]++;
   gUnknown_020298E0[side].unk58[slot] += gUnknown_020298E0[side].unk62[slot];
@@ -121,6 +121,8 @@ void sub_080517BC(void)
   gUnknown_020298E0[side].unk6c[slot] += gUnknown_020298E0[side].unk76[slot];
   gUnknown_020298E0[side].unk4e[slot] += ((s16) gUnknown_020298E0[side].unk6c[slot]) >> 8;
   new_var = gUnknown_03001470[gUnknown_03001FBC].unk28;
-  sub_08050528(side, gUnknown_03001FBC, (*(&gUnknown_02029924[side][slot])) + new_var, gUnknown_020298E0[side].unk4e[slot]);
+  SetEffectScreenPosition(side, gUnknown_03001FBC, (*(&gUnknown_02029924[side][slot])) + new_var, gUnknown_020298E0[side].unk4e[slot]);
   sub_080513FC(side, slot, gUnknown_03001FBC);
 }
+
+asm(".global sub_080517BC\n.thumb_set sub_080517BC, MissileHitEffect_Loop\n");

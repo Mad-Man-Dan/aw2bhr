@@ -54,12 +54,12 @@ void sub_0803EBA4(struct Unk3EBA4Proc *proc)
                      (int)gUnknown_0849F728[gUnknown_03004080 & 1], proc);
         break;
     case 3:
-        q = sub_0803DE94(p[proc->unk4c].unk04, p[proc->unk4c].unk06);
+        q = FindInventionAt(p[proc->unk4c].unk04, p[proc->unk4c].unk06);
         sub_0803F0A4(p[proc->unk4c].unk04, p[proc->unk4c].unk06, u->x, u->y,
                      3, q->unk02_e, proc);
         break;
     case 4:
-        q = sub_0803DE94(p[proc->unk4c].unk04, p[proc->unk4c].unk06);
+        q = FindInventionAt(p[proc->unk4c].unk04, p[proc->unk4c].unk06);
         sub_0803F0A4(p[proc->unk4c].unk04, p[proc->unk4c].unk06, u->x, u->y,
                      4, q->unk02_e, proc);
         break;

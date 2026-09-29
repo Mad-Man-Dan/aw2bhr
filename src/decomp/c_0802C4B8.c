@@ -22,17 +22,19 @@
  * and sub_0802B4D4 hand it straight to Proc_Find, and it is the 0x20-byte slot
  * immediately after gUnknown_0849A00C, which is already declared that way. */
 
-void sub_0802C4B8(ProcPtr parent)
+void StartTargetPickList(ProcPtr parent)
 {
     BuildAttackTargetList();
     Proc_StartBlocking(gUnknown_0849A02C, parent);
 }
+asm(".global sub_0802C4B8\n.thumb_set sub_0802C4B8, StartTargetPickList\n");
 
-/* Family F075, second member -- see sub_0802C4B8. Same teardown call, the next
+/* Family F075, second member -- see StartTargetPickList. Same teardown call, the next
  * proc script along. */
 
-void sub_0802C4D4(ProcPtr parent)
+void StartTargetPickCursor(ProcPtr parent)
 {
     BuildAttackTargetList();
     Proc_StartBlocking(gUnknown_0849A04C, parent);
 }
+asm(".global sub_0802C4D4\n.thumb_set sub_0802C4D4, StartTargetPickCursor\n");

@@ -18,7 +18,7 @@
  * register-offset form, so the sign extension is at this use. y needs no cast --
  * the subtraction lands in an `s16` parameter, which is where its
  * `lsls #0x10; asrs #0x10` comes from. */
-void sub_0804DC5C(u16 a, u16 b, int c)
+void RidePartOnFigure(u16 a, u16 b, int c)
 {
     u16 v;
 
@@ -27,3 +27,4 @@ void sub_0804DC5C(u16 a, u16 b, int c)
     sub_080155C0(c, (s16)gUnknown_02029A10[a].entries[b].x,
                  gUnknown_02029A10[a].entries[b].y - v);
 }
+asm(".global sub_0804DC5C\n.thumb_set sub_0804DC5C, RidePartOnFigure\n");

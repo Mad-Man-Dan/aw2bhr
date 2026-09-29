@@ -13,6 +13,6 @@ void sub_08021598(void)
     InitPlayersFromSettings();
     AdvanceToNextActiveArmy();
     CalcRandomWeatherChances();
-    sub_0803E3D8();
-    sub_080455CC();
+    SpawnInventionRecords();
+    InitPipeSeamHpPlane();
 }

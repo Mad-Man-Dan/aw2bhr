@@ -9,7 +9,7 @@
 
 /* Re-entry into the map/menu view: reset one piece of state, repaint the
  * 7x0xf..0x17 window of *gBG0TilemapBuffer, flush, then stop the script that
- * sub_08014878 started and re-run the blob sub_080485DC parked in unk850.
+ * sub_08014878 started and re-run the blob ShopScreen_StartMessage parked in unk850.
  *
  * Every result is discarded and the epilogue is `pop {r0}; bx r0`, the void
  * spelling. unk850's type comes from EndEventScript's `const u8 *`, the same

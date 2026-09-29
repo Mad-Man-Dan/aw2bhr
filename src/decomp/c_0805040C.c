@@ -11,9 +11,10 @@
  * own prologue narrowing -- agbcc's PROMOTE_MODE re-narrows each sub-word
  * parameter at entry, and the arguments then need no setup at all.
  *
- * sub_08050424's third parameter is int, so the third lsls/lsrs pair belongs
+ * StreamWholePose's third parameter is int, so the third lsls/lsrs pair belongs
  * to this function's own u16 c, not to the call. */
-void sub_0805040C(u16 a, u16 b, u16 c)
+void ResetFigurePose_Whole(u16 a, u16 b, u16 c)
 {
-    sub_08050424(a, b, c);
+    StreamWholePose(a, b, c);
 }
+asm(".global sub_0805040C\n.thumb_set sub_0805040C, ResetFigurePose_Whole\n");

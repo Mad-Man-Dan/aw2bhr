@@ -7,9 +7,10 @@
  * sub_0803D3D8 @ 0x0803D3D8
  */
 
-void sub_0803D3D8(int a, u8 *b)
+void ApplyMapRecord(int a, u8 *b)
 {
-    sub_0803D2F8(a, b);
-    sub_0803D238(b);
-    sub_0803D3F0();
+    CopyMapRecordToGMap(a, b);
+    PlaceMapRecordUnits(b);
+    RebuildTerrainFromTiles();
 }
+asm(".global sub_0803D3D8\n.thumb_set sub_0803D3D8, ApplyMapRecord\n");

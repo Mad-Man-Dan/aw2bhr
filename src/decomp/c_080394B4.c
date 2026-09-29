@@ -10,7 +10,7 @@
 /* The text proc's per-frame script step. The proc is sub_080152EC's slot seen
  * through this subsystem's own view: the halfwords struct Unk03001470 types as
  * unk1e/unk20/unk22/unk24 are the tick counter, the script cursor and the pen,
- * and everything from +0x26 on is the byte script sub_08039544 copied in. That
+ * and everything from +0x26 on is the byte script StartCoPowerNameBanner copied in. That
  * is the same reinterpretation of +0x26 c_08039544.c uses and NOT a claim that
  * Unk03001470's `u16 unk26` is wrong. */
 struct Unk394B4Proc
@@ -137,9 +137,9 @@ void sub_080394B4(struct Unk394B4Proc *proc)
  * The parameter is real. unknown-functions.h declared this `void (void)`
  * because the caller "sets up no argument register at all"; r0 is read before
  * being written here, and the call site is
- * `sub_08039544(sub_08039F18(proc->unk54))` -- two sequential `bl`s carrying a
+ * `StartCoPowerNameBanner(GetArmyCoPowerName(proc->unk54))` -- two sequential `bl`s carrying a
  * nested call, which needs no instruction between them. */
-void sub_08039544(u8 *str)
+void StartCoPowerNameBanner(u8 *str)
 {
     struct Unk39544Slot *proc;
     u8 i;
@@ -151,3 +151,4 @@ void sub_08039544(u8 *str)
 
     proc->unk26[i] = 0;
 }
+asm(".global sub_08039544\n.thumb_set sub_08039544, StartCoPowerNameBanner\n");

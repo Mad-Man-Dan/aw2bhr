@@ -21,5 +21,5 @@
  */
 void sub_0803B9AC(void)
 {
-    sub_08049BD8();
+    StartShopScreen();
 }

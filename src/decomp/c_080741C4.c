@@ -18,7 +18,7 @@
  *
  * Wave 53 (W53-A) RETYPES this from `void sub_080741C4(void)`. The body reads
  * no argument register, so nullary was the honest body-side reading, but the
- * caller-side evidence is decisive the other way: sub_0804A260 sets r0, r1 and
+ * caller-side evidence is decisive the other way: NameEntry_Init sets r0, r1 and
  * r2 to 0 with three separate `movs #0` immediately before the `bl`. An
  * argument already in the right register costs nothing, but a literal 0 never
  * does, so there are three parameters and this body ignores all three. The

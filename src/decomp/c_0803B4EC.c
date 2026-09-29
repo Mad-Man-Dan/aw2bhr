@@ -10,10 +10,10 @@
 #include "proc.h"
 
 /* "Play song id, unless sound is suppressed": when gPlaySt.unk0c is
- * set the id goes to sub_0803B524 and actually starts; otherwise it is only
+ * set the id goes to PlayMusic and actually starts; otherwise it is only
  * PARKED in gUnknown_030005C8 with the requested slot gUnknown_030005CA blanked
  * to 0xFFFF, which is precisely the state sub_0803B640 next door later drains
- * by replaying gUnknown_030005C8 through sub_0803B524.
+ * by replaying gUnknown_030005C8 through PlayMusic.
  *
  * The `u16` is a LOCAL and the parameter is `int`. Both readings -- `int a`
  * with `u16 v = a`, and a bare `u16` parameter -- are byte-identical here and
@@ -22,17 +22,17 @@
  * are still assembly, but the (s16) cast below is only reachable with a
  * non-`u16` parameter -- with `u16` the cast would fold away and the ROM's
  * `lsls #0x10; asrs #0x10` in front of the `bl` would be a zero-extending
- * `lsrs` instead. The cast is needed because sub_0803B524 is declared `int`
+ * `lsrs` instead. The cast is needed because PlayMusic is declared `int`
  * (include/unknown-functions.h), so nothing narrows the argument for us.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B4EC(int a)
+void PlayMusicIfEnabled(int a)
 {
     u16 v = a;
 
     if (gPlaySt.bgmOn != 0)
     {
-        sub_0803B524((s16)v);
+        PlayMusic((s16)v);
     }
     else
     {
@@ -40,6 +40,7 @@ void sub_0803B4EC(int a)
         gUnknown_030005CA = 0xFFFF;
     }
 }
+asm(".global sub_0803B4EC\n.thumb_set sub_0803B4EC, PlayMusicIfEnabled\n");
 
 /* "Start song id, unless it is already the one playing": compare against the
  * requested slot, and on a change tear down the ProcScr_FadeSound proc, hand
@@ -47,7 +48,7 @@ void sub_0803B4EC(int a)
  * 0xFFFF the neighbours write is just a value that never equals a real id.
  *
  * THE DEFINITION IS OLD-STYLE ON PURPOSE AND THE `s16` IS NOT A PROTOTYPE
- * CHANGE. include/unknown-functions.h still declares `void sub_0803B524(int);`
+ * CHANGE. include/unknown-functions.h still declares `void PlayMusic(int);`
  * and every caller still sees `int`; C89 6.7.1 makes an old-style definition
  * compatible with a prototype when the declared parameter type promotes to the
  * prototype's, which `s16` -> `int` does, so this compiles clean under -Werror
@@ -78,7 +79,7 @@ void sub_0803B4EC(int a)
  * here they disagree in opposite directions and BOTH readings were right about
  * their own side. */
 
-void sub_0803B524(a)
+void PlayMusic(a)
     s16 a;
 {
     if (gUnknown_030005CA != a)
@@ -90,3 +91,4 @@ void sub_0803B524(a)
         gUnknown_030005CA = a;
     }
 }
+asm(".global sub_0803B524\n.thumb_set sub_0803B524, PlayMusic\n");

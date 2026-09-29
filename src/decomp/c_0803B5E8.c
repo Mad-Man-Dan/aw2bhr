@@ -17,5 +17,5 @@
 
 void sub_0803B5E8(void)
 {
-    sub_0803B5A4(2);
+    FadeOutMusic(2);
 }

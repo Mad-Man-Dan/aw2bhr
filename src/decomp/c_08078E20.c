@@ -63,10 +63,10 @@ void sub_08078E48(ProcPtr proc)
 
 void sub_08078E94(ProcPtr parent)
 {
-    sub_0803B3D4(9);
+    SetSoundMixerChannelCount(9);
 
     if (sub_08078E20())
-        sub_0803B524(0x1a2);
+        PlayMusic(0x1a2);
     else
         Proc_Start(gUnknown_08615D70, parent);
 }

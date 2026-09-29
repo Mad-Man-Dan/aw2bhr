@@ -12,13 +12,14 @@
 /* Two statements, no arguments to the second. sub_0802C2B4's own prologue
  * reads no argument register, so r0 still holding 0x76 at the second bl is a
  * leftover, not a hidden parameter. */
-void sub_0802E250(void)
+void MapCursor_OnPressStart(void)
 {
     sub_0803B4DC(0x76);
     sub_0802C2B4();
 }
+asm(".global sub_0802E250\n.thumb_set sub_0802E250, MapCursor_OnPressStart\n");
 
-/* A four-call teardown. sub_0802DBF8 returns u8 and the result is discarded
+/* A four-call teardown. IsMapCursorSettled returns u8 and the result is discarded
  * here -- sub_0802E278 next door is this function with 8 instead of 4 and the
  * result actually tested, which is what fixes the return type. */
 void sub_0802E260(void)
@@ -26,7 +27,7 @@ void sub_0802E260(void)
     HandleMoveMapCursor();
     sub_08023518();
     HandleMoveCameraWithMapCursor(4);
-    sub_0802DBF8();
+    IsMapCursorSettled();
 }
 
 /* sub_0802E260 with 8 for 4 and a guarded tail, and NOT a variant of it -- the
@@ -46,7 +47,7 @@ void sub_0802E278(void)
     sub_08023518();
     HandleMoveCameraWithMapCursor(8);
 
-    if (sub_0802DBF8())
+    if (IsMapCursorSettled())
     {
         k = gpKeySt->held & 2;
 

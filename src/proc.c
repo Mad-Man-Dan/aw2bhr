@@ -815,7 +815,7 @@ bool8 ProcCmd_29_0801CF90(ProcPtr proc)
 {
     struct Proc * p = ((struct Proc *)proc);
 
-    sub_0803B5A4(p->proc_scrUnk->dataImm);
+    FadeOutMusic(p->proc_scrUnk->dataImm);
     p->proc_scrUnk++;
 
     return TRUE;
@@ -954,7 +954,7 @@ bool8 ProcCmd_1B_0801D0AC(ProcPtr proc)
 {
     struct Proc * p = ((struct Proc *)proc);
 
-    sub_0803B524(p->proc_scrUnk->dataImm);
+    PlayMusic(p->proc_scrUnk->dataImm);
     p->proc_scrUnk++;
 
     return TRUE;

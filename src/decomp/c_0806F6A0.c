@@ -41,7 +41,7 @@ struct Unk6F6C4Proc
  * unk58 is int: it is compared against -1 with a full-word cmp after
  * movs r0,#1; rsbs r0,r0,#0. The lsls #0x10; asrs #0x10 before the call is
  * therefore an explicit (s16) cast at the use, not the field's width --
- * sub_0803B524 takes int. */
+ * PlayMusic takes int. */
 struct Unk6F6D8Proc
 {
     /* 00 */ PROC_HEADER;
@@ -74,7 +74,7 @@ void sub_0806F6D8(struct Unk6F6D8Proc *proc)
     if (proc->unk64 > 0x2F)
     {
         if (proc->unk58 != -1)
-            sub_0803B524((s16)proc->unk58);
+            PlayMusic((s16)proc->unk58);
 
         Proc_Break(proc);
     }

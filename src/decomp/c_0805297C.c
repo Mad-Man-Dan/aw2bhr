@@ -7,7 +7,7 @@
  * sub_0805297C @ 0x0805297C
  */
 
-/* MATCHED. Sibling of sub_08051DE0 (shape ratio 0.937); see the comment on
+/* MATCHED. Sibling of SmokeEffect_Init (shape ratio 0.937); see the comment on
  * that function for the three non-obvious spellings, all of which carry over
  * unchanged. This one differs in exactly two source statements:
  *   - an extra `gUnknown_03001470[proc].unk28 = 0;` ahead of the unk30 store;
@@ -20,7 +20,7 @@
  * adds r1,#0x34` there -- is a liveness consequence of the extra store and
  * needs nothing in the source: with a third use of the gUnknown_03001470 base
  * still ahead of it, gcc copies rather than clobbers. */
-void sub_0805297C(void)
+void BattleAnimExplosion_Init(void)
 {
     struct OamData oam;
     int tile;
@@ -46,5 +46,6 @@ void sub_0805297C(void)
         + gUnknown_085D7E28[gUnknown_03004580[gUnknown_0300453C][1]][gUnknown_0300451C].unk04;
 
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_08050528(gUnknown_0300453C, gUnknown_03001FBC, x, y);
+    SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
+asm(".global sub_0805297C\n.thumb_set sub_0805297C, BattleAnimExplosion_Init\n");

@@ -29,7 +29,7 @@
  * 0x6c record, already fully described in include/unknown-globals.h.
  */
 
-void sub_080564B8(u16 a1, u16 a2, u16 a3)
+void SetDeathBatchSizes(u16 a1, u16 a2, u16 a3)
 {
   u16 new_var;
   u16 i;
@@ -52,3 +52,4 @@ void sub_080564B8(u16 a1, u16 a2, u16 a3)
 
   }
 }
+asm(".global sub_080564B8\n.thumb_set sub_080564B8, SetDeathBatchSizes\n");

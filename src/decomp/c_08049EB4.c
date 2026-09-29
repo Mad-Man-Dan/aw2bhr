@@ -11,7 +11,7 @@
  * gUnknown_084C3244 in r4 across them, which is what pays for the `push {r4}`.
  * A single call plus a loop would have emitted a counter; this is four separate
  * statements. */
-void sub_08049EB4(void)
+void DefeatFlow_OnEnd(void)
 {
     sub_0801537C(gUnknown_084C325C);
     sub_0801537C(gUnknown_084C3244);
@@ -19,3 +19,4 @@ void sub_08049EB4(void)
     sub_0801537C(gUnknown_084C3244);
     sub_0801537C(gUnknown_084C3244);
 }
+asm(".global sub_08049EB4\n.thumb_set sub_08049EB4, DefeatFlow_OnEnd\n");

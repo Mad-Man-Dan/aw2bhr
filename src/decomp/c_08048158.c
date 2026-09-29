@@ -17,7 +17,7 @@ struct Unk08047B98
     /* 0x22 */ u8 unk22;
 };
 
-void sub_08048158(struct Unk08047B98 *p)
+void UnitList_DrawSprites(struct Unk08047B98 *p)
 {
     int i;
 
@@ -58,3 +58,4 @@ void sub_08048158(struct Unk08047B98 *p)
                     (u16)((0x10 - DivRem(Div(0x40 - DivRem(gGameClock, 0x40), 4), 0x10)) * 2 + 0x2a0),
                     DivRem(Div(0x40 - DivRem(gGameClock, 0x40), 4), 0x10) * 2);
 }
+asm(".global sub_08048158\n.thumb_set sub_08048158, UnitList_DrawSprites\n");

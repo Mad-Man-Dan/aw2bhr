@@ -30,7 +30,7 @@ struct Unk3E0D0
  * have, and keeping a second local for the cursor costs an extra copy at the
  * top. sub_08040200 discards the result.
  */
-struct Unk3E0D0 *sub_0803E0D0(struct Unk3E0D0 *p)
+struct Unk3E0D0 *RemoveInventionRecord(struct Unk3E0D0 *p)
 {
     while (p->unk02 & 0x3c0)
     {
@@ -38,3 +38,4 @@ struct Unk3E0D0 *sub_0803E0D0(struct Unk3E0D0 *p)
         p++;
     }
 }
+asm(".global sub_0803E0D0\n.thumb_set sub_0803E0D0, RemoveInventionRecord\n");

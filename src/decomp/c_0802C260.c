@@ -37,12 +37,13 @@ void sub_0802C270(void)
  * hence `const u8 []` and a clean pool word.
  */
 
-void sub_0802C280(void)
+void StartSaveConfirmScript(void)
 {
     StartEventScript(gUnknown_0849A8F0);
 }
+asm(".global sub_0802C280\n.thumb_set sub_0802C280, StartSaveConfirmScript\n");
 
-/* The removal half of the pair: sub_0802C280 installs gUnknown_0849A8F0 through
+/* The removal half of the pair: StartSaveConfirmScript installs gUnknown_0849A8F0 through
  * StartEventScript and this drops it through EndEventScript. EndEventScript returns -1
  * unconditionally and `pop {r0}; bx r0` discards it, so this is void.
  */

@@ -7,7 +7,8 @@
  * sub_0802F4F4 @ 0x0802F4F4
  */
 
-s8 sub_0802F4F4(void)
+s8 SioGetSelfId(void)
 {
     return gUnknown_0849B018->unk06;
 }
+asm(".global sub_0802F4F4\n.thumb_set sub_0802F4F4, SioGetSelfId\n");

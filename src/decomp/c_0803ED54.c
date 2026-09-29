@@ -13,7 +13,8 @@ struct Unk803ED54
     /* 0x2c */ struct Unk02028360 *unk2c;
 };
 
-void sub_0803ED54(struct Unk803ED54 *p)
+void InventionTurn_ResetCursor(struct Unk803ED54 *p)
 {
     p->unk2c = gUnknown_02028360;
 }
+asm(".global sub_0803ED54\n.thumb_set sub_0803ED54, InventionTurn_ResetCursor\n");

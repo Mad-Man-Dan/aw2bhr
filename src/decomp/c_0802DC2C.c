@@ -7,20 +7,20 @@
  * sub_0802DC2C @ 0x0802DC2C
  */
 
-void sub_0802DC2C(void)
+void RunMapCursorState(void)
 {
     switch (gUnknown_03003334)
     {
     case 0:
-        sub_0802DCB4();
+        MapCursorIdle();
         break;
 
     case 1:
-        sub_0802DE1C();
+        MapCursorState_ChooseDestination();
         break;
 
     case 2:
-        sub_0802DEFC();
+        MapCursorState_DeleteUnit();
         break;
 
     case 3:
@@ -48,3 +48,4 @@ void sub_0802DC2C(void)
         break;
     }
 }
+asm(".global sub_0802DC2C\n.thumb_set sub_0802DC2C, RunMapCursorState\n");

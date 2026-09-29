@@ -4,12 +4,12 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0805521C.
- * sub_0805521C @ 0x0805521C, sub_08055288 @ 0x08055288, sub_0805530C @ 0x0805530C, sub_08055374 @ 0x08055374
+ * LoadThirdEffectArt @ 0x0805521C, LoadProjectileArt @ 0x08055288, sub_0805530C @ 0x0805530C, sub_08055374 @ 0x08055374
  */
 
 #include "hardware.h"
 
-u16 sub_0805521C(u16 a, u16 b, u16 c, u16 tile)
+u16 LoadThirdEffectArt(u16 a, u16 b, u16 c, u16 tile)
 {
     struct Unk020296B0 *p;
     u16 len;
@@ -31,7 +31,7 @@ u16 sub_0805521C(u16 a, u16 b, u16 c, u16 tile)
     return tile;
 }
 
-u16 sub_08055288(u16 a, u16 b, u16 c, u16 d, u16 tile)
+u16 LoadProjectileArt(u16 a, u16 b, u16 c, u16 d, u16 tile)
 {
     u16 *row;
     u16 len;
@@ -90,3 +90,6 @@ u16 sub_08055374(u16 a, u16 tile)
     tile += len >> 5;
     return tile;
 }
+
+asm(".global sub_08055288\n.thumb_set sub_08055288, LoadProjectileArt\n");
+asm(".global sub_0805521C\n.thumb_set sub_0805521C, LoadThirdEffectArt\n");

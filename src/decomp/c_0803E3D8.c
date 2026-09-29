@@ -28,14 +28,14 @@
  * 11-entry jump table at _0803E464 is source value N + 0x15. Case BODIES come
  * out in SOURCE order, which is what fixes the odd-looking order below
  * (0x19, then 0x16/0x15/0x17/0x18, then 0x1c/0x1b/0x1a/0x1d/0x1f/0x1e); the
- * four sub_0803E260 arms are cross-jumped onto one shared tail by jump.c, so
+ * four AddMinicannonInventionRecord arms are cross-jumped onto one shared tail by jump.c, so
  * they are four ordinary cases differing only in the fifth argument, not a
  * grouped case label.
  */
 
 #define MAP gMap
 
-void sub_0803E3D8(void)
+void SpawnInventionRecords(void)
 {
     int x;
     int y;
@@ -44,38 +44,38 @@ void sub_0803E3D8(void)
 
     a = gUnknown_085C77A0[gPlaySt.mapID].unk1c;
     b = gUnknown_085C77A0[gPlaySt.mapID].unk1e;
-    sub_0803DE14();
+    ClearInventionRecords();
     for (y = 0; y < MAP->height; y++)
     {
         for (x = 0; x < MAP->width; x++)
         {
-            if (sub_0803DE94(x, y))
+            if (FindInventionAt(x, y))
                 continue;
             switch (MAP->terrain[MAP->rowOffset[y] + x] & 0x1f)
             {
             case TERRAIN_LASER:
-                sub_0803E158(x, y, a, b);
+                AddLaserInventionRecord(x, y, a, b);
                 break;
             case TERRAIN_MINICANNON_N:
-                sub_0803E260(x, y, a, b, 1);
+                AddMinicannonInventionRecord(x, y, a, b, 1);
                 break;
             case TERRAIN_MINICANNON_S:
-                sub_0803E260(x, y, a, b, 0);
+                AddMinicannonInventionRecord(x, y, a, b, 0);
                 break;
             case TERRAIN_MINICANNON_W:
-                sub_0803E260(x, y, a, b, 2);
+                AddMinicannonInventionRecord(x, y, a, b, 2);
                 break;
             case TERRAIN_MINICANNON_E:
-                sub_0803E260(x, y, a, b, 3);
+                AddMinicannonInventionRecord(x, y, a, b, 3);
                 break;
             case TERRAIN_VOLCANO:
                 sub_0803E1B0(x, y, 4, 4, 2, 1);
                 break;
             case TERRAIN_CANNON_N:
-                sub_0803E208(x, y, 3, 3, a, 2, 1);
+                AddCannonInventionRecord(x, y, 3, 3, a, 2, 1);
                 break;
             case TERRAIN_CANNON_S:
-                sub_0803E208(x, y, 3, 3, a, b, 0);
+                AddCannonInventionRecord(x, y, 3, 3, a, b, 0);
                 break;
             case TERRAIN_FACTORY:
                 sub_0803E310(x, y, 3, 4, 1, 1);
@@ -84,9 +84,10 @@ void sub_0803E3D8(void)
                 sub_0803E108(x, y, 4, 4);
                 break;
             case TERRAIN_DEATHRAY:
-                sub_0803E2B8(x, y, 3, 3, 7, 7);
+                AddDeathRayInventionRecord(x, y, 3, 3, 7, 7);
                 break;
             }
         }
     }
 }
+asm(".global sub_0803E3D8\n.thumb_set sub_0803E3D8, SpawnInventionRecords\n");

@@ -18,7 +18,7 @@
  * into gUnknown_020288B4 kills the CSE of the pointer deref, which is why the
  * ROM reloads `[r5]` on every inner iteration and why the address constant
  * ends up materialised twice (r8 for the outer bound, r5 for the body). */
-/* The read-only twin of sub_080455CC: the same double scan of the map header
+/* The read-only twin of InitPipeSeamHpPlane: the same double scan of the map header
  * at gUnknown_08499590, asking whether any cell of the parallel byte plane at
  * gUnknown_020288B4 is set. With no store in the loop, LICM hoists the height
  * and the width out of the outer loop for the guards while the map deref is
@@ -28,7 +28,7 @@
  * `return TRUE` and not a `break`: with a break the array address would keep
  * three references at expand time and the in-loop `ldr` would stop being
  * invariant, and the reduction declines. */
-/* The RLE COMPRESSOR, exact inverse of the matched sub_080456B8 expander: it
+/* The RLE COMPRESSOR, exact inverse of the matched ExpandPipeSeamHpPlane expander: it
  * walks the whole byte plane at gUnknown_020288B4 and writes, into the caller's
  * buffer, a literal `cell | 0x80` for every non-zero cell and a plain count for
  * every run of zeroes, flushing the pending run before a literal and whenever it
@@ -45,7 +45,7 @@
  * every iteration, because the `strb` through the `u8 *` parameter kills them.
  *
  * `run` is u8, read off the truncation on its own increment. */
-void sub_080455CC(void)
+void InitPipeSeamHpPlane(void)
 {
     int x;
     int y;
@@ -64,8 +64,9 @@ void sub_080455CC(void)
         }
     }
 }
+asm(".global sub_080455CC\n.thumb_set sub_080455CC, InitPipeSeamHpPlane\n");
 
-bool8 sub_08045650(void)
+bool8 AnyPipeSeamHpSet(void)
 {
     int x;
     int y;
@@ -77,6 +78,7 @@ bool8 sub_08045650(void)
 
     return FALSE;
 }
+asm(".global sub_08045650\n.thumb_set sub_08045650, AnyPipeSeamHpSet\n");
 
 /* An RLE expander into gUnknown_020288B4: a byte with bit 7 set is one
  * literal (its low seven bits), a byte without it is a run of that many
@@ -88,7 +90,7 @@ bool8 sub_08045650(void)
  * the `!= 0xff` test made. The `src + 1` in the run arm's preheader is the
  * trailing `src++` hoisted (src is invariant in the loop); the zero-trip guard
  * branches straight to it, which is why the increment is not conditional. */
-void sub_080456B8(u8 *src)
+void ExpandPipeSeamHpPlane(u8 *src)
 {
     u8 *dst;
     int i;
@@ -115,8 +117,9 @@ void sub_080456B8(u8 *src)
         }
     }
 }
+asm(".global sub_080456B8\n.thumb_set sub_080456B8, ExpandPipeSeamHpPlane\n");
 
-void sub_08045700(u8 *dst)
+void CompressPipeSeamHpPlane(u8 *dst)
 {
     u8 *src;
     int i;
@@ -163,3 +166,4 @@ void sub_08045700(u8 *dst)
 
     *dst = 0xff;
 }
+asm(".global sub_08045700\n.thumb_set sub_08045700, CompressPipeSeamHpPlane\n");

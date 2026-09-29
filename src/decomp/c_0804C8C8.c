@@ -7,7 +7,7 @@
  * sub_0804C8C8 @ 0x0804C8C8, sub_0804C99C @ 0x0804C99C
  */
 
-void sub_0804C8C8(s16 a, u16 *p)
+void SubmarinePart_StreamHook(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -26,8 +26,9 @@ void sub_0804C8C8(s16 a, u16 *p)
         sub_08011E54((u8 *)gUnknown_08552FB0[side] + e * 0x600,
                      (void *)(0x06010A00 + (side << 13)), 0x600);
 }
+asm(".global sub_0804C8C8\n.thumb_set sub_0804C8C8, SubmarinePart_StreamHook\n");
 
-void sub_0804C99C(u16 a)
+void SpawnLanderFigure(u16 a)
 {
     u16 t;
     int n;
@@ -37,7 +38,7 @@ void sub_0804C99C(u16 a)
 
     t = gUnknown_03004580[a][0];
 
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
 
     Decompress((u8 *)gUnknown_08557CFC[t][0], gUnknown_08552FB0[a]);
 
@@ -46,3 +47,4 @@ void sub_0804C99C(u16 a)
     gUnknown_02029668[a][4] = sub_08015410(gUnknown_0855339C, 1,
         gUnknown_08557CFC[t][2], gUnknown_08557CFC[t][1], n);
 }
+asm(".global sub_0804C99C\n.thumb_set sub_0804C99C, SpawnLanderFigure\n");

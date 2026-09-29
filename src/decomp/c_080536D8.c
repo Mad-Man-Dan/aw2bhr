@@ -32,7 +32,7 @@
  * The `= 1` store into gUnknown_02029B80 reuses the register the `== 1` test
  * loaded, which is why the ROM has no `movs #1` there.
  */
-void sub_080536D8(u16 a1, u16 a2, u16 count)
+void RunDeathBatch(u16 a1, u16 a2, u16 count)
 {
     void (*fn)(u16, u16, int);
     u16 i;
@@ -72,3 +72,4 @@ void sub_080536D8(u16 a1, u16 a2, u16 count)
 
     gUnknown_02029808[a1].unk00++;
 }
+asm(".global sub_080536D8\n.thumb_set sub_080536D8, RunDeathBatch\n");

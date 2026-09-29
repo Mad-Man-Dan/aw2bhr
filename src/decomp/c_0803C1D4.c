@@ -25,7 +25,7 @@
  * reusing the switch value, which it knows equals the case constant inside the
  * arm -- the source writes plain literals. */
 
-void sub_0803C1D4(void)
+void ApplyMatchSettingsRecord(void)
 {
     u8 i;
 
@@ -74,3 +74,4 @@ void sub_0803C1D4(void)
         break;
     }
 }
+asm(".global sub_0803C1D4\n.thumb_set sub_0803C1D4, ApplyMatchSettingsRecord\n");

@@ -61,7 +61,7 @@ void sub_0801348C(struct Unk03002090 *st, s16 keys)
 }
 
 /* The once-per-frame key poll. Normally reads the pad, but when
- * gPlaySt.unk32 selects the replay mode AND sub_080303B0 reports 1
+ * gPlaySt.unk32 selects the replay mode AND IsLinkKeySyncMode reports 1
  * the mask comes out of the replay stream instead (sub_080303C8) and
  * sub_08030234 advances it.
  *
@@ -75,7 +75,7 @@ void sub_08013510(void)
 {
     u16 v;
 
-    if (gPlaySt.savingEnabled != 0 && sub_080303B0() == 1)
+    if (gPlaySt.savingEnabled != 0 && IsLinkKeySyncMode() == 1)
     {
         v = sub_080303C8();
         sub_08030234();

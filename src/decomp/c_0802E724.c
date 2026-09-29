@@ -8,7 +8,7 @@
  * sub_0802E724 @ 0x0802E724
  */
 
-bool8 sub_0802E724(s16 a1, s16 a2)
+bool8 IsValidMoveDestination(s16 a1, s16 a2)
 {
     struct Unit **ptbl;
     struct Unit *e;
@@ -42,3 +42,4 @@ bool8 sub_0802E724(s16 a1, s16 a2)
 
     return FALSE;
 }
+asm(".global sub_0802E724\n.thumb_set sub_0802E724, IsValidMoveDestination\n");

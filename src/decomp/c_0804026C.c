@@ -9,16 +9,16 @@
 
 #include "proc.h"
 
-/* Asks sub_0803DFE0 for the entry's tile position into a stack pair, then
+/* Asks GetInventionTargetCell for the entry's tile position into a stack pair, then
  * starts the 0x0849FADC proc through sub_0803FEDC with that position and its
- * own parent argument. sub_0803DFE0 returns bool8 and the result is dropped --
+ * own parent argument. GetInventionTargetCell returns bool8 and the result is dropped --
  * no narrowing follows the `bl`. The twin sub_08040290 differs only in calling
  * sub_0803FF04. */
 void sub_0804026C(struct Unk02028360 *ent, ProcPtr parent)
 {
     struct Unk02028360Pos pos;
 
-    sub_0803DFE0(ent, &pos);
+    GetInventionTargetCell(ent, &pos);
     sub_0803FEDC(pos.unk00, pos.unk02, parent);
 }
 
@@ -28,6 +28,6 @@ void sub_08040290(struct Unk02028360 *ent, ProcPtr parent)
 {
     struct Unk02028360Pos pos;
 
-    sub_0803DFE0(ent, &pos);
+    GetInventionTargetCell(ent, &pos);
     sub_0803FF04(pos.unk00, pos.unk02, parent);
 }

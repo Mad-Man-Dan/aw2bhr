@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_08045ED4(void)
+void MapEventFx_EndScreenShake(void)
 {
     EndScreenShake();
 }
+asm(".global sub_08045ED4\n.thumb_set sub_08045ED4, MapEventFx_EndScreenShake\n");

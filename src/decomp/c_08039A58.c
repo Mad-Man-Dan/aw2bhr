@@ -7,6 +7,7 @@
  * sub_08039A58 @ 0x08039A58
  */
 
-void sub_08039A58(int arg0, int arg1)
+void CoPowerPanelNoOp(int arg0, int arg1)
 {
 }
+asm(".global sub_08039A58\n.thumb_set sub_08039A58, CoPowerPanelNoOp\n");

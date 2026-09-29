@@ -33,5 +33,5 @@ void sub_0803BA1C(void)
     gUnknown_0200C420.unk38[0].unk00_08 = 0;
 
     for (i = 0x60; i <= 0x9f; i++)
-        sub_0803CBA0(i, 0);
+        SetCampaignCompletionFlag(i, 0);
 }

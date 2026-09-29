@@ -9,7 +9,7 @@
 
 /* MATCHED (wave 49, W49-C), first attempt. 344/344 bytes, relocs match.
  *
- * A rectangle query over the same 0x02028360 decoration list sub_0803ED60 walks:
+ * A rectangle query over the same 0x02028360 decoration list InventionTurn_PrepareNextFire walks:
  * skip every record whose (unk00, unk01) extent misses the (a1, a2, a3, a4) box,
  * then dispatch on unk02_6.
  *
@@ -33,12 +33,12 @@
  * the increment at the bottom either way.
  */
 
-void sub_0803FC28(int a1, int a2, int a3, int a4)
+void DrawInventionSprites(int a1, int a2, int a3, int a4)
 {
     struct Unk02028360 *p;
     const u8 *t;
 
-    p = sub_0803F5C8(0);
+    p = GetInventionRecordByIndex(0);
     while (p->unk02_6 != 0)
     {
         if (p->unk00 + p->unk02_0 < a1)
@@ -83,3 +83,4 @@ void sub_0803FC28(int a1, int a2, int a3, int a4)
         p++;
     }
 }
+asm(".global sub_0803FC28\n.thumb_set sub_0803FC28, DrawInventionSprites\n");

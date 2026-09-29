@@ -13,7 +13,7 @@
 void sub_08045F5C(void)
 {
     if (IsCampaignCompletionFlagSet(0x60))
-        sub_0803CBA0(0x22, 1);
+        SetCampaignCompletionFlag(0x22, 1);
     else
-        sub_0803CBA0(0x21, 1);
+        SetCampaignCompletionFlag(0x21, 1);
 }

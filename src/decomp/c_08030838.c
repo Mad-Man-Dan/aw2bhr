@@ -7,7 +7,7 @@
  * sub_08030838 @ 0x08030838
  */
 
-void sub_08030838(struct Unk08090CD8Entry *src)
+void SioQueuePendingRecvData(struct Unk08090CD8Entry *src)
 {
     struct Unk08090CD8Entry *dst;
     int i;
@@ -22,3 +22,4 @@ void sub_08030838(struct Unk08090CD8Entry *src)
     gUnknown_0849B018->unk1aaf++;
     gUnknown_0849B018->unk1aaf &= 0xF;
 }
+asm(".global sub_08030838\n.thumb_set sub_08030838, SioQueuePendingRecvData\n");

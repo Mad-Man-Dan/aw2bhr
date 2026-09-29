@@ -7,6 +7,7 @@
  * sub_0804C094 @ 0x0804C094
  */
 
-void sub_0804C094(u16 a, u16 b, int c)
+void ResetFigurePose_None(u16 a, u16 b, int c)
 {
 }
+asm(".global sub_0804C094\n.thumb_set sub_0804C094, ResetFigurePose_None\n");

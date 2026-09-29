@@ -20,7 +20,8 @@
  * the branching four-block form from the Control-flow table in
  * docs/agbcc-codegen.md and is four bytes longer.
  */
-bool8 sub_0804B160(void)
+bool8 IsNameEntryRunning(void)
 {
     return sub_08015BD0((s32)gUnknown_084C3D9C) != -1;
 }
+asm(".global sub_0804B160\n.thumb_set sub_0804B160, IsNameEntryRunning\n");

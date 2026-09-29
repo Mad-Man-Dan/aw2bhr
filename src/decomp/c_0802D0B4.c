@@ -10,7 +10,7 @@
 /* See src/decomp/c_0802D064.c: same shape, LoadUnitIntoTransport instead of
  * ApplyCaptureProgress and command id 7. */
 
-void sub_0802D0B4(void)
+void UnitMenu_Load(void)
 {
     LockUnitSelection();
     CloseTopMenu();
@@ -22,3 +22,4 @@ void sub_0802D0B4(void)
     if (gPlaySt.savingEnabled != 0)
         SendActionCommand(7, gUnknown_03003F38, 0, 0);
 }
+asm(".global sub_0802D0B4\n.thumb_set sub_0802D0B4, UnitMenu_Load\n");

@@ -17,7 +17,7 @@
  * here. Everything below was read off the callee's own body instead.
  *
  * The callee is EMPTY -- a lone `bx lr`, four bytes. void(void) and not
- * void(int): at the only call site (sub_0803AFA0) r0 holds the `1 & flags`
+ * void(int): at the only call site (DebugBackupUtility_Loop) r0 holds the `1 & flags`
  * of the test that just branched, which is a leftover and not an argument
  * anyone set up.
  */
@@ -36,7 +36,7 @@ void sub_0803AF78(void)
  * here. Everything below was read off the callee's own body instead.
  *
  * Same as sub_0803AF78 twelve bytes above: the callee sub_0801B4BC is a
- * lone `bx lr`, and sub_0803AFA0 leaves `4 & flags` in r0 at the call.
+ * lone `bx lr`, and DebugBackupUtility_Loop leaves `4 & flags` in r0 at the call.
  */
 void sub_0803AF84(void)
 {

@@ -7,7 +7,7 @@
  * sub_0802CE04 @ 0x0802CE04
  */
 
-void sub_0802CE04(void)
+void OptionsMenu_ToggleMusic(void)
 {
     gPlaySt.bgmOn = 1 - gPlaySt.bgmOn;
 
@@ -25,3 +25,4 @@ void sub_0802CE04(void)
     sub_08019E68();
     gUnknown_0200C420.unk14 = (gPlaySt.bgmOn == 0);
 }
+asm(".global sub_0802CE04\n.thumb_set sub_0802CE04, OptionsMenu_ToggleMusic\n");

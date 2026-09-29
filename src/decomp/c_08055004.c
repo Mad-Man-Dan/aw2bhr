@@ -7,7 +7,7 @@
  * sub_08055004 @ 0x08055004
  */
 
-/* sub_08054EE0's third sibling and the `case 0x12` arm of sub_08054E8C: the
+/* LoadInfantryEffectArt's third sibling and the `case 0x12` arm of sub_08054E8C: the
  * same shape as c_08054E8C.c's pair, one slot further into the same VRAM
  * block (+0x1400 instead of +0xA00), a different source blob, 0x2C8 words
  * instead of 0x288, and only ONE of the three parallel tables written.
@@ -19,7 +19,7 @@
  *
  * Both are u16: the ROM truncates each with an `lsls #0x10; lsrs #0x10` pair
  * that an int would not need. */
-void sub_08055004(u16 a1, u16 a2)
+void LoadBCopterEffectArt(u16 a1, u16 a2)
 {
     u16 v;
 
@@ -36,3 +36,4 @@ void sub_08055004(u16 a1, u16 a2)
     }
     gUnknown_020296B0[a1].unk00 = v;
 }
+asm(".global sub_08055004\n.thumb_set sub_08055004, LoadBCopterEffectArt\n");

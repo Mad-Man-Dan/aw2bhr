@@ -15,7 +15,7 @@
 void sub_080326FC(void)
 {
     if (gUnknown_0849B060->unk09 == gUnknown_0849B018->unk06)
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 6, 2);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 6, 2);
     else
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 7, 2);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 7, 2);
 }

@@ -7,10 +7,11 @@
  * sub_0802A838 @ 0x0802A838, GetTerrainNameGraphic @ 0x0802A85C
  */
 
-const u8 * sub_0802A838(int a1)
+const u8 * GetUnitNameGraphic(int a1)
 {
     return gUnknown_08108264[(gUnknown_0849A354[a1].unk00 * 8) & 0x3ff];
 }
+asm(".global sub_0802A838\n.thumb_set sub_0802A838, GetUnitNameGraphic\n");
 
 const u8 * GetTerrainNameGraphic(int a1)
 {

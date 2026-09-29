@@ -24,15 +24,15 @@ void sub_0803C670(void)
     for (i = 0; i < 9; i++)
         sub_0803C950(i, 1);
     for (i = 0; i < 0xc0; i++)
-        sub_0803C8F0(i, 1);
+        SetCampaignMapUnlocked(i, 1);
     for (i = 0; i < 0x13; i++)
-        sub_0803C97C(i, 1);
+        SetCoUnlocked(i, 1);
     for (i = 0; i < 0x13; i++)
         sub_0803C9A8(i, 1);
     for (i = 0x60; i < 0xa0; i++)
-        sub_0803CBA0(i, 0);
+        SetCampaignCompletionFlag(i, 0);
     for (i = 0x20; i < 0x60; i++)
-        sub_0803CBA0(i, 0);
+        SetCampaignCompletionFlag(i, 0);
     for (i = 0; i < 0xc0; i++)
         sub_0803CA28(i, 0);
     for (i = 0; gUnknown_0849EDB0[i].unk04 != -1; i++)

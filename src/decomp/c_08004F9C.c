@@ -11,7 +11,7 @@
  * DesignRoomSaveToSlot -- run the save-slot call for the current design and redraw
  * that slot's row on screen.
  *
- * sub_0803CF54 is handed gActiveMap->designSlot, gActiveMap->designName and
+ * SaveDesignRoomSlot is handed gActiveMap->designSlot, gActiveMap->designName and
  * sub_0800C9E8's result; whether it writes the slot or reads it is not visible
  * here. sub_0800CB30 brackets the call, first with (0, 0) and then with (1,
  * <what the first call returned>), so it suspends something and restores it
@@ -38,7 +38,7 @@ void DesignRoomSaveToSlot(void)
     int v;
 
     t = sub_0800CB30(0, 0);
-    sub_0803CF54(gActiveMap->designSlot, gActiveMap->designName,
+    SaveDesignRoomSlot(gActiveMap->designSlot, gActiveMap->designName,
                  sub_0800C9E8());
     sub_0800CB30(1, t);
 

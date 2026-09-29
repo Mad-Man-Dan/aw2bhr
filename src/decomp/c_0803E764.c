@@ -9,7 +9,7 @@
  */
 
 /* Walks a 0xFFFF-terminated {x, y} list and, for every cell that holds a unit,
- * appends a record through sub_0803E560.
+ * appends a record through PushInventionFireEntry.
  *
  * Two spellings here are load-bearing and both cost exactly one instruction if
  * you undo them:
@@ -30,10 +30,10 @@
  *    see the chapter in docs/agbcc-codegen.md. The same idiom is what fixed the
  *    identical residual in sub_0803E6C4.
  *
- * sub_0803E560's u16 parameters are why `a2` is narrowed (`lsls #0x10` hoisted
+ * PushInventionFireEntry's u16 parameters are why `a2` is narrowed (`lsls #0x10` hoisted
  * into the preheader, `lsrs #0x10` at the call) while x, y and t are not --
  * see the note on that prototype in include/unknown-functions.h. */
-void sub_0803E764(struct Unk02028360Pos *p, int a2)
+void ScanUnitsOnCellList(struct Unk02028360Pos *p, int a2)
 {
     int x;
     int y;
@@ -46,8 +46,9 @@ void sub_0803E764(struct Unk02028360Pos *p, int a2)
         if (gMap->unit[gMap->rowOffset[y] + x] != 0)
         {
             t = gMap->unit[gMap->rowOffset[y] + x];
-            sub_0803E560(x, y, t, a2);
+            PushInventionFireEntry(x, y, t, a2);
         }
         p++;
     }
 }
+asm(".global sub_0803E764\n.thumb_set sub_0803E764, ScanUnitsOnCellList\n");

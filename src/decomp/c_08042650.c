@@ -41,7 +41,7 @@
  *     the `movs rI,#0; ldrsh` pair feeding sub_08024058). The union already
  *     models this; do not pick one view for the whole function.
  *   - `t` is a `u8` local, not an `int`: `t >> 5` is `lsrs`. That is the
- *     OPPOSITE of the neighbouring sub_08045BF0, whose `>> 6` is `asrs` and
+ *     OPPOSITE of the neighbouring MapEventCond_Army1UnitAtX7Y2, whose `>> 6` is `asrs` and
  *     needs an `int`; check the shift before copying that note.
  *   - `t & 0x1f` must be written INLINE at all three comparison sites. Bound
  *     to a `terr` local it hoists above the `gPlaySt.unk09` test;

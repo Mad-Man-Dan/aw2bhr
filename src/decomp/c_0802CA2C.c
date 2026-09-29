@@ -10,10 +10,10 @@
 
 int sub_0802CA2C(void)
 {
-    if (!sub_0802C8F8())
+    if (!UnitMenu_JoinUsability())
         return 1;
 
-    if (!sub_0802CBA0())
+    if (!UnitMenu_LoadUsability())
         return 1;
 
     FillMovementMap(0xff);
@@ -25,7 +25,7 @@ int sub_0802CA2C(void)
     return 1;
 }
 
-int sub_0802CA78(void)
+int UnitMenu_FireUsability(void)
 {
     int off;
     u32 cur;
@@ -56,6 +56,7 @@ int sub_0802CA78(void)
 
     return 0;
 }
+asm(".global sub_0802CA78\n.thumb_set sub_0802CA78, UnitMenu_FireUsability\n");
 
 int sub_0802CB20(void)
 {

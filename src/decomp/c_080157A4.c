@@ -10,7 +10,7 @@
 /* Parameter two is `s16`, not the `u16` this file first declared. The bare
  * `strh` setter cannot distinguish int/u32/u16/s16 (see the setter table in
  * docs/agbcc-codegen.md), so the callee is silent and the CALLER settles it:
- * sub_08051BEC and sub_08051F4C both bind a u16 table element to a local and
+ * DeathHandler_Tank and DeathHandler_Air both bind a u16 table element to a local and
  * sign-extend it `lsls #0x10; asrs #0x10` immediately before the call, which
  * is the `u16 -> s16` conversion and is two instructions of real code. A `u16`
  * parameter emits nothing there and leaves those two callers short. This

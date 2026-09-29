@@ -63,7 +63,7 @@ void sub_0806BB08(struct Unk0806BB08Proc *proc)
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xFFE0) | 0x07;
     *(u16 *)&gUnknown_030030E0 = (*(u16 *)&gUnknown_030030E0 & 0xE0FF) | 0x1800;
     sub_0806BA6C(0, 0, 0x40, 0xa0);
-    sub_0803B3D4(0xa);
-    sub_0803B524(0x1a0);
+    SetSoundMixerChannelCount(0xa);
+    PlayMusic(0x1a0);
     proc->unk38 = 0;
 }

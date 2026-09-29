@@ -29,7 +29,7 @@
  * ROM does the same (r5 is undefined on the zero-trip path).
  */
 
-void sub_080484CC(struct Unk0804769C *p)
+void UnitList_Loop(struct Unk0804769C *p)
 {
     s16 i;
     u16 sel;
@@ -54,6 +54,7 @@ void sub_080484CC(struct Unk0804769C *p)
     }
     else
     {
-        sub_080482D8(p);
+        UnitList_DrawFrame(p);
     }
 }
+asm(".global sub_080484CC\n.thumb_set sub_080484CC, UnitList_Loop\n");

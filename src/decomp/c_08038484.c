@@ -17,7 +17,7 @@
  * offset at runtime -- which is what an array member emits, because the
  * variable subscript stops the fold.
  *   Reshaping unk10/unk12 into `u16 unk10[2]` is the reading the codegen
- * actually supports, but it is a SHARED member (sub_0803C52C reads +0x10 twice,
+ * actually supports, but it is a SHARED member (ShopAvail_CoNeedsRank reads +0x10 twice,
  * ResetProfileToDefaults zeroes both) and the brief forbids reshaping one to suit a
  * single function, so the layout is spelled locally instead -- the same device
  * src/decomp/c_08038848.c uses for gUnknown_08499590. Recorded rather than

@@ -7,7 +7,7 @@
  * sub_0803E354 @ 0x0803E354, CountLivingInventionsOfType @ 0x0803E388
  */
 
-struct Unk02028360 *sub_0803E354(int a1)
+struct Unk02028360 *FindInventionOfKind(int a1)
 {
     struct Unk02028360 *p;
 
@@ -18,6 +18,7 @@ struct Unk02028360 *sub_0803E354(int a1)
     }
     return NULL;
 }
+asm(".global sub_0803E354\n.thumb_set sub_0803E354, FindInventionOfKind\n");
 
 bool8 CountLivingInventionsOfType(int a1)
 {

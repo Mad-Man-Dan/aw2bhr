@@ -14,7 +14,7 @@
  * `e` is `d >> 4` and shares agbcc's `(d << 16) >> 20` with the u16 narrowing
  * of `d` itself -- one shifted value feeding two extracts, which is why no
  * separate `lsrs` for `e` appears. */
-void sub_0804D1AC(s16 a, u16 *p)
+void FigureTileHook_CruiserVariant2(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -36,3 +36,4 @@ void sub_0804D1AC(s16 a, u16 *p)
         sub_0804D25C(g, h, e);
     }
 }
+asm(".global sub_0804D1AC\n.thumb_set sub_0804D1AC, FigureTileHook_CruiserVariant2\n");

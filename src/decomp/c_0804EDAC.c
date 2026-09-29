@@ -16,7 +16,7 @@
  * drops the sign extension and emits `ldrh`, losing the one instruction that
  * proves the table is signed. Computing the sum in a word and storing it is
  * byte-exact and keeps the `movs r3, #0; ldrsh` register-offset form. */
-void sub_0804EDAC(u16 a, u16 b, s16 c)
+void StepFigureBob(u16 a, u16 b, s16 c)
 {
     int v;
 
@@ -28,3 +28,4 @@ void sub_0804EDAC(u16 a, u16 b, s16 c)
         + gUnknown_02029A10[a].entries[b].y;
     gUnknown_02029A10[a].entries[b].y = v;
 }
+asm(".global sub_0804EDAC\n.thumb_set sub_0804EDAC, StepFigureBob\n");

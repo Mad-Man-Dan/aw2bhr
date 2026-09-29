@@ -7,7 +7,7 @@
  * sub_08050AEC @ 0x08050AEC
  */
 
-void sub_08050AEC(u16 a1, u16 a2, s16 a3)
+void EndProjectileEffect(u16 a1, u16 a2, s16 a3)
 {
     if (gUnknown_02029A10[a1].entries[a2].unk1a == 0)
     {
@@ -20,3 +20,4 @@ void sub_08050AEC(u16 a1, u16 a2, s16 a3)
     if (a3 != -1 && sub_080153F0(a3) != 0)
         sub_08015328(a3);
 }
+asm(".global sub_08050AEC\n.thumb_set sub_08050AEC, EndProjectileEffect\n");

@@ -7,7 +7,7 @@
  * sub_0803A460 @ 0x0803A460
  */
 
-/* MATCHED, and the first of a byte-identical pair with sub_08047094. Clears
+/* MATCHED, and the first of a byte-identical pair with TerrainInfoWindow_OnEnd. Clears
  * 0x400 halfwords through the gBG0TilemapBuffer pointer and restarts four
  * subsystems.
  *

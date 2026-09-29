@@ -71,7 +71,7 @@ void sub_0802B3AC(s16 a, s16 b, s16 c)
     if (Proc_Find(gUnknown_0849A02C) == NULL)
         return;
 
-    if (sub_0803DE94(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02) != NULL
+    if (FindInventionAt(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02) != NULL
         || gUnknown_020288B4[idx =
                gMap->rowOffset[gUnknown_030033E4.unk02]
                + gUnknown_030033E4.unk00] != 0)

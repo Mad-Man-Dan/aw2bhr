@@ -27,20 +27,22 @@ struct Unk397CCProc
  * two-argument call keeps the base in r0 and moves the first argument in last
  * instead. */
 
-void sub_080397BC(struct Unk397BCProc *proc)
+void CoPowerSequence_Activate(struct Unk397BCProc *proc)
 {
     ActivateCoPower(proc->unk54, proc->unk58, proc);
 }
+asm(".global sub_080397BC\n.thumb_set sub_080397BC, CoPowerSequence_Activate\n");
 
 /* No `adds rN, r0, #0` here, unlike its two neighbours: the base stays in r0
  * to the end, so this call really does take one argument. The
  * `lsls #0x18; lsrs #0x18` is sub_08043DAC's declared u8 parameter narrowing
  * the int field. */
 
-void sub_080397CC(struct Unk397CCProc *proc)
+void CoPowerSequence_PlayMusic(struct Unk397CCProc *proc)
 {
     sub_08043DAC(proc->unk54);
 }
+asm(".global sub_080397CC\n.thumb_set sub_080397CC, CoPowerSequence_PlayMusic\n");
 
 /* Two statements, not a nest: r0 is overwritten by the pool `ldr` between the
  * calls, so nothing survives from sub_08022A34. */
@@ -62,7 +64,7 @@ void sub_080397F4(u16 a)
 }
 
 /* In mode 1 the scripted line (sub_08039850) is tried first and the random
- * line (sub_080398D0) is the fallback; in every other mode the random line is
+ * line (ShowRandomCoPowerQuote) is the fallback; in every other mode the random line is
  * all there is. `lsls r0, r0, #0x18` before the `cmp` is sub_08039850's u8
  * return being re-narrowed at the call site. */
 
@@ -71,10 +73,10 @@ void sub_08039820(ProcPtr proc)
     if (gPlaySt.gameMode == 1)
     {
         if (sub_08039850(proc) == 0)
-            sub_080398D0(proc);
+            ShowRandomCoPowerQuote(proc);
     }
     else
     {
-        sub_080398D0(proc);
+        ShowRandomCoPowerQuote(proc);
     }
 }

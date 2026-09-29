@@ -7,7 +7,7 @@
  * sub_0803E560 @ 0x0803E560
  */
 
-void sub_0803E560(u16 a, u16 b, u16 c, u16 d)
+void PushInventionFireEntry(u16 a, u16 b, u16 c, u16 d)
 {
     struct Unk03003338 *p;
 
@@ -18,3 +18,4 @@ void sub_0803E560(u16 a, u16 b, u16 c, u16 d)
     p[gUnknown_03003F40].unk02 = d;
     gUnknown_03003F40++;
 }
+asm(".global sub_0803E560\n.thumb_set sub_0803E560, PushInventionFireEntry\n");

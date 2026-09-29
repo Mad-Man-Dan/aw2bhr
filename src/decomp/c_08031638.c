@@ -19,9 +19,9 @@ void sub_08031638(ProcPtr proc)
 
     if (sub_0802F534() > 1 && sub_0802F504() > 1 && sub_0802F4A0() == 1
         && gUnknown_0849B018->unk06 == 0)
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 2, 2);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 2, 2);
     else
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 1, 2);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 1, 2);
 
     for (i = 0; i < 4; i++)
     {
@@ -57,14 +57,14 @@ void sub_08031638(ProcPtr proc)
             gUnknown_0849B018->unk16[i] = 0;
 
         gUnknown_03004400[0] = 0xff;
-        sub_080308B4((u8 *)gUnknown_03004400);
+        LinkQueueCommand((u8 *)gUnknown_03004400);
 
         sub_0803B4DC(0x71);
         Proc_EndEach(gUnknown_0849B1A0);
 
         Proc_Goto(proc, 1);
     }
-    else if (sub_080309AC((void *)gUnknown_03004400, 0) != -1
+    else if (LinkReceiveCommand((void *)gUnknown_03004400, 0) != -1
              && sub_0802F460(gUnknown_0849B018->unk06) == 1
              && gUnknown_03004400[0] == 0xff)
     {

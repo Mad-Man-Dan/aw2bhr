@@ -19,7 +19,7 @@
  * The two edge sums are LOCALS, not subexpressions of the `&&` chain: the ROM
  * computes both before any of the four branches, which short-circuit
  * evaluation of `a < p->unk00 + p->unk02_0` inside the chain would not do. */
-struct Unk02028360 *sub_0803DE94(int a, int b)
+struct Unk02028360 *FindInventionAt(int a, int b)
 {
     struct Unk02028360 *p;
 
@@ -32,15 +32,16 @@ struct Unk02028360 *sub_0803DE94(int a, int b)
     }
     return NULL;
 }
+asm(".global sub_0803DE94\n.thumb_set sub_0803DE94, FindInventionAt\n");
 
-/* sub_0803DE94's shape with one extra test. The kind field is compared
+/* FindInventionAt's shape with one extra test. The kind field is compared
  * against the third argument out of the HALFWORD the loop test already
  * loaded -- `lsl #0x16 / lsr #0x1c` on r5, i.e. bits 6..9 of the u16 at +2,
  * which is unk02_6 -- where the rectangle's own fields are re-read as a
  * narrowed `ldrb`. CSE keeping the loop test's `ldrh` alive across the body
  * is what puts the 0x3C0 mask in r8 rather than r7 and costs this function
  * the extra high-register save its twin does not have. */
-struct Unk02028360 *sub_0803DEEC(int a, int b, int c)
+struct Unk02028360 *FindInventionOfKindAt(int a, int b, int c)
 {
     struct Unk02028360 *p;
 
@@ -54,3 +55,4 @@ struct Unk02028360 *sub_0803DEEC(int a, int b, int c)
     }
     return NULL;
 }
+asm(".global sub_0803DEEC\n.thumb_set sub_0803DEEC, FindInventionOfKindAt\n");

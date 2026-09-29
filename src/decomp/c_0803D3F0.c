@@ -21,7 +21,7 @@
  * spends holding 0x417A and 0x1432 across the inner loop. Same finding as the
  * wave-34 note in include/unknown-globals.h, reached independently here.
  *
- * The member set is written to match sub_0803D2F8's copy of this declaration
+ * The member set is written to match CopyMapRecordToGMap's copy of this declaration
  * exactly, so the two survive being promoted into one translation unit. */
 /* The 0x02000000 staging record. Declared locally and cast onto the `u8 []`
  * global for the same reason src/decomp's `struct Map` files do it: the ROM
@@ -43,7 +43,7 @@ struct Rec
     /* 0x04CB */ u8 cell[1];
 };
 
-void sub_0803D3F0(void)
+void RebuildTerrainFromTiles(void)
 {
     int x, y;
 
@@ -58,6 +58,7 @@ void sub_0803D3F0(void)
     RecountArmyProperties();
     sub_08024268();
 }
+asm(".global sub_0803D3F0\n.thumb_set sub_0803D3F0, RebuildTerrainFromTiles\n");
 
 /* Drives sub_0803D4A8 over slots 0..11. The counter is `u8`: it is
  * re-narrowed (`adds r0,r4,#1; lsls #0x18; lsrs #0x18`) on every increment,

@@ -33,7 +33,7 @@ struct Unk85D6A48Row
     /* 0x14 */ u8 filler_14[4];
 };
 
-void sub_08050424(u16 a1, u16 a2, int a3)
+void StreamWholePose(u16 a1, u16 a2, int a3)
 {
     struct Unk85D6A48Row *tbl;
     u16 j;
@@ -51,3 +51,4 @@ void sub_08050424(u16 a1, u16 a2, int a3)
     sub_08011E54((u8 *)gUnknown_02029BA8[a1].unk18[idx] + src,
                  (void *)(0x06010000 + off), 0x200);
 }
+asm(".global sub_08050424\n.thumb_set sub_08050424, StreamWholePose\n");

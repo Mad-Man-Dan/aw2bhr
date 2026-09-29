@@ -62,7 +62,7 @@
  *   - W73-E's three pointer-global spellings: all three TIE at 89.4%.
  *
  * 0x417A and 0x417E are rowOffset[0] and rowOffset[2]. */
-int sub_08045C18(void)
+int MapEventCond_Army2OwnsTenCellsX21To25Y0AndY2(void)
 {
   unsigned short new_var;
   struct Map *m = gMap;
@@ -108,3 +108,4 @@ int sub_08045C18(void)
   }
   return 1;
 }
+asm(".global sub_08045C18\n.thumb_set sub_08045C18, MapEventCond_Army2OwnsTenCellsX21To25Y0AndY2\n");

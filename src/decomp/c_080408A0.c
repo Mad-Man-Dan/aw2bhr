@@ -35,7 +35,7 @@ void sub_080408A0(ProcPtr proc)
     HandleMoveCameraWithMapCursor(4);
     sub_080232CC(2, 0x12);
 
-    if (sub_0802DBF8() == 0)
+    if (IsMapCursorSettled() == 0)
         return;
 
     if (gpKeySt->pressed & 1)

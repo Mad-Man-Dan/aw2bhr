@@ -13,7 +13,7 @@
 
 #include "proc.h"
 
-/* Family F075, third member -- see sub_0802C4B8. Both `varies` entries move
+/* Family F075, third member -- see StartTargetPickList. Both `varies` entries move
  * together here: a different reset routine (sub_0807F238, which likewise reads
  * no argument register) and Proc_Start instead of Proc_StartBlocking. */
 

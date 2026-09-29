@@ -9,22 +9,22 @@
 
 #include "proc.h"
 
-/* The (u32) cast is sub_080337D8's own promoted signature
+/* The (u32) cast is StartSioBigReceive's own promoted signature
  * (src/decomp/c_080337D8.c), not a spelling choice; gUnknown_02000000 is a
  * u8 array and the address goes out unchanged either way. */
 
 void sub_08031BF0(ProcPtr parent)
 {
-    sub_080337D8((u32)gUnknown_02000000, 0, parent);
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 10, 2);
+    StartSioBigReceive((u32)gUnknown_02000000, 0, parent);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 10, 2);
 }
 
 /* sub_08031BF0's five-argument twin: the same gUnknown_02000000 buffer and the
- * same sub_080315E8 round-trip afterwards, differing only in the extra
+ * same LinkScreenSetMessage round-trip afterwards, differing only in the extra
  * 0xA5C size, the two zeros, and the message id. */
 
 void sub_08031C1C(ProcPtr parent)
 {
-    sub_0803376C((u32)gUnknown_02000000, 0xa5c, 0, 0, parent);
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 9, 2);
+    StartSioBigSend((u32)gUnknown_02000000, 0xa5c, 0, 0, parent);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 9, 2);
 }

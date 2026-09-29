@@ -8,7 +8,7 @@
  */
 
 /* MATCHED. A LOOSE duplicate of the promoted sub_08045770 -- same instruction
- * stream, one pool word different (`sub_0803BA00` for `sub_0803B8A0`), so the
+ * stream, one pool word different (`StartWarRoom` for `sub_0803B8A0`), so the
  * body is that function's with one symbol swapped and it cost one line.
  *
  * It is also the first free match the wave-20 screen produced that did not
@@ -16,5 +16,5 @@
  * wave. See the wave-21 list. */
 void sub_08038548(void)
 {
-    sub_0803D73C(sub_08016D04(gPlaySt.gameMode), sub_0803BA00);
+    sub_0803D73C(sub_08016D04(gPlaySt.gameMode), StartWarRoom);
 }

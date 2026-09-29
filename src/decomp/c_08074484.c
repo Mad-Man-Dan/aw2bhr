@@ -84,7 +84,7 @@ u8 sub_08074484(u8 *p, struct Unk030040D8 *a2, int a3)
             }
 
             if (p[1] != 0xFF)
-                sub_0803CBA0(p[1], 1);
+                SetCampaignCompletionFlag(p[1], 1);
             break;
 
         case 5:

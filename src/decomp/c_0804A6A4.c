@@ -11,28 +11,29 @@
  * `unk5f + 1`, an int expression, which is why the compare is SIGNED
  * (`bge`/`blt`) where sub_0804A6D8's u8-against-u8 bound next door goes
  * through shorten_compare and comes out unsigned. */
-void sub_0804A6A4(void)
+void NameEntry_ClearBuffer(void)
 {
     u8 i;
 
     for (i = 0; i < gUnknown_030044E0->unk5f + 1; i++)
         gUnknown_030044E0->unk2c[i] = 0;
 }
+asm(".global sub_0804A6A4\n.thumb_set sub_0804A6A4, NameEntry_ClearBuffer\n");
 
 /* gUnknown_0812A280 is NOT an object: the word at 0x0812A280 holds 0x030044E0,
  * so it is agbcc's -fforce-addr address constant for gUnknown_030044E0, the
- * same struct sub_0804A6A4 next door reaches with a plain pool word. Reading it
+ * same struct NameEntry_ClearBuffer next door reaches with a plain pool word. Reading it
  * as a real global costs one indirection too many -- the trap the
  * gUnknown_0812A2A8 note records.
  *
  * The loop compare is UNSIGNED (`bhs`/`blo`) because both sides are u8 and
  * shorten_compare narrows the comparison back into the shorter unsigned type;
- * sub_0804A6A4's bound is `unk5f + 1`, an int, and comes out signed.
+ * NameEntry_ClearBuffer's bound is `unk5f + 1`, an int, and comes out signed.
  *
  * The RETURN TYPE IS NOT void, and the epilogue is the only thing that says so:
  * the ROM pops the return address into r1 (`pop {r1}; bx r1`) where every void
- * neighbour in this block -- sub_0804AE78, sub_0804B850, sub_0804BAC4,
- * sub_0804A1E4 -- pops it into r0. agbcc keeps r0 clear at the epilogue when it
+ * neighbour in this block -- NameEntry_SlideIn_Step, LoadBattleBackdropArt, sub_0804BAC4,
+ * RedrawNameEntryText -- pops it into r0. agbcc keeps r0 clear at the epilogue when it
  * holds a return value. Both arms end in a void call, so nothing supplies one
  * and the value is whatever sub_0803B4DC left; that is what the original did. */
 int sub_0804A6D8(void)
@@ -41,7 +42,7 @@ int sub_0804A6D8(void)
     u8 i;
 
     count = 0;
-    sub_0804A1E4(0);
+    RedrawNameEntryText(0);
 
     for (i = 0; i < gUnknown_030044E0->unk5f; i++)
     {

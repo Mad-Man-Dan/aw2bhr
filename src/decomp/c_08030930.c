@@ -14,7 +14,7 @@
  * unknown-globals.h. The honest `gUnknown_0849B018->member` spelling
  * reproduces the three-deep `ldr; ldr; ldr` chain by itself.
  *
- * sub_080308B4's twin: the same push into the ring, but a 128-byte payload
+ * LinkQueueCommand's twin: the same push into the ring, but a 128-byte payload
  * instead of 20, which is why unk04 (the LENGTH field) is 0x80 here. The
  * `u8 i` counter with `i < 128` is what produces the `cmp r0,#0; bge` exit
  * on the SHIFTED value -- gcc turns `(u8)(i + 1) < 128` into a sign test on
@@ -31,7 +31,7 @@
  * caller c_0803355C.c passes; the question is byte-neutral, so the promoted
  * caller wins. See the note on the declaration. */
 
-void sub_08030930(u32 a1)
+void LinkQueueBlock(u32 a1)
 {
     struct Unk08090CD8Entry *entry;
     struct Unk0849B018 *p;
@@ -51,3 +51,4 @@ void sub_08030930(u32 a1)
     gUnknown_0849B018->unk1aad++;
     gUnknown_0849B018->unk1aad &= 0x1F;
 }
+asm(".global sub_08030930\n.thumb_set sub_08030930, LinkQueueBlock\n");

@@ -7,7 +7,7 @@
  * sub_0804BD58 @ 0x0804BD58
  */
 
-void sub_0804BD58(volatile u16 *src, void *dst)
+void BuildHitFlashPalette(volatile u16 *src, void *dst)
 {
     int i;
     int r;
@@ -26,3 +26,4 @@ void sub_0804BD58(volatile u16 *src, void *dst)
 
     CpuFastSet((u16 *)((u8 *)gUnknown_02028E5C + 8), dst, 0x10);
 }
+asm(".global sub_0804BD58\n.thumb_set sub_0804BD58, BuildHitFlashPalette\n");

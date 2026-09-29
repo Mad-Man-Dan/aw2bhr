@@ -7,9 +7,9 @@
  * sub_0802E60C @ 0x0802E60C
  */
 
-void sub_0802E60C(s16 a1, s16 a2)
+void ConfirmUnitDestination(s16 a1, s16 a2)
 {
-    if (!sub_0802E724(a1, a2))
+    if (!IsValidMoveDestination(a1, a2))
     {
         sub_0803B4DC(0x68);
         return;
@@ -36,3 +36,4 @@ void sub_0802E60C(s16 a1, s16 a2)
 
     sub_08025BB4(gUnknown_03003110);
 }
+asm(".global sub_0802E60C\n.thumb_set sub_0802E60C, ConfirmUnitDestination\n");

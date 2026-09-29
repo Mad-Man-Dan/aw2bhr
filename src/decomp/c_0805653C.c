@@ -7,7 +7,7 @@
  * sub_0805653C @ 0x0805653C
  */
 
-/* sub_0805653C @ 0x0805653C
+/* BuildDeathFigureList @ 0x0805653C
  *
  * Fills gUnknown_0202980A[side][0..] with the slots that are "live" -- entry
  * .unk01 == 0 and .unk00 != 0 -- walking them in the gUnknown_0855218C
@@ -15,7 +15,7 @@
  *
  * The return type is u16 and that is read off the CALLER (sub_0805634C): it
  * stores the result back into its own u16 third parameter and passes it on to
- * sub_080564B8 with no narrowing at either point, which a u32 return cannot
+ * SetDeathBatchSizes with no narrowing at either point, which a u32 return cannot
  * do. The value returned is this function's own first parameter, which both
  * arms reuse as the running result -- 0/1 in the first, the requested count in
  * the second.
@@ -36,7 +36,7 @@ struct Unk85D6A48Row /* 0x18 */
     /* 0x14 */ u8 filler_14[0x18 - 0x14];
 };
 
-u16 sub_0805653C(u16 a, u16 b)
+u16 BuildDeathFigureList(u16 a, u16 b)
 {
     struct Unk85D6A48Row *rows;
     u16 n;
@@ -81,3 +81,4 @@ u16 sub_0805653C(u16 a, u16 b)
 
     return a;
 }
+asm(".global sub_0805653C\n.thumb_set sub_0805653C, BuildDeathFigureList\n");

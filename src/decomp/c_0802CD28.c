@@ -47,7 +47,7 @@ void sub_0802CD54(int a1, u8 a2)
     PushMenu();
     CloseTopMenu();
     sub_08034F10();
-    sub_08046764();
+    StartIntelStatusScreen();
 }
 
 /* sub_0802CD54 with a sub_080152EC install instead of the fourth teardown call,

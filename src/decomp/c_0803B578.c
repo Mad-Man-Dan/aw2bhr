@@ -11,7 +11,7 @@
 /* A proc callback with no `bl` callers anywhere in asm/ -- it is reached only
  * through a ProcCmd table -- so the parameter is the proc pointer every such
  * entry point receives, and include/unknown-functions.h deliberately does not
- * declare it. It reads one slot, the halfword at +0x64 that sub_0803B5A4 writes
+ * declare it. It reads one slot, the halfword at +0x64 that FadeOutMusic writes
  * when it starts this proc's script, and replays it as a song id.
  *
  * unk64 is `s16` HERE and `u16` in the two other files that describe the same
@@ -37,7 +37,7 @@ struct UnkB578Proc
  * the fade down, parking the speed in the proc's +0x64 slot scaled by 16. It
  * no-ops when the requested-song slot still holds the 0xFFFF sentinel, i.e.
  * when there is nothing playing to fade. Its counterpart
- * src/decomp/c_0803B5E8.c is the `sub_0803B5A4(2)` wrapper.
+ * src/decomp/c_0803B5E8.c is the `FadeOutMusic(2)` wrapper.
  *
  * THE PARAMETER IS `int`, AND include/unknown-functions.h DECLARED IT `s16`
  * FROM WAVE 7 UNTIL THIS ONE. The prologue is a bare `adds r4, r0, #0`: the
@@ -63,10 +63,11 @@ struct UnkB5A4Proc
     /* 0x64 */ u16 unk64;
 };
 
-void sub_0803B578(struct UnkB578Proc *proc)
+void PlayMusicAfterFade_PlayMusic(struct UnkB578Proc *proc)
 {
-    sub_0803B524(proc->unk64);
+    PlayMusic(proc->unk64);
 }
+asm(".global sub_0803B578\n.thumb_set sub_0803B578, PlayMusicAfterFade_PlayMusic\n");
 
 /* Stop everything: blank the requested-song slot to the 0xFFFF sentinel and
  * call m4aMPlayAllStop, whose body is a fixed eleven-iteration loop stopping every
@@ -81,7 +82,7 @@ void sub_0803B588(void)
     m4aMPlayAllStop();
 }
 
-void sub_0803B5A4(int a)
+void FadeOutMusic(int a)
 {
     struct UnkB5A4Proc *proc;
 
@@ -96,3 +97,4 @@ void sub_0803B5A4(int a)
         proc->unk64 = a << 4;
     }
 }
+asm(".global sub_0803B5A4\n.thumb_set sub_0803B5A4, FadeOutMusic\n");

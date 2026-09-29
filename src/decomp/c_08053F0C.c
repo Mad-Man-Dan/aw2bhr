@@ -19,7 +19,7 @@
  * count arguments: the pointer is loaded before the flag test, and r0 and r1
  * are the registers that test needs, so the allocator had nowhere lower to put
  * it. include/unknown-globals.h records that with the table's declaration. */
-void sub_08053F0C(void)
+void RunBattleAnimStepHandler(void)
 {
     void (*f)(void) = gUnknown_08553734[gUnknown_030045A0[gUnknown_0300450C]];
 
@@ -31,30 +31,33 @@ void sub_08053F0C(void)
 
     f();
 }
+asm(".global sub_08053F0C\n.thumb_set sub_08053F0C, RunBattleAnimStepHandler\n");
 
 /* Steps both channels of the cutscene player. gUnknown_0300450C is bound in r4
  * and RELOADED for the second call, which is what two separate reads of a
  * plain global give. */
-void sub_08053F50(void)
+void BattleAnimStep_Full(void)
 {
-    sub_08053FBC(gUnknown_0300450C);
-    sub_0805414C(gUnknown_0300450C);
-    sub_08054278(0);
-    sub_08054278(1);
-    sub_08054488(0);
-    sub_08054488(1);
-    sub_08053660(0);
-    sub_08053660(1);
+    StepShotFireTimeline(gUnknown_0300450C);
+    StepShotReturnTimeline(gUnknown_0300450C);
+    StepThirdEffectTimeline(0);
+    StepThirdEffectTimeline(1);
+    StepHitTimeline(0);
+    StepHitTimeline(1);
+    StepDeathTimeline(0);
+    StepDeathTimeline(1);
 }
+asm(".global sub_08053F50\n.thumb_set sub_08053F50, BattleAnimStep_Full\n");
 
-/* sub_08053F50 without the two script-advancing calls -- the same six
+/* BattleAnimStep_Full without the two script-advancing calls -- the same six
  * per-channel steps. */
-void sub_08053F90(void)
+void BattleAnimStep_NoShots(void)
 {
-    sub_08054278(0);
-    sub_08054278(1);
-    sub_08054488(0);
-    sub_08054488(1);
-    sub_08053660(0);
-    sub_08053660(1);
+    StepThirdEffectTimeline(0);
+    StepThirdEffectTimeline(1);
+    StepHitTimeline(0);
+    StepHitTimeline(1);
+    StepDeathTimeline(0);
+    StepDeathTimeline(1);
 }
+asm(".global sub_08053F90\n.thumb_set sub_08053F90, BattleAnimStep_NoShots\n");

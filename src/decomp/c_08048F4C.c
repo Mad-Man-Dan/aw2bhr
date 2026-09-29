@@ -20,7 +20,7 @@
  * kind-4 cross-jump label (W59-D showed the shared `strb` is byte-exact).
  * Seven compiler profiles were swept by the wave-80 orchestrator: none helps.
  *
- * The lever is the one the MATCHED TWIN sub_08047F70 (src/decomp/c_08047F70.c)
+ * The lever is the one the MATCHED TWIN UnitList_HandleInput (src/decomp/c_08047F70.c)
  * already carries: the comparison's left operand is an ASSIGNMENT to a dead
  * `int` local, `((v = p->unk01e) == p->unk020) && p->unk01e != 0`, and the
  * follow-up store is `p->unk020 = p->unk01e - 1`. With the load bound to a
@@ -36,7 +36,7 @@
  * STORE itself"; the measured lever is on the LOAD side of the comparison, and
  * the matched twin had been carrying it since wave 30. Grep src/decomp/ for
  * the twin's spelling before probing (the wave-77 rule). */
-void sub_08048F4C(void)
+void ShopList_HandleInput(void)
 {
     struct Unk084C30F8 *p;
     int v;
@@ -78,3 +78,4 @@ void sub_08048F4C(void)
 
     sub_080488E0();
 }
+asm(".global sub_08048F4C\n.thumb_set sub_08048F4C, ShopList_HandleInput\n");

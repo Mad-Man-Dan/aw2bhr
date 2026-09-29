@@ -21,5 +21,5 @@
  */
 void sub_08052F14(void)
 {
-    sub_08052F3C();
+    BattleAnimParamMenu_ResetToDefaults();
 }

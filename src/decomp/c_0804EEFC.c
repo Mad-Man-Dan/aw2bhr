@@ -23,7 +23,7 @@ struct Unk4EEFCPair
     /* 0x02 */ u16 y;
 };
 
-void sub_0804EEFC(void)
+void WholeFigure_Init(void)
 {
     struct OamData oam;
     u16 pal;
@@ -64,3 +64,4 @@ void sub_0804EEFC(void)
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x,
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
 }
+asm(".global sub_0804EEFC\n.thumb_set sub_0804EEFC, WholeFigure_Init\n");

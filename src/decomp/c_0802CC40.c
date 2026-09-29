@@ -9,10 +9,10 @@
 
 int sub_0802CC40(void)
 {
-    if (!sub_0802C8F8())
+    if (!UnitMenu_JoinUsability())
         return 1;
 
-    if (!sub_0802CBA0())
+    if (!UnitMenu_LoadUsability())
         return 1;
 
     if (!HasSupplyAbility((u8 *)gUnknown_030040D8))

@@ -14,7 +14,7 @@ struct Unk0803ABDC
     /* 0x1e */ s16 unk1e;
 };
 
-void sub_0803ABDC(struct Unk0803ABDC *p)
+void DebugFlagControl_Loop(struct Unk0803ABDC *p)
 {
     int i;
 
@@ -42,3 +42,4 @@ void sub_0803ABDC(struct Unk0803ABDC *p)
             p->unk1e++;
     }
 }
+asm(".global sub_0803ABDC\n.thumb_set sub_0803ABDC, DebugFlagControl_Loop\n");

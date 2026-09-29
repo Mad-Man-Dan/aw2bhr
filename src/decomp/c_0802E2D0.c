@@ -41,7 +41,7 @@
  *    `void sub_0801FE68(void)` and its body reads nothing from r0; the
  *    unknown-functions.h note asking for its signature to be "fixed" is wrong
  *    and has been corrected there. This call site really is
- *    `movs r0,#0x40; bl sub_0801FE68`, so sub_0802E2D0's own translation unit
+ *    `movs r0,#0x40; bl sub_0801FE68`, so MapCursor_OnPressB's own translation unit
  *    saw a declaration taking an argument -- a cross-TU prototype disagreement
  *    that agbcc cannot see and that costs nothing at either end. The file-local
  *    `void sub_0801FE68(int);` below reproduces it. LEAVE c_0801FE68.c ALONE.
@@ -57,7 +57,7 @@
  * rather than through a `map` local, which is the W34-F rule that
  * c_08003DC4.c records; that is what gives `(p + K) + idx` rather than
  * `(p + idx) + K`. Every use in the function -- including the
- * `sub_0803E9F8`/`SetWorkingMapPlane` setup calls -- must name `gMap`, since
+ * `MarkInventionFireArea`/`SetWorkingMapPlane` setup calls -- must name `gMap`, since
  * agbcc's CSE only reuses a pointer load across identical symbols (see
  * sub_08057D90 for the fuller writeup). */
 
@@ -65,21 +65,21 @@ struct Unk0803E9F8;
 void sub_08024404(void);
 void sub_0802E2BC(void);
 void sub_080201E0(s16, s16, struct Unit *);
-int sub_0803E9F8(struct Unk0803E9F8 *, u8 *, u8, u8);
+int MarkInventionFireArea(struct Unk0803E9F8 *, u8 *, u8, u8);
 int sub_08041FE0(struct Unit *);
 int sub_0804203C(struct Unit *);
 void sub_0801FE68(int);
 
-u8 sub_0802E2D0(s16 x, s16 y)
+u8 MapCursor_OnPressB(s16 x, s16 y)
 {
     struct Unk02028360 *unit;
     u8 a;
     u8 b;
 
-    unit = sub_0803DE94(x, y);
+    unit = FindInventionAt(x, y);
 
     if (unit != NULL
-     && (u8)sub_0803E9F8((struct Unk0803E9F8 *)unit,
+     && (u8)MarkInventionFireArea((struct Unk0803E9F8 *)unit,
                          gMap->move, 0xFF, 0))
     {
         sub_08024404();
@@ -145,3 +145,4 @@ u8 sub_0802E2D0(s16 x, s16 y)
     sub_0803B4DC(0x69);
     return 1;
 }
+asm(".global sub_0802E2D0\n.thumb_set sub_0802E2D0, MapCursor_OnPressB\n");

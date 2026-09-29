@@ -22,7 +22,7 @@
  *
  * gUnknown_03004570 had to be retyped s16 -- see the comment on its
  * declaration. */
-void sub_080532D8(ProcPtr proc)
+void BattleAnimScene_OnEnd(ProcPtr proc)
 {
     int i;
     int j;
@@ -67,3 +67,4 @@ void sub_080532D8(ProcPtr proc)
     sub_08036B34();
     sub_0801F00C();
 }
+asm(".global sub_080532D8\n.thumb_set sub_080532D8, BattleAnimScene_OnEnd\n");

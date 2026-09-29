@@ -7,7 +7,8 @@
  * sub_0803BEF8 @ 0x0803BEF8
  */
 
-void sub_0803BEF8(void)
+void Versus_ResetCoPickIndex(void)
 {
     gUnknown_0849ECDC->unk01 = 0;
 }
+asm(".global sub_0803BEF8\n.thumb_set sub_0803BEF8, Versus_ResetCoPickIndex\n");

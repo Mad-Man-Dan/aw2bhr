@@ -18,6 +18,6 @@
 
 void sub_0805315C(void)
 {
-    sub_080553C8();
-    sub_08054C04();
+    PlanBattleAnim();
+    LoadBattleAnimScene();
 }

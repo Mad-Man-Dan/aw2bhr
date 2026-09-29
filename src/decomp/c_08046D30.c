@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08046D30(void)
+void TerrainInfoInput_Loop(void)
 {
     sub_08023274(2);
 
@@ -32,7 +32,7 @@ void sub_08046D30(void)
         {
             sub_0803B4DC(0x67);
             sub_08012BC8(gBG0TilemapBuffer, (gUnknown_02028DD5 >> 3) + 1, 0xb, 0xc, 8, 0);
-            sub_08046778(gUnknown_02028DD5, gUnknown_02028DD6);
+            DrawTerrainInfoMoveCosts(gUnknown_02028DD5, gUnknown_02028DD6);
             gUnknown_02028DD4 = 1;
             sub_08014878();
         }
@@ -42,13 +42,14 @@ void sub_08046D30(void)
     if (gpKeySt->pressed & (B_BUTTON | R_BUTTON))
     {
         sub_08014878();
-        sub_080470E8();
+        EndTerrainInfoWindowScript();
         sub_08015C30(gUnknown_03001FBC);
         sub_0803B4DC(0x66);
     }
 }
+asm(".global sub_08046D30\n.thumb_set sub_08046D30, TerrainInfoInput_Loop\n");
 
-void sub_08046E48(void)
+void TerrainInfoWindow_Init(void)
 {
     u8 *src;
     u16 *pal;
@@ -114,7 +115,7 @@ void sub_08046E48(void)
 
     case 1:
         sub_08046914(gUnknown_02028DD5, gUnknown_02028DD6);
-        sub_08046778(gUnknown_02028DD5, gUnknown_02028DD6);
+        DrawTerrainInfoMoveCosts(gUnknown_02028DD5, gUnknown_02028DD6);
         break;
 
     case 2:
@@ -127,3 +128,4 @@ void sub_08046E48(void)
     sub_0802465C();
     sub_0803B4DC(0x65);
 }
+asm(".global sub_08046E48\n.thumb_set sub_08046E48, TerrainInfoWindow_Init\n");

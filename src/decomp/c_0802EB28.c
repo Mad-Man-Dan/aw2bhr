@@ -27,7 +27,7 @@
  * gUnknown_0300055C and gUnknown_03000564 are both volatile; see their notes
  * in unknown-globals.h. Three of the reloads here are the only evidence in the
  * ROM that 0x03000564 is. */
-int sub_0802EB28(void)
+int SioPollingMsg(void)
 {
     int v;
 
@@ -73,3 +73,4 @@ int sub_0802EB28(void)
 
     return -1;
 }
+asm(".global sub_0802EB28\n.thumb_set sub_0802EB28, SioPollingMsg\n");

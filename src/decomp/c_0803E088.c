@@ -7,7 +7,7 @@
  * sub_0803E088 @ 0x0803E088
  */
 
-/* The object sub_0803E01C hands back. Only +3, +5, +6 and +7 are named; +3 is
+/* The object AddInventionRecord hands back. Only +3, +5, +6 and +7 are named; +3 is
  * BITFIELDS and not a scalar mask -- the clear of bits 2..5 is
  * `movs r2, #0x3d; rsbs r2, r2, #0`, the mov/neg form a scalar `&= ~0x3c`
  * would have narrowed to a bare `movs #0xc3`. */
@@ -26,7 +26,7 @@ struct Unk3E01C
 void *sub_0803E088(int a1, int a2, int a3, int a4, int a5, int a6,
                    int a7, int a8, int a9, int a10)
 {
-    struct Unk3E01C *p = sub_0803E01C(a1, a2, a3, a4, a5, a6);
+    struct Unk3E01C *p = AddInventionRecord(a1, a2, a3, a4, a5, a6);
 
     p->unk05 = a7;
     p->unk03_6 = a9;

@@ -29,7 +29,7 @@ struct UnkB6A8Proc
  * gUnknown_0849E778's address is loaded once into r5 and reused for both
  * Proc_Find and Proc_EndEach -- one pool word, so the script is named once in
  * the source and CSE'd, not spelled twice. */
-void sub_0803B700(struct UnkB6A8Proc *proc)
+void MusicDuckRelease_Init(struct UnkB6A8Proc *proc)
 {
     struct UnkB6A8Proc *other = Proc_Find(gUnknown_0849E778);
 
@@ -41,14 +41,16 @@ void sub_0803B700(struct UnkB6A8Proc *proc)
     }
     proc->unk64 = 0;
 }
+asm(".global sub_0803B700\n.thumb_set sub_0803B700, MusicDuckRelease_Init\n");
 
-/* sub_0803B6A8 with the two middle Interpolate endpoints SWAPPED: this one
+/* MusicDuck_Loop with the two middle Interpolate endpoints SWAPPED: this one
  * runs from proc->unk54 to 0x100, the other from 0x100 to proc->unk54. The
  * whole difference is which argument register receives the `ldr [r4,#0x54]`
  * and which receives the `movs #0x80; lsls #1`. */
-void sub_0803B734(struct UnkB6A8Proc *proc)
+void MusicDuckRelease_Loop(struct UnkB6A8Proc *proc)
 {
     if (proc->unk64 > 0x13)
         Proc_Break(proc);
-    sub_0803B35C(Interpolate(0, proc->unk54, 0x100, proc->unk64++, 0x14));
+    SetMusicVolume(Interpolate(0, proc->unk54, 0x100, proc->unk64++, 0x14));
 }
+asm(".global sub_0803B734\n.thumb_set sub_0803B734, MusicDuckRelease_Loop\n");

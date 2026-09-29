@@ -7,7 +7,7 @@
  * sub_08034394 @ 0x08034394, sub_080343D8 @ 0x080343D8
  */
 
-/* sub_080309AC returns s16 -- the `lsls #0x10; asrs #0x10` on the result is a
+/* LinkReceiveCommand returns s16 -- the `lsls #0x10; asrs #0x10` on the result is a
  * re-narrowing at the call site, and -1 needs `movs #1; rsbs #0` because THUMB
  * `cmp rN, #imm8` cannot hold it. The `beq` skipping the three stores is the
  * negation of the source `if`, so the source condition is `!= -1`. */
@@ -15,7 +15,7 @@ void sub_08034394(void)
 {
     sub_08034598();
 
-    if (sub_080309AC(&gUnknown_030046C0, sub_08034380) != -1)
+    if (LinkReceiveCommand(&gUnknown_030046C0, sub_08034380) != -1)
     {
         gUnknown_03004780 = 3;
         gUnknown_030045D4 = 0;

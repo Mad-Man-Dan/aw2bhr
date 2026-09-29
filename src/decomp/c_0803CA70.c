@@ -19,7 +19,7 @@
  * same `s = &gUnknown_02028030` two-step that keeps `adds r0, #0x12` out of
  * the relocation addend -- and the assignment must sit AFTER the call or the
  * address is held across it in a callee-saved register. */
-u8 sub_0803CA70(u32 id)
+u8 IsCampaignMapUnlockedByMapData(u32 id)
 {
     struct Unk02028030 *s;
     u32 idx;
@@ -34,3 +34,4 @@ u8 sub_0803CA70(u32 id)
 
     return (1 << (id & 7)) & *p;
 }
+asm(".global sub_0803CA70\n.thumb_set sub_0803CA70, IsCampaignMapUnlockedByMapData\n");

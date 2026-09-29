@@ -25,9 +25,10 @@
  *
  * The two `bl`s are two statements: the second callee never reads r0 before
  * writing it, so a nest is not expressible in C. */
-void sub_0802CE94(void *a, u8 b)
+void OptionsMenu_Yield(void *a, u8 b)
 {
     gUnknown_030044A0 = b;
     CloseTopMenu();
     sub_0802C1B0();
 }
+asm(".global sub_0802CE94\n.thumb_set sub_0802CE94, OptionsMenu_Yield\n");

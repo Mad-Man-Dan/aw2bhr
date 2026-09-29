@@ -22,7 +22,7 @@
  * unk3d: this function's cursor is biased, so it addresses unk3d[1..] as the
  * old unk3e[0..]. Writing it that way -- `q->co[i + 1]` -- produces the
  * ROM's five instructions exactly, and it is the same index expression the
- * MATCHED sub_0803C1D4 uses against all four of these arrays.
+ * MATCHED ApplyMatchSettingsRecord uses against all four of these arrays.
  *
  * WHY IT WORKS, and this is the transferable part. The wanted code is
  *     ldr r1,=gPlaySt ; ldrb r0,[..,#1] ; adds r1,r1,r0 ; adds r1,#0x3e

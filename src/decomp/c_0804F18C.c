@@ -7,7 +7,7 @@
  * sub_0804F18C @ 0x0804F18C
  */
 
-/* MATCHED (wave 87, W87-B) -- see work/sub_0804F18C/W87-notes.md.
+/* MATCHED (wave 87, W87-B) -- see work/BomberFigure_Init/W87-notes.md.
  * Permuter win from a hand-built 99.3% draft; body kept verbatim as the
  * permuter emitted it (wave-83 rule: do not tidy a permuter win).  Three
  * constructs closed a 68-wave "register allocation only" park:
@@ -34,7 +34,7 @@ static inline int inline_fn(int arg0, u16 arg1)
     return ((s16)arg0) + arg1;
 }
 
-void sub_0804F18C(void)
+void BomberFigure_Init(void)
 {
   struct OamData oam;
   u16 pal;
@@ -69,6 +69,7 @@ void sub_0804F18C(void)
   gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x = inline_fn(v, gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk04);
   gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06 = (e2 = &pos[(gUnknown_0300453C * 5) + gUnknown_0300451C])->y;
   gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y = gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06;
-  sub_0804BCB8(gUnknown_0300453C, gUnknown_0300451C, 0, 0x32);
+  StartFigureEntrySlide(gUnknown_0300453C, gUnknown_0300451C, 0, 0x32);
   sub_080155C0(gUnknown_03001FBC, inline_fn(v, gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x), gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);
 }
+asm(".global sub_0804F18C\n.thumb_set sub_0804F18C, BomberFigure_Init\n");

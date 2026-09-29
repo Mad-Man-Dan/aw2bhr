@@ -22,15 +22,16 @@
  * int/u32/u16/s16, and the prologue does not narrow r0.
  * `pop {r0}; bx r0` -> void. */
 
-void sub_0803B35C(int a)
+void SetMusicVolume(int a)
 {
     gUnknown_030005CE = a;
     MPlayVolumeControl(gUnknown_03005AE0, 0xFFFF, gUnknown_030005CE);
 }
+asm(".global sub_0803B35C\n.thumb_set sub_0803B35C, SetMusicVolume\n");
 
 /* The sound-subsystem reset: set both mixer knobs to 0x100, re-run
  * m4aSoundInit (m4aSoundInit), and blank the current/requested song id pair to
- * the 0xFFFF sentinel that sub_0803B524 and sub_0803B640 test against.
+ * the 0xFFFF sentinel that PlayMusic and sub_0803B640 test against.
  *
  * `movs r4,#0x80; lsls r4,r4,#1` is a PLAIN constant 0x100, not wave 23's
  * named-constant-local: the shift is minimal (0x100 is not an imm8) and both
@@ -42,7 +43,7 @@ void sub_0803B35C(int a)
 void sub_0803B37C(void)
 {
     sub_0803B350(0x100);
-    sub_0803B35C(0x100);
+    SetMusicVolume(0x100);
     m4aSoundInit();
 
     gUnknown_030005C8 = 0xFFFF;

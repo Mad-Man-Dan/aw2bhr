@@ -42,7 +42,7 @@ struct Unk2023830
     /* 0x02 */ u8 filler_02[0x02];
 };
 
-void sub_0802DA18(void)
+void DeploymentScreen_Loop(void)
 {
     struct Unk03001470 *ent;
     void *p;
@@ -68,7 +68,7 @@ void sub_0802DA18(void)
 
         if (FindFreeUnitSlot() == NULL)
         {
-            sub_0802DBE4();
+            ShowUnitLimitMessage();
             return;
         }
 
@@ -136,3 +136,4 @@ void sub_0802DA18(void)
     if (ent->unk1e + 7 < *(s16 *)&gUnknown_0300055A)
         sub_08043418(0x44, 0x96, 0xf);
 }
+asm(".global sub_0802DA18\n.thumb_set sub_0802DA18, DeploymentScreen_Loop\n");

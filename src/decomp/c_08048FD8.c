@@ -84,7 +84,7 @@ void BattleMaps_IDLE_08048FD9(ProcPtr proc)
     }
 
     if (n != 0)
-        sub_080485DC(gUnknown_084C24A0[gUnknown_084C30F8->unk839].unk00);
+        ShopScreen_StartMessage(gUnknown_084C24A0[gUnknown_084C30F8->unk839].unk00);
 
     Proc_Break(proc);
 }

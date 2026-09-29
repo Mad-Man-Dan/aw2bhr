@@ -14,8 +14,9 @@
  * The argument is passed on unchanged, so its type comes entirely from
  * StartEventScript's const u8 *; ->unk850 takes the same type for the same
  * reason. */
-void sub_080485DC(const u8 *script)
+void ShopScreen_StartMessage(const u8 *script)
 {
     gUnknown_084C30F8->unk850 = script;
     StartEventScript(script);
 }
+asm(".global sub_080485DC\n.thumb_set sub_080485DC, ShopScreen_StartMessage\n");

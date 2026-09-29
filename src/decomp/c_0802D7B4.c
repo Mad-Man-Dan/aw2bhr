@@ -42,7 +42,7 @@
  *
  * `i < 7` is the unsigned `cmp #6; bhi` at the loop bottom, and it is written
  * FIRST in the `&&` because the ROM tests it before re-reading the record. */
-void sub_0802D7B4(int a1)
+void DrawDeploymentList(int a1)
 {
     u8 buf[16];
     u16 base;
@@ -91,3 +91,4 @@ void sub_0802D7B4(int a1)
 
     sub_08013AEC();
 }
+asm(".global sub_0802D7B4\n.thumb_set sub_0802D7B4, DrawDeploymentList\n");

@@ -7,6 +7,7 @@
  * sub_0803ABD8 @ 0x0803ABD8
  */
 
-void sub_0803ABD8(void)
+void DebugScreenNoOp(void)
 {
 }
+asm(".global sub_0803ABD8\n.thumb_set sub_0803ABD8, DebugScreenNoOp\n");

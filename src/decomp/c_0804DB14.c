@@ -17,7 +17,7 @@ void sub_0804DB14(u16 a)
     gUnknown_0300451C = gUnknown_08552148[a];
     A = gUnknown_03004580[a][0];
     B = gUnknown_03004580[a][4];
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
     off = (a << 13) + 0x800;
     n = gUnknown_08552178[a][2] * 7;
     gUnknown_02029668[a][2] = sub_08015410(gUnknown_08553444, 1,

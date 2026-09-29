@@ -7,9 +7,9 @@
  * sub_0802CF48 @ 0x0802CF48, sub_0802CF6C @ 0x0802CF6C, sub_0802CF94 @ 0x0802CF94, sub_0802CFC0 @ 0x0802CFC0, sub_0802CFDC @ 0x0802CFDC
  */
 
-/* sub_0802CFC0's four-call sibling: the same `if (!(a3 & 2))` guard on the same
+/* MapMenu_Save's four-call sibling: the same `if (!(a3 & 2))` guard on the same
  * three-argument callback signature, with a longer body. See the note on
- * sub_0802CFC0 for why the third parameter is u8 and the first two are a floor
+ * MapMenu_Save for why the third parameter is u8 and the first two are a floor
  * rather than a reading.
  */
 
@@ -20,7 +20,7 @@ void sub_0802CF48(int a1, int a2, u8 a3)
         PushMenu();
         CloseTopMenu();
         sub_08034F10();
-        sub_080485AC();
+        StartUnitListScreen();
     }
 }
 
@@ -36,7 +36,7 @@ void sub_0802CF48(int a1, int a2, u8 a3)
  * third independent reader of it, and unk2e is the payload it gates.
  */
 
-void sub_0802CF6C(void)
+void MapMenu_End(void)
 {
     CloseTopMenu();
     sub_08042B9C();
@@ -44,6 +44,7 @@ void sub_0802CF6C(void)
     if (gPlaySt.savingEnabled != 0)
         sub_080344F0(gPlaySt.unk2e);
 }
+asm(".global sub_0802CF6C\n.thumb_set sub_0802CF6C, MapMenu_End\n");
 
 /* A wrapping 0-1-2 counter published to sub_08035020.
  *
@@ -89,14 +90,15 @@ void sub_0802CF94(void)
  * statements and this is void.
  */
 
-void sub_0802CFC0(int a1, int a2, u8 a3)
+void MapMenu_Save(int a1, int a2, u8 a3)
 {
     if (!(a3 & 2))
     {
         CloseTopMenu();
-        sub_0802C280();
+        StartSaveConfirmScript();
     }
 }
+asm(".global sub_0802CFC0\n.thumb_set sub_0802CFC0, MapMenu_Save\n");
 
 /* sub_0802C1D0's twin, one block down: the same
  * `sub_08016D04(gPlaySt.gameMode)` result handed to a u16-taking

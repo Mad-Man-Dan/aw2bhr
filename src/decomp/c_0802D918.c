@@ -7,7 +7,7 @@
  * sub_0802D918 @ 0x0802D918
  */
 
-void sub_0802D918(void)
+void DeploymentScreen_Init(void)
 {
     struct Unk03001470 *proc;
 
@@ -23,9 +23,10 @@ void sub_0802D918(void)
 
     sub_0802D7B0();
     sub_0801A444(1, 4, 0xf, 0x10);
-    sub_0802D7B4(0);
+    DrawDeploymentList(0);
     sub_08022AD0(8, 0x28);
     sub_0803B4DC(0x65);
     sub_0803A9C8(gUnknown_02023830[0]);
     sub_0802776C(1);
 }
+asm(".global sub_0802D918\n.thumb_set sub_0802D918, DeploymentScreen_Init\n");

@@ -7,9 +7,9 @@
  * sub_0804BFC0 @ 0x0804BFC0
  */
 
-/* The sub_0804EEFC OAM-rebuild idiom with the tail cut off: fetch the slot's
+/* The WholeFigure_Init OAM-rebuild idiom with the tail cut off: fetch the slot's
  * attributes with sub_0801566C, rewrite four bitfields, hand them back with
- * sub_08015608. Every global it touches is a strict subset of sub_0804EEFC's,
+ * sub_08015608. Every global it touches is a strict subset of WholeFigure_Init's,
  * so the type model came over whole and nothing here is newly declared -- the
  * data_refs-subset axis delivering exactly what it claims.
  *

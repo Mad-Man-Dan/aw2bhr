@@ -18,11 +18,12 @@ struct UnkD8E8Proc
     /* 4c */ void (*unk4c)(void);
 };
 
-void sub_0803D8E8(struct UnkD8E8Proc *proc)
+void SaveScreen_RunCallback(struct UnkD8E8Proc *proc)
 {
     if (proc->unk4c != NULL)
         proc->unk4c();
 }
+asm(".global sub_0803D8E8\n.thumb_set sub_0803D8E8, SaveScreen_RunCallback\n");
 
 /* Reads the byte sub_0803D8C0/sub_0803D92C stashed at struct Unk0200C528's
  * +0x10 -- signed for the `== 6` test (`ldrsb`), then re-loaded `ldrb` as

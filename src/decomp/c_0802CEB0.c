@@ -7,7 +7,7 @@
  * sub_0802CEB0 @ 0x0802CEB0, sub_0802CEFC @ 0x0802CEFC
  */
 
-void sub_0802CEB0(void)
+void MapMenu_Power(void)
 {
     u8 *p;
 
@@ -22,8 +22,9 @@ void sub_0802CEB0(void)
     PayForCoPower(gUnknown_030033EC, 1);
     sub_08024268();
 }
+asm(".global sub_0802CEB0\n.thumb_set sub_0802CEB0, MapMenu_Power\n");
 
-void sub_0802CEFC(void)
+void MapMenu_SuperPower(void)
 {
     u8 *p;
 
@@ -38,3 +39,4 @@ void sub_0802CEFC(void)
     PayForCoPower(gUnknown_030033EC, 2);
     sub_08024268();
 }
+asm(".global sub_0802CEFC\n.thumb_set sub_0802CEFC, MapMenu_SuperPower\n");

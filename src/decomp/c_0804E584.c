@@ -8,7 +8,7 @@
  */
 
 #include "hardware.h"
-/* Third member of the sub_0804D290 / sub_0804DCA8 family (both matched, both
+/* Third member of the CruiserFigure_Init / BattleshipFigure_Init family (both matched, both
  * 600 B) -- same subsystem, same `pos` reseed out of sub_08057D44, same
  * `entry->x - *ox` tail. The two levers that closed those two do NOT transfer,
  * and that was measured rather than assumed (see docs/agbcc-codegen.md):
@@ -45,7 +45,7 @@ struct UnkPosPair
 };
 void sub_0804BFC0(u16, u16, s16);
 
-void sub_0804E584(void)
+void GroundFigure_Init(void)
 {
     int x0;
     struct UnkPosPair (*pos)[10];
@@ -84,7 +84,7 @@ void sub_0804E584(void)
     gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y =
         gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06;
 
-    sub_0804BCB8(gUnknown_0300453C, gUnknown_0300451C,
+    StartFigureEntrySlide(gUnknown_0300453C, gUnknown_0300451C,
                  gUnknown_0855214C[gUnknown_0300453C], 0x32);
 
     ox = gUnknown_084C3F70[gUnknown_0300453C];
@@ -97,3 +97,4 @@ void sub_0804E584(void)
         gUnknown_08552FB8[gUnknown_03004580[gUnknown_0300453C][1]]
                          [gUnknown_03004580[gUnknown_0300453C][2]][2]);
 }
+asm(".global sub_0804E584\n.thumb_set sub_0804E584, GroundFigure_Init\n");

@@ -15,7 +15,7 @@
  * is re-emitted as an ordinary inline-pool reloc, DELETES gUnknown_03003340's
  * -fforce-addr .rodata word (0x0816D9CC).  Written as a goto loop there is no
  * NOTE_INSN_LOOP_BEG, LICM never runs, and all three come back at once.
- * This is wave 49's `sub_080309AC` / `sub_08030B00` finding applied to the
+ * This is wave 49's `LinkReceiveCommand` / `LinkReceiveBlock` finding applied to the
  * measurement the -fforce-addr chapter itself was still citing as open. */
 
 void sub_0805B778(void)

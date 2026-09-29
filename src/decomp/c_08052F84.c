@@ -10,7 +10,7 @@
 #include "hardware.h"
 #include "proc.h"
 
-/* Wave 50, W50-F. A debug-menu tick: sub_08057464 draws the readout, this
+/* Wave 50, W50-F. A debug-menu tick: DrawBattleAnimDebugReadout draws the readout, this
  * reads the pad and edits the value under the cursor.
  *
  * Every `ldr rN,=gUnknown_0813xxxx; ldr rM,[rN]` pair here is agbcc's own
@@ -24,18 +24,18 @@
  * -- see the comments on both in include/unknown-globals.h. The two share one
  * index expression, which is why the ROM computes the byte offset once and adds
  * each base to it separately. */
-void sub_08052F84(ProcPtr proc)
+void BattleAnimParamMenu_Loop(ProcPtr proc)
 {
     int i;
     int j;
 
-    sub_08057464();
+    DrawBattleAnimDebugReadout();
 
     if (gpKeySt->pressed & 4)
-        sub_08052F3C();
+        BattleAnimParamMenu_ResetToDefaults();
 
     if (gpKeySt->repeated & DPAD_ANY)
-        sub_08054BA0();
+        MoveBattleAnimParamCursor();
 
     if (gpKeySt->pressed & L_BUTTON)
         gUnknown_030045AC ^= 1;
@@ -74,3 +74,4 @@ void sub_08052F84(ProcPtr proc)
         Proc_End(proc);
     }
 }
+asm(".global sub_08052F84\n.thumb_set sub_08052F84, BattleAnimParamMenu_Loop\n");

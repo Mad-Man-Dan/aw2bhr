@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_0803B828(void)
+void StartMainMenu(void)
 {
     Proc_Start(ProcScr_MainMenu, PROC_TREE_3);
 }
+asm(".global sub_0803B828\n.thumb_set sub_0803B828, StartMainMenu\n");

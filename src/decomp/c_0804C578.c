@@ -11,8 +11,8 @@
  * the ROM scales r0 -- still holding the zero-extended argument -- with
  * `lsls r1, r0, #1` after the `strh`, and never reloads the global.
  *
- * The trailing `bl sub_0804C400` has no argument setup because r0 already holds
- * that same value; the declared `void sub_0804C400(u16)` and the two matched
+ * The trailing `bl SpawnWholeFigure` has no argument setup because r0 already holds
+ * that same value; the declared `void SpawnWholeFigure(u16)` and the two matched
  * F086 wrappers beside it (src/decomp/c_0804C488.c) fix it as an argument.
  *
  * u16 parameter by PROMOTE_MODE: `lsls #0x10; lsrs #0x10` at entry. */
@@ -20,5 +20,5 @@ void sub_0804C578(u16 a)
 {
     gUnknown_0300453C = a;
     gUnknown_0300451C = gUnknown_08552148[a];
-    sub_0804C400(a);
+    SpawnWholeFigure(a);
 }

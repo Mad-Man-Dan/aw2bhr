@@ -14,7 +14,7 @@
  * 0x08090CB4/CB8/CBC/CE0/CE4/CE8 hold 0849B01C/0849B018/0849B018/0849B018/
  * 0849B018/0849B018 respectively -- six pool words, two objects, zero globals.
  *
- * sub_08030B00 is this function's TWIN: byte-identical but for its own pool
+ * LinkReceiveBlock is this function's TWIN: byte-identical but for its own pool
  * word (0x08090CE4) and a 128-byte payload where this one copies 20. The same
  * C matched both with only the loop bound changed.
  *
@@ -54,7 +54,7 @@
  * is left alone and the `(u8)` cast carries the narrowing -- see the existing
  * W43-C note recording the same disagreement. */
 
-s16 sub_080309AC(void *a1, int (*fn)(u8 *))
+s16 LinkReceiveCommand(void *a1, int (*fn)(u8 *))
 {
     struct Unk08090CD8Entry *entry;
     u8 army;
@@ -101,16 +101,17 @@ again:
     gUnknown_0849B018->unk1aae &= 0xF;
     return army;
 }
+asm(".global sub_080309AC\n.thumb_set sub_080309AC, LinkReceiveCommand\n");
 
 /* MATCHED (wave 49, W49-B). Needs its .rodata pool word placed:
  *   "rodata": ["0x08090CE4"]
  * -- an agbcc -fforce-addr word holding &gUnknown_0849B018, confirmed by
  * dereferencing baserom.gba, not a global.
  *
- * sub_080309AC's TWIN. The two functions are the same 340 bytes of the same
+ * LinkReceiveCommand's TWIN. The two functions are the same 340 bytes of the same
  * shape and differ in exactly two places: their private pool word, and the
  * payload length -- 20 there, 128 here. The whole derivation was done once on
- * sub_080309AC and instantiated; see that file for the three load-bearing
+ * LinkReceiveCommand and instantiated; see that file for the three load-bearing
  * findings (the goto loop, the unk24 member array, and binding `army` before
  * the pointer chain).
  *
@@ -122,7 +123,7 @@ again:
  * value directly and leaves the `lsrs` un-coalesced. That `bge` is an ASCENDING
  * loop, exactly as c_08030930.c records for the same idiom. */
 
-s16 sub_08030B00(void *a1, int (*fn)(u8 *))
+s16 LinkReceiveBlock(void *a1, int (*fn)(u8 *))
 {
     struct Unk08090CD8Entry *entry;
     u8 army;
@@ -169,3 +170,4 @@ again:
     gUnknown_0849B018->unk1aae &= 0xF;
     return army;
 }
+asm(".global sub_08030B00\n.thumb_set sub_08030B00, LinkReceiveBlock\n");

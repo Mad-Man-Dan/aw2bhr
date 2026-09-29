@@ -7,7 +7,7 @@
  * sub_080499F8 @ 0x080499F8
  */
 
-void sub_080499F8(void)
+void ShopScreen_DrawSprites(void)
 {
     PutOamHi(0x7f, 0, gUnknown_084C30FC, 0x6ceb);
 
@@ -33,3 +33,4 @@ void sub_080499F8(void)
     PutSprite(1, 0x40, 0x2c, gUnknown_0848B6BE, 0x8c9f);
     PutSprite(1, 0x60, 0x2c, gUnknown_0848B6BE, 0x8ca7);
 }
+asm(".global sub_080499F8\n.thumb_set sub_080499F8, ShopScreen_DrawSprites\n");

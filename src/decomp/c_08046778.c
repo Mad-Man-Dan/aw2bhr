@@ -44,7 +44,7 @@
  * argument. One source expression, two expansions.
  */
 
-void sub_08046778(u8 a, u8 b)
+void DrawTerrainInfoMoveCosts(u8 a, u8 b)
 {
   s8 *new_var3;
   u16 i;
@@ -69,3 +69,4 @@ void sub_08046778(u8 a, u8 b)
 
   sub_08013AEC();
 }
+asm(".global sub_08046778\n.thumb_set sub_08046778, DrawTerrainInfoMoveCosts\n");

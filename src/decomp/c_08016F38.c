@@ -119,7 +119,7 @@ void CaptureBattleSaveState(u8 enabled)
             save->units[i * 51 + j] = gUnknown_02022684[i * 64 + j];
     for (i = 0; i < 16; i++)
         save->unk0d28[i] = gUnknown_02028360[i];
-    sub_08045700(save->unk0da8);
+    CompressPipeSeamHpPlane(save->unk0da8);
 }
 
 asm(".global sub_08016F38\n.thumb_set sub_08016F38, CaptureBattleSaveState\n");

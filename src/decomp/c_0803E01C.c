@@ -7,7 +7,7 @@
  * sub_0803E01C @ 0x0803E01C
  */
 
-void *sub_0803E01C(int a1, int a2, int a3, int a4, int a5, int a6)
+void *AddInventionRecord(int a1, int a2, int a3, int a4, int a5, int a6)
 {
     struct Unk02028360 *p;
 
@@ -21,3 +21,4 @@ void *sub_0803E01C(int a1, int a2, int a3, int a4, int a5, int a6)
     p->unk04 = a6;
     return p;
 }
+asm(".global sub_0803E01C\n.thumb_set sub_0803E01C, AddInventionRecord\n");

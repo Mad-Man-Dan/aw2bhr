@@ -21,7 +21,7 @@
  * member offset to it at each use (`adds r0, r3, #8` / `adds r0, r3, #2`),
  * which is 4 bytes long and puts v in the wrong register. Binding the row to a
  * `u16 *` is what folds the offsets into the load displacements. */
-void sub_08050528(u16 a1, s16 a2, s16 a3, s16 a4)
+void SetEffectScreenPosition(u16 a1, s16 a2, s16 a3, s16 a4)
 {
     u16 *ox;
     u16 *oy;
@@ -41,3 +41,4 @@ void sub_08050528(u16 a1, s16 a2, s16 a3, s16 a4)
 
     sub_080155C0(a2, a3 - v, a4 - *oy);
 }
+asm(".global sub_08050528\n.thumb_set sub_08050528, SetEffectScreenPosition\n");

@@ -9,6 +9,6 @@
 
 void sub_08032104(void)
 {
-    gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, 15, 2);
+    gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, 15, 2);
     gUnknown_0300410C = gUnknown_030040CC;
 }

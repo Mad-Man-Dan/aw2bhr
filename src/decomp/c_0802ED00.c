@@ -19,10 +19,11 @@
  *
  * 0x6080 is `movs #0xc1; lsls #7`, and the `adds r1, r3, #0` beside it is
  * agbcc keeping the constant in its own register for the `orrs`. */
-void sub_0802ED00(void)
+void SioHandleIrq_Timer3(void)
 {
     REG_TM3CNT_H = 0;
 
     if (gUnknown_03000570 != 0 || (gUnknown_03000564 & 3) == 2)
         REG_SIOCNT = gUnknown_03000560 | 0x6080;
 }
+asm(".global sub_0802ED00\n.thumb_set sub_0802ED00, SioHandleIrq_Timer3\n");

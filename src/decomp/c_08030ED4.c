@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08030ED4(void)
+void LinkShutdown(void)
 {
     sub_0802F348();
     REG_RCNT = 0;
@@ -20,3 +20,4 @@ void sub_08030ED4(void)
     gUnknown_0849B018->unk06 = 0xff;
     gPlaySt.savingEnabled = 0;
 }
+asm(".global sub_08030ED4\n.thumb_set sub_08030ED4, LinkShutdown\n");

@@ -8,7 +8,7 @@
  */
 
 /* The pool word is the symbol's ADDRESS, not its contents, so this compares a
- * pointer argument against the script itself -- the same object sub_0802C280
+ * pointer argument against the script itself -- the same object StartSaveConfirmScript
  * and sub_0802C290 hand to StartEventScript / EndEventScript.
  */
 

@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0803BF98(void)
+void Versus_AssignRandomCos(void)
 {
     sub_08026290();
 }
+asm(".global sub_0803BF98\n.thumb_set sub_0803BF98, Versus_AssignRandomCos\n");

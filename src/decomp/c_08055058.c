@@ -7,7 +7,7 @@
  * sub_08055058 @ 0x08055058
  */
 
-u16 sub_08055058(u16 a, u16 b, u16 c, u16 d)
+u16 LoadDeathEffectArt(u16 a, u16 b, u16 c, u16 d)
 {
     u16 v[2];
     u16 side;
@@ -55,3 +55,4 @@ u16 sub_08055058(u16 a, u16 b, u16 c, u16 d)
     }
     return r;
 }
+asm(".global sub_08055058\n.thumb_set sub_08055058, LoadDeathEffectArt\n");

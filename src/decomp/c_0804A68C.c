@@ -7,7 +7,8 @@
  * sub_0804A68C @ 0x0804A68C
  */
 
-void sub_0804A68C(void)
+void NameEntry_DeleteChar(void)
 {
     gUnknown_030044E0->unk2c[gUnknown_030044E0->unk5d] = 0;
 }
+asm(".global sub_0804A68C\n.thumb_set sub_0804A68C, NameEntry_DeleteChar\n");

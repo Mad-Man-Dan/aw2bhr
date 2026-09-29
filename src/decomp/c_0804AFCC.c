@@ -15,7 +15,7 @@
  * unk2a is read BOTH ways in one statement -- `ldrsh` for the `> 0xa0` test and
  * `ldrh` for the `- 4` stored straight back -- which is what proves it an s16
  * object rather than a u16 one. */
-void sub_0804AFCC(void)
+void NameEntry_SlideOut_Step(void)
 {
     int t;
 
@@ -38,3 +38,4 @@ void sub_0804AFCC(void)
     if (t == 0)
         sub_08015C30(gUnknown_03001FBC);
 }
+asm(".global sub_0804AFCC\n.thumb_set sub_0804AFCC, NameEntry_SlideOut_Step\n");

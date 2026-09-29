@@ -12,7 +12,7 @@
  * gUnknown_08499590 + 0x1E42 for the two cursor slots gUnknown_03004070 and
  * gUnknown_03004088, then -- only in the gPlaySt.unk0d mode -- re-run
  * every army's turn-start pass and stamp StampVisionByPlaneMask over each record
- * sub_0803F5C8 hands back.
+ * GetInventionRecordByIndex hands back.
  *
  * gUnknown_08090964 and gUnknown_08090968 in the asm are NOT globals: the ROM
  * words there hold 0x03003FC0 and 0x08499590, so they are agbcc's own
@@ -64,7 +64,7 @@ void RebuildVisionPlanes(void)
         StampArmyVision(3);
         StampArmyVision(4);
 
-        p = sub_0803F5C8(0);
+        p = GetInventionRecordByIndex(0);
 
         while (p->unk02_6 != 0)
         {

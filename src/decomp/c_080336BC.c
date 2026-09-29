@@ -11,13 +11,13 @@
 /* MATCHED byte-for-byte, wave 43 (W43-C), first attempt.
  *
  * The block-sender's per-frame tick, and the consumer half of the proc
- * sub_0803376C builds: unk2a is the block count, unk2c the cursor, unk24 the
+ * StartSioBigSend builds: unk2a is the block count, unk2c the cursor, unk24 the
  * write pointer, unk2e the tail byte count and unk2f the 0..100 percentage.
- * Every field lines up with sub_0803376C's initialisation, which is what
+ * Every field lines up with StartSioBigSend's initialisation, which is what
  * settles this struct -- a producer and a consumer agreeing independently,
  * rather than any single access here.
  *
- * `sub_08030B00(...) != -1` re-narrows the callee's `s16` return with
+ * `LinkReceiveBlock(...) != -1` re-narrows the callee's `s16` return with
  * `lsls #0x10; asrs #0x10`; that is the declared width, not a cast at this
  * use. The -1 arrives as `movs r1,#1; rsbs r1,r1,#0` because `cmp` takes only
  * an 8-bit immediate -- it is the constant, not arithmetic.
@@ -108,14 +108,14 @@ void sub_080336BC(struct Unk336BCProc *proc)
 
     if (proc->unk2c < proc->unk2a - 1)
     {
-        if (sub_08030B00(proc->unk24, 0) != -1)
+        if (LinkReceiveBlock(proc->unk24, 0) != -1)
         {
             proc->unk24 += 0x80;
             proc->unk2f = 100 * proc->unk2c / proc->unk2a;
             proc->unk2c++;
         }
     }
-    else if (sub_08030B00((void *)gUnknown_03004400, 0) != -1)
+    else if (LinkReceiveBlock((void *)gUnknown_03004400, 0) != -1)
     {
         for (i = 0; i < proc->unk2e; i++)
         {
@@ -134,7 +134,7 @@ void sub_080336BC(struct Unk336BCProc *proc)
         Proc_Break(proc);
 }
 
-int sub_0803376C(u32 a, u32 b, int c, u8 d, ProcPtr parent)
+int StartSioBigSend(u32 a, u32 b, int c, u8 d, ProcPtr parent)
 {
     int mask;
     struct Unk3376CProc *proc;
@@ -164,3 +164,4 @@ int sub_0803376C(u32 a, u32 b, int c, u8 d, ProcPtr parent)
 
     return 0;
 }
+asm(".global sub_0803376C\n.thumb_set sub_0803376C, StartSioBigSend\n");

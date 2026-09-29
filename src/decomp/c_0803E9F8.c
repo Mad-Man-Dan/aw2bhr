@@ -18,7 +18,7 @@ struct Unk0803E9F8
     /* 0x04 */ u8 unk04;
 };
 
-int sub_0803E9F8(struct Unk0803E9F8 *p, u8 *a2, u8 a3, u8 a4)
+int MarkInventionFireArea(struct Unk0803E9F8 *p, u8 *a2, u8 a3, u8 a4)
 {
     int j;
     int k;
@@ -49,3 +49,4 @@ int sub_0803E9F8(struct Unk0803E9F8 *p, u8 *a2, u8 a3, u8 a4)
     }
     return 0;
 }
+asm(".global sub_0803E9F8\n.thumb_set sub_0803E9F8, MarkInventionFireArea\n");

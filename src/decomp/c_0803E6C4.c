@@ -13,7 +13,7 @@
 #include "map.h"
 
 /* For each row from y + 3 to the bottom of the map, looks at the three cells
- * starting at column x. Every cell holding a unit is passed to sub_0803E560
+ * starting at column x. Every cell holding a unit is passed to PushInventionFireEntry
  * (column, row, the unit byte, a3), unless the owning player's teamColor
  * (player slot = (unit byte >> 6) + 1) is 5.
  *
@@ -44,7 +44,7 @@ void ScanUnitsBelowStrip(int x, int y, int a3)
                 {
                     t = gMap->unit[gMap->rowOffset[row] + (left + i)];
                     if (gPlayers[(t >> 6) + 1].teamColor != 5)
-                        sub_0803E560(left + i, row, t, a3);
+                        PushInventionFireEntry(left + i, row, t, a3);
                 }
             }
             row++;

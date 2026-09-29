@@ -12,10 +12,10 @@
  * what puts both `lsls` before arg 1's `ldrsh` and both `asrs` after it, as
  * in the ROM. Without them (the old inline-only draft) the same-address
  * pool/sl-r9 residual of waves 79-87 comes back. Full record:
- * work/sub_0804E7A8/W87-notes.md. */
+ * work/TankFigure_Loop/W87-notes.md. */
 #include "global.h"
 
-void sub_0804E7A8(void)
+void TankFigure_Loop(void)
 {
   struct Unk02029A10 *entry;
   u16 *p1, *p2, *row;
@@ -24,8 +24,8 @@ void sub_0804E7A8(void)
   c = gUnknown_03001470[gUnknown_03001FBC].unk30;
   e = gUnknown_03001470[gUnknown_03001FBC].unk34;
   t = sub_080156C4(gUnknown_03001FBC);
-  sub_08056E9C(c, e);
-  w = sub_0804BDD8(c, e, gUnknown_03001FBC);
+  StepFigureSlide(c, e);
+  w = StepFigureHitFlash(c, e, gUnknown_03001FBC);
   p1 = gUnknown_084C3F70[c];
   p2 = gUnknown_084C3F78[c];
   if (t == 0x1C)
@@ -41,3 +41,4 @@ void sub_0804E7A8(void)
   sub_080155C0(gUnknown_03001FBC, entry->x - (*p1), entry->y - (*p2));
 
 }
+asm(".global sub_0804E7A8\n.thumb_set sub_0804E7A8, TankFigure_Loop\n");

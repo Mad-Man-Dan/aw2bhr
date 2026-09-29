@@ -71,7 +71,7 @@ void sub_08030D84(void)
  * The tail is unk38[unk06 + 1] -- a variable index on a 0x38 base, biased by
  * one into the 1..4 player-slot convention the rest of the record uses. */
 
-void sub_08030DEC(void)
+void LinkAssignArmyControllers(void)
 {
     int i;
 
@@ -85,6 +85,7 @@ void sub_08030DEC(void)
 
     gPlaySt.aiControlled[gUnknown_0849B018->unk06 + 1] = 1;
 }
+asm(".global sub_08030DEC\n.thumb_set sub_08030DEC, LinkAssignArmyControllers\n");
 
 /* MATCHED (wave 42, W42-K). Needs its .rodata pool word placed:
  *   "rodata": ["0x08090CF0"]

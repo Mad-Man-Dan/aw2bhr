@@ -22,7 +22,7 @@
  * Two things cost the first attempt, both about how a member is SPELLED rather
  * than about the shape, and both worth carrying forward:
  *
- * 1. `*(s16 *)&gUnknown_030044E0->unk1e = 0` -- the spelling the sub_0804ABDC
+ * 1. `*(s16 *)&gUnknown_030044E0->unk1e = 0` -- the spelling the NameEntry_DrawSprites
  *    draft also uses -- makes agbcc RELOAD the global pointer before the next
  *    member store, because a bare pointer-cast MEM is not MEM_IN_STRUCT_P and
  *    so aliases the pointer. The ROM does all six halfword stores (0x1e..0x28)
@@ -45,7 +45,7 @@
  *    first zero.
  *
  * The `?:` picking gBG2TilemapBuffer / gBG1TilemapBuffer is an if/else here for
- * the same reason the one in sub_08047C04 is: the front end folds `x == 0 ? a :
+ * the same reason the one in UnitList_Init is: the front end folds `x == 0 ? a :
  * b` into `x ? b : a` and inverts the branch, and the statement form is not
  * folded.
  */
@@ -53,7 +53,7 @@
 /* A second view of the object gUnknown_030044E0 points at, for the two members
  * the shared struct in include/unknown-globals.h cannot spell: a HALFWORD at
  * +0x1e (declared there as `u8 unk1e` plus filler_1f, on the strength of
- * sub_0804A64C's `ldrb`) and the byte array at +0x41 that the shared model
+ * NameEntry_TypeChar's `ldrb`) and the byte array at +0x41 that the shared model
  * swallows inside unk2c[0x2c]. Cast through a struct rather than through a bare
  * `*(s16 *)&...`: the bare cast is not MEM_IN_STRUCT_P, so agbcc reloads the
  * global pointer after it and the ROM does not. */
@@ -65,7 +65,7 @@ struct Unk030044E0View
     /* 0x41 */ u8 unk41[0x17];
 };
 
-void sub_0804A260(void)
+void NameEntry_Init(void)
 {
     u16 * p;
     u8 * src;
@@ -125,14 +125,14 @@ void sub_0804A260(void)
 
     ((struct Unk030044E0View *)gUnknown_030044E0)->unk41[i] = 0;
     sub_08013034(((struct Unk030044E0View *)gUnknown_030044E0)->unk41);
-    sub_0804A6A4();
+    NameEntry_ClearBuffer();
 
     for (i = 0; i < gUnknown_030044E0->unk5f
               && ((struct Unk030044E0View *)gUnknown_030044E0)->unk41[i] != 0; i++)
         gUnknown_030044E0->unk2c[i] = ((struct Unk030044E0View *)gUnknown_030044E0)->unk41[i];
 
     gUnknown_030044E0->unk5d = i;
-    sub_0804A1E4(0);
+    RedrawNameEntryText(0);
     sub_080741C4(0, 0, 0);
     sub_080152C0((s32)gUnknown_0849D55C, 0);
     Decompress(gUnknown_084C3B2C[gUnknown_02028E40], (void *)0x06010000);
@@ -162,5 +162,6 @@ void sub_0804A260(void)
     sub_08013B1C();
     sub_08043BA4(0, 0x27, 6);
     sub_080152C0((s32)gUnknown_084C3D8C, 0);
-    sub_0803B524(0x190);
+    PlayMusic(0x190);
 }
+asm(".global sub_0804A260\n.thumb_set sub_0804A260, NameEntry_Init\n");

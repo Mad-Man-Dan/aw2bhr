@@ -17,7 +17,7 @@
  * gUnknown_030040D8 is the same object as gUnits[i] -- see the note
  * on struct Unk030040D8 in unknown-globals.h for why the cast is here rather
  * than in the global's type. */
-void sub_0802E4B4(s16 x, s16 y)
+void MapCursor_OnPressA(s16 x, s16 y)
 {
     u8 *sel;
     int idx;
@@ -46,7 +46,7 @@ void sub_0802E4B4(s16 x, s16 y)
     idx = gMap->rowOffset[sy] + sx;
     if (gMap->unit[idx] == 0 || (gUnknown_030040D8->unk01 & 1))
     {
-        sub_0802D458();
+        OpenMapMenu();
         return;
     }
 
@@ -64,3 +64,4 @@ void sub_0802E4B4(s16 x, s16 y)
     InitMovePathForActiveUnit();
     sub_0803B4DC(0x69);
 }
+asm(".global sub_0802E4B4\n.thumb_set sub_0802E4B4, MapCursor_OnPressA\n");

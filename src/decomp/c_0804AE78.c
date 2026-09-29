@@ -7,7 +7,7 @@
  * sub_0804AE78 @ 0x0804AE78
  */
 
-void sub_0804AE78(void)
+void NameEntry_SlideIn_Step(void)
 {
     u16 i;
     u16 j;
@@ -45,3 +45,4 @@ void sub_0804AE78(void)
     if ((gUnknown_030030A0 == 0x1d8) && (gUnknown_030044E0->unk2a == lim))
         sub_08015C30(gUnknown_03001FBC);
 }
+asm(".global sub_0804AE78\n.thumb_set sub_0804AE78, NameEntry_SlideIn_Step\n");

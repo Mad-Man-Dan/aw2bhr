@@ -11,7 +11,7 @@
 
 /* A per-frame hook: run sub_080116E8, then on L (0x200 in gpKeySt->held, the
  * same slot and the same test as sub_0803B1CC's 0x100/R next door) start the
- * gUnknown_0849E610 proc through sub_0803AF5C and raise gUnknown_03002F1C.
+ * gUnknown_0849E610 proc through StartDebugEditMenu and raise gUnknown_03002F1C.
  *
  * `movs r0,#0x80; lsls r0,r0,#2` is a PLAIN constant 0x200 and not wave 23's
  * named-constant-local shape: the shift is minimal for that value (0x200 needs
@@ -25,7 +25,7 @@ void sub_0803B0EC(void)
 
     if (gpKeySt->held & L_BUTTON)
     {
-        sub_0803AF5C();
+        StartDebugEditMenu();
         gUnknown_03002F1C = 1;
     }
 }
@@ -49,7 +49,7 @@ void sub_0803B118(struct Unk03001470 *a)
     {
         if (++a->unk1e > 0x5a)
         {
-            sub_0803B0D8();
+            StartDebugBackupUtility();
             sub_08015C30(gUnknown_03001FBC);
         }
     }

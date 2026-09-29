@@ -9,10 +9,10 @@
 
 #include "hardware.h"
 /*
- * sub_0804A760 -- input handler for the on-screen character grid.
+ * NameEntry_HandleInput -- input handler for the on-screen character grid.
  *
  * The grid is 15 columns by 6 rows. gUnknown_030044E0 holds the cursor
- * (+0x1e column, +0x20 row), and sub_0804A18C maps a cell index
+ * (+0x1e column, +0x20 row), and GetNameEntryGridChar maps a cell index
  * (row * 15 + column) to the key under it: 0x23, 0x24, 0x25 and 0x40 are
  * command keys, anything else is a character.
  *
@@ -50,7 +50,7 @@ struct Unk030044E0View
     /* 0x41 */ u8 unk41[0x17];
 };
 
-void sub_0804A760(void)
+void NameEntry_HandleInput(void)
 {
     register int flag asm("r8");
     int t;
@@ -65,7 +65,7 @@ void sub_0804A760(void)
     struct Unk030044E0 **gr;
 
     flag = 0;
-    t = sub_0804A18C(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
+    t = GetNameEntryGridChar(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
 
     switch (gUnknown_030044E0->unk63)
     {
@@ -115,8 +115,8 @@ void sub_0804A760(void)
                 return;
             }
             sub_0803B4DC(0x65);
-            sub_0804A64C();
-            sub_0804A1E4(0);
+            NameEntry_TypeChar();
+            RedrawNameEntryText(0);
             gUnknown_030044E0->unk5d++;
             return;
         case 0x40:
@@ -130,15 +130,15 @@ void sub_0804A760(void)
         case 0x24:
             sub_0803B4DC(0x65);
             gUnknown_030044E0->unk63 = 3;
-            sub_0804A1E4(0);
+            RedrawNameEntryText(0);
             StartEventScript(gUnknown_084C3A5C);
             return;
         case 0x25:
             if (gUnknown_030044E0->unk5d != 0)
             {
                 gUnknown_030044E0->unk5d--;
-                sub_0804A68C();
-                sub_0804A1E4(0);
+                NameEntry_DeleteChar();
+                RedrawNameEntryText(0);
                 sub_0803B4DC(0x66);
                 return;
             }
@@ -149,8 +149,8 @@ void sub_0804A760(void)
         if (gUnknown_030044E0->unk5d != 0)
         {
             gUnknown_030044E0->unk5d--;
-            sub_0804A68C();
-            sub_0804A1E4(0);
+            NameEntry_DeleteChar();
+            RedrawNameEntryText(0);
             sub_0803B4DC(0x66);
         }
         return;
@@ -163,7 +163,7 @@ key_loop:
     {
         if (gpKeySt->repeated & 0x30)
         {
-            u = sub_0804A18C(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
+            u = GetNameEntryGridChar(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
             switch (u)
             {
             case 0x23:
@@ -192,10 +192,10 @@ key_loop:
                         ((struct Unk030044E0View *)(*gq))->unk1e = ((struct Unk030044E0View *)(*gq))->unk1e - 1;
                 }
             }
-            while (sub_0804A18C((*(gp = &gUnknown_030044E0))->unk20 * 15
+            while (GetNameEntryGridChar((*(gp = &gUnknown_030044E0))->unk20 * 15
                 + ((struct Unk030044E0View *)(*gp))->unk1e) == u);
 
-            switch (sub_0804A18C(gUnknown_030044E0->unk20 * 15
+            switch (GetNameEntryGridChar(gUnknown_030044E0->unk20 * 15
                 + gUnknown_030044E0->unk1e))
             {
             case 0x40:
@@ -229,7 +229,7 @@ key_loop:
 
     if (gUnknown_030044E0->unk5c != 0)
         goto after_key_loop;
-    if (sub_0804A18C(gUnknown_030044E0->unk20 * 15
+    if (GetNameEntryGridChar(gUnknown_030044E0->unk20 * 15
         + gUnknown_030044E0->unk1e) == 0x24)
         goto key_loop;
 
@@ -257,3 +257,4 @@ after_key_loop:
         sub_0803B4DC(0x67);
     }
 }
+asm(".global sub_0804A760\n.thumb_set sub_0804A760, NameEntry_HandleInput\n");

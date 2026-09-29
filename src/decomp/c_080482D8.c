@@ -18,7 +18,7 @@
  *
  * SETTLED, do not re-litigate:
  *  - Parameter is `struct Unk0804769C *` (retyped in unknown-functions.h this
- *    wave; c_080484CC.c already passed one). sub_08048158 sees the SAME object
+ *    wave; c_080484CC.c already passed one). UnitList_DrawSprites sees the SAME object
  *    through c_08047B98.c's file-local `struct Unk08047B98`, which is now
  *    forward-declared in the header so the cast at the call site is all that is
  *    needed and neither promoted file had to be edited.
@@ -67,7 +67,7 @@
  * were both required.
  */
 
-void sub_080482D8(struct Unk0804769C *p)
+void UnitList_DrawFrame(struct Unk0804769C *p)
 {
     u16 i;
     u16 v;
@@ -80,11 +80,11 @@ void sub_080482D8(struct Unk0804769C *p)
 
     if (p->unk21 != 0)
     {
-        sub_08047F70((struct Unk08047B98 *)p);
+        UnitList_HandleInput((struct Unk08047B98 *)p);
         sub_0802323C(0x1e, (p->unk1f - p->unk20) * 16 + 0x36, 3);
     }
 
-    sub_08048158((struct Unk08047B98 *)p);
+    UnitList_DrawSprites((struct Unk08047B98 *)p);
     DrawOamObject(gPlayers[gUnknown_030033EC].teamColor + 0x3d, 0xf, 8, 0, 0);
     DrawOamObject(1, 0xaa, 8, 0, 0);
 
@@ -141,3 +141,4 @@ void sub_080482D8(struct Unk0804769C *p)
         }
     }
 }
+asm(".global sub_080482D8\n.thumb_set sub_080482D8, UnitList_DrawFrame\n");

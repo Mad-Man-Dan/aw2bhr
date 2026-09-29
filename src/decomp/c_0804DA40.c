@@ -35,9 +35,9 @@
  * CALL and cost a register in the high bank.
  *
  * HOW IT WAS FOUND -- the wave-77 grep-the-tree rule, applied to a twin the
- * park never named. The park listed sub_0804D1AC and sub_0804D5D8 as "the
+ * park never named. The park listed FigureTileHook_CruiserVariant2 and FigureTileHook_Cruiser as "the
  * twins" and recorded that nothing in either transfers. The actual nearest
- * matched relative is sub_0804CE24 (src/decomp/c_0804CE24.c): same
+ * matched relative is LanderPart_StreamHook (src/decomp/c_0804CE24.c): same
  * prototype, same sub_0801566C readout, the SAME 0x38 divisor and the SAME
  * 0x700 stride, differing only in the gUnknown_02029668 column ([4] vs [3])
  * and the VRAM base (0x06011000 vs 0x06010C00). It has been matched with
@@ -46,7 +46,7 @@
  * LESSON FOR THE NEXT WAVE: "the twins" in a park entry is a claim about
  * which functions were looked at, not about which functions are nearest.
  * Re-derive the twin list from the CONSTANTS (divisor, stride, VRAM base),
- * not from the address neighbourhood -- sub_0804CE24 is 0xC1C bytes away
+ * not from the address neighbourhood -- LanderPart_StreamHook is 0xC1C bytes away
  * from this function while the named twins are adjacent.
  *
  * SETTLED and still true from the earlier parks:
@@ -56,14 +56,14 @@
  *   - gUnknown_02029668 is `s16 [][5]` and this reads column 3.
  *   - The destination base 0x06010C00 is the folded 0x06010000 + 0xC00.
  *   - gUnknown_08552FB0 is `void *[]`, a LOADED pointer table, so the
- *     wave-51 sub_0804C340 ARRAY_REF-on-the-bare-symbol lever that the park
+ *     wave-51 StartWholeFigureSlot ARRAY_REF-on-the-bare-symbol lever that the park
  *     pointed at has no analogue here: there is no address-of-a-symbol to
  *     route through get_inner_reference, only a pointer fetched from memory.
  *     Three matched files (c_0804C8C8.c, c_0804CE24.c, c_0804E4CC.c) already
  *     use this exact `(u8 *)tbl[i] + k * S` cast spelling. Checked and
  *     refuted this wave; do not spend a probe on it.
  */
-void sub_0804DA40(s16 a, u16 *p)
+void CruiserPart2_StreamHook(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -82,3 +82,4 @@ void sub_0804DA40(s16 a, u16 *p)
         sub_08011E54((u8 *)gUnknown_08552FB0[side] + e * 0x700,
                      (void *)(0x06010C00 + (side << 13)), 0x700);
 }
+asm(".global sub_0804DA40\n.thumb_set sub_0804DA40, CruiserPart2_StreamHook\n");

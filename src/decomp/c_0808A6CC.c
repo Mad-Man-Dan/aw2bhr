@@ -24,7 +24,7 @@
  * caller that exposes it: it SPILLS its proc to [sp] because the two
  * CpuFastSet loops use every callee-saved register including r8/sb/sl, and
  * then reloads it into r0 for nothing but the `bl` --
- *   `str r0,[sp]; movs r0,#9; bl sub_0803B3D4; ldr r0,[sp]; bl sub_0807898C`
+ *   `str r0,[sp]; movs r0,#9; bl SetSoundMixerChannelCount; ldr r0,[sp]; bl sub_0807898C`
  * A `(void)` callee emits no such reload. include/unknown-functions.h,
  * src/decomp/c_0807898C.c, src/decomp/c_08080498.c and
  * src/decomp/c_08078E20.c were all updated; sub_0807898C (356 B),
@@ -41,7 +41,7 @@ void CampaignIntro_0808A6CD(ProcPtr proc)
 {
     int i;
 
-    sub_0803B3D4(9);
+    SetSoundMixerChannelCount(9);
     sub_0807898C(proc);
 
     Decompress(gUnknown_0822FEF0,

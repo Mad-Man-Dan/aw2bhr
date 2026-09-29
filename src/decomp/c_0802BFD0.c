@@ -25,7 +25,7 @@
  * draft referenced any filler. Keep the drafts in sync; sync_work.py
  * reintroduces whatever the drafts say. */
 
-void sub_0802BFD0(int a1)
+void StartSubmarineDiveEffect(int a1)
 {
     if (!(gPlayers[gUnknown_030033EC].turnState & 2)
         && gMap->unk234A[
@@ -61,3 +61,4 @@ void sub_0802BFD0(int a1)
                  0x31CA, a1, 0);
     Proc_Start(gUnknown_0849A480, (ProcPtr)3);
 }
+asm(".global sub_0802BFD0\n.thumb_set sub_0802BFD0, StartSubmarineDiveEffect\n");

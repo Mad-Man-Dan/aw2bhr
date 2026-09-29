@@ -9,7 +9,7 @@
 
 u8 sub_0803E0F4(int a1, int a2)
 {
-    struct Unk02028360 *p = sub_0803DE94(a1, a2);
+    struct Unk02028360 *p = FindInventionAt(a1, a2);
 
     if (p == NULL)
         return 0;

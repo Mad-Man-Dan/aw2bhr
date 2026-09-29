@@ -32,7 +32,7 @@
  * `lsls #3; adds; lsls #0x17; lsrs #0x10` (times nine, then times 0x80, then
  * truncated to u16) and `x * 0x20` is `lsls #0x15; lsrs #0x10`. Written as
  * shifts they cost an instruction each. */
-void sub_0804EA54(u16 a, u16 b, u16 c)
+void StreamBodyPose(u16 a, u16 b, u16 c)
 {
     u16 t;
     u16 o1;
@@ -48,10 +48,11 @@ void sub_0804EA54(u16 a, u16 b, u16 c)
     sub_08011E54((u8 *)gUnknown_02029BA8[a].unk18[k] + o1,
                  (void *)(0x06010000 + o2), 0x480);
 }
+asm(".global sub_0804EA54\n.thumb_set sub_0804EA54, StreamBodyPose\n");
 
-/* sub_0804EA54's sibling: the same queue with a 0x100-byte block, the source
+/* StreamBodyPose's sibling: the same queue with a 0x100-byte block, the source
  * offset stepped by 0x2d frames and the destination 0x28 tiles further on. See
- * the note on sub_0804EA54 in src/decomp/c_0804EA54.c for what each of the five
+ * the note on StreamBodyPose in src/decomp/c_0804EA54.c for what each of the five
  * bound locals buys -- they are the same five and they matter for the same
  * reasons.
  *
@@ -59,7 +60,7 @@ void sub_0804EA54(u16 a, u16 b, u16 c)
  * lsrs #0x10`: agbcc distributes the shift over the sum, so the 0x2d arrives
  * pre-shifted as `movs #0xb4; lsls #0x16`. The PROMOTE_MODE narrowing of `c`
  * disappears because `<< 24` discards everything it would have cleared. */
-void sub_0804EAEC(u16 a, u16 b, u16 c)
+void StreamCrewPose(u16 a, u16 b, u16 c)
 {
     u16 t;
     u16 o1;
@@ -75,3 +76,4 @@ void sub_0804EAEC(u16 a, u16 b, u16 c)
     sub_08011E54((u8 *)gUnknown_02029BA8[a].unk18[k] + o1,
                  (void *)(0x06010000 + o2), 0x100);
 }
+asm(".global sub_0804EAEC\n.thumb_set sub_0804EAEC, StreamCrewPose\n");

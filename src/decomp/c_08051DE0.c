@@ -8,7 +8,7 @@
  */
 
 /* MATCHED. The representative of the wave-17 shape cluster
- * sub_08051DE0 / sub_080524C0 / sub_0805297C: rebuild the OBJ attributes of
+ * SmokeEffect_Init / SplashEffect_Init / BattleAnimExplosion_Init: rebuild the OBJ attributes of
  * the current gUnknown_03001470 slot, then re-place the sprite at a position
  * summed from three tables. The two siblings differ only in an extra
  * `unk28 = 0`, the paletteNum source and the priority constant.
@@ -33,7 +33,7 @@
  *    order (agbcc expands the addresses in source order and issues the loads in
  *    the opposite one), which shows up as gUnknown_08552D80's pool word landing
  *    ahead of gUnknown_02029A10's. */
-void sub_08051DE0(void)
+void SmokeEffect_Init(void)
 {
     struct OamData oam;
     int tile;
@@ -58,5 +58,6 @@ void sub_08051DE0(void)
         + gUnknown_085D7E28[gUnknown_03004580[gUnknown_0300453C][1]][gUnknown_0300451C].unk04;
 
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-    sub_08050528(gUnknown_0300453C, gUnknown_03001FBC, x, y);
+    SetEffectScreenPosition(gUnknown_0300453C, gUnknown_03001FBC, x, y);
 }
+asm(".global sub_08051DE0\n.thumb_set sub_08051DE0, SmokeEffect_Init\n");

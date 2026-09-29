@@ -13,11 +13,11 @@
  * rather than one.
  *
  * The `lsls #0x18; asrs #0x18` before the compare is unk06's own s8 width, not
- * a narrowing of sub_0802EB28's int return -- the `strb` above it truncates and
+ * a narrowing of SioPollingMsg's int return -- the `strb` above it truncates and
  * needs no shifts. */
 int sub_08030D1C(void)
 {
-    gUnknown_0849B018->unk06 = sub_0802EB28();
+    gUnknown_0849B018->unk06 = SioPollingMsg();
 
     if (gUnknown_0849B018->unk06 == -1)
         return 0;
@@ -25,7 +25,7 @@ int sub_08030D1C(void)
     return 1;
 }
 
-/* sub_0802F8FC takes the ADDRESS of gGameClock, not its value: the ROM
+/* SioSend16 takes the ADDRESS of gGameClock, not its value: the ROM
  * loads the pool word straight into r0 with no `ldr r0, [r0]` after it.
  *
  * Its second argument is the literal 1 and costs no instruction -- r1 is still
@@ -37,6 +37,6 @@ void sub_08030D4C(void)
 {
     gUnknown_0849B018->unk04 = 5;
     gPlaySt.savingEnabled = 1;
-    sub_0802F8FC((u16 *)&gGameClock, 1);
+    SioSend16((u16 *)&gGameClock, 1);
     sub_08015C30(gUnknown_03001FBC);
 }

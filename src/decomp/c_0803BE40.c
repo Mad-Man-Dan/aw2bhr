@@ -25,7 +25,7 @@ void sub_0803BE40(void)
 
 /* A do-nothing stub: the whole body is `bx lr`, padded to 4 bytes by the
  * `.align 2, 0` behind it. Nothing about the signature is recoverable;
- * void(void) is the weakest model. See sub_0803B404 in
+ * void(void) is the weakest model. See SoundMainLoopNoOp in
  * src/decomp/c_0803B3C8.c. */
 
 void sub_0803BE5C(void)

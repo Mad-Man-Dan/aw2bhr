@@ -68,6 +68,6 @@ void sub_080324C4(int a1, int a2, u8 a3)
     else
     {
         ApplyPaletteExt(gUnknown_081320AC, 0x60, 0x20);
-        gUnknown_0849B060->unk00 = sub_080315E8(gUnknown_0849B060->unk00, a2, 2);
+        gUnknown_0849B060->unk00 = LinkScreenSetMessage(gUnknown_0849B060->unk00, a2, 2);
     }
 }

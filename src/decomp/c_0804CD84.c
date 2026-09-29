@@ -4,13 +4,13 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804CD84.
- * sub_0804CD84 @ 0x0804CD84
+ * LanderPart_Loop @ 0x0804CD84
  */
 
-/* MATCHED. Byte-for-byte the same function as sub_0804C828 -- one C body, two
+/* MATCHED. Byte-for-byte the same function as SubmarinePart_Loop -- one C body, two
  * addresses. Read that one; the `pal` local and the struct spelling of
  * gUnknown_020298E0 are the two load-bearing choices. */
-void sub_0804CD84(void)
+void LanderPart_Loop(void)
 {
     struct OamData oam;
     u16 side;
@@ -21,7 +21,7 @@ void sub_0804CD84(void)
     side = gUnknown_03001470[gUnknown_03001FBC].unk30;
     slot = gUnknown_03001470[gUnknown_03001FBC].unk34;
 
-    sub_0804DC5C(side, slot, gUnknown_03001FBC);
+    RidePartOnFigure(side, slot, gUnknown_03001FBC);
     sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
 
     t = gUnknown_020298E0[side].unk26[slot] + gUnknown_020298E0[side].unk30[slot];
@@ -30,3 +30,5 @@ void sub_0804CD84(void)
 
     sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
 }
+
+asm(".global sub_0804CD84\n.thumb_set sub_0804CD84, LanderPart_Loop\n");

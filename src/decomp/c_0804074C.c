@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* One of the two arms of sub_08041958. Resolves the entry's tile position with
- * sub_0803DFE0, starts the 0x0849FBEC proc under the caller's parent, and
+ * GetInventionTargetCell, starts the 0x0849FBEC proc under the caller's parent, and
  * copies the position, the entry's 4-bit field and its unk04 byte into it,
  * keeping the entry itself at unk4c.
  *
@@ -34,7 +34,7 @@ void sub_0804074C(struct Unk02028360 *ent, ProcPtr parent)
     struct Unk02028360Pos pos;
     struct Unk4074CProc *proc;
 
-    sub_0803DFE0(ent, &pos);
+    GetInventionTargetCell(ent, &pos);
 
     proc = Proc_StartBlocking(gUnknown_0849FBEC, parent);
     proc->unk2c = pos.unk00;

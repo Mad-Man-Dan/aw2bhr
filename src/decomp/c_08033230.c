@@ -34,7 +34,7 @@
  *
  * `proc->unk64 == 0` really is tested twice -- once as the outer guard and
  * again before Proc_GotoScript. agbcc cannot fold the second test because
- * sub_080315E8 clobbers memory in between, so the reload is not evidence of
+ * LinkScreenSetMessage clobbers memory in between, so the reload is not evidence of
  * a different structure.
  *
  * gUnknown_030030E0 is written through `.raw`, not `.bits`: the ROM clears
@@ -83,28 +83,28 @@ void sub_08033230(struct Unk33230Proc *proc)
             {
             case 0:
                 gUnknown_0849B060->unk00 =
-                    sub_080315E8(gUnknown_0849B060->unk00, 2, 0);
+                    LinkScreenSetMessage(gUnknown_0849B060->unk00, 2, 0);
                 break;
 
             case 0xd1:
                 gUnknown_0849B060->unk00 =
-                    sub_080315E8(gUnknown_0849B060->unk00, 0xe, 0);
+                    LinkScreenSetMessage(gUnknown_0849B060->unk00, 0xe, 0);
                 break;
 
             default:
                 gUnknown_0849B060->unk00 =
-                    sub_080315E8(gUnknown_0849B060->unk00, 0, 0);
+                    LinkScreenSetMessage(gUnknown_0849B060->unk00, 0, 0);
                 break;
             }
 
             if (gUnknown_03003F70[0x18] > 0xdf)
                 gUnknown_0849B060->unk00 =
-                    sub_080315E8(gUnknown_0849B060->unk00, 0xe, 0);
+                    LinkScreenSetMessage(gUnknown_0849B060->unk00, 0xe, 0);
         }
         else
         {
             gUnknown_0849B060->unk00 =
-                sub_080315E8(gUnknown_0849B060->unk00, 0, 0);
+                LinkScreenSetMessage(gUnknown_0849B060->unk00, 0, 0);
         }
 
         if (proc->unk64 == 0 && (gpKeySt->pressed & 2))

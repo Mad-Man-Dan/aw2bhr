@@ -56,13 +56,13 @@ struct Unk0803AFA0
     /* 0x20 */ s16 unk20;
 };
 
-void sub_0803AFA0(struct Unk0803AFA0 *p)
+void DebugBackupUtility_Loop(struct Unk0803AFA0 *p)
 {
     u8 i;
     u8 v;
     const char ***tbl;
 
-    sub_0803ABD8();
+    DebugScreenNoOp();
     sub_080119A0(0, 0, gUnknown_080910D4);
     for (i = 0, tbl = &gUnknown_080910E0; i <= 2; i++) {
         if (p->unk20 == i)
@@ -106,3 +106,4 @@ void sub_0803AFA0(struct Unk0803AFA0 *p)
             p->unk20++;
     }
 }
+asm(".global sub_0803AFA0\n.thumb_set sub_0803AFA0, DebugBackupUtility_Loop\n");

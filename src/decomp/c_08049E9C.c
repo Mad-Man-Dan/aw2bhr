@@ -9,6 +9,6 @@
 
 void sub_08049E9C(void)
 {
-    sub_0803B524(0xda);
+    PlayMusic(0xda);
     sub_080152EC(gUnknown_084C325C, 0);
 }

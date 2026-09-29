@@ -7,7 +7,7 @@
  * sub_0804E050 @ 0x0804E050
  */
 
-void sub_0804E050(s16 a, u16 *p)
+void FigureTileHook_Ship(s16 a, u16 *p)
 {
     struct OamData oam;
     u16 d;
@@ -29,3 +29,4 @@ void sub_0804E050(s16 a, u16 *p)
         sub_0804E100(side, slot, e);
     }
 }
+asm(".global sub_0804E050\n.thumb_set sub_0804E050, FigureTileHook_Ship\n");

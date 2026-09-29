@@ -81,7 +81,7 @@ void sub_0806C9C0(struct ProcTitleScreen * proc)
     if ((proc->unk_2C <= (2700 - gUnknown_0202F2C4)) && (gpKeySt->pressed & 9))
     {
         sub_0803B4DC(0x71);
-        sub_08030ED4();
+        LinkShutdown();
         Proc_GotoScript(proc, ProcScr_TitleToMainMenu);
     }
 }
@@ -507,7 +507,7 @@ void TitleSpriteDraw_Loop_Idle(struct ProcTitleSpriteDraw * proc)
     if (proc->unk_30 == 0)
     {
         ((struct ProcTitlePressStartDraw *)(Proc_Find(ProcScr_TitlePressStartDraw)))->unk_34 = 1;
-        sub_0803B524(0x1AA);
+        PlayMusic(0x1AA);
         proc->unk_30 = -1;
     }
 

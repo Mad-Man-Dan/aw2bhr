@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_08049BD8(void)
+void StartShopScreen(void)
 {
     Proc_Start(ProcScr_BattleMaps, PROC_TREE_3);
 }
+asm(".global sub_08049BD8\n.thumb_set sub_08049BD8, StartShopScreen\n");

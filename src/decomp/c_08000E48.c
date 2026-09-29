@@ -98,6 +98,6 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     sub_080152C0((s32)&gUnknown_084857AC[0x100], 0);
     SetSelectedTile(0x28);
     DesignRoomStartCoordBox();
-    sub_0803B524(0xD8);
+    PlayMusic(0xD8);
 }
 asm(".global sub_08000E48\n.thumb_set sub_08000E48, DesignRoomProc_Init\n");

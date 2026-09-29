@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* The full builder of the sub_080308B4 command block: sub_080344B4 is this one
+/* The full builder of the LinkQueueCommand command block: sub_080344B4 is this one
  * with the id fixed at 8 and the +2..+5 cursor snapshot dropped, and
  * sub_0803446C is the +2..+5 snapshot on its own. The store order is the
  * source's -- +0 first, then the two cursor pairs, then +1/+6/+7 -- and it is
@@ -28,7 +28,7 @@ void SendActionCommand(int a, u8 b, u8 c, u8 d)
     gUnknown_030044B0[7] = d;
     gUnknown_030044B0[0x12] = unit->fuel;
     PackPathNibbles(gUnknown_03003110, gUnknown_030044B0 + 0xc);
-    sub_080308B4(gUnknown_030044B0);
+    LinkQueueCommand(gUnknown_030044B0);
 }
 
 /* The shared per-frame tail of sub_08034394 and sub_080343D8. */
