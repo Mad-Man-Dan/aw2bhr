@@ -24,7 +24,7 @@ struct Unk35828Proc
  * bitfield would build the complement negative (bit 7 of 0xf9 is set) and emit
  * `mov #7; neg`, and the ROM has a bare `movs #0xf9`.
  */
-void sub_08035828(struct Unk35828Proc *proc)
+void EndMoveSlide(struct Unk35828Proc *proc)
 {
     if (proc->unk30 != NULL)
         proc->unk30->unk01 &= 0xf9;
@@ -33,3 +33,4 @@ void sub_08035828(struct Unk35828Proc *proc)
 
     gUnknown_030040E4 = 0;
 }
+asm(".global sub_08035828\n.thumb_set sub_08035828, EndMoveSlide\n");

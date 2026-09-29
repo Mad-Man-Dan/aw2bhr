@@ -46,11 +46,11 @@
  *
  *  - `u` is `u8`, not `int`. With `int` the value is kept as `u << 16` across
  *    the calls and every narrow-parameter call site pays a `lsrs r0,r6,#0x10`;
- *    a `u8` local is PROMOTE_MODE zero-extended, so `sub_08026F9C(g, u)` and
+ *    a `u8` local is PROMOTE_MODE zero-extended, so `AreUnitsOnSameTeam(g, u)` and
  *    `sub_080257C0(u)` need no conversion at all, which is the ROM's bare
  *    `adds r0,r4,#0`.
- *  - the results of sub_08058C54 and sub_08058BB4 are BOUND to `t` before the
- *    `== -1` test, and sub_08058A2C's is not. That is what decides which of the
+ *  - the results of AiPickFiringCellBeside and AiPickFiringCellBesideUnit are BOUND to `t` before the
+ *    `== -1` test, and AiScoreAttack's is not. That is what decides which of the
  *    two registers holds the result and which holds the -1: bound gives the
  *    ROM's `adds r1,r0,#0 / movs r0,#1 / rsbs r0,r0,#0 / cmp r1,r0`, unbound
  *    gives `movs r1,#1 / rsbs / cmp r0,r1`. Both spellings appear in this one
@@ -69,7 +69,7 @@
  * first write to `pos` really is one word store of `(u16)x | (y << 16)`, which
  * is why it is spelled through the `int *` cast rather than as two `strh`. */
 
-int sub_080587FC(int flag)
+int AiListAttackCandidates(int flag)
 {
     struct Unk03003338 *p;
     struct Unit *r;
@@ -105,7 +105,7 @@ int sub_080587FC(int flag)
                     continue;
                 if (flag == 0)
                 {
-                    t = sub_08058C54(x, y, (u16 *)&pos);
+                    t = AiPickFiringCellBeside(x, y, (u16 *)&pos);
                     if (t == -1)
                         continue;
                 }
@@ -126,16 +126,16 @@ int sub_080587FC(int flag)
                 u = gMap->unit[idx];
                 if (u == 0)
                     continue;
-                if (sub_08026F9C(gUnknown_03003F38, u) == 1)
+                if (AreUnitsOnSameTeam(gUnknown_03003F38, u) == 1)
                     continue;
                 r = &gUnits[u];
                 if (r->type == 0x18 && !sub_080257C0(u))
                     continue;
-                if (!sub_08020DBC(gUnknown_030033EC, x, y))
+                if (!IsCellVisibleToArmy(gUnknown_030033EC, x, y))
                     continue;
                 if (flag == 0)
                 {
-                    t = sub_08058BB4(u, (u16 *)&pos);
+                    t = AiPickFiringCellBesideUnit(u, (u16 *)&pos);
                     if (t == -1)
                         continue;
                 }
@@ -148,7 +148,7 @@ int sub_080587FC(int flag)
                 lim = (u8 *)gBattleAttacker;
                 if (*(s16 *)(lim + 0x18) == 0)
                     continue;
-                if (sub_08058A2C(&w) == -1)
+                if (AiScoreAttack(&w) == -1)
                     w = 0;
                 p->unk00 = u;
                 p->unk04 = pos.unk00;
@@ -162,3 +162,4 @@ int sub_080587FC(int flag)
     p->unk00 = 0;
     return p - gUnknown_03003338;
 }
+asm(".global sub_080587FC\n.thumb_set sub_080587FC, AiListAttackCandidates\n");

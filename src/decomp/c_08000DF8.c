@@ -11,7 +11,7 @@
 /*
  * sub_08000DF8 -- reset the map view, and generate a fresh map when a1 is 0.
  *
- * Clears gUnknown_030032D8 and calls sub_080215D0. When a1 is 0 it also zeroes
+ * Clears gUnknown_030032D8 and calls LoadTileTerrainTable. When a1 is 0 it also zeroes
  * the map's scroll and camera position and calls GenerateRandomMap, so a
  * non-zero a1 keeps the map that is already loaded. Either way it then moves
  * both cursors (gUnknown_030033E4, gUnknown_030033E0) to 0,0 and calls
@@ -29,7 +29,7 @@ void sub_08000DF8(int a1)
     struct Map *map;
 
     gUnknown_030032D8 = 0;
-    sub_080215D0();
+    LoadTileTerrainTable();
 
     if (a1 == 0)
     {

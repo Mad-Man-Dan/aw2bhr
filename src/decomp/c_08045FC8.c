@@ -7,14 +7,14 @@
  * sub_08045FC8 @ 0x08045FC8
  */
 
-/* Draws the army list: for each army 1..sub_080248F8() that is not defeated,
+/* Draws the army list: for each army 1..GetLoadedMapArmyCount() that is not defeated,
  * its team-colour sprite (teamColor + 0x3d) at x 8, y 0x30 + 16 * army; then
  * two fixed sprites. */
 void sub_08045FC8(void)
 {
     u16 i;
 
-    for (i = 1; i <= sub_080248F8(); i++)
+    for (i = 1; i <= GetLoadedMapArmyCount(); i++)
     {
         /* Row y is 0x30 + 16 * i, spelled (i * 2 + 6) * 8 so that it is not
          * folded into the shift that scales the player index. */

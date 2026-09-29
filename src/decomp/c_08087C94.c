@@ -116,13 +116,13 @@ void CoDesignC1_08087C95(struct Unk87C94Proc *proc)
     proc->unk5c = 0;
 
     sub_08043BA4(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], 0x40, 1);
-    sub_08043B14(gUnknown_030058E0[0], 0x2cc);
-    sub_08043E3C(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013000, 0x12);
-    sub_08043E3C(gUnknown_030058E0[DivRem(1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013480, 0x13);
-    sub_08043E3C(gUnknown_030058E0[DivRem(2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013900, 0x14);
-    sub_08043E3C(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014200, 0x16);
-    sub_08043E3C(gUnknown_030058E0[DivRem(1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014680, 0x17);
-    sub_08043E3C(gUnknown_030058E0[DivRem(2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014B00, 0x18);
+    LoadCoNameGraphic(gUnknown_030058E0[0], 0x2cc);
+    LoadCoFace(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013000, 0x12);
+    LoadCoFace(gUnknown_030058E0[DivRem(1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013480, 0x13);
+    LoadCoFace(gUnknown_030058E0[DivRem(2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013900, 0x14);
+    LoadCoFace(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014200, 0x16);
+    LoadCoFace(gUnknown_030058E0[DivRem(1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014680, 0x17);
+    LoadCoFace(gUnknown_030058E0[DivRem(2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014B00, 0x18);
 
     sub_0801F114();
     sub_0801F150(1, (void *)0x06010000, 0x2d8, 0x1b);

@@ -14,15 +14,16 @@
  */
 
 
-/* Removes sub_08037790 from the 16-slot gUnknown_03000000 callback list.
+/* Removes AnimateMapPreviewPalette from the 16-slot gUnknown_03000000 callback list.
  * sub_08011B5C is the remover and sub_08011B34 the inserter, both `void *`,
  * so a function argument casts -- same spelling as sub_080111AC's
- * registration. sub_08037790 is not promoted yet; `void (void)` is read off
+ * registration. AnimateMapPreviewPalette is not promoted yet; `void (void)` is read off
  * its own bytes (`push {lr}` ... `pop {r0}; bx r0`, no argument register
  * read).
  */
 
-void sub_08037780(void)
+void RemoveMapPreviewPaletteHook(void)
 {
-    sub_08011B5C((void *)sub_08037790);
+    sub_08011B5C((void *)AnimateMapPreviewPalette);
 }
+asm(".global sub_08037780\n.thumb_set sub_08037780, RemoveMapPreviewPaletteHook\n");

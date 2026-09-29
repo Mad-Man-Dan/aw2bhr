@@ -47,7 +47,7 @@ int sub_08063528(struct Unk08062FB8 *);
  * start the transfer). Returns 0 or an error code. The source is the SDK's
  * own, kept as published: its for-loops and gotos are what produce the
  * loop shapes in the ROM. */
-int sub_08062FF4(struct MbParam *mp)
+int MultiBootMain(struct MbParam *mp)
 {
     int i;
     int j;
@@ -303,3 +303,4 @@ output_burst:
             return 0;
     }
 }
+asm(".global sub_08062FF4\n.thumb_set sub_08062FF4, MultiBootMain\n");

@@ -15,14 +15,14 @@ void sub_08029880(void)
     sub_08015328(gUnknown_03001FBC);
 
     if (gUnknown_03001470[gUnknown_03001FBC].unk24 == 0)
-        sub_080428F0(gUnknown_03001470[gUnknown_03001FBC].unk22);
+        DropCargoUnit(gUnknown_03001470[gUnknown_03001FBC].unk22);
 
     LockUnitSelection();
     DecrementMapLock();
 
     if (gUnknown_03001470[gUnknown_03001FBC].unk24 == 0)
     {
-        sub_080258CC();
+        RebuildMapUnitLayers();
 
         if (!sub_0802CBC8())
         {
@@ -35,7 +35,7 @@ void sub_08029880(void)
     }
 
     gUnknown_03003334 = 0;
-    sub_080424FC();
+    CommitUnitMove();
 
     if (gPlaySt.savingEnabled != 0)
         sub_080344B4(gUnknown_03003F38, gUnknown_030033E8[0], gUnknown_030033E8[1]);

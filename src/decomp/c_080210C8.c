@@ -22,7 +22,7 @@
  *
  * `(u8)a6` (wave 90, W90-C): sub_08020EDC's 6th parameter is `int`, and
  * this cast is the `lsls #0x18; lsrs #0x18` each call site emits. */
-void sub_080210C8(s16 a1, s16 a2, s16 a3, s16 kind, s8 a5, int a6)
+void StampVisionByPlaneMask(s16 a1, s16 a2, s16 a3, s16 kind, s8 a5, int a6)
 {
     switch (kind)
     {
@@ -45,3 +45,4 @@ void sub_080210C8(s16 a1, s16 a2, s16 a3, s16 kind, s8 a5, int a6)
         break;
     }
 }
+asm(".global sub_080210C8\n.thumb_set sub_080210C8, StampVisionByPlaneMask\n");

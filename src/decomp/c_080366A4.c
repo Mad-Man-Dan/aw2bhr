@@ -12,8 +12,8 @@
 void InitMainFrameCallbacks(void)
 {
     sub_08011B18();
-    SetVBlankCallback(sub_08036884);
-    SetMainLoopCallback(sub_080368E8);
+    SetVBlankCallback(DefaultVBlankCallback);
+    SetMainLoopCallback(DefaultMainLoopCallback);
 }
 
 asm(".global sub_080366A4\n.thumb_set sub_080366A4, InitMainFrameCallbacks\n");

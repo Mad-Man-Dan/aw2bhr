@@ -7,7 +7,7 @@
  * sub_08034D18 @ 0x08034D18
  */
 
-void sub_08034D18(void)
+void MapState_DispatchTurnByController(void)
 {
     sub_0802776C(0);
 
@@ -45,3 +45,4 @@ void sub_08034D18(void)
         break;
     }
 }
+asm(".global sub_08034D18\n.thumb_set sub_08034D18, MapState_DispatchTurnByController\n");

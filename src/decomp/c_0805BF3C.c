@@ -72,7 +72,7 @@ void sub_0805BF3C(int x, int y, u16 *out)
         gUnknown_085768B8[buf[gUnknown_030046D4]](x, y, out);
 }
 
-void sub_0805BFDC(int x, int y, int a3, int a4)
+void AiTryRideInsteadOfWalk(int x, int y, int a3, int a4)
 {
     int v;
     u16 t;
@@ -94,3 +94,4 @@ void sub_0805BFDC(int x, int y, int a3, int a4)
     ((struct Unk5BFDCCtl *)gUnknown_030040D8)->unk09_3 = a4;
     sub_0805FB70();
 }
+asm(".global sub_0805BFDC\n.thumb_set sub_0805BFDC, AiTryRideInsteadOfWalk\n");

@@ -20,9 +20,9 @@
  *
  * The `lsls #0x18; lsrs #0x18` on a3 is the conversion to InitUnit's u8. */
 
-struct Unit *sub_08025C5C(s16 a1, s16 a2, s16 a3)
+struct Unit *CreateUnitAtNoRefresh(s16 a1, s16 a2, s16 a3)
 {
-    struct Unit *u = sub_08025AEC();
+    struct Unit *u = FindFreeUnitSlot();
 
     if (u == NULL)
         return NULL;
@@ -36,8 +36,9 @@ struct Unit *sub_08025C5C(s16 a1, s16 a2, s16 a3)
 
     return u;
 }
+asm(".global sub_08025C5C\n.thumb_set sub_08025C5C, CreateUnitAtNoRefresh\n");
 
-/* Same guard-clause shape as sub_08025C5C: `if (u == NULL) return NULL;` puts
+/* Same guard-clause shape as CreateUnitAtNoRefresh: `if (u == NULL) return NULL;` puts
  * the body in the fall-through and the `movs r0,#0` at the end. The inverted
  * `if (u != NULL) { ...; return u; } return NULL;` swaps the two blocks and
  * misses by 20 bytes -- measured, not assumed.
@@ -47,13 +48,13 @@ struct Unit *sub_08025C5C(s16 a1, s16 a2, s16 a3)
 
 void *sub_08025C98(s16 a1, s16 a2, s16 a3)
 {
-    struct Unit *u = sub_08025C5C(a1, a2, a3);
+    struct Unit *u = CreateUnitAtNoRefresh(a1, a2, a3);
 
     if (u == NULL)
         return NULL;
 
     u->flags |= 1;
-    sub_080258CC();
+    RebuildMapUnitLayers();
 
     return u;
 }
@@ -62,7 +63,7 @@ void *sub_08025C98(s16 a1, s16 a2, s16 a3)
  * shape. */
 
 /* Wave 32 (W32-B) RETYPES the return `void *` -> `struct Unit *`. It
- * returns sub_08025C5C's result unchanged, and that function is already
+ * returns CreateUnitAtNoRefresh's result unchanged, and that function is already
  * declared `struct Unit *` right here -- the `void *` was the weakest
  * type that fit when nothing read the result. sub_08045564, promoted this
  * wave, writes `->unk04_0 = 0x5a` through it, which is the discriminating use.
@@ -74,12 +75,12 @@ void *sub_08025C98(s16 a1, s16 a2, s16 a3)
  * resolving it unchanged. */
 struct Unit *CreateUnitAt(s16 a1, s16 a2, s16 a3)
 {
-    struct Unit *u = sub_08025C5C(a1, a2, a3);
+    struct Unit *u = CreateUnitAtNoRefresh(a1, a2, a3);
 
     if (u == NULL)
         return NULL;
 
-    sub_080258CC();
+    RebuildMapUnitLayers();
 
     return u;
 }

@@ -133,24 +133,24 @@ void WarRoomMapSelected_0807C615(struct Unk807C614 *proc)
     if (v != 0)
     {
         for (i = 0; i < proc->unk64; i++)
-            sub_08043B14(gUnknown_030058D4[i], i * 0xc + 0x3c0);
+            LoadCoNameGraphic(gUnknown_030058D4[i], i * 0xc + 0x3c0);
 
-        sub_08043B14(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c],
+        LoadCoNameGraphic(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c],
                      proc->unk64 * 0xc + 0x3c0);
     }
     else
     {
         proc->unk52 = 0;
-        sub_08043B14(gUnknown_030058E0[0], 0x3c0);
+        LoadCoNameGraphic(gUnknown_030058E0[0], 0x3c0);
     }
 
     sub_08043BA4(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c], 0x40, 1);
-    sub_08043E3C(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013000, 0x12);
-    sub_08043E3C(gUnknown_030058E0[DivRem(proc->unk52 + 1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013480, 0x13);
-    sub_08043E3C(gUnknown_030058E0[DivRem(proc->unk52 + 2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013900, 0x14);
-    sub_08043E3C(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014200, 0x16);
-    sub_08043E3C(gUnknown_030058E0[DivRem(proc->unk52 + 1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014680, 0x17);
-    sub_08043E3C(gUnknown_030058E0[DivRem(proc->unk52 + 2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014B00, 0x18);
+    LoadCoFace(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013000, 0x12);
+    LoadCoFace(gUnknown_030058E0[DivRem(proc->unk52 + 1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013480, 0x13);
+    LoadCoFace(gUnknown_030058E0[DivRem(proc->unk52 + 2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013900, 0x14);
+    LoadCoFace(gUnknown_030058E0[DivRem(proc->unk52, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014200, 0x16);
+    LoadCoFace(gUnknown_030058E0[DivRem(proc->unk52 + 1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014680, 0x17);
+    LoadCoFace(gUnknown_030058E0[DivRem(proc->unk52 + 2, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06014B00, 0x18);
 }
 
 asm(".global sub_0807C614\n.thumb_set sub_0807C614, WarRoomMapSelected_0807C615\n");

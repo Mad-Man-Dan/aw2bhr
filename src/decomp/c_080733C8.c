@@ -17,7 +17,7 @@
  * TWO READOUTS, EACH WORTH AN ATTEMPT.
  *
  * 1. `int i = 0;` must be a DECLARATION INITIALISER, not the `for` init. The
- *    ROM sets the counter to zero BEFORE `bl sub_0802163C`, which puts its live
+ *    ROM sets the counter to zero BEFORE `bl LoadMapIntoGMap`, which puts its live
  *    range across the call and earns it a callee-saved register; written as
  *    `for (i = 0; ...)` the store lands after the call and the counter takes a
  *    scratch. 88.0% -> 98.9%.
@@ -46,7 +46,7 @@ void sub_080733C8(int a1, const void * a2, void * a3)
     int t;
     u16 *tile;
 
-    sub_0802163C(a1);
+    LoadMapIntoGMap(a1);
 
     for (; str[i] != 0; i++)
         counts[i] = 0;

@@ -8,7 +8,7 @@
  * sub_08041EA8 @ 0x08041EA8
  */
 
-u8 sub_08041EA8(s16 x, s16 y, int t)
+u8 IsCellOpenForDrop(s16 x, s16 y, int t)
 {
     s8 *costs;
     int idx;
@@ -39,3 +39,4 @@ u8 sub_08041EA8(s16 x, s16 y, int t)
 
     return 1;
 }
+asm(".global sub_08041EA8\n.thumb_set sub_08041EA8, IsCellOpenForDrop\n");

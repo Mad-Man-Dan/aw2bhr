@@ -23,9 +23,9 @@ void sub_0802E250(void)
  * result actually tested, which is what fixes the return type. */
 void sub_0802E260(void)
 {
-    sub_08023824();
+    HandleMoveMapCursor();
     sub_08023518();
-    sub_08023908(4);
+    HandleMoveCameraWithMapCursor(4);
     sub_0802DBF8();
 }
 
@@ -42,9 +42,9 @@ void sub_0802E278(void)
 {
     u16 k;
 
-    sub_08023824();
+    HandleMoveMapCursor();
     sub_08023518();
-    sub_08023908(8);
+    HandleMoveCameraWithMapCursor(8);
 
     if (sub_0802DBF8())
     {

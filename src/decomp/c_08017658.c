@@ -18,6 +18,6 @@ void sub_08017658(struct Unk03001470 *proc)
     LoadSuspendSave(proc->unk1e);
     sub_08026798();
     sub_08023348();
-    sub_0803662C();
+    InstallMapFrameCallbacks();
     sub_08043DAC(gUnknown_030033EC);
 }

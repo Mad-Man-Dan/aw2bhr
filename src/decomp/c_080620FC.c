@@ -56,7 +56,7 @@ void sub_080620FC(int a1, int a2)
     n = 0;
     k = 0;
     sub_080581A4(gMap->dangerMask, 0);
-    sub_0801F92C((u8 *)gMap->move);
+    SetWorkingMapPlane((u8 *)gMap->move);
     sub_08062330();
 
     while ((u8)sub_080623C4(&x, &y)) {

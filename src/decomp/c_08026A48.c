@@ -27,7 +27,7 @@
  * real table -- the prefix decides nothing.)
  *
  * The 0x3c running offset is strength reduction of the element stride. */
-void sub_08026A48(void)
+void AssignArmyTeamColors(void)
 {
     int i;
 
@@ -36,17 +36,18 @@ void sub_08026A48(void)
     case 1:
     case 2:
         for (i = 1; i <= 4; i++)
-            gPlayers[i].teamColor = sub_08026AC0(i, sub_08042DFC(i));
+            gPlayers[i].teamColor = PickArmyTeamColor(i, GetPlayerCoDefaultTeamColor(i));
         break;
     }
 }
+asm(".global sub_08026A48\n.thumb_set sub_08026A48, AssignArmyTeamColors\n");
 
 /* Answers whether team colour `v` is still unused by army slots 1 .. n-1.
  *
  * The `n == 1` pre-test is a REAL early return, not a peeled iteration: the
  * `for` entry test (`movs r3,#1; cmp r3,r4; bge`) is still there right after
  * it, so the ROM tests the same thing twice and the source said it twice. */
-bool8 sub_08026A88(int n, int v)
+bool8 IsTeamColorUnused(int n, int v)
 {
     int i;
 
@@ -61,6 +62,7 @@ bool8 sub_08026A88(int n, int v)
 
     return 1;
 }
+asm(".global sub_08026A88\n.thumb_set sub_08026A88, IsTeamColorUnused\n");
 
 /* Picks the team colour for army slot `slot`. The chapter record supplies a
  * preset in unk3c[slot - 1] / unk40[slot - 1] -- 0xff in unk3c means "none",
@@ -71,7 +73,7 @@ bool8 sub_08026A88(int n, int v)
  * loop can only leave v at 5 -- but the ROM has the compare, so the source had
  * the clamp. It sits inside the collision branch: the non-colliding path
  * branches straight past it to the return. */
-int sub_08026AC0(int slot, int fallback)
+int PickArmyTeamColor(int slot, int fallback)
 {
     int v;
 
@@ -80,11 +82,11 @@ int sub_08026AC0(int slot, int fallback)
     else
         v = gUnknown_085C77A0[gPlaySt.mapID].unk40[slot - 1];
 
-    if (!sub_08026A88(slot, v))
+    if (!IsTeamColorUnused(slot, v))
     {
         for (v = 1; v <= 4; v++)
         {
-            if (sub_08026A88(slot, v))
+            if (IsTeamColorUnused(slot, v))
                 break;
         }
 
@@ -94,6 +96,7 @@ int sub_08026AC0(int slot, int fallback)
 
     return v;
 }
+asm(".global sub_08026AC0\n.thumb_set sub_08026AC0, PickArmyTeamColor\n");
 
 /* Rebuilds each live army's "other armies I am at war with" mask: for army i,
  * OR in gUnknown_08090A84[j] for every j in 1..4 that is not i and is on a

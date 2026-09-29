@@ -7,7 +7,7 @@
  * sub_080202A4 @ 0x080202A4
  */
 
-/* The unit-record dispatch of sub_0802032C's family, with the fourth argument
+/* The unit-record dispatch of GenerateUnitExtendedMovementMap's family, with the fourth argument
  * clamped: the record's own 7-bit unk06_0 unless that is already at or above
  * the type's GetUnitMovementWithCoBonus ceiling, in which case the ceiling.
  *
@@ -21,7 +21,7 @@
  * The parameter is declared `struct Unk030040D8 *` because that is what every
  * caller hands it; the body casts to the identical `struct Unit` to
  * reach unk06_0 and the pointer difference, the same way c_08074320.c does. */
-void sub_080202A4(struct Unk030040D8 *a1)
+void GenerateUnitMovementMap(struct Unk030040D8 *a1)
 {
     struct Unit *e;
     u16 v;
@@ -35,3 +35,4 @@ void sub_080202A4(struct Unk030040D8 *a1)
 
     gUnknown_030013EC(e->x, e->y, e->type, (s16)v, 1);
 }
+asm(".global sub_080202A4\n.thumb_set sub_080202A4, GenerateUnitMovementMap\n");

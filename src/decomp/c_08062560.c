@@ -29,7 +29,7 @@ void sub_08062560(u16 a1, u8 a2)
             continue;
         if (e->type == 0x18 && (u8)sub_080257C0(u) == 0)
             continue;
-        if ((u8)sub_08020DBC(gUnknown_03004480, e->x, e->y) == 0)
+        if ((u8)IsCellVisibleToArmy(gUnknown_03004480, e->x, e->y) == 0)
             continue;
         if (GetUnitFiringRangeWithCoBonus(gUnknown_030033EC, e->type) == 1) {
             gUnknown_030013EC(e->x, e->y, e->type,

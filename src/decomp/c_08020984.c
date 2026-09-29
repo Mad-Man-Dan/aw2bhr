@@ -21,7 +21,7 @@
  * The `cur + k <= 4 ? cur + k : cur + k - 4` wrap is bound to a local in the
  * outer loops (the ROM computes it once into r5) and written out TWICE in the
  * innermost one, which is c_08020864.c's documented case. */
-void sub_08020984(void)
+void RecomputeArmyVisionMasks(void)
 {
     u16 i;
     u16 j;
@@ -82,6 +82,7 @@ void sub_08020984(void)
     gUnknown_03004070 = 0;
     gUnknown_03004088 = 1;
 }
+asm(".global sub_08020984\n.thumb_set sub_08020984, RecomputeArmyVisionMasks\n");
 
 /* Overlay writer over the Manhattan disk of radius `r` around (x, y): the outer
  * loop walks yy from y-r to y+r with a parallel s16 `dy` running -r..+r, and the
@@ -142,7 +143,7 @@ void sub_08020B88(s16 x, s16 y, s16 r, s16 v)
                 t = gMap->unit[gMap->rowOffset[yy] + xx];
                 if (t == 0)
                     continue;
-                if (sub_08026F9C(gUnknown_03003F38, t) == 1)
+                if (AreUnitsOnSameTeam(gUnknown_03003F38, t) == 1)
                     continue;
                 sub_080251BC(gUnknown_03003F38, t, &gUnknown_03003100.pos);
                 if (gBattleAttacker->attackType != 0)

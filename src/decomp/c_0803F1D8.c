@@ -15,10 +15,10 @@ struct Unk3F1D8Proc
 };
 
 /* MATCHED, and the first of a byte-identical pair with sub_08040984. Forwards
- * a proc's +0x64/+0x66 coordinate pair to sub_08029088. Both members are
- * `ldrsh`, so both are s16, and sub_08029088's own `lsls #0x10; asrs #0x10`
+ * a proc's +0x64/+0x66 coordinate pair to ScrollCameraToKeepCellInView. Both members are
+ * `ldrsh`, so both are s16, and ScrollCameraToKeepCellInView's own `lsls #0x10; asrs #0x10`
  * pair on each argument is the parameter narrowing, not a cast here. */
 void sub_0803F1D8(struct Unk3F1D8Proc *p)
 {
-    sub_08029088(p->unk64, p->unk66);
+    ScrollCameraToKeepCellInView(p->unk64, p->unk66);
 }

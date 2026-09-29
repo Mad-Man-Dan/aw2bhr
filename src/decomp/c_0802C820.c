@@ -29,7 +29,7 @@ bool8 sub_0802C820(void)
     return TRUE;
 }
 
-/* sub_0802C820's twin: byte-identical apart from the callee, sub_08044280
+/* sub_0802C820's twin: byte-identical apart from the callee, IsSuperCoPowerReady
  * instead of IsCoPowerAvailable. Both callees open `adds r5, r0, #0` with no masking
  * (so `int` parameter) and both results feed the `ands` with no re-narrowing
  * (so `int` return). See sub_0802C820 for the branch-sense reading.
@@ -37,7 +37,7 @@ bool8 sub_0802C820(void)
 
 bool8 sub_0802C848(void)
 {
-    if (gPlaySt.coPowersEnabled & sub_08044280(gUnknown_030033EC))
+    if (gPlaySt.coPowersEnabled & IsSuperCoPowerReady(gUnknown_030033EC))
         return FALSE;
 
     return TRUE;

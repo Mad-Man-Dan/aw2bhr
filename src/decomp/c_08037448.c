@@ -22,7 +22,7 @@
  * The `count > 0x31` bail sits AFTER the body and BEFORE the `i` increment, so
  * it is a `break` at the end of the loop body rather than part of the `for`
  * condition. */
-u8 sub_08037448(u8 a1)
+u8 BuildMapListForCategory(u8 a1)
 {
     u8 count;
     u8 i;
@@ -48,3 +48,4 @@ u8 sub_08037448(u8 a1)
     gUnknown_02027F74.unk37 = count - 1;
     return 1;
 }
+asm(".global sub_08037448\n.thumb_set sub_08037448, BuildMapListForCategory\n");

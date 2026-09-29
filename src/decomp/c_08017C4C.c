@@ -26,10 +26,10 @@ void sub_08017C4C(struct Unk0200C528 *slot)
 }
 
 /*
- * EventOp_ScrollCameraKeepInView -- script command: pass the current node's x/y to sub_08029088.
+ * EventOp_ScrollCameraKeepInView -- script command: pass the current node's x/y to ScrollCameraToKeepCellInView.
  *
  * gUnknown_0200C528[a].unk04 is the slot's cursor into its list of script
- * nodes. The node's .unk08 and .unk0a go to sub_08029088 as a signed pair,
+ * nodes. The node's .unk08 and .unk0a go to ScrollCameraToKeepCellInView as a signed pair,
  * sub_08017C4C above is installed as the slot's callback, and the cursor steps
  * on one node. Returns FALSE, which ends the slot's turn for this frame (see
  * the dispatcher in src/decomp/c_08019404.c).
@@ -43,20 +43,20 @@ bool8 EventOp_ScrollCameraKeepInView(s16 a)
 {
     struct Unk0200C528Node *p = gUnknown_0200C528[a].unk04;
 
-    sub_08029088((s16)p->unk08, (s16)p->unk0a);
+    ScrollCameraToKeepCellInView((s16)p->unk08, (s16)p->unk0a);
     gUnknown_0200C528[a].unk08 = (struct Unk0200C528Node *)sub_08017C4C;
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }
 asm(".global sub_08017C70\n.thumb_set sub_08017C70, EventOp_ScrollCameraKeepInView\n");
 
-/* EventOp_ScrollCameraToCenter -- EventOp_ScrollCameraKeepInView above with sub_0802909C in place of
- * sub_08029088. */
+/* EventOp_ScrollCameraToCenter -- EventOp_ScrollCameraKeepInView above with ScrollCameraToCenterCell in place of
+ * ScrollCameraToKeepCellInView. */
 bool8 EventOp_ScrollCameraToCenter(s16 a)
 {
     struct Unk0200C528Node *p = gUnknown_0200C528[a].unk04;
 
-    sub_0802909C((s16)p->unk08, (s16)p->unk0a);
+    ScrollCameraToCenterCell((s16)p->unk08, (s16)p->unk0a);
     gUnknown_0200C528[a].unk08 = (struct Unk0200C528Node *)sub_08017C4C;
     gUnknown_0200C528[a].unk04++;
     return FALSE;

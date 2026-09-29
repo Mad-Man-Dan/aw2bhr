@@ -50,6 +50,6 @@ void sub_080385A4(void)
         gPlaySt.aiControlled[2] = 2;
         gPlaySt.aiControlled[3] = 2;
         gPlaySt.aiControlled[4] = 2;
-        sub_08026900();
+        SetFreeForAllTeams();
     }
 }

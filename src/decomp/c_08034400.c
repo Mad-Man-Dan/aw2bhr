@@ -7,10 +7,11 @@
  * sub_08034400 @ 0x08034400
  */
 
-void sub_08034400(u8 *src, u8 *dst)
+void PackPathNibbles(u8 *src, u8 *dst)
 {
     int i;
 
     for (i = 0; i < 6; i++)
         dst[i] = ((src[i * 2] & 0xf) << 4) | (src[i * 2 + 1] & 0xf);
 }
+asm(".global sub_08034400\n.thumb_set sub_08034400, PackPathNibbles\n");

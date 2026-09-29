@@ -17,7 +17,7 @@ void CalcDamage(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
 
     if (c == 1)
     {
-        v2 = sub_080433F8(a->unit->type, b->unit->type, 1);
+        v2 = GetUnitBaseDamage(a->unit->type, b->unit->type, 1);
         if (v2 != 0)
             v1 = (u16)sub_08043070(gPlayers[army].co,
                               gPlayers[army].coMode,
@@ -95,7 +95,7 @@ void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
     else
         hp = 0;
 
-    a1->terrainDefense = sub_08043304(a1);
+    a1->terrainDefense = GetBattleUnitTerrainDefense(a1);
     a1->totalDefense = Div(hp * a1->terrainDefense, 10);
     a1->totalDefense = a1->totalDefense
               + GetUnitDefenceWithCoBonus(((a1->unit - gUnits) >> 6) + 1, a1->unit->type)
@@ -103,7 +103,7 @@ void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
     a1->damage = a1->baseDamage;
 
     if (a2 == 1)
-        acc += sub_0804338C(a1);
+        acc += GetBattleUnitCounterattackBonus(a1);
 
     acc += sub_0804334C(a1);
     acc += firepower;
@@ -128,7 +128,7 @@ void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
     }
 }
 
-void sub_08024DDC(struct BattleUnit *a1, struct BattleUnit *a2)
+void ApplyBattleHit(struct BattleUnit *a1, struct BattleUnit *a2)
 {
     int hp;
 
@@ -146,8 +146,9 @@ void sub_08024DDC(struct BattleUnit *a1, struct BattleUnit *a2)
     a1->hpLoss = Div((200 - a1->totalDefense) * a2->damage, 100);
     a1->remainingHp = a1->unit->hp - a1->hpLoss;
 }
+asm(".global sub_08024DDC\n.thumb_set sub_08024DDC, ApplyBattleHit\n");
 
-void sub_08024E60(struct BattleUnit *a1, struct BattleUnit *a2)
+void ResolveBattleExchange(struct BattleUnit *a1, struct BattleUnit *a2)
 {
     int v;
     s16 hp;
@@ -159,7 +160,7 @@ void sub_08024E60(struct BattleUnit *a1, struct BattleUnit *a2)
 
     a1->damage = Div(v, 10);
 
-    sub_08024DDC(a2, a1);
+    ApplyBattleHit(a2, a1);
 
     if (a2->remainingHp >= 0)
         hp = a2->remainingHp;
@@ -173,10 +174,11 @@ void sub_08024E60(struct BattleUnit *a1, struct BattleUnit *a2)
 
     a2->damage = Div(v, 10);
 
-    sub_08024DDC(a1, a2);
+    ApplyBattleHit(a1, a2);
 }
+asm(".global sub_08024E60\n.thumb_set sub_08024E60, ResolveBattleExchange\n");
 
-void sub_08024ED8(struct BattleUnit *a, struct BattleUnit *b)
+void PreventBattleMutualKill(struct BattleUnit *a, struct BattleUnit *b)
 {
     if (a->remainingHp <= 0)
     {
@@ -203,6 +205,7 @@ void sub_08024ED8(struct BattleUnit *a, struct BattleUnit *b)
     if (b->remainingHp < 0)
         b->remainingHp = 0;
 }
+asm(".global sub_08024ED8\n.thumb_set sub_08024ED8, PreventBattleMutualKill\n");
 
 void CalcBattleDamage(s16 a1, s16 a2, struct Unk802C57C *a3)
 {
@@ -216,8 +219,8 @@ void CalcBattleDamage(s16 a1, s16 a2, struct Unk802C57C *a3)
     saved |= gUnits[a1].y << 16;
     gUnits[a1].y = a3->unk02;
 
-    sub_08024A2C(gBattleAttacker, a1);
-    sub_08024A2C(gBattleDefender, a2);
+    InitBattleUnit(gBattleAttacker, a1);
+    InitBattleUnit(gBattleDefender, a2);
 
     dx = gBattleAttacker->unit->x
        - gBattleDefender->unit->x;
@@ -240,13 +243,13 @@ void CalcBattleDamage(s16 a1, s16 a2, struct Unk802C57C *a3)
 
     if ((GetPlayerSpecialAbilities(((gBattleDefender->unit
                         - gUnits) >> 6) + 1) & 4) != 0)
-        sub_08024E60(gBattleDefender,
+        ResolveBattleExchange(gBattleDefender,
                      gBattleAttacker);
     else
-        sub_08024E60(gBattleAttacker,
+        ResolveBattleExchange(gBattleAttacker,
                      gBattleDefender);
 
-    sub_08024ED8(gBattleAttacker,
+    PreventBattleMutualKill(gBattleAttacker,
                  gBattleDefender);
 
     gUnits[a1].x = saved;
@@ -259,7 +262,7 @@ void sub_08025058(void)
 {
 }
 
-void sub_0802505C(void *a1)
+void WriteBackBattleUnit(void *a1)
 {
     struct BattleUnit *p = a1;
     int v;
@@ -281,31 +284,34 @@ void sub_0802505C(void *a1)
     p->unit->ammo = p->ammo;
 
     if (p->unit->hp == 0)
-        sub_0804018C(p->unit);
+        StartUnitDestroyed(p->unit);
 }
+asm(".global sub_0802505C\n.thumb_set sub_0802505C, WriteBackBattleUnit\n");
 
-void sub_080250E8(void)
+void WriteBackBattleResult(void)
 {
     if (gBattleAttacker->remainingHp <= 0)
-        sub_08026588(
+        RecordUnitDestroyed(
             ((gBattleDefender->unit - gUnits) >> 6) + 1,
             ((gBattleAttacker->unit - gUnits) >> 6) + 1,
             gBattleAttacker->unit->type);
 
     if (gBattleDefender->remainingHp <= 0)
-        sub_08026588(
+        RecordUnitDestroyed(
             ((gBattleAttacker->unit - gUnits) >> 6) + 1,
             ((gBattleDefender->unit - gUnits) >> 6) + 1,
             gBattleDefender->unit->type);
 
-    sub_0802505C(gBattleAttacker);
-    sub_0802505C(gBattleDefender);
+    WriteBackBattleUnit(gBattleAttacker);
+    WriteBackBattleUnit(gBattleDefender);
 }
+asm(".global sub_080250E8\n.thumb_set sub_080250E8, WriteBackBattleResult\n");
 
-void sub_080251AC(void)
+void WriteBackBattleAttacker(void)
 {
-    sub_0802505C(gBattleAttacker);
+    WriteBackBattleUnit(gBattleAttacker);
 }
+asm(".global sub_080251AC\n.thumb_set sub_080251AC, WriteBackBattleAttacker\n");
 
 void sub_080251BC(int a1, int a2, struct Unk802C57C *a3)
 {
@@ -329,7 +335,7 @@ void sub_080251D8(int a1)
 
     e = &gUnits[a1];
 
-    sub_08024A2C(gBattleAttacker, a1);
+    InitBattleUnit(gBattleAttacker, a1);
 
     if (e->ammo != 0)
     {
@@ -339,7 +345,7 @@ void sub_080251D8(int a1)
     }
     else
     {
-        ok = sub_080433F8(e->type, 3, 1);
+        ok = GetUnitBaseDamage(e->type, 3, 1);
         if (ok != 0)
             b = sub_08043070(gPlayers[gUnknown_030033EC].co,
                              gPlayers[gUnknown_030033EC].coMode,

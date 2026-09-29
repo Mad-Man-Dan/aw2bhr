@@ -15,9 +15,9 @@ void sub_0802DE1C(void)
     int off;
     int v;
 
-    sub_08023824();
+    HandleMoveMapCursor();
     sub_080236E8();
-    sub_08023908(4);
+    HandleMoveCameraWithMapCursor(4);
 
     off = gMap->rowOffset[gUnknown_030033E4.unk02] + gUnknown_030033E4.unk00;
 
@@ -44,12 +44,12 @@ void sub_0802DE1C(void)
         return;
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0x11, gUnknown_03003F38, 0, 0);
+        SendActionCommand(0x11, gUnknown_03003F38, 0, 0);
 
-    sub_08029088(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
+    ScrollCameraToKeepCellInView(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
     sub_08035810();
-    sub_080258CC();
-    sub_08022A08();
+    RebuildMapUnitLayers();
+    HideRangeOverlay();
     gUnknown_03003334 = v;
     sub_0803B4DC(0x66);
 }
@@ -60,9 +60,9 @@ void sub_0802DEFC(void)
     int id;
     struct Unit *e;
 
-    sub_08023824();
-    sub_0802361C();
-    sub_08023908(4);
+    HandleMoveMapCursor();
+    HandleGameMapCursorInput();
+    HandleMoveCameraWithMapCursor(4);
     sub_08023274(5);
 
     if (!sub_0802DBF8())
@@ -93,7 +93,7 @@ void sub_0802DEFC(void)
         return;
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0x12, id, 0, 0);
+        SendActionCommand(0x12, id, 0, 0);
 
-    sub_0804018C(e);
+    StartUnitDestroyed(e);
 }

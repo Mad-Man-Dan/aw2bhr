@@ -57,7 +57,7 @@
  *    register allocation. The table is in .rodata and every site is a read, so
  *    `const u16` is the obvious declaration; it is wrong. This function stores
  *    into the map plane THROUGH gUnknown_08499590 and then passes
- *    gUnknown_084995F4[team] to sub_080240B4. With `const`, agbcc proves the
+ *    gUnknown_084995F4[team] to SetPropertyTileForOwner. With `const`, agbcc proves the
  *    store cannot alias the table and reuses the register it loaded for the
  *    store; the ROM reloads it (`ldrb r2,[r5]` after the `strb`). With `const`
  *    the function came out 588 bytes AND mis-allocated the loop; dropping it
@@ -73,7 +73,7 @@
  * Readout notes: `gPlayers[(v >> 6) + 1].unk2a` is the ROM's
  * `adds r1, #0x66` -- 0x3c + 0x2a, the 1-based army slot, NOT a member at +0x66
  * (struct PlayerStruct is only 0x3c long, and its unk2a comment already records
- * sub_08026F9C/sub_08026FD0 reaching it the same way). `i` is u16 from
+ * AreUnitsOnSameTeam/IsTerrainOwnedByUnitsTeam reaching it the same way). `i` is u16 from
  * `adds #1; lsls #0x10; lsrs #0x10` and the unsigned `bhi`; the `i <= 0x5b` half
  * of the loop condition folds away at the top guard because i is 0 there. r5
  * (&gUnknown_084995F4[team]) and sl (&gProperty) are LICM hoists, not
@@ -107,7 +107,7 @@ void sub_08028580(struct Unk28580 *p)
             + (gPlayers[p->unk64].hqX & 0x7f);
         team = map->terrain[idx] >> 5;
         map->terrain[idx] = 8 | gUnknown_084995F4[p->unk64];
-        sub_080240B4(gPlayers[p->unk64].hqX & 0x7f,
+        SetPropertyTileForOwner(gPlayers[p->unk64].hqX & 0x7f,
                      gPlayers[p->unk64].hqY & 0x7f,
                      gUnknown_084995F4[p->unk64]);
         RecountArmyProperties();
@@ -139,7 +139,7 @@ void sub_08028580(struct Unk28580 *p)
                         gProperty[i].y] + gProperty[i].x]
                             = 6 | gUnknown_084995F4[team];
                 sub_0802419C(gProperty[i].x, gProperty[i].y, 0);
-                sub_080240B4(gProperty[i].x, gProperty[i].y,
+                SetPropertyTileForOwner(gProperty[i].x, gProperty[i].y,
                              gUnknown_084995F4[team]);
             }
             else
@@ -149,7 +149,7 @@ void sub_08028580(struct Unk28580 *p)
                         gProperty[i].y] + gProperty[i].x]
                             = MAP_OBJ_TERRAIN(gProperty[i].flags)
                             | gUnknown_084995F4[team];
-                sub_080240B4(gProperty[i].x, gProperty[i].y,
+                SetPropertyTileForOwner(gProperty[i].x, gProperty[i].y,
                              gUnknown_084995F4[team]);
             }
         }
@@ -157,6 +157,6 @@ void sub_08028580(struct Unk28580 *p)
 
     sub_08024268();
     RecountArmyProperties();
-    sub_08026D68();
+    RecountArmyIncome();
     p->unk68 = 1;
 }

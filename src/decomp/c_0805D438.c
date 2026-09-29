@@ -10,7 +10,7 @@
 #include "map.h"
 
 /*
- * sub_0805D438 -- AI: run one step of the current army's unit list.
+ * AiRunNextWorklistUnit -- AI: run one step of the current army's unit list.
  *
  * gUnknown_030046B0 walks a list of unit indices. 0 ends the list and 0x40
  * is a special entry with no unit. Nothing happens while gUnknown_030044D8
@@ -38,7 +38,7 @@
  * that pass on, the compiler shares the address loads of three globals
  * across the call and the function comes out 28 bytes longer.
  */
-void sub_0805D438(void)
+void AiRunNextWorklistUnit(void)
 {
     if (gUnknown_030044D8 != 0)
         return;
@@ -106,3 +106,4 @@ void sub_0805D438(void)
         gUnknown_03004780 = 3;
     }
 }
+asm(".global sub_0805D438\n.thumb_set sub_0805D438, AiRunNextWorklistUnit\n");

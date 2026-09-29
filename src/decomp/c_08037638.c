@@ -7,9 +7,10 @@
  * sub_08037638 @ 0x08037638
  */
 
-void sub_08037638(int a, int b, int c, int d)
+void ShowMapPreview(int a, int b, int c, int d)
 {
-    sub_08011B34((void *)sub_08037790);
+    sub_08011B34((void *)AnimateMapPreviewPalette);
     sub_08037610(a + ((c & 0x3ff) << 5));
     sub_0803768C(a, b, c, d);
 }
+asm(".global sub_08037638\n.thumb_set sub_08037638, ShowMapPreview\n");

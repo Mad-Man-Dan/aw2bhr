@@ -46,7 +46,7 @@ void sub_0803F4C8(struct UnkF4C8Proc *proc)
 /* `adds r1, r2, #0` before the bl -- the parent is the third parameter, the
  * same shape src/decomp/c_0803F3E4.c has. Both stored fields are words; the
  * `lsls #0x10; asrs #0x10` pairs afterwards are the conversions to
- * sub_0802909C's `s16` parameters and apply to the arguments, not the fields. */
+ * ScrollCameraToCenterCell's `s16` parameters and apply to the arguments, not the fields. */
 void sub_0803F510(int a, int b, ProcPtr parent)
 {
     struct UnkF510Proc *proc = Proc_StartBlocking(gUnknown_0849F940, parent);
@@ -54,5 +54,5 @@ void sub_0803F510(int a, int b, ProcPtr parent)
     proc->unk2c = a;
     proc->unk30 = b;
 
-    sub_0802909C(a + 1, b + 1);
+    ScrollCameraToCenterCell(a + 1, b + 1);
 }

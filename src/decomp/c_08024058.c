@@ -19,8 +19,8 @@ void sub_08024058(s16 a1, s16 a2)
     v = (map->terrain[idx] & 0x1f) + gUnknown_03004084;
     map->terrain[idx] = v;
 
-    sub_080240B4(a1, a2, v & 0xe0);
+    SetPropertyTileForOwner(a1, a2, v & 0xe0);
     sub_08024268();
     RecountArmyProperties();
-    sub_08026D68();
+    RecountArmyIncome();
 }

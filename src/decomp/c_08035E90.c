@@ -53,7 +53,7 @@ void sub_08035E90(ProcPtr procArg)
     case 1:
         if (gUnknown_0849CD88[proc->unk36].unk1a != 0)
         {
-            t = sub_08035D0C(proc);
+            t = GetMoveSlideFootstepSfx(proc);
 
             if (t != 0)
                 PlayMusicOrSfx(t + a + b);

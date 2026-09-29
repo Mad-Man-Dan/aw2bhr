@@ -20,7 +20,7 @@ bool8 sub_0802C8F8(void)
 
     e = &gUnits[gMap->unit[off]];
 
-    if (!sub_08025FC0((struct Unit *)gUnknown_030040D8, e))
+    if (!CanJoinUnits((struct Unit *)gUnknown_030040D8, e))
         return TRUE;
 
     return FALSE;
@@ -37,7 +37,7 @@ bool8 sub_0802C958(void)
     FillMovementMap(0xff);
     gUnknown_03003340[gUnknown_03003100.pos.unk02][gUnknown_03003100.pos.unk00] = 0;
 
-    if (sub_0804151C())
+    if (BuildCapturableCellList())
         return FALSE;
 
     return TRUE;

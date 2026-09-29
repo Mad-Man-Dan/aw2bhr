@@ -15,5 +15,5 @@ void sub_08035740(void *a)
 
     proc = Proc_Find(ProcScr_SelectUnit);
     if (proc != NULL)
-        sub_08035760(proc, a);
+        BeginMoveSlidePath(proc, a);
 }

@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* sub_08024584 without the trailing sub_0801237C -- see
+/* SetMapLayersDefault without the trailing sub_0801237C -- see
  * src/decomp/c_08024404.c for the 2-bit-field reading. */
 
 void sub_0802465C(void)

@@ -21,9 +21,9 @@ struct UnkF2D8Proc
 };
 
 /* Both fields are full words (`ldr`); the `lsls #0x10; asrs #0x10` on each is
- * the implicit conversion to sub_0802909C's two `s16` parameters, not a cast
+ * the implicit conversion to ScrollCameraToCenterCell's two `s16` parameters, not a cast
  * in the source. */
 void sub_0803F2D8(struct UnkF2D8Proc *proc)
 {
-    sub_0802909C(proc->unk2c + 1, proc->unk30 + 2);
+    ScrollCameraToCenterCell(proc->unk2c + 1, proc->unk30 + 2);
 }

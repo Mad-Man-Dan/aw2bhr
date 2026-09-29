@@ -32,7 +32,7 @@
  *    arithmetic; with `s16` the two come out in argument-number order instead.
  *
  * 3. The whole map lookup is sequenced INSIDE the second argument with commas.
- *    The ROM evaluates sub_08026FD0's first argument -- including the `ldrsh`,
+ *    The ROM evaluates IsTerrainOwnedByUnitsTeam's first argument -- including the `ldrsh`,
  *    not just its address -- before the map base is even loaded, and no
  *    statement form reaches that: written as statements ahead of the call the
  *    map goes first, and binding the first argument to a local of any width
@@ -54,10 +54,10 @@ u8 sub_080257C0(u16 id)
     if (!(unit->flags & 0x20))
         return 1;
 
-    if (sub_08026F5C(unit - gUnits))
+    if (IsUnitOnCurrentTeam(unit - gUnits))
         return 1;
 
-    if (sub_08026FD0(gUnknown_084995FE[gUnknown_030033EC],
+    if (IsTerrainOwnedByUnitsTeam(gUnknown_084995FE[gUnknown_030033EC],
                      gMap->terrain[gMap->rowOffset[y] + x]))
         return 1;
 

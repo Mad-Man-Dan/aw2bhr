@@ -77,23 +77,23 @@ void sub_0803F990(void) {
       break;
     case TERRAIN_MINICANNON_S:
       sub_0803F908(gProperty[i].x, gProperty[i].y,
-                   gUnknown_0849F9D0, sub_08027198(5), 0);
+                   gUnknown_0849F9D0, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_MINICANNON_N:
       sub_0803F908(gProperty[i].x, gProperty[i].y,
-                   gUnknown_0849F9D8, sub_08027198(5), 0);
+                   gUnknown_0849F9D8, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_MINICANNON_W:
       sub_0803F908(gProperty[i].x, gProperty[i].y,
-                   gUnknown_0849F9C0, sub_08027198(5), 0);
+                   gUnknown_0849F9C0, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_MINICANNON_E:
       sub_0803F908(gProperty[i].x, gProperty[i].y,
-                   gUnknown_0849F9C8, sub_08027198(5), 0);
+                   gUnknown_0849F9C8, GetArmyByTeamColor(5), 0);
       break;
     case TERRAIN_LASER:
       sub_0803F908(gProperty[i].x, gProperty[i].y,
-                   gUnknown_0849F9E0, sub_08027198(5), 0);
+                   gUnknown_0849F9E0, GetArmyByTeamColor(5), 0);
       break;
     case 0xFF:
       return;

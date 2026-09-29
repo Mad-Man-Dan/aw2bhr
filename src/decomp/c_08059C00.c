@@ -25,7 +25,7 @@ struct Unk59C00Cell
     /* 0x02 */ s16 v;
 };
 
-s16 sub_08059C00(void *a, u16 *b)
+s16 AiPopLastNearestCandidate(void *a, u16 *b)
 {
     struct Unk59C00Cell *p;
     u16 *out;
@@ -59,3 +59,4 @@ s16 sub_08059C00(void *a, u16 *b)
     }
     return bv;
 }
+asm(".global sub_08059C00\n.thumb_set sub_08059C00, AiPopLastNearestCandidate\n");

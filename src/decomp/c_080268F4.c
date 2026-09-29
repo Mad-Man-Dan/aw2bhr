@@ -21,5 +21,5 @@
  */
 void sub_080268F4(void)
 {
-    sub_080267AC();
+    StartArmyTurn();
 }

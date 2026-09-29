@@ -8,7 +8,7 @@
  * sub_08035224 @ 0x08035224, sub_080352B4 @ 0x080352B4, sub_08035354 @ 0x08035354
  */
 
-void sub_08035224(void)
+void InitSnowParticles(void)
 {
     s16 i;
     s16 j;
@@ -25,6 +25,7 @@ void sub_08035224(void)
         gUnknown_02027C68[i].unk08 = gUnknown_08090E40[j * 3 + 2];
     }
 }
+asm(".global sub_08035224\n.thumb_set sub_08035224, InitSnowParticles\n");
 
 /* The second loop's bound must be reached through the SAME local the loop is
  * seeded from (`i = k * 0x10;` then `j < i + 0x10`), not written out again as
@@ -32,7 +33,7 @@ void sub_08035224(void)
  * the bound's `lsls #4` AHEAD of the loop variable's `lsls #0x14`, which is
  * the whole of an otherwise size-exact 93.1% near-miss -- same instructions,
  * same count, wrong order. Found by decomp-permuter. */
-void sub_080352B4(void)
+void UpdateSnowParticles(void)
 {
     s16 i;
     s16 j;
@@ -55,8 +56,9 @@ void sub_080352B4(void)
                      gUnknown_02027C68[j].unk08);
     }
 }
+asm(".global sub_080352B4\n.thumb_set sub_080352B4, UpdateSnowParticles\n");
 
-void sub_08035354(void)
+void InitRainParticles(void)
 {
     s16 i;
     s16 j;
@@ -73,3 +75,4 @@ void sub_08035354(void)
         gUnknown_02027DE8[i].unk08 = gUnknown_08090E40[j * 3 + 2];
     }
 }
+asm(".global sub_08035354\n.thumb_set sub_08035354, InitRainParticles\n");

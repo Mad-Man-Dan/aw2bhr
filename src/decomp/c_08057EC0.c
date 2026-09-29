@@ -15,7 +15,7 @@ struct Unk08057EC0Rec
     /* 0x02 */ s16 unk02;
 };
 
-void *sub_08057EC0(void)
+void *AiPopFirstNearestCandidate(void)
 {
     struct Unk08057EC0Rec *e;
     struct Unk08057EC0Rec *best;
@@ -40,3 +40,4 @@ void *sub_08057EC0(void)
 
     return best;
 }
+asm(".global sub_08057EC0\n.thumb_set sub_08057EC0, AiPopFirstNearestCandidate\n");

@@ -21,5 +21,5 @@
  */
 void sub_080246A8(void)
 {
-    sub_08024584();
+    SetMapLayersDefault();
 }

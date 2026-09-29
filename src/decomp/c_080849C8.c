@@ -61,9 +61,9 @@ void StartCoInfoScreen_080849C9(ProcPtr parent)
                  gUnknown_08616B1C[gPlayers[gUnknown_030033EC].teamColor], 0);
     sub_080858C0();
     sub_08043BA4(gPlayers[gUnknown_030033EC].co, 0xB6 * 2, 5);
-    sub_08043FA8(gPlayers[gUnknown_030033EC].co, (void *)0x06015700, 0x16);
+    LoadCoMiniPortrait(gPlayers[gUnknown_030033EC].co, (void *)0x06015700, 0x16);
     sub_08043B44(8);
-    sub_08043B14(gPlayers[gUnknown_030033EC].co, 0xAB * 4);
+    LoadCoNameGraphic(gPlayers[gUnknown_030033EC].co, 0xAB * 4);
     sub_0801F114();
     sub_0801F150(0, (void *)0x06010000, 0xB1 * 4, 0x12);
     sub_0801F150(1, (void *)0x06010000, 0xB3 * 4, 0x13);
@@ -73,7 +73,7 @@ void StartCoInfoScreen_080849C9(ProcPtr parent)
 
     for (i = 0;
          i < (gPlaySt.gameMode == 2 ? sub_0802490C(gPlaySt.mapID)
-                                           : sub_080248F8());
+                                           : GetLoadedMapArmyCount());
          i++)
         LoadTilePoolGraphic(gPlayers[i + 1].teamColor + 0x3D);
 

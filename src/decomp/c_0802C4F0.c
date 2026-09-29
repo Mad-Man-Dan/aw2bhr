@@ -24,7 +24,7 @@ void sub_0802C4F0(ProcPtr proc)
     }
     else
     {
-        p = sub_080413A4(gUnknown_03003F40);
+        p = GetAttackTargetRecord(gUnknown_03003F40);
 
         if (p->unk02 == 0)
             sub_080425E0(p->unk00);

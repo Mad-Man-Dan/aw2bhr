@@ -11,16 +11,18 @@
  * so the subtraction is UNSIGNED -- that is what fixes sub_0808B6B0's return
  * type as u32 rather than a narrow or signed one, since a signed `/ 2` would
  * have been the `lsr #31; add; asr #1` triple. */
-int sub_08034A44(const char *s)
+int GetCenteredTextX(const char *s)
 {
     return (0xf0 - sub_0808B6B0(s) * 8) / 2;
 }
+asm(".global sub_08034A44\n.thumb_set sub_08034A44, GetCenteredTextX\n");
 
 /* Draw `s` centred on row `y`. Both shift pairs are the int -> u16 conversions
  * sub_080119A0's first two parameters force, not evidence of narrow returns or
  * narrow parameters here: `adds r4, r0, #0` with a bare prologue says `y`
  * arrives wide. */
-void sub_08034A58(int y, const char *s)
+void PutCenteredAsciiStringSprites(int y, const char *s)
 {
-    sub_080119A0(sub_08034A44(s), y, s);
+    sub_080119A0(GetCenteredTextX(s), y, s);
 }
+asm(".global sub_08034A58\n.thumb_set sub_08034A58, PutCenteredAsciiStringSprites\n");

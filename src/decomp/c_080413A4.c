@@ -7,7 +7,8 @@
  * sub_080413A4 @ 0x080413A4
  */
 
-struct Unk03003338 *sub_080413A4(int index)
+struct Unk03003338 *GetAttackTargetRecord(int index)
 {
     return &gUnknown_03003338[index];
 }
+asm(".global sub_080413A4\n.thumb_set sub_080413A4, GetAttackTargetRecord\n");

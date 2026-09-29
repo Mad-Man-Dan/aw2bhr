@@ -8,7 +8,7 @@
  */
 
 /* Skips a byte-coded command stream until the terminator 4 -- the same
- * terminator sub_08020634 appends just above.  Nothing calls it and nothing in
+ * terminator RevertMovementScript appends just above.  Nothing calls it and nothing in
  * the ROM holds its address; r0 and r1 are never read, so both leading
  * parameters are dead, and so is everything the four non-terminating cases
  * once did.

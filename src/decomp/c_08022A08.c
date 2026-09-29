@@ -11,15 +11,16 @@
  * sub_0801537C returns int and the result is discarded; the epilogue is
  * `pop {r0}; bx r0`, which is what makes this function void rather than a tail
  * forward. */
-void sub_08022A08(void)
+void HideRangeOverlay(void)
 {
     sub_08013C00();
     sub_08013AEC();
-    sub_080227A8();
-    sub_08024584();
+    RedrawUnitIconLayer();
+    SetMapLayersDefault();
     gUnknown_03000559 = 0;
     sub_0801537C(gUnknown_08499B4C);
 }
+asm(".global sub_08022A08\n.thumb_set sub_08022A08, HideRangeOverlay\n");
 
 /* Two tile blobs and the palette between them, in that order -- the palette
  * store sits between the decompressions in the ROM and cannot be moved to

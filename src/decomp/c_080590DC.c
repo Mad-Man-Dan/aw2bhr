@@ -60,7 +60,7 @@ void sub_080590DC(void *a1)
 
   if (v.pos.unk00 != 0x270F)
   {
-    sub_080591E4(&v);
+    AiAdvanceToward(&v);
   }
   else
   {

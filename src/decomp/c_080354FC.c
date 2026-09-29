@@ -21,8 +21,8 @@
  * alias below so every other unit keeps resolving it unchanged. */
 void LoadWeatherData(void)
 {
-    sub_08035224();
-    sub_08035354();
+    InitSnowParticles();
+    InitRainParticles();
 }
 
 asm(".global sub_080354FC\n.thumb_set sub_080354FC, LoadWeatherData\n");

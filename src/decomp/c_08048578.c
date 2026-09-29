@@ -10,7 +10,7 @@
 /* gUnknown_03003F2C + proc->unk28 indexes the 12-byte unit records
  * gUnits points at -- the lsls #1; adds; lsls #2 chain is x * 3 * 4,
  * agbcc's usual shape for a stride of 12. unk02 and unk03 are that struct's
- * cell column and row, and sub_08029088 takes them as s16.
+ * cell column and row, and ScrollCameraToKeepCellInView takes them as s16.
  *
  * proc->unk28 is loaded twice; the guard and the index are separate reads in
  * the ROM, which is what an if (p->unk28) around a body that reads it again
@@ -28,6 +28,6 @@ void sub_08048578(struct Unk48578Proc *proc)
     if (proc->unk28 != 0)
     {
         u = &gUnits[gUnknown_03003F2C + proc->unk28];
-        sub_08029088(u->x, u->y);
+        ScrollCameraToKeepCellInView(u->x, u->y);
     }
 }

@@ -13,7 +13,7 @@
  * otherwise it loads the map, tallies the properties on it per owner into a
  * six-byte scratch, and reports (largest single army's tally, total).
  *
- * The guard is the same fold range test sub_0802163C carries, but on a u8
+ * The guard is the same fold range test LoadMapIntoGMap carries, but on a u8
  * member: build_range_check keeps unsigned char as the working type, so the
  * subtraction truncates -- `adds #0x4c; lsls #0x18; lsrs #0x18; cmp #0xb; bhi`
  * is `unk02 >= 0xb4 && unk02 <= 0xbf` and nothing else.  (+0x4c is -0xb4 mod
@@ -66,7 +66,7 @@ void sub_08021810(u8 *a, u8 *b)
         return;
     }
 
-    sub_0802163C(gPlaySt.mapID);
+    LoadMapIntoGMap(gPlaySt.mapID);
 
     for (x = 0; x <= 5; x++)
         gUnknown_030032D0[x] = 0;
@@ -115,7 +115,7 @@ void RecountArmyProperties(void)
 
     n = 0;
 
-    sub_0801F92C(gMap->property);
+    SetWorkingMapPlane(gMap->property);
     FillMovementMap(0xff);
 
     for (x = 0; x <= 4; x++)

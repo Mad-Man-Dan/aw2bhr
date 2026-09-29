@@ -7,10 +7,11 @@
  * sub_0804438C @ 0x0804438C
  */
 
-void sub_0804438C(int a1, int a2)
+void PayForCoPower(int a1, int a2)
 {
-    sub_08044354(a1);
+    IncrementCoPowerUseCount(a1);
     SpendCoPowerCharge(a1, a2);
     gPlayers[a1].unk24 = 0;
     sub_08039634(a1, a2);
 }
+asm(".global sub_0804438C\n.thumb_set sub_0804438C, PayForCoPower\n");

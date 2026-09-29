@@ -12,19 +12,19 @@
  *
  * `movs r2,#0; ldrsh r0,[r1,r2]` and `movs r2,#2; ldrsh r1,[r1,r2]` is the
  * s16-OBJECT tell, and it is why union Unk802C57CBuf gained a signed view: the
- * u16 `.pos` spelling emits `ldrh` and lets sub_080422A8's declared s16
+ * u16 `.pos` spelling emits `ldrh` and lets IsBoardableTransportAt's declared s16
  * parameters do the sign extension, and an (s16) cast on a u16 member emits
  * `ldrh; lsls #16; asrs #16`. Only a genuinely s16 member produces the register-
  * offset `ldrsh` here (ldrsh has no immediate-offset form, hence the scratch).
  *
- * `lsls #0x18; lsrs #0x18; cmp #1` is sub_080422A8's bool8 return kept for a
+ * `lsls #0x18; lsrs #0x18; cmp #1` is IsBoardableTransportAt's bool8 return kept for a
  * compare against a non-zero constant. The THEN arm is `return FALSE` and it
  * sits after the pool, so this is the sub_0802C5F0 spelling.
  */
 
 bool8 sub_0802CBA0(void)
 {
-    if (sub_080422A8(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) == TRUE)
+    if (IsBoardableTransportAt(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) == TRUE)
         return FALSE;
 
     return TRUE;

@@ -8,10 +8,10 @@
  * sub_0805A268 @ 0x0805A268, sub_0805A388 @ 0x0805A388
  */
 
-/* sub_0805A514's sibling (src/decomp/c_0805A514.c) and a producer for the same
+/* AiListEmbarkBoundUnits's sibling (src/decomp/c_0805A514.c) and a producer for the same
  * cell list sub_0805A744 consumes: sweeps the 0x40-unit window at
  * gUnknown_03003F2C and emits {x, y, threat} for every unit that passes, then
- * terminates the array with 0xFFFF exactly as sub_0805A514 does.
+ * terminates the array with 0xFFFF exactly as AiListEmbarkBoundUnits does.
  *
  * Two disjoint acceptance arms sharing one emit body. The first takes units
  * HasSupplyAbility accepts whose class byte is live in gUnknown_084995A8; the
@@ -41,7 +41,7 @@ struct Unk5A514Cell
     /* 0x02 */ s16 v;
 };
 
-void sub_0805A268(struct Unk5A514Cell *out)
+void AiListSuppliersInReach(struct Unk5A514Cell *out)
 {
     struct Unit *u;
     int i;
@@ -87,8 +87,9 @@ void sub_0805A268(struct Unk5A514Cell *out)
 
     out->v = 0xFFFF;
 }
+asm(".global sub_0805A268\n.thumb_set sub_0805A268, AiListSuppliersInReach\n");
 
-void sub_0805A388(struct Unk5A514Cell *out)
+void AiListSuppliersAndSupplyProperties(struct Unk5A514Cell *out)
 {
     struct Unit *u;
     u8 *tbl;
@@ -156,3 +157,4 @@ void sub_0805A388(struct Unk5A514Cell *out)
 
     out->v = 0xFFFF;
 }
+asm(".global sub_0805A388\n.thumb_set sub_0805A388, AiListSuppliersAndSupplyProperties\n");

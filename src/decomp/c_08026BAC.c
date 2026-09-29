@@ -24,7 +24,7 @@
  * gUnknown_08090A8C is the -fforce-addr word holding &gPlayers, which
  * is why the chain is three `ldr`s deep. Named honestly; the build places the
  * word. */
-void sub_08026BAC(void)
+void ResetAllPlayers(void)
 {
     int i;
 
@@ -60,3 +60,4 @@ void sub_08026BAC(void)
     gPlayers[3].unk2b = 4;
     gPlayers[4].unk2b = 8;
 }
+asm(".global sub_08026BAC\n.thumb_set sub_08026BAC, ResetAllPlayers\n");

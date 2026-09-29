@@ -10,7 +10,7 @@
 
 /* Traces a path downhill through the gUnknown_03003340 cost overlay from (x, y),
  * appending one direction code per step to *p and handing the run to
- * sub_08020634 to reverse in place. Each step samples the four orthogonal
+ * RevertMovementScript to reverse in place. Each step samples the four orthogonal
  * neighbours (0 = +x, 1 = -x, 2 = -y, 3 = +y; off-map reads as 0xff), takes the
  * minimum, collects every neighbour tied for it, and breaks the tie with
  * GetNextRandomNumber. `dir` survives across steps because the switch has no default
@@ -32,7 +32,7 @@
  * displacement; written as two statements each arm materialises `sp + 8 + 2k`
  * from scratch, which is what the ROM does. This is the store-address twin of
  * the "one local where the original had N" rule. */
-void sub_0802042C(int x, int y, u8 *p)
+void GenerateBestMovementScript(int x, int y, u8 *p)
 {
     s16 sel[4];
     s16 nb[4];
@@ -115,5 +115,6 @@ void sub_0802042C(int x, int y, u8 *p)
         c = gUnknown_03003340[y][x];
     }
 
-    sub_08020634(start, p);
+    RevertMovementScript(start, p);
 }
+asm(".global sub_0802042C\n.thumb_set sub_0802042C, GenerateBestMovementScript\n");

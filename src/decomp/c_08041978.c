@@ -102,9 +102,9 @@ struct Unk41978Proc
 /* Promoted but undeclared; signatures taken from src/decomp/c_08041D40.c and
  * src/decomp/c_080440A8.c, not derived. */
 int sub_08041D40(struct Unit *, struct Unit *);
-void sub_080440E0(int, int);
+void AddCoPowerCharge(int, int);
 
-void sub_08041978(u8 a1, int a2)
+void StartUnitAttack(u8 a1, int a2)
 {
     struct Unit *unit;
     struct Unit *sel;
@@ -130,7 +130,7 @@ void sub_08041978(u8 a1, int a2)
     {
         ((struct Unit *)gUnknown_030040D8)->ammo--;
         LockUnitSelection();
-        sub_080424FC();
+        CommitUnitMove();
     }
     else
     {
@@ -216,8 +216,8 @@ void sub_08041978(u8 a1, int a2)
         else
             x2 = t * c;
 
-        sub_080440E0(army1, x1 + Div(x2, 2));
-        sub_080440E0(army2, x2 + Div(x1, 2));
+        AddCoPowerCharge(army1, x1 + Div(x2, 2));
+        AddCoPowerCharge(army2, x2 + Div(x1, 2));
 
         v = gPlaySt.animOpts;
 
@@ -236,3 +236,4 @@ void sub_08041978(u8 a1, int a2)
         }
     }
 }
+asm(".global sub_08041978\n.thumb_set sub_08041978, StartUnitAttack\n");

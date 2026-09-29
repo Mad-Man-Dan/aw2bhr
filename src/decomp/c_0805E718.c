@@ -12,7 +12,7 @@ void sub_0805E718(void)
     struct Unk03003338 *p;
 
     sub_08062474();
-    if (sub_080587FC(sub_08058744()) != 0)
+    if (AiListAttackCandidates(AiPrepareAttackReach()) != 0)
     {
         p = sub_0805878C();
         if (p != NULL)

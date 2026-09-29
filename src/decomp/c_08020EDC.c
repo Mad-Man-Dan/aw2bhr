@@ -16,11 +16,11 @@
  * distance r of (x, y). r == 0 touches only the centre cell. Beyond distance
  * 1, when bit 3 of sub_08043050(flags) is clear, a cell of terrain type 4 or
  * 0x13 is skipped if it holds no unit or a unit whose type is outside
- * 0x10..0x14. sub_080210C8 calls it with planes in gMap->visible. Twin of
+ * 0x10..0x14. StampVisionByPlaneMask calls it with planes in gMap->visible. Twin of
  * sub_08020B88, which writes an overlay instead of adding.
  *
  * Measured spelling notes (parked since wave 49 at 90.7%):
- * - `flags` is an INT parameter. The one caller, sub_080210C8, narrows its
+ * - `flags` is an INT parameter. The one caller, StampVisionByPlaneMask, narrows its
  *   own int with an explicit `(u8)` at the call; a u8 parameter here would
  *   narrow it a second time at entry, and that half-emitted narrowing is
  *   what slipped `lsls r4,#24` ahead of delta's group. Earlier waves read the

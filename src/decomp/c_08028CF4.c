@@ -7,22 +7,22 @@
  * sub_08028CF4 @ 0x08028CF4
  */
 
-/* sub_08028B70 returns `int`: the result is tested with a BARE `cmp r0, #0` and
+/* GetCaptureLimitWinner returns `int`: the result is tested with a BARE `cmp r0, #0` and
  * only then cast to u8 (`lsls #0x18; lsrs #0x18`) for sub_08019940's u8 first
  * parameter. A narrow return would have been re-narrowed before the compare
- * instead. sub_08028BAC does return a byte -- `lsls r0, #0x18; cmp r0, #0`. */
-void sub_08028CF4(void)
+ * instead. IsOnlyOneTeamLeft does return a byte -- `lsls r0, #0x18; cmp r0, #0`. */
+void RunWinLossCheck(void)
 {
     int r;
 
-    if (sub_08028BAC())
+    if (IsOnlyOneTeamLeft())
     {
         MarkDefeatedArmies();
         FinalizeBattleResult();
     }
     else
     {
-        r = sub_08028B70();
+        r = GetCaptureLimitWinner();
 
         if (r != 0)
             sub_08019940(r, 0x20);
@@ -30,3 +30,4 @@ void sub_08028CF4(void)
             sub_08028A68();
     }
 }
+asm(".global sub_08028CF4\n.thumb_set sub_08028CF4, RunWinLossCheck\n");

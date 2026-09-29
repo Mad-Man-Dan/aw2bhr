@@ -21,7 +21,7 @@ void sub_08062474(void)
         return;
     gUnknown_030045CC.unk00_0 = 1;
 
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
     sub_080581A4(gMap->dangerMask, 0);
 
     mask = gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d;

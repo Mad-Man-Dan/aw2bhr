@@ -7,7 +7,7 @@
  * sub_08025D60 @ 0x08025D60, BuyUnit @ 0x08025E08
  */
 
-void sub_08025D60(int a1)
+void DestroyUnitAndCargo(int a1)
 {
     struct Unit *p;
     struct Unit *q;
@@ -16,7 +16,7 @@ void sub_08025D60(int a1)
     p = &gUnits[a1];
 
     sub_0802A5C4(p);
-    sub_08025D40((a1 >> 6) + 1);
+    IncrementPlayerUnitsLost((a1 >> 6) + 1);
 
     if (p->unk07 != 0)
     {
@@ -28,7 +28,7 @@ void sub_08025D60(int a1)
             v = 0;
 
         sub_08025B24(q, v);
-        sub_08025D60(p->unk07);
+        DestroyUnitAndCargo(p->unk07);
     }
 
     if (p->unk08 != 0)
@@ -41,11 +41,12 @@ void sub_08025D60(int a1)
             v = 0;
 
         sub_08025B24(q, v);
-        sub_08025D60(p->unk08);
+        DestroyUnitAndCargo(p->unk08);
     }
 
     p->type = 0;
 }
+asm(".global sub_08025D60\n.thumb_set sub_08025D60, DestroyUnitAndCargo\n");
 
 /* Named per Xenesis's AW2 Subroutine List: "Costs for unit bought". The old
  * BuyUnit symbol is kept as a linker alias below so every other unit

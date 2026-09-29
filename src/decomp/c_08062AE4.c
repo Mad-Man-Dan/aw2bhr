@@ -8,7 +8,7 @@
  * sub_08062AE4 @ 0x08062AE4
  */
 
-/* Tallies, for each 4x4-cell block of the map, how many cells sub_08026FD0
+/* Tallies, for each 4x4-cell block of the map, how many cells IsTerrainOwnedByUnitsTeam
  * accepts (a) versus how many carry a nonzero top-three-bit terrain flag (b),
  * and stores the ratio as a percentage in gUnknown_0202DAD8[j][i].unk28. The
  * source is permuter output, kept because it is what the bytes require. */
@@ -36,7 +36,7 @@ void sub_08062AE4(void)
           if (gUnknown_085767D5[gMap->terrain[gMap->rowOffset[y] + x] & 0x1f] != 0)
           {
             gUnknown_0202DAD8[j][i].unk2a++;
-            if (sub_08026FD0(gUnknown_03003F2C, gMap->terrain[gMap->rowOffset[y] + x]) == 1)
+            if (IsTerrainOwnedByUnitsTeam(gUnknown_03003F2C, gMap->terrain[gMap->rowOffset[y] + x]) == 1)
             {
               a++;
             }

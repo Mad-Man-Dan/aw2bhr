@@ -13,7 +13,8 @@ struct Unk080362D0
     /* 0x3e */ u16 unk3e;
 };
 
-void sub_080362D0(struct Unk080362D0 *p)
+void MoveSlideState_Wait(struct Unk080362D0 *p)
 {
     p->unk3e--;
 }
+asm(".global sub_080362D0\n.thumb_set sub_080362D0, MoveSlideState_Wait\n");

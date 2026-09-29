@@ -55,7 +55,7 @@ ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
     int pal;
     u16 (*tbl)[16];
 
-    slot = sub_0803649C();
+    slot = FindFreeMoveSlideSlot();
     if (slot == -1)
         return NULL;
 
@@ -65,7 +65,7 @@ ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
     proc = Proc_Start(ProcScr_SelectUnit, PROC_TREE_5);
     proc->unk2c = AP_Create(gfx, 2, 1);
     proc->unk3a = slot;
-    proc->unk48 = sub_080364C4();
+    proc->unk48 = AllocMoveSlideGfxBuffer();
     proc->unk30 = 0;
     proc->unk35 = 1;
     proc->unk42 = x << 4;
@@ -92,6 +92,6 @@ ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
                     (u16)(0x20 * (sub_08035AE8(proc->unk3a) + 0x10)), 0x20);
 
     sub_080359A4(proc);
-    Decompress(sub_08035B3C(proc), proc->unk48);
+    Decompress(GetMoveSlideGraphicsPointer(proc), proc->unk48);
     return proc;
 }

@@ -36,10 +36,10 @@ void sub_0802A6B0(void)
         p = &gUnits[(s16)gUnknown_03001470[gUnknown_03001FBC].unk38
                                + gUnknown_03003F2C];
 
-        if (p->type != 0 && sub_080253B0(p))
+        if (p->type != 0 && ApplyDailyFuelBurn(p))
         {
             sub_08025B24(p, p->hp ? Div(p->hp - 1, 10) + 1 : 0);
-            sub_0804018C(p);
+            StartUnitDestroyed(p);
             return;
         }
 

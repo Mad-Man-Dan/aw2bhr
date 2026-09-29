@@ -16,7 +16,7 @@
  * not two source spellings: -fforce-addr parks &gActiveMap in this
  * unit's own pool (0x0808D6EC in the ROM) for the reads inside the loop, while
  * the later statements get an ordinary inline pool word. Likewise 0x0808D6F0 /
- * 0x0808D6F4 hold &sub_08036944 / &sub_080369BC with the THUMB bit set, and
+ * 0x0808D6F4 hold &MapVBlankCallback / &MapMainLoopCallback with the THUMB bit set, and
  * 0x0808D6F8 / 0x0808D6FC hold &gUnknown_03003F3C and a script blob at
  * 0x084858AC -- all five are written honestly here and agbcc rebuilds the pool.
  *
@@ -42,9 +42,9 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     gUnknown_030040E4 = 0;
     gUnknown_030040E8 = 0;
     gMap->unk4233 = 4;
-    sub_08026BAC();
+    ResetAllPlayers();
     SetDefaultRules();
-    sub_08026924();
+    InitPlayersFromSettings();
     gPlayers[0].co = 0;
     gPlayers[1].co = 1;
     gPlayers[2].co = 3;
@@ -53,12 +53,12 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     gPlaySt.event20 = 0;
     gUnknown_030033EC = 0;
     gUnknown_03004080 = 1;
-    sub_08026768();
+    AdvanceToNextActiveArmy();
     sub_08000DF8(a);
     ClearAllUnits();
     sub_0803DE68();
     sub_080268F4();
-    sub_080258CC();
+    RebuildMapUnitLayers();
     sub_08023348();
 
     if (a == 0)
@@ -79,9 +79,9 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
         gActiveMap->panelSide = 1;
     }
 
-    sub_0803662C();
-    sub_080366D0(sub_08036944);
-    sub_080366C4(sub_080369BC);
+    InstallMapFrameCallbacks();
+    sub_080366D0(MapVBlankCallback);
+    sub_080366C4(MapMainLoopCallback);
     gUnknown_03003F3C = 0;
     sub_0801B780(0);
     DesignRoomLoadGraphics();

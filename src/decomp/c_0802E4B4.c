@@ -54,13 +54,13 @@ void sub_0802E4B4(s16 x, s16 y)
     gUnknown_03003110[0] = 4;
     sub_08035584(gUnknown_030040D8);
     sub_08024454();
-    sub_080258CC();
+    RebuildMapUnitLayers();
     gUnknown_03004480 = (*sel >> 6) + 1;
-    sub_0801F92C(gMap->move);
-    sub_080202A4(gUnknown_030040D8);
+    SetWorkingMapPlane(gMap->move);
+    GenerateUnitMovementMap(gUnknown_030040D8);
     gUnknown_03004480 = gUnknown_030033EC;
-    sub_08022990((u16)sx, (u16)sy, 0);
+    ShowRangeOverlay((u16)sx, (u16)sy, 0);
     gUnknown_03003334 = 1;
-    sub_08038C98();
+    InitMovePathForActiveUnit();
     sub_0803B4DC(0x69);
 }

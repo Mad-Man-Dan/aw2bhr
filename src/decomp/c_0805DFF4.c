@@ -28,12 +28,12 @@
  * Unk030040D8's unk07[5], which c_0802966C.c indexes with a runtime subscript.
  *
  * p->flags and p->x are NAMED LOCALS: the ROM loads them once into two
- * callee-saved registers before the sub_0805BFDC branch and reuses them for the
+ * callee-saved registers before the AiTryRideInsteadOfWalk branch and reuses them for the
  * `x | (y << 16)` word afterwards. That pair is why this function pushes r7.
  *
  * The trailing sub_0805F4F8() belongs to the p == NULL arm as a whole, not to
  * the gUnknown_030046B8 test inside it -- the `beq` when bit 0 is clear lands on
- * the single call, and the sub_08059A0C == 0 path reaches TWO consecutive calls
+ * the single call, and the AiListEnemyPropertyCells == 0 path reaches TWO consecutive calls
  * by falling through.
  */
 
@@ -58,13 +58,13 @@ void sub_0805DFF4(void)
     sub_0805D888();
 
     if (gUnknown_03004784[0] > (u8)(gUnknown_030040D8->unk07[3] % 100)
-        || sub_0804415C(gUnknown_030033EC))
+        || IsCoPowerActive(gUnknown_030033EC))
         sub_0805E718();
 
-    sub_08058F30(&buf);
+    AiGetReachBudget(&buf);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, buf, 0);
-    sub_08058058(sub_0804151C());
+    sub_08058058(BuildCapturableCellList());
     q = CountUnitsWithTypeTag(1) / gUnknown_085766E0->unk04[5];
     if (q == 0)
         q = gUnknown_085766E0->unk00;
@@ -75,11 +75,11 @@ void sub_0805DFF4(void)
         x = p->flags;
         y = p->x;
         if (gUnknown_030046B8 & 1)
-            sub_0805BFDC(x, y, 0x14, 2);
+            AiTryRideInsteadOfWalk(x, y, 0x14, 2);
         else
-            sub_0805BFDC(x, y, 7, 1);
+            AiTryRideInsteadOfWalk(x, y, 7, 1);
         v.raw = x | (y << 16);
-        sub_080591E4(&v);
+        AiAdvanceToward(&v);
     }
     else
     {
@@ -89,14 +89,14 @@ void sub_0805DFF4(void)
             sub_0805FB70();
             gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                               0x14, 0x78, 0);
-            if (sub_08059A0C(gUnknown_03003F20))
+            if (AiListEnemyPropertyCells(gUnknown_03003F20))
             {
                 gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                                   gUnknown_030040D8->unk00, 0x78, -1);
                 v.pos.unk00 = 0x270F;
                 sub_0805C0AC(&v);
                 if (v.pos.unk00 != 0x270F)
-                    sub_080591E4(&v);
+                    AiAdvanceToward(&v);
             }
             else
             {

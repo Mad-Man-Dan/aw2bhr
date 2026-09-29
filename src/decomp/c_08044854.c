@@ -8,10 +8,10 @@
  * sub_08044854 @ 0x08044854
  */
 
-/* MATCHED. Byte-for-byte the same function as sub_08026100. Read that one --
+/* MATCHED. Byte-for-byte the same function as DamageUnitAtCell. Read that one --
  * the comma chain in the index expression is a position readout that no
  * statement boundary reaches. */
-void sub_08044854(int x, int y, int c)
+void DamageUnitAtCellCopy(int x, int y, int c)
 {
     int idx;
     struct Unit *u;
@@ -41,3 +41,4 @@ void sub_08044854(int x, int y, int c)
     else
         u->hp = u->hp - c;
 }
+asm(".global sub_08044854\n.thumb_set sub_08044854, DamageUnitAtCellCopy\n");

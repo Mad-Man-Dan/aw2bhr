@@ -30,12 +30,12 @@
  * pass 3 (r2, r8) are strength_reduce givs and LICM hoists, not source --
  * pass 3 is written with the ordinary gPlayers[i] subscript.
  *
- * sub_08026F28 had no declaration before this function; added to
+ * AreArmiesOnSameTeam had no declaration before this function; added to
  * include/unknown-functions.h from the promoted src/decomp/c_08026F28.c. An
  * implicit declaration compiles but default-promotes both arguments to int and
  * drops the `lsls/lsrs #0x10` pairs the ROM has in front of that `bl`.
  */
-u8 sub_08028BAC(void)
+u8 IsOnlyOneTeamLeft(void)
 {
     u8 buf[8];
     int i;
@@ -59,7 +59,7 @@ u8 sub_08028BAC(void)
             {
                 for (j = 1; j <= 4; j++)
                 {
-                    if (i != j && IsPlayerAliveAndActive(j) && sub_08026F28(i, j) && !buf[j])
+                    if (i != j && IsPlayerAliveAndActive(j) && AreArmiesOnSameTeam(i, j) && !buf[j])
                     {
                         buf[i] = 0;
                         sub_0802C154(i);
@@ -89,3 +89,4 @@ u8 sub_08028BAC(void)
 
     return 0;
 }
+asm(".global sub_08028BAC\n.thumb_set sub_08028BAC, IsOnlyOneTeamLeft\n");

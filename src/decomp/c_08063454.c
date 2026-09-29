@@ -25,7 +25,7 @@
  *
  * `~0x7E` really is ~0x7E (bits 0 and 7 of the packed byte): `movs #0x7f;
  * rsbs #0` materialises -0x7F. Spelling it 0x81 would have been one `movs`. */
-void sub_08063454(struct Unk08062FB8 *p, int a2, int a3, u8 a4, s8 a5)
+void MultiBootStartMaster(struct Unk08062FB8 *p, int a2, int a3, u8 a4, s8 a5)
 {
     int q;
 
@@ -63,3 +63,4 @@ ok:
     p->unk1c = ((q & 0x3F) << 1) | ~0x7E;
     p->unk18 = 0xD0;
 }
+asm(".global sub_08063454\n.thumb_set sub_08063454, MultiBootStartMaster\n");

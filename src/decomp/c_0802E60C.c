@@ -15,7 +15,7 @@ void sub_0802E60C(s16 a1, s16 a2)
         return;
     }
 
-    sub_08022A08();
+    HideRangeOverlay();
 
     gUnknown_03003F24.pos.unk00 = gUnknown_030040D8->unk02;
     gUnknown_03003F24.pos.unk02 = gUnknown_030040D8->unk03;
@@ -28,7 +28,7 @@ void sub_0802E60C(s16 a1, s16 a2)
     if (gUnknown_03003F24.raw == gUnknown_03003100.raw)
         return;
 
-    sub_08038AD8();
+    EncodeMovePathDirections();
 
     if ((u8)sub_0802E7C8(gUnknown_03003F24.spos.unk00, gUnknown_03003F24.spos.unk02,
             gUnknown_03003110, 4) == 1)

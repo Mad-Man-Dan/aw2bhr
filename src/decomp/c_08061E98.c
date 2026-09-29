@@ -49,7 +49,7 @@ struct Unk61E98Unit
     /* 0x0a */ u8 filler_0a[2];
 };
 /* Sweeps every cell of the gUnknown_08499590 map and accumulates two byte
- * masks: gUnknown_030045C0 over the cells sub_0802700C rejects, and
+ * masks: gUnknown_030045C0 over the cells IsCellOwnedByArmyTeam rejects, and
  * gUnknown_030046B8 over every cell. `v` is the five-entry bit-mask table
  * copied off its ROM template with the repo's standard
  * `sub_0808B6E8(buf, <rom blob>, N)` stack-copy idiom.
@@ -102,7 +102,7 @@ void AiScanBuildableFacilities(void)
     {
         for (x = 0; x < gMap->width; x++)
         {
-            if (sub_0802700C(gUnknown_030033EC, x, y) == 0)
+            if (IsCellOwnedByArmyTeam(gUnknown_030033EC, x, y) == 0)
                 gUnknown_030045C0 |= v[gUnknown_085767F2[gMap->terrain[gMap->rowOffset[y] + x] & 0x1f] >> 1];
 
             gUnknown_030046B8 |= v[gUnknown_085767F2[gMap->terrain[gMap->rowOffset[y] + x] & 0x1f] >> 1];

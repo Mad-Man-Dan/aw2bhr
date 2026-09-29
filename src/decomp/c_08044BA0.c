@@ -7,7 +7,7 @@
  * sub_08044BA0 @ 0x08044BA0
  */
 
-bool8 sub_08044BA0(int a1)
+bool8 IsBlackHoleCo(int a1)
 {
     int lo;
 
@@ -18,3 +18,4 @@ bool8 sub_08044BA0(int a1)
         return 0;
     return 1;
 }
+asm(".global sub_08044BA0\n.thumb_set sub_08044BA0, IsBlackHoleCo\n");

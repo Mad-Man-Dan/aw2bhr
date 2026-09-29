@@ -55,11 +55,11 @@ void LoadGameplayGraphics(int a)
 
     sub_08037150(0x1a6);
     sub_08024268();
-    sub_08022A08();
+    HideRangeOverlay();
 
     sub_08011C68(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
 
-    sub_08035568();
+    ClearMoveSlideSlots();
     sub_080116E8();
     LoadWeatherData();
     sub_08035020(gPlaySt.weather);

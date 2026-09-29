@@ -45,10 +45,11 @@ void sub_08043AFC(int a, int b)
 /* Decompresses the slot's +0x04 blob into OBJ VRAM at tile `b & 0x3ff`.
  * 0x06010000 is the OBJ tile base and 0x20 the bytes per 4bpp tile.
  */
-void sub_08043B14(int a, int b)
+void LoadCoNameGraphic(int a, int b)
 {
     Decompress(gUnknown_084A0090[a].nameGraphic, (void *)(0x06010000 + (b & 0x3ff) * 32));
 }
+asm(".global sub_08043B14\n.thumb_set sub_08043B14, LoadCoNameGraphic\n");
 
 void sub_08043B44(int a)
 {

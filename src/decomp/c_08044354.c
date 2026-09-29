@@ -7,8 +7,9 @@
  * sub_08044354 @ 0x08044354
  */
 
-void sub_08044354(int a1)
+void IncrementCoPowerUseCount(int a1)
 {
     if (gPlayers[a1].unk25 != 0xff)
         gPlayers[a1].unk25++;
 }
+asm(".global sub_08044354\n.thumb_set sub_08044354, IncrementCoPowerUseCount\n");

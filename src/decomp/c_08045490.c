@@ -11,7 +11,7 @@
 #include "proc.h"
 /* The proc scans the map for the first cell of its own army's terrain type
  * whose 0x51A plane byte is still clear, hands the coordinates to
- * sub_08029088 and returns; running off the end of the map (or finding no
+ * ScrollCameraToKeepCellInView and returns; running off the end of the map (or finding no
  * free gUnits slot at all) goes to label 1 instead.
  *
  * The cursor lives in the PROC, not in locals: `proc->unk2c` and
@@ -40,7 +40,7 @@ void sub_08045490(struct Unk45490Proc *proc)
 {
     int idx;
 
-    if (sub_08025AEC() == NULL)
+    if (FindFreeUnitSlot() == NULL)
     {
         Proc_Goto(proc, 1);
         return;
@@ -55,7 +55,7 @@ void sub_08045490(struct Unk45490Proc *proc)
             if (gMap->terrain[idx] == ((gUnknown_030033EC << 5) | 6)
              && gMap->unitUnk[idx] == 0)
             {
-                sub_08029088(proc->unk2c, proc->unk30);
+                ScrollCameraToKeepCellInView(proc->unk2c, proc->unk30);
                 return;
             }
 

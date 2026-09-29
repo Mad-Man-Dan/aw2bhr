@@ -77,7 +77,7 @@ void sub_08085B30(struct Unk8085B30 *proc)
     {
         gUnknown_03005928 = 5;
 
-        while (sub_08037448(gUnknown_0300596C) == 0)
+        while (BuildMapListForCategory(gUnknown_0300596C) == 0)
         {
             gUnknown_0300596C--;
 

@@ -36,14 +36,14 @@
  * |d| is spelled inline as `d < 0 ? -d : d` at BOTH inner-loop bounds (the
  * wave-41 note said three sites; there are two).
  *
- * The prototype now agrees: `void sub_080200EC(s16, s16, s16, s16)`. The
+ * The prototype now agrees: `void MapSetInRangeSigned(s16, s16, s16, s16)`. The
  * wave-41 objection to the `int` fourth parameter was right -- the prologue
  * narrows all four arguments -- and has since been applied to the header.
  */
 
 #define MAP gMap
 
-void sub_080200EC(s16 cx, s16 cy, s16 r, s16 value)
+void MapSetInRangeSigned(s16 cx, s16 cy, s16 r, s16 value)
 {
     s16 x, y, d;
 
@@ -61,3 +61,4 @@ void sub_080200EC(s16 cx, s16 cy, s16 r, s16 value)
         }
     }
 }
+asm(".global sub_080200EC\n.thumb_set sub_080200EC, MapSetInRangeSigned\n");

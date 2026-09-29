@@ -43,8 +43,8 @@ void CalcRandomWeatherChances(void)
         {
             gUnknown_03004490[1]--;
             gUnknown_03004490[2]--;
-            gUnknown_03004490[1] += sub_08042F5C(i);
-            gUnknown_03004490[2] += sub_08042FA4(i);
+            gUnknown_03004490[1] += GetPlayerCoRainBringerPercent(i);
+            gUnknown_03004490[2] += GetPlayerCoSnowBringerPercent(i);
         }
 
         ((struct Unk35490Counts *)gUnknown_03004490)->unk03[i] = 0;

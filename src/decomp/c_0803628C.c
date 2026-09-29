@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* One of a pair of state-setters on the proc's +0x35 byte (sub_080362A8 is the
+/* One of a pair of state-setters on the proc's +0x35 byte (MoveSlideState_WaitForCameraScroll is the
  * other). `adds r1, r4, #0; adds r1, #0x35` is the THUMB `strb` displacement
  * limit of 31, not an address being taken -- the c_08035CF4.c note. */
 struct Unk3628CProc
@@ -36,10 +36,11 @@ void sub_0803628C(ProcPtr procArg)
         proc->unk35 = 3;
 }
 
-void sub_080362A8(ProcPtr procArg)
+void MoveSlideState_WaitForCameraScroll(ProcPtr procArg)
 {
     struct Unk362A8Proc *proc = procArg;
 
     if (sub_08015BD0((s32)gUnknown_0849A00C) == -1)
         proc->unk35 = 2;
 }
+asm(".global sub_080362A8\n.thumb_set sub_080362A8, MoveSlideState_WaitForCameraScroll\n");

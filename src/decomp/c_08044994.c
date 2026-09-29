@@ -26,23 +26,23 @@ void sub_08044994(struct Unk8044994 *proc)
         col = e->x;
         row = e->y;
 
-        sub_08044854(col, row - 2, proc->unk64);
+        DamageUnitAtCellCopy(col, row - 2, proc->unk64);
 
-        sub_08044854(col - 1, row - 1, proc->unk64);
-        sub_08044854(col, row - 1, proc->unk64);
-        sub_08044854(col + 1, row - 1, proc->unk64);
+        DamageUnitAtCellCopy(col - 1, row - 1, proc->unk64);
+        DamageUnitAtCellCopy(col, row - 1, proc->unk64);
+        DamageUnitAtCellCopy(col + 1, row - 1, proc->unk64);
 
-        sub_08044854(col - 2, row, proc->unk64);
-        sub_08044854(col - 1, row, proc->unk64);
-        sub_08044854(col, row, proc->unk64);
-        sub_08044854(col + 1, row, proc->unk64);
-        sub_08044854(col + 2, row, proc->unk64);
+        DamageUnitAtCellCopy(col - 2, row, proc->unk64);
+        DamageUnitAtCellCopy(col - 1, row, proc->unk64);
+        DamageUnitAtCellCopy(col, row, proc->unk64);
+        DamageUnitAtCellCopy(col + 1, row, proc->unk64);
+        DamageUnitAtCellCopy(col + 2, row, proc->unk64);
 
-        sub_08044854(col - 1, row + 1, proc->unk64);
-        sub_08044854(col, row + 1, proc->unk64);
-        sub_08044854(col + 1, row + 1, proc->unk64);
+        DamageUnitAtCellCopy(col - 1, row + 1, proc->unk64);
+        DamageUnitAtCellCopy(col, row + 1, proc->unk64);
+        DamageUnitAtCellCopy(col + 1, row + 1, proc->unk64);
 
-        sub_08044854(col, row + 2, proc->unk64);
+        DamageUnitAtCellCopy(col, row + 2, proc->unk64);
     }
 
     sub_08039F58();

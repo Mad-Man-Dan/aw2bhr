@@ -47,7 +47,7 @@ void sub_08027A50(u16 a1, u16 a2, u16 a3)
     sub_080158D4(id, 0x20);
 }
 
-void sub_08027B10(int a1, int a2, int a3, int a4, ProcPtr a5)
+void StartDayStartGlyph(int a1, int a2, int a3, int a4, ProcPtr a5)
 {
     struct Unk27B10Proc *proc = Proc_Start(ProcScr_DayStart, a5);
 
@@ -59,3 +59,4 @@ void sub_08027B10(int a1, int a2, int a3, int a4, ProcPtr a5)
     proc->unk4a = (a3 + 0x1ca) | 0x3000;
     proc->unk6a = a4;
 }
+asm(".global sub_08027B10\n.thumb_set sub_08027B10, StartDayStartGlyph\n");

@@ -18,7 +18,7 @@ int sub_080357E0(u16 a, u16 b, u16 c, u16 d, void *e)
         return 0;
     else
     {
-        sub_08035760(proc, e);
+        BeginMoveSlidePath(proc, e);
         return (int)proc;
     }
 }
@@ -29,5 +29,5 @@ void sub_08035810(void)
 
     proc = Proc_Find(ProcScr_SelectUnit);
     if (proc != NULL)
-        sub_08035828(proc);
+        EndMoveSlide(proc);
 }

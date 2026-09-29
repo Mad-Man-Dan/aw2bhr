@@ -33,7 +33,7 @@ struct Unk35760Proc
     /* 0x4c */ u8 unk4c[0x10];
 };
 
-void sub_08035760(ProcPtr proc, void *src)
+void BeginMoveSlidePath(ProcPtr proc, void *src)
 {
     u8 *s = src;
     int i;
@@ -45,9 +45,10 @@ void sub_08035760(ProcPtr proc, void *src)
     ((struct Unk35760Proc *)proc)->unk35 = 4;
 
     if (gPlaySt.savingEnabled == 0 || gUnknown_030032D8 != 0x13)
-        sub_08029088(((struct Unk35760Proc *)proc)->unk42 / 16,
+        ScrollCameraToKeepCellInView(((struct Unk35760Proc *)proc)->unk42 / 16,
                      ((struct Unk35760Proc *)proc)->unk44 / 16);
 
     gUnknown_030040E4 = 1;
     sub_08035F68(proc);
 }
+asm(".global sub_08035760\n.thumb_set sub_08035760, BeginMoveSlidePath\n");

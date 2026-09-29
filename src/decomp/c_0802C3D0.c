@@ -12,9 +12,9 @@
 
 void sub_0802C3D0(void)
 {
-    sub_08023824();
+    HandleMoveMapCursor();
     sub_08023518();
-    sub_08023908(8);
+    HandleMoveCameraWithMapCursor(8);
 
     if (gMap->unk10 & 0xf)
         return;

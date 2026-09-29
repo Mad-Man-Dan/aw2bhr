@@ -23,7 +23,7 @@
  *
  * One pointer passed through. sub_08035F68 reads r0 first thing
  * (`adds r4, r0, #0`) and dereferences +0x36, past PROC_HEADER's 0x29
- * bytes; its other caller sub_08035760 treats the same object as a proc.
+ * bytes; its other caller BeginMoveSlidePath treats the same object as a proc.
  */
 void DesignRoomPlaceUnit_080358AD(ProcPtr proc)
 {

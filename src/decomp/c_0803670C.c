@@ -84,7 +84,7 @@ void UpdateFuelAmmoGraphics(void)
 
 asm(".global sub_0803678C\n.thumb_set sub_0803678C, UpdateFuelAmmoGraphics\n");
 
-void sub_08036884(void)
+void DefaultVBlankCallback(void)
 {
     sub_0803B3F8();
     sub_0802FACC();
@@ -109,8 +109,9 @@ void sub_08036884(void)
     gGameClock++;
     sub_0803B408();
 }
+asm(".global sub_08036884\n.thumb_set sub_08036884, DefaultVBlankCallback\n");
 
-void sub_080368E8(void)
+void DefaultMainLoopCallback(void)
 {
     if (gUnknown_03004094 == 0)
     {
@@ -130,8 +131,9 @@ void sub_080368E8(void)
         gUnknown_03004094 = 1;
     }
 }
+asm(".global sub_080368E8\n.thumb_set sub_080368E8, DefaultMainLoopCallback\n");
 
-void sub_08036944(void)
+void MapVBlankCallback(void)
 {
     gUnknown_030044D0 = 1;
     sub_0803B3F8();
@@ -158,8 +160,9 @@ void sub_08036944(void)
     sub_0803B408();
     gUnknown_030044D0 = 0;
 }
+asm(".global sub_08036944\n.thumb_set sub_08036944, MapVBlankCallback\n");
 
-void sub_080369BC(void)
+void MapMainLoopCallback(void)
 {
     if (gUnknown_03004094 == 0 && (gGameClock & gUnknown_030043F4) == 0)
     {
@@ -180,7 +183,7 @@ void sub_080369BC(void)
         Proc_Run(gProcTreeRootArray[3]);
         Proc_Run(gProcTreeRootArray[5]);
         Proc_Run(gProcTreeRootArray[4]);
-        sub_08023EEC();
+        UpdateMapDisplay();
         sub_0803F990();
         sub_0801F06C();
         sub_0801F084();
@@ -188,6 +191,7 @@ void sub_080369BC(void)
         gUnknown_03004094 = 1;
     }
 }
+asm(".global sub_080369BC\n.thumb_set sub_080369BC, MapMainLoopCallback\n");
 
 void sub_08036A50(void)
 {

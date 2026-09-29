@@ -38,7 +38,7 @@
  *     the same expression. Inlining it into the subscript swaps r1 and r2 in
  *     the last block (6 bytes), and reversing the two addends reschedules the
  *     gUnknown_085D5ABC lookup ahead of the cell read. */
-void sub_08038848(s8 a, s8 b)
+void PushMovePathStep(s8 a, s8 b)
 {
     struct Map *map;
     s8 *costs;
@@ -70,3 +70,4 @@ void sub_08038848(s8 a, s8 b)
 
     *cur = *prev - costs[c];
 }
+asm(".global sub_08038848\n.thumb_set sub_08038848, PushMovePathStep\n");

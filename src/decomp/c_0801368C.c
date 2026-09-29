@@ -22,7 +22,7 @@
  *
  * The third parameter is u16 (entry `lsls #0x10; lsrs #0x10`), which is why
  * unknown-functions.h was corrected from the `int` this wave first guessed;
- * sub_08037790, its only caller, passes a literal and was re-verified. */
+ * AnimateMapPreviewPalette, its only caller, passes a literal and was re-verified. */
 void sub_0801368C(u16 *src, u16 b, u16 n)
 {
     sub_08011C58(src, gPal + b / 2, n);

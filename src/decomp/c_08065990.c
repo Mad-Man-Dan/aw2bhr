@@ -26,8 +26,8 @@
 
 void sub_08065990(void)
 {
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
     sub_08012C58(gUnknown_0849D16C);
     sub_0801237C();
 

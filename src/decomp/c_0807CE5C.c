@@ -68,9 +68,9 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
     {
         if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_LEFT))
         {
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014200, 0x16);
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014680, 0x17);
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014B00, 0x18);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014200, 0x16);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014680, 0x17);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014B00, 0x18);
 
             p->unk4c = 0;
 
@@ -81,15 +81,15 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
             p->unk4e = -1;
 
-            sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013D80, 0x15);
+            LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013D80, 0x15);
             sub_0803B4DC(0x67);
         }
         else if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_RIGHT))
         {
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014200, 0x16);
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014680, 0x17);
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014B00, 0x18);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014200, 0x16);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014680, 0x17);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06014B00, 0x18);
 
             p->unk4c = 0;
 
@@ -100,8 +100,8 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
             p->unk4e = 1;
 
-            sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013D80, 0x15);
+            LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013D80, 0x15);
             sub_0803B4DC(0x67);
         }
         else if (p->unk40 == 0 && (gpKeySt->repeated & DPAD_UP) && (int)gUnknown_03005944 > 1 && gUnknown_030059C0[p->unk64] != 0)
@@ -131,7 +131,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
             p->unk60 = -1;
 
-            sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+            LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
             sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
             sub_0803B4DC(0x67);
         }
@@ -163,7 +163,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
             p->unk60 = 1;
 
             sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
-            sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+            LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
             sub_0803B4DC(0x67);
         }
         else if (gpKeySt->pressed & 1)
@@ -222,7 +222,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
                     p->unk60 = 1;
 
-                    sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+                    LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
                     sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
                 }
 
@@ -247,7 +247,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
                 else if (gUnknown_030059C0[p->unk64] != 0)
                 {
                     gUnknown_03005910[gUnknown_0300599C[p->unk64]] = 0;
-                    sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+                    LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
                 }
                 else
                 {
@@ -266,7 +266,7 @@ void CoSelect_IDLE_0807CE5D(struct Unk807CE5C *p)
 
                     p->unk60 = -1;
 
-                    sub_08043B14(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
+                    LoadCoNameGraphic(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], p->unk64 * 12 + 960);
                     sub_0802D5CC(gUnknown_03005958[p->unk58], 8);
                 }
             }

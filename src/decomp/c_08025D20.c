@@ -18,8 +18,9 @@ void sub_08025D20(int index)
         gPlayers[index].unitCount++;
 }
 
-void sub_08025D40(int index)
+void IncrementPlayerUnitsLost(int index)
 {
     if (gPlayers[index].unitsLost != 0xff)
         gPlayers[index].unitsLost++;
 }
+asm(".global sub_08025D40\n.thumb_set sub_08025D40, IncrementPlayerUnitsLost\n");

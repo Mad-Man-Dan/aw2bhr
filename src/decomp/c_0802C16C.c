@@ -16,7 +16,7 @@
 void sub_0802C16C(void)
 {
     sub_0802C154(gUnknown_030033EC);
-    sub_08028CD8();
+    ParkMapState();
 }
 
 /* sub_0802C16C's sibling: the same sub_0802C154(gUnknown_030033EC) opener, then
@@ -28,7 +28,7 @@ void sub_0802C16C(void)
  * gPlaySt.unk32.
  *
  * The four `mov #imm8` argument setups are in argument order because they are
- * all one operand class; sub_08034534's declared (int, u8, int, int) costs
+ * all one operand class; SendActionCommand's declared (int, u8, int, int) costs
  * nothing extra for literal zeroes. `pop {r0}; bx r0`, so void.
  */
 
@@ -37,5 +37,5 @@ void sub_0802C184(void)
     sub_0802C154(gUnknown_030033EC);
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0x13, 0, 0, 0);
+        SendActionCommand(0x13, 0, 0, 0);
 }

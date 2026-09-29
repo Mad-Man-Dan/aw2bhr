@@ -19,5 +19,5 @@
 void sub_08062028(void)
 {
     sub_08061B4C();
-    sub_0805AC88();
+    AiClearEscortTally();
 }

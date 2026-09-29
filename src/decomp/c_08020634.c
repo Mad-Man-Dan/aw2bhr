@@ -21,7 +21,7 @@
  *
  * `i++` must be its own statement after the store: written as `buf[i++]` the
  * `movs r4, #1` schedules ahead of the `strb` and cross-jumping fires again. */
-void sub_08020634(u8 *dst, u8 *end)
+void RevertMovementScript(u8 *dst, u8 *end)
 {
     u8 buf[0x14];
     int i;
@@ -43,3 +43,4 @@ void sub_08020634(u8 *dst, u8 *end)
         i++;
     }
 }
+asm(".global sub_08020634\n.thumb_set sub_08020634, RevertMovementScript\n");

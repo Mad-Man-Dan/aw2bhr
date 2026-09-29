@@ -17,7 +17,7 @@ void sub_0802A8DC(int a1, int a2, int a3, int a4, int a5)
 
     t = sub_0803EED4(a1, a2);
     k = t & 0x1f;
-    m = sub_080249C8(t);
+    m = GetCellOwnerTeamColor(t);
     n = sub_08024984(t);
 
     sub_08011E54((void *)GetTerrainNameGraphic(k), (void *)0x06013940, 0x100);

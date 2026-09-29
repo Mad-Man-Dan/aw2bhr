@@ -9,7 +9,7 @@
 
 /* Returns `void *` and not the `u32` this was first promoted as: the only
  * caller is sub_080355CC, which hands the result straight to Decompress, and
- * unknown-functions.h documents the neighbouring sub_08035B3C the same way.
+ * unknown-functions.h documents the neighbouring GetMoveSlideGraphicsPointer the same way.
  * Both spellings are one word and compile identically -- re-verified
  * byte-for-byte after the change -- so this is a type-honesty fix, not a
  * codegen one. Reconciled at wave 13 promotion, where the `u32` definition and

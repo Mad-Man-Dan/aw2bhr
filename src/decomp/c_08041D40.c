@@ -15,7 +15,7 @@
  * `>> 6` merged into the single `asr #8`. The `+ 1` then indexes
  * gPlayers ONE-BASED, which is what puts the member at a runtime
  * 0x3c + 0x2d == 0x69: exactly the reach struct PlayerStruct's own unk2a note
- * records for sub_08026F9C/sub_08026FD0, which read element [n + 1] the same
+ * records for AreUnitsOnSameTeam/IsTerrainOwnedByUnitsTeam, which read element [n + 1] the same
  * way.
  *
  * The last test is written `<= ... return 0` and NOT `> ... return 1`. Both are

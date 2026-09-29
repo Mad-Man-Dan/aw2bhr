@@ -8,12 +8,12 @@
  * sub_0804151C @ 0x0804151C, sub_080415E4 @ 0x080415E4, sub_080416A4 @ 0x080416A4, sub_08041758 @ 0x08041758
  */
 
-/* Scans the whole map for cells the sub_0804236C predicate accepts, and writes
+/* Scans the whole map for cells the IsCellCapturableByCurrentArmy predicate accepts, and writes
  * them into the gUnknown_03003F20 list as {x, y, value} triples terminated by a
  * 0xFFFF value word. Returns how many were written.
  *
- * Byte-identical twin of sub_08041758 apart from the predicate: the two differ
- * in exactly one instruction, the `bl` target (sub_0804236C vs IsTerrainSilo).
+ * Byte-identical twin of BuildSiloCellList apart from the predicate: the two differ
+ * in exactly one instruction, the `bl` target (IsCellCapturableByCurrentArmy vs IsTerrainSilo).
  *
  * gUnknown_03003F20 is declared `struct Unk03003338 *` -- a type inherited from
  * its only writer, sub_0803486C. This function reads it as a 4-byte
@@ -31,9 +31,9 @@ struct Unk4151CCell
     /* 01 */ u8 y;
     /* 02 */ s16 v;
 };
-/* Byte-identical twin of sub_0804151C -- 200 bytes, 87 instructions, the same
+/* Byte-identical twin of BuildCapturableCellList -- 200 bytes, 87 instructions, the same
  * five pool words in the same order, differing in exactly ONE instruction: the
- * predicate called is IsTerrainSilo here and sub_0804236C there. See
+ * predicate called is IsTerrainSilo here and IsCellCapturableByCurrentArmy there. See
  * src/decomp/c_0804151C.c for the read-out of the shape.
  *
  * That one-instruction equality is also what proves IsTerrainSilo returns bool8
@@ -48,7 +48,7 @@ struct Unk41758Cell
     /* 02 */ s16 v;
 };
 
-int sub_0804151C(void)
+int BuildCapturableCellList(void)
 {
     struct Unk4151CCell *out;
     int count;
@@ -64,7 +64,7 @@ int sub_0804151C(void)
     {
         for (x = 0; x < gMap->width; x++)
         {
-            if ((s8)gUnknown_03003340[y][x] >= 0 && sub_0804236C(x, y) == 1)
+            if ((s8)gUnknown_03003340[y][x] >= 0 && IsCellCapturableByCurrentArmy(x, y) == 1)
             {
                 count++;
                 out->x = x;
@@ -77,9 +77,10 @@ int sub_0804151C(void)
     out->v = 0xFFFF;
     return count;
 }
+asm(".global sub_0804151C\n.thumb_set sub_0804151C, BuildCapturableCellList\n");
 
 /* Builds the gUnknown_03003338 list from every map cell whose unit id passes
- * sub_08025EF0 against gUnknown_03003F38, terminates it with a zero unk00, and
+ * CanTransportCarryUnitId against gUnknown_03003F38, terminates it with a zero unk00, and
  * returns the element count as a pointer difference.
  *
  * The splitter's `gUnknown_08091310` is NOT an object: the ROM word at
@@ -111,7 +112,7 @@ int sub_080415E4(void)
             {
                 off = gMap->rowOffset[y] + x;
                 cell = gMap->unit[off];
-                if (cell != 0 && sub_08025EF0(cell, gUnknown_03003F38))
+                if (cell != 0 && CanTransportCarryUnitId(cell, gUnknown_03003F38))
                 {
                     out->unk00 = cell;
                     out++;
@@ -157,7 +158,7 @@ int sub_080416A4(void)
     return out - gUnknown_03003338;
 }
 
-int sub_08041758(void)
+int BuildSiloCellList(void)
 {
     struct Unk41758Cell *out;
     int count;
@@ -186,3 +187,4 @@ int sub_08041758(void)
     out->v = 0xFFFF;
     return count;
 }
+asm(".global sub_08041758\n.thumb_set sub_08041758, BuildSiloCellList\n");

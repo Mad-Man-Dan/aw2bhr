@@ -86,7 +86,7 @@ struct Unk2BF20
  * loop: the `x -= 7` moves to the top behind an entry `b`, x is forced into a
  * high register and y follows it, and the function grows a third callee-saved
  * high register. With `return` the body stays at the top and the exit falls
- * straight into the epilogue, which is the ROM. (Same rule as sub_080206B0 in
+ * straight into the epilogue, which is the ROM. (Same rule as FindMapIdByMapData in
  * this wave, now confirmed on a `for(;;)` rather than a `while`.)
  *
  * The `x -= 7` sits AFTER the test, so the last digit does not step: that is why

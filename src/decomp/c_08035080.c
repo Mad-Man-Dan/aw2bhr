@@ -50,7 +50,7 @@ struct Unk03004490
     /* 0x03 */ u8 unk03[5];
 };
 
-u8 sub_08035080(void)
+u8 TickWeatherRoundCounter(void)
 {
     u8 v;
     u8 i;
@@ -83,3 +83,4 @@ u8 sub_08035080(void)
         return 0;
     }
 }
+asm(".global sub_08035080\n.thumb_set sub_08035080, TickWeatherRoundCounter\n");

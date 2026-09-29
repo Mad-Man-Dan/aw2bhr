@@ -70,7 +70,7 @@ void DrawMapList(int first, int count, int top)
             }
             else
             {
-                u8 *name = sub_08024944(gUnknown_02027F74.unk04[first + i]);
+                u8 *name = GetMapName(gUnknown_02027F74.unk04[first + i]);
                 int rowOffset = i * 2;
                 rowTop = top + 5;
                 row = rowOffset + rowTop;
@@ -108,7 +108,7 @@ void DrawMapList(int first, int count, int top)
             }
             else
             {
-                u8 *name = sub_08024944(gUnknown_02027F74.unk04[first + i]);
+                u8 *name = GetMapName(gUnknown_02027F74.unk04[first + i]);
                 int rowOffset = i * 2;
                 rowTop = top + 9;
                 row = rowOffset + rowTop;

@@ -26,9 +26,9 @@
 
 void sub_080293C8(ProcPtr proc)
 {
-    sub_08023824();
+    HandleMoveMapCursor();
     sub_080236E8();
-    sub_08023908(4);
+    HandleMoveCameraWithMapCursor(4);
 
     if (sub_08029490(proc))
     {
@@ -72,7 +72,7 @@ bool8 sub_08029490(ProcPtr proc)
             return 1;
 
         if (gMap->unit[idx] != 0
-            && sub_08026F5C(gMap->unit[idx]))
+            && IsUnitOnCurrentTeam(gMap->unit[idx]))
             return 1;
     }
 

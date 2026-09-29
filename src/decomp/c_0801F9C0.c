@@ -34,10 +34,10 @@
  *
  * The 4th parameter was declared `int` in unknown-functions.h and is `u8`: the
  * prologue narrows r3 with `lsls #0x18 / lsrs #0x18`. Same correction wave 41
- * made to the twin sub_080200EC; see the note at the declaration.
+ * made to the twin MapSetInRangeSigned; see the note at the declaration.
  *
  * MATCHED (2 attempts). */
-void sub_0801F9C0(u16 a1, u16 a2, u16 a3, u8 a4)
+void MapSetInRange(u16 a1, u16 a2, u16 a3, u8 a4)
 {
     int y;
     int r;
@@ -80,3 +80,4 @@ void sub_0801F9C0(u16 a1, u16 a2, u16 a3, u8 a4)
             gUnknown_03003340[y][x] = a4;
     }
 }
+asm(".global sub_0801F9C0\n.thumb_set sub_0801F9C0, MapSetInRange\n");

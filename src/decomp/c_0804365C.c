@@ -14,7 +14,7 @@
  * u16 parameters -- see the retyped declaration in unknown-functions.h. */
 void DrawDaysRemaining(int x, int y)
 {
-    int t = sub_08043630();
+    int t = GetMapTurnLimit();
     int n;
 
     if (t == 0)
@@ -61,12 +61,12 @@ void sub_080436DC(int x, int y, int pid)
         if (gPlayers[pid].coMode != 0)
             DrawCoPowerLabel(x, y, pid);
         else
-            sub_080438FC(x, y, pid);
+            DrawCoPowerStarBar(x, y, pid);
     }
 
-    if (sub_080442E4(pid))
+    if (AdvanceCoPowerReadyAnnouncement(pid))
     {
-        if ((u8)sub_08044280(pid))
+        if ((u8)IsSuperCoPowerReady(pid))
             sub_0803B4DC(0x1e0);
         else
             sub_0803B4DC(0x75);

@@ -29,7 +29,7 @@ void sub_08025340(u8 a1)
     p->flags |= 2;
 
     if (gPlaySt.fog != 0)
-        sub_080211DC(a1, -1);
+        StampUnitVision(a1, -1);
 }
 
 /* The clearing half of sub_08025340 -- see there for the pointer-local
@@ -44,5 +44,5 @@ void sub_08025378(u8 a1)
     p->flags &= ~2;
 
     if (gPlaySt.fog != 0)
-        sub_080211DC(a1, 1);
+        StampUnitVision(a1, 1);
 }

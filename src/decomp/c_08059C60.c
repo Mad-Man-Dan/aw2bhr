@@ -40,7 +40,7 @@ void sub_08059C60(void *a1)
                 continue;
             if (p->type == 0x18 && !sub_080257C0(j))
                 continue;
-            if (!sub_08020DBC(gUnknown_030033EC, p->x, p->y))
+            if (!IsCellVisibleToArmy(gUnknown_030033EC, p->x, p->y))
                 continue;
             x = sub_08043070(gPlayers[k].co, gPlayers[k].coMode,
                              gUnknown_030040D8->unk00, p->type, 0);

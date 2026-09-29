@@ -15,7 +15,7 @@
  * rather than folding into the load displacement. */
 
 /* Wave 38 (W38-K): return retyped `int` -> `bool8`. Byte-neutral here (the body
- * returns literal 0/1), but the sole caller sub_08041758 re-narrows the result
+ * returns literal 0/1), but the sole caller BuildSiloCellList re-narrows the result
  * with `lsls #0x18; lsrs #0x18` before `cmp #1`, which agbcc emits only for a
  * narrow-returning callee. See include/unknown-functions.h. */
 bool8 IsTerrainSilo(s16 a, s16 b)

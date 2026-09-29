@@ -9,7 +9,7 @@
 
 /* Builds the gUnknown_08580934->unk34[] object row: one sub_080152EC slot per
  * live entry (->unk08 of them), each seeded with its index and handed to
- * sub_08043E3C with its own 0x24-tile VRAM window.
+ * LoadCoFace with its own 0x24-tile VRAM window.
  *
  * The two 0x24-stepped registers are ONE source expression each, not a shared
  * one. `i * 0x24 + 0x190` appears twice -- once inside the `& 0x3ff` for the
@@ -37,7 +37,7 @@ void sub_08065238(void)
         obj->unk38 = 0x34;
         obj->unk24 = i * 2;
         obj->unk44 = i * 0x24 + 0x190 + (i << 12);
-        sub_08043E3C(gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]],
+        LoadCoFace(gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]],
                      (void *)(0x06010000 + (((i * 0x24 + 0x190) & 0x3ff) << 5)),
                      i + 0x10);
     }
@@ -49,7 +49,7 @@ void sub_08065238(void)
  * and handing it to sub_08064D44 -- the same shape sub_0806502C uses on
  * sub_08064BC8. `obj` is reused for both allocations, which is what puts both
  * in r5, and `i * 2` is written twice (the +0x24 field and sub_08064D44's
- * fourth argument) and CSEd into r4 across the sub_08043E3C call. */
+ * fourth argument) and CSEd into r4 across the LoadCoFace call. */
 void sub_0806530C(void)
 {
     struct Unk08580934_Obj *obj;
@@ -67,7 +67,7 @@ void sub_0806530C(void)
         obj->unk38 = 0;
         obj->unk24 = i * 2;
         obj->unk44 = i * 0x24 + 0x190 + (i << 12);
-        sub_08043E3C(gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]],
+        LoadCoFace(gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]],
                      (void *)(0x06010000 + (((i * 0x24 + 0x190) & 0x3ff) << 5)),
                      i + 0x10);
         obj = (struct Unk08580934_Obj *)sub_080152EC(gUnknown_08580A08, 3);
@@ -97,7 +97,7 @@ void sub_0806540C(void)
         obj->unk38 = 0;
         obj->unk24 = i * 2;
         obj->unk44 = i * 0x24 + 0x190 + (i << 12);
-        sub_08043E3C(gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]],
+        LoadCoFace(gUnknown_08580934->unk18[gUnknown_08580934->unk1c[i]],
                      (void *)(0x06010000 + (((i * 0x24 + 0x190) & 0x3ff) << 5)),
                      i + 0x10);
     }

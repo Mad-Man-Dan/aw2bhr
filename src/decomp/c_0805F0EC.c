@@ -9,7 +9,7 @@
  */
 
 /* Scores every passable cell by the gUnknown_0202DAD8 influence record for its
- * 4x4 block, keeps the best, and hands the winning cell to sub_080591E4 -- the
+ * 4x4 block, keeps the best, and hands the winning cell to AiAdvanceToward -- the
  * same 4-byte (u16, u16) buffer contract the rest of the 0x08059/0x0805F block
  * uses. AiProtectHq is its twin; c_08058BB4.c is the vocabulary exemplar.
  *
@@ -81,7 +81,7 @@ void sub_0805F0EC(void)
 
     best = 1;
     best2 = 0;
-    sub_08058F30(&cost);
+    AiGetReachBudget(&cost);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, cost, best2);
     v.raw = (v.raw & 0xFFFF0000) | 0x270F;
@@ -133,6 +133,6 @@ void sub_0805F0EC(void)
 
     if (p[0] == 0x270F)
         sub_0805F4F8();
-    sub_080591E4(p);
+    AiAdvanceToward(p);
     sub_0805F7B8();
 }

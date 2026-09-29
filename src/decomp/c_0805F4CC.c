@@ -22,10 +22,11 @@
  * the arity readout, so the table's entries are nullary.
  */
 
-void sub_0805F4CC(void)
+void AiRunRoleMove(void)
 {
     if (gUnknown_030040D8->unk07[4] > 7)
         gUnknown_030040D8->unk07[4] = 1;
 
     gUnknown_085768E0[gUnknown_030040D8->unk07[4]]();
 }
+asm(".global sub_0805F4CC\n.thumb_set sub_0805F4CC, AiRunRoleMove\n");

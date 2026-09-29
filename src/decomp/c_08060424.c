@@ -29,7 +29,7 @@ void sub_0806044C(void)
  * is PROC_TREE_3, and `movs r4, #3` is the same instruction either way. */
 void sub_08060474(void)
 {
-    sub_080424FC();
+    CommitUnitMove();
     sub_08042C24(gUnknown_030046C0.unk02, gUnknown_030046C0.unk03,
                  gUnknown_030046C0.unk06, gUnknown_030046C0.unk07, PROC_TREE_3);
     gUnknown_030045D4 = 6;

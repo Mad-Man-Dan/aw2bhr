@@ -10,9 +10,9 @@
 void sub_08034A7C(int y, int b)
 {
     char *s = (char *)gTextTable[gUnknown_08499CCC[b]];
-    int x = sub_08034A44(s);
+    int x = GetCenteredTextX(s);
 
-    sub_08034A58(y, s);
+    PutCenteredAsciiStringSprites(y, s);
 
     DrawOamObject(b + 0x3d, x - 0x10, y - 4, 0, 0);
     DrawOamObject(b + 0x3d, x + sub_0808B6B0(s) * 8, y - 4, 0, 0);

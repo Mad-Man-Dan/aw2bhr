@@ -9,7 +9,7 @@
 
 /* The install half of sub_0806D620's teardown: one sub_080152EC(3) object per
  * live gUnknown_08580934->unk08 slot into unk34[], each given a tile block
- * uploaded by sub_08043E3C.
+ * uploaded by LoadCoFace.
  *
  * The two accumulators are BOTH strength-reduced givs off `i`, not source
  * locals, and the preheader ordering is what says so: the source's own
@@ -17,7 +17,7 @@
  * (the constant 0 for unk46, and &gUnknown_08580934), and only then the giv
  * inits 0x190 and 0 -- the fixed three-pass order in docs/agbcc-codegen.md.
  * They are the same induction variable 0x190 apart, which is why `0x190 + i *
- * 0x24` appears once as a whole (the tile number handed to sub_08043E3C) and
+ * 0x24` appears once as a whole (the tile number handed to LoadCoFace) and
  * once as the sum `0x190 + (i * 0x24)` rebuilt in the loop for unk44.
  *
  * `i * 4` is shared with the unk34[] index scaling by CSE -- that is where
@@ -42,7 +42,7 @@ void sub_0806D53C(void)
         o->unk2a = 0x28;
         o->unk24 = i * 2;
         o->unk44 = 0x190 + i * 0x24 + (i << 12);
-        sub_08043E3C(gUnknown_08580934->unk20[i],
+        LoadCoFace(gUnknown_08580934->unk20[i],
                      (void *)(((0x190 + i * 0x24) & 0x3ff) * 32 + 0x06010000),
                      i + 0x10);
         o->unk40 = i * 4 - 0x7d70;

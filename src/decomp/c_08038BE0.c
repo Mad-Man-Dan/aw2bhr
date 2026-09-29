@@ -7,10 +7,11 @@
  * sub_08038BE0 @ 0x08038BE0
  */
 
-void sub_08038BE0(void)
+void RebuildBestMovePath(void)
 {
-    sub_080386EC(1);
+    TruncateMovePath(1);
     sub_08038B84();
-    sub_0802042C(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02, gUnknown_03003110);
-    sub_080389D8();
+    GenerateBestMovementScript(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02, gUnknown_03003110);
+    RebuildMovePathFromDirections();
 }
+asm(".global sub_08038BE0\n.thumb_set sub_08038BE0, RebuildBestMovePath\n");

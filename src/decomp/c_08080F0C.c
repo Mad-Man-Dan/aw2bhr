@@ -9,7 +9,7 @@
 
 void sub_08080F0C(void)
 {
-    if (sub_08044BA0(gUnknown_03005970))
+    if (IsBlackHoleCo(gUnknown_03005970))
         sub_0803B524(0x1C8);
     else
         sub_0803B524(0x1C5);

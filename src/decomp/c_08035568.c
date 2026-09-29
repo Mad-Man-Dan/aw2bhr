@@ -7,10 +7,11 @@
  * sub_08035568 @ 0x08035568
  */
 
-void sub_08035568(void)
+void ClearMoveSlideSlots(void)
 {
     u16 i;
 
     for (i = 0; i < 3; i++)
         gUnknown_03003124[i] = 0;
 }
+asm(".global sub_08035568\n.thumb_set sub_08035568, ClearMoveSlideSlots\n");

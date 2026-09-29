@@ -21,18 +21,18 @@
  * ROM keeps the mask in the constant's register (`ands r0,r1`). Worth 2 bytes,
  * and the only difference between 99.0% and the match.
  *
- * The A-branch reads gUnknown_030033E4's two halves as u8 for sub_08034534's
+ * The A-branch reads gUnknown_030033E4's two halves as u8 for SendActionCommand's
  * declared u8 third and fourth parameters (`ldrb`), while the B-branch reads
- * the same two as s16 for sub_08029088 (`ldrsh`) -- the widths come from the
+ * the same two as s16 for ScrollCameraToKeepCellInView (`ldrsh`) -- the widths come from the
  * callees, not from the object, exactly as in the matched sub_08041E48. */
 void sub_080408A0(ProcPtr proc)
 {
     if (sub_08019260() != 0)
         return;
 
-    sub_08023824();
-    sub_0802361C();
-    sub_08023908(4);
+    HandleMoveMapCursor();
+    HandleGameMapCursorInput();
+    HandleMoveCameraWithMapCursor(4);
     sub_080232CC(2, 0x12);
 
     if (sub_0802DBF8() == 0)
@@ -45,7 +45,7 @@ void sub_080408A0(ProcPtr proc)
                      gUnknown_030033E4.unk00, gUnknown_030033E4.unk02, proc);
 
         if (gPlaySt.savingEnabled != 0)
-            sub_08034534(0x14, gUnknown_03003F38,
+            SendActionCommand(0x14, gUnknown_03003F38,
                          gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
 
         Proc_Break(proc);
@@ -55,7 +55,7 @@ void sub_080408A0(ProcPtr proc)
         gUnknown_030033E4.unk00 = gUnknown_03003100.pos.unk00;
         gUnknown_030033E4.unk02 = gUnknown_03003100.pos.unk02;
 
-        sub_08029088(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
+        ScrollCameraToKeepCellInView(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
 
         Proc_Goto(proc, 0);
         Proc_Break(proc);

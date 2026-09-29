@@ -22,13 +22,13 @@
  *     every branch in the function.
  *
  *  2. The inner test is spelled with `||` and the ELSE-arm falling through:
- *     `if (gMap->unk234A[idx2] == 0 || sub_08029DBC(...) == 0) sub_08029D1C(u); else
+ *     `if (gMap->unk234A[idx2] == 0 || IsCellOnScreen(...) == 0) CalcUnitResupplyCost(u); else
  *     {...}`.  Written as `&&` with the arms the other way round, agbcc puts
  *     the one-call arm behind the pool and jumps to it.  Both arms really do
- *     call sub_08029D1C -- that is two call sites in the source, not a
+ *     call CalcUnitResupplyCost -- that is two call sites in the source, not a
  *     duplicated one.
  *
- *  3. sub_08029DBC takes TWO arguments and only ONE is set up
+ *  3. IsCellOnScreen takes TWO arguments and only ONE is set up
  *     (`adds r0, r3, #0; bl`).  r1 already holds u->y from the idx2
  *     computation, so the second argument is free -- the wave-51 arity rule.
  *     Reading it as a one-argument call is the trap here.
@@ -42,7 +42,7 @@
  *         &gUnknown_03003100 instead and gUnits gets an inline pool
  *         word every iteration.
  *       - `ec = &gUnknown_030033EC;` as the first statement of the else-arm,
- *         BEFORE the sub_08029D1C call.  Its only read is the last argument
+ *         BEFORE the CalcUnitResupplyCost call.  Its only read is the last argument
  *         setup of StartSupplyAnimation, so nothing else makes the address live
  *         across the call, and without it the second hi register is never
  *         allocated at all (`pop {r3}` instead of `pop {r3, r4}`).
@@ -92,10 +92,10 @@ void sub_08029DF8(struct Unk03001470 *proc)
         gUnknown_030033E4.unk02 = gUnknown_03003100.pos.unk02;
       }
       sub_08015328(gUnknown_03001FBC);
-      sub_080424FC();
+      CommitUnitMove();
       if ((proc->unk20 == 0) && (gPlaySt.savingEnabled != 0))
       {
-        sub_08034534(6, gUnknown_03003F38, 0, 0);
+        SendActionCommand(6, gUnknown_03003F38, 0, 0);
       }
       LockUnitSelection();
       DecrementMapLock();
@@ -109,14 +109,14 @@ void sub_08029DF8(struct Unk03001470 *proc)
       u = &(*pp)[new_var2->unitUnk[idx]];
       new_var = 0;
       idx2 = new_var2->rowOffset[u->y] + u->x;
-      if ((new_var2->unk234A[idx2] == new_var) || (((u8) sub_08029DBC(u->x, u->y)) == 0))
+      if ((new_var2->unk234A[idx2] == new_var) || (((u8) IsCellOnScreen(u->x, u->y)) == 0))
       {
-        sub_08029D1C(u);
+        CalcUnitResupplyCost(u);
       }
       else
       {
         ec = &gUnknown_030033EC;
-        c = sub_08029D1C(u);
+        c = CalcUnitResupplyCost(u);
         if (c != 0)
         {
           pt.unk00 = cp->unk00 + gUnknown_0849A0D8[(proc->unk1e * 3) + 1];

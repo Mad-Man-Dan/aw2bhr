@@ -12,7 +12,7 @@
  *
  * The capture/repair-target chooser: it rebuilds the reachable-cell list, then
  * scans for the cheapest cell whose terrain low-5-bits are 0xd or 0xb, and
- * either hands the winning cell to sub_080591E4 or moves onto it directly.
+ * either hands the winning cell to AiAdvanceToward or moves onto it directly.
  * Every failure path calls sub_0805F7B8, which longjmps out -- which is why
  * those calls read as unconditional statements with execution continuing after
  * them in the listing.
@@ -47,7 +47,7 @@
  *
  * RECORDED, NOT ACTED ON: sub_0805A854's result is narrowed here with
  * `lsls r0,#0x18` before the truth test, which is the caller-side evidence for
- * a `u8` return -- the same evidence that retyped its twin sub_0805ACA8 in
+ * a `u8` return -- the same evidence that retyped its twin AiPickShoalParkBeside in
  * wave 48. src/decomp/c_0805A854.c defines it `int` and a promoted definition
  * wins over any declaration, so this file reproduces the narrowing with an
  * explicit (u8) cast rather than retyping a file it does not own. Its body
@@ -130,13 +130,13 @@ void sub_0805F4F8(void)
     if (cur.x == 0x270f)
         sub_0805F7B8();
 
-    if ((s8)gUnknown_03003340[cur.y][cur.x] > sub_08058224((struct Unit *)gUnknown_030040D8))
+    if ((s8)gUnknown_03003340[cur.y][cur.x] > GetUnitMovementBudget((struct Unit *)gUnknown_030040D8))
     {
-        sub_080591E4(&cur);
+        AiAdvanceToward(&cur);
     }
     else
     {
-        sub_080202A4(gUnknown_030040D8);
+        GenerateUnitMovementMap(gUnknown_030040D8);
         if (!(u8)sub_0805A854((u16 *)&cur))
             sub_0805F7B8();
         sub_0805D648(cur.x, cur.y, 2, 0, 0);

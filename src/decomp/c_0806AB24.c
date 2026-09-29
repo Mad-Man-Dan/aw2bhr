@@ -8,7 +8,7 @@
  */
 
 /* Lays out a multi-line message box: sub_0807B7BC wraps the string
- * sub_08024944 returned into `proc->unk2f[]`, returning the LINE COUNT and
+ * GetMapName returned into `proc->unk2f[]`, returning the LINE COUNT and
  * writing the last line's residual width back through its `u16 *`
  * out-parameter. The first line is then centred against the 0xf0 screen width
  * and every later line's start is accumulated from the one before it.
@@ -48,7 +48,7 @@ void sub_0806AB24(struct Unk806AB24 *proc)
     int n;
     int i;
 
-    n = sub_0807B7BC(sub_08024944(proc->unk2a), &rest, proc->unk2f, proc->unk52, proc);
+    n = sub_0807B7BC(GetMapName(proc->unk2a), &rest, proc->unk2f, proc->unk52, proc);
     proc->unk48 = n;
     w = gUnknown_085816B4[n];
     proc->unk2f[0] = (0xf0 - (rest + w * (n - 1))) >> 1;

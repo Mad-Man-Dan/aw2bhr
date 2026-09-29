@@ -18,5 +18,5 @@ void sub_08028154(void)
 {
     sub_08013C00();
     sub_08013AEC();
-    sub_08024584();
+    SetMapLayersDefault();
 }

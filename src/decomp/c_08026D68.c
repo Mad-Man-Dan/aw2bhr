@@ -11,13 +11,13 @@
 /* The per-army terrain census. Clears each army's tallies, then walks every
  * cell of the gUnknown_08499590 map: the top three bits of the +0x1432 terrain
  * byte select the owning army and the low five are the terrain id, so an owned
- * property adds sub_08026C6C(id) to that army's income and bumps one counter
+ * property adds GetIncomeForTerrainKind(id) to that army's income and bumps one counter
  * per kind. Terrain 8 (the HQ) records its cell instead of counting.
  *
  * The map is reached through a local overlay because gUnknown_08499590 is
  * declared `u8 *`: unk00/unk02 are the width and height, +0x1432 is the cell
  * array and +0x417a the per-row start table, which is the same +0x1432 /
- * rowOffset pair sub_080253B0 and sub_08058A2C use.
+ * rowOffset pair ApplyDailyFuelBurn and AiScoreAttack use.
  *
  * The case bodies are emitted in SOURCE order, and the ROM's block order is
  * 8, 14, 20, 6, 10, 11 -- which is why the switch is written that way rather
@@ -26,7 +26,7 @@
  * The `lsls #0x18` on `b & 0xe0` before the zero test is the u8 local `t`, and
  * `lsrs #0x1d` on that same shifted value is `t >> 5`: read the pair as
  * `(u32)x << 24 >> 29`, a net right shift of 5, not as a mask plus a shift. */
-void sub_08026D68(void)
+void RecountArmyIncome(void)
 {
     int i;
     int j;
@@ -62,28 +62,28 @@ void sub_08026D68(void)
                 switch (kind)
                 {
                 case 8:
-                    army->income += sub_08026C6C(kind);
+                    army->income += GetIncomeForTerrainKind(kind);
                     army->hqX = k;
                     army->hqY = j;
                     break;
                 case 14:
-                    army->income += sub_08026C6C(kind);
+                    army->income += GetIncomeForTerrainKind(kind);
                     army->bases++;
                     break;
                 case 20:
-                    army->income += sub_08026C6C(kind);
+                    army->income += GetIncomeForTerrainKind(kind);
                     army->labs++;
                     break;
                 case 6:
-                    army->income += sub_08026C6C(kind);
+                    army->income += GetIncomeForTerrainKind(kind);
                     army->cities++;
                     break;
                 case 10:
-                    army->income += sub_08026C6C(kind);
+                    army->income += GetIncomeForTerrainKind(kind);
                     army->airports++;
                     break;
                 case 11:
-                    army->income += sub_08026C6C(kind);
+                    army->income += GetIncomeForTerrainKind(kind);
                     army->ports++;
                     break;
                 }
@@ -93,3 +93,4 @@ void sub_08026D68(void)
 
     sub_08026CD0();
 }
+asm(".global sub_08026D68\n.thumb_set sub_08026D68, RecountArmyIncome\n");

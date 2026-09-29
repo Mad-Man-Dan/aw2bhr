@@ -22,6 +22,6 @@
  * sub_0801F024 returns a value; this discards it. */
 void sub_08039264(void)
 {
-    sub_08038D7C();
+    UpdateMovePathToCursor();
     sub_0801F024((void *)sub_08039188, 2);
 }

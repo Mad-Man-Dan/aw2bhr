@@ -18,9 +18,10 @@
  * sub_08062730 (promoted this wave) passes gUnits entries straight
  * in. Byte-neutral; re-verified. The local model is removed rather than kept
  * so the shared type is the only one a future caller can see. */
-int sub_08058224(struct Unit *p)
+int GetUnitMovementBudget(struct Unit *p)
 {
     if (GetUnitMovementWithCoBonus(gUnknown_030033EC, p->type) > p->fuel)
         return p->fuel;
     return GetUnitMovementWithCoBonus(gUnknown_030033EC, p->type);
 }
+asm(".global sub_08058224\n.thumb_set sub_08058224, GetUnitMovementBudget\n");

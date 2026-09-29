@@ -41,7 +41,7 @@ void sub_08024720(void)
     {
         if (gPlayers[i].aiControlled != 0)
         {
-            if (sub_0804415C(i) && (j = idx) >= 0)
+            if (IsCoPowerActive(i) && (j = idx) >= 0)
             {
                 p = gUnknown_0809139C + j;
                 sub_0801368C(p, (i + 0xb) * 32 + 0x1e, 2);

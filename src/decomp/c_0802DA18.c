@@ -66,7 +66,7 @@ void sub_0802DA18(void)
 
         sub_0803B4DC(0x65);
 
-        if (sub_08025AEC() == NULL)
+        if (FindFreeUnitSlot() == NULL)
         {
             sub_0802DBE4();
             return;
@@ -79,7 +79,7 @@ void sub_0802DA18(void)
         gUnknown_03003100.pos.unk02 = gUnknown_030040A4.unk02;
 
         if (gPlaySt.savingEnabled != 0)
-            sub_08034534(1, ((struct Unk2023830 *)gUnknown_02023830)[ent->unk20].unk00,
+            SendActionCommand(1, ((struct Unk2023830 *)gUnknown_02023830)[ent->unk20].unk00,
                          0, 0);
 
         sub_08074410(0xe, p);

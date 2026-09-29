@@ -54,7 +54,7 @@ void sub_08039674(struct Unk39674Proc *proc)
     p->unk54 = gPlayers[i].co;
 
     sub_08039930(gPlayers[i].co, proc);
-    sub_08024584();
+    SetMapLayersDefault();
 
     gUnknown_030030E0.bits.effect = 1;
     gUnknown_030030E0.bits.target1_enable_bg0 = 1;

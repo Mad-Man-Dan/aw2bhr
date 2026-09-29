@@ -24,8 +24,8 @@ void sub_0802D230(void)
 
     AddPlayerFunds(gUnknown_030033EC, v);
     sub_0804256C();
-    sub_08025D60(gUnknown_03003F38);
-    sub_080258CC();
+    DestroyUnitAndCargo(gUnknown_03003F38);
+    RebuildMapUnitLayers();
 }
 
 void sub_0802D2A0(int a1, int a2, u8 a3)

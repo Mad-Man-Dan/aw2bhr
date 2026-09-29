@@ -27,10 +27,11 @@ struct Unk3FF2CProc
  * `ProcPtr` is `void *`, so the body's binding is an implicit conversion and
  * the bytes are unchanged -- re-verified.
  */
-void sub_0803FF2C(ProcPtr p)
+void ExplosionEffect_EndIfStale(ProcPtr p)
 {
     struct Unk3FF2CProc *proc = p;
 
     if (proc->unk54 != gUnknown_030044D4)
         Proc_End(proc);
 }
+asm(".global sub_0803FF2C\n.thumb_set sub_0803FF2C, ExplosionEffect_EndIfStale\n");

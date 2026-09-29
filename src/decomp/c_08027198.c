@@ -7,7 +7,7 @@
  * sub_08027198 @ 0x08027198
  */
 
-int sub_08027198(int a1)
+int GetArmyByTeamColor(int a1)
 {
     int i;
 
@@ -17,3 +17,4 @@ int sub_08027198(int a1)
             return i;
     }
 }
+asm(".global sub_08027198\n.thumb_set sub_08027198, GetArmyByTeamColor\n");

@@ -7,7 +7,7 @@
  * sub_080606D0 @ 0x080606D0, sub_08060718 @ 0x08060718
  */
 
-/* sub_080606D0 @ 0x080606D0, 72 bytes.
+/* AiProduceUnits @ 0x080606D0, 72 bytes.
  *
  * The AI turn's outer driver: seed a difficulty budget, ask AiBuildPropertyList how
  * many decision passes this turn gets, then run sub_08060718 that many times
@@ -30,7 +30,7 @@
  * bne`, which is check_dbra_loop reversing an ascending counter it knows runs
  * to zero. Spelling it `while (n-- > 0)` gives `bgt` and an extra `adds r0,
  * r4, #0` per iteration. */
-void sub_080606D0(void)
+void AiProduceUnits(void)
 {
     s16 v;
     int n;
@@ -39,13 +39,14 @@ void sub_080606D0(void)
     v = 0;
     sub_08060D78(&v);
     n = AiBuildPropertyList();
-    gUnknown_030045D8 = sub_08057FE8(0x15);
+    gUnknown_030045D8 = AiCountEnemyUnitsOfType(0x15);
 
     for (j = 0; j < n; j++)
         sub_08060718(v);
 
     gUnknown_03004780 = 4;
 }
+asm(".global sub_080606D0\n.thumb_set sub_080606D0, AiProduceUnits\n");
 
 /* sub_08060718 @ 0x08060718, 208 bytes.
  *

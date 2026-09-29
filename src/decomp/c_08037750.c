@@ -18,6 +18,6 @@ void sub_08037750(int a)
 {
     gUnknown_0300057C = a;
     ApplyPaletteExt(gUnknown_081253F0, (u16)(a * 0x20), 0x20);
-    sub_08011B34((void *)sub_08037790);
+    sub_08011B34((void *)AnimateMapPreviewPalette);
     sub_0803D6B8();
 }

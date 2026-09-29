@@ -9,13 +9,13 @@
 
 /* Deals the four army rosters out of the pristine bank in gUnknown_02022684:
  * one 0xC00-byte scratch block, 0x100 records copied into it, then one
- * sub_080260D0 per quarter (64 records each). The `1, 2, 3, 4` early-out is a
+ * CopyRosterToArmy per quarter (64 records each). The `1, 2, 3, 4` early-out is a
  * debug guard and is reproduced as written.
  *
  * The copy loop is a STRUCT ASSIGNMENT of the 0x0c-byte struct Unit,
  * which is where the `ldm r0!, {r5,r6,r7}` / `stm r1!, {r5,r6,r7}` pair comes
  * from -- not a memcpy and not word-at-a-time. The element type is fixed by
- * sub_080260D0's promoted definition, which takes `struct Unit *`.
+ * CopyRosterToArmy's promoted definition, which takes `struct Unit *`.
  *
  * `subs r3,#1; cmp r3,#0; bge` at the bottom is check_dbra_loop's rewrite of
  * the ASCENDING `i < 0x100` counter, not a descending source loop. The four
@@ -34,9 +34,9 @@ void sub_08026040(int a1, int a2, int a3, int a4)
     for (i = 0; i < 0x100; i++)
         buf[i] = gUnknown_02022684[i];
 
-    sub_080260D0(&buf[0], a1);
-    sub_080260D0(&buf[0x40], a2);
-    sub_080260D0(&buf[0x80], a3);
-    sub_080260D0(&buf[0xc0], a4);
+    CopyRosterToArmy(&buf[0], a1);
+    CopyRosterToArmy(&buf[0x40], a2);
+    CopyRosterToArmy(&buf[0x80], a3);
+    CopyRosterToArmy(&buf[0xc0], a4);
     sub_08014ED4(buf);
 }

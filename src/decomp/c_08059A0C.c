@@ -10,7 +10,7 @@
 
 /* The c_0804151C.c list builder with a different predicate: walks every map
  * cell, and for each passable one whose terrain code is accepted by
- * gUnknown_085767D5 and whose unit id sub_08026FD0 does not reject against
+ * gUnknown_085767D5 and whose unit id IsTerrainOwnedByUnitsTeam does not reject against
  * gUnknown_03003F38, appends {x, y, terrain} to the caller's buffer. Terminated
  * by a 0xFFFF value halfword; returns the element count as a pointer
  * difference against the buffer's START, which is kept in sl.
@@ -39,7 +39,7 @@ struct Unk59A0CCell
     /* 02 */ s16 v;
 };
 
-int sub_08059A0C(void *a1)
+int AiListEnemyPropertyCells(void *a1)
 {
     struct Unk59A0CCell *out;
     struct Unk59A0CCell *start;
@@ -58,7 +58,7 @@ int sub_08059A0C(void *a1)
             {
                 off = gMap->rowOffset[y] + x;
                 if (gUnknown_085767D5[gMap->terrain[off] & 0x1f] != 0
-                    && sub_08026FD0(gUnknown_03003F38, gMap->terrain[off]) != 1)
+                    && IsTerrainOwnedByUnitsTeam(gUnknown_03003F38, gMap->terrain[off]) != 1)
                 {
                     out->x = x;
                     out->y = y;
@@ -72,3 +72,4 @@ int sub_08059A0C(void *a1)
     out->v = 0xFFFF;
     return out - start;
 }
+asm(".global sub_08059A0C\n.thumb_set sub_08059A0C, AiListEnemyPropertyCells\n");

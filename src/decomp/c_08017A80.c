@@ -49,10 +49,10 @@ void sub_08017ABC(struct Unk0200C528 *slot)
 
 /* The node's +0x04 is the polymorphic script operand this block casts at every
  * use (see the struct Unk0200C528Node note in unknown-globals.h); here it is
- * the u32 key sub_080206B0 scans gUnknown_085C77A0 for. */
+ * the u32 key FindMapIdByMapData scans gUnknown_085C77A0 for. */
 bool8 sub_08017AD4(s16 a)
 {
-    gPlaySt.mapID = sub_080206B0((u32)gUnknown_0200C528[a].unk04->unk04);
+    gPlaySt.mapID = FindMapIdByMapData((u32)gUnknown_0200C528[a].unk04->unk04);
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }

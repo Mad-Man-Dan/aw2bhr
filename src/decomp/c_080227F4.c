@@ -18,7 +18,7 @@
  * arm into it -- and the 0x81b2 / 0x81b3 constants are reached by incrementing
  * the 0x81b1 pool word rather than pooled themselves, which is agbcc's own
  * constant CSE and not a different expression. */
-void sub_080227F4(u16 x, u16 y)
+void DrawRangeOverlayCellAt(u16 x, u16 y)
 {
     u16 *p = gBG0TilemapBuffer
            + ((x - gMap->camX) & 0xF) * 2
@@ -39,3 +39,4 @@ void sub_080227F4(u16 x, u16 y)
         p[33] = 0x81B3;
     }
 }
+asm(".global sub_080227F4\n.thumb_set sub_080227F4, DrawRangeOverlayCellAt\n");

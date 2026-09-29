@@ -36,7 +36,7 @@ struct Unk59E3CCell
  *   2. The bare block around the four stores has to stay a block.  It reads as
  *      redundant braces; flattening it loses the match.
  */
-void sub_08059E3C(void *a1)
+void AiListThreatenedProperties(void *a1)
 {
     struct Unk59E3CCell *out;
     int zero;
@@ -80,3 +80,4 @@ void sub_08059E3C(void *a1)
 
     out->v = 0xFFFF;
 }
+asm(".global sub_08059E3C\n.thumb_set sub_08059E3C, AiListThreatenedProperties\n");

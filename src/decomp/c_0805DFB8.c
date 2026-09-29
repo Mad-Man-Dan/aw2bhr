@@ -19,10 +19,10 @@ void sub_0805DFB8(void)
         switch (p->unk00)
         {
         case 7:
-            sub_080598BC();
+            AiDeliberateApcDeliver();
             break;
         case 0x14:
-            sub_08059978();
+            AiDeliberateTCopterDeliver();
             break;
         }
     }

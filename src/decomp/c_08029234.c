@@ -8,13 +8,13 @@
  */
 
 #include "proc.h"
-/* Clear one halfword, seed the next from sub_08041398, then block on a child
+/* Clear one halfword, seed the next from GetAttackTargetCount, then block on a child
  * proc and play a sound.
  *
  * Both fields are reached with `adds r1, r4, #0; adds r1, #0x64` rather than a
  * `strh` displacement -- 0x64 and 0x66 are past strh's imm5*2 limit of 62.
  *
- * No re-narrowing after `bl sub_08041398`: it returns a word, and the `strh` is
+ * No re-narrowing after `bl GetAttackTargetCount`: it returns a word, and the `strh` is
  * the field's own truncation. */
 struct Unk29234Proc
 {
@@ -26,7 +26,7 @@ struct Unk29234Proc
 void sub_08029234(struct Unk29234Proc *proc)
 {
     proc->unk64 = 0;
-    proc->unk66 = sub_08041398();
+    proc->unk66 = GetAttackTargetCount();
     sub_08028ED0(proc);
     sub_0803B4DC(0x77);
 }

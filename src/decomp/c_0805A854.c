@@ -7,12 +7,12 @@
  * sub_0805A854 @ 0x0805A854
  */
 
-/* sub_0805ACA8's sibling against sub_0805C128, differing in that the scratch
+/* AiPickShoalParkBeside's sibling against sub_0805C128, differing in that the scratch
  * cell is a LOCAL rather than the caller's, and the accepted cell is written
  * back over the input pair.
  *
- * THE SENTINEL MUST NOT BE BOUND HERE -- the opposite of sub_0805ACA8 and of
- * sub_08058BB4, and the local is what flips it. `pos.x` is a halfword member
+ * THE SENTINEL MUST NOT BE BOUND HERE -- the opposite of AiPickShoalParkBeside and of
+ * AiPickFiringCellBesideUnit, and the local is what flips it. `pos.x` is a halfword member
  * of a four-byte struct, i.e. an SImode aggregate, so the seed store is a
  * bitfield insert: `ldr [sp]; and #0xFFFF0000; orr #0x270F; str [sp]`. The
  * 0x270F has to be an operand of that `orr`, so its `ldr` belongs BETWEEN the
@@ -20,7 +20,7 @@
  * and swaps the two pool words. CSE still parks the constant in r4 for the
  * final compare, so nothing is lost by spelling it twice.
  *
- * The tail is `== -> 0` for the reason recorded on sub_0805ACA8: the `if` body
+ * The tail is `== -> 0` for the reason recorded on AiPickShoalParkBeside: the `if` body
  * is the block laid out after the literal pool, and the ROM's `beq` reaches
  * `movs r0,#0`. */
 struct CellXY

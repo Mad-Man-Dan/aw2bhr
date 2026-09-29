@@ -11,7 +11,7 @@
  * maximum values instead of a chapter threshold, and with a mode-dependent
  * baseline of 10 or 20.
  *
- * sub_08025CF0 / sub_08025D08 are taken with a bare `adds rN, r0, #0` and NO
+ * sub_08025CF0 / GetPlayerUnitsLost are taken with a bare `adds rN, r0, #0` and NO
  * re-narrowing, which is what re-typed both from `u8` to `int` this wave; see
  * the correction in include/unknown-functions.h.
  *
@@ -36,7 +36,7 @@ u8 GetTechScore(u8 a)
     {
         n = gPlaySt.gameMode == 1 ? 0x14 : 0xa;
         x = sub_08025CF0(a);
-        y = sub_08025D08(a);
+        y = GetPlayerUnitsLost(a);
 
         if (x != 0 && x >= y)
         {

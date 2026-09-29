@@ -29,14 +29,14 @@ void sub_0805DB70(void)
     int v;
     int n;
 
-    if ((u8)sub_08044280(gUnknown_030033EC))
+    if ((u8)IsSuperCoPowerReady(gUnknown_030033EC))
     {
         fn = gUnknown_085D3DD0[gPlayers[gUnknown_030033EC].co].unk1c;
         if (fn != 0 && fn(2) == 1)
         {
             if (gPlaySt.savingEnabled != 0)
-                sub_08034534(0x10, 0, gUnknown_030033EC, 0);
-            sub_0804438C(gUnknown_030033EC, 2);
+                SendActionCommand(0x10, 0, gUnknown_030033EC, 0);
+            PayForCoPower(gUnknown_030033EC, 2);
             return;
         }
     }
@@ -56,8 +56,8 @@ void sub_0805DB70(void)
             if (fn != 0 && fn(1) == 1)
             {
                 if (gPlaySt.savingEnabled != 0)
-                    sub_08034534(0xf, 0, gUnknown_030033EC, 0);
-                sub_0804438C(gUnknown_030033EC, 1);
+                    SendActionCommand(0xf, 0, gUnknown_030033EC, 0);
+                PayForCoPower(gUnknown_030033EC, 1);
             }
         }
     }

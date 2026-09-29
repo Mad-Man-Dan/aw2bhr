@@ -14,13 +14,14 @@
  *
  * Wave 34 (W34-D) widened the signature to three parameters. `b` and `c` are
  * genuinely unused here -- the body below is unchanged and still byte-exact --
- * but sub_080250E8 sets r0, r1 and r2 before every `bl`, and computes r0 and r1
+ * but WriteBackBattleResult sets r0, r1 and r2 before every `bl`, and computes r0 and r1
  * with a full pointer-difference-by-12 divide each. See the note in
  * include/unknown-functions.h. */
-void sub_08026588(u8 a, u8 b, u8 c)
+void RecordUnitDestroyed(u8 a, u8 b, u8 c)
 {
     gPlayers[a].destroyedThisTurn++;
 
     if (gPlayers[a].destroyedThisTurn > gPlayers[a].totalDestroyed)
         gPlayers[a].totalDestroyed = gPlayers[a].destroyedThisTurn;
 }
+asm(".global sub_08026588\n.thumb_set sub_08026588, RecordUnitDestroyed\n");

@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_080443D8(ProcPtr parent)
+void StartCoPowerUnitEffects(ProcPtr parent)
 {
     Proc_StartBlocking(gUnknown_084A0818, parent);
 }
+asm(".global sub_080443D8\n.thumb_set sub_080443D8, StartCoPowerUnitEffects\n");

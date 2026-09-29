@@ -113,8 +113,8 @@ void sub_08038240(void)
     int i;
 
     LockMainMenu();
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
     sub_08011B18();
 
     for (i = 0; i < 4; i++)

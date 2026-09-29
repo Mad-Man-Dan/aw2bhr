@@ -13,7 +13,7 @@
 /* One arm of the 0x08060 cursor state machine: if the cell under the CURRENT
  * UNIT (gUnknown_030046C0.unk06 indexes gUnits, and the unit carries
  * its own column/row in unk02/unk03) is occupied on the gMap->unk234A plane, hand it
- * to sub_08029088 and advance to state 7; otherwise state 3.
+ * to ScrollCameraToKeepCellInView and advance to state 7; otherwise state 3.
  *
  * NO POINTER IS BOUND. The unit element is named twice and CSE gives it one
  * address -- and that is the whole difference between this and a candidate that
@@ -42,7 +42,7 @@ void sub_080601F0(void)
 
     if (map->unk234A[off] != 0)
     {
-        sub_08029088(x, y);
+        ScrollCameraToKeepCellInView(x, y);
         gUnknown_030046D4 = 0;
         gUnknown_030045D4 = 7;
     }
@@ -52,12 +52,12 @@ void sub_080601F0(void)
 
 /* One arm of the 0x08060 cursor state machine: if the cursor's own cell
  * (gUnknown_030046C0.unk06/.unk07) is occupied on the gMap->unk234A plane, hand it to
- * sub_08029088 and advance to state 8; otherwise state 4.
+ * ScrollCameraToKeepCellInView and advance to state 8; otherwise state 4.
  *
  * THE COLUMN IS ASSIGNED INSIDE THE OFFSET EXPRESSION. It has to be read after
  * the row-offset `ldrh` -- a statement of its own puts the `ldrb` two
  * instructions early -- but it also has to be a NAMED LOCAL, because
- * `sub_08029088(gUnknown_030046C0.unk06, y)` sets up r1 before r0 while the ROM
+ * `ScrollCameraToKeepCellInView(gUnknown_030046C0.unk06, y)` sets up r1 before r0 while the ROM
  * sets r0 first. The embedded assignment is the only spelling that gets both.
  *
  * The cell is gMap->unk234A[gMap->rowOffset[y] + x]. */
@@ -74,7 +74,7 @@ void sub_08060264(void)
 
     if (map->unk234A[off] != 0)
     {
-        sub_08029088(x, y);
+        ScrollCameraToKeepCellInView(x, y);
         gUnknown_030046D4 = 0;
         gUnknown_030045D4 = 8;
     }
@@ -101,7 +101,7 @@ void sub_080602C4(void)
 
     if (map->unk234A[off] != 0)
     {
-        sub_08029088(x, y);
+        ScrollCameraToKeepCellInView(x, y);
         gUnknown_030046D4 = 0;
         gUnknown_030045D4 = 9;
     }

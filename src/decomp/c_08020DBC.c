@@ -8,7 +8,7 @@
  * sub_08020DBC @ 0x08020DBC
  */
 
-bool8 sub_08020DBC(u8 a1, u8 x, u8 y)
+bool8 IsCellVisibleToArmy(u8 a1, u8 x, u8 y)
 {
   struct Map **mapPtr;
   int new_var2;
@@ -73,3 +73,4 @@ bool8 sub_08020DBC(u8 a1, u8 x, u8 y)
   }
   return 0;
 }
+asm(".global sub_08020DBC\n.thumb_set sub_08020DBC, IsCellVisibleToArmy\n");

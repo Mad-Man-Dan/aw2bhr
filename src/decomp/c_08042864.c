@@ -36,7 +36,7 @@
  * over gUnknown_08499590 (the wave-34 W34-F rule) -- `(map + K) + idx` only
  * survives as a COMPONENT_REF. gUnknown_03003100 is read `.pos` (the UNSIGNED
  * view of the coordinate pair): both reads are `ldrh`. */
-void sub_08042864(void)
+void LoadUnitIntoTransport(void)
 {
     struct Unit *e;
     int m;
@@ -47,7 +47,7 @@ void sub_08042864(void)
                 ->rowOffset[gUnknown_03003100.pos.unk02]
             + gUnknown_03003100.pos.unk00]];
 
-    sub_080424BC();
+    ResetCaptureProgressIfMoved();
 
     if (e->unk07 != 0)
         e->unk08 = gUnknown_03003F38;
@@ -66,3 +66,4 @@ void sub_08042864(void)
         break;
     }
 }
+asm(".global sub_08042864\n.thumb_set sub_08042864, LoadUnitIntoTransport\n");

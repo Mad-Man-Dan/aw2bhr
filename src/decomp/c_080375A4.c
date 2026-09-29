@@ -9,5 +9,5 @@
 
 void sub_080375A4(u8 a)
 {
-    sub_08037448(gUnknown_08090EF0[a]);
+    BuildMapListForCategory(gUnknown_08090EF0[a]);
 }

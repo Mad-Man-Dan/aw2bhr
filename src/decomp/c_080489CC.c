@@ -117,7 +117,7 @@ void BattleMaps_080489CD(void)
     gUnknown_03001400 = -0x30;
     sub_08013B0C();
     sub_08073304(gUnknown_085802B4, gUnknown_0200FC50, 0, 5, 1, 1, 3);
-    sub_08043E3C(0xf, (void *)0x06011560, 0x16);
+    LoadCoFace(0xf, (void *)0x06011560, 0x16);
     Decompress(gUnknown_0823EA40, gUnknown_0200FC50);
 
     for (i = 0; i <= 7; i++)

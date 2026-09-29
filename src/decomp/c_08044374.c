@@ -7,7 +7,8 @@
  * sub_08044374 @ 0x08044374
  */
 
-int sub_08044374(int a1)
+int GetCoPowerUseCount(int a1)
 {
     return gPlayers[a1].unk25;
 }
+asm(".global sub_08044374\n.thumb_set sub_08044374, GetCoPowerUseCount\n");

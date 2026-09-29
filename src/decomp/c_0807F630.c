@@ -112,7 +112,7 @@ void sub_0807F630(struct Unk807CE5C *p)
                     if (gUnknown_030059C0[i] == 0)
                         gPlayers[i + 1].teamColor = gUnknown_03005958[i] + 1;
                     else
-                        gPlayers[i + 1].teamColor = sub_08026AC0(i + 1, 1);
+                        gPlayers[i + 1].teamColor = PickArmyTeamColor(i + 1, 1);
 
                     switch (gPlayers[i + 1].teamColor)
                     {
@@ -144,7 +144,7 @@ void sub_0807F630(struct Unk807CE5C *p)
             }
 
             gPlayers[i + 1].teamColor =
-                sub_08026AC0(i + 1, sub_08042E18(gPlayers[i + 1].co));
+                PickArmyTeamColor(i + 1, GetCoDefaultTeamColor(gPlayers[i + 1].co));
             gPlayers[i + 1].funds = 0;
         }
 

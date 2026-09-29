@@ -178,7 +178,7 @@ void sub_080860DC(ProcPtr procp)
         sub_0803BCD0(gUnknown_02027F74.unk04[p->unk58]);
         sub_0803BD54();
         sub_0803B4DC(0x71);
-        sub_08037780();
+        RemoveMapPreviewPaletteHook();
         Proc_Start(gUnknown_08616CCC, p);
         p->unk4e = 1;
         p->unk4c = 0x1E;
@@ -190,7 +190,7 @@ void sub_080860DC(ProcPtr procp)
     {
         sub_0803B4DC(0x66);
         sub_0803BD60();
-        sub_08037780();
+        RemoveMapPreviewPaletteHook();
         Proc_Start(gUnknown_08616CCC, p);
         p->unk4e = 1;
         p->unk4c = 0x1E;
@@ -220,7 +220,7 @@ void sub_080860DC(ProcPtr procp)
         if (gUnknown_0300596C <= 1)
             gUnknown_0300596C = 8;
 
-        while (!(u8)sub_08037448(gUnknown_0300596C))
+        while (!(u8)BuildMapListForCategory(gUnknown_0300596C))
         {
             gUnknown_0300596C--;
             if (gUnknown_0300596C <= 1)
@@ -260,7 +260,7 @@ void sub_080860DC(ProcPtr procp)
         if (gUnknown_0300596C > 8)
             gUnknown_0300596C = 2;
 
-        while (!(u8)sub_08037448(gUnknown_0300596C))
+        while (!(u8)BuildMapListForCategory(gUnknown_0300596C))
         {
             gUnknown_0300596C++;
             if (gUnknown_0300596C > 8)

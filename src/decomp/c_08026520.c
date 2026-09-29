@@ -14,7 +14,7 @@
  * The `strh` at +0x38 is immediately followed by an `ldrh` of the same slot:
  * the source stores the field and then passes the FIELD, not the register.
  * Written as `GetRankFromScore(GetClampedRankScoreSum(i))` the reload disappears. */
-void sub_08026520(void)
+void UpdateAllArmyScores(void)
 {
     u8 i;
 
@@ -27,3 +27,4 @@ void sub_08026520(void)
         gPlayers[i].rank = GetRankFromScore(gPlayers[i].totalScore);
     }
 }
+asm(".global sub_08026520\n.thumb_set sub_08026520, UpdateAllArmyScores\n");

@@ -7,7 +7,7 @@
  * sub_08025AEC @ 0x08025AEC
  */
 
-struct Unit *sub_08025AEC(void)
+struct Unit *FindFreeUnitSlot(void)
 {
     int i;
 
@@ -19,3 +19,4 @@ struct Unit *sub_08025AEC(void)
 
     return 0;
 }
+asm(".global sub_08025AEC\n.thumb_set sub_08025AEC, FindFreeUnitSlot\n");

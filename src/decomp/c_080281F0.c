@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080281F0.
- * sub_080281F0 @ 0x080281F0
+ * DebugSettingsMenu_Loop @ 0x080281F0
  */
 
 /* THIS IS A MATCH pending `.rodata` placement -- read the addends before
@@ -34,7 +34,7 @@
 #include "hardware.h"
 static const char *const sNames[] = { "OFF", "ON" };
 
-void sub_080281F0(void)
+void DebugSettingsMenu_Loop(void)
 {
     struct Unk03001470 *ent;
     int v;
@@ -110,3 +110,5 @@ void sub_080281F0(void)
     sub_08013428(10, 16, "SNOW:%s", sNames[gPlaySt.weather]);
     sub_08013428(10, 18, "SAKU:%s", sNames[gPlaySt.fog]);
 }
+
+asm(".global sub_080281F0\n.thumb_set sub_080281F0, DebugSettingsMenu_Loop\n");

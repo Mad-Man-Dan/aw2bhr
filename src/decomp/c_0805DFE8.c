@@ -21,5 +21,5 @@
  */
 void sub_0805DFE8(void)
 {
-    sub_0805F4CC();
+    AiRunRoleMove();
 }

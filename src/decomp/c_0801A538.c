@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_0801A538 -- run sub_080199F8, then sub_08024584.
+ * sub_0801A538 -- run sub_080199F8, then SetMapLayersDefault.
  *
  * The four parameters are never used. They are declared because the callers set
  * all four argument registers immediately before the call, and sub_08019DA8
@@ -17,7 +17,7 @@
  * overwrites the first argument register anyway. `int` is the weakest type that
  * fits the constants seen.
  *
- * Two statements and not `sub_08024584(sub_080199F8())`: the second callee takes
+ * Two statements and not `SetMapLayersDefault(sub_080199F8())`: the second callee takes
  * no arguments, so there is nothing for the first call's result to reach. See
  * the F005 block in include/unknown-functions.h for the other eighteen wrappers
  * of this shape.
@@ -26,5 +26,5 @@
 void sub_0801A538(int a, int b, int c, int d)
 {
     sub_080199F8();
-    sub_08024584();
+    SetMapLayersDefault();
 }

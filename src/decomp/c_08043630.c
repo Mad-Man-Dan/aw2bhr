@@ -36,7 +36,7 @@
  * The unit is this function alone and it calls nothing, so the wave-27
  * static-helper axis cannot apply.
  */
-int sub_08043630(void)
+int GetMapTurnLimit(void)
 {
     register int off asm("r0");
     u16 v;
@@ -60,3 +60,4 @@ int sub_08043630(void)
 
     return v;
 }
+asm(".global sub_08043630\n.thumb_set sub_08043630, GetMapTurnLimit\n");

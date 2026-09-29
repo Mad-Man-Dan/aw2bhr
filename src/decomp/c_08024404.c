@@ -21,7 +21,7 @@
  * arises here: every access is `ldrb` + a byte mask, i.e. `.bits`.
  *
  * This is src/decomp/c_08024378.c's opening with a different permutation of the
- * four priorities; sub_08024584 and sub_0802465C are the other two. */
+ * four priorities; SetMapLayersDefault and sub_0802465C are the other two. */
 
 void sub_08024404(void)
 {

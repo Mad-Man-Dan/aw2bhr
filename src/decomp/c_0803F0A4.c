@@ -40,5 +40,5 @@ void sub_0803F0A4(int a1, int a2, int a3, int a4, int a5, int a6, ProcPtr parent
     proc->unk68 = a6;
     proc->unk6a = a5;
     proc->unk5c = 0;
-    sub_0802909C(a1 + 1, a2 + 1);
+    ScrollCameraToCenterCell(a1 + 1, a2 + 1);
 }

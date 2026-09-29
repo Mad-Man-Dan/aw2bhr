@@ -10,10 +10,10 @@
 #include "proc.h"
 /* The per-proc sibling of the matched sub_08041E48 next door: the same three
  * bracketing calls and the same gPlaySt.unk32 gate on the same
- * sub_08034534 command, but issuing command 4 with the byte behind
- * sub_080413A4's result instead of the proc's own coordinates.
+ * SendActionCommand command, but issuing command 4 with the byte behind
+ * GetAttackTargetRecord's result instead of the proc's own coordinates.
  *
- * The `bl sub_080413A4` sits BETWEEN the two tests, which is what fixes the
+ * The `bl GetAttackTargetRecord` sits BETWEEN the two tests, which is what fixes the
  * shape as a nested `if` with the pointer bound in the outer block rather than
  * one `&&`: a call cannot be hoisted above a conditional branch, so an `&&`
  * spelling could not put it there. */
@@ -30,14 +30,14 @@ void sub_08041DF8(struct Unk41DF8Proc *proc)
     u8 *p;
 
     sub_0802C57C();
-    sub_080424FC();
+    CommitUnitMove();
     sub_0802C594();
 
     if (proc->unk64 != 0)
     {
-        p = (u8 *)sub_080413A4(gUnknown_03003F40);
+        p = (u8 *)GetAttackTargetRecord(gUnknown_03003F40);
 
         if (gPlaySt.savingEnabled != 0)
-            sub_08034534(4, gUnknown_03003F38, *p, 0);
+            SendActionCommand(4, gUnknown_03003F38, *p, 0);
     }
 }

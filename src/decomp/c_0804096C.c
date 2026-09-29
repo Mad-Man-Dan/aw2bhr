@@ -20,7 +20,7 @@
 void sub_0804096C(ProcPtr proc)
 {
     sub_0802C57C();
-    sub_080424FC();
+    CommitUnitMove();
     sub_0802C594();
     LockUnitSelection();
 }

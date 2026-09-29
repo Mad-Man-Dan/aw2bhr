@@ -8,7 +8,7 @@
  */
 
 /* Family F031. sub_080743E8's parameter is `struct Unk030040D8 *` and not the
- * `int` a pass-through would suggest: its other caller sub_080424FC reaches it
+ * `int` a pass-through would suggest: its other caller CommitUnitMove reaches it
  * the same way, `ldr r0,[r4]` off &gUnknown_030040D8. `pop {r0}` discards the
  * callee's u8 result, so this is void. */
 

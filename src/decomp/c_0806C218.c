@@ -10,7 +10,7 @@
 #include "hardware.h"
 #include "proc.h"
 /* Picks the row of gUnknown_085816F0 for this run and loads its palette and
- * graphics. `5 - sub_08038474()` stays in r0 across the +0x60 store, so the
+ * graphics. `5 - GetAverageCampaignRank()` stays in r0 across the +0x60 store, so the
  * first table read uses the register while the second (after two calls) has to
  * reload -- that asymmetry is CSE, not two different expressions.
  *
@@ -28,7 +28,7 @@ struct Unk0806C218Proc
 
 void sub_0806C218(struct Unk0806C218Proc *proc)
 {
-    proc->unk58 = 5 - sub_08038474();
+    proc->unk58 = 5 - GetAverageCampaignRank();
     proc->unk60 = (proc->unk58 != 3) ? 0x20 : 0x10;
 
     ApplyPaletteExt(gUnknown_085816F0[proc->unk58].unk04, 0x220, 0x20);

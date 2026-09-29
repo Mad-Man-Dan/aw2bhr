@@ -11,7 +11,7 @@
 /* Redraws the map's 0x2852 plane, hands the two out-params of sub_0805B4D8 to
  * the gUnknown_030013EC indirect hook, then sweeps every passable cell and
  * bumps the per-cell counter in the map's 0x3C72 plane wherever the terrain
- * code is 0xd or 0xb (the same two codes c_0805ACA8.c's sub_0805ACFC accepts,
+ * code is 0xd or 0xb (the same two codes c_0805ACA8.c's AiCheckShoalParkNeighbour accepts,
  * spelled here as the positive `||` rather than that function's negative `&&`
  * guard).
  *
@@ -48,7 +48,7 @@ void sub_0805AD90(void)
     if (sub_0805B4D8(sub_0805B4A8(), &a, &b) == 0)
         sub_0805F7B8();
 
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
 
     gUnknown_030013EC(a, b, gUnknown_030046D4, gUnknown_085766E0->unk0f, 0);
 

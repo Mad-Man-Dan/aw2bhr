@@ -7,7 +7,7 @@
  * sub_08029978 @ 0x08029978, sub_08029A48 @ 0x08029A48
  */
 
-int sub_08029978(struct Unit *p, u8 a2)
+int ResupplyUnitAmmo(struct Unit *p, u8 a2)
 {
     int acc;
     u16 v;
@@ -33,8 +33,9 @@ int sub_08029978(struct Unit *p, u8 a2)
 
     return acc;
 }
+asm(".global sub_08029978\n.thumb_set sub_08029978, ResupplyUnitAmmo\n");
 
-int sub_08029A48(struct Unit *p, u8 a2)
+int ResupplyUnitFuel(struct Unit *p, u8 a2)
 {
     int acc;
     u16 v;
@@ -58,3 +59,4 @@ int sub_08029A48(struct Unit *p, u8 a2)
 
     return acc;
 }
+asm(".global sub_08029A48\n.thumb_set sub_08029A48, ResupplyUnitFuel\n");

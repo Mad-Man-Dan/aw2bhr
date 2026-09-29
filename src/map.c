@@ -56,15 +56,17 @@ void sub_08024830(void)
     sub_0801A57C(gUnknown_030033EC);
 }
 
-u8 *sub_080248E4(void)
+u8 *GetLoadedMapName(void)
 {
     return gMap->unk421a;
 }
+asm(".global sub_080248E4\n.thumb_set sub_080248E4, GetLoadedMapName\n");
 
-u8 sub_080248F8(void)
+u8 GetLoadedMapArmyCount(void)
 {
     return gMap->unk4233;
 }
+asm(".global sub_080248F8\n.thumb_set sub_080248F8, GetLoadedMapArmyCount\n");
 
 u8 sub_0802490C(u16 a1)
 {
@@ -74,13 +76,14 @@ u8 sub_0802490C(u16 a1)
     return gUnknown_085C77A0[a1].unk18;
 }
 
-u8 *sub_08024944(u16 a1)
+u8 *GetMapName(u16 a1)
 {
     if ((u16)(a1 - 0xB4) <= 0xB)
         return sub_0803CCEC(a1 + 0x4C);
 
     return gTextTable[gUnknown_085C77A0[a1].nameIndex];
 }
+asm(".global sub_08024944\n.thumb_set sub_08024944, GetMapName\n");
 
 int sub_08024984(int a1)
 {
@@ -99,7 +102,7 @@ int sub_08024984(int a1)
     return r;
 }
 
-int sub_080249C8(int a)
+int GetCellOwnerTeamColor(int a)
 {
     int i = a & 0xE0;
 
@@ -108,6 +111,7 @@ int sub_080249C8(int a)
 
     return gPlayers[i >> 5].teamColor;
 }
+asm(".global sub_080249C8\n.thumb_set sub_080249C8, GetCellOwnerTeamColor\n");
 
 int GetTerrainDefense(int a1, s8 a2, u8 a3)
 {
@@ -119,7 +123,7 @@ int GetTerrainDefense(int a1, s8 a2, u8 a3)
 
 asm(".global sub_080249EC\n.thumb_set sub_080249EC, GetTerrainDefense\n");
 
-void sub_08024A2C(struct BattleUnit *a1, s16 a2)
+void InitBattleUnit(struct BattleUnit *a1, s16 a2)
 {
     struct Unit *e;
     struct Map *map;
@@ -142,3 +146,4 @@ void sub_08024A2C(struct BattleUnit *a1, s16 a2)
     a1->baseDamage = 0;
     a1->hpLoss = 0;
 }
+asm(".global sub_08024A2C\n.thumb_set sub_08024A2C, InitBattleUnit\n");

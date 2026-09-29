@@ -32,7 +32,7 @@
  * in unknown-globals.h; it is on wave 50's pool-word ALLOWLIST and is NOT a
  * -fforce-addr word. `(i*16 - i)*4` is agbcc's 60-byte stride multiply. */
 
-void sub_08034938(void)
+void MapState_CheckTurnLimit(void)
 {
     u8 i;
     u8 best;
@@ -60,10 +60,11 @@ void sub_08034938(void)
         for (i = 1; i <= 4; i++)
         {
             if (IsPlayerAliveAndActive(i) && best > gPlayers[i].captures)
-                sub_08028874(i, 0x20);
+                RecordArmyDefeat(i, 0x20);
         }
 
         FinalizeBattleResult();
         gUnknown_030032D8 = 0x12;
     }
 }
+asm(".global sub_08034938\n.thumb_set sub_08034938, MapState_CheckTurnLimit\n");

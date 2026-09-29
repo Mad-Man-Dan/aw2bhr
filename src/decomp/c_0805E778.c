@@ -20,26 +20,26 @@ void sub_0805E778(void)
   gUnknown_03004784[1] = 0x64;
   for (i = 0; i < 2; i++)
   {
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03, gUnknown_030040D8->unk00, 0x78, 1);
     sub_0805A0EC(p);
     if (1)
     {
       v.pos.unk00 = 0x270F;
-      sub_08059C00(p, (u16 *) (&v));
+      AiPopLastNearestCandidate(p, (u16 *) (&v));
       if (v.pos.unk00 == 0x270F)
       {
         break;
       }
     }
     gUnknown_03004784[1] = (new_var = 0, save);
-    if (((s8 *) gUnknown_03003340[v.pos.unk02])[v.pos.unk00] <= sub_08058224((struct Unit *) gUnknown_030040D8))
+    if (((s8 *) gUnknown_03003340[v.pos.unk02])[v.pos.unk00] <= GetUnitMovementBudget((struct Unit *) gUnknown_030040D8))
     {
       sub_0805D648(v.spos.unk00, v.spos.unk02, 2, 0, new_var);
     }
     else
     {
-      sub_080591E4(&v);
+      AiAdvanceToward(&v);
     }
     gUnknown_03004784[1] = 0;
   }

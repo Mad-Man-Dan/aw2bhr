@@ -10,7 +10,7 @@
 #include "hardware.h"
 #include "proc.h"
 
-/* A mode-entry sequence: install the two sub_08036884 / sub_080368E8 handlers
+/* A mode-entry sequence: install the two DefaultVBlankCallback / DefaultMainLoopCallback handlers
  * through the setter pair documented on sub_080366C4 / sub_080366D0 in
  * include/unknown-functions.h, run three more `void (void)` leaves, drop
  * forced blank, and start gUnknown_086147FC on tree 3.
@@ -23,9 +23,9 @@
 void sub_080780E4(void)
 {
     sub_0801F00C();
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
-    sub_08036B4C();
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
+    InitGameSystems();
     sub_080745C0();
     gDispIo.disp_ct.forced_blank = 0;
     Proc_Start(gUnknown_086147FC, PROC_TREE_3);

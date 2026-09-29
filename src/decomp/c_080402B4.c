@@ -5,7 +5,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080402B4.
- * DestroyPipeSeam @ 0x080402B4, sub_08040380 @ 0x08040380
+ * DestroyPipeSeam @ 0x080402B4, StartSiloLaunch @ 0x08040380
  */
 
 #include "proc.h"
@@ -68,7 +68,7 @@ void DestroyPipeSeam(int x, int y, ProcPtr parent)
 
 asm(".global sub_080402B4\n.thumb_set sub_080402B4, DestroyPipeSeam\n");
 
-void sub_08040380(int x, int y, ProcPtr parent)
+void StartSiloLaunch(int x, int y, ProcPtr parent)
 {
     u16 v = gMap->tile[
         gMap->rowOffset[y] + x];
@@ -84,6 +84,7 @@ void sub_08040380(int x, int y, ProcPtr parent)
             gMap->rowOffset[y] + x] = 0x1A0;
     }
 
-    sub_08021CB4();
+    RefreshPropertyTerrainBytes();
     sub_08024268();
 }
+asm(".global sub_08040380\n.thumb_set sub_08040380, StartSiloLaunch\n");

@@ -11,7 +11,7 @@ void sub_0805B744(void)
 {
     u16 pos[2];
 
-    sub_080202A4(gUnknown_030040D8);
+    GenerateUnitMovementMap(gUnknown_030040D8);
     sub_0805B980();
     if (sub_0805B8F4(pos) == 1)
         sub_0805B814(pos);

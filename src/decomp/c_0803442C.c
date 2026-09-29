@@ -33,7 +33,7 @@
  * docs/agbcc-codegen.md.
  *
  * src[i] is deliberately re-read rather than bound: the ROM has two `ldrb`. */
-void sub_0803442C(u8 *src, u8 *dst)
+void UnpackPathNibbles(u8 *src, u8 *dst)
 {
     int i;
     int j;
@@ -57,10 +57,11 @@ void sub_0803442C(u8 *src, u8 *dst)
             dst[j + 1] = n;
     }
 }
+asm(".global sub_0803442C\n.thumb_set sub_0803442C, UnpackPathNibbles\n");
 
 /* A once-per-entry snapshot into the sub_080308B4 command block: the two
  * u16 cursor pairs are truncated into bytes 2..5 and the six-byte nibble-packed
- * copy sub_08034400 does lands at +0x0c. gUnknown_030040DC is the guard and the
+ * copy PackPathNibbles does lands at +0x0c. gUnknown_030040DC is the guard and the
  * done-flag both. */
 void sub_0803446C(void)
 {
@@ -70,12 +71,12 @@ void sub_0803446C(void)
         gUnknown_030044B0[3] = gUnknown_03003100.pos.unk02;
         gUnknown_030044B0[4] = gUnknown_03003F24.pos.unk00;
         gUnknown_030044B0[5] = gUnknown_03003F24.pos.unk02;
-        sub_08034400(gUnknown_03003110, gUnknown_030044B0 + 0xc);
+        PackPathNibbles(gUnknown_03003110, gUnknown_030044B0 + 0xc);
         gUnknown_030040DC = 1;
     }
 }
 
-/* The sibling of sub_08034534: same command block, command id hard-coded to 8.
+/* The sibling of SendActionCommand: same command block, command id hard-coded to 8.
  * `unit` is bound before the block is filled -- the ROM computes
  * &gUnits[a] into r5 first and keeps it live across the four stores,
  * which is what a local declared here gives. */

@@ -72,8 +72,8 @@ void sub_0804A260(void)
     s16 i;
 
     sub_0801B768(0);
-    sub_080366C4(sub_080368E8);
-    sub_080366D0(sub_08036884);
+    sub_080366C4(DefaultMainLoopCallback);
+    sub_080366D0(DefaultVBlankCallback);
     sub_08012C58(gUnknown_084C3D1C);
     ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e = 0;
     gUnknown_030044E0->unk20 = 0;

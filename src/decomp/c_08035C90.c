@@ -32,7 +32,7 @@ struct Unk35C90Proc
     /* 0x44 */ s16 unk44;
 };
 
-u8 sub_08035C90(ProcPtr procArg)
+u8 IsMoveSlideOnRiver(ProcPtr procArg)
 {
     struct Unk35C90Proc *proc = procArg;
     struct Map *map = gMap;
@@ -43,3 +43,4 @@ u8 sub_08035C90(ProcPtr procArg)
 
     return 0;
 }
+asm(".global sub_08035C90\n.thumb_set sub_08035C90, IsMoveSlideOnRiver\n");

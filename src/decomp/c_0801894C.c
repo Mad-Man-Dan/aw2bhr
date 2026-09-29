@@ -105,11 +105,11 @@ bool8 sub_08018A64(s16 a)
 }
 
 /* sub_08018A28's twin: the same install/remove callback shape, keyed on
- * sub_0804415C(slot->unk11) instead of the unk12 comparison. */
+ * IsCoPowerActive(slot->unk11) instead of the unk12 comparison. */
 void sub_08018AA8(struct Unk0200C528 *slot)
 {
     if (gUnknown_030032D8 == 0xc)
-        if (sub_0804415C(slot->unk11))
+        if (IsCoPowerActive(slot->unk11))
             if (gUnknown_030033EC == 1)
                 slot->unk08 = NULL;
 }

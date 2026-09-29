@@ -13,8 +13,9 @@
  * same reason src/decomp/c_08026588.c keeps the plain spelling). unk2f and
  * unk30 were filler until wave 29; they are named from this call. */
 
-void sub_0802A4DC(void)
+void ScrollCameraToCurrentArmyCursor(void)
 {
-    sub_08029088(gPlayers[gUnknown_030033EC].cursorX,
+    ScrollCameraToKeepCellInView(gPlayers[gUnknown_030033EC].cursorX,
                  gPlayers[gUnknown_030033EC].cursorY);
 }
+asm(".global sub_0802A4DC\n.thumb_set sub_0802A4DC, ScrollCameraToCurrentArmyCursor\n");

@@ -145,15 +145,17 @@ int sub_08042DE0(int a1)
     return sub_08042DCC(gPlayers[a1].co);
 }
 
-int sub_08042DFC(int a1)
+int GetPlayerCoDefaultTeamColor(int a1)
 {
-    return sub_08042E18(gPlayers[a1].co);
+    return GetCoDefaultTeamColor(gPlayers[a1].co);
 }
+asm(".global sub_08042DFC\n.thumb_set sub_08042DFC, GetPlayerCoDefaultTeamColor\n");
 
-int sub_08042E18(int a)
+int GetCoDefaultTeamColor(int a)
 {
     return gUnknown_085D3DD0[a].unk16;
 }
+asm(".global sub_08042E18\n.thumb_set sub_08042E18, GetCoDefaultTeamColor\n");
 
 int GetCoLuckBonus(int a, int b)
 {
@@ -199,36 +201,41 @@ int GetCoCaptureRate(int a, int b)
 
 asm(".global sub_08042EDC\n.thumb_set sub_08042EDC, GetCoCaptureRate\n");
 
-int sub_08042F14(int a1)
+int GetPlayerCoCaptureRate(int a1)
 {
     return GetCoCaptureRate(gPlayers[a1].co, gPlayers[a1].coMode);
 }
+asm(".global sub_08042F14\n.thumb_set sub_08042F14, GetPlayerCoCaptureRate\n");
 
-int sub_08042F34(int a, int b)
+int GetCoRainBringerPercent(int a, int b)
 {
     if (gPlaySt.coAbilities == 0)
         return 0;
 
     return gUnknown_085D3DD0[a].rainBringerPercent;
 }
+asm(".global sub_08042F34\n.thumb_set sub_08042F34, GetCoRainBringerPercent\n");
 
-int sub_08042F5C(int a1)
+int GetPlayerCoRainBringerPercent(int a1)
 {
-    return sub_08042F34(gPlayers[a1].co, gPlayers[a1].coMode);
+    return GetCoRainBringerPercent(gPlayers[a1].co, gPlayers[a1].coMode);
 }
+asm(".global sub_08042F5C\n.thumb_set sub_08042F5C, GetPlayerCoRainBringerPercent\n");
 
-int sub_08042F7C(int a, int b)
+int GetCoSnowBringerPercent(int a, int b)
 {
     if (gPlaySt.coAbilities == 0)
         return 0;
 
     return gUnknown_085D3DD0[a].snowBringerPercent;
 }
+asm(".global sub_08042F7C\n.thumb_set sub_08042F7C, GetCoSnowBringerPercent\n");
 
-int sub_08042FA4(int a1)
+int GetPlayerCoSnowBringerPercent(int a1)
 {
-    return sub_08042F7C(gPlayers[a1].co, gPlayers[a1].coMode);
+    return GetCoSnowBringerPercent(gPlayers[a1].co, gPlayers[a1].coMode);
 }
+asm(".global sub_08042FA4\n.thumb_set sub_08042FA4, GetPlayerCoSnowBringerPercent\n");
 
 int GetCoCounterattackBonus(int a, int b)
 {
@@ -247,17 +254,18 @@ int GetPlayerCoCounterattackBonus(int a1)
 
 asm(".global sub_08042FFC\n.thumb_set sub_08042FFC, GetPlayerCoCounterattackBonus\n");
 
-u32 sub_0804301C(int a, int b)
+u32 GetCoSpecialAbilities(int a, int b)
 {
     if (gPlaySt.coAbilities == 0)
         return 0;
 
     return gUnknown_085D3DD0[a].power[b].specialAbilities;
 }
+asm(".global sub_0804301C\n.thumb_set sub_0804301C, GetCoSpecialAbilities\n");
 
 u32 GetPlayerSpecialAbilities(int a1)
 {
-    return sub_0804301C(gPlayers[a1].co, gPlayers[a1].coMode);
+    return GetCoSpecialAbilities(gPlayers[a1].co, gPlayers[a1].coMode);
 }
 
 asm(".global sub_08043050\n.thumb_set sub_08043050, GetPlayerSpecialAbilities\n");
@@ -389,13 +397,14 @@ int GetUnitCombatClassColumn(int a)
 
 asm(".global sub_080432E0\n.thumb_set sub_080432E0, GetUnitCombatClassColumn\n");
 
-int sub_08043304(struct BattleUnit *p)
+int GetBattleUnitTerrainDefense(struct BattleUnit *p)
 {
     if ((GetPlayerSpecialAbilities(((p->unit - gUnits) >> 6) + 1) & 0x20) == 0)
         return p->terrainDefense;
 
     return p->terrainDefense * 2;
 }
+asm(".global sub_08043304\n.thumb_set sub_08043304, GetBattleUnitTerrainDefense\n");
 
 int sub_0804334C(struct BattleUnit *p)
 {
@@ -409,10 +418,11 @@ int sub_0804334C(struct BattleUnit *p)
     return r;
 }
 
-int sub_0804338C(struct BattleUnit *p)
+int GetBattleUnitCounterattackBonus(struct BattleUnit *p)
 {
     return GetPlayerCoCounterattackBonus(((p->unit - gUnits) >> 6) + 1);
 }
+asm(".global sub_0804338C\n.thumb_set sub_0804338C, GetBattleUnitCounterattackBonus\n");
 
 int GetUnitBaseMovement(int a)
 {
@@ -439,10 +449,11 @@ asm(".global sub_080433B8\n.thumb_set sub_080433B8, GetUnitBaseMovement\n"
     ".global sub_080433D8\n.thumb_set sub_080433D8, GetUnitBaseCost\n"
     ".global sub_080433E8\n.thumb_set sub_080433E8, GetUnitBaseVision\n");
 
-int sub_080433F8(int a, int b, int c)
+int GetUnitBaseDamage(int a, int b, int c)
 {
     return gUnknown_085D5ABC[a].baseDamage[c][b];
 }
+asm(".global sub_080433F8\n.thumb_set sub_080433F8, GetUnitBaseDamage\n");
 
 void sub_08043418(int x, int y, int id)
 {

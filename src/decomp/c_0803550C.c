@@ -16,9 +16,9 @@
  * instruction pair.
  *
  * The ROM dispatches through gcc's balanced case TREE:
- *     cmp r0, #1 ; beq  -> sub_080352B4
+ *     cmp r0, #1 ; beq  -> UpdateSnowParticles
  *     cmp r0, #1 ; ble  -> end          <- emit_case_nodes' low-bound test
- *     cmp r0, #2 ; beq  -> sub_080353E8
+ *     cmp r0, #2 ; beq  -> UpdateRainParticles
  *     b end
  * i.e. `emit_case_nodes` on a root node 1 with a right child 2 and
  * `node_has_low_bound` FALSE. Every spelling below emits the same code WITHOUT
@@ -42,17 +42,18 @@
  * plain `int` index does not do it either. Ruled out: the index type
  * (u8/s8/s16/int all probed), extra cases, an explicit `default`, and the
  * if/else-if rewrite. */
-void sub_0803550C(void)
+void UpdateWeatherParticles(void)
 {
     switch (gPlaySt.weather)
     {
     case 0:
         break;
     case 1:
-        sub_080352B4();
+        UpdateSnowParticles();
         break;
     case 2:
-        sub_080353E8();
+        UpdateRainParticles();
         break;
     }
 }
+asm(".global sub_0803550C\n.thumb_set sub_0803550C, UpdateWeatherParticles\n");

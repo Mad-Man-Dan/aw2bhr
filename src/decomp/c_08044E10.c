@@ -136,7 +136,7 @@ void sub_08044E10(struct Unk08044E10Proc *proc)
         else
             unit->hp = unit->hp + proc->unk2e * 10;
 
-        sub_08022580();
+        RedrawUnitLayer();
         sub_080452C0(unit->x, unit->y, proc->unk2c);
         break;
     }
@@ -210,7 +210,7 @@ void sub_08044F24(struct Unk08044F24Proc *proc)
         if (proc->unk30 != 0)
             unit->fuel = unit->fuel >> 1;
 
-        sub_08022580();
+        RedrawUnitLayer();
         sub_080452C0(unit->x, unit->y, proc->unk2c);
         break;
     }

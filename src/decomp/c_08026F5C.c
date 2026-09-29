@@ -19,10 +19,11 @@
  * `return <cmp>;` cannot produce (docs/agbcc-codegen.md): a returned comparison
  * goes through do_store_flag and arrives with no branch at all. */
 
-bool8 sub_08026F5C(s16 a1)
+bool8 IsUnitOnCurrentTeam(s16 a1)
 {
     if (gPlayers[gUnknown_030033EC].team == gPlayers[(a1 >> 6) + 1].team)
         return TRUE;
 
     return FALSE;
 }
+asm(".global sub_08026F5C\n.thumb_set sub_08026F5C, IsUnitOnCurrentTeam\n");

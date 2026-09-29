@@ -79,7 +79,7 @@ void sub_0800487C(void)
         gActiveMap->flags |= 0x1000;
 
     sub_08023348();
-    sub_0803662C();
+    InstallMapFrameCallbacks();
     sub_08024268();
     sub_08024830();
     DesignRoomLoadTerrainNamePalettes();

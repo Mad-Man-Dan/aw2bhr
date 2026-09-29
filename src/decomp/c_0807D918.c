@@ -31,23 +31,23 @@ void sub_0807D918(struct Unk7D918 *p)
     if (p->unk60 < 0)
     {
         if (p->unk4c == 13)
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013000, 0x12);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013000, 0x12);
 
         if (p->unk4c == 14)
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013480, 0x13);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013480, 0x13);
 
         if (p->unk4c == 15)
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013900, 0x14);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013900, 0x14);
     }
     else if (p->unk60 > 0)
     {
         if (p->unk4c == 13)
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013000, 0x12);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013000, 0x12);
 
         if (p->unk4c == 9)
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013480, 0x13);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 1, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013480, 0x13);
 
         if (p->unk4c == 6)
-            sub_08043E3C(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013900, 0x14);
+            LoadCoFace(gUnknown_030058E0[DivRem(p->unk52 + 2, gUnknown_03005948[p->unk58]) + p->unk5c], (void *)0x06013900, 0x14);
     }
 }

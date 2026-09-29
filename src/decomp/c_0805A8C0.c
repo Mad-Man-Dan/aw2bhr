@@ -7,7 +7,7 @@
  * sub_0805A8C0 @ 0x0805A8C0
  */
 
-int sub_0805A8C0(u16 x, u16 y)
+int AiIsNearEnemyHq(u16 x, u16 y)
 {
     int i;
     int dx;
@@ -17,7 +17,7 @@ int sub_0805A8C0(u16 x, u16 y)
     {
         if ((gPlayers[gUnknown_030033EC].unk2c >> i) & 1)
         {
-            if (sub_08026D44(i + 1))
+            if (DoesArmyHaveHq(i + 1))
             {
                 dx = x - gPlayers[i + 1].hqX + 2;
                 dy = y - gPlayers[i + 1].hqY + 2;
@@ -30,3 +30,4 @@ int sub_0805A8C0(u16 x, u16 y)
 
     return 0;
 }
+asm(".global sub_0805A8C0\n.thumb_set sub_0805A8C0, AiIsNearEnemyHq\n");

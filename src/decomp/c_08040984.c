@@ -19,5 +19,5 @@ struct Unk40984Proc
  * addresses; read that one for the derivation. */
 void sub_08040984(struct Unk40984Proc *p)
 {
-    sub_08029088(p->unk64, p->unk66);
+    ScrollCameraToKeepCellInView(p->unk64, p->unk66);
 }

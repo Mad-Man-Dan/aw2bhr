@@ -32,7 +32,7 @@ struct Unk360D0Proc
     /* 0x4c */ u8 unk4c[0x14];
 };
 
-void sub_080360D0(ProcPtr procArg)
+void RunMoveSlideCommand(ProcPtr procArg)
 {
     struct Unk360D0Proc *proc = procArg;
     u16 cmd;
@@ -57,7 +57,7 @@ void sub_080360D0(ProcPtr procArg)
             if (gPlaySt.savingEnabled != 0
                 && gUnknown_030032D8 != 0x13
                 && (u8)sub_0805C974() == 0)
-                sub_08034534(2, proc->unk30 - gUnits, 0, 0);
+                SendActionCommand(2, proc->unk30 - gUnits, 0, 0);
             return;
 
         case 4:
@@ -66,7 +66,7 @@ void sub_080360D0(ProcPtr procArg)
 
         case -1:
             sub_08036024(proc);
-            sub_08035828((struct Unk35828Proc *)proc);
+            EndMoveSlide((struct Unk35828Proc *)proc);
             return;
 
         case 0:
@@ -106,3 +106,4 @@ void sub_080360D0(ProcPtr procArg)
         }
     }
 }
+asm(".global sub_080360D0\n.thumb_set sub_080360D0, RunMoveSlideCommand\n");

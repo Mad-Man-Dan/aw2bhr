@@ -20,7 +20,7 @@ struct Unk3FF48Proc
 };
 
 /* Sets the generation counter, sweeps every existing instance of the script
- * through sub_0803FF2C (which ends the ones whose stashed counter is stale),
+ * through ExplosionEffect_EndIfStale (which ends the ones whose stashed counter is stale),
  * then starts a fresh blocking instance and stamps the same counter into it.
  * a1 and a2 have to survive both calls, which is what costs the r8/sb pair. */
 void sub_0803FF48(int a1, int a2, int a3, ProcPtr parent)
@@ -28,7 +28,7 @@ void sub_0803FF48(int a1, int a2, int a3, ProcPtr parent)
     struct Unk3FF48Proc *proc;
 
     gUnknown_030044D4 = a3;
-    Proc_ForEach(gUnknown_0849FB04, sub_0803FF2C);
+    Proc_ForEach(gUnknown_0849FB04, ExplosionEffect_EndIfStale);
     proc = Proc_StartBlocking(gUnknown_0849FB04, parent);
     proc->unk50 = 0;
     proc->unk2c = a1;

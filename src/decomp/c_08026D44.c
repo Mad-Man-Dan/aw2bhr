@@ -10,10 +10,11 @@
 /* No narrowing on the index, so the parameter is a word and not the u8 its
  * siblings in this family take. The branched-to block is the FALSE arm, which
  * per the branch-polarity rule makes `return FALSE` the first return. */
-bool8 sub_08026D44(int a)
+bool8 DoesArmyHaveHq(int a)
 {
     if ((gPlayers[a].hqX & 0x80) != 0)
         return FALSE;
 
     return TRUE;
 }
+asm(".global sub_08026D44\n.thumb_set sub_08026D44, DoesArmyHaveHq\n");

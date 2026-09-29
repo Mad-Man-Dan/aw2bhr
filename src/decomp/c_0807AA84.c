@@ -187,12 +187,12 @@ void sub_0807AA84(struct Unk807AA84 *proc)
         ApplyPaletteExt(gUnknown_0822BB60, 0, 0x20);
 
         for (i = 0; i < gUnknown_0202FDEC.unk08; i++)
-            sub_08043E3C(gPlayers[(s8)gUnknown_0202FDEC.unk00[i]].co + 0x18,
+            LoadCoFace(gPlayers[(s8)gUnknown_0202FDEC.unk00[i]].co + 0x18,
                          (void *)(((i * 0x24 + 0x100) & 0x3FF) * 0x20 + 0x06010000),
                          i + 0x19);
 
         for (i = 0; i < gUnknown_0202FDEC.unk09; i++)
-            sub_08043E3C(gPlayers[(s8)gUnknown_0202FDEC.unk04[i]].co + 0x30,
+            LoadCoFace(gPlayers[(s8)gUnknown_0202FDEC.unk04[i]].co + 0x30,
                          (void *)(((i * 0x24 + 0x16C) & 0x3FF) * 0x20 + 0x06010000),
                          i + 0x1C);
     }
@@ -216,7 +216,7 @@ void sub_0807AA84(struct Unk807AA84 *proc)
         ApplyPaletteExt(gUnknown_0822BDFC, 0, 0x20);
 
         for (i = 0; i < gUnknown_0202FDEC.unk08; i++)
-            sub_08043E3C(gPlayers[(s8)gUnknown_0202FDEC.unk00[i]].co + 0x30,
+            LoadCoFace(gPlayers[(s8)gUnknown_0202FDEC.unk00[i]].co + 0x30,
                          (void *)(((i * 0x24 + 0x100) & 0x3FF) * 0x20 + 0x06010000),
                          i + 0x19);
     }

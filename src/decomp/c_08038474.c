@@ -8,8 +8,9 @@
  */
 
 /* Nested and not sequential: GetCampaignScoreRank takes an argument and so READS r0,
- * which sub_08038434 has just written. `pop {r1}` leaves that result live. */
-int sub_08038474(void)
+ * which GetAverageCampaignScore has just written. `pop {r1}` leaves that result live. */
+int GetAverageCampaignRank(void)
 {
-    return GetCampaignScoreRank(sub_08038434());
+    return GetCampaignScoreRank(GetAverageCampaignScore());
 }
+asm(".global sub_08038474\n.thumb_set sub_08038474, GetAverageCampaignRank\n");

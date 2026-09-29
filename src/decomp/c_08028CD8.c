@@ -7,7 +7,7 @@
  * sub_08028CD8 @ 0x08028CD8
  */
 
-void sub_08028CD8(void)
+void ParkMapState(void)
 {
     if (gUnknown_030032D8 != 0x10)
     {
@@ -15,3 +15,4 @@ void sub_08028CD8(void)
         gUnknown_030032D8 = 0x10;
     }
 }
+asm(".global sub_08028CD8\n.thumb_set sub_08028CD8, ParkMapState\n");

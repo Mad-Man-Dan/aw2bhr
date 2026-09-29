@@ -21,9 +21,9 @@ void sub_0802DFC8(void)
 {
     u16 v;
 
-    sub_08023824();
+    HandleMoveMapCursor();
     sub_080236E8();
-    sub_08023908(4);
+    HandleMoveCameraWithMapCursor(4);
     sub_08023274(1);
 
     v = gpKeySt->held & 2;
@@ -31,8 +31,8 @@ void sub_0802DFC8(void)
     if (v == 0)
     {
         sub_08035810();
-        sub_080258CC();
-        sub_08022A08();
+        RebuildMapUnitLayers();
+        HideRangeOverlay();
 
         gUnknown_03003334 = v;
     }

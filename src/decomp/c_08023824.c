@@ -7,7 +7,7 @@
  * sub_08023824 @ 0x08023824
  */
 
-void sub_08023824(void)
+void HandleMoveMapCursor(void)
 {
     if (gUnknown_03004090.unk00 < gUnknown_030032C4.unk00)
         gUnknown_03004090.unk00++;
@@ -18,3 +18,4 @@ void sub_08023824(void)
     if (gUnknown_03004090.unk02 > gUnknown_030032C4.unk02)
         gUnknown_03004090.unk02--;
 }
+asm(".global sub_08023824\n.thumb_set sub_08023824, HandleMoveMapCursor\n");

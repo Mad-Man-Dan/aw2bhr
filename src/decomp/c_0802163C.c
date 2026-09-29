@@ -25,7 +25,7 @@
  * folded into the load displacement, i.e. a member array and not `+ 1` on a
  * bare u16 pointer. */
 
-void sub_0802163C(int a)
+void LoadMapIntoGMap(int a)
 {
     int x;
     int y;
@@ -52,10 +52,10 @@ void sub_0802163C(int a)
     gMap->unk10 = 0;
 
     CopyString(gMap->unk421a,
-                 sub_08024944(a));
+                 GetMapName(a));
     gMap->unk4233 = sub_0802490C(a);
 
-    sub_080215FC();
+    InitMapRowOffsets();
 
     for (y = 0; y < gMap->height; y++)
     {
@@ -73,3 +73,4 @@ void sub_0802163C(int a)
 
     sub_0802481C();
 }
+asm(".global sub_0802163C\n.thumb_set sub_0802163C, LoadMapIntoGMap\n");

@@ -26,7 +26,7 @@
  *
  * The guard is an early return and not a wrapping `if`: its branch goes
  * straight to the epilogue that both later bounds failures also reach. */
-void sub_0802361C(void)
+void HandleGameMapCursorInput(void)
 {
     int dir;
     int n;
@@ -54,3 +54,4 @@ void sub_0802361C(void)
             sub_0803B4DC(0x6a);
     }
 }
+asm(".global sub_0802361C\n.thumb_set sub_0802361C, HandleGameMapCursorInput\n");

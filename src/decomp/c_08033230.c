@@ -121,5 +121,5 @@ void sub_08033230(struct Unk33230Proc *proc)
     }
 
     if (proc->unk64 != 1)
-        sub_08062FF4(gUnknown_03003F70);
+        MultiBootMain(gUnknown_03003F70);
 }

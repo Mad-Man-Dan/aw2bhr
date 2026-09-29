@@ -8,7 +8,7 @@
  * sub_080258CC @ 0x080258CC
  */
 
-void sub_080258CC(void)
+void RebuildMapUnitLayers(void)
 {
     int i;
     int j;
@@ -20,7 +20,7 @@ void sub_080258CC(void)
     gMap->unk08 = gMap->scrollX;
     gMap->unk0a = gMap->scrollY;
     sub_08023860();
-    sub_080213AC();
+    RebuildVisionPlanes();
 
     for (i = 0; i < gMap->height; i++)
     {
@@ -77,6 +77,7 @@ void sub_080258CC(void)
     }
 
     sub_08021D10();
-    sub_08022580();
-    sub_080227A8();
+    RedrawUnitLayer();
+    RedrawUnitIconLayer();
 }
+asm(".global sub_080258CC\n.thumb_set sub_080258CC, RebuildMapUnitLayers\n");

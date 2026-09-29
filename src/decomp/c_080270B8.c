@@ -20,7 +20,7 @@ bool8 sub_080270B8(void)
     return FALSE;
 }
 
-u8 sub_080270F0(void)
+u8 GetFirstHumanArmy(void)
 {
     int i;
 
@@ -32,6 +32,7 @@ u8 sub_080270F0(void)
 
     return 0;
 }
+asm(".global sub_080270F0\n.thumb_set sub_080270F0, GetFirstHumanArmy\n");
 
 void sub_08027118(void)
 {

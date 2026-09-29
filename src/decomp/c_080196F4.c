@@ -9,14 +9,14 @@
 
 /* Apply a 0xFF-terminated table of 12-byte unit-spawn commands: 0xFE resets
  * gUnknown_030033EC (and the 0x40-scaled shadow gUnknown_03003F2C) to the
- * command's byte 1, anything else builds a unit through sub_08025C5C and
+ * command's byte 1, anything else builds a unit through CreateUnitAtNoRefresh and
  * stamps the command's bytes into it, clamped against that unit type's caps in
  * gUnknown_085D5ABC. The entry value of gUnknown_030033EC is saved in sl and
  * restored on the way out, so the whole table runs "as" whichever army each
  * 0xFE selects.
  *
  * The `if (u == NULL)` exit is a BREAK, not a return: the ROM branches to the
- * same block the loop guard does, and that block still runs sub_080258CC and
+ * same block the loop guard does, and that block still runs RebuildMapUnitLayers and
  * the restore.
  *
  * gUnknown_030033EC and gUnknown_03003F2C each get an agbcc `-fforce-addr`
@@ -70,7 +70,7 @@ void ApplyUnitSpawnTable(void *arg)
         }
         else
         {
-            u = sub_08025C5C(p->unk00, p->unk01, p->unk02);
+            u = CreateUnitAtNoRefresh(p->unk00, p->unk01, p->unk02);
             if (u == NULL)
                 break;
             u->hp = p->unk04;
@@ -94,7 +94,7 @@ void ApplyUnitSpawnTable(void *arg)
         p++;
     }
 
-    sub_080258CC();
+    RebuildMapUnitLayers();
     gUnknown_030033EC = saved;
     gUnknown_03003F2C = (gUnknown_030033EC - 1) * 0x40;
 }

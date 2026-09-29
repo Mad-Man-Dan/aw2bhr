@@ -20,7 +20,7 @@
  * first and the ROM has `movs r0,#0` first. The bounds are recomputed inside
  * the chain rather than bound to locals up front: locals hoist the second
  * `ldrh` above the first compare and cost the extra register copy. */
-int sub_08029DBC(int x, int y)
+int IsCellOnScreen(int x, int y)
 {
     if (x < (gMap->scrollX >> 4)
      || y < (gMap->scrollY >> 4)
@@ -30,3 +30,4 @@ int sub_08029DBC(int x, int y)
 
     return 1;
 }
+asm(".global sub_08029DBC\n.thumb_set sub_08029DBC, IsCellOnScreen\n");

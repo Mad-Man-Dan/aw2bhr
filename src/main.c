@@ -2,10 +2,11 @@
 #include "proc.h"
 #include "hardware.h"
 
-void sub_08036B28(void)
+void ClearMainLoopFrameMask(void)
 {
     gUnknown_030043F4 = 0;
 }
+asm(".global sub_08036B28\n.thumb_set sub_08036B28, ClearMainLoopFrameMask\n");
 
 void sub_08036B34(void)
 {
@@ -19,7 +20,7 @@ static void sub_08036B48(void)
         ;
 }
 
-void sub_08036B4C(void)
+void InitGameSystems(void)
 {
     gUnknown_030040A0 = 0;
     gUnknown_02028E40 = 0;
@@ -44,7 +45,7 @@ void sub_08036B4C(void)
     sub_080191B0();
     sub_08015184();
     Proc_Init();
-    sub_08035568();
+    ClearMoveSlideSlots();
     sub_08010F94();
     sub_08013434();
     sub_0801F4A4();
@@ -57,18 +58,19 @@ void sub_08036B4C(void)
     sub_08080F90(0);
     sub_0801F114();
 }
+asm(".global sub_08036B4C\n.thumb_set sub_08036B4C, InitGameSystems\n");
 
 void sub_08036C08(void)
 {
     sub_0801F018();
     sub_080366D0(sub_08036A50);
     sub_080366C4(sub_08036AB8);
-    sub_08036B28();
+    ClearMainLoopFrameMask();
 }
 
 void sub_08036C2C(void)
 {
-    sub_08036B4C();
+    InitGameSystems();
     sub_08036C08();
     Proc_Start(gUnknown_08553754, PROC_TREE_3);
     sub_08036B34();
@@ -77,20 +79,20 @@ void sub_08036C2C(void)
 void sub_08036C4C(void)
 {
     sub_0801F00C();
-    sub_08036B4C();
+    InitGameSystems();
     gUnknown_030032CC = 0xE28;
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
     sub_0806A454();
 }
 
 void sub_08036C80(void)
 {
     sub_0801F00C();
-    sub_08036B4C();
+    InitGameSystems();
     gUnknown_030032CC = 0xE28;
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
     sub_0806A454();
 }
 
@@ -144,7 +146,7 @@ void AgbMain(void)
     SetIRQHandler(0, sub_080366F4);
     flag = (keys & 0xF) != 0xF && keys == 0x214;
     if (flag)
-        sub_08036E54();
+        StartEraseSaveDataScreen();
     else
         sub_08036C4C();
     sub_0801BB10(2, 0x00012001);
@@ -172,12 +174,13 @@ void CheckSoftResetCombo(void)
 
 asm(".global sub_08036E18\n.thumb_set sub_08036E18, CheckSoftResetCombo\n");
 
-void sub_08036E54(void)
+void StartEraseSaveDataScreen(void)
 {
-    sub_08036B4C();
+    InitGameSystems();
     sub_0801B780(0);
     sub_080152EC(gUnknown_0849D1AC, 0);
 }
+asm(".global sub_08036E54\n.thumb_set sub_08036E54, StartEraseSaveDataScreen\n");
 
 void sub_08036E70(void)
 {
@@ -193,8 +196,8 @@ void sub_08036E70(void)
     sub_0801A5B0(0);
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);
     sub_08011B18();
-    sub_080366C4(sub_080368E8);
-    sub_080366D0(sub_08036884);
+    sub_080366C4(DefaultMainLoopCallback);
+    sub_080366D0(DefaultVBlankCallback);
 }
 
 void sub_08036F20(void)
@@ -255,11 +258,12 @@ void sub_08036F68(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7, u8 a8,
     Proc_Start(gUnknown_0849D3BC, PROC_TREE_3);
 }
 
-void sub_080370F0(void)
+void SetDefaultFrameCallbacks(void)
 {
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
 }
+asm(".global sub_080370F0\n.thumb_set sub_080370F0, SetDefaultFrameCallbacks\n");
 
 int sub_0803710C(void)
 {

@@ -12,7 +12,7 @@
  * read off the `lsls #0x10; lsrs #0x10` on the increment; the returned
  * value's `lsls #0x10; asrs #0x10` is the s16 return narrowing.
  */
-s16 sub_0803649C(void)
+s16 FindFreeMoveSlideSlot(void)
 {
     u16 i;
 
@@ -24,3 +24,4 @@ s16 sub_0803649C(void)
 
     return -1;
 }
+asm(".global sub_0803649C\n.thumb_set sub_0803649C, FindFreeMoveSlideSlot\n");

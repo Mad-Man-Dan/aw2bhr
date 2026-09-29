@@ -19,16 +19,16 @@ void AiChargeAggressively(void)
     else
         t = gUnknown_030040D8->unk00;
 
-    sub_08058F30(&x);
+    AiGetReachBudget(&x);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03, t, x, 0);
-    sub_08059AEC();
+    AiMarkAttackRings();
 
     if (sub_08058F90(&v) == -1)
         sub_0805F4F8();
     else if (gUnknown_085D5ABC[gUnknown_030040D8->unk00].deployLocation == 0x20)
         sub_080590DC(&v);
     else
-        sub_080591E4(&v);
+        AiAdvanceToward(&v);
 
     sub_0805F7B8();
 }
@@ -42,22 +42,22 @@ void AiMoveWithFrontLine(void)
     u8 x;
 
     p = gUnknown_03003F20;
-    sub_08058F30(&x);
+    AiGetReachBudget(&x);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, x, 0);
-    sub_08059AEC();
+    AiMarkAttackRings();
     if (gUnknown_085D5ABC[gUnknown_030040D8->unk00].deployLocation == 0x20)
-        sub_0805A008(p);
+        AiListUnescortedLanders(p);
     else
-        sub_08059F24(p);
+        AiListUnescortedFootUnits(p);
     v.pos.unk00 = 0x270F;
-    sub_08059C00(p, (u16 *)&v);
+    AiPopLastNearestCandidate(p, (u16 *)&v);
     if (v.pos.unk00 == 0x270F)
         sub_0805F4F8();
     gUnknown_03004730[gMap->unit[
         gMap->rowOffset[v.pos.unk02]
         + v.pos.unk00] & 0x3f]++;
-    sub_080591E4(&v);
+    AiAdvanceToward(&v);
     sub_0805F7B8();
 }
 
@@ -73,11 +73,11 @@ void sub_0805EE40(void)
     int b;
 
     p = gUnknown_03003F20;
-    sub_08058F30(&x);
+    AiGetReachBudget(&x);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, x, 0);
-    sub_08059AEC();
-    sub_08059A0C(p);
+    AiMarkAttackRings();
+    AiListEnemyPropertyCells(p);
     if (gUnknown_085D5ABC[gUnknown_030040D8->unk00].minRange > 1)
     {
         q = CountUnitsWithTypeTag(4);
@@ -91,10 +91,10 @@ void sub_0805EE40(void)
         b = 2;
     }
     v.pos.unk00 = 0x270F;
-    sub_08059B4C(q, a, b, p, &v);
+    AiAllocateTerritoryTarget(q, a, b, p, &v);
     if (v.pos.unk00 == 0x270F)
         sub_0805F4F8();
-    sub_080591E4(&v);
+    AiAdvanceToward(&v);
     sub_0805F7B8();
 }
 
@@ -107,7 +107,7 @@ void sub_0805EF00(void)
     int b;
 
     p = gUnknown_03003F20;
-    sub_08059A0C(p);
+    AiListEnemyPropertyCells(p);
     if (gUnknown_085D5ABC[gUnknown_030040D8->unk00].minRange > 1)
     {
         q = CountUnitsWithTypeTag(4);
@@ -121,10 +121,10 @@ void sub_0805EF00(void)
         b = 2;
     }
     v.pos.unk00 = 0x270F;
-    sub_08059B4C(q, a, b, p, &v);
+    AiAllocateTerritoryTarget(q, a, b, p, &v);
     if (v.pos.unk00 == 0x270F)
         sub_0805F4F8();
-    sub_080591E4(&v);
+    AiAdvanceToward(&v);
     sub_0805F7B8();
 }
 
@@ -135,20 +135,20 @@ void sub_0805EF9C(void)
     u8 x;
 
     p = gUnknown_03003F20;
-    sub_08058F30(&x);
+    AiGetReachBudget(&x);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, x, 0);
-    sub_08059AEC();
+    AiMarkAttackRings();
     sub_08059C60(p);
     v.pos.unk00 = 0x270F;
-    sub_08059C00(p, (u16 *)&v);
+    AiPopLastNearestCandidate(p, (u16 *)&v);
     if (v.pos.unk00 == 0x270F)
         sub_0805F4F8();
     else if ((s8)gUnknown_03003340[v.pos.unk02][v.pos.unk00] <= 0x79)
-        sub_080591E4(&v);
-    sub_0801F92C(gMap->danger);
+        AiAdvanceToward(&v);
+    SetWorkingMapPlane(gMap->danger);
     gUnknown_030013EC(v.pos.unk00, v.pos.unk02, 0x10, 0x78, 0);
-    sub_08059464(&v);
+    AiAdvanceTowardUnseeded(&v);
     sub_0805F7B8();
 }
 
@@ -159,16 +159,16 @@ void AiMoveUpConservatively(void)
     u8 x;
 
     p = gUnknown_03003F20;
-    sub_08058F30(&x);
+    AiGetReachBudget(&x);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, x, 0);
-    sub_08059AEC();
-    sub_08059E3C(p);
+    AiMarkAttackRings();
+    AiListThreatenedProperties(p);
     v.pos.unk00 = 0x270F;
-    sub_08059C00(p, (u16 *)&v);
+    AiPopLastNearestCandidate(p, (u16 *)&v);
     if (v.pos.unk00 == 0x270F)
         sub_0805EF00();
-    sub_080591E4(&v);
+    AiAdvanceToward(&v);
     sub_0805F7B8();
 }
 

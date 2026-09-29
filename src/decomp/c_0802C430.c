@@ -48,7 +48,7 @@ void sub_0802C430(struct Unk2C430Proc *proc)
     sub_08024268();
     sub_08013C00();
     sub_08013AEC();
-    sub_08037678();
+    HideMapPreview();
     proc->unk1e = 6;
 }
 

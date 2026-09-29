@@ -22,8 +22,8 @@
 void sub_0805FF64(void)
 {
     sub_08035584(gUnknown_030040D8);
-    sub_080258CC();
-    sub_0803442C(gUnknown_030046CC, gUnknown_03003110);
+    RebuildMapUnitLayers();
+    UnpackPathNibbles(gUnknown_030046CC, gUnknown_03003110);
     sub_08025BB4(gUnknown_03003110);
     gUnknown_030045D4 = 2;
 }

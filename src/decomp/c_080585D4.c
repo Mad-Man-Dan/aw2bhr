@@ -10,7 +10,7 @@
 
 /* Weighted count over the whole map: every passable cell (gUnknown_03003340
  * non-negative as an s8) whose terrain byte is accepted by gUnknown_085767D5
- * and which sub_08026FD0 does not reject scores 0x1e if its terrain code is
+ * and which IsTerrainOwnedByUnitsTeam does not reject scores 0x1e if its terrain code is
  * exactly 8 and 1 otherwise.
  *
  * The clean gMap field spelling is byte-exact here: the repeated
@@ -33,7 +33,7 @@ int sub_080585D4(void)
             {
                 off = gMap->rowOffset[y] + x;
                 if (gUnknown_085767D5[gMap->terrain[off] & 0x1f] != 0
-                    && sub_08026FD0(gUnknown_03003F38, gMap->terrain[off]) == 0)
+                    && IsTerrainOwnedByUnitsTeam(gUnknown_03003F38, gMap->terrain[off]) == 0)
                 {
                     off = gMap->rowOffset[y] + x;
                     if ((gMap->terrain[off] & 0x1f) == 8)

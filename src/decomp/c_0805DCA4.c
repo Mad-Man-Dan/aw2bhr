@@ -23,10 +23,10 @@ void sub_0805DCA4(void)
         switch (p->unk00)
         {
         case 7:
-            sub_08059760();
+            AiDeliberateApcPickup();
             break;
         case 0x14:
-            sub_08059824();
+            AiDeliberateTCopterPickup();
             break;
         }
     }

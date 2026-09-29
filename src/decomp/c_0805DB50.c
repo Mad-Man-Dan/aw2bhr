@@ -18,7 +18,7 @@ void sub_0805DB50(void)
 {
     sub_0805E5AC();
     sub_0805E718();
-    sub_0805F4CC();
+    AiRunRoleMove();
 }
 
 /* Family F001 forwarder, 12 bytes:
@@ -35,5 +35,5 @@ void sub_0805DB50(void)
  */
 void sub_0805DB64(void)
 {
-    sub_0805AC88();
+    AiClearEscortTally();
 }

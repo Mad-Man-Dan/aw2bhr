@@ -8,7 +8,7 @@
  * sub_080353E8 @ 0x080353E8
  */
 
-void sub_080353E8(void)
+void UpdateRainParticles(void)
 {
     s16 i;
     s16 j;
@@ -32,3 +32,4 @@ void sub_080353E8(void)
                      0);
     }
 }
+asm(".global sub_080353E8\n.thumb_set sub_080353E8, UpdateRainParticles\n");

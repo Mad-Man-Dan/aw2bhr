@@ -82,7 +82,7 @@ void sub_08057860(u16 *dst, int i, struct Unk8057Pos *pos)
     b = (pos->x + q->unk00) + ((pos->y + q->unk01) << 5);
     n = Div(gUnknown_03004580[j][7], 10);
 
-    if (GetPlayerSpecialAbilities(sub_08027198(gUnknown_03004580[j][0] + 1)) & 0x20)
+    if (GetPlayerSpecialAbilities(GetArmyByTeamColor(gUnknown_03004580[j][0] + 1)) & 0x20)
     {
         k = n - (n >> 1);
         m = k;

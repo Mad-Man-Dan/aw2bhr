@@ -21,5 +21,5 @@
  */
 void sub_08028EE4(void)
 {
-    sub_08022A08();
+    HideRangeOverlay();
 }

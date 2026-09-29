@@ -7,7 +7,7 @@
  * sub_08041F38 @ 0x08041F38, sub_08041FE0 @ 0x08041FE0
  */
 
-/* Probes the four cells around (x, y) with sub_08041EA8 and returns a
+/* Probes the four cells around (x, y) with IsCellOpenForDrop and returns a
  * direction bitmask: 4 = left, 8 = right, 1 = up, 2 = down.
  *
  * `r` is initialised BEFORE the `id == 0` test, not after the unit lookup --
@@ -17,7 +17,7 @@
  *
  * unit->type is re-loaded before each of the four calls: gUnits is
  * not const, so every `bl` kills the MEM. */
-u8 sub_08041F38(int x, int y, int id)
+u8 GetDropDirectionMask(int x, int y, int id)
 {
     struct Unit *unit;
     u8 r;
@@ -29,20 +29,21 @@ u8 sub_08041F38(int x, int y, int id)
 
     unit = &gUnits[id];
 
-    if (sub_08041EA8(x - 1, y, unit->type) == 1)
+    if (IsCellOpenForDrop(x - 1, y, unit->type) == 1)
         r |= 4;
 
-    if (sub_08041EA8(x + 1, y, unit->type) == 1)
+    if (IsCellOpenForDrop(x + 1, y, unit->type) == 1)
         r |= 8;
 
-    if (sub_08041EA8(x, y - 1, unit->type) == 1)
+    if (IsCellOpenForDrop(x, y - 1, unit->type) == 1)
         r |= 1;
 
-    if (sub_08041EA8(x, y + 1, unit->type) == 1)
+    if (IsCellOpenForDrop(x, y + 1, unit->type) == 1)
         r |= 2;
 
     return r;
 }
+asm(".global sub_08041F38\n.thumb_set sub_08041F38, GetDropDirectionMask\n");
 
 /* The same army-number idiom the matched sub_0804203C uses one function over:
  * `(p - gUnits) >> 6` is the exact division by the 0x0c stride

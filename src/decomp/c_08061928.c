@@ -11,7 +11,7 @@
  * header is copied verbatim from the record selected DIRECTLY by a2, and the
  * 24 following 0xc-byte rows are the byte-wise sum of that record and the one
  * selected through gUnknown_0857690C[a3][gPlayers[a4].unk1d]. Both
- * strides are the `((x*4+x)*4-x)*16` synthesis of *0x130 that sub_08061788
+ * strides are the `((x*4+x)*4-x)*16` synthesis of *0x130 that AiLoadPersonality
  * already uses, so indexing gUnknown_085771C4[] directly reproduces them.
  *
  * The 0x10 unrolled byte pairs and the 0xc-wide loop body are SOURCE-LEVEL,

@@ -18,7 +18,7 @@
  * and 87 alone, and the surviving block order in the ROM -- 0, 1, 3, 6, 7, 4,
  * 5, 2, 3 -- is exactly what that partial merge leaves behind. Writing the
  * duplicates as shared case labels instead gives a different order. */
-void sub_08021DD8(void)
+void UpdateTerrainAnimation(void)
 {
     if (sub_08011BD4() <= 0x1000)
     {
@@ -95,3 +95,4 @@ void sub_08021DD8(void)
         }
     }
 }
+asm(".global sub_08021DD8\n.thumb_set sub_08021DD8, UpdateTerrainAnimation\n");

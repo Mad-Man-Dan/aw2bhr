@@ -75,9 +75,9 @@ void sub_08000694(void)
     }
 
     case 70:
-        sub_08023824();
+        HandleMoveMapCursor();
         sub_08023518();
-        sub_08023908(8);
+        HandleMoveCameraWithMapCursor(8);
         if (gpKeySt->pressed & (A_BUTTON | B_BUTTON | START_BUTTON))
         {
             gActiveMap->state = 80;

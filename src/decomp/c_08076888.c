@@ -83,8 +83,8 @@ void sub_08076888(ProcPtr proc)
 
     list = (u16 *)&gUnknown_0202FDFC.unk3c;
 
-    sub_080366D0(sub_08036884);
-    sub_080366C4(sub_080368E8);
+    sub_080366D0(DefaultVBlankCallback);
+    sub_080366C4(DefaultMainLoopCallback);
     sub_08012C58(gUnknown_08614548);
 
     gDispIo.disp_ct.bg0_enable = 1;

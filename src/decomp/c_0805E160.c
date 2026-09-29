@@ -26,7 +26,7 @@
  * never runs, and all of it comes back at once.  This is exactly the
  * measurement recorded on sub_0805B778 (wave 51, W51-E), which is this
  * function's twin: same scratch cell, same 0x270F seed, same
- * gUnknown_03003340 / sub_08058224 / sub_080591E4 tail.
+ * gUnknown_03003340 / GetUnitMovementBudget / AiAdvanceToward tail.
  *
  * _call_via_r4 here is a FIVE-argument indirect call, not a four-argument one:
  * r4 is callee-saved, so the register index is not an arity readout (W46-D).
@@ -36,12 +36,12 @@
  *
  * struct Unk5A514Cell is repeated here rather than declared in a shared header
  * because src/decomp/c_0805A268.c, c_0805A514.c and c_0805A744.c all define it
- * file-locally; sub_0805A514's promoted definition takes it, so the cast on
+ * file-locally; AiListEmbarkBoundUnits's promoted definition takes it, so the cast on
  * gUnknown_03003F20 is what keeps this unit in agreement with that definition.
- * See the note at sub_0805A5E0 in include/unknown-functions.h.
+ * See the note at AiPickSupplyWard in include/unknown-functions.h.
  *
  * Uses `gMap` (include/map.h) for the +0x12/+0x417A reads, but the
- * `sub_0801F92C` setup call must pass `gMap->move` (the plane's own array
+ * `SetWorkingMapPlane` setup call must pass `gMap->move` (the plane's own array
  * member, decays to `u8 *`), not `gUnknown_08499590 + 0x2852` or a cast --
  * agbcc's CSE only reuses a pointer load across identical symbols, so mixing
  * in the raw name anywhere forces a second pool load and breaks the match
@@ -53,7 +53,7 @@ struct Unk5A514Cell
     /* 0x01 */ u8 y;
     /* 0x02 */ s16 v;
 };
-void sub_0805A514(struct Unk5A514Cell *);
+void AiListEmbarkBoundUnits(struct Unk5A514Cell *);
 struct CellXY
 {
     /* 0x00 */ u16 x;
@@ -67,31 +67,31 @@ void sub_0805E160(void)
     u8 r;
 
     list = gUnknown_03003F20;
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
 
     if ((gUnknown_030040D8->unk07[2] & 0xc0) == 0)
     {
         gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                           gUnknown_030040D8->unk00, 0x78, 1);
         sub_0801FD9C(0x79);
-        sub_0805A514((struct Unk5A514Cell *)list);
+        AiListEmbarkBoundUnits((struct Unk5A514Cell *)list);
     loop:
         pos.x = 0x270F;
-        sub_08059C00(list, (u16 *)&pos);
+        AiPopLastNearestCandidate(list, (u16 *)&pos);
         if (pos.x == 0x270F)
         {
             sub_0805E2AC();
             return;
         }
         gUnknown_03004730[gMap->unit[gMap->rowOffset[pos.y] + pos.x] & 0x3f]++;
-        r = sub_0805ACA8(pos.x, pos.y, (u16 *)&pos);
+        r = AiPickShoalParkBeside(pos.x, pos.y, (u16 *)&pos);
         if (r != 1)
             goto loop;
 
         gUnknown_030013EC(pos.x, pos.y, gUnknown_030040D8->unk00, 0x78, 1);
 
-        if ((s8)gUnknown_03003340[gUnknown_030040D8->unk03][gUnknown_030040D8->unk02] > sub_08058224((struct Unit *)gUnknown_030040D8))
-            sub_080591E4(&pos);
+        if ((s8)gUnknown_03003340[gUnknown_030040D8->unk03][gUnknown_030040D8->unk02] > GetUnitMovementBudget((struct Unit *)gUnknown_030040D8))
+            AiAdvanceToward(&pos);
         else
             sub_0805D648(pos.x, pos.y, 2, 0, 0);
     }

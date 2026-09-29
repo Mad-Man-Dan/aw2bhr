@@ -8,10 +8,10 @@
  * sub_080225CC @ 0x080225CC
  */
 
-/* The gBG2TilemapBuffer twin of sub_080223E0 -- same 2x2 block, same address
+/* The gBG2TilemapBuffer twin of ClearUnitTileQuadAt -- same 2x2 block, same address
  * form (see the comment there), but filled with 0x360, the same value
  * sub_08013CA8 clears that whole tilemap to. */
-void sub_080225CC(u16 x, u16 y)
+void ClearUnitIconTileQuadAt(u16 x, u16 y)
 {
     int cx;
     int cy;
@@ -24,3 +24,4 @@ void sub_080225CC(u16 x, u16 y)
     *(gBG2TilemapBuffer + cx * 2 + cy * 64 + 0x20) = 0x360;
     *(gBG2TilemapBuffer + cx * 2 + cy * 64 + 0x21) = 0x360;
 }
+asm(".global sub_080225CC\n.thumb_set sub_080225CC, ClearUnitIconTileQuadAt\n");

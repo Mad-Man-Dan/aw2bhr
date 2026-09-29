@@ -15,7 +15,8 @@
  * build it). The wave-23 "non-minimal shift means a named constant local" rule
  * does not apply to agbcc's own constant synthesiser here: writing 0xa20
  * directly reproduces the shift of 4 exactly. */
-void *sub_080364C4(void)
+void *AllocMoveSlideGfxBuffer(void)
 {
     return sub_08014E44(0xa20);
 }
+asm(".global sub_080364C4\n.thumb_set sub_080364C4, AllocMoveSlideGfxBuffer\n");

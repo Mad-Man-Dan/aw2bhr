@@ -8,7 +8,7 @@
  */
 
 /* The setter half of the sub_0803CA70 pair, and the same body as the promoted
- * sub_0803C8F0 with the bit id mapped through sub_080206B0 first.
+ * sub_0803C8F0 with the bit id mapped through FindMapIdByMapData first.
  *
  * The `s = &gUnknown_02028030` assignment must come AFTER the call, and this is
  * measured: written before it, agbcc keeps the address live across the `bl` in
@@ -24,7 +24,7 @@ void sub_0803C91C(u32 id, u8 value)
     u8 *p;
     u32 bit;
 
-    k = sub_080206B0(id);
+    k = FindMapIdByMapData(id);
     s = &gUnknown_02028030;
     idx = k >> 3;
     b = s->unk12;

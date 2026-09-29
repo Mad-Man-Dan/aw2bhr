@@ -83,7 +83,7 @@ u8 sub_0805B8F4(u16 *outp)
 
     out = (struct CellXY *)outp;
     p = (struct Unk5B980Cell *)gUnknown_03003F20;
-    limit = sub_08058224((struct Unit *)gUnknown_030040D8);
+    limit = GetUnitMovementBudget((struct Unit *)gUnknown_030040D8);
     out->x = 0x270F;
 
     while (p->v != -1)
@@ -103,7 +103,7 @@ u8 sub_0805B8F4(u16 *outp)
     p = (struct Unk5B980Cell *)gUnknown_03003F20;
 
     if (out->x == 0x270F)
-        sub_08059C00(p, (u16 *)out);
+        AiPopLastNearestCandidate(p, (u16 *)out);
 
     return 0;
 }

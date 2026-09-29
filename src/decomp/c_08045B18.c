@@ -9,7 +9,7 @@
 
 int sub_08045B18(void)
 {
-    if (sub_08044374(1) == 1)
+    if (GetCoPowerUseCount(1) == 1)
         return 1;
 
     return 0;

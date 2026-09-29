@@ -16,7 +16,7 @@
  * (`ldrh r2,[r2,#2]`). A plain `for` whose condition names the global reloads it
  * at the bottom -- the `strh` kills the cached pointer load -- which is one
  * instruction too many. */
-void sub_080215FC(void)
+void InitMapRowOffsets(void)
 {
     struct Map *map;
     u8 i;
@@ -34,3 +34,4 @@ void sub_080215FC(void)
         while (i < map->height);
     }
 }
+asm(".global sub_080215FC\n.thumb_set sub_080215FC, InitMapRowOffsets\n");

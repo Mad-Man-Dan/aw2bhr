@@ -7,7 +7,7 @@
  * sub_08019940 @ 0x08019940
  */
 
-/* Run sub_08028874 for every army 1..4 whose gPlayers[i].unk2a
+/* Run RecordArmyDefeat for every army 1..4 whose gPlayers[i].unk2a
  * differs from army `a`'s and which passes IsPlayerAliveAndActive, then close out with
  * FinalizeBattleResult and post mode 0x12.
  *
@@ -29,7 +29,7 @@ void sub_08019940(u8 a, u8 b)
     {
         if (gPlayers[i].team != gPlayers[a].team
          && IsPlayerAliveAndActive(i))
-            sub_08028874(i, b);
+            RecordArmyDefeat(i, b);
     }
     FinalizeBattleResult();
     gUnknown_030032D8 = 0x12;

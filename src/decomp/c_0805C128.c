@@ -15,7 +15,7 @@
 /* MATCHED (wave 52, W52-C) -- 152/152 bytes, relocs match.
  *
  * The 0x0805C block's own accept-a-cell predicate, the same skeleton as
- * sub_08058E88 with a different filter: the cell must be EMPTY (+0x12 is 0
+ * AiCheckDropNeighbour with a different filter: the cell must be EMPTY (+0x12 is 0
  * rather than "mine or neutral"), its gUnknown_03003340 byte non-negative, and
  * its terrain code neither 0x0b nor 0x0d. Cells whose gUnknown_085767D5 entry
  * is set must additionally carry gUnknown_03004084 in the top three bits of the
@@ -38,7 +38,7 @@
  * use of a one-reference pseudo, which flips the tie. Same instruction count,
  * same schedule; the binding is worth 2 bytes and nothing else.
  *
- * Corroborated independently in the same batch: sub_08059E3C has the identical
+ * Corroborated independently in the same batch: AiListThreatenedProperties has the identical
  * `& 0x1f` / `& 0xe0` pair on the same plane byte and shows the same flip --
  * naming the member twice gives `ands r0, r1` (the ROM), binding it to a `u8`
  * local gives `ands r1, r0`. Two functions, same lever, opposite of the note

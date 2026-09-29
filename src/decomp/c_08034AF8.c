@@ -17,38 +17,38 @@
  * gGameClock is declared s32 but the division is `__udivsi3`/`__umodsi3`,
  * so the source read it unsigned; the cast is on the read rather than a retype
  * of the global, which a dozen other files share. */
-void sub_08034AF8(void)
+void MapState_TurnHandoverPrompt(void)
 {
     if (ShouldPromptCountryName())
     {
-        sub_08034A7C(0x4e, gPlayers[sub_08026704(gUnknown_030033EC)].teamColor);
+        sub_08034A7C(0x4e, gPlayers[GetNextActiveArmy(gUnknown_030033EC)].teamColor);
         switch (gUnknown_02028E40)
         {
         case 0:
-            sub_08034A58(0x38, gUnknown_08090DA4);
-            sub_08034A58(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
+            PutCenteredAsciiStringSprites(0x38, gUnknown_08090DA4);
+            PutCenteredAsciiStringSprites(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
                          gUnknown_08090DB0);
             break;
         case 1:
-            sub_08034A58(0x38, gUnknown_08090DC0);
-            sub_08034A58(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
+            PutCenteredAsciiStringSprites(0x38, gUnknown_08090DC0);
+            PutCenteredAsciiStringSprites(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
                          gUnknown_08090DD0);
             break;
         case 2:
-            sub_08034A58(0x38, gUnknown_08090DE0);
-            sub_08034A58(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
+            PutCenteredAsciiStringSprites(0x38, gUnknown_08090DE0);
+            PutCenteredAsciiStringSprites(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
                          gUnknown_08090DF0);
             break;
         case 3:
-            sub_08034A58(0x30, gUnknown_08090E04);
-            sub_08034A58(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
+            PutCenteredAsciiStringSprites(0x30, gUnknown_08090E04);
+            PutCenteredAsciiStringSprites(gUnknown_08090D90[(u32)gGameClock / 3 % 10] + 0x68,
                          gUnknown_08090E14);
             break;
         }
         if ((gpKeySt->pressed & 1) == 0)
             return;
     }
-    sub_08026768();
+    AdvanceToNextActiveArmy();
     sub_080268F4();
     ClearPlayerCoPowerStatus(gUnknown_030033EC);
     sub_08024268();
@@ -59,3 +59,4 @@ void sub_08034AF8(void)
     sub_0803B5E8();
     gUnknown_030032D8 = 4;
 }
+asm(".global sub_08034AF8\n.thumb_set sub_08034AF8, MapState_TurnHandoverPrompt\n");

@@ -8,7 +8,7 @@
  * sub_0805B980 @ 0x0805B980, sub_0805BA34 @ 0x0805BA34, sub_0805BAFC @ 0x0805BAFC, sub_0805BB8C @ 0x0805BB8C, sub_0805BBF8 @ 0x0805BBF8
  */
 
-/* sub_08059A0C's shape without the predicate call and without the count: fills
+/* AiListEnemyPropertyCells's shape without the predicate call and without the count: fills
  * the gUnknown_03003F20 scratch list with {x, y, terrain} for every passable
  * map cell whose byte in the 0x3C72 plane is non-zero, and terminates it with a
  * 0xFFFF value halfword. Nothing is returned -- `pop {r0}; bx r0` with no value

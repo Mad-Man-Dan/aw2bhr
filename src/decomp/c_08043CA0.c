@@ -25,7 +25,7 @@
  * `u8 n` and `u8 i` are both hard: every increment is `adds #1; lsls #0x18;
  * lsrs #0x18`, and the loop bound reads `cmp r5,#0x12; bls` (unsigned <= 18).
  */
-u8 sub_08043CA0(void)
+u8 BuildUnlockedCoList(void)
 {
     u8 n;
     u8 i;
@@ -39,12 +39,13 @@ u8 sub_08043CA0(void)
     gUnknown_020288A0[n] = 0xff;
     return n;
 }
+asm(".global sub_08043CA0\n.thumb_set sub_08043CA0, BuildUnlockedCoList\n");
 
 /* MATCHED (wave 37, W37-Q4), one attempt.
  * Needs "rodata": ["0x08091380"] in data/promoted.json (the force-addr word
- * holding &gUnknown_020288A0 -- same block as sub_08043CA0's two).
+ * holding &gUnknown_020288A0 -- same block as BuildUnlockedCoList's two).
  *
- * Takes sub_08043CA0's unlocked-CO list and DOUBLES it in place until it is
+ * Takes BuildUnlockedCoList's unlocked-CO list and DOUBLES it in place until it is
  * longer than six, so the carousel always has enough entries to scroll.
  *
  * `(u8)(n - 1) <= 5` is gcc's range test for `n != 0 && n <= 6` on an
@@ -60,7 +61,7 @@ void sub_08043D00(void)
     u8 n;
     u8 k;
 
-    n = sub_08043CA0();
+    n = BuildUnlockedCoList();
     while ((u8)(n - 1) <= 5)
     {
         for (k = 0; k < n; k++)

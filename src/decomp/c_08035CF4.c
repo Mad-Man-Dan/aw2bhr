@@ -10,13 +10,14 @@
 /* The `adds r0, #0x2c` ahead of the `ldrb` is the THUMB ldrb displacement limit
  * (0-31), not an address being taken. */
 /* Wave 37 (W37-H): retyped `int (void)` -> `u8 (ProcPtr)`. The one caller
- * sub_08035D0C loads r0 with the proc immediately before the `bl` (so the
+ * GetMoveSlideFootstepSfx loads r0 with the proc immediately before the `bl` (so the
  * argument is real, even though this body ignores it) and narrows the result
  * with `lsls r0,#0x18`. Byte-exact before and after. */
-u8 sub_08035CF4(ProcPtr proc)
+u8 IsWeatherSnowing(ProcPtr proc)
 {
     if (gPlaySt.weather == 1)
         return 1;
 
     return 0;
 }
+asm(".global sub_08035CF4\n.thumb_set sub_08035CF4, IsWeatherSnowing\n");

@@ -24,13 +24,13 @@ void sub_0802CFFC(void)
     LockUnitSelection();
     CloseTopMenu();
     sub_0802C57C();
-    sub_080424FC();
+    CommitUnitMove();
     sub_0802C594();
 
     if (gPlaySt.savingEnabled != 0)
     {
         if (gUnknown_030033E8[0] == 0 && gUnknown_030033E8[1] == 0)
-            sub_08034534(2, gUnknown_03003F38, 0, 0);
+            SendActionCommand(2, gUnknown_03003F38, 0, 0);
         else
             sub_080344B4(gUnknown_03003F38, gUnknown_030033E8[0], gUnknown_030033E8[1]);
     }

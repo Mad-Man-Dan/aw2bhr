@@ -8,14 +8,14 @@
  * sub_0805A744 @ 0x0805A744
  */
 
-/* Consumes the cell list sub_0805A514 (src/decomp/c_0805A514.c) produces:
+/* Consumes the cell list AiListEmbarkBoundUnits (src/decomp/c_0805A514.c) produces:
  * seeds the map's 0x3C72 plane to 0x7F, redraws the 0x2852 plane, then for each
  * listed cell drives the gUnknown_030013EC hook and floods the 0x3C72 plane
  * with that cell's threat value wherever the terrain code is 0xd or 0xb and the
  * value beats what is already there.
  *
  * THE RECORD TYPE IS SETTLED BY A PRODUCER/CONSUMER PAIR, not by guesswork --
- * the wave brief's one real oracle for a byte-neutral type. sub_0805A514 writes
+ * the wave brief's one real oracle for a byte-neutral type. AiListEmbarkBoundUnits writes
  * {u8 x; u8 y; s16 v;} records and terminates the array with `out->v = 0xFFFF`;
  * this function walks the same 4-byte stride and stops on `v == -1`. Same
  * struct, declared here rather than shared because it describes only a pointer
@@ -50,7 +50,7 @@ void sub_0805A744(struct Unk5A514Cell *p)
     int off;
 
     sub_080581A4(gMap->unk3C72, 0x7f);
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
 
     while (p->v != -1)
     {

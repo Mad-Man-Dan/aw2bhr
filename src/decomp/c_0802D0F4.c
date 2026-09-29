@@ -8,7 +8,7 @@
  */
 
 /* The same frame-entry shape as c_0802CFFC.c -- open with LockUnitSelection and
- * CloseTopMenu, close with the sub_0802C57C / sub_080424FC / sub_0802C594
+ * CloseTopMenu, close with the sub_0802C57C / CommitUnitMove / sub_0802C594
  * bracket -- with a different middle and one extra call (sub_08042998) in the
  * tail.
  *
@@ -42,11 +42,11 @@ void sub_0802D0F4(void)
         }
 
         if (gPlaySt.savingEnabled != 0)
-            sub_08034534(0xa, gUnknown_03003F38, 0, 0);
+            SendActionCommand(0xa, gUnknown_03003F38, 0, 0);
     }
 
     sub_0802C57C();
     sub_08042998();
-    sub_080424FC();
+    CommitUnitMove();
     sub_0802C594();
 }

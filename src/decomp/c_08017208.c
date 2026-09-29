@@ -65,7 +65,7 @@ struct SaveBlk
  *   2. The map's size and scroll position are restored, and the camera
  *      position is recomputed as the scroll position divided by 16.
  *   3. Unless the map ID is one of 0xb4..0xbf, rebuild the map: sub_0802490C
- *      and sub_08024944 for its header word and its name, LoadMapData for its
+ *      and GetMapName for its header word and its name, LoadMapData for its
  *      tiles, then copy the pristine tiles at gUnknown_03003F68 into the live
  *      map and replay the difference list at .unk0bb8 over the top, stopping
  *      at the record whose tile is 0xffff.
@@ -135,9 +135,9 @@ void RestoreBattleSaveState(void)
     {
         gMap->unk4233 = sub_0802490C(gPlaySt.mapID);
         CopyString(gMap->unk421a,
-                     sub_08024944(gPlaySt.mapID));
+                     GetMapName(gPlaySt.mapID));
         LoadMapData(gPlaySt.mapID);
-        sub_080215FC();
+        InitMapRowOffsets();
         for (y = 0; y < gMap->width; y++)
         {
             for (x = 0; x < gMap->height; x++)

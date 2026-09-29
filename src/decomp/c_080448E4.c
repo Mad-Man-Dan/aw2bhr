@@ -15,7 +15,7 @@ struct UnkP448E4
     /* 66 */ s16 unk66;
 };
 
-/* Look up a unit id and, if there is one, report its cell to sub_08029088.
+/* Look up a unit id and, if there is one, report its cell to ScrollCameraToKeepCellInView.
  *
  * The guard tests the RETURN VALUE, not the field: the `cmp r0,#0` reuses the
  * byte sub_0805C290 handed back, whereas the index a few instructions later is
@@ -34,6 +34,6 @@ void sub_080448E4(struct UnkP448E4 *proc)
     proc->unk66 = id;
     if (id != 0) {
         e = &gUnits[proc->unk66];
-        sub_08029088(e->x, e->y);
+        ScrollCameraToKeepCellInView(e->x, e->y);
     }
 }

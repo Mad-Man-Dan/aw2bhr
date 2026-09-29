@@ -16,7 +16,7 @@
  * constant to the base first, then the index -- and costs far more than the
  * tail below. `gMap` is named directly at every use rather than bound to a
  * local: the ROM keeps only its ADDRESS in sl and re-loads the pointer each
- * time. The two `sub_0801F92C`/`sub_080581A4` setup calls must also pass
+ * time. The two `SetWorkingMapPlane`/`sub_080581A4` setup calls must also pass
  * `gMap->move` / `gMap->unk376A` (the plane's own array member, decays to
  * `u8 *`), not `gUnknown_08499590 + offset` or a cast -- agbcc's CSE only
  * reuses a pointer load across identical symbols, and mixing in the raw name
@@ -63,7 +63,7 @@ void sub_08061B4C(void)
     int k;
     u8 c;
 
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
     sub_080581A4(gMap->unk376A, 0);
 
     for (i = 0; gUnknown_084995A0[i].unk00 != 0xFF; i++)
@@ -72,7 +72,7 @@ void sub_08061B4C(void)
                           + gUnknown_084995A0[i].unk01] & 0x1F) == 0x13)
             continue;
 
-        if (sub_08026FD0(gUnknown_03003F2C,
+        if (IsTerrainOwnedByUnitsTeam(gUnknown_03003F2C,
                          MAP->terrain[MAP->rowOffset[gUnknown_084995A0[i].unk02]
                                       + gUnknown_084995A0[i].unk01]) == 1)
             continue;
@@ -80,7 +80,7 @@ void sub_08061B4C(void)
         c = gMap->unit[MAP->rowOffset[gUnknown_084995A0[i].unk02]
                          + gUnknown_084995A0[i].unk01];
 
-        if (c != 0 && sub_08026F9C(gUnknown_03003F2C, c) == 1
+        if (c != 0 && AreUnitsOnSameTeam(gUnknown_03003F2C, c) == 1
             && (*(u = &gUnits[c])).type <= 2)
             continue;
 

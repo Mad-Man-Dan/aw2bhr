@@ -28,14 +28,14 @@ void sub_0803486C(void)
 {
     gUnknown_03003338 = gUnknown_0849FE74[0];
     gUnknown_03003F20 = gUnknown_03003338;
-    sub_080215D0();
+    LoadTileTerrainTable();
 }
 
 void sub_08034890(void)
 {
     InitGameSettings();
-    sub_0802163C(gPlaySt.mapID);
+    LoadMapIntoGMap(gPlaySt.mapID);
     sub_08021598();
     sub_080215B8();
-    sub_080267AC();
+    StartArmyTurn();
 }

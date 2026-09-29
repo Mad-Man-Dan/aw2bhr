@@ -20,7 +20,7 @@ void sub_08034DF8(void)
     if (gPlaySt.savingEnabled == 0
      || gPlayers[gUnknown_030033EC].aiControlled == 1)
     {
-        sub_08029088(gPlayers[gUnknown_030033EC].cursorX,
+        ScrollCameraToKeepCellInView(gPlayers[gUnknown_030033EC].cursorX,
                      gPlayers[gUnknown_030033EC].cursorY);
     }
 

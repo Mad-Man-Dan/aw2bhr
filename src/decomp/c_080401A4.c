@@ -24,5 +24,5 @@ struct Unk401A4Proc
  * addresses; read that one for the derivation. */
 void sub_080401A4(struct Unk401A4Proc *p)
 {
-    sub_08029088(p->unk4c->unk02, p->unk4c->unk03);
+    ScrollCameraToKeepCellInView(p->unk4c->unk02, p->unk4c->unk03);
 }

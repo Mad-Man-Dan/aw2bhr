@@ -7,7 +7,8 @@
  * sub_08027180 @ 0x08027180
  */
 
-void sub_08027180(int a1)
+void ResetPlayerUnitsLost(int a1)
 {
     gPlayers[a1].unitsLost = 0;
 }
+asm(".global sub_08027180\n.thumb_set sub_08027180, ResetPlayerUnitsLost\n");

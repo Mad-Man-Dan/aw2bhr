@@ -20,9 +20,9 @@
  *
  *     s8 n;
  *     s8 m;          <- ADDED
- *     n = sub_08038960(unk00, unk02);
+ *     n = FindMovePathStep(unk00, unk02);
  *     m = n;         <- ADDED
- *     if (n != -1) { sub_080386EC((s8)(m + 1)); ... }
+ *     if (n != -1) { TruncateMovePath((s8)(m + 1)); ... }
  *
  * SPOT 1 (6 bytes) was W86-C's rule "TWO EXTENSIONS OF ONE VALUE OFF ONE lsls
  * MEANS TWO SOURCE LOCALS" (docs/agbcc-codegen.md).  Wave 60 measured five
@@ -80,7 +80,7 @@ struct Unk38848Map
     /* 0x417A */ u16 rowOffset[1];
 };
 
-void sub_08038D7C(void)
+void UpdateMovePathToCursor(void)
 {
     struct Unk38848Map *map;
     s8 *costs;
@@ -103,12 +103,12 @@ void sub_08038D7C(void)
     if (v == -1)
         return;
 
-    n = sub_08038960(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
+    n = FindMovePathStep(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
     m = n;
 
     if (n != -1)
     {
-        sub_080386EC((s8)(m + 1));
+        TruncateMovePath((s8)(m + 1));
         gUnknown_03004074 = gUnknown_0849D5F8->unk38[0xc]
             - gUnknown_0849D5F8->unk38[gUnknown_0849D5F8->unk45];
         return;
@@ -141,31 +141,32 @@ void sub_08038D7C(void)
                 && gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45]
                        == gUnknown_030033E4.unk00)))
     {
-        sub_08038848(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
+        PushMovePathStep(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
         gUnknown_03004074 = gUnknown_0849D5F8->unk38[0xc]
             - gUnknown_0849D5F8->unk38[gUnknown_0849D5F8->unk45];
         return;
     }
 
     if (gUnknown_0849D5F8->unk38[gUnknown_0849D5F8->unk45] == 0)
-        sub_080386EC(1);
+        TruncateMovePath(1);
 
-    sub_0801F92C(gUnknown_08499590 + 0x2D5A);
+    SetWorkingMapPlane(gUnknown_08499590 + 0x2D5A);
     sub_08038B84();
 
     if (((s8 *)gUnknown_03003340[gUnknown_030033E4.unk02])[gUnknown_030033E4.unk00]
         == -1)
     {
-        sub_08038BE0();
+        RebuildBestMovePath();
     }
     else
     {
-        sub_0802042C(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02,
+        GenerateBestMovementScript(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02,
                      gUnknown_03003110);
-        sub_080389D8();
+        RebuildMovePathFromDirections();
         if ((u8)sub_08038C08() == 0)
-            sub_08038BE0();
+            RebuildBestMovePath();
     }
 
-    sub_0801F92C(gUnknown_08499590 + 0x2852);
+    SetWorkingMapPlane(gUnknown_08499590 + 0x2852);
 }
+asm(".global sub_08038D7C\n.thumb_set sub_08038D7C, UpdateMovePathToCursor\n");

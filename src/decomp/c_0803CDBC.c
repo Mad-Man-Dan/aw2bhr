@@ -32,7 +32,7 @@ void sub_0803CE28(int a1, int a2)
     sub_0803CFA4(gUnknown_0809113C, p, 1);
     sub_08037B84(p);
     sub_0803D6D0();
-    sub_08037638((int)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
+    ShowMapPreview((int)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  (int)(gBG0TilemapBuffer + (a2 * 32 + a1)), 1, 5);
     sub_08013AD4(0);
 }

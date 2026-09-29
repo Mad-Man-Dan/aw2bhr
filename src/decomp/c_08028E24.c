@@ -53,7 +53,7 @@ void sub_08028E24(struct Unk08028E24Proc *proc)
 
     if (proc->unk66 == 8)
     {
-        sub_08022990(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02, 1);
+        ShowRangeOverlay(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02, 1);
         Proc_End(proc);
         return;
     }

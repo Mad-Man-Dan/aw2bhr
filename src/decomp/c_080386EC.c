@@ -12,14 +12,14 @@
  *
  * Truncates the gUnknown_0849D5F8 move stack back to `a` entries and recomputes
  * the running fuel cost of every entry that survives. The loop body is ONE
- * statement and it is work/sub_08038848's body verbatim, with that function's
+ * statement and it is work/PushMovePathStep's body verbatim, with that function's
  * pushed (x, y) pair replaced by the stack's own unk2c[i] / unk20[i].
  *
  * The `?:` inside `costs` is a real branch, and that is why gUnknown_0849D5F8
  * is loaded TWICE in the body: CSE cannot carry the first load across it. The
  * `+ 1` on the gPlayers subscript rides in the 0x59 / 0x5a
  * displacements (0x3c + 0x1d, 0x3c + 0x1e), the same one-based indexing
- * work/sub_08038848 and src/decomp/c_080211DC.c record for that array.
+ * work/PushMovePathStep and src/decomp/c_080211DC.c record for that array.
  *
  * TWO SPELLINGS ARE LOAD-BEARING, both isolated with compile_probe:
  *   - `(n = (s8)a)` INSIDE the comparison. Writing the obvious
@@ -47,7 +47,7 @@
  * address` at +0x148 (gUnknown_085D3E20 vs gUnknown_085D3DD0+0x50) -- the
  * documented false mismatch; 0x085D3E20 IS
  * &gUnknown_085D3DD0[0].unk38[0].unk18[0] (0x38 + 0x18 == 0x50). */
-void sub_080386EC(int a)
+void TruncateMovePath(int a)
 {
     struct Unk0849D5F8 *p;
     struct Map *map;
@@ -89,3 +89,4 @@ void sub_080386EC(int a)
         *cur = *prev - costs[c];
     }
 }
+asm(".global sub_080386EC\n.thumb_set sub_080386EC, TruncateMovePath\n");

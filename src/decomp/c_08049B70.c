@@ -18,7 +18,7 @@
  */
 
 
-/* The insert half of the gUnknown_03000000 callback list, where sub_08037780
+/* The insert half of the gUnknown_03000000 callback list, where RemoveMapPreviewPaletteHook
  * above is a remove. sub_08049BAC is already promoted as void(void) in
  * src/decomp/c_08049BAC.c.
  */

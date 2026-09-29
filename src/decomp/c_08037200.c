@@ -9,6 +9,6 @@
 
 void sub_08037200(u16 a, u16 b, u16 c, u16 d)
 {
-    sub_08037170(a, b, c, d);
+    PutRightAlignedNumberSprites(a, b, c, d);
     PutOamHi((a - 0x18) & 0x1ff, (b - 8) & 0xff, gUnknown_0848B698, d + 0x1014);
 }

@@ -32,7 +32,7 @@ struct Unk03004490
     /* 0x03 */ u8 unk03[5];
 };
 
-void sub_080350E4(void)
+void ResetWeatherRoundCounters(void)
 {
     u8 i;
 
@@ -47,3 +47,4 @@ void sub_080350E4(void)
 
     gUnknown_03004490[0] = 0x1e;
 }
+asm(".global sub_080350E4\n.thumb_set sub_080350E4, ResetWeatherRoundCounters\n");

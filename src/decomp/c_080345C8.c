@@ -39,22 +39,22 @@ void MapMainIdle(void)
         switch (**state)
         {
         case 0:  break;
-        case 1:  sub_08034938(); break;
+        case 1:  MapState_CheckTurnLimit(); break;
         case 2:  sub_080349E4(); break;
-        case 3:  sub_08034AF8(); break;
+        case 3:  MapState_TurnHandoverPrompt(); break;
         case 4:  sub_08034DB0(); break;
         case 5:  sub_08034DCC(); break;
         case 6:  sub_08034DF8(); break;
-        case 7:  sub_08034EA4(); break;
-        case 8:  sub_08034C90(); break;
-        case 9:  sub_08034CA4(); break;
+        case 7:  MapState_StartDayStartScreen(); break;
+        case 8:  MapState_StartFuelUpkeep(); break;
+        case 9:  MapState_StartTurnStartSupply(); break;
         case 10: sub_08034CB8(); break;
         case 11: sub_08034CD4(); break;
-        case 12: sub_08034D18(); break;
+        case 12: MapState_DispatchTurnByController(); break;
         case 13: sub_0802DC2C(); break;
-        case 14: sub_0806171C(); break;
+        case 14: AiDriverStep(); break;
         case 19: sub_08034350(); break;
-        case 16: sub_08034ED0(); break;
+        case 16: MapState_RunParkedWinLossCheck(); break;
         case 18: sub_08034EF0(); break;
         case 20: sub_08034F1C(); return;
         }

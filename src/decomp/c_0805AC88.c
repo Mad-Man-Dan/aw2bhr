@@ -7,10 +7,11 @@
  * sub_0805AC88 @ 0x0805AC88
  */
 
-void sub_0805AC88(void)
+void AiClearEscortTally(void)
 {
     int i;
 
     for (i = 0; i < 0x40; i++)
         gUnknown_03004730[i] = 0;
 }
+asm(".global sub_0805AC88\n.thumb_set sub_0805AC88, AiClearEscortTally\n");

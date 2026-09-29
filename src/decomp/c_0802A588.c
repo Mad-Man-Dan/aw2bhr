@@ -30,6 +30,6 @@ void sub_0802A588(struct Unk2A588Proc *proc)
     struct Unit *unit = proc->unk4c;
 
     sub_0803FECC(unit->x, unit->y, proc);
-    sub_08025D60(unit - gUnits);
-    sub_080258CC();
+    DestroyUnitAndCargo(unit - gUnits);
+    RebuildMapUnitLayers();
 }

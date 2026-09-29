@@ -5,11 +5,11 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0801F888.
- * CacheUnitMovementCosts @ 0x0801F888, sub_0801F92C @ 0x0801F92C, sub_0801F98C @ 0x0801F98C
+ * CacheUnitMovementCosts @ 0x0801F888, SetWorkingMapPlane @ 0x0801F92C, sub_0801F98C @ 0x0801F98C
  */
 
 /* Loads the terrain movement-cost row for unit type a1 into the flood fill's
- * 0x20-byte cost table at gUnknown_084999C8->unk00 -- the table sub_0801F6F0
+ * 0x20-byte cost table at gUnknown_084999C8->unk00 -- the table MapFloodCoreStep
  * then charges each step against. The source row is
  * gUnknown_085D3DD0[..].unk38[..].unk18[..], indexed by the unit's movement
  * type gUnknown_085D5ABC[a1].unk19 * 32, with the terrain code as the column,
@@ -65,7 +65,7 @@ asm(".global sub_0801F888\n.thumb_set sub_0801F888, CacheUnitMovementCosts\n");
  * write through: row y of the caller's plane starts at `a1 + rowOffset[y]`,
  * where rowOffset is the +0x417A halfword table of the gUnknown_08499590 map.
  * Then it publishes the map's width and height as the u8 pair at
- * gUnknown_084999C8 +0x28 / +0x29 (the bounds sub_0801F6F0's flood fill reads).
+ * gUnknown_084999C8 +0x28 / +0x29 (the bounds MapFloodCoreStep's flood fill reads).
  *
  * `stm r7!, {r0}` is NOT authored as a walking pointer. Plain
  * `gUnknown_03003340[y] = ...` is what produces it -- strength_reduce turns the
@@ -90,7 +90,7 @@ asm(".global sub_0801F888\n.thumb_set sub_0801F888, CacheUnitMovementCosts\n");
  * ROM word at 0x08090934 -- supplying the middle level. The honest spelling
  * reproduces it; naming a `u8 **` pool word here would add a fourth level.
  * Both bounds are re-read every iteration, as c_0801F838 describes. */
-void sub_0801F92C(u8 *a1)
+void SetWorkingMapPlane(u8 *a1)
 {
     int y;
 
@@ -99,6 +99,7 @@ void sub_0801F92C(u8 *a1)
     gUnknown_084999C8->unk28 = gMap->width;
     gUnknown_084999C8->unk29 = gMap->height;
 }
+asm(".global sub_0801F92C\n.thumb_set sub_0801F92C, SetWorkingMapPlane\n");
 
 /* A busy-wait sized by the gMap screen: the nested loop has an
  * EMPTY body and exists only to burn width * height iterations.

@@ -19,6 +19,6 @@ void sub_08047094(void)
 
     sub_08013AEC();
     sub_0801A538(0, 0, 0, 0);
-    sub_08022580();
-    sub_080227A8();
+    RedrawUnitLayer();
+    RedrawUnitIconLayer();
 }

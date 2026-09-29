@@ -19,18 +19,18 @@ struct Unk41E48Proc
 };
 
 /* The same three bracketing calls src/decomp/c_0802CFFC.c opens with, and the
- * same gPlaySt.unk32 gate on the same sub_08034534 command -- this
+ * same gPlaySt.unk32 gate on the same SendActionCommand command -- this
  * is that function's per-proc variant, taking the two coordinates off the proc
  * instead of passing zeros. The `lsls #0x18; lsrs #0x18` pair on each is what
- * retyped sub_08034534's third and fourth parameters to u8; c_0802CFFC.c's two
+ * retyped SendActionCommand's third and fourth parameters to u8; c_0802CFFC.c's two
  * literal zeros could never have shown it. */
 
 void sub_08041E48(struct Unk41E48Proc *proc)
 {
     sub_0802C57C();
-    sub_080424FC();
+    CommitUnitMove();
     sub_0802C594();
 
     if (proc->unk64 != 0 && gPlaySt.savingEnabled != 0)
-        sub_08034534(5, gUnknown_03003F38, proc->unk2c, proc->unk30);
+        SendActionCommand(5, gUnknown_03003F38, proc->unk2c, proc->unk30);
 }

@@ -17,9 +17,9 @@ void sub_0802CEB0(void)
     *(u32 *)(p + 8) = gUnknown_03001FD4;
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0xf, 0, gUnknown_030033EC, 0);
+        SendActionCommand(0xf, 0, gUnknown_030033EC, 0);
 
-    sub_0804438C(gUnknown_030033EC, 1);
+    PayForCoPower(gUnknown_030033EC, 1);
     sub_08024268();
 }
 
@@ -33,8 +33,8 @@ void sub_0802CEFC(void)
     *(u32 *)(p + 8) = gUnknown_03001FD4;
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0x10, 0, gUnknown_030033EC, 0);
+        SendActionCommand(0x10, 0, gUnknown_030033EC, 0);
 
-    sub_0804438C(gUnknown_030033EC, 2);
+    PayForCoPower(gUnknown_030033EC, 2);
     sub_08024268();
 }

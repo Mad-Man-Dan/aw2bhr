@@ -9,10 +9,10 @@
 
 void sub_080601C8(void)
 {
-    sub_0804438C(gUnknown_030046C0.unk06, 1);
+    PayForCoPower(gUnknown_030046C0.unk06, 1);
 }
 
 void sub_080601DC(void)
 {
-    sub_0804438C(gUnknown_030046C0.unk06, 2);
+    PayForCoPower(gUnknown_030046C0.unk06, 2);
 }

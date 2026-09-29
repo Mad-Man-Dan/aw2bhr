@@ -8,8 +8,8 @@
  * sub_08022990 @ 0x08022990
  */
 
-/* The sub_080227F4 member of the 76-byte twin family (sub_08022580 /
- * sub_080227A8), wrapped in a setup/teardown: the sweep is 11 rows of 16
+/* The DrawRangeOverlayCellAt member of the 76-byte twin family (RedrawUnitLayer /
+ * RedrawUnitIconLayer), wrapped in a setup/teardown: the sweep is 11 rows of 16
  * instead of 16 of 16 (`cmp r5,#0xa` at the outer bottom against `#0xf` at the
  * inner).
  *
@@ -22,7 +22,7 @@
  * forwarding is invisible either way.  Only the third is narrowed at entry
  * (`lsls #0x10; lsrs #0x10`) and parked in r8 across the loop for the final
  * `strh` into the slot sub_080152EC hands back. */
-void sub_08022990(int a1, int a2, u16 a3)
+void ShowRangeOverlay(int a1, int a2, u16 a3)
 {
     u16 x;
     u16 y;
@@ -33,7 +33,7 @@ void sub_08022990(int a1, int a2, u16 a3)
     {
         for (x = 0; x <= 0xf; x++)
         {
-            sub_080227F4((u16)(x + (gMap->scrollX >> 4)),
+            DrawRangeOverlayCellAt((u16)(x + (gMap->scrollX >> 4)),
                          (u16)(y + (gMap->scrollY >> 4)));
         }
     }
@@ -42,3 +42,4 @@ void sub_08022990(int a1, int a2, u16 a3)
     gUnknown_03000559 = 1;
     sub_080152EC(gUnknown_08499B4C, 0xff)->unk1e = a3;
 }
+asm(".global sub_08022990\n.thumb_set sub_08022990, ShowRangeOverlay\n");

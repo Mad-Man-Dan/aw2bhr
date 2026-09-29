@@ -57,7 +57,7 @@
  *
  * OTHER THINGS THE ASSEMBLY DOES NOT HAND YOU:
  *   - the inner test is spelled with `||`, not `&&`. The ROM's unk08-only arm
- *     is the FALL-THROUGH and the sub_08029088 arm is forward past the pool;
+ *     is the FALL-THROUGH and the ScrollCameraToKeepCellInView arm is forward past the pool;
  *     `if (cell != 0 && (unk01 & 8) == 0)` lays them out the other way round.
  *   - AnimateUnitCreation's first two arguments are bound to locals BEFORE the flag
  *     is computed. The ROM loads unk02/unk03 into r3/r4 (clobbering the unit
@@ -119,7 +119,7 @@ void sub_08044610(struct Unk08044610Proc *proc)
             }
             else
             {
-                sub_08029088(unit->x, unit->y);
+                ScrollCameraToKeepCellInView(unit->x, unit->y);
 
                 if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
                     return;

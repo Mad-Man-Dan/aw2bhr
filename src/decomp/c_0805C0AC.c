@@ -11,7 +11,7 @@
  * whose gUnknown_03003340 entry is not -1, and writes that unit's cell column
  * and row back through the out-parameter as two halfwords. The prototype in
  * include/unknown-functions.h records the argument as the address of a 4-byte
- * (u16, u16) stack object shared with sub_080591E4, hence the local view here.
+ * (u16, u16) stack object shared with AiAdvanceToward, hence the local view here.
  *
  * `(s8)` on the u8 the row pointer yields really is a CAST and it really does
  * come out as `lsls #0x18; asrs #0x18`. That does NOT contradict wave 37's

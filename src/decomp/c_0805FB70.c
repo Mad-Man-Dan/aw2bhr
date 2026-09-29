@@ -29,7 +29,7 @@ void sub_0805FB70(void)
     struct Unit *u;
 
     v.pos.unk00 = 0x270F;
-    sub_080202A4(gUnknown_030040D8);
+    GenerateUnitMovementMap(gUnknown_030040D8);
     sub_0805FC1C(((struct Unk5FB70Rec *)gUnknown_030040D8)->unk09_3, &v);
     if (v.pos.unk00 != 0x270F)
     {

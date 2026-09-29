@@ -29,11 +29,11 @@ void sub_0805B778(void)
 loop:
     p = gUnknown_03003F20;
     v.pos.unk00 = 0x270F;
-    sub_08059C00(p, (u16 *)&v);
+    AiPopLastNearestCandidate(p, (u16 *)&v);
     if (v.pos.unk00 == 0x270F)
         sub_0805F7B8();
     if ((s8)gUnknown_03003340[v.pos.unk02][v.pos.unk00]
-        <= sub_08058224((struct Unit *)gUnknown_030040D8))
+        <= GetUnitMovementBudget((struct Unit *)gUnknown_030040D8))
         goto loop;
-    sub_080591E4(&v);
+    AiAdvanceToward(&v);
 }

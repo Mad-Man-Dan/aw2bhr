@@ -12,7 +12,7 @@ void sub_0802D918(void)
     struct Unk03001470 *proc;
 
     sub_08024268();
-    sub_08024274();
+    SaveMapCursorPosition();
 
     gUnknown_03001418 = gUnknown_03001FF8 = 0;
 

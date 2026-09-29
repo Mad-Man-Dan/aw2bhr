@@ -23,7 +23,7 @@
  * statement rather than in one of its own: a leading `n = gUnknown_030033EC;`
  * creates the force-addr pseudo before gUnknown_03004084's, which swaps the
  * first two pool words. */
-void sub_080267AC(void)
+void StartArmyTurn(void)
 {
     u16 n;
 
@@ -33,14 +33,14 @@ void sub_080267AC(void)
     gUnknown_030032C0 = 0;
     gPlayers[gUnknown_030033EC].destroyedThisTurn = 0;
     gPlayers[gUnknown_030033EC].unk24 = 0;
-    sub_08020984();
+    RecomputeArmyVisionMasks();
     AddPlayerIncomeToFunds();
     sub_0801A548(gUnknown_030033EC);
     sub_0801A57C(gUnknown_030033EC);
     sub_08043834(gUnknown_030033EC);
     if (gUnknown_03004080 == 1)
     {
-        if (sub_08026D44(gUnknown_030033EC))
+        if (DoesArmyHaveHq(gUnknown_030033EC))
             sub_08022AAC(gPlayers[gUnknown_030033EC].hqX & 0x7f,
                          gPlayers[gUnknown_030033EC].hqY & 0x7f);
         else
@@ -52,3 +52,4 @@ void sub_080267AC(void)
     sub_08022AAC(gPlayers[gUnknown_030033EC].cursorX,
                  gPlayers[gUnknown_030033EC].cursorY);
 }
+asm(".global sub_080267AC\n.thumb_set sub_080267AC, StartArmyTurn\n");

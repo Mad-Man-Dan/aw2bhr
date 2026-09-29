@@ -50,10 +50,10 @@ void sub_0802D1C0(void)
     LockUnitSelection();
     CloseTopMenu();
     sub_08060684();
-    sub_080424FC();
+    CommitUnitMove();
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0xB, gUnknown_03003F38, 0, 0);
+        SendActionCommand(0xB, gUnknown_03003F38, 0, 0);
 }
 
 /* See src/decomp/c_0802D064.c and c_0802D1C0.c: the sub_080606A0 twin of
@@ -64,8 +64,8 @@ void sub_0802D1F8(void)
     LockUnitSelection();
     CloseTopMenu();
     sub_080606A0();
-    sub_080424FC();
+    CommitUnitMove();
 
     if (gPlaySt.savingEnabled != 0)
-        sub_08034534(0xC, gUnknown_03003F38, 0, 0);
+        SendActionCommand(0xC, gUnknown_03003F38, 0, 0);
 }

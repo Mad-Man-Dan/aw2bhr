@@ -10,7 +10,7 @@
 /* Linear search of the move stack for the (x, y) step `a`,`b`, returning its
  * slot index or -1. `i` is s8, not int: the ROM re-narrows the counter with
  * `lsrs #0x18` at the increment and sign-extends it again at each use. */
-int sub_08038960(s8 a, s8 b)
+int FindMovePathStep(s8 a, s8 b)
 {
     s8 i;
 
@@ -22,9 +22,10 @@ int sub_08038960(s8 a, s8 b)
 
     return -1;
 }
+asm(".global sub_08038960\n.thumb_set sub_08038960, FindMovePathStep\n");
 
-/* Replays the direction string sub_08038AD8 wrote into gUnknown_03003110,
- * pushing one step per byte onto the move stack via sub_08038848, and stops on
+/* Replays the direction string EncodeMovePathDirections wrote into gUnknown_03003110,
+ * pushing one step per byte onto the move stack via PushMovePathStep, and stops on
  * the 4 terminator.
  *
  * The jump table is 11 entries wide with a `+1` bias, so the case values run
@@ -38,8 +39,8 @@ int sub_08038960(s8 a, s8 b)
  * in numeric order swaps the two blocks and moves the tail-merge point.
  *
  * gUnknown_08090F0C is this unit's own -fforce-addr pool word holding
- * &gUnknown_03003110; sub_08038AD8 has a second, private copy at 0x08090F10. */
-void sub_080389D8(void)
+ * &gUnknown_03003110; EncodeMovePathDirections has a second, private copy at 0x08090F10. */
+void RebuildMovePathFromDirections(void)
 {
     s8 i;
 
@@ -52,19 +53,19 @@ void sub_080389D8(void)
         case -1:
             return;
         case 0:
-            sub_08038848(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45] - 1,
+            PushMovePathStep(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45] - 1,
                          gUnknown_0849D5F8->unk2c[gUnknown_0849D5F8->unk45]);
             break;
         case 1:
-            sub_08038848(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45] + 1,
+            PushMovePathStep(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45] + 1,
                          gUnknown_0849D5F8->unk2c[gUnknown_0849D5F8->unk45]);
             break;
         case 3:
-            sub_08038848(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45],
+            PushMovePathStep(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45],
                          gUnknown_0849D5F8->unk2c[gUnknown_0849D5F8->unk45] - 1);
             break;
         case 2:
-            sub_08038848(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45],
+            PushMovePathStep(gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45],
                          gUnknown_0849D5F8->unk2c[gUnknown_0849D5F8->unk45] + 1);
             break;
         case 4:
@@ -74,17 +75,18 @@ void sub_080389D8(void)
         }
     }
 }
+asm(".global sub_080389D8\n.thumb_set sub_080389D8, RebuildMovePathFromDirections\n");
 
 /* Encodes the move stack as a direction string in gUnknown_03003110, one byte
- * per step, terminated by 4. The codes are the ones sub_080389D8 replays:
+ * per step, terminated by 4. The codes are the ones RebuildMovePathFromDirections replays:
  * 0 = x-1, 1 = x+1, 2 = y+1, 3 = y-1. The trailing store uses the loop
  * counter after the loop, so `i` must be the same s8 the loop leaves behind.
  *
  * gUnknown_08090F10 is agbcc's own -fforce-addr pool word holding
  * &gUnknown_03003110 -- the honest spelling emits it, exactly as the wave-41
- * gUnknown_08090940 note in unknown-globals.h records. sub_080389D8 has its
+ * gUnknown_08090940 note in unknown-globals.h records. RebuildMovePathFromDirections has its
  * own private copy of the same address at 0x08090F0C. */
-void sub_08038AD8(void)
+void EncodeMovePathDirections(void)
 {
     s8 i;
 
@@ -102,3 +104,4 @@ void sub_08038AD8(void)
 
     gUnknown_03003110[i - 1] = 4;
 }
+asm(".global sub_08038AD8\n.thumb_set sub_08038AD8, EncodeMovePathDirections\n");

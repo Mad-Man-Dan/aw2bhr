@@ -52,7 +52,7 @@ void sub_080610D0(void)
             gUnknown_03003100.pos.unk00 = pos.unk00;
             gUnknown_03003100.pos.unk02 = pos.unk02;
             if (gPlaySt.savingEnabled != 0)
-                sub_08034534(0xe, gUnknown_030046C0.unk06, gUnknown_030046C0.unk07, 0);
+                SendActionCommand(0xe, gUnknown_030046C0.unk06, gUnknown_030046C0.unk07, 0);
         }
     }
 }

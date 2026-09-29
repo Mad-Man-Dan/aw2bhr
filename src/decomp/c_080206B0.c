@@ -27,7 +27,7 @@
  * entry 0 -- and the early exit MUST be spelled `return i;`.  Written as
  * `break;` the duplication does not happen at all (44 bytes, and the +0x2c
  * folds into the pool word's addend instead of the `adds r3, #0x2c` hoist). */
-u16 sub_080206B0(u32 a1)
+u16 FindMapIdByMapData(u32 a1)
 {
     u16 i;
 
@@ -40,14 +40,15 @@ u16 sub_080206B0(u32 a1)
     }
     return i;
 }
+asm(".global sub_080206B0\n.thumb_set sub_080206B0, FindMapIdByMapData\n");
 
 
 /* Wave 49, W49-K RETYPES the second parameter from `u16` to `int`, with the
  * narrowing moved into an explicit `u16` local -- byte-identical here (still
  * `lsls r1,#0x10; lsrs r7,#0x10` at entry) and REQUIRED by the newly matched
- * caller sub_080213AC, which passes `1 - gPlaySt.unk0d` with no
+ * caller RebuildVisionPlanes, which passes `1 - gPlaySt.unk0d` with no
  * narrowing at all.  agbcc narrows a `u16` argument AT THE CALL SITE as well as
- * at entry (measured: +4 bytes per site, and sub_0802163C's `LoadMapData(a)`
+ * at entry (measured: +4 bytes per site, and LoadMapIntoGMap's `LoadMapData(a)`
  * shows the same pair on the caller side), so a `u16` prototype cannot produce
  * the ROM's caller.  The original almost certainly had no prototype in the
  * caller's translation unit -- default argument promotions passed an int and

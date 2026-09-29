@@ -25,5 +25,5 @@ struct Unk2A578Proc
  * inline bytes. */
 void sub_0802A578(struct Unk2A578Proc *p)
 {
-    sub_08029088(p->unk4c->unk02, p->unk4c->unk03);
+    ScrollCameraToKeepCellInView(p->unk4c->unk02, p->unk4c->unk03);
 }

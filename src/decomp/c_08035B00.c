@@ -41,7 +41,7 @@ s16 sub_08035B00(u16 i)
         return gUnknown_0849CD88[i].unk18 * 2;
 }
 
-u8 *sub_08035B3C(ProcPtr procArg)
+u8 *GetMoveSlideGraphicsPointer(ProcPtr procArg)
 {
     struct Unk35B3CProc *proc = procArg;
     u8 **tbl;
@@ -52,3 +52,4 @@ u8 *sub_08035B3C(ProcPtr procArg)
 
     return tbl[proc->unk36 * 9 + k];
 }
+asm(".global sub_08035B3C\n.thumb_set sub_08035B3C, GetMoveSlideGraphicsPointer\n");

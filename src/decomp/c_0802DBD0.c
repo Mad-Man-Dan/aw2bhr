@@ -7,13 +7,13 @@
  * sub_0802DBD0 @ 0x0802DBD0, sub_0802DBE4 @ 0x0802DBE4
  */
 
-/* Three statements. sub_0802428C and DecrementMapLock take nothing, so the
+/* Three statements. RestoreMapCursorPosition and DecrementMapLock take nothing, so the
  * sub_0802776C(1) result cannot be flowing into either of them. */
 
 void sub_0802DBD0(void)
 {
     sub_0802776C(1);
-    sub_0802428C();
+    RestoreMapCursorPosition();
     DecrementMapLock();
 }
 

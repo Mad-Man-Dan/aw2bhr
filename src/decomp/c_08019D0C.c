@@ -68,7 +68,7 @@ asm(".global sub_08019D0C\n.thumb_set sub_08019D0C, Menu_Loop\n");
 /*
  * sub_08019D48 -- tear an option list down.
  *
- * Runs the two closers sub_08022ADC and sub_08019C24, uploads
+ * Runs the two closers SnapMapCursorDisplayToCell and sub_08019C24, uploads
  * gBG0TilemapBuffer to BG VRAM at 0x06007000 now that sub_08019C24 has been
  * over it, and ends the cursor sprite's script with sub_080153B8.
  * sub_08019D78 and sub_08019DA8 below both start here and then tidy up their
@@ -78,7 +78,7 @@ void sub_08019D48(ProcPtr proc)
 {
     struct Unk08019B50 *p = (struct Unk08019B50 *)proc;
 
-    sub_08022ADC();
+    SnapMapCursorDisplayToCell();
     sub_08019C24();
     sub_08011E54(gBG0TilemapBuffer, (void *)0x06007000, 0x800);
     sub_080153B8(p->unk44);
@@ -106,7 +106,7 @@ void sub_08019D78(ProcPtr proc)
  * sub_08019DA8 -- tear the list down and hand control of the map back.
  *
  * sub_08019D48 above does the teardown. sub_0801A538 (which ignores all four
- * arguments), sub_08022580 and sub_080227A8 then run, and DecrementMapLock
+ * arguments), RedrawUnitLayer and RedrawUnitIconLayer then run, and DecrementMapLock
  * releases one level of the map's input lock. The other of the two teardowns
  * CreateMenu picks between.
  */
@@ -114,8 +114,8 @@ void sub_08019DA8(ProcPtr proc)
 {
     sub_08019D48(proc);
     sub_0801A538(0, 1, 6, 0xc);
-    sub_08022580();
-    sub_080227A8();
+    RedrawUnitLayer();
+    RedrawUnitIconLayer();
     DecrementMapLock();
 }
 

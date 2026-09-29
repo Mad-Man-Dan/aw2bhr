@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080440A8.
- * SpendCoPowerCharge @ 0x080440A8, sub_080440E0 @ 0x080440E0
+ * SpendCoPowerCharge @ 0x080440A8, AddCoPowerCharge @ 0x080440E0
  */
 
 void SpendCoPowerCharge(int a1, int a2)
@@ -23,18 +23,18 @@ void SpendCoPowerCharge(int a1, int a2)
     v = GetCoPowerCharge(a1) - v;
     if (v < 0)
         v = 0;
-    sub_08044080(a1, v);
+    SetCoPowerCharge(a1, v);
 }
 
 asm(".global sub_080440A8\n.thumb_set sub_080440A8, SpendCoPowerCharge\n");
 
-void sub_080440E0(int a1, int a2)
+void AddCoPowerCharge(int a1, int a2)
 {
     int v;
 
     if (gPlaySt.coPowersEnabled == 0)
         return;
-    if (sub_0804415C(a1))
+    if (IsCoPowerActive(a1))
         return;
     v = gPlayers[a1].coCharge;
     if (v < 0)
@@ -44,3 +44,4 @@ void sub_080440E0(int a1, int a2)
     else
         gPlayers[a1].coCharge = gPlayers[a1].coCharge + a2;
 }
+asm(".global sub_080440E0\n.thumb_set sub_080440E0, AddCoPowerCharge\n");

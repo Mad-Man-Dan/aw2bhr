@@ -25,7 +25,7 @@
  * so without it the value is a plain int and LICM hoists the whole thing. With
  * it, only the invariant `<< 16` hoists and the `>> 16` stays at the call,
  * which is the ROM's `lsls r7, r0, #0x10` / `lsrs r1, r7, #0x10` pair. */
-void sub_08037170(u16 a1, u16 a2, u16 a3, u16 a4)
+void PutRightAlignedNumberSprites(u16 a1, u16 a2, u16 a3, u16 a4)
 {
     u16 x;
 
@@ -42,3 +42,4 @@ void sub_08037170(u16 a1, u16 a2, u16 a3, u16 a4)
         x -= 8;
     }
 }
+asm(".global sub_08037170\n.thumb_set sub_08037170, PutRightAlignedNumberSprites\n");

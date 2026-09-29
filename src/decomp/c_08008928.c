@@ -128,7 +128,7 @@ int RemoveUnitAt(int mode, int x, int y)
             gUnknown_030030DC.bits.win0_enable_bg3 = 1;
             gUnknown_030030DC.bits.win0_enable_obj = 1;
 
-            sub_0804018C(e);
+            StartUnitDestroyed(e);
         }
         else
         {

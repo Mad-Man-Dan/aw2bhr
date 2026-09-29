@@ -31,7 +31,7 @@
  *      sites in c_0803C354.c and one in c_08043CA0.c.
  *
  * ALL THIRTEEN affected functions verify byte-for-byte by exit code
- * (sub_0803C474/C48C/C4B4/C4DC/C504/C52C/C598/C5C0/C5E8, sub_08043CA0,
+ * (sub_0803C474/C48C/C4B4/C4DC/C504/C52C/C598/C5C0/C5E8, BuildUnlockedCoList,
  * sub_0803CA9C, sub_0803CAB8, and this one); proto_check is clean. Details in
  * work/sub_0807F57C/W88-notes.md.
  *

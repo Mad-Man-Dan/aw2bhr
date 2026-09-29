@@ -24,7 +24,7 @@
  *     to a `u16 *p` first interleaves them and accumulates into the base's
  *     register instead. Same length either way, so only the bytes notice.
  */
-void sub_080223E0(u16 x, u16 y)
+void ClearUnitTileQuadAt(u16 x, u16 y)
 {
     int cx;
     int cy;
@@ -37,3 +37,4 @@ void sub_080223E0(u16 x, u16 y)
     *(gBG1TilemapBuffer + cx * 2 + cy * 64 + 0x20) = 0;
     *(gBG1TilemapBuffer + cx * 2 + cy * 64 + 0x21) = 0;
 }
+asm(".global sub_080223E0\n.thumb_set sub_080223E0, ClearUnitTileQuadAt\n");

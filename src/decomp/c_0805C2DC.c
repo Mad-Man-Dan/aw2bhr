@@ -59,7 +59,7 @@ u8 sub_0805C2DC(u16 a1, u8 a2)
 
             score = 0;
             FillMovementMap(0xff);
-            sub_0801F9C0(e->x, e->y, 2, 0);
+            MapSetInRange(e->x, e->y, 2, 0);
 
             for (y = 0; y < gMap->height; y++)
             {
@@ -69,7 +69,7 @@ u8 sub_0805C2DC(u16 a1, u8 a2)
                         continue;
                     if (gMap->unitUnk[gMap->rowOffset[y] + x] == 0)
                         continue;
-                    if (a2 != 0 && !sub_08020DBC(a1, x, y))
+                    if (a2 != 0 && !IsCellVisibleToArmy(a1, x, y))
                         continue;
                     e = &gUnits[gMap->unitUnk[gMap->rowOffset[y] + x]];
                     if (e->type == 0x18)
@@ -81,7 +81,7 @@ u8 sub_0805C2DC(u16 a1, u8 a2)
                     }
                     if (e->hp <= 10)
                         continue;
-                    if (sub_08026F28(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
+                    if (AreArmiesOnSameTeam(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
                         score -= e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10);
                     else
                         score += e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10);
@@ -126,7 +126,7 @@ u8 sub_0805C514(u16 a1, u8 a2)
 
             score = 0;
             FillMovementMap(0xff);
-            sub_0801F9C0(e->x, e->y, 2, 0);
+            MapSetInRange(e->x, e->y, 2, 0);
 
             for (y = 0; y < gMap->height; y++)
             {
@@ -136,7 +136,7 @@ u8 sub_0805C514(u16 a1, u8 a2)
                         continue;
                     if (gMap->unitUnk[gMap->rowOffset[y] + x] == 0)
                         continue;
-                    if (a2 != 0 && !sub_08020DBC(a1, x, y))
+                    if (a2 != 0 && !IsCellVisibleToArmy(a1, x, y))
                         continue;
                     e = &gUnits[gMap->unitUnk[gMap->rowOffset[y] + x]];
                     if (e->type == 0x18)
@@ -148,7 +148,7 @@ u8 sub_0805C514(u16 a1, u8 a2)
                     }
                     if (e->hp <= 10)
                         continue;
-                    if (sub_08026F28(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
+                    if (AreArmiesOnSameTeam(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
                         score -= e->hp;
                     else
                         score += e->hp;
@@ -194,7 +194,7 @@ u8 sub_0805C720(u16 a1, u8 a2)
 
             score = 0;
             FillMovementMap(0xff);
-            sub_0801F9C0(e->x, e->y, 2, 0);
+            MapSetInRange(e->x, e->y, 2, 0);
 
             for (y = 0; y < gMap->height; y++)
             {
@@ -204,7 +204,7 @@ u8 sub_0805C720(u16 a1, u8 a2)
                         continue;
                     if (gMap->unitUnk[gMap->rowOffset[y] + x] == 0)
                         continue;
-                    if (a2 != 0 && !sub_08020DBC(a1, x, y))
+                    if (a2 != 0 && !IsCellVisibleToArmy(a1, x, y))
                         continue;
                     e = &gUnits[gMap->unitUnk[gMap->rowOffset[y] + x]];
                     if (e->type == 0x18)
@@ -219,7 +219,7 @@ u8 sub_0805C720(u16 a1, u8 a2)
                     mul = 1;
                     if (gUnknown_085D5ABC[e->type].minRange > 1)
                         mul = 2;
-                    if (sub_08026F28(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
+                    if (AreArmiesOnSameTeam(a1, (gMap->unitUnk[gMap->rowOffset[y] + x] >> 6) + 1) == 1)
                         score -= e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10) * mul;
                     else
                         score += e->hp * (GetCoPriceMultiplier(gUnknown_030033EC, e->type) / 10) * mul;

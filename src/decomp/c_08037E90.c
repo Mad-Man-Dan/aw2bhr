@@ -17,6 +17,6 @@ void sub_08037E90(void)
     sub_08011C68(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
     sub_08011C68(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
     sub_08022A34();
-    sub_080366C4(sub_080368E8);
-    sub_080366D0(sub_08036884);
+    sub_080366C4(DefaultMainLoopCallback);
+    sub_080366D0(DefaultVBlankCallback);
 }

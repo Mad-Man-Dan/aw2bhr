@@ -10,7 +10,7 @@
 void sub_080295E4(void)
 {
     gUnknown_03001470[gUnknown_03001FBC].unk1e =
-        sub_08041F38(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
+        GetDropDirectionMask(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
                      gUnknown_030040D8->unk07[
                          gUnknown_03001470[gUnknown_03001FBC].unk22]);
     gUnknown_03001470[gUnknown_03001FBC].unk20 = 3;

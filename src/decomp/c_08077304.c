@@ -120,7 +120,7 @@ void sub_08077304(struct Unk8077304Proc * proc)
     if (gUnknown_08615194[gUnknown_0202FDFC.unk0c].coSelect == NULL)
     {
         arg = gUnknown_085C77A0[proc->unk34].unk3c[0];
-        sub_08043E3C(arg,
+        LoadCoFace(arg,
                      (void *)(0x060008C0 + (gUnknown_03002B6C.bits.chr_block << 14)),
                      1);
         proc->unk3c = 1;
@@ -139,7 +139,7 @@ void sub_08077304(struct Unk8077304Proc * proc)
         if (gUnknown_085C77A0[proc->unk34].unk40[i] == 5)
         {
             arg = gUnknown_085C77A0[proc->unk34].unk3c[i];
-            sub_08043FA8(arg,
+            LoadCoMiniPortrait(arg,
                          (void *)0x06011300, 0x12);
         }
     }

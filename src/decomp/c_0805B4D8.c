@@ -12,7 +12,7 @@
  * chain (see that symbol's comment for the layout and for why the head byte is
  * a flat index while the +0x60/+0x61 record bytes need the struct cast) and
  * returns the first entry whose cell's low-5-bit terrain code is 8 and which
- * sub_08026FD0 accepts.  0xFE in the record's x byte means "advance the head
+ * IsTerrainOwnedByUnitsTeam accepts.  0xFE in the record's x byte means "advance the head
  * cursor", not "stop" -- it re-seeds i from head[a1][j] and falls into the
  * shared `i != 0xff` test.
  *
@@ -64,7 +64,7 @@ u8 sub_0805B4D8(int a1, int *outX, int *outY)
              & 0x1f)
             == 8)
         {
-            if (sub_08026FD0(gUnknown_03003F38,
+            if (IsTerrainOwnedByUnitsTeam(gUnknown_03003F38,
                              gMap
                                  ->terrain[gMap
                                                ->rowOffset[y]
@@ -111,7 +111,7 @@ int sub_0805B5BC(int *a1, int *a2, int *outX, int *outY)
 
         y = p->y;
 
-        if (sub_08026FD0(gUnknown_03003F38,
+        if (IsTerrainOwnedByUnitsTeam(gUnknown_03003F38,
                          gMap
                              ->terrain[gMap
                                            ->rowOffset[y]

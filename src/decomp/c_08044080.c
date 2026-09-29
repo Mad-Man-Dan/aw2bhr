@@ -7,7 +7,8 @@
  * sub_08044080 @ 0x08044080
  */
 
-void sub_08044080(int a1, u32 a2)
+void SetCoPowerCharge(int a1, u32 a2)
 {
     gPlayers[a1].coCharge = a2;
 }
+asm(".global sub_08044080\n.thumb_set sub_08044080, SetCoPowerCharge\n");

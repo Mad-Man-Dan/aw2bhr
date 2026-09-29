@@ -8,7 +8,7 @@
  * sub_08026100 @ 0x08026100
  */
 
-/* MATCHED, and the first of a byte-identical pair with sub_08044854. Applies
+/* MATCHED, and the first of a byte-identical pair with DamageUnitAtCellCopy. Applies
  * `c` points of damage to the unit standing on cell (x, y), flooring at 1:
  * bounds-check the cell against gMap's width/height, look the
  * unit id up through gMap->unitUnk, and clamp.
@@ -33,7 +33,7 @@
  * Every neighbouring spelling misses by exactly one slot, which is what makes
  * this a readout rather than a lucky arrangement -- see the wave-20 section in
  * docs/agbcc-codegen.md for the table. */
-void sub_08026100(int x, int y, int c)
+void DamageUnitAtCell(int x, int y, int c)
 {
     int idx;
     struct Unit *u;
@@ -63,3 +63,4 @@ void sub_08026100(int x, int y, int c)
     else
         u->hp = u->hp - c;
 }
+asm(".global sub_08026100\n.thumb_set sub_08026100, DamageUnitAtCell\n");

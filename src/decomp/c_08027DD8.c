@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08027DD8.
- * sub_08027DD8 @ 0x08027DD8
+ * DayStartScreen_Loop @ 0x08027DD8
  */
 
 #include "hardware.h"
@@ -19,20 +19,20 @@ struct Unk27DD8
     /* 0x1e */ s16 unk1e;
     /* 0x20 */ s16 unk20;
 };
-/* The two identical `sub_08027B10` bodies are NOT a transcription slip: the
+/* The two identical `StartDayStartGlyph` bodies are NOT a transcription slip: the
  * ROM reaches one copy from case 25 with an explicit `b`, over the top of
  * case 15's test, which a single shared body could not produce. gcc's
  * cross-jumping merges the two copies back into one, so the duplicate costs
  * nothing and is the only shape that emits that branch.
  */
 
-/* The two identical `sub_08027B10` bodies are NOT a transcription slip: the
+/* The two identical `StartDayStartGlyph` bodies are NOT a transcription slip: the
  * ROM reaches one copy from case 25 with an explicit `b`, over the top of
  * case 15's test, which a single shared body could not produce. gcc's
  * cross-jumping merges the two copies back into one, so the duplicate costs
  * nothing and is the only shape that emits that branch.
  */
-void sub_08027DD8(struct Unk27DD8 *e)
+void DayStartScreen_Loop(struct Unk27DD8 *e)
 {
     if (gpKeySt->pressed & (A_BUTTON | B_BUTTON | START_BUTTON))
     {
@@ -53,7 +53,7 @@ void sub_08027DD8(struct Unk27DD8 *e)
     case 25:
         if (gUnknown_03004080 <= 9)
             break;
-        sub_08027B10(e->unk20, 0x50, (s16)(e->unk1e / 5) * 16, (s16)(e->unk1e / 5),
+        StartDayStartGlyph(e->unk20, 0x50, (s16)(e->unk1e / 5) * 16, (s16)(e->unk1e / 5),
                      PROC_TREE_3);
         e->unk20 += 0x18;
         break;
@@ -66,7 +66,7 @@ void sub_08027DD8(struct Unk27DD8 *e)
     case 5:
     case 10:
     case 30:
-        sub_08027B10(e->unk20, 0x50, (s16)(e->unk1e / 5) * 16, (s16)(e->unk1e / 5),
+        StartDayStartGlyph(e->unk20, 0x50, (s16)(e->unk1e / 5) * 16, (s16)(e->unk1e / 5),
                      PROC_TREE_3);
         e->unk20 += 0x18;
         break;
@@ -78,3 +78,5 @@ void sub_08027DD8(struct Unk27DD8 *e)
 
     e->unk1e++;
 }
+
+asm(".global sub_08027DD8\n.thumb_set sub_08027DD8, DayStartScreen_Loop\n");

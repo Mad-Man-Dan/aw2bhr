@@ -18,7 +18,7 @@
  * behind.  The bound is also tested BEFORE the 0xFF terminator on every
  * iteration but not on entry, which is loop rotation of a `while (flags !=
  * 0xff)` whose body ends in the `if (i > 0x5b) break;`. */
-void sub_08021CB4(void)
+void RefreshPropertyTerrainBytes(void)
 {
     struct Map *map;
     int i;
@@ -35,3 +35,4 @@ void sub_08021CB4(void)
             break;
     }
 }
+asm(".global sub_08021CB4\n.thumb_set sub_08021CB4, RefreshPropertyTerrainBytes\n");

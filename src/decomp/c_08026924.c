@@ -15,7 +15,7 @@
  * TWO READ-OUTS THAT ARE NOT FREE:
  *
  * 1. The first loop really is DESCENDING in the source. Its counter runs down
- *    from `4 - sub_080248F8()` to 1 and the index is written `5 - k`, which is
+ *    from `4 - GetLoadedMapArmyCount()` to 1 and the index is written `5 - k`, which is
  *    why the constant 5 is a live register across it. Rewriting it as the
  *    equivalent ascending `for (i = n + 1; i <= 4; i++)` does NOT get rewritten
  *    back into this by check_dbra_loop -- it produces an ascending loop with a
@@ -37,13 +37,13 @@
  * argument `(i >> 6) + 1` is a real arithmetic shift (`asrs r0, r2, #0x16` on
  * the already-shifted value), not a division -- a signed /64 would carry a
  * rounding correction. */
-void sub_08026924(void)
+void InitPlayersFromSettings(void)
 {
     s16 i;
     s16 k;
     int j;
 
-    for (k = 4 - sub_080248F8(); k > 0; k--)
+    for (k = 4 - GetLoadedMapArmyCount(); k > 0; k--)
     {
         j = 5 - k;
         gUnknown_03003FF8[j] = 0;
@@ -65,7 +65,7 @@ void sub_08026924(void)
             gPlayers[i].co = 1;
     }
 
-    sub_08026A48();
+    AssignArmyTeamColors();
 
     if (gPlaySt.coAbilities == 0)
         gPlaySt.coPowersEnabled = 0;
@@ -78,3 +78,4 @@ void sub_08026924(void)
             sub_08025D20((i >> 6) + 1);
     }
 }
+asm(".global sub_08026924\n.thumb_set sub_08026924, InitPlayersFromSettings\n");

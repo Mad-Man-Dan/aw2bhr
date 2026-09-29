@@ -20,7 +20,7 @@
  * gUnknown_0849FFF8 is s16 and gUnknown_03003100's members are s16, yet every
  * read here is `ldrb`: the sum is stored with `strb`, so combine narrows both
  * loads. The byte access is not evidence of a byte type. */
-void sub_080428F0(s16 a1)
+void DropCargoUnit(s16 a1)
 {
     struct Unit *e;
 
@@ -38,3 +38,4 @@ void sub_080428F0(s16 a1)
     if (gUnknown_030040D8->unk07[0] == 0)
         gUnknown_030040D8->unk01 &= ~0x10;
 }
+asm(".global sub_080428F0\n.thumb_set sub_080428F0, DropCargoUnit\n");

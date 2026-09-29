@@ -14,12 +14,12 @@
  * it is agbcc's `-fforce-addr` word for &gPlayers and the double
  * `ldr` is that indirection, not a pointer-to-pointer in the source.
  *
- * sub_08044280 and IsCoPowerAvailable are declared `int` but both results are tested
+ * IsSuperCoPowerReady and IsCoPowerAvailable are declared `int` but both results are tested
  * as BYTES (`lsls r0,#0x18; cmp r0,#0`), hence the casts. Their own bodies are
  * still asm, so the declarations are left alone rather than retyped. */
-bool8 sub_080442E4(int a)
+bool8 AdvanceCoPowerReadyAnnouncement(int a)
 {
-    if (gPlayers[a].unk24 <= 1 && (u8)sub_08044280(a))
+    if (gPlayers[a].unk24 <= 1 && (u8)IsSuperCoPowerReady(a))
     {
         gPlayers[a].unk24 = 2;
         return TRUE;
@@ -33,3 +33,4 @@ bool8 sub_080442E4(int a)
 
     return FALSE;
 }
+asm(".global sub_080442E4\n.thumb_set sub_080442E4, AdvanceCoPowerReadyAnnouncement\n");

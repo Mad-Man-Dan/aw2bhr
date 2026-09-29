@@ -23,7 +23,7 @@ void WarRoomMapSelected_0807C589(struct Unk807C588 *proc)
 {
     int i;
 
-    sub_08026BAC();
+    ResetAllPlayers();
 
     for (i = 0; i < sub_0802490C(gPlaySt.mapID); i++)
     {

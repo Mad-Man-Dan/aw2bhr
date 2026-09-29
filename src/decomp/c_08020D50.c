@@ -7,7 +7,7 @@
  * sub_08020D50 @ 0x08020D50
  */
 
-/* sub_08020354's signed-coordinate twin against a third overlay writer. Here
+/* FillUnitAttackRange's signed-coordinate twin against a third overlay writer. Here
  * the guard reads gUnknown_085D5ABC[t].unk0f rather than re-calling
  * GetUnitFiringRangeWithCoBonus, and the ROM keeps the element ADDRESS live across the test to
  * reach .unk0e -- one subscript expression, two members. */

@@ -9,9 +9,9 @@
 
 void sub_08021598(void)
 {
-    sub_08026BAC();
-    sub_08026924();
-    sub_08026768();
+    ResetAllPlayers();
+    InitPlayersFromSettings();
+    AdvanceToNextActiveArmy();
     CalcRandomWeatherChances();
     sub_0803E3D8();
     sub_080455CC();

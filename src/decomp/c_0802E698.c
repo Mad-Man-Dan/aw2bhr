@@ -36,7 +36,7 @@ void sub_0802E6C0(void)
     if (GetUnitSelectionLock() == 0)
     {
         sub_08035810();
-        sub_080258CC();
+        RebuildMapUnitLayers();
         sub_0802E4B4(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
     }
     else
@@ -52,6 +52,6 @@ void sub_0802E6F8(void)
 {
     sub_08022AAC(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02);
     LockUnitSelection();
-    sub_080424FC();
+    CommitUnitMove();
     gUnknown_03003334 = 0;
 }

@@ -14,10 +14,10 @@ void sub_0806050C(void)
     if (v == 0)
     {
         if (gUnknown_030045E0[0] != NULL)
-            sub_08035828(gUnknown_030045E0[0]);
+            EndMoveSlide(gUnknown_030045E0[0]);
         if (gUnknown_030045E0[1] != NULL)
-            sub_08035828(gUnknown_030045E0[1]);
-        sub_080424FC();
+            EndMoveSlide(gUnknown_030045E0[1]);
+        CommitUnitMove();
         gUnknown_03004780 = 2;
         gUnknown_030045D4 = v;
     }

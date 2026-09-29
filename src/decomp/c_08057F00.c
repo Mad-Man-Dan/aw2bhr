@@ -5,14 +5,14 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08057F00.
- * CountUnitsWithTypeTag @ 0x08057F00, CountUnitsByDeployLocation @ 0x08057F54, CountUnitsOfType @ 0x08057FA8, sub_08057FE8 @ 0x08057FE8, sub_08058058 @ 0x08058058, sub_08058144 @ 0x08058144
+ * CountUnitsWithTypeTag @ 0x08057F00, CountUnitsByDeployLocation @ 0x08057F54, CountUnitsOfType @ 0x08057FA8, AiCountEnemyUnitsOfType @ 0x08057FE8, sub_08058058 @ 0x08058058, sub_08058144 @ 0x08058144
  */
 
 /* c_0804151C.c's list builder again, appending to the gUnknown_03003F20 list
  * from the element index it is HANDED and returning the index it reached: the
  * caller's running count in and out. The same
  * `if ((u8)(gUnknown_030040D8->unk00 - 1) > 1) return 0;` guard as
- * sub_0804151C, and it sits AFTER the cursor is formed, as it does there.
+ * BuildCapturableCellList, and it sits AFTER the cursor is formed, as it does there.
  *
  * The cursor is formed in TWO statements. `(struct Cell *)gUnknown_03003F20 + n`
  * as one expression scales n before loading the pointer
@@ -33,7 +33,7 @@ struct Unk58058Cell
     /* 01 */ u8 y;
     /* 02 */ s16 v;
 };
-/* The 4-byte record sub_08057EC0 hands back: a (column, row) pair plus the
+/* The 4-byte record AiPopFirstNearestCandidate hands back: a (column, row) pair plus the
  * s16 priority it stamps with 0x7FFF on the way out.  It has no struct tag in
  * include/ yet -- gUnknown_03003F20's declared `struct Unk03003338 *` is a
  * different, 0x08-strided type -- so it is spelled locally here. */
@@ -100,7 +100,7 @@ int CountUnitsOfType(int a1)
 
 asm(".global sub_08057FA8\n.thumb_set sub_08057FA8, CountUnitsOfType\n");
 
-int sub_08057FE8(int a1)
+int AiCountEnemyUnitsOfType(int a1)
 {
     int i;
     int j;
@@ -122,6 +122,7 @@ int sub_08057FE8(int a1)
 
     return count;
 }
+asm(".global sub_08057FE8\n.thumb_set sub_08057FE8, AiCountEnemyUnitsOfType\n");
 
 int sub_08058058(int n)
 {
@@ -162,7 +163,7 @@ int sub_08058058(int n)
     return n;
 }
 
-/* Repeatedly pulls the next candidate cell off sub_08057EC0 and maps it through
+/* Repeatedly pulls the next candidate cell off AiPopFirstNearestCandidate and maps it through
  * gMap's rowOffset table into the property plane; that byte selects a
  * gUnknown_084995A0 record. The first
  * record whose unk03[a2] is not above a1 wins: the counter is bumped and the
@@ -185,7 +186,7 @@ struct Unit *sub_08058144(int a1, int a2)
 
     do
     {
-        e = (struct Unk08057EC0Rec *)sub_08057EC0();
+        e = (struct Unk08057EC0Rec *)AiPopFirstNearestCandidate();
         if (e == 0)
             return 0;
 

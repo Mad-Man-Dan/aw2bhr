@@ -31,7 +31,7 @@
  * the stored byte, `asrs #0x10` for the two signed compares) fall out of that
  * one declaration. */
 
-void sub_0801F6F0(u8 a1, u8 a2, u8 a3)
+void MapFloodCoreStep(u8 a1, u8 a2, u8 a3)
 {
     u8 x;
     u8 y;
@@ -71,3 +71,4 @@ void sub_0801F6F0(u8 a1, u8 a2, u8 a3)
     gUnknown_03003F64 += 4;
     gUnknown_03003340[y][x] = v;
 }
+asm(".global sub_0801F6F0\n.thumb_set sub_0801F6F0, MapFloodCoreStep\n");

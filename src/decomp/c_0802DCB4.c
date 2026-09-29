@@ -14,9 +14,9 @@ void sub_0802DCB4(void)
 {
     struct Unit *unit;
 
-    sub_08023824();
-    sub_0802361C();
-    sub_08023908(4);
+    HandleMoveMapCursor();
+    HandleGameMapCursorInput();
+    HandleMoveCameraWithMapCursor(4);
     sub_08023274(0);
 
     if (sub_0802DBF8())
@@ -55,12 +55,12 @@ void sub_0802DCB4(void)
 
         if (gpKeySt->pressed & L_BUTTON)
         {
-            sub_08025580();
-            unit = sub_080254AC();
+            PeekNextReadyUnit();
+            unit = GetNextReadyUnit();
 
             if (unit != NULL)
             {
-                sub_08029088(unit->x, unit->y);
+                ScrollCameraToKeepCellInView(unit->x, unit->y);
 
                 if (sub_08015BD0((s32)gUnknown_0849A00C) != -1)
                 {
@@ -85,6 +85,6 @@ void sub_0802DCB4(void)
         }
     }
 
-    sub_0802A7C4();
+    RefreshMapCursorInfoPanel();
     sub_0802776C(0);
 }

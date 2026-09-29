@@ -57,7 +57,7 @@
  * rather than through a `map` local, which is the W34-F rule that
  * c_08003DC4.c records; that is what gives `(p + K) + idx` rather than
  * `(p + idx) + K`. Every use in the function -- including the
- * `sub_0803E9F8`/`sub_0801F92C` setup calls -- must name `gMap`, since
+ * `sub_0803E9F8`/`SetWorkingMapPlane` setup calls -- must name `gMap`, since
  * agbcc's CSE only reuses a pointer load across identical symbols (see
  * sub_08057D90 for the fuller writeup). */
 
@@ -107,15 +107,15 @@ u8 sub_0802E2D0(s16 x, s16 y)
             return 0;
         }
 
-        sub_0801F92C(gMap->move);
+        SetWorkingMapPlane(gMap->move);
         sub_08035584(gUnknown_030040D8);
         sub_08024404();
-        sub_080258CC();
+        RebuildMapUnitLayers();
 
         if (a)
         {
             gUnknown_03004480 = (gUnknown_03003F38 >> 6) + 1;
-            sub_080202A4(gUnknown_030040D8);
+            GenerateUnitMovementMap(gUnknown_030040D8);
             gUnknown_03004480 = gUnknown_030033EC;
             ((s8 *)gUnknown_03003340[y])[x] = 0;
             sub_0801FE68(0x40);
@@ -140,7 +140,7 @@ u8 sub_0802E2D0(s16 x, s16 y)
         }
     }
 
-    sub_08022990((u16)x, (u16)y, 1);
+    ShowRangeOverlay((u16)x, (u16)y, 1);
     gUnknown_03003334 = 6;
     sub_0803B4DC(0x69);
     return 1;

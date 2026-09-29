@@ -25,12 +25,12 @@ int sub_0803E9F8(struct Unk0803E9F8 *p, u8 *a2, u8 a3, u8 a4)
 
     if (p->unk04 == 0)
         return 0;
-    sub_0801F92C(a2);
+    SetWorkingMapPlane(a2);
     FillMovementMap(a3);
     switch (p->unk02_6)
     {
     case 1:
-        sub_0801FD30(p->unk00, p->unk01, a4);
+        MapSetCross(p->unk00, p->unk01, a4);
         return 1;
     case 3:
         sub_0801FAC4((u16)(p->unk00 + (int)sub_0803E7C0(p->unk02_6, p->unk02_e)),
@@ -44,7 +44,7 @@ int sub_0803E9F8(struct Unk0803E9F8 *p, u8 *a2, u8 a3, u8 a4)
                      p->unk02_e, 4, a4);
         return 1;
     case 5:
-        sub_0801FCE0(p->unk00, p->unk01 + 3, a4);
+        MapSetBarToBottom(p->unk00, p->unk01 + 3, a4);
         return 1;
     }
     return 0;

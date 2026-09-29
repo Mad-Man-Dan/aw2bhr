@@ -24,32 +24,33 @@
  * a local first; binding the two byte values to `u8` locals first. All three
  * reuse r1.
  *
- * Next thing to try: sub_08020354's parameter widths. It is declared from this
+ * Next thing to try: FillUnitAttackRange's parameter widths. It is declared from this
  * call site alone, and a wider first parameter -- or a third parameter -- would
  * make the pointer conflict with r1 and push it out to r2.
  */
 
-int sub_08058744(void)
+int AiPrepareAttackReach(void)
 {
     int r = 0;
 
     if (GetUnitFiringRangeWithCoBonus(gUnknown_030033EC, gUnknown_030040D8->unk00) == 1)
     {
-        sub_080202A4(gUnknown_030040D8);
+        GenerateUnitMovementMap(gUnknown_030040D8);
         sub_0801FD9C(0x79);
     }
     else
     {
         FillMovementMap(0xff);
-        /* WAVE 36: third argument added. W35-H retyped sub_08020354 from
+        /* WAVE 36: third argument added. W35-H retyped FillUnitAttackRange from
          * (int, int) to (u16, u16, struct Unit *) on body-side
          * evidence; this call site confirms it independently -- the ROM does
          * `ldr r2,[r4]` then reads r0/r1 through r2 and leaves r2 holding the
          * pointer, so the third argument IS the struct pointer and costs no
          * instruction to pass. */
-        sub_08020354(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
+        FillUnitAttackRange(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                      (struct Unit *)gUnknown_030040D8);
         r = 1;
     }
     return r;
 }
+asm(".global sub_08058744\n.thumb_set sub_08058744, AiPrepareAttackReach\n");

@@ -25,7 +25,7 @@
  * The height bound is re-read from memory every iteration (c_0801F838's rule);
  * only the row address `&gUnknown_03003340[y]` is hoisted out of the inner
  * loop, which is the compiler's own CSE and not a source local. */
-void sub_0801FCE0(int a1, int a2, int a3)
+void MapSetBarToBottom(int a1, int a2, int a3)
 {
     u16 x;
     u16 y;
@@ -39,6 +39,7 @@ void sub_0801FCE0(int a1, int a2, int a3)
         for (i = 0; i < 3; i++)
             gUnknown_03003340[y][x + i] = v;
 }
+asm(".global sub_0801FCE0\n.thumb_set sub_0801FCE0, MapSetBarToBottom\n");
 
 /* Draws a crosshair of a3 across the gUnknown_03003340 screen centred on
  * (a1, a2): the whole of row a2 except column a1, then the whole of column a1
@@ -56,7 +57,7 @@ void sub_0801FCE0(int a1, int a2, int a3)
  * subscript into a post-increment giv, with the giv's `ldr r1,=` init landing
  * in the preheader after the zero-trip guard. Writing either as an explicit
  * walking pointer emits the `ldr` ahead of the guard and reorders the pool. */
-void sub_0801FD30(int a1, int a2, int a3)
+void MapSetCross(int a1, int a2, int a3)
 {
     u16 x;
     u16 y;
@@ -73,3 +74,4 @@ void sub_0801FD30(int a1, int a2, int a3)
         if (i != y)
             gUnknown_03003340[i][x] = v;
 }
+asm(".global sub_0801FD30\n.thumb_set sub_0801FD30, MapSetCross\n");

@@ -69,9 +69,9 @@
  *     read into `ldrsb`. The store order is load-bearing.
  *   - Putting the `unk00` test inside the do-while as well is byte-neutral.
  *   - The parameter cannot be `struct Unk5A514Cell *`:
- *     include/unknown-functions.h declares `void sub_08059F24(void *)`.
+ *     include/unknown-functions.h declares `void AiListUnescortedFootUnits(void *)`.
  *
- * sub_0805A008 is this shape with ONE compare changed (`!= 0x17` for `> 2`)
+ * AiListUnescortedLanders is this shape with ONE compare changed (`!= 0x17` for `> 2`)
  * and matched on the first attempt from this derivation. */
 
 struct Unk5A514Cell
@@ -81,7 +81,7 @@ struct Unk5A514Cell
     /* 0x02 */ s16 v;
 };
 
-void sub_08059F24(void *a1)
+void AiListUnescortedFootUnits(void *a1)
 {
   struct Unk5A514Cell *out;
   struct Unit *u;
@@ -134,8 +134,9 @@ void sub_08059F24(void *a1)
 
   out->v = 0xFFFF;
 }
+asm(".global sub_08059F24\n.thumb_set sub_08059F24, AiListUnescortedFootUnits\n");
 
-void sub_0805A008(void *a1)
+void AiListUnescortedLanders(void *a1)
 {
   struct Unk5A514Cell *out;
   struct Unit *u;
@@ -188,3 +189,4 @@ void sub_0805A008(void *a1)
 
   out->v = 0xFFFF;
 }
+asm(".global sub_0805A008\n.thumb_set sub_0805A008, AiListUnescortedLanders\n");

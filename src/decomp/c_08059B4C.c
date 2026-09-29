@@ -31,7 +31,7 @@
  * The cell lookup is gMap->property[gMap->rowOffset[y] + x], read as s8.
  */
 
-void sub_08059B4C(int a1, int a2, int a3, void *a4, void *a5)
+void AiAllocateTerritoryTarget(int a1, int a2, int a3, void *a4, void *a5)
 {
     union Unk802C57CBuf v;
     struct PropertyListEntry *arr;
@@ -48,7 +48,7 @@ void sub_08059B4C(int a1, int a2, int a3, void *a4, void *a5)
 
 loop:
     v.pos.unk00 = 0x270F;
-    sub_08059C00(a4, (u16 *)&v);
+    AiPopLastNearestCandidate(a4, (u16 *)&v);
 
     if (v.pos.unk00 == 0x270F)
         return;
@@ -64,3 +64,4 @@ loop:
     ((u16 *)a5)[0] = v.pos.unk00;
     ((u16 *)a5)[1] = v.pos.unk02;
 }
+asm(".global sub_08059B4C\n.thumb_set sub_08059B4C, AiAllocateTerritoryTarget\n");

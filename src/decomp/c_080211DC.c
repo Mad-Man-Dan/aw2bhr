@@ -8,7 +8,7 @@
  * sub_080211DC @ 0x080211DC
  */
 
-void sub_080211DC(u8 a1, s8 a2)
+void StampUnitVision(u8 a1, s8 a2)
 {
     struct Unit *e;
     struct Map *map;
@@ -31,8 +31,9 @@ void sub_080211DC(u8 a1, s8 a2)
             bonus = 3;
     }
 
-    sub_080210C8(e->x, e->y,
+    StampVisionByPlaneMask(e->x, e->y,
                  bonus + GetUnitVisionWithCoBonus(((e - gUnits) >> 6) + 1, e->type),
                  gPlayers[(a1 >> 6) + 1].turnState,
                  a2, (a1 >> 6) + 1);
 }
+asm(".global sub_080211DC\n.thumb_set sub_080211DC, StampUnitVision\n");

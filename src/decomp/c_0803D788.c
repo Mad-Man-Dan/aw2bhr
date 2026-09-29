@@ -19,8 +19,8 @@ void sub_0803D788(void)
     gUnknown_030030E0.bits.effect = 3;
     gUnknown_03001FFC = 0x1f;
     sub_08011B18();
-    sub_080366C4(sub_080368E8);
-    sub_080366D0(sub_08036884);
+    sub_080366C4(DefaultMainLoopCallback);
+    sub_080366D0(DefaultVBlankCallback);
     sub_08012C58(gUnknown_0849D16C);
     sub_0801295C();
     Decompress(gUnknown_0823A3D4,

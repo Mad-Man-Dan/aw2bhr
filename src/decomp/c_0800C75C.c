@@ -89,7 +89,7 @@ asm(".global sub_0800C7A4\n.thumb_set sub_0800C7A4, ClearArmyHq\n");
 /* A classification of the low five bits of a terrain byte into 0, 1 or 2.
  * agbcc emits a jump table because the twelve labels 6..17 are dense, and the
  * six "1" cases share one body, so the table holds the same target six times
- * -- the same construction as sub_08026C6C.
+ * -- the same construction as GetIncomeForTerrainKind.
  *
  * The `movs r2, #0` sits AHEAD of the mask and the switch, and the three arms
  * converge on `adds r0, r2, #0`, so the result is ONE shared variable the

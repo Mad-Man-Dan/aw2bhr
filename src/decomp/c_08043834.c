@@ -36,7 +36,7 @@ void DrawCoPowerLabel(int x, int y, int i)
 
 asm(".global sub_08043898\n.thumb_set sub_08043898, DrawCoPowerLabel\n");
 
-void sub_080438FC(int a, int b, int c)
+void DrawCoPowerStarBar(int a, int b, int c)
 {
     int va;
     int vy;
@@ -54,6 +54,7 @@ void sub_080438FC(int a, int b, int c)
     va = a;
     vy = b + 0x18;
 
-    sub_080439A8(&va, &vy, &vu, m, lo, 0, vu >= lo, &vt);
-    sub_080439A8(&va, &vy, &vu, m, hi, 1, vu >= hi, &vt);
+    DrawCoPowerStarBarSegment(&va, &vy, &vu, m, lo, 0, vu >= lo, &vt);
+    DrawCoPowerStarBarSegment(&va, &vy, &vu, m, hi, 1, vu >= hi, &vt);
 }
+asm(".global sub_080438FC\n.thumb_set sub_080438FC, DrawCoPowerStarBar\n");

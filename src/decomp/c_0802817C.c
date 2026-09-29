@@ -13,7 +13,8 @@
  * `const u8 []` blob with no cast; a plain `void *` would discard the const and
  * -Werror turns that into an error. src/decomp/c_0802BF80.c is the matched
  * exemplar for this shape. */
-void sub_0802817C(void)
+void StartDayStartScreen(void)
 {
     sub_080152EC(gUnknown_08499E4C, 0);
 }
+asm(".global sub_0802817C\n.thumb_set sub_0802817C, StartDayStartScreen\n");

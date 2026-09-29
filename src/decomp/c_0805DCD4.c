@@ -43,13 +43,13 @@ void sub_0805DCD4(void)
   dir = 0;
   if ((((struct Unk5DCD4Unit *)gUnknown_030040D8)->unk09_6 != 0) && ((gUnknown_030040D8->unk00 == 7) || (gUnknown_030040D8->unk00 == 0x14)))
   {
-    sub_080202A4(gUnknown_030040D8);
+    GenerateUnitMovementMap(gUnknown_030040D8);
     sub_0801FD9C(0x79);
     for (y = 0; y < gMap->height; y++)
     {
       for (x = 0; x < gMap->width; x++)
       {
-        if (((((((s8) gUnknown_03003340[y][x]) >= 0) && (sub_0804236C(x, y) == 1)) && (gMap->unit[gMap->rowOffset[y] + x] == 0)) && (((s8) gUnknown_03003340[y][x]) > best)) && (sub_08058DEC(x, y, (u16 *)&pt) == 0))
+        if (((((((s8) gUnknown_03003340[y][x]) >= 0) && (IsCellCapturableByCurrentArmy(x, y) == 1)) && (gMap->unit[gMap->rowOffset[y] + x] == 0)) && (((s8) gUnknown_03003340[y][x]) > best)) && (AiPickDropCellBeside(x, y, (u16 *)&pt) == 0))
         {
           bx = x;
           by = y;
@@ -84,7 +84,7 @@ void sub_0805DCD4(void)
       {
         for (x = 0; x < gMap->width; x++)
         {
-          if ((((((s8) gUnknown_03003340[y][x]) >= 0) && (gMap->unk376A[gMap->rowOffset[y] + x] > best)) && (gMap->unit[gMap->rowOffset[y] + x] == 0)) && (sub_08058DEC(x, y, (u16 *)&pt) == 0))
+          if ((((((s8) gUnknown_03003340[y][x]) >= 0) && (gMap->unk376A[gMap->rowOffset[y] + x] > best)) && (gMap->unit[gMap->rowOffset[y] + x] == 0)) && (AiPickDropCellBeside(x, y, (u16 *)&pt) == 0))
           {
             bx = (x = x);
             by = y;

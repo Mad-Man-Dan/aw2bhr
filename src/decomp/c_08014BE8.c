@@ -38,7 +38,7 @@ bool8 sub_08014BE8(void)
     if (sub_08015BD0((s32)gUnknown_0849E240) != -1)
         return FALSE;
 
-    if (sub_080366DC() == sub_080369BC)
+    if (sub_080366DC() == MapMainLoopCallback)
         return TRUE;
 
     return FALSE;

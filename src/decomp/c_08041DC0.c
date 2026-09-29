@@ -49,7 +49,7 @@ void sub_08041DCC(void)
 void sub_08041DD8(void)
 {
     sub_08023348();
-    sub_0803662C();
+    InstallMapFrameCallbacks();
 }
 
 /* Family F005 (data/families.json): 19 sixteen-byte wrappers shaped
@@ -63,6 +63,6 @@ void sub_08041DD8(void)
 
 void sub_08041DE8(void)
 {
-    sub_080258CC();
+    RebuildMapUnitLayers();
     LockUnitSelection();
 }

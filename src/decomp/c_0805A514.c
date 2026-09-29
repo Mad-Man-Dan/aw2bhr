@@ -14,7 +14,7 @@ struct Unk5A514Cell
     /* 0x02 */ s16 v;
 };
 
-void sub_0805A514(struct Unk5A514Cell *out)
+void AiListEmbarkBoundUnits(struct Unk5A514Cell *out)
 {
     struct Unit *u;
     u16 pos[2];
@@ -31,7 +31,7 @@ void sub_0805A514(struct Unk5A514Cell *out)
             continue;
         if ((s8)gUnknown_03003340[u->y][u->x] == -1)
             continue;
-        if (sub_0805ACA8(u->x, u->y, pos) != 1)
+        if (AiPickShoalParkBeside(u->x, u->y, pos) != 1)
             continue;
         out->x = u->x;
         out->y = u->y;
@@ -41,8 +41,9 @@ void sub_0805A514(struct Unk5A514Cell *out)
 
     out->v = 0xFFFF;
 }
+asm(".global sub_0805A514\n.thumb_set sub_0805A514, AiListEmbarkBoundUnits\n");
 
-void sub_0805A5E0(int *out)
+void AiPickSupplyWard(int *out)
 {
     struct Unit *p;
     int i;
@@ -79,3 +80,4 @@ void sub_0805A5E0(int *out)
         }
     }
 }
+asm(".global sub_0805A5E0\n.thumb_set sub_0805A5E0, AiPickSupplyWard\n");

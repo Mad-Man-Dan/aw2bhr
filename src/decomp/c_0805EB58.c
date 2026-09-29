@@ -37,8 +37,8 @@ void sub_0805EB58(void)
     u32 yp;
 
     best = 0x7fff;
-    sub_0801F92C(gMap->move);
-    sub_080202A4(gUnknown_030040D8);
+    SetWorkingMapPlane(gMap->move);
+    GenerateUnitMovementMap(gUnknown_030040D8);
     v.f.unk00 = 0x270f;
 
     for (y = 0; y < gMap->height; y++)
@@ -50,7 +50,7 @@ void sub_0805EB58(void)
             idx = gMap->rowOffset[y] + x;
             if (gMap->unit[idx] != 0)
                 continue;
-            if (sub_08026FD0(gUnknown_03003F38, gMap->terrain[idx]) == 1)
+            if (IsTerrainOwnedByUnitsTeam(gUnknown_03003F38, gMap->terrain[idx]) == 1)
                 continue;
             tbl = gUnknown_085D5ABC[gUnknown_030040D8->unk00].transportTable;
             t = gMap->terrain[gMap->rowOffset[y] + x] & 0x1f;
@@ -67,7 +67,7 @@ void sub_0805EB58(void)
     }
 
     if (v.f.unk00 != 0x270f)
-        sub_080591E4(&v);
+        AiAdvanceToward(&v);
     else
         sub_0805F7B8();
 }

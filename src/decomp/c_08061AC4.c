@@ -14,7 +14,7 @@
  * base register rather than a ldrb displacement -- ldrb's imm5 stops at 31 --
  * and the base pool word is loaded once and held, which is why the copy exists
  * at all. */
-void sub_08061AC4(void)
+void AiEndTurnStep(void)
 {
     if (gUnknown_030044D8 != 1)
     {
@@ -25,3 +25,4 @@ void sub_08061AC4(void)
             sub_080344F0(gPlaySt.unk2e);
     }
 }
+asm(".global sub_08061AC4\n.thumb_set sub_08061AC4, AiEndTurnStep\n");

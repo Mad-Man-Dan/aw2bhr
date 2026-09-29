@@ -15,7 +15,8 @@
  * with `strh` is byte-identical either way, and this function was re-verified
  * after the change. */
 
-void sub_0805D338(void)
+void AiStartProductionPass(void)
 {
     gUnknown_03004780 = 5;
 }
+asm(".global sub_0805D338\n.thumb_set sub_0805D338, AiStartProductionPass\n");

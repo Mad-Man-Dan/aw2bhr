@@ -21,5 +21,5 @@ void sub_0803EF44(int a1, int a2, ProcPtr parent)
 
     proc->unk_2c = a1;
     proc->unk_30 = a2;
-    sub_0802909C(a1, a2);
+    ScrollCameraToCenterCell(a1, a2);
 }

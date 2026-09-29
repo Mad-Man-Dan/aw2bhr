@@ -13,7 +13,7 @@
  * `lsls #0x10; asrs #0x10` pair, which is exactly the ROM's shape.
  */
 
-void sub_0805FD64(void)
+void AiExecuteActionStep(void)
 {
     gUnknown_03004774 = 0;
 
@@ -57,3 +57,4 @@ void sub_0805FD64(void)
         break;
     }
 }
+asm(".global sub_0805FD64\n.thumb_set sub_0805FD64, AiExecuteActionStep\n");

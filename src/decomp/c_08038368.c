@@ -26,7 +26,7 @@
  * spanning two of these functions necessarily contains every function between
  * them and therefore claims every word between their words. Concretely:
  * 0x080381C0 + 0x80 = 0x08038240, so sub_08038240 immediately follows
- * sub_080381C0 and lies strictly inside any span reaching sub_08038368; a unit
+ * sub_080381C0 and lies strictly inside any span reaching SaveCampaignMissionResult; a unit
  * with both my words but not F00/F04 cannot be drawn.
  *   What the check actually needs is that no word in the span is unclaimed or
  * claimed out of order -- NOT that one function's own words are adjacent.
@@ -44,7 +44,7 @@
  * into the test, which is why it is emitted a second time at _080383BA.
  */
 
-void sub_08038368(int a1, int a2, int a3)
+void SaveCampaignMissionResult(int a1, int a2, int a3)
 {
     u8 found;
     u8 i;
@@ -70,6 +70,7 @@ void sub_08038368(int a1, int a2, int a3)
     if (found == 0)
         gUnknown_0200C420.unk38[i + 1].unk00_08 = 0;
 }
+asm(".global sub_08038368\n.thumb_set sub_08038368, SaveCampaignMissionResult\n");
 
 /* MATCHED byte-for-byte (wave 43, W43-E), first attempt. relocs: match.
  *
@@ -81,7 +82,7 @@ void sub_08038368(int a1, int a2, int a3)
  * The index is `u8`: it is truncated with an `lsls #0x18; lsrs #0x18` pair on
  * every iteration and the bound test is `bhi`, unsigned. It stays a real
  * counter rather than being strength-reduced into a pointer (which is what
- * happens to the identically-shaped guard in the adjacent sub_08038434)
+ * happens to the identically-shaped guard in the adjacent GetAverageCampaignScore)
  * precisely BECAUSE the index value is needed after the loop for `i + 1`.
  * Those two functions are one shape differing in what they do with the walk,
  * and the u8-vs-int index difference falls straight out of that.
@@ -123,7 +124,7 @@ int sub_0803840C(void)
  * logical shift alone extracts it.
  */
 
-int sub_08038434(void)
+int GetAverageCampaignScore(void)
 {
     int sum;
     int count;
@@ -140,3 +141,4 @@ int sub_08038434(void)
     }
     return Div(sum, count);
 }
+asm(".global sub_08038434\n.thumb_set sub_08038434, GetAverageCampaignScore\n");

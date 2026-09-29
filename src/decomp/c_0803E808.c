@@ -57,7 +57,7 @@ void sub_0803E808(int a1, int a2, int a3, int a4, int a5)
     bestX = 0;
     bestY = 0;
     bestT = 0;
-    sub_0801F92C(MAP->move);
+    SetWorkingMapPlane(MAP->move);
     FillMovementMap(0xff);
     x = a1 + (int)sub_0803E7C0(a4, a5);
     y = a2 + (int)sub_0803E7E4(a4, a5);
@@ -70,9 +70,9 @@ void sub_0803E808(int a1, int a2, int a3, int a4, int a5)
                 continue;
             if (gMap->unit[MAP->rowOffset[j] + i] == 0)
                 continue;
-            if (sub_08026F28(gUnknown_030033EC, (gMap->unit[MAP->rowOffset[j] + i] >> 6) + 1) == 1)
+            if (AreArmiesOnSameTeam(gUnknown_030033EC, (gMap->unit[MAP->rowOffset[j] + i] >> 6) + 1) == 1)
                 continue;
-            if (!sub_08020DBC(gUnknown_030033EC, i, j))
+            if (!IsCellVisibleToArmy(gUnknown_030033EC, i, j))
                 continue;
             u = &gUnits[gMap->unit[MAP->rowOffset[j] + i]];
             if (u->type == 0x18)

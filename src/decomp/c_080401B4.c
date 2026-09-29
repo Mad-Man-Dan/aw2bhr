@@ -26,7 +26,7 @@ struct Unk401B4Proc
 };
 /* Marks the entry's cell as occupied on two planes of the gUnknown_08499590
  * map, then refreshes. The map header is modelled as a struct for the same
- * reason sub_08041EA8 and sub_08040790 need it: the ROM computes every plane
+ * reason IsCellOpenForDrop and sub_08040790 need it: the ROM computes every plane
  * address as `(map + K) + idx`, an association that only survives through a
  * COMPONENT_REF.
  *
@@ -43,8 +43,8 @@ void sub_080401B4(struct Unk401B4Proc *proc)
     struct Unit *ent = proc->unk4c;
 
     sub_0803FF48(ent->x, ent->y, gUnknown_085D5ABC[ent->type].unitClass, proc);
-    sub_08025D60(ent - gUnits);
-    sub_080258CC();
+    DestroyUnitAndCargo(ent - gUnits);
+    RebuildMapUnitLayers();
 }
 
 void sub_08040200(struct Unk02028360 *ent, ProcPtr a2)

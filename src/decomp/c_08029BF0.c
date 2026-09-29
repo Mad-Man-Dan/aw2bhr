@@ -41,7 +41,7 @@ struct Unk29C28Obj
 
 void sub_08029BF0(struct Unk29BF0Obj *p)
 {
-    sub_08029088(p->unk20, p->unk22);
+    ScrollCameraToKeepCellInView(p->unk20, p->unk22);
 
     if (p->unk24 > 999)
     {

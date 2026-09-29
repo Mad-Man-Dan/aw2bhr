@@ -21,7 +21,7 @@
 void BlockMapStartCoInfo_08034FD9(void)
 {
     sub_08023348();
-    sub_0803662C();
+    InstallMapFrameCallbacks();
     sub_08024268();
 }
 
@@ -35,7 +35,7 @@ void BlockMapStartCoInfo_08034FD9(void)
 void sub_08034FEC(void)
 {
     sub_08023354();
-    sub_0803662C();
+    InstallMapFrameCallbacks();
     sub_08024268();
 }
 

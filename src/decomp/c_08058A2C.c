@@ -10,7 +10,7 @@
 #include "map.h"
 
 /*
- * sub_08058A2C -- AI: score the battle that was just simulated.
+ * AiScoreAttack -- AI: score the battle that was just simulated.
  *
  * Reads gBattleAttacker and gBattleDefender. Returns -1 at once if the
  * attacker's HP loss (plus 50 if it would be destroyed) reaches the limit at
@@ -18,7 +18,7 @@
  *
  * Otherwise it weights the defender:
  *   - Infantry-class defenders (type 2 or lower) on a property tile that
- *     sub_08026FD0 rejects: weight 1, or 32 on terrain kind 8, times 8 on
+ *     IsTerrainOwnedByUnitsTeam rejects: weight 1, or 32 on terrain kind 8, times 8 on
  *     kinds 0xA, 0xB and 0xE; then times (unk05_3 + displayed HP) / 5 + 1,
  *     times 100.
  *   - Everything else: weight 100 or 150, by sub_08042D50.
@@ -33,7 +33,7 @@
  *     map index. Reusing `n` or `off` puts the values in different registers.
  */
 
-int sub_08058A2C(int *out)
+int AiScoreAttack(int *out)
 {
     struct Unit *u;
     int atk;
@@ -60,7 +60,7 @@ int sub_08058A2C(int *out)
         off = ((struct Map *)gUnknown_08499590)->rowOffset[u->y] + u->x;
         if (((struct Map *)gUnknown_08499590)->property[off] != -1)
         {
-            if (!sub_08026FD0(((struct Map *)gUnknown_08499590)->unit[off], ((struct Map *)gUnknown_08499590)->terrain[off]))
+            if (!IsTerrainOwnedByUnitsTeam(((struct Map *)gUnknown_08499590)->unit[off], ((struct Map *)gUnknown_08499590)->terrain[off]))
             {
                 kind = ((struct Map *)gUnknown_08499590)->terrain[((struct Map *)gUnknown_08499590)->rowOffset[u->y] + u->x] & 0x1F;
                 if (kind == 8)
@@ -107,3 +107,4 @@ merge:
         return -1;
     return 0;
 }
+asm(".global sub_08058A2C\n.thumb_set sub_08058A2C, AiScoreAttack\n");

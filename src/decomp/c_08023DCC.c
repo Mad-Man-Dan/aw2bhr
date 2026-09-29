@@ -15,19 +15,20 @@
  * (`adds rN, rM, #0`), which is only free when the declared parameter is
  * u16-compatible.
  *
- * sub_08023DCC and sub_08023E14 are byte-for-byte the same function, as are
- * sub_08023E5C and sub_08023EA4 -- same callees, same global, same
+ * RedrawMapColumnForScrollLeft and RedrawMapColumnForScrollRight are byte-for-byte the same function, as are
+ * RedrawMapRowForScrollUp and RedrawMapRowForScrollDown -- same callees, same global, same
  * relocations. Two duplicated bodies, not four; the ROM really does contain
  * both copies.
  */
-void sub_08023DCC(u16 a, u16 b, u16 c, u16 d)
+void RedrawMapColumnForScrollLeft(u16 a, u16 b, u16 c, u16 d)
 {
     BlitMapColumn(a, b, c, d);
-    sub_08023D48(a, b, c, d);
+    RedrawUnitLayerColumn(a, b, c, d);
 
     if (gUnknown_03000559 == 1)
-        sub_08023DA4(a, b, c, d);
+        RedrawRangeOverlayColumn(a, b, c, d);
 }
+asm(".global sub_08023DCC\n.thumb_set sub_08023DCC, RedrawMapColumnForScrollLeft\n");
 
 /* Family F043 (tools/families.py): four 72-byte wrappers that run two or three
  * redraw passes over the same four arguments. Four `lsls #0x10; lsrs #0x10`
@@ -37,19 +38,20 @@ void sub_08023DCC(u16 a, u16 b, u16 c, u16 d)
  * (`adds rN, rM, #0`), which is only free when the declared parameter is
  * u16-compatible.
  *
- * sub_08023DCC and sub_08023E14 are byte-for-byte the same function, as are
- * sub_08023E5C and sub_08023EA4 -- same callees, same global, same
+ * RedrawMapColumnForScrollLeft and RedrawMapColumnForScrollRight are byte-for-byte the same function, as are
+ * RedrawMapRowForScrollUp and RedrawMapRowForScrollDown -- same callees, same global, same
  * relocations. Two duplicated bodies, not four; the ROM really does contain
  * both copies.
  */
-void sub_08023E14(u16 a, u16 b, u16 c, u16 d)
+void RedrawMapColumnForScrollRight(u16 a, u16 b, u16 c, u16 d)
 {
     BlitMapColumn(a, b, c, d);
-    sub_08023D48(a, b, c, d);
+    RedrawUnitLayerColumn(a, b, c, d);
 
     if (gUnknown_03000559 == 1)
-        sub_08023DA4(a, b, c, d);
+        RedrawRangeOverlayColumn(a, b, c, d);
 }
+asm(".global sub_08023E14\n.thumb_set sub_08023E14, RedrawMapColumnForScrollRight\n");
 
 /* Family F043 (tools/families.py): four 72-byte wrappers that run two or three
  * redraw passes over the same four arguments. Four `lsls #0x10; lsrs #0x10`
@@ -59,19 +61,20 @@ void sub_08023E14(u16 a, u16 b, u16 c, u16 d)
  * (`adds rN, rM, #0`), which is only free when the declared parameter is
  * u16-compatible.
  *
- * sub_08023DCC and sub_08023E14 are byte-for-byte the same function, as are
- * sub_08023E5C and sub_08023EA4 -- same callees, same global, same
+ * RedrawMapColumnForScrollLeft and RedrawMapColumnForScrollRight are byte-for-byte the same function, as are
+ * RedrawMapRowForScrollUp and RedrawMapRowForScrollDown -- same callees, same global, same
  * relocations. Two duplicated bodies, not four; the ROM really does contain
  * both copies.
  */
-void sub_08023E5C(u16 a, u16 b, u16 c, u16 d)
+void RedrawMapRowForScrollUp(u16 a, u16 b, u16 c, u16 d)
 {
     BlitMapRow(a, b, c, d);
-    sub_08023D14(a, b, c, d);
+    RedrawUnitLayerRow(a, b, c, d);
 
     if (gUnknown_03000559 == 1)
-        sub_08023D7C(a, b, c, d);
+        RedrawRangeOverlayRow(a, b, c, d);
 }
+asm(".global sub_08023E5C\n.thumb_set sub_08023E5C, RedrawMapRowForScrollUp\n");
 
 /* Family F043 (tools/families.py): four 72-byte wrappers that run two or three
  * redraw passes over the same four arguments. Four `lsls #0x10; lsrs #0x10`
@@ -81,16 +84,17 @@ void sub_08023E5C(u16 a, u16 b, u16 c, u16 d)
  * (`adds rN, rM, #0`), which is only free when the declared parameter is
  * u16-compatible.
  *
- * sub_08023DCC and sub_08023E14 are byte-for-byte the same function, as are
- * sub_08023E5C and sub_08023EA4 -- same callees, same global, same
+ * RedrawMapColumnForScrollLeft and RedrawMapColumnForScrollRight are byte-for-byte the same function, as are
+ * RedrawMapRowForScrollUp and RedrawMapRowForScrollDown -- same callees, same global, same
  * relocations. Two duplicated bodies, not four; the ROM really does contain
  * both copies.
  */
-void sub_08023EA4(u16 a, u16 b, u16 c, u16 d)
+void RedrawMapRowForScrollDown(u16 a, u16 b, u16 c, u16 d)
 {
     BlitMapRow(a, b, c, d);
-    sub_08023D14(a, b, c, d);
+    RedrawUnitLayerRow(a, b, c, d);
 
     if (gUnknown_03000559 == 1)
-        sub_08023D7C(a, b, c, d);
+        RedrawRangeOverlayRow(a, b, c, d);
 }
+asm(".global sub_08023EA4\n.thumb_set sub_08023EA4, RedrawMapRowForScrollDown\n");

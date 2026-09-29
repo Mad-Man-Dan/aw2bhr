@@ -34,9 +34,9 @@
  *     gMap->terrain[] and gMap->unk234A[], with no pointer locals bound.
  *
  *  3. THE TWO-CALL SUM MUST BE SPLIT, AND 978 EVALUATED FIRST:
- *         n = sub_08029978(u, 0);
- *         n = sub_08029A48(u, 0) + n;
- *     The single expression `sub_08029978(u,0) + sub_08029A48(u,0)` emits the
+ *         n = ResupplyUnitAmmo(u, 0);
+ *         n = ResupplyUnitFuel(u, 0) + n;
+ *     The single expression `ResupplyUnitAmmo(u,0) + ResupplyUnitFuel(u,0)` emits the
  *     right instruction shape but the WRONG call order.  Note this difference
  *     costs ZERO bytes -- both `bl`s encode as offset 0 plus a relocation -- so
  *     it is invisible in the byte score and only the reloc comparison catches
@@ -113,15 +113,15 @@ void sub_08029FE4(void)
     }
     if (gMap->unk234A[idx] == 0)
     {
-      sub_08029978(u, 0);
-      sub_08029A48(u, 0);
+      ResupplyUnitAmmo(u, 0);
+      ResupplyUnitFuel(u, 0);
       RepairUnit(u, 2, 1 - (*p7));
     }
     else
     {
       save = gPlayers[gUnknown_030033EC].funds;
-      n = sub_08029978(u, 0);
-      n = sub_08029A48(u, 0) + n;
+      n = ResupplyUnitAmmo(u, 0);
+      n = ResupplyUnitFuel(u, 0) + n;
       m = RepairUnit(u, 2, 1 - (*p7));
       if ((n != 0) || (m != 0))
       {

@@ -7,8 +7,8 @@
  * sub_080409A0 @ 0x080409A0, sub_080409B4 @ 0x080409B4, sub_080409D0 @ 0x080409D0
  */
 
-/* The twin of sub_08040088 above, calling sub_0802909C instead of
- * sub_08029088 -- the same pair of s16 fields at 0x2c/0x30. */
+/* The twin of sub_08040088 above, calling ScrollCameraToCenterCell instead of
+ * ScrollCameraToKeepCellInView -- the same pair of s16 fields at 0x2c/0x30. */
 struct Unk409A0Proc
 {
     /* 00 */ u8 filler_00[0x2c];
@@ -17,8 +17,8 @@ struct Unk409A0Proc
     /* 30 */ s16 unk30;
 };
 #include "proc.h"
-/* Forwards the proc's own cell coordinates to sub_08040380 together with the
- * proc itself, which sub_08040380 passes on as sub_0804046C's fifth argument
+/* Forwards the proc's own cell coordinates to StartSiloLaunch together with the
+ * proc itself, which StartSiloLaunch passes on as sub_0804046C's fifth argument
  * -- the Proc_StartBlocking parent. `adds r2,r0,#0` before either coordinate
  * load is the parameter copy that argument setup groups first, not a spill.
  * Same s16 field pair as the matched sub_08040984 at this address. */
@@ -42,12 +42,12 @@ struct Unk409D0Proc
 
 void sub_080409A0(struct Unk409A0Proc *proc)
 {
-    sub_0802909C(proc->unk2c, proc->unk30);
+    ScrollCameraToCenterCell(proc->unk2c, proc->unk30);
 }
 
 void sub_080409B4(struct Unk409B4Proc *proc)
 {
-    sub_08040380(proc->unk64, proc->unk66, proc);
+    StartSiloLaunch(proc->unk64, proc->unk66, proc);
 }
 
 void sub_080409D0(struct Unk409D0Proc *proc)

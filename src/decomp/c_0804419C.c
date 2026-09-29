@@ -4,17 +4,17 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804419C.
- * GetCoPowerStarCost @ 0x0804419C, GetCoPowerCost @ 0x080441D4, GetSuperCoPowerCost @ 0x08044208, IsCoPowerReady @ 0x0804423C, sub_08044280 @ 0x08044280, IsCoPowerAvailable @ 0x080442AC
+ * GetCoPowerStarCost @ 0x0804419C, GetCoPowerCost @ 0x080441D4, GetSuperCoPowerCost @ 0x08044208, IsCoPowerReady @ 0x0804423C, IsSuperCoPowerReady @ 0x08044280, IsCoPowerAvailable @ 0x080442AC
  */
 
 int GetCoPowerStarCost(int a1)
 {
     u16 pct;
 
-    if (sub_08044374(a1) > 9)
+    if (GetCoPowerUseCount(a1) > 9)
         pct = 200;
     else
-        pct = sub_08044374(a1) * 20 + 100;
+        pct = GetCoPowerUseCount(a1) * 20 + 100;
     return Div(pct * 9000, 100);
 }
 
@@ -38,10 +38,10 @@ u8 IsCoPowerReady(int a1)
 {
     int funds;
 
-    if (sub_0804415C(a1))
+    if (IsCoPowerActive(a1))
         return 0;
     if (GetCoPowerCost(a1) == 0)
-        return sub_08044280(a1);
+        return IsSuperCoPowerReady(a1);
     funds = GetCoPowerCharge(a1);
     if (funds >= GetCoPowerCost(a1))
         return 1;
@@ -50,23 +50,24 @@ u8 IsCoPowerReady(int a1)
 
 asm(".global sub_0804423C\n.thumb_set sub_0804423C, IsCoPowerReady\n");
 
-int sub_08044280(int a1)
+int IsSuperCoPowerReady(int a1)
 {
     int funds;
 
-    if (sub_0804415C(a1))
+    if (IsCoPowerActive(a1))
         return 0;
     funds = GetCoPowerCharge(a1);
     if (funds >= GetSuperCoPowerCost(a1))
         return 1;
     return 0;
 }
+asm(".global sub_08044280\n.thumb_set sub_08044280, IsSuperCoPowerReady\n");
 
 int IsCoPowerAvailable(int a1)
 {
     int funds;
 
-    if (sub_0804415C(a1))
+    if (IsCoPowerActive(a1))
         return 0;
     if (GetCoPowerCost(a1) == 0)
         return 0;

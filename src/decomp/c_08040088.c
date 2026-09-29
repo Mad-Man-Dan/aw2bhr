@@ -10,7 +10,7 @@
 /* Family F025-adjacent: `f(proc->unk2c, proc->unk30)` with both coordinates
  * loaded `ldrsh`. The two fields are s16 OBJECTS and not (s16) casts of int
  * members: `movs rI,#0x2c / ldrsh rD,[rB,rI]` is the s16-object tell -- an int
- * member converted to sub_08029088's s16 parameters would emit `ldr` and let
+ * member converted to ScrollCameraToKeepCellInView's s16 parameters would emit `ldr` and let
  * the callee narrow, and an (s16) cast on an int member would emit
  * `ldr; lsls #16; asrs #16`. Same shape as sub_08040984 next door, at 0x2c/0x30
  * instead of 0x64/0x66. */
@@ -24,5 +24,5 @@ struct Unk40088Proc
 
 void sub_08040088(struct Unk40088Proc *proc)
 {
-    sub_08029088(proc->unk2c, proc->unk30);
+    ScrollCameraToKeepCellInView(proc->unk2c, proc->unk30);
 }

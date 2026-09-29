@@ -23,7 +23,7 @@
  * The two arms are a plain if/else with a STORE IN EACH, not a `?:` -- both
  * recompute their value and cross-jumping merged the `strb` afterwards, which
  * is why the ROM has the GetUnitMovementWithCoBonus call twice. */
-void sub_08038C98(void)
+void InitMovePathForActiveUnit(void)
 {
     ApplyPaletteExt(gUnknown_0809165C, 0x260, 0x20);
     sub_08011E54(gUnknown_080A1C24, (void *)0x06013940, 0xa00);
@@ -40,10 +40,11 @@ void sub_08038C98(void)
                              - gUnits) >> 6) + 1,
                            ((struct Unit *)gUnknown_030040D8)->type);
 
-    sub_080386EC(0);
-    sub_08038848(((struct Unit *)gUnknown_030040D8)->x,
+    TruncateMovePath(0);
+    PushMovePathStep(((struct Unit *)gUnknown_030040D8)->x,
                  ((struct Unit *)gUnknown_030040D8)->y);
     gUnknown_0849D5F8->unk38[0] = gUnknown_0849D5F8->unk38[0xc];
     sub_080386DC(0xFFFF, 0xFFFF);
-    sub_08038D7C();
+    UpdateMovePathToCursor();
 }
+asm(".global sub_08038C98\n.thumb_set sub_08038C98, InitMovePathForActiveUnit\n");

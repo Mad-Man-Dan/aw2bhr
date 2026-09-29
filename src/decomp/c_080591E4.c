@@ -8,21 +8,21 @@
  * sub_080591E4 @ 0x080591E4, sub_08059464 @ 0x08059464
  */
 
-/* sub_080591E4 @ 0x080591E4, 640 bytes. MATCHED.
+/* AiAdvanceToward @ 0x080591E4, 640 bytes. MATCHED.
  *
  * The battle-cursor threat scan: walk every reachable cell, keep the one with
  * the lowest +0x2D5A threat value that passes the reachability and terrain
- * tests, and issue it as a sub_0805D648 move. The sibling sub_08059464 at
+ * tests, and issue it as a sub_0805D648 move. The sibling AiAdvanceTowardUnseeded at
  * 0x08059464 runs the same loop without the gUnknown_030013EC cursor-draw
  * callback, the +0x2D5A prefetch or the `== 100` seed.
  *
- * NOT a transcription twin of sub_08059464 despite tools/twin_pairs.py rating
+ * NOT a transcription twin of AiAdvanceTowardUnseeded despite tools/twin_pairs.py rating
  * them 0.538 -- 288 instructions against 240, with a four-instruction block
  * deleted, an 18-instruction run replaced by five, and different frame sizes.
  * What DID transfer between them is the whole loop body verbatim; each was
  * matched separately and neither derived from the other.
  *
- * Uses `gMap` (include/map.h), but the `sub_0801F92C` setup calls must also
+ * Uses `gMap` (include/map.h), but the `SetWorkingMapPlane` setup calls must also
  * pass `gMap->danger` / `gMap->move` (the plane's own array member,
  * decays to `u8 *`), not `gUnknown_08499590 + offset` or a cast -- agbcc's
  * CSE only reuses a pointer load across identical symbols, and mixing in the
@@ -42,7 +42,7 @@
  * 304 iterations, which is the wave-37 claim about the permuter holding:
  * order-right, slot-wrong is exactly its case.
  *
- * The same loop in sub_08059464 matched first try with `int mask`, because
+ * The same loop in AiAdvanceTowardUnseeded matched first try with `int mask`, because
  * that function has no pre-loop high-register allocnos competing for reuse. So
  * the type of a SPILLED local is a register-allocation lever even when it
  * costs zero instructions, and whether it matters depends on code OUTSIDE the
@@ -58,7 +58,7 @@
  *     shorten_compare then makes the comparison unsigned. Adding `(u8)` or
  *     `100u` breaks it.
  *   - the pre-loop `best` read comes out `ldrsb` here and `ldrb; lsl; asr` in
- *     sub_08059464 from the SAME `(s8)map->danger[...]` source: `ldrsb` needs
+ *     AiAdvanceTowardUnseeded from the SAME `(s8)map->danger[...]` source: `ldrsb` needs
  *     a spare register for the zero index, and here the address landed in r2
  *     leaving r0 free while there it landed in r0.
  *   - the 5th argument to the gUnknown_030013EC indirect call is the literal 0
@@ -76,16 +76,16 @@
  * matches the four register arguments plus one stack word here.
  */
 
-/* sub_08059464 @ 0x08059464, 528 bytes. MATCHED (first attempt).
+/* AiAdvanceTowardUnseeded @ 0x08059464, 528 bytes. MATCHED (first attempt).
  *
- * The sibling of sub_080591E4 at 0x080591E4: the same "walk every cell, keep
+ * The sibling of AiAdvanceToward at 0x080591E4: the same "walk every cell, keep
  * the lowest-threat reachable one, issue it as a sub_0805D648 move" scan, minus
  * the gUnknown_030013EC cursor-draw callback, minus the +0x2D5A prefetch, and
  * minus the `gUnknown_03004784[1] == 100` special case that seeds `best` with
  * 0x7FFF. Its `void *` parameter is declared (unknown-functions.h) but never
  * read -- the ROM prologue does not touch r0.
  *
- * NOT a transcription twin of sub_080591E4 -- see the note in that function's
+ * NOT a transcription twin of AiAdvanceToward -- see the note in that function's
  * work file. The two share this loop and nothing else structurally.
  *
  * gUnknown_0816D95C / 0816D960 / 0816D964 are NOT globals: the ROM words there
@@ -112,7 +112,7 @@
  * sign-extend.
  */
 
-void sub_080591E4(void *a1)
+void AiAdvanceToward(void *a1)
 {
     u16 *cur;
     s16 x;
@@ -126,7 +126,7 @@ void sub_080591E4(void *a1)
     bestY = 0;
     mask = 0;
 
-    sub_0801F92C(gMap->danger);
+    SetWorkingMapPlane(gMap->danger);
     gUnknown_030013EC(cur[0], cur[1], gUnknown_030040D8->unk00, 0x78, 0);
 
     if (gUnknown_03004784[1] >= gUnknown_030040D8->unk07[3] % 100)
@@ -135,8 +135,8 @@ void sub_080591E4(void *a1)
         mask = gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d;
     }
 
-    sub_0801F92C(gMap->move);
-    sub_080202A4(gUnknown_030040D8);
+    SetWorkingMapPlane(gMap->move);
+    GenerateUnitMovementMap(gUnknown_030040D8);
 
     if (gUnknown_03004784[1] == 100)
         best = 0x7fff;
@@ -155,7 +155,7 @@ void sub_080591E4(void *a1)
                 continue;
             if (gMap->dangerMask[gMap->rowOffset[y] + x] & mask)
                 continue;
-            if (!sub_08059674(x, y))
+            if (!AiIsSettleCellOk(x, y))
                 continue;
             if (gUnknown_085D5ABC[gUnknown_030040D8->unk00].deployLocation != 0x20
              && (gMap->terrain[gMap->rowOffset[y] + x] & 0x1f) == 0xb)
@@ -177,8 +177,9 @@ void sub_080591E4(void *a1)
     }
     sub_0805F7B8();
 }
+asm(".global sub_080591E4\n.thumb_set sub_080591E4, AiAdvanceToward\n");
 
-void sub_08059464(void *a1)
+void AiAdvanceTowardUnseeded(void *a1)
 {
     s16 x;
     s16 y;
@@ -196,8 +197,8 @@ void sub_08059464(void *a1)
         mask = gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d;
     }
 
-    sub_0801F92C(gMap->move);
-    sub_080202A4(gUnknown_030040D8);
+    SetWorkingMapPlane(gMap->move);
+    GenerateUnitMovementMap(gUnknown_030040D8);
 
     best = gMap->danger[gMap->rowOffset[gUnknown_030040D8->unk03] + gUnknown_030040D8->unk02];
     bestX = -1;
@@ -212,7 +213,7 @@ void sub_08059464(void *a1)
                 continue;
             if (gMap->dangerMask[gMap->rowOffset[y] + x] & mask)
                 continue;
-            if (!sub_08059674(x, y))
+            if (!AiIsSettleCellOk(x, y))
                 continue;
             if ((gMap->terrain[gMap->rowOffset[y] + x] & 0x1f) == 0xb)
                 continue;
@@ -233,3 +234,4 @@ void sub_08059464(void *a1)
     }
     sub_0805F7B8();
 }
+asm(".global sub_08059464\n.thumb_set sub_08059464, AiAdvanceTowardUnseeded\n");

@@ -69,7 +69,7 @@ void sub_0807BA90(struct Unk0807BA90Proc * proc)
 
     sub_08013B0C();
 
-    gUnknown_0300592C = sub_0807B7BC(sub_08024944(gPlaySt.mapID), 0, gUnknown_0202FF78, 0x80, proc);
+    gUnknown_0300592C = sub_0807B7BC(GetMapName(gPlaySt.mapID), 0, gUnknown_0202FF78, 0x80, proc);
     gUnknown_0202FF78[0] = 0;
 
     p = gUnknown_0202FF78;

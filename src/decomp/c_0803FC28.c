@@ -58,7 +58,7 @@ void sub_0803FC28(int a1, int a2, int a3, int a4)
                 t = gUnknown_0849FA08;
             else
                 t = gUnknown_0849FA22;
-            sub_0803F908(p->unk00, p->unk01, t, sub_08027198(5), 0);
+            sub_0803F908(p->unk00, p->unk01, t, GetArmyByTeamColor(5), 0);
             break;
         case 5:
             if (p->unk04 == 0)
@@ -67,16 +67,16 @@ void sub_0803FC28(int a1, int a2, int a3, int a4)
                 t = gUnknown_0849FA78;
             else
                 t = gUnknown_0849FA5E;
-            sub_0803F908(p->unk00, p->unk01, t, sub_08027198(5), 0);
+            sub_0803F908(p->unk00, p->unk01, t, GetArmyByTeamColor(5), 0);
             break;
         case 8:
-            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA56, sub_08027198(5), 0);
+            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA56, GetArmyByTeamColor(5), 0);
             break;
         case 2:
             sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA56, -1, 0);
             break;
         case 7:
-            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA9A, sub_08027198(5), 0);
+            sub_0803F908(p->unk00, p->unk01, gUnknown_0849FA9A, GetArmyByTeamColor(5), 0);
             break;
         }
     next:

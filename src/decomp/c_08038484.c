@@ -43,7 +43,7 @@ void sub_08038484(void)
 
     if (IsPlayer1TeamAlive())
     {
-        sub_08038368(gPlaySt.mapID - 0x8a, gUnknown_03004080,
+        SaveCampaignMissionResult(gPlaySt.mapID - 0x8a, gUnknown_03004080,
                      gPlayers[sub_0807A908()].totalScore);
         CampaignMapNoOp(gPlaySt.mapID - 0x8a);
         gUnknown_0202FDFC.unk0c = gPlaySt.mapID - 0x8a;
@@ -62,8 +62,8 @@ void sub_08038484(void)
     {
         tbl = (struct Unk38484Tbl *)&gUnknown_0200C420;
 
-        if (tbl->unk10[IsHardCampaignMode()] < sub_08038434())
-            tbl->unk10[IsHardCampaignMode()] = sub_08038434();
+        if (tbl->unk10[IsHardCampaignMode()] < GetAverageCampaignScore())
+            tbl->unk10[IsHardCampaignMode()] = GetAverageCampaignScore();
 
         sub_08045790();
     }

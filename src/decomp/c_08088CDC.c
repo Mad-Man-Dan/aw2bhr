@@ -54,9 +54,9 @@ void sub_08088CDC(struct Unk08088CDC *p)
 
     if (*m == 0x10)
     {
-        sub_08043E3C(v0, (void *)0x06013000, 0x12);
-        sub_08043E3C(v1, (void *)0x06013480, 0x13);
-        sub_08043E3C(v2, (void *)0x06013900, 0x14);
+        LoadCoFace(v0, (void *)0x06013000, 0x12);
+        LoadCoFace(v1, (void *)0x06013480, 0x13);
+        LoadCoFace(v2, (void *)0x06013900, 0x14);
     }
 }
 
@@ -85,23 +85,23 @@ void sub_08088DA4(struct Unk08088DA4 *p)
     if (p->unk60 < 0)
     {
         if (*m == 0xd)
-            sub_08043E3C(v0, (void *)0x06013000, 0x12);
+            LoadCoFace(v0, (void *)0x06013000, 0x12);
 
         if (*m == 0xe)
-            sub_08043E3C(v1, (void *)0x06013480, 0x13);
+            LoadCoFace(v1, (void *)0x06013480, 0x13);
 
         if (*m == 0xf)
-            sub_08043E3C(v2, (void *)0x06013900, 0x14);
+            LoadCoFace(v2, (void *)0x06013900, 0x14);
     }
     else if (p->unk60 > 0)
     {
         if (*m == 0xd)
-            sub_08043E3C(v0, (void *)0x06013000, 0x12);
+            LoadCoFace(v0, (void *)0x06013000, 0x12);
 
         if (*m == 9)
-            sub_08043E3C(v1, (void *)0x06013480, 0x13);
+            LoadCoFace(v1, (void *)0x06013480, 0x13);
 
         if (*m == 6)
-            sub_08043E3C(v2, (void *)0x06013900, 0x14);
+            LoadCoFace(v2, (void *)0x06013900, 0x14);
     }
 }

@@ -84,29 +84,29 @@ void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
             {
                 if (gpKeySt->repeated & DPAD_LEFT)
                 {
-                    sub_08043E3C(FRAME(proc->unk52), (void *)0x06014200, 0x16);
-                    sub_08043E3C(FRAME(proc->unk52 + 1), (void *)0x06014680, 0x17);
-                    sub_08043E3C(FRAME(proc->unk52 + 2), (void *)0x06014B00, 0x18);
+                    LoadCoFace(FRAME(proc->unk52), (void *)0x06014200, 0x16);
+                    LoadCoFace(FRAME(proc->unk52 + 1), (void *)0x06014680, 0x17);
+                    LoadCoFace(FRAME(proc->unk52 + 2), (void *)0x06014B00, 0x18);
                     proc->unk4c = 0;
                     proc->unk52 = (proc->unk52 != 0 ? proc->unk52 : gUnknown_03005948[proc->unk58]) - 1;
                     proc->unk4e = -1;
-                    sub_08043E3C(FRAME(proc->unk52), (void *)0x06013D80, 0x15);
-                    sub_08043B14(FRAME(proc->unk52), 0x2CC);
+                    LoadCoFace(FRAME(proc->unk52), (void *)0x06013D80, 0x15);
+                    LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
                     sub_0803B4DC(0x67);
                 }
                 else if (gpKeySt->repeated & DPAD_RIGHT)
                 {
-                    sub_08043E3C(FRAME(proc->unk52), (void *)0x06014200, 0x16);
-                    sub_08043E3C(FRAME(proc->unk52 + 1), (void *)0x06014680, 0x17);
-                    sub_08043E3C(FRAME(proc->unk52 + 2), (void *)0x06014B00, 0x18);
+                    LoadCoFace(FRAME(proc->unk52), (void *)0x06014200, 0x16);
+                    LoadCoFace(FRAME(proc->unk52 + 1), (void *)0x06014680, 0x17);
+                    LoadCoFace(FRAME(proc->unk52 + 2), (void *)0x06014B00, 0x18);
                     proc->unk4c = 0;
                     if (proc->unk52 == gUnknown_03005948[proc->unk58] - 1)
                         proc->unk52 = 0;
                     else
                         proc->unk52 = proc->unk52 + 1;
                     proc->unk4e = 1;
-                    sub_08043E3C(FRAME(proc->unk52 + 2), (void *)0x06013D80, 0x15);
-                    sub_08043B14(FRAME(proc->unk52), 0x2CC);
+                    LoadCoFace(FRAME(proc->unk52 + 2), (void *)0x06013D80, 0x15);
+                    LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
                     sub_0803B4DC(0x67);
                 }
                 else if ((gpKeySt->repeated & DPAD_UP) && (int)gUnknown_03005944 > 1)
@@ -122,7 +122,7 @@ void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
                         proc->unk5c += gUnknown_03005948[i];
                     proc->unk60 = -1;
                     sub_0802D5CC(gUnknown_03005958[proc->unk58], 8);
-                    sub_08043B14(FRAME(proc->unk52), 0x2CC);
+                    LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
                     sub_0803B4DC(0x67);
                 }
                 else if ((gpKeySt->repeated & DPAD_DOWN) && (int)gUnknown_03005944 > 1)
@@ -138,7 +138,7 @@ void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
                         proc->unk5c += gUnknown_03005948[i];
                     proc->unk60 = 1;
                     sub_0802D5CC(gUnknown_03005958[proc->unk58], 8);
-                    sub_08043B14(FRAME(proc->unk52), 0x2CC);
+                    LoadCoNameGraphic(FRAME(proc->unk52), 0x2CC);
                     sub_0803B4DC(0x67);
                 }
                 else if (gpKeySt->pressed & 1)
@@ -265,7 +265,7 @@ void CoDesignC2_IDLE_0808844D(struct Unk0808844C *proc)
                 proc->unk64 = 1;
                 sub_0803B4DC(0x71);
                 SetLoadedCoPalette(FRAME(proc->unk52), gUnknown_03005964);
-                sub_08043E3C(FRAME(proc->unk52), (void *)0x06013000, 0x12);
+                LoadCoFace(FRAME(proc->unk52), (void *)0x06013000, 0x12);
                 Proc_Start(gUnknown_08616EDC, proc);
             }
             else if (gpKeySt->pressed & 2)

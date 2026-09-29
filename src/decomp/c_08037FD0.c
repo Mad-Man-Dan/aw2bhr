@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08037FD0.
- * sub_08037FD0 @ 0x08037FD0
+ * EndOfGame_StartResultFlow @ 0x08037FD0
  */
 
 /* End-of-battle dispatch: picks the winning slot for sub_08037F94 or falls
@@ -25,7 +25,7 @@
 #include "global.h"
 #include "proc.h"
 
-void sub_08037FD0(ProcPtr parent)
+void EndOfGame_StartResultFlow(ProcPtr parent)
 {
     int a;
     int b;
@@ -41,7 +41,7 @@ void sub_08037FD0(ProcPtr parent)
         if (sub_080266DC(i))
             sub_080265D0(i, gPlaySt.mapID);
     }
-    sub_08026520();
+    UpdateAllArmyScores();
     sub_08017720(gPlayers[sub_0807A908()].co,
                  gPlaySt.mapID,
                  gPlayers[sub_0807A908()].totalScore,
@@ -146,3 +146,5 @@ void sub_08037FD0(ProcPtr parent)
         break;
     }
 }
+
+asm(".global sub_08037FD0\n.thumb_set sub_08037FD0, EndOfGame_StartResultFlow\n");

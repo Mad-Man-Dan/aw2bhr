@@ -33,7 +33,7 @@
  * src/decomp/c_0802A38C.c with a file-local `struct Unk2A38C *` parameter, so
  * a header declaration would be a conflicting type for that unit. This is the
  * weakest spelling that agrees with both call sites, and it matches how
- * sub_0802A2E4 and sub_0802A304 are declared (`void *`).
+ * sub_0802A2E4 and CalcCargoResupplyCost are declared (`void *`).
  *
  * sub_0802A258 is SIXTEEN bits, measured here and nowhere else: the truth
  * test is `lsls r0, #0x10`, where a bool8/u8 return gives `lsls #0x18`. The
@@ -60,7 +60,7 @@ void sub_0802A3FC(void)
         if (p->flags & 9)
             continue;
 
-        if (p->type == 0x16 && sub_0802A38C(p, sub_0802A304))
+        if (p->type == 0x16 && sub_0802A38C(p, CalcCargoResupplyCost))
         {
             gUnknown_03001470[gUnknown_03001FBC].unk38 = i + 1;
             break;

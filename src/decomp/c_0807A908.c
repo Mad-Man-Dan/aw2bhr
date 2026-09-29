@@ -30,7 +30,7 @@ int sub_0807A908(void)
             return gUnknown_030033EC;
 
     i = 0;
-    while (i < sub_080248F8())
+    while (i < GetLoadedMapArmyCount())
     {
         if (IsPlayerAliveAndActive(i + 1))
             return i + 1;

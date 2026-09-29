@@ -7,8 +7,9 @@
  * sub_08043E3C @ 0x08043E3C
  */
 
-void sub_08043E3C(int a, void *b, int c)
+void LoadCoFace(int a, void *b, int c)
 {
     Decompress(gUnknown_084A0090[a % 24].face[a / 24], b);
     sub_08043AA0(a, c);
 }
+asm(".global sub_08043E3C\n.thumb_set sub_08043E3C, LoadCoFace\n");

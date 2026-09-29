@@ -21,5 +21,5 @@
  */
 void sub_0803CEAC(void)
 {
-    sub_08037678();
+    HideMapPreview();
 }

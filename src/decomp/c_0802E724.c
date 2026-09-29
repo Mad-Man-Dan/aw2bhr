@@ -34,10 +34,10 @@ bool8 sub_0802E724(s16 a1, s16 a2)
     if ((gMap->unit[off] & 0xc0) != army)
         return FALSE;
 
-    if ((u8)sub_08025FC0((struct Unit *)gUnknown_030040D8, e) == 1)
+    if ((u8)CanJoinUnits((struct Unit *)gUnknown_030040D8, e) == 1)
         return TRUE;
 
-    if ((u8)sub_080422A8(a1, a2) == 1)
+    if ((u8)IsBoardableTransportAt(a1, a2) == 1)
         return TRUE;
 
     return FALSE;

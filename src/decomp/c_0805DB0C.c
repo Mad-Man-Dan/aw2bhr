@@ -8,7 +8,7 @@
  */
 
 /* Ends the battle animation once the defender's HP has run past the tracked
- * value, or once sub_0804415C says so for the current army.
+ * value, or once IsCoPowerActive says so for the current army.
  *
  * `% 100` comes out as __umodsi3 and not __modsi3 even though the u8 promotes
  * to a signed int: agbcc knows a zero-extended byte is non-negative and picks
@@ -24,6 +24,6 @@ void sub_0805DB0C(void)
     sub_0805E5AC();
 
     if (*gUnknown_03004784 > (u8)(gUnknown_030040D8->unk07[3] % 100)
-        || sub_0804415C(gUnknown_030033EC))
+        || IsCoPowerActive(gUnknown_030033EC))
         sub_0805E718();
 }

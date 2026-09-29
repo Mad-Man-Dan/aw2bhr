@@ -21,7 +21,7 @@
  * the scan, and as a plain inline pool word for the final read. Both come out
  * of the one honest name; see include/unknown-globals.h. */
 
-/* Near-twin of sub_080240B4: same scan of the 0xFFFF-terminated
+/* Near-twin of SetPropertyTileForOwner: same scan of the 0xFFFF-terminated
  * gUnknown_08499B0C list against the map's +0x0A22 tile halfword, same
  * `i / 5 * 5`, same `(s16)n` return. Three differences -- it does not write
  * gUnknown_030033F8, it guards the store with `n <= 4`, and its table index
@@ -40,7 +40,7 @@
  * instead (probed) preserves the grouping too but schedules the shift up above
  * the map address computation, which is a different miss. */
 
-s16 sub_080240B4(s16 a1, s16 a2, u8 a3)
+s16 SetPropertyTileForOwner(s16 a1, s16 a2, u8 a3)
 {
     int i;
     int n;
@@ -61,6 +61,7 @@ s16 sub_080240B4(s16 a1, s16 a2, u8 a3)
             gUnknown_08499B0C[n + (a3 >> 5)];
     return n;
 }
+asm(".global sub_080240B4\n.thumb_set sub_080240B4, SetPropertyTileForOwner\n");
 
 s16 sub_0802419C(s16 a1, s16 a2, u8 a3)
 {

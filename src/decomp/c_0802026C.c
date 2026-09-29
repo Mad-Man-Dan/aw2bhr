@@ -18,9 +18,10 @@
  * Five arguments to the callee and six to this function: the first is consumed
  * by the global, the rest are forwarded untouched, which is why none of them
  * costs an instruction. */
-void sub_0802026C(int a1, int a2, int a3, int a4, int a5, int a6)
+void GenerateMovementMapForArmy(int a1, int a2, int a3, int a4, int a5, int a6)
 {
     gUnknown_03004480 = a1;
     gUnknown_030013EC(a2, a3, a4, a5, a6);
     gUnknown_03004480 = gUnknown_030033EC;
 }
+asm(".global sub_0802026C\n.thumb_set sub_0802026C, GenerateMovementMapForArmy\n");

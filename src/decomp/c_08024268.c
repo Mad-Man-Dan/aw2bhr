@@ -21,5 +21,5 @@
  */
 void sub_08024268(void)
 {
-    sub_080258CC();
+    RebuildMapUnitLayers();
 }

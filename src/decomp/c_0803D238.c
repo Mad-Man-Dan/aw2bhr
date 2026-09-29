@@ -80,7 +80,7 @@ void sub_0803D2F8(int a1, u8 *a2)
         gUnknown_03003FF3[x] = ((struct Rec *)a2)->unk4C4[x];
     gMap->width = ((struct Rec *)a2)->width;
     gMap->height = ((struct Rec *)a2)->height;
-    sub_080215FC();
+    InitMapRowOffsets();
     k = 0;
     for (y = 0; y < gMap->height; y++) {
         for (x = 0; x < gMap->width; x++) {

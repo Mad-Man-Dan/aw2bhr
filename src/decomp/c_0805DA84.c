@@ -7,8 +7,8 @@
  * sub_0805DA84 @ 0x0805DA84
  */
 
-/* Picks a unit with sub_0805A5E0, finds a destination cell next to it with
- * sub_08058BB4, clears that unit's three-bit +0x09 field and hands the cell to
+/* Picks a unit with AiPickSupplyWard, finds a destination cell next to it with
+ * AiPickFiringCellBesideUnit, clears that unit's three-bit +0x09 field and hands the cell to
  * sub_0805D648. Does nothing if either step comes back empty.
  *
  * The scratch cell is a four-byte struct local, so the 0x270F seed is a
@@ -56,16 +56,16 @@ void sub_0805DA84(void)
     struct CellXY pos;
     struct Unk5DA84 * u;
 
-    sub_080202A4(gUnknown_030040D8);
+    GenerateUnitMovementMap(gUnknown_030040D8);
     sub_0801FD9C(0x79);
-    sub_0805A5E0(&id);
+    AiPickSupplyWard(&id);
 
     if (id == -1)
         return;
 
     pos.x = 0x270F;
 
-    sub_08058BB4(id, (u16 *)&pos);
+    AiPickFiringCellBesideUnit(id, (u16 *)&pos);
 
     if (pos.x == 0x270F)
         return;

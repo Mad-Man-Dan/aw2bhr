@@ -63,7 +63,7 @@ void DrawUnitAt(u16 x, u16 y)
         || !sub_0802571C(id)
         || (gUnits[id].flags & 4) != 0)
     {
-        sub_080223E0(x, y);
+        ClearUnitTileQuadAt(x, y);
     }
     else
     {

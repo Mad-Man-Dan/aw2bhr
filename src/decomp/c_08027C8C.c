@@ -12,7 +12,7 @@
  */
 
 #include "proc.h"
-/* Another callback on sub_08027B10's proc -- same +0x2c / +0x30 / +0x4a / +0x64
+/* Another callback on StartDayStartGlyph's proc -- same +0x2c / +0x30 / +0x4a / +0x64
  * displacements src/decomp/c_08027B68.c already derived.
  *
  * `--proc->unk64 == 0` and not a reload: the compare is `lsls r0, #0x10;

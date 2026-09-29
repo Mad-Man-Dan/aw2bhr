@@ -82,9 +82,9 @@ void DesignRoomMode_Paint(void)
     }
 
     gActiveMap->soundId = 0;
-    sub_08023824();
+    HandleMoveMapCursor();
     v = DesignRoomHandleCursorInput();
-    sub_08023908(4);
+    HandleMoveCameraWithMapCursor(4);
 
     if (gUnknown_030033E4.unk00 != gActiveMap->cursorX
      || gUnknown_030033E4.unk02 != gActiveMap->cursorY)

@@ -67,9 +67,9 @@ void sub_0805F7B8(void)
     bestY = 0;
     best = 0;
 
-    if (!sub_08059674(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03))
+    if (!AiIsSettleCellOk(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03))
     {
-        sub_080202A4(gUnknown_030040D8);
+        GenerateUnitMovementMap(gUnknown_030040D8);
 
         for (y = 0; y < gMap->height; y++)
         {
@@ -86,7 +86,7 @@ void sub_0805F7B8(void)
                     score = 0x14 - v;
                 if (score <= best)
                     continue;
-                if (!sub_08059674(x, y))
+                if (!AiIsSettleCellOk(x, y))
                     continue;
                 bestX = x;
                 bestY = y;

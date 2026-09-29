@@ -9,7 +9,7 @@
 
 /* Byte-identical duplicate of sub_0803E560 -- same array, different index
  * counter (gUnknown_030040A8). */
-void sub_080413B4(int a, int b, int c, int d)
+void AddAttackTarget(int a, int b, int c, int d)
 {
     struct Unk03003338 *p;
 
@@ -20,3 +20,4 @@ void sub_080413B4(int a, int b, int c, int d)
     p[gUnknown_030040A8].unk02 = d;
     gUnknown_030040A8++;
 }
+asm(".global sub_080413B4\n.thumb_set sub_080413B4, AddAttackTarget\n");

@@ -26,5 +26,5 @@ void sub_0801815C(u8 a)
     if (sub_08078198())
         v = 1;
 
-    sub_08043E3C(a, (void *)(0x06004160 + gUnknown_03002B6C.bits.chr_block * 0x4000), v);
+    LoadCoFace(a, (void *)(0x06004160 + gUnknown_03002B6C.bits.chr_block * 0x4000), v);
 }

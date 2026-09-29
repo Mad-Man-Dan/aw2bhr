@@ -26,7 +26,7 @@
  * holds a byte reads as settled.
  *
  * AT PROMOTION this needs its .rodata pool word placed, exactly as
- * sub_080254AC does:  "rodata": ["0x08090A48"]  (agbcc's -fforce-addr word
+ * GetNextReadyUnit does:  "rodata": ["0x08090A48"]  (agbcc's -fforce-addr word
  * holding &gUnknown_085D5ABC). trymatch reports it as
  * `a8: R_ARM_ABS32 .rodata`; that is the wave-18 honest-spelling flow.
  *
@@ -36,7 +36,7 @@
  * (one ROM terrain code per unit type).
  */
 
-bool8 sub_080253B0(struct Unit *a1)
+bool8 ApplyDailyFuelBurn(struct Unit *a1)
 {
     int off;
     u8 cell;
@@ -76,3 +76,4 @@ bool8 sub_080253B0(struct Unit *a1)
 
     return TRUE;
 }
+asm(".global sub_080253B0\n.thumb_set sub_080253B0, ApplyDailyFuelBurn\n");

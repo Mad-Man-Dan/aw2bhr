@@ -9,7 +9,7 @@
 
 /* Takes ONE argument that this body ignores, and the parameter is byte-neutral
  * here -- which is why it was first promoted `(void)`. The evidence is entirely
- * caller-side: sub_08036B4C emits `movs r0, #0` immediately before its
+ * caller-side: InitGameSystems emits `movs r0, #0` immediately before its
  * `bl sub_08080F90`, with no other consumer of r0, and that instruction only
  * exists if an argument is being passed. Wave 27 briefly settled this the other
  * way from the definition and the merged-unit check rejected it. */

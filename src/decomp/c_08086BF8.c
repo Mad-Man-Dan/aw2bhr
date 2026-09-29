@@ -62,7 +62,7 @@ void sub_08086BF8(u32 a1, int a2, int a3)
         }
         else
         {
-            u8 *p = sub_08024944(gUnknown_02027F74.unk04[a1 + i]);
+            u8 *p = GetMapName(gUnknown_02027F74.unk04[a1 + i]);
             int k = i * 2;
             y = a3 + 9;
             z = k + y;
@@ -115,7 +115,7 @@ void sub_08086CE0(u32 a1, int a2, int a3)
       }
       else
       {
-        u8 *p = sub_08024944(gUnknown_02027F74.unk04[a1 + i]);
+        u8 *p = GetMapName(gUnknown_02027F74.unk04[a1 + i]);
         int k = i * 2;
         y = a3;
         y = y + 9;

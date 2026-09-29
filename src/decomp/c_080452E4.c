@@ -17,5 +17,5 @@ struct Unk452E4
 
 void sub_080452E4(struct Unk452E4 *p)
 {
-    sub_08029088(p->unk3c, p->unk40);
+    ScrollCameraToKeepCellInView(p->unk3c, p->unk40);
 }

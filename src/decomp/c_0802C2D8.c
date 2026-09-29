@@ -24,7 +24,7 @@ void sub_0802C2D8(struct Unk2C2D8Proc *proc)
     proc->unk22 = gMap->scrollY;
 
     sub_0803D6D0();
-    sub_08037638(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000,
+    ShowMapPreview(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000,
         (int)gBG0TilemapBuffer, 1, 9);
     sub_08013AD4(0);
     sub_0801237C();

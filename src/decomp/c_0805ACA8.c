@@ -8,7 +8,7 @@
  * sub_0805ACA8 @ 0x0805ACA8, sub_0805ACFC @ 0x0805ACFC
  */
 
-/* The 0x0805ACA8 driver's per-cell tester, and the near-twin of sub_08058E88
+/* The 0x0805ACA8 driver's per-cell tester, and the near-twin of AiCheckDropNeighbour
  * in src/decomp/c_08058BB4.c: same guards, same `rowOffset[y] + x` key, same
  * (s8) read of gUnknown_03003340. It differs only in the tail -- 0x78 is
  * rejected as well as 0x79, and the terrain gate accepts exactly the two
@@ -23,10 +23,10 @@
  *
  * The single `lsls #0x18; asrs #0x18` serves all three compares, so it is an
  * int local carrying one explicit (s8) cast, not an s8 local -- the same
- * reading c_08058BB4.c records for sub_08058E88. */
+ * reading c_08058BB4.c records for AiCheckDropNeighbour. */
 
-/* Offers the four cells orthogonally adjacent to (x, y) to sub_0805ACFC and
- * reports whether any of them was accepted. The exact shape of sub_08058C54
+/* Offers the four cells orthogonally adjacent to (x, y) to AiCheckShoalParkNeighbour and
+ * reports whether any of them was accepted. The exact shape of AiPickFiringCellBeside
  * in src/decomp/c_08058BB4.c, with a 1/0 result instead of best/-1.
  *
  * BINDING THE SENTINEL IS LOAD-BEARING, for the reason c_08058BB4.c records:
@@ -44,25 +44,26 @@
  *
  * The fourth call's `adds r4,#1` clobbers y because y is dead after it; that
  * falls out of writing `y + 1` last. */
-u8 sub_0805ACA8(int x, int y, u16 * out)
+u8 AiPickShoalParkBeside(int x, int y, u16 * out)
 {
     int sentinel;
 
     sentinel = 0x270F;
     out[0] = sentinel;
 
-    sub_0805ACFC(x - 1, y, out);
-    sub_0805ACFC(x + 1, y, out);
-    sub_0805ACFC(x, y - 1, out);
-    sub_0805ACFC(x, y + 1, out);
+    AiCheckShoalParkNeighbour(x - 1, y, out);
+    AiCheckShoalParkNeighbour(x + 1, y, out);
+    AiCheckShoalParkNeighbour(x, y - 1, out);
+    AiCheckShoalParkNeighbour(x, y + 1, out);
 
     if (out[0] == sentinel)
         return 0;
 
     return 1;
 }
+asm(".global sub_0805ACA8\n.thumb_set sub_0805ACA8, AiPickShoalParkBeside\n");
 
-void sub_0805ACFC(int x, int y, u16 * out)
+void AiCheckShoalParkNeighbour(int x, int y, u16 * out)
 {
     struct Map * map;
     int idx;
@@ -103,3 +104,4 @@ void sub_0805ACFC(int x, int y, u16 * out)
     out[0] = x;
     out[1] = y;
 }
+asm(".global sub_0805ACFC\n.thumb_set sub_0805ACFC, AiCheckShoalParkNeighbour\n");

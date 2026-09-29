@@ -61,9 +61,9 @@ void sub_08062DF0(void)
     a = 0;
     b = 0;
 
-    sub_08023824();
-    sub_0802361C();
-    sub_08023908(4);
+    HandleMoveMapCursor();
+    HandleGameMapCursorInput();
+    HandleMoveCameraWithMapCursor(4);
     sub_08023274(0);
 
     if ((MAP->unk10 & 0xF) == 0)
@@ -71,7 +71,7 @@ void sub_08062DF0(void)
         if (gpKeySt->pressed == 1)
         {
             gUnknown_03004780 = gUnknown_030045DC;
-            sub_08024584();
+            SetMapLayersDefault();
             sub_08013C00();
             sub_08013AEC();
             return;
@@ -115,6 +115,6 @@ void sub_08062DF0(void)
         }
     }
 
-    sub_0802A7C4();
+    RefreshMapCursorInfoPanel();
     sub_0802776C(0);
 }

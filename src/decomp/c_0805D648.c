@@ -24,7 +24,7 @@
  *
  * Two prototypes were corrected against this function, both recorded there:
  * this one's parameters 3 and 5 are u8 rather than int (its own prologue
- * narrows all five), and sub_0802042C's first two are int rather than u16 (its
+ * narrows all five), and GenerateBestMovementScript's first two are int rather than u16 (its
  * prologue narrows neither, and a u16 formal makes agbcc zero-extend on top of
  * the sign extension the following comparisons already need).
  *
@@ -69,7 +69,7 @@ void sub_0805D648(s16 a1, s16 a2, u8 a3, u8 a4, u8 a5)
     if (gUnknown_030040D8->unk00 == 0x18 && a3 == 2)
     {
         FillMovementMap(0xff);
-        sub_0801F9C0(a1, a2, 9, 0);
+        MapSetInRange(a1, a2, 9, 0);
 
         for (y = 0; y < gMap->height; y++)
         {
@@ -79,7 +79,7 @@ void sub_0805D648(s16 a1, s16 a2, u8 a3, u8 a4, u8 a5)
                     continue;
                 if (gMap->unit[gMap->rowOffset[y] + x] == 0)
                     continue;
-                if (sub_08026F9C(gUnknown_03003F38, gMap->unit[gMap->rowOffset[y] + x]))
+                if (AreUnitsOnSameTeam(gUnknown_03003F38, gMap->unit[gMap->rowOffset[y] + x]))
                     continue;
                 e = &gUnits[gMap->unit[gMap->rowOffset[y] + x]];
                 if (gPlaySt.fog == 0)
@@ -105,9 +105,9 @@ void sub_0805D648(s16 a1, s16 a2, u8 a3, u8 a4, u8 a5)
             a3 = 0xc;
     }
 
-    sub_080202A4(gUnknown_030040D8);
-    sub_0802042C(a1, a2, gUnknown_03003110);
-    sub_08034400(gUnknown_03003110, gUnknown_030046CC);
+    GenerateUnitMovementMap(gUnknown_030040D8);
+    GenerateBestMovementScript(a1, a2, gUnknown_03003110);
+    PackPathNibbles(gUnknown_03003110, gUnknown_030046CC);
 
     if (gUnknown_030040D8->unk02 == a1 && gUnknown_030040D8->unk03 == a2 && a3 == 2)
         sub_08071910(gUnknown_03004680, 1);

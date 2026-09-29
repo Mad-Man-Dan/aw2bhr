@@ -35,7 +35,7 @@
  * interchangeable). Naming the global honestly reproduces the ROM's
  * three-level `ldr rN,=<word>; ldr r0,[rN]; ldr r1,[r0]`, and the reload after
  * each two-arm clamp is the merge-point reload, not a second variable. */
-void sub_080358C4(s16 a1, s16 a2)
+void ScrollCameraToKeepPixelInView(s16 a1, s16 a2)
 {
     u16 nx;
     u16 ny;
@@ -80,3 +80,4 @@ void sub_080358C4(s16 a1, s16 a2)
 
     sub_08023860();
 }
+asm(".global sub_080358C4\n.thumb_set sub_080358C4, ScrollCameraToKeepPixelInView\n");

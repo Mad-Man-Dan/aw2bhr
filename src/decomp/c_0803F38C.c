@@ -31,7 +31,7 @@ struct UnkF3C8Proc
 /* The two `lsls #0x10; asrs #0x10` pairs come from re-reading the two word
  * fields that were just stored, not from the ldrh values: agbcc keeps the
  * stored register live and the pair is the implicit conversion to
- * sub_08029088's `s16` parameters. Writing `sub_08029088(p[0], p[1])` instead
+ * ScrollCameraToKeepCellInView's `s16` parameters. Writing `ScrollCameraToKeepCellInView(p[0], p[1])` instead
  * costs two `ldrsh` reloads. */
 void sub_0803F38C(struct UnkF38CProc *proc)
 {
@@ -46,7 +46,7 @@ void sub_0803F38C(struct UnkF38CProc *proc)
         proc->unk2c = p[0];
         proc->unk30 = p[1];
 
-        sub_08029088(proc->unk2c, proc->unk30);
+        ScrollCameraToKeepCellInView(proc->unk2c, proc->unk30);
 
         p += 2;
         proc->unk4c = p;

@@ -7,7 +7,8 @@
  * sub_0804415C @ 0x0804415C
  */
 
-u8 sub_0804415C(int a1)
+u8 IsCoPowerActive(int a1)
 {
     return gPlayers[a1].coMode != 0;
 }
+asm(".global sub_0804415C\n.thumb_set sub_0804415C, IsCoPowerActive\n");

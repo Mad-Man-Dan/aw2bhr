@@ -21,7 +21,7 @@ void sub_0805FFA0(void)
         gUnknown_030040D8->unk01 |= 1;
         gUnknown_030040D8->unk02 = gUnknown_03003100.pos.unk00;
         gUnknown_030040D8->unk03 = gUnknown_03003100.pos.unk02;
-        sub_080258CC();
+        RebuildMapUnitLayers();
     }
 
     switch (gUnknown_030046C0.unk00)
@@ -42,10 +42,10 @@ void sub_0805FFA0(void)
         sub_080601DC();
         break;
     case 3:
-        sub_08042650();
+        ApplyCaptureProgress();
     case 2:
     _redraw:
-        sub_080424FC();
+        CommitUnitMove();
         break;
     case 4:
         sub_080601F0();
@@ -54,7 +54,7 @@ void sub_0805FFA0(void)
         sub_08060264();
         return;
     case 7:
-        sub_08042864();
+        LoadUnitIntoTransport();
         goto _redraw;
     case 8:
         sub_0806056C(1);

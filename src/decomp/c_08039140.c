@@ -43,7 +43,7 @@
  * `u16` produces both. Full evidence in include/unknown-functions.h above the
  * declaration, and in work/sub_08039188/W88-notes.md. */
 
-u8 sub_08039140(x, y, w, h)
+u8 IsRectOnScreen(x, y, w, h)
 u16 x;
 s16 y;
 u8 w;
@@ -64,3 +64,4 @@ u8 h;
 
     return 0;
 }
+asm(".global sub_08039140\n.thumb_set sub_08039140, IsRectOnScreen\n");

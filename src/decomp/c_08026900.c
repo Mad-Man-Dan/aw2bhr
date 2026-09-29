@@ -7,10 +7,11 @@
  * sub_08026900 @ 0x08026900
  */
 
-void sub_08026900(void)
+void SetFreeForAllTeams(void)
 {
     gPlaySt.unk42[1] = 0;
     gPlaySt.unk42[2] = 1;
     gPlaySt.unk42[3] = 2;
     gPlaySt.unk42[4] = 3;
 }
+asm(".global sub_08026900\n.thumb_set sub_08026900, SetFreeForAllTeams\n");

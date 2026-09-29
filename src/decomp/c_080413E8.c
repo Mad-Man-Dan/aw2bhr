@@ -11,7 +11,7 @@
 /* MATCHED byte-for-byte, wave 50 (W50-J). Hand-derived to 98.1% size-exact,
  * closed by decomp-permuter on the last 6 bytes.
  *
- * THE PERMUTER'S ONLY CHANGE WAS `(u8)` ON sub_080413B4's FOURTH ARGUMENT, and
+ * THE PERMUTER'S ONLY CHANGE WAS `(u8)` ON AddAttackTarget's FOURTH ARGUMENT, and
  * it emits NO instruction. `v` is either `lsrs #28` of a halfword (4 bits) or
  * the constant 6, so gcc's `nonzero_bits` proves `v & 0xff` is a no-op and
  * combine deletes it -- but the cast still makes the argument a NOP_EXPR
@@ -20,7 +20,7 @@
  * from `r0, r1, r2, r3` to the ROM's `r3, r0, r1, r2`. Without the cast the
  * function is 6 bytes off in exactly this one spot. See the wave-50 entry in
  * docs/agbcc-codegen.md.
- *   The cast is at THIS USE. It is a hint that sub_080413B4's fourth parameter
+ *   The cast is at THIS USE. It is a hint that AddAttackTarget's fourth parameter
  * is really `u8`, but the promoted src/decomp/c_080413B4.c defines it `int`
  * and that definition wins; retyping it would touch a byte-exact file and its
  * other callers, so it is recorded here and NOT acted on.
@@ -48,12 +48,12 @@
  * `adds rD,rB,rI; ldrb; lsls #24; asrs #24`.
  *
  * c_08020984.c is this function's near-twin -- same sub_0803DF54 /
- * gUnknown_020288B4 / unk02_6 / sub_08026F9C / sub_080251BC sequence over the
+ * gUnknown_020288B4 / unk02_6 / AreUnitsOnSameTeam / sub_080251BC sequence over the
  * same map -- and settled the unk18 and unk02_6 spellings. */
 
 #define MAP gMap
 
-int sub_080413E8(void)
+int BuildAttackTargetList(void)
 {
     struct Unk02028360 *unit;
     int v;
@@ -61,7 +61,7 @@ int sub_080413E8(void)
     int x;
     int y;
 
-    sub_0804138C();
+    ClearAttackTargetList();
 
     for (y = 0; y < MAP->height; y++)
     {
@@ -88,7 +88,7 @@ int sub_080413E8(void)
                 if (gBattleAttacker->attackType == 0)
                     continue;
 
-                sub_080413B4(x, y, 0, (u8)v);
+                AddAttackTarget(x, y, 0, (u8)v);
             }
             else
             {
@@ -97,7 +97,7 @@ int sub_080413E8(void)
                 if (t == 0)
                     continue;
 
-                if (sub_08026F9C(gUnknown_03003F38, t) == 1)
+                if (AreUnitsOnSameTeam(gUnknown_03003F38, t) == 1)
                     continue;
 
                 sub_080251BC(gUnknown_03003F38, t, &gUnknown_03003100.pos);
@@ -105,10 +105,11 @@ int sub_080413E8(void)
                 if (gBattleAttacker->attackType == 0)
                     continue;
 
-                sub_080413B4(x, y, t, 0);
+                AddAttackTarget(x, y, t, 0);
             }
         }
     }
 
     return gUnknown_030040A8;
 }
+asm(".global sub_080413E8\n.thumb_set sub_080413E8, BuildAttackTargetList\n");

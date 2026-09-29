@@ -9,7 +9,7 @@
  */
 
 /* Runs one army's turn-start pass: first re-scores all 0x32 of its unit slots,
- * then walks the map and fires sub_080210C8 on every tile whose top three
+ * then walks the map and fires StampVisionByPlaneMask on every tile whose top three
  * terrain bits equal the army's gUnknown_084995F4 tag.
  *
  * gUnknown_08090960 in the asm is NOT a global: the ROM word at 0x08090960
@@ -23,13 +23,13 @@
  * proves both tables have a 2-byte stride.
  *
  * That table's declaration LOST its `const` for this function (see
- * include/unknown-globals.h): with `const`, agbcc proves the sub_080211DC call
+ * include/unknown-globals.h): with `const`, agbcc proves the StampUnitVision call
  * cannot write it and hoists the element load out of the loop.  All seven
  * existing readers were re-verified and still match.
  *
  * `y << 16` living in r8 across the inner loop and the `asrs #0x10` that
  * unpacks it at the call are loop-optimiser output -- y is a plain int here. */
-void sub_080212AC(u16 faction)
+void StampArmyVision(u16 faction)
 {
     int i;
     int x;
@@ -38,7 +38,7 @@ void sub_080212AC(u16 faction)
     if (gPlayers[faction].aiControlled != 0 && gPlayers[faction].turnState != 0)
     {
         for (i = 0; i <= 0x32; i++)
-            sub_080211DC((u8)(gUnknown_084995FE[faction] + i), 1);
+            StampUnitVision((u8)(gUnknown_084995FE[faction] + i), 1);
 
         for (y = 0; y < gMap->height; y++)
         {
@@ -48,9 +48,10 @@ void sub_080212AC(u16 faction)
                          gMap->rowOffset[y] + x] & 0xE0)
                     == gUnknown_084995F4[faction])
                 {
-                    sub_080210C8(x, y, 0, gPlayers[faction].turnState, 1, 0);
+                    StampVisionByPlaneMask(x, y, 0, gPlayers[faction].turnState, 1, 0);
                 }
             }
         }
     }
 }
+asm(".global sub_080212AC\n.thumb_set sub_080212AC, StampArmyVision\n");

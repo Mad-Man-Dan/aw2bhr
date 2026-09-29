@@ -43,7 +43,7 @@
  * not a spelling.
  */
 
-struct Unit *sub_080254AC(void)
+struct Unit *GetNextReadyUnit(void)
 {
     u16 i;
 
@@ -73,3 +73,4 @@ struct Unit *sub_080254AC(void)
 
     return 0;
 }
+asm(".global sub_080254AC\n.thumb_set sub_080254AC, GetNextReadyUnit\n");

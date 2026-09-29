@@ -11,7 +11,7 @@
  * for which IsPlayerAliveAndActive is true. A do/while: the increment happens before the
  * first test, so the value passed in is never itself tested. The wrap compares
  * `== 5` exactly, so a value above 5 never wraps -- reproduced as written. */
-u16 sub_08026704(int a)
+u16 GetNextActiveArmy(int a)
 {
     u16 i;
 
@@ -25,8 +25,9 @@ u16 sub_08026704(int a)
 
     return i;
 }
+asm(".global sub_08026704\n.thumb_set sub_08026704, GetNextActiveArmy\n");
 
-/* The sub_08026704 twin (see work/sub_08026704): the same wrap-at-5 retry over
+/* The GetNextActiveArmy twin (see work/GetNextActiveArmy): the same wrap-at-5 retry over
  * IsPlayerAliveAndActive, but seeded from gUnknown_030033EC instead of a parameter, and
  * answering whether the slot it landed on is EARLIER than the one it started
  * from -- i.e. whether the search wrapped past the end.
@@ -70,7 +71,7 @@ bool8 sub_0802672C(void)
  *
  * Here the pool word is an ordinary inline `=gUnknown_030033EC`, where
  * sub_0802672C's is a -fforce-addr .rodata word for the same symbol. */
-void sub_08026768(void)
+void AdvanceToNextActiveArmy(void)
 {
     do
     {
@@ -83,3 +84,4 @@ void sub_08026768(void)
         }
     } while (!IsPlayerAliveAndActive(gUnknown_030033EC));
 }
+asm(".global sub_08026768\n.thumb_set sub_08026768, AdvanceToNextActiveArmy\n");

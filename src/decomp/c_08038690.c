@@ -16,7 +16,8 @@
  * The argument is `int`: it survives a `bl` with a bare `adds r1, r0, #0` and
  * no PROMOTE_MODE narrowing, which a u8 or u16 parameter would have carried. */
 
-void sub_08038690(int a)
+void SetHardCampaignFlag(int a)
 {
     sub_0803CBA0(0x60, a);
 }
+asm(".global sub_08038690\n.thumb_set sub_08038690, SetHardCampaignFlag\n");

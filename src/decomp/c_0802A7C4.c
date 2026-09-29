@@ -17,7 +17,7 @@
  * because each is used again in the second byte. A single
  * `gUnknown_030030E0.raw |= 0xdf` would emit one `ldrh`, one constant and one
  * `strh`. */
-void sub_0802A7C4(void)
+void RefreshMapCursorInfoPanel(void)
 {
     if (gPlaySt.dispMiniPanel == 0)
         return;
@@ -41,3 +41,4 @@ void sub_0802A7C4(void)
     gUnknown_03002020 = 0x10;
     gUnknown_03002B28 = 0;
 }
+asm(".global sub_0802A7C4\n.thumb_set sub_0802A7C4, RefreshMapCursorInfoPanel\n");

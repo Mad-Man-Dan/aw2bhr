@@ -7,7 +7,7 @@
  * sub_08025EF0 @ 0x08025EF0, CanTransportCarry @ 0x08025F74, sub_08025FC0 @ 0x08025FC0
  */
 
-bool8 sub_08025EF0(int a1, int a2)
+bool8 CanTransportCarryUnitId(int a1, int a2)
 {
     u8 *t;
     u8 *u;
@@ -33,6 +33,7 @@ bool8 sub_08025EF0(int a1, int a2)
 
     return TRUE;
 }
+asm(".global sub_08025EF0\n.thumb_set sub_08025EF0, CanTransportCarryUnitId\n");
 
 bool8 CanTransportCarry(struct Unit *a1, u8 a2)
 {
@@ -60,7 +61,7 @@ bool8 CanTransportCarry(struct Unit *a1, u8 a2)
 
 asm(".global sub_08025F74\n.thumb_set sub_08025F74, CanTransportCarry\n");
 
-bool8 sub_08025FC0(struct Unit *a1, struct Unit *a2)
+bool8 CanJoinUnits(struct Unit *a1, struct Unit *a2)
 {
     if (a1->type != a2->type)
         return FALSE;
@@ -79,3 +80,4 @@ bool8 sub_08025FC0(struct Unit *a1, struct Unit *a2)
 
     return TRUE;
 }
+asm(".global sub_08025FC0\n.thumb_set sub_08025FC0, CanJoinUnits\n");

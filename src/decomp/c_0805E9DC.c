@@ -11,7 +11,7 @@
 /* A file-local bitfield view of gUnknown_030040D8's offset 0x09, which is
  * struct Unk030040D8's unk07[2]. The header records that the byte really is a
  * bitfield container and that it is DELIBERATELY not reshaped, because promoted
- * code reads unk07[0], unk07[1] and unk07[4] as an array -- sub_0805BFDC uses
+ * code reads unk07[0], unk07[1] and unk07[4] as an array -- AiTryRideInsteadOfWalk uses
  * the same file-local view. */
 struct Unk5E9DCFlags
 {
@@ -30,7 +30,7 @@ void sub_0805E9DC(void)
 {
     void (*fns[2])(void) = { sub_0805E87C, sub_0805E778 };
 
-    sub_0801F92C(gMap->move);
+    SetWorkingMapPlane(gMap->move);
 
     if ((gUnknown_030040D8->unk05 & 0xf8) == 0
         && ((struct Unk5E9DCFlags *)gUnknown_030040D8)->unk09_0 != 0
@@ -56,7 +56,7 @@ void sub_0805EA54(void)
     if (gUnknown_030040D8->unk04 > 0x32)
         return;
 
-    sub_080202A4(gUnknown_030040D8);
+    GenerateUnitMovementMap(gUnknown_030040D8);
 
     for (i = gUnknown_03003F2C; i < gUnknown_03003F2C + 0x40; i++)
     {

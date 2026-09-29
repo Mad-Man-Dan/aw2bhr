@@ -50,7 +50,7 @@ void sub_0806056C(u8 a1)
             gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
             (((struct Unit *)gUnknown_030040D8 - gUnits) & 0xc0) >> 6,
             unit->type, &gUnknown_08576900[gUnknown_03003F40]);
-        sub_080428F0(a1);
+        DropCargoUnit(a1);
         gUnknown_03004774++;
         sub_08029868(unit->type);
     }

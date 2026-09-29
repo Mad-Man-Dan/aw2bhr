@@ -13,7 +13,7 @@
  * one body, so the table holds the same target six times.
  *
  * A leaf: no `push`, and the epilogue is a bare `bx lr`. */
-u32 sub_08026C6C(u8 a)
+u32 GetIncomeForTerrainKind(u8 a)
 {
     switch (a)
     {
@@ -27,3 +27,4 @@ u32 sub_08026C6C(u8 a)
     }
     return 0;
 }
+asm(".global sub_08026C6C\n.thumb_set sub_08026C6C, GetIncomeForTerrainKind\n");

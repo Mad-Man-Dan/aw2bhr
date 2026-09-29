@@ -19,7 +19,7 @@ int sub_0802CA2C(void)
     FillMovementMap(0xff);
     gUnknown_03003340[gUnknown_03003100.pos.unk02][gUnknown_03003100.pos.unk00] = 0;
 
-    if (sub_08041758())
+    if (BuildSiloCellList())
         return 0;
 
     return 1;
@@ -48,10 +48,10 @@ int sub_0802CA78(void)
         return 1;
 
     FillMovementMap(0xff);
-    sub_08020354(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
+    FillUnitAttackRange(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
         (struct Unit *)gUnknown_030040D8);
 
-    if (!sub_080413E8())
+    if (!BuildAttackTargetList())
         return 1;
 
     return 0;
@@ -79,10 +79,10 @@ int sub_0802CB20(void)
         return 1;
 
     FillMovementMap(0xff);
-    sub_08020354(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
+    FillUnitAttackRange(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
         (struct Unit *)gUnknown_030040D8);
 
-    if (!sub_080413E8())
+    if (!BuildAttackTargetList())
         return 2;
 
     return 1;

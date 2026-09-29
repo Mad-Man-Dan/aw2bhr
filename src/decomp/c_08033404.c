@@ -16,7 +16,7 @@
  * and neither Proc_Find result is narrowed, so both are word wide. */
 void sub_08033404(ProcPtr proc)
 {
-    sub_08062FF4(gUnknown_03003F70);
+    MultiBootMain(gUnknown_03003F70);
 
     if (Proc_Find(gUnknown_0861429C) == NULL && Proc_Find(gUnknown_08614284) == NULL)
         Proc_Break(proc);

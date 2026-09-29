@@ -23,7 +23,7 @@ struct MoveTbl
 };
 
 /* Probes the four cells orthogonally adjacent to unit `id`, letting
- * sub_08058CE8 keep the running best, and returns that best or -1 if it
+ * AiScoreFiringCell keep the running best, and returns that best or -1 if it
  * rejected all four.
  *
  * BINDING THE SENTINEL IS LOAD-BEARING, and it is the whole difference between
@@ -41,7 +41,7 @@ struct MoveTbl
  * The out-pointer is `u16 *` and not `s16 *`: the final read is a plain `ldrh`.
  *
  * MATCHED. */
-int sub_08058BB4(u16 id, u16 * out)
+int AiPickFiringCellBesideUnit(u16 id, u16 * out)
 {
     struct Unit * u;
     int best;
@@ -54,27 +54,28 @@ int sub_08058BB4(u16 id, u16 * out)
     sentinel = 0x270F;
     out[0] = sentinel;
 
-    sub_08058CE8(u->x - 1, u->y, mask, &best, out);
-    sub_08058CE8(u->x + 1, u->y, mask, &best, out);
-    sub_08058CE8(u->x, u->y - 1, mask, &best, out);
-    sub_08058CE8(u->x, u->y + 1, mask, &best, out);
+    AiScoreFiringCell(u->x - 1, u->y, mask, &best, out);
+    AiScoreFiringCell(u->x + 1, u->y, mask, &best, out);
+    AiScoreFiringCell(u->x, u->y - 1, mask, &best, out);
+    AiScoreFiringCell(u->x, u->y + 1, mask, &best, out);
 
     if (out[0] == sentinel)
         return -1;
 
     return best;
 }
+asm(".global sub_08058BB4\n.thumb_set sub_08058BB4, AiPickFiringCellBesideUnit\n");
 
-/* sub_08058BB4's twin, taking the cell coordinates directly instead of looking
+/* AiPickFiringCellBesideUnit's twin, taking the cell coordinates directly instead of looking
  * them up from a unit id. Both parameters are `int` -- the prologue is a bare
  * `mov r8, r0` / `adds r4, r1, #0` with no PROMOTE_MODE shift pair, unlike
- * sub_08058BB4's `u16` id. The fourth call's `adds r4, #1` clobbers y because
+ * AiPickFiringCellBesideUnit's `u16` id. The fourth call's `adds r4, #1` clobbers y because
  * y is dead after it; that falls out of writing `y + 1` last.
  *
  * See c_08058BB4.c for why the 0x270F sentinel needs its own binding statement.
  *
  * MATCHED. */
-int sub_08058C54(int x, int y, u16 * out)
+int AiPickFiringCellBeside(int x, int y, u16 * out)
 {
     int best;
     int mask;
@@ -85,16 +86,17 @@ int sub_08058C54(int x, int y, u16 * out)
     sentinel = 0x270F;
     out[0] = sentinel;
 
-    sub_08058CE8(x - 1, y, mask, &best, out);
-    sub_08058CE8(x + 1, y, mask, &best, out);
-    sub_08058CE8(x, y - 1, mask, &best, out);
-    sub_08058CE8(x, y + 1, mask, &best, out);
+    AiScoreFiringCell(x - 1, y, mask, &best, out);
+    AiScoreFiringCell(x + 1, y, mask, &best, out);
+    AiScoreFiringCell(x, y - 1, mask, &best, out);
+    AiScoreFiringCell(x, y + 1, mask, &best, out);
 
     if (out[0] == sentinel)
         return -1;
 
     return best;
 }
+asm(".global sub_08058C54\n.thumb_set sub_08058C54, AiPickFiringCellBeside\n");
 
 /* Scores the cell (x, y) as a move target and keeps the running best.
  *
@@ -109,7 +111,7 @@ int sub_08058C54(int x, int y, u16 * out)
  * block must name the global again or the reload disappears.
  *
  * MATCHED first draft. */
-void sub_08058CE8(int x, int y, int mask, int * pBest, u16 * out)
+void AiScoreFiringCell(int x, int y, int mask, int * pBest, u16 * out)
 {
     struct Map * map;
     int idx;
@@ -152,19 +154,20 @@ void sub_08058CE8(int x, int y, int mask, int * pBest, u16 * out)
     out[0] = x;
     out[1] = y;
 }
+asm(".global sub_08058CE8\n.thumb_set sub_08058CE8, AiScoreFiringCell\n");
 
-/* The sub_08058E88 counterpart of sub_08058BB4/sub_08058C54: gates on the
+/* The AiCheckDropNeighbour counterpart of AiPickFiringCellBesideUnit/AiPickFiringCellBeside: gates on the
  * current unit's move-cost entry for the terrain under (x, y) and then offers
- * the four neighbours to sub_08058E88, which writes back the first it accepts.
+ * the four neighbours to AiCheckDropNeighbour, which writes back the first it accepts.
  * Returns 0 on success and -1 both when the gate rejects and when no neighbour
  * was accepted -- the ROM reaches the same `movs r0,#1; rsbs` tail from both.
  *
  * The sentinel binding is the same lever c_08058BB4.c documents, one notch
  * weaker: the constant needs its own statement so it lands directly in the
  * callee-saved r4 (`ldr r4, =0x270F; strh r4, [r5]`), where the literal alone
- * loads into r0 and copies. r4 is a low register here, so unlike sub_08058BB4
+ * loads into r0 and copies. r4 is a low register here, so unlike AiPickFiringCellBesideUnit
  * no `mov` back is needed at the store. */
-int sub_08058DEC(int x, int y, u16 * out)
+int AiPickDropCellBeside(int x, int y, u16 * out)
 {
     struct MoveTbl * tbl;
     struct Map * map;
@@ -179,23 +182,24 @@ int sub_08058DEC(int x, int y, u16 * out)
     sentinel = 0x270F;
     out[0] = 0x270F;
 
-    sub_08058E88(x - 1, y, out);
-    sub_08058E88(x + 1, y, out);
-    sub_08058E88(x, y - 1, out);
-    sub_08058E88(x, y + 1, out);
+    AiCheckDropNeighbour(x - 1, y, out);
+    AiCheckDropNeighbour(x + 1, y, out);
+    AiCheckDropNeighbour(x, y - 1, out);
+    AiCheckDropNeighbour(x, y + 1, out);
 
     if (out[0] == sentinel)
         return -1;
 
     return 0;
 }
+asm(".global sub_08058DEC\n.thumb_set sub_08058DEC, AiPickDropCellBeside\n");
 
 /* Accepts (x, y) as a destination and writes it to *out. The single
  * `lsls #0x18; asrs #0x18` on the gUnknown_03003340 read serves BOTH compares,
  * so it is an int local carrying one explicit (s8) cast, not an s8 local.
  *
  * MATCHED first draft. */
-void sub_08058E88(int x, int y, u16 * out)
+void AiCheckDropNeighbour(int x, int y, u16 * out)
 {
     struct Map * map;
     struct MoveTbl * tbl;
@@ -234,6 +238,7 @@ void sub_08058E88(int x, int y, u16 * out)
     out[0] = x;
     out[1] = y;
 }
+asm(".global sub_08058E88\n.thumb_set sub_08058E88, AiCheckDropNeighbour\n");
 
 /* Writes a per-unit value to *out, defaulting to 0x78 and clamping back to
  * 0x78 on overflow.
@@ -246,7 +251,7 @@ void sub_08058E88(int x, int y, u16 * out)
  * argument, which is why r2 survives the stride multiply.
  *
  * MATCHED first draft. */
-void sub_08058F30(u8 * out)
+void AiGetReachBudget(u8 * out)
 {
     *out = 0x78;
 
@@ -262,6 +267,7 @@ void sub_08058F30(u8 * out)
     if (*out > 0x78)
         *out = 0x78;
 }
+asm(".global sub_08058F30\n.thumb_set sub_08058F30, AiGetReachBudget\n");
 
 /* Runs sub_08059050 once per set bit of the current army's four-bit mask at
  * gPlayers[gUnknown_030033EC].unk2c, passing the 1-based army index
@@ -270,7 +276,7 @@ void sub_08058F30(u8 * out)
  * The sentinel really is `s16` and not `u16`: the final read is
  * `movs r1,#0; ldrsh r0,[r0,r1]`, the register-offset form agbcc uses for a
  * signed halfword on the stack. Its callers' out-pointers, by contrast, are
- * read with a plain `ldrh` -- see the note on sub_08058CE8 in
+ * read with a plain `ldrh` -- see the note on AiScoreFiringCell in
  * include/unknown-functions.h.
  *
  * The final test is written `!= sentinel -> 0` and not `== sentinel -> -1`.

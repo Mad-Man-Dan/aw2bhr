@@ -46,11 +46,11 @@ int sub_08043DAC(u8 a)
 
 /* The parameter is dead inside the body -- see the note on the declaration.
  * The bare `lsls r0, r0, #0x18` in front of the test is what retyped
- * sub_08044BA0's return from `int` to `bool8` (wave 28, W28-B).
+ * IsBlackHoleCo's return from `int` to `bool8` (wave 28, W28-B).
  */
 void sub_08043DF4(int a)
 {
-    if (sub_08044BA0(a))
+    if (IsBlackHoleCo(a))
         sub_0803B4EC(0x1a3);
     else
         sub_0803B4EC(0x1a4);
@@ -58,7 +58,7 @@ void sub_08043DF4(int a)
 
 void sub_08043E18(int a)
 {
-    if (sub_08044BA0(a))
+    if (IsBlackHoleCo(a))
         sub_0803B4EC(0x199);
     else
         sub_0803B4EC(0x19a);

@@ -10,13 +10,14 @@
 /* `>> 6` on an s16, then element [n + 1]: agbcc folds the +1 element (0x3c)
  * into the member offset (0x2a) and emits a single `adds r2, #0x66`.
  */
-bool8 sub_08026F9C(s16 a, s16 b)
+bool8 AreUnitsOnSameTeam(s16 a, s16 b)
 {
     if (gPlayers[(a >> 6) + 1].team == gPlayers[(b >> 6) + 1].team)
         return TRUE;
 
     return FALSE;
 }
+asm(".global sub_08026F9C\n.thumb_set sub_08026F9C, AreUnitsOnSameTeam\n");
 
 /* Two separate `if`s, not `&&`: the shared `return FALSE` block has to sit
  * directly after the second compare with the TRUE block behind the pool, and
@@ -26,7 +27,7 @@ bool8 sub_08026F9C(s16 a, s16 b)
  * either way, but three call sites load the argument with `ldrsh`, which a u16
  * parameter cannot produce. See include/unknown-functions.h.
  */
-bool8 sub_08026FD0(s16 a, u8 b)
+bool8 IsTerrainOwnedByUnitsTeam(s16 a, u8 b)
 {
     u32 t = b >> 5;
 
@@ -38,3 +39,4 @@ bool8 sub_08026FD0(s16 a, u8 b)
 
     return FALSE;
 }
+asm(".global sub_08026FD0\n.thumb_set sub_08026FD0, IsTerrainOwnedByUnitsTeam\n");

@@ -11,24 +11,26 @@
  * negation of the source condition and the `if` body -- the 9 -- falls through.
  * The literal pool sitting between the two arms is why the else arm gets its
  * own copy of &gUnknown_030032D8. */
-void sub_08034EA4(void)
+void MapState_StartDayStartScreen(void)
 {
-    sub_0802817C();
+    StartDayStartScreen();
 
     if (gUnknown_03004080 == 1)
         gUnknown_030032D8 = 9;
     else
         gUnknown_030032D8 = 8;
 }
+asm(".global sub_08034EA4\n.thumb_set sub_08034EA4, MapState_StartDayStartScreen\n");
 
-/* The other half of sub_08028CD8, which parks gUnknown_030032D8 in
+/* The other half of ParkMapState, which parks gUnknown_030032D8 in
  * gUnknown_030044DC and writes 0x10 in its place. */
-void sub_08034ED0(void)
+void MapState_RunParkedWinLossCheck(void)
 {
     gUnknown_030032D8 = gUnknown_030044DC;
     gUnknown_030044DC = 0;
-    sub_08028CF4();
+    RunWinLossCheck();
 }
+asm(".global sub_08034ED0\n.thumb_set sub_08034ED0, MapState_RunParkedWinLossCheck\n");
 
 /* The local is load-bearing: the ROM stores r4 -- the narrowed return value,
  * known to be zero on this path -- into gUnknown_030032D8 rather than a fresh
@@ -39,7 +41,7 @@ void sub_08034EF0(void)
 
     if (v == 0)
     {
-        sub_08037F80();
+        StartEndOfGameProc();
         gUnknown_030032D8 = v;
     }
 }

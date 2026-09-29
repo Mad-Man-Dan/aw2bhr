@@ -17,7 +17,7 @@
 void sub_080215B8(void)
 {
     RecountArmyProperties();
-    sub_08026D68();
+    RecountArmyIncome();
     AiScanBuildableFacilities();
     sub_08062038();
 }

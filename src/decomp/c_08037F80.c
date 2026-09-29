@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_08037F80(void)
+void StartEndOfGameProc(void)
 {
     Proc_Start(gUnknown_0849D56C, PROC_TREE_3);
 }
+asm(".global sub_08037F80\n.thumb_set sub_08037F80, StartEndOfGameProc\n");

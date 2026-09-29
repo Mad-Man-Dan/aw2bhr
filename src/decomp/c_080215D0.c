@@ -11,7 +11,7 @@
  * Both bases are bound to locals: the pointer global's deref is hoisted out
  * of the loop despite the `strb`, and binding the ROM array as well is what
  * puts its pool word first. */
-void sub_080215D0(void)
+void LoadTileTerrainTable(void)
 {
     u8 *src;
     u8 *dst;
@@ -23,3 +23,4 @@ void sub_080215D0(void)
     for (i = 0; i <= 0x3ff; i++)
         dst[i] = src[i];
 }
+asm(".global sub_080215D0\n.thumb_set sub_080215D0, LoadTileTerrainTable\n");

@@ -29,7 +29,7 @@ void sub_08034394(void)
 void sub_080343D8(void)
 {
     sub_08034598();
-    sub_0805FD64();
+    AiExecuteActionStep();
 
     if (gUnknown_03004780 == 2)
         gUnknown_03003F60 = 0;

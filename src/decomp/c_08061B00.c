@@ -11,10 +11,11 @@
  * The post-increment is what puts `adds r0,#1; str r0,[r2]` between the address
  * computation and the `ldr r0,[r1]` of the slot; `bl _call_via_r0` is agbcc's
  * ordinary indirect-call trampoline and its register index is the arity. */
-void sub_08061B00(void)
+void AiStartNextPass(void)
 {
     if (gPlaySt.fog == 0)
         gUnknown_085766E8[gUnknown_03004770++]();
     else
         gUnknown_08576738[gUnknown_03004770++]();
 }
+asm(".global sub_08061B00\n.thumb_set sub_08061B00, AiStartNextPass\n");

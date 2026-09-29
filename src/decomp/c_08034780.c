@@ -29,7 +29,7 @@ void SetDefaultRules(void)
     gPlaySt.co[3] = 4;
     gPlaySt.co[4] = 0xb;
 
-    sub_08026900();
+    SetFreeForAllTeams();
 
     gPlaySt.turnLimit = 0;
     gPlaySt.captureLimit = 0;
