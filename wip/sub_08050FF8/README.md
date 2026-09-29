@@ -49,4 +49,14 @@ Worked across several waves without a match; the full record is the draft's head
 - Extending the volatile to the other route to the same variable (retyping the pDC local to volatile u16 *const *): 868 bytes (+68), 14.22%. Only the direct reads want it.
 - **next:** Re-run -fno-force-mem from the new fixpoint and say whether the last 4 bytes are the same mechanism.
 
+### Wave 95
+
+Base: existing draft (800, -4, 17.8%), kept as `sub_08050FF8.w95-start.c`; draft unchanged.
+- Lever 1 (per-block temp for a derived value) did not apply: the ROM's copies here are the `side * 144` index shared by two stores in the FIRST statement, not a saved-register copy.
+- Finding: in the first statement (`gUnknown_02029906[SIDE][gUnknown_020298E0[SIDE].unk16 - 1] = 1`) the ROM reads the side ONCE and shares `side*144` between both subscripts. Naming the plain (non-volatile) global at BOTH positions of that statement (rest stays volatile) reproduces that statement's instructions exactly (single `ldrh`, `lsls #3; adds; lsls #4`, `adds r0,r1,r2`, `ldrh [r0,#22]`). But total size falls to 792 (-12) and the score to 15.2%, first difference still +0xc. Plain global at only ONE of the two positions is byte-neutral (800, 17.8%).
+- Plain global everywhere: 796 (-8), 15.4%.
+- Lever 2 (mixed bare / bound): this IS the mixed form for the side reads (statement 1 bare, others volatile); it fixes statement 1 but loses 8 bytes elsewhere, so not size-exact. Not transferred as a size fix.
+- Residual unchanged: ROM holds &gUnknown_0300453C in r8, &gUnknown_020298E0 in r9 and reloads &gUnknown_03001FBC per group; ours holds the 03001FBC address in r6.
+Proposed tried-line: "plain (non-volatile) side read in statement 1 only: that statement then matches but the function is 12 bytes short".
+
 </details>

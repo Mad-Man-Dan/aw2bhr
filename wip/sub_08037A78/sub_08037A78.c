@@ -31,39 +31,48 @@ struct Map37A78
 
 void sub_08037A78(int a1)
 {
-    struct Map37A78 *map;
-    struct Map37A78 *p;
-    u16 *dst;
-    const u16 *src;
-    int x;
-    int y;
-    u8 v;
-
-    map = (struct Map37A78 *)gUnknown_08499590;
-    for (y = 0; y < map->unk02; y++)
+  const u16 *maskTable;
+  struct Map37A78 *map;
+  struct Map37A78 *p;
+  u16 *dst;
+  u8 (*cellRow)[0x417a - 0x12];
+  const u16 *src;
+  int x;
+  struct Map37A78 *outerMap;
+  int y;
+  u8 v;
+  y = 0;
+  if (y < (map = (struct Map37A78 *) gUnknown_08499590)->unk02)
+  {
+    outerMap = map;
+    do
     {
-        p = (struct Map37A78 *)gUnknown_08499590;
-        for (x = 0; x < p->unk00; x++)
+      x = 0;
+      if (x < outerMap->unk00)
+      {
+        p = (struct Map37A78 *) gUnknown_08499590;
+        do
         {
-            v = p->unk12[p->unk417a[y] + x];
-            if (v != 0)
-            {
-                src = (const u16 *)gUnknown_080A0F38
-                    + gUnknown_08582E74[gUnknown_030040F8[(v >> 6) + 1] + 0x12];
-                dst = (u16 *)a1 + gUnknown_03004010[x] + gUnknown_030032E0[y];
-                dst[0] &= gUnknown_0849D534[0];
-                dst[2] &= gUnknown_0849D534[1];
-                dst[4] &= gUnknown_0849D534[2];
-                dst[6] &= gUnknown_0849D534[3];
-                dst[0] |= src[0];
-                dst[2] |= src[2];
-                dst[4] |= src[4];
-                dst[6] |= src[6];
-            }
+          maskTable = gUnknown_0849D534;
+          cellRow = &p->unk12;
+          v = (*cellRow)[p->unk417a[y] + x];
+          if (v != 0)
+          {
+            src = ((const u16 *) gUnknown_080A0F38) + gUnknown_08582E74[gUnknown_030040F8[((v >> 3) >> 3) + 1] + 0x12];
+            dst = (((u16 *) a1) + gUnknown_03004010[x]) + gUnknown_030032E0[y];
+            dst[0] &= maskTable[0];
+            dst[2] &= maskTable[1];
+            dst[4] &= maskTable[2];
+            dst[6] &= maskTable[3];
+            dst[0] |= src[0];
+            dst[2] |= src[2];
+            dst[4] |= src[4];
+            dst[6] |= src[6];
+          }
         }
+        while ((++x) < p->unk00);
+      }
     }
+    while ((++y) < outerMap->unk02);
+  }
 }
-
-
-
-

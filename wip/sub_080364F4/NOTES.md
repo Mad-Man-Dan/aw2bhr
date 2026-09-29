@@ -12,3 +12,55 @@ and adds runtime 0x44/0x40/0x3c offsets.  The honest array spelling instead
 folds 0x44 into its address constant, orders the bases differently, and loses
 16 bytes.  All three branches, both four-item loops, the 0xff fallback, and the
 final script selection are present; no further fixpoint was attempted.
+
+## wave 95
+
+Base: the old draft (kept as `sub_080364F4.w95-start.c`). Result: 9.5% / -16 -> **17.6% / -8**
+(`sub_080364F4.w95-v9.c`, draft left as that file). The first difference is still +0xe because
+the ROM's `ldr r0,=word; ldr r2,[r0]; ldrb r1,[r2,#1]; cmp r1,#0; beq` opens with the mode test
+before the second word is loaded, and the draft loads it in the same place except for register
+naming.
+
+What moved it (mechanism):
+- The second `.rodata` word (holds gUnknown_085C77A0) appears ONLY when the table address is bound
+  through a BYTE cast: `t = (u8 *)gUnknown_085C77A0;` inside the case-1/2 block. Binding a
+  `const struct Unk085C77A0 *t = gUnknown_085C77A0` at the top (or `&arr[0]`) emits no word: the
+  address stays a folded constant. The tail's bare `gUnknown_085C77A0[...]` then also loads through
+  the word, and case 0's bare use keeps the plain `gUnknown_085C77A0+0x3c` literal: the ROM's
+  `mov r1,sl; ldr r3,[r1]` tail and `=gUnknown_085C77DC` in arm 0 both come out right.
+- The 4-byte frame the wave-71 probe paid does NOT appear: the bind is a plain cast local, no
+  volatile, `sub sp` unchanged. (That probe's extra locals were live across the loop.)
+- The `+0x44 / +0x40 / +0x3c` offsets stay separate from the index only with a per-statement temp:
+  `(d1 = t + 0x44, d1[gPlaySt.mapID * 0x5c + i])`, one temp per offset (d1/d2/d3). Without the temp the
+  constant sinks to the end (`adds r0,#0x44` after the sum) even when written `x + (t + 0x44)`.
+  One distinct temp per statement transferred from W95-A's lever: yes.
+
+Residual (-8): LICM hoists `t + 0x44` and `t + 0x40` into registers r9/r8 with the ROM computing them
+inside the loop (`adds r1,r6,#0; adds r1,#0x44` per use), and only `t + 0x3c` (used twice) is hoisted.
+So the ROM's 0x44/0x40 adds are NOT loop-invariant to loop.c: something makes them variant or
+un-movable. Tried d-temps declared per block: same. Then the register roles differ (arm 0 uses r3/r4
+swapped) as a consequence. Not tried: permuter (never run), a walker for the +0x44 read.
+
+Proposed summary:
+- does: (unchanged)
+- status: 17.6% at -8 bytes
+- left: the ROM adds 0x44 and 0x40 to the table base inside the loop, while the draft hoists them into registers; only 0x3c is shared and hoisted
+- tried: table base bound as a pointer-to-struct (no address word emitted); byte-cast bind + per-statement offset temps (word appears, -8); folded byte-index forms (offset sinks to the end)
+
+### wave 95, permuter (three chained 600 s runs, 2 threads, from `sub_080364F4.w95-v9.c`)
+
+17.6% / -8  ->  61.5%  ->  70.6%  ->  71.6%, all **size-exact (296)**. Kept: `sub_080364F4.c`
+(= perm3 output with `t - -0x40` written back as `t + 0x40`, `new_var` renamed `isEmpty`; measured 71.6%
+before and after). Every kept mutation was read and is semantically the same C:
+1. run 1: `(i & 0xFF)` on the index of the +0x44 read (the fold-proof mask: `i` is u8, so no-op) and the
+   `== 0xff` test bound to a `u8` temp before the `&& i + 1 <= 3` (that is `isEmpty`). Together: -8 -> size-exact. This is what
+   stops LICM hoisting `t + 0x44`.
+2. run 2: `mode = mapID * 0x5c + i;` reused as the index of the +0x40 read (`mode` is dead after the switch
+   dispatch) and `(&gPlaySt)->mapID` in the tail.
+3. run 3: operand swap `i + mapID*0x5c`, and a `do { } while (0)` around the else-arm store.
+Residual: the permuter shares the `mapID * 0x5c` product between two reads (`mode`), where the ROM
+recomputes the product for every read (`mov r1,ip; ldrb r0,[r1,#2]; muls r0,r5` three times). So 71.6% is
+size-exact but structurally the ROM's *other* spelling: next step is to un-share the product (three
+distinct one-statement temps) while keeping the `& 0xFF` and the `isEmpty` temp. First difference is +0x10:
+the ROM's first `ldr r2,[r0]` uses r2 for the play-state pointer where the draft uses r1.
+Proposed summary status: 71.6% at the right size; the `.rodata` words for the play-state pointer and the map table are now both produced.

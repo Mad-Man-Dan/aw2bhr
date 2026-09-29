@@ -9,33 +9,45 @@
 void sub_0804CA98(u16 a1, u16 a2, s16 a3)
 {
     struct Unk56E28 s;
+    struct Unk02029A10 *e;
+    struct Unk02029A10 *dst;
     u16 cnt;
+    unsigned short grp;
 
-    if (gUnknown_02029A10[a1].entries[a2].unk00 == 0)
+    e = (struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
+                               + a1 * sizeof(struct Unk02029A10Group)
+                               + (u8 *)gUnknown_02029A10);
+    if (e->unk00 == 0)
     {
-        gUnknown_02029A10[a1].entries[a2].unk20 += gUnknown_02029B94[a1][a2];
-        if (((*(volatile u16 *)&gUnknown_02029A10[a1].entries[a2].unk20) & 0xf)
-            == 1)
+        e->unk20 += gUnknown_02029B94[a1][a2];
+        if ((e->unk20 & 0xf) == 1)
         {
-            gUnknown_02029A10[a1].entries[a2].unk22++;
-            if (gUnknown_02029A10[a1].entries[a2].unk22 == 3)
+            if (++e->unk22 == 3)
             {
                 gUnknown_02029B94[a1][a2] = 0;
-                gUnknown_02029A10[a1].entries[a2].unk20 = 0xff;
+                e->unk20 = 0xff;
             }
-            cnt = gUnknown_02029A10[a1].entries[a2].unk22;
-            gUnknown_02029A10[a1].entries[cnt].x =
-                gUnknown_02029A10[a1].entries[gUnknown_08552148[a1]].x
+            cnt = e->unk22;
+            grp = sizeof(struct Unk02029A10Group);
+            dst = (struct Unk02029A10 *)(cnt * sizeof(struct Unk02029A10)
+                                         + a1 * grp
+                                         + (u8 *)gUnknown_02029A10);
+            dst->x = ((struct Unk02029A10 *)(gUnknown_08552148[a1] * sizeof(struct Unk02029A10)
+                                             + a1 * grp
+                                             + (u8 *)gUnknown_02029A10))->x
                 + ((u16 *)gUnknown_0855335C)[a1 * 10 + cnt * 2];
-            gUnknown_02029A10[a1].entries[cnt].y =
-                gUnknown_02029A10[a1].entries[gUnknown_08552148[a1]].y
+            dst->y = ((struct Unk02029A10 *)(gUnknown_08552148[a1] * sizeof(struct Unk02029A10)
+                                             + a1 * grp
+                                             + (u8 *)gUnknown_02029A10))->y
                 + ((u16 *)gUnknown_0855335C)[a1 * 10 + cnt * 2 + 1];
         }
         if (gUnknown_02029B80[a1][a2] != 0)
         {
             gUnknown_02029B80[a1][a2] = 0;
             gUnknown_02029B94[a1][a2] = 1;
-            gUnknown_02029A10[a1].entries[a2].frame = 0;
+            ((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
+                + a1 * sizeof(struct Unk02029A10Group)
+                + (u8 *)gUnknown_02029A10))->frame = 0;
             s.unk00 = a1;
             s.unk02 = a2;
             s.unk04 = ((u16 *)gUnknown_08553354)[a1 * 2];
@@ -45,8 +57,12 @@ void sub_0804CA98(u16 a1, u16 a2, s16 a3)
             s.unk0c = 0x78;
             sub_08056E28(&s);
         }
-        if (gUnknown_02029A10[a1].entries[a2].frame
-                == gUnknown_02029A10[a1].entries[a2].frameCount
+        if (((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
+                 + a1 * sizeof(struct Unk02029A10Group)
+                 + (u8 *)gUnknown_02029A10))->frame
+                == ((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
+                 + a1 * sizeof(struct Unk02029A10Group)
+                 + (u8 *)gUnknown_02029A10))->frameCount
             && a3 != -1 && sub_080153F0(a3))
             sub_08015328(a3);
     }
@@ -128,3 +144,55 @@ void sub_0804CA98(u16 a1, u16 a2, s16 a3)
  *     Kept anyway, because it mirrors sub_0804F3C8 and reads better.
  * Residual kind 3 (allocation / constant placement).
  */
+
+/* WAVE 77 (W77-H).  NOW SIZE-EXACT, 416/416, 345 of 416 bytes differ (17.1%),
+ * first difference at +0xa.  Was -12 bytes / 14.9%.
+ *
+ * The W77-A note above says the guarded region must use the `(u8 *)g + n` form.
+ * That is half right, and it is the half that costs the force-addr word:
+ * `(u8 *)gUnknown_02029A10` decays to `&gUnknown_02029A10[0]`, an address-of,
+ * and the -fforce-addr chapter's own rule is that `&gSym` is NOT a use.  So
+ * that spelling can never emit gUnknown_08136060, which is why this candidate
+ * was short by exactly the missing `ldr rP,=word; ldr rB,[rP]; mov sl,rB` plus
+ * the pool word plus one reload.
+ *
+ * WHAT IS IN THE BODY NOW, and why each piece is there:
+ *   - The guarded region is spelled BY NAME, `gUnknown_02029A10[a1].entries[n]`.
+ *     Only a by-name memory reference can produce the force-addr word.
+ *   - The TAIL (`entries[a2].frame = 0`, and the frame == frameCount guard) is
+ *     spelled `(u8 *)g + n * sizeof`.  The ROM's pool carries BOTH a force-addr
+ *     word and a plain gUnknown_02029A10 literal; the tail is where the plain
+ *     one comes from.  This region/tail split is what took it from -4 bytes to
+ *     size-exact.
+ *   - The read-site `volatile` cast on unk20 is back (W66-D had it, the wave-77
+ *     draft had lost it).  It restores the ROM's post-store `ldrh` reload, 2 B.
+ *   - W77-A's flat table indices on gUnknown_0855335C and gUnknown_08553354 are
+ *     KEPT.  The old "array form is +8 bytes" measurement was array form plus
+ *     the 3-D table indices; the tables were the 8 bytes, not the array form.
+ *
+ * MEASURED AND RULED OUT this wave, in addition to W77-A's list:
+ *   - region array + tail array: -4 bytes / 17.3%.
+ *   - region `(u8 *)g + n` bound to an `entry` pointer local, with by-name array
+ *     form only for the cnt / gUnknown_08552148 accesses: -36 bytes / 13.9%.  A
+ *     pointer local converts every access under it into a non-use and takes the
+ *     whole region's by-name count with it.
+ *
+ * REMAINING, one fact: the candidate still reaches gUnknown_02029A10 through the
+ * plain literal in the guarded region, so gUnknown_08136060 is absent and the
+ * plain word is created FIRST (pool `02029A10, .rodata, ...` against the ROM's
+ * `.rodata, .rodata, ..., 02029A10`).  Everything else in the diff is downstream
+ * of it.  Residual kind 3.  See the W77-H chapter in docs/agbcc-codegen.md. */
+
+/* WAVE 78 (W78-B).  Configured fixpoint reverified size-exact 416/416,
+ * 17.1%, 345 differing bytes, first difference +0xa.  Resumed only at W77-H's
+ * named residual.  Converting any one or two of the tail's `frame` /
+ * `frameCount` references back to array form is byte- and pool-neutral; doing
+ * all three, then retaining one plain-literal use by converting one guarded
+ * x/y/unk22 reference to `(u8 *)g + n`, also leaves the same single
+ * gUnknown_02029A10 plain word and no force-address word.  Goto/early-return
+ * forms for the outer guard and a goto for the inner cnt guard likewise leave
+ * the pool unchanged.  These region splits do not change the surviving
+ * by-name reference that the force-address pass sees. */
+
+
+

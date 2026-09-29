@@ -35,3 +35,16 @@ So the missing 8 bytes are NOT the visible `adds r2,r4,#0` and dead `ldrh`.
 Those are already accounted for. The residual is the two `unk210 |= 0xFFFF`
 sites, as the park says, and the spellings it lists are still the only ones
 measured.
+
+## wave 95
+
+Base: existing draft (420, -8, 18.0%), kept as `sub_080303C8.w95-start.c`; draft unchanged.
+- Lever 1: the ROM copies (`adds r3,r2,#0` / `adds r2,r4,#0` before the wait loop) hold the addresses of gUnknown_0849B018 and gUnknown_02023894, each loaded once through the compiler's .rodata address words. Binding those addresses to locals (`pi = &gUnknown_02023894; pa = &gUnknown_0849B018;`, loop reads `*pi`, `(*pa)->unk04`) is byte-identical to the draft: the copy propagates away. Lever did not transfer; mechanism: the ROM's copies are loop-rotation copies the compiler makes, and a source local is just propagated. The first difference (+0xe) is the ROM holding the address in r4 (ours r2), which a source local does not change.
+- unk210 read-modify-write: `w = unk210; unk210 = w | 0xFFFF;` byte-identical (combine forwards the read into the use, the dead first read stays: still two reads). `w = unk210 | 0xFFFF; unk210 = w;` loses BOTH reads (412 bytes). With `w` also used later (`acc += w`) identical to the draft. So a single volatile read before the write is not reachable by a local temp; the lever chapters (narrow-global volatile read) were not enough here.
+- Not tried: permuter (draft is 8 bytes short in size).
+
+Permuter (added at end of wave 95): two chained 600 s runs from the draft, 18.0 -> 40.9 -> 48.6, SIZE-EXACT (428), first difference +0xa. Draft = current `sub_080303C8.c` (= `.w95-perm3-start.c`). Changes, checked by reading:
+1. `new_var = gpKeySt;` read at the top and `return new_var->previous;` at the end. Differs from the start only if gpKeySt is reassigned during the function (callees sub_080301E8 / sub_0802F460); NOT verified, so treat as provisional. This is what supplied the missing 8 bytes (a live saved-register copy).
+2. `new_var2 = 2;` holds the constant in the wait loop's `unk04 != 2` test.
+3. In the key word the OR is written with the `0x8000 | unk00 << 10` group first, then `~REG_KEYINPUT & 0x3FF`, then `unk02 << 13` (the same value; the ROM groups 0x8000 with the shifted field, which this ordering reproduces without the local for 0x8000).
+Lever 1 (copy of a value into a saved register): transferred through the permuter's `new_var = gpKeySt` form; my hand-written address locals were folded away. Remaining: unk210 read-modify-write still reads twice, r4 vs r2 for the &gUnknown_0849B018 address.

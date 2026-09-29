@@ -55,7 +55,7 @@ void sub_0802216C(u16 *dst, u8 a2, u16 a3, u8 a4, u8 a5, u16 a6, u16 a7, u8 a8)
 {
     u16 t;
     u16 r;
-    register int base asm("r8");
+    int base;
 
     if (a3 == 0x100)
     {

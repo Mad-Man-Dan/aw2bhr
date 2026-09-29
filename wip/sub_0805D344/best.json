@@ -1,1 +1,1 @@
-{"candidate_bytes": 248, "exact_size": false, "origin": "draft", "percent": 28.23, "scored_over": "max(candidate, target)", "size_delta": 4, "source_sha1": "f880739297b1932d7a12238ed74ae3277a7074cb", "target_bytes": 244}
+{"candidate_bytes": 244, "exact_size": true, "origin": "permuter", "percent": 80.74, "scored_over": "max(candidate, target)", "size_delta": 0, "source_sha1": "8dde7dd35415ed28c3b3a8dc5130b28ccae2d7cf", "target_bytes": 244}

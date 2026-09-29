@@ -80,6 +80,16 @@
    ],
    "reason": "Flash library, 292 bytes. Parked at 8.2% under the DEFAULT -O2 configuration, which is the wrong one for this block; W60-I closed it at -O1 in one session. Wave 60 (orchestrator + W60-I). See the nine sibling entries for the measurement that established the flash library is -O1: nine byte-for-byte matches across 0x0808A3DC-0x0808B91C with no source change. This one needed source work on top of the flag, which is why it is credited to the agent and not to the sweep. NOT uniformly true across the span -- sub_0808AAF4, sub_0808AC7C and sub_0808B91C get LONGER under -O1, so each function still needs its own verdict."
   },
+  "sub_0808AAF4": {
+   "cflags_remove": [
+    "-O2",
+    "-fforce-addr"
+   ],
+   "cflags_add": [
+    "-O1"
+   ],
+   "reason": "Flash library ReadFlashId, 152 bytes. Wave 95 (W95-F). Matched by transplanting pret's ReadFlashId (pokeemerald src/agb_flash.c, with its DELAY() macro; this ROM writes 0xF0 once in the exit sequence where pret writes it twice). Byte-exact under -O1 with or without -fforce-addr, the flash block's configuration (see sub_0808AB8C); the default -O2 configuration gives 26.3%. The wave 88/93 notes that this function is '-O2 by exception' and 'longer at -O1' were measured on a hand-written goto draft whose shape was the residual."
+  },
   "sub_0808AB8C": {
    "cflags_remove": [
     "-O2",
@@ -266,6 +276,83 @@
     "-fprologue-bugfix"
    ],
    "reason": "m4a fade/update routine, 200 bytes. Wave 78 (W78-D + coordinator). The canonical compound member assignments recover the ROM's copied 0xFFFF mask and literal-pool alignment. With that unchanged source, default agbcc remains size-exact at 93.5% with 13 differing register/order bytes, while old_agbcc is byte-and-relocation exact. The function contains calls in its shutdown loop, matching the wave-38 discriminator: the older allocator schedules the loop-carried/call argument pseudos the way the prebuilt m4a object does. The coordinator independently verified the temporary old-agbcc match, recorded this override, regenerated compiler-overrides.mk, and re-ran the configured verdict. old_agbcc rejects -fprologue-bugfix."
+  },
+  "sub_08070F44": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a CgbModVol, 104 bytes. Wave 95 (W95-F). Matched by transplanting pret's CgbPan (static inline) and CgbModVol from refs/fireemblem8u/src/m4a.c (FE8 builds m4a.c with CC1_OLD) onto a file-local copy of the channel struct whose leftVolume/rightVolume are plain u8. The shared struct CgbChannel declares them volatile u8, and every earlier spelling fought that. Byte-exact under this configuration, the one its m4a neighbours carry; the default configuration gives 51.9% (first difference +0x2: chan in r2 instead of r1, both volume bytes loaded before either is narrowed)."
+  },
+  "sub_080717F8": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xwave, 72 bytes. Wave 95 (W95-F). Was listed in data/asm-resident.json on a calling-convention argument (track pointer in r1, r0 unused), which is the SDK's own signature for the ply_x* handlers; FE's m4a.c has them as C. pret's ply_xwave body (it reads an uninitialised local, as in the SDK) is byte-exact under this configuration; the default configuration gives 65.3% (first difference +0x2)."
+  },
+  "sub_08071840": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xtype, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_08071854": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xatta, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_08071868": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xdeca, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_0807187C": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xsust, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_08071890": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xrele, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_080718A4": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xiecv, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_080718B0": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xiecl, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_080718BC": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xleng, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
+  },
+  "sub_080718D0": {
+   "cc1": "old_agbcc",
+   "cflags_remove": [
+    "-fprologue-bugfix"
+   ],
+   "reason": "m4a ply_xswee, a track-command handler (pret's m4a.c has it as C). Wave 95 (W95-F + orchestrator). File-consistency entry, not an independent measurement: it is byte-identical under the default configuration and under this one, and promote.py merges it into one file with ply_xwave (sub_080717F8), which needs this configuration. Was listed in data/asm-resident.json on the argument that the track pointer arrives in r1; that is the SDK's (mplayInfo, track) signature with the first argument unused."
   },
   "sub_08070FAC": {
    "cc1": "old_agbcc",

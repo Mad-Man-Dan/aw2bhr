@@ -88,3 +88,10 @@ A register-allocation residual, but NOT the permuter's stated case — the sizes
 differ, and a 6-instruction prologue delta is the shape the permuter is
 documented to be useless on. Attack the pressure: find the spelling that makes
 agbcc want `sl`.
+
+## wave 95
+
+Base: the `do { } while (0)` around the whole outer body (148, -8, 5.8%), kept as `sub_0807B7BC.w95-perm1-start.c`; original draft kept as `sub_0807B7BC.w95-start.c` (144, 9.0%). `str++` at the top with the compare re-read (136), `nx = str + 1` temp (144, 10.3%), bare copies of outWidths / outTotal (148): no gain; the copies propagate away.
+RESULT: SIZE-EXACT (156), 51.3%, first difference +0xa. Draft = `sub_0807B7BC.w95-perm3-start.c` = current `sub_0807B7BC.c`. Permuter chain (600 s each): 5.8 -> 46.8 -> 51.3 (both semantically identical to the start, checked by reading). What it changed: `total` is `int` (the u16 store at the end truncates identically), a variable `new_var = 0` stands for the zero in the two `!= 0` loop tests, `new_var2 = 0` stands for the NULL test on outTotal, and the return sits inside the `do { } while (0)`. Runs 3 and 4 (58.3, 59.0) were WRONG C: `new_var = tile;` is written inside the glyph loop over the very variable used as the zero constant. Kept as `.w95-WRONG-58.c` / `.w95-WRONG-59.c`. Rewriting that step with a distinct temp (`tc = tile`) is 51.3%, the same as before it, so the improvement was the clobber.
+The park's "one register short" is gone: the wrapper plus zero-variable form saves the third high register; what is left is register choice (str in r5 not r4, etc.) inside a size-exact body.
+Lever 1: does not transfer as a source form (copies fold away); the permuter's zero-variable is the working equivalent. Comments in the draft are the permuter's, not to be promoted as is.

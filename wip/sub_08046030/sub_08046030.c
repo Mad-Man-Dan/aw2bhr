@@ -53,6 +53,12 @@ struct Unk46030Map
 
 #define MAP ((struct Unk46030Map *)gUnknown_08499590)
 
+/* Draws one icon row of the tally page with the shared text buffer. */
+static inline void DrawIcon(int x, int y, int id)
+{
+    sub_08014A5C(x, y, gUnknown_08499578, id, 0x8000, 0);
+}
+
 void sub_08046030(void)
 {
     s16 i;
@@ -110,11 +116,11 @@ void sub_08046030(void)
     a = gUnknown_03004080 <= 9 ? 0x18 : 0x17;
     if (gUnknown_03004080 <= 0x63)
         a++;
-    sub_08014A5C(a, 2, gUnknown_08499578, 0x967, 0x8000, 0);
-    sub_08014A5C(2, 6, gUnknown_08499578, 0x95d, 0x8000, 0);
-    sub_08014A5C(8, 6, gUnknown_08499578, 0x95e, 0x8000, 0);
-    sub_08014A5C(0xf, 6, gUnknown_08499578, 0x968, 0x8000, 0);
-    sub_08014A5C(0x16, 6, gUnknown_08499578, 0x96e, 0x8000, 0);
+    DrawIcon(a, 2, 0x967);
+    DrawIcon(2, 6, 0x95d);
+    DrawIcon(8, 6, 0x95e);
+    DrawIcon(0xf, 6, 0x968);
+    DrawIcon(0x16, 6, 0x96e);
 
     y = 8;
     for (k = 1; k <= sub_080248F8(); k++)

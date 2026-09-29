@@ -82,40 +82,45 @@
 
 void sub_0805D344(u32 a1)
 {
-    int n;
-    int i;
-    int j;
-    u8 t;
-    u8 x;
+  int new_var3;
+  struct Unit **new_var2;
+  int n;
+  int i;
+  int j;
+  u8 t;
+  struct Unit * volatile *new_var4;
+  int new_var;
+  u8 x;
+  new_var2 = &gUnknown_08499594;
+  n = 0;
+  new_var4 = (struct Unit * volatile *) new_var2;
+  while (gUnknown_030045F0[n] != 0)
+  {
+    x = (&(*new_var4)[gUnknown_030045F0[n]])->type;
+    gUnknown_030046E0[n] = sub_08042D1C(gUnknown_030033EC, x);
+    n++;
+  }
 
-    n = 0;
-
-    while (gUnknown_030045F0[n] != 0)
+  new_var = n > 1;
+  if (new_var)
+  {
+    new_var3 = n;
+    for (i = 0; i <= (new_var3 - 2); i++)
     {
-        x = (*(struct Unit *volatile *)&gUnknown_08499594)[gUnknown_030045F0[n]].type;
-        gUnknown_030046E0[n] = sub_08042D1C(gUnknown_030033EC, x);
-        n++;
-    }
-
-    if (n > 1)
-    {
-        for (i = 0; i <= n - 2; i++)
+      for (j = new_var3 - 2; j >= i; j--)
+      {
+        if ((a1 == 0) ? (gUnknown_030046E0[j] < gUnknown_030046E0[j + 1]) : (gUnknown_030046E0[j] > gUnknown_030046E0[j + 1]))
         {
-            for (j = n - 2; j >= i; j--)
-            {
-                if (a1 == 0
-                        ? gUnknown_030046E0[j] < gUnknown_030046E0[j + 1]
-                        : gUnknown_030046E0[j] > gUnknown_030046E0[j + 1])
-                {
-                    t = gUnknown_030046E0[j];
-                    gUnknown_030046E0[j] = gUnknown_030046E0[j + 1];
-                    gUnknown_030046E0[j + 1] = t;
-
-                    t = gUnknown_030045F0[j];
-                    gUnknown_030045F0[j] = gUnknown_030045F0[j + 1];
-                    gUnknown_030045F0[j + 1] = t;
-                }
-            }
+          t = gUnknown_030046E0[j];
+          gUnknown_030046E0[j] = gUnknown_030046E0[1 + j];
+          gUnknown_030046E0[j + 1] = t;
+          t = gUnknown_030045F0[j];
+          gUnknown_030045F0[j] = gUnknown_030045F0[j + 1];
+          gUnknown_030045F0[j + 1] = t;
         }
+      }
+
     }
+
+  }
 }

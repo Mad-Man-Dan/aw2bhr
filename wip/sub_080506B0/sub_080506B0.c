@@ -91,8 +91,11 @@ void sub_080506B0(void)
     oam.tileNum = gUnknown_02029710[(*sidep)].unk00;
     oam.objMode = 0;
 
+    /* The mission id is read as "table base + 2 + side * 16": the byte-offset
+     * spelling gives the same pool-load order as the original and 4% more
+     * matching bytes than the two-index form. */
     if ((tbl = (struct Unk85D6A48Row *)gUnknown_085D6A48,
-         tbl[v = gUnknown_03004580[(*sidep)][1]].unk02) == 2
+         tbl[v = *(u16 *)((u8 *)gUnknown_03004580 + 2 + (*sidep) * 16)].unk02) == 2
         && (v == 0x17 || v == 0x11))
     {
         sub_08012358();

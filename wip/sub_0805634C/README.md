@@ -28,6 +28,7 @@ In the second loop the original loads the bare addresses of gUnknown_020298E0 an
 
 - `sub_0805634C.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -38,5 +39,10 @@ In the second loop the original loads the bare addresses of gUnknown_020298E0 an
 ### Notes
 
 PARKED Wave 70 at 360/364 (-4). First loop and all semantics are settled; the second loop needs two addresses emitted as bare symbol plus runtime constant before the varying offset. Separate p=base; p+=K statements prove that spelling for +0x1a and +6, but before-loop placement spills the adjusted pointers while body placement const-propagates back to base+K. Existing direct/member/pointer forms are documented in the draft; the remaining axis is lifetime/CSE, not transcription.
+
+### Wave 95
+
+No probe run. Reading the pre-registered chapters (two-statement split, member-array giv order) against the record: the wave-70 park already ran the two-statement `p = base; p += K;` split, before the loop (spills, kills the inner CSE) and in the body (const-propagates back). The chapters' successful splits use a base that is a LOAD (`e4 = *pE4`) or a two-element row read; here the base is a bare SYMBOL_REF, so cse folds base+K back. Nothing in the chapters gives a non-constant base for gUnknown_020298E0 / gUnknown_08551D22. Left at the wave-70 draft (360/364).
+(draft left at the wave-70 draft.)
 
 </details>

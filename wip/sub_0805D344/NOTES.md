@@ -38,3 +38,14 @@ not a possible file and {D338, D344, D438} is ruled out. The only file left is
   type byte and dereferenced at the call is 12.70%, and computing `id * 12`
   into an int local then adding the volatile-read base is 13.11%. So those
   order differences are downstream of n's register, not independent facts.
+
+## wave 95
+
+Base: draft (236, -8, 16.4%) kept as `sub_0805D344.w95-start.c`. best.c form (n reused as outer counter with `m = n - 2`) gave 28.2% at +4; the `for (n = 0; m >= n; ...)` spelling of it reached 33.9% at +4 but folds `m >= 0` into a branch the ROM does not have, so it was dropped. Copying n to a second variable by hand (`k = n; m = k - 2`) is byte-identical (copy propagates).
+RESULT: SIZE-EXACT (244), 75.0%, first difference +0xf. Draft = `sub_0805D344.w95-perm3-start.c` = current `sub_0805D344.c`. Chained permuter: run 1 (600 s) 16.4 -> 72.1; run 2 72.1 -> 75.0; run 3 75.0 -> 80.7 was WRONG C (`n = n > 1; new_var = n;` clobbers the list length; kept as `.w95-WRONG-80.c`); run 4 75.0 -> 75.8 was `volatile unsigned a1` (parameter made volatile; kept as `.w95-volatile-a1-75_82.c`, not adopted).
+What the two kept steps are (checked by reading, semantics identical to the start):
+1. Lever 2 transfers: the address of the unit-table pointer is bound to a local once at the top (`new_var2 = &gUnknown_08499594;`) and the volatile-cast read goes through it. That took 16.4 -> 72.1 and made the size exact (the old draft was 8 short).
+2. Lever 1 transfers in the form "copy the list length into a per-block variable for the sort" (`new_var3 = n; ... i <= new_var3 - 2 ... j = new_var3 - 2`): 72.1 -> 75.0.
+Residual: n is still in a LOW register (r5) with a hoisted-address difference in the fill loop (`ldr r2,[r6]` before the index arithmetic; ROM loads the table pointer after). The ROM's n lives in r8. The 80.7% form got n into a high register only by destroying it, so a high register for n is reachable only if a second variable, not n, takes the flag / copy role.
+Pool words: none new.
+Proposed summary: status=size-exact, 75% identical, only n's register and the order of three loads in the fill loop differ; tried += "binding &gUnknown_08499594 to a local at the top with the volatile read through it: size-exact (kept)"; "per-block copy of n for the sort loops (kept)". Rename new_var2 -> unitTable, new_var3 -> count when promoting, re-checking bytes.

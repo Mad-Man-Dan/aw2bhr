@@ -78,3 +78,11 @@ never place them, so it may be the only route. If a later wave tries it, note
 that the ROM's `mov r8, r2` re-uses the address pseudo from the **pre-loop**
 `gUnknown_0202F208 = 0` store, so a single bare reference plus a bound local is
 the shape to aim for — and that is also what removes the `.rodata` word.
+
+## wave 95
+
+Base: existing draft (176/172, +4, 35.8%), kept as `sub_08068038.w95-start.c`. Result: SIZE-EXACT (172), 41.3%, first difference still +0xc (frame/spill choice). Draft at `sub_08068038.c` is the permuter's run-1 result, checked by reading: same C as the start except the table is read through a local `new_var = gUnknown_08581160;` bound AFTER the first `gUnknown_0202F208 = 0;` (the sentinel `[12].data` and the matching-entry `.data` reads stay on the bare global; the chr compares use the local).
+- Pre-registered hypothesis (bind table and cursor addresses before the loop, first store bare): as written it OVERSHOOTS. Both bound: 160 (-12), 14.5%; cursor only: 164 (-8), 21.5%; table only: 160 (-12), 16.3%. Binding every table read removes the ROM's folded `gUnknown_08581164` pool word (member offset becomes `ldr [r3,#4]`). The permuter's mixed form (local for the chr reads, bare global for the two `.data` reads) is what restores the size: the bare reads keep the folded base+4 pool word.
+- Chained permuter: run 1 (900 s) 35.8 -> 41.3, run 2 NO-IMPROVEMENT.
+- Residual: str spill vs a2*32 spill and where &cursor lives (frame/reg allocation only; instruction multiset now close).
+Proposed summary: does=renders a string glyph by glyph; status=size-exact, allocation differs; left=ROM keeps str on the stack, a2*32 in sb, table in sl and &cursor in r8 for the whole function; tried=binding table/cursor addresses (all reads: too small; mixed: size-exact).

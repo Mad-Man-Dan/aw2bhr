@@ -1,4 +1,5 @@
 #include "global.h"
+#include "map.h"
 
 /* PARKED, wave 56 W56-M; advanced in Wave 72. The retained configured draft
  * is 13.5%, candidate 844 bytes vs 864 (-20), first difference +0x1c.
@@ -44,16 +45,6 @@
  *     c_080591E4.c records. Do not author a variable for it.
  */
 
-struct Map61308
-{
-    /* 0x0000 */ u16 unk00;
-    /* 0x0002 */ u16 unk02;
-    /* 0x0004 */ u8 filler_04[0x000E];
-    /* 0x0012 */ u8 unk12[0x1420];
-    /* 0x1432 */ u8 unk1432[0x2D48];
-    /* 0x417a */ u16 unk417A[0x100];
-};
-
 struct Unk61308Cell
 {
     /* 0x00 */ u8 x;
@@ -69,21 +60,23 @@ u8 sub_08061308(u8 a1, u8 a2, u16 *a3)
     int i;
     int j;
     u16 v;
+    struct Map **mp;
 
     k = 0;
     p = (struct Unk61308Cell *)gUnknown_03003F20;
     if (gUnknown_030045C8 != a1)
     {
+        mp = &gMap;
         for (; gUnknown_085766E4[k].unk00 != 0xff; k++)
         {
             if (gUnknown_0857680F[gUnknown_030046C0.unk06] != gUnknown_085766E4[k].unk02)
                 continue;
-            if (((struct Map61308 *)gUnknown_08499590)->unk12[
-                    ((struct Map61308 *)gUnknown_08499590)->unk417A[gUnknown_085766E4[k].unk01]
+            if (gMap->unit[
+                    gMap->rowOffset[gUnknown_085766E4[k].unk01]
                         + gUnknown_085766E4[k].unk00] != 0)
                 continue;
 
-            sub_0801F92C(gUnknown_08499590 + 0x2852);
+            sub_0801F92C(gMap->move);
 
             if (a2 == 4)
                 gUnknown_030013EC(gUnknown_085766E4[k].unk00, gUnknown_085766E4[k].unk01,
@@ -92,43 +85,43 @@ u8 sub_08061308(u8 a1, u8 a2, u16 *a3)
                 gUnknown_030013EC(gUnknown_085766E4[k].unk00, gUnknown_085766E4[k].unk01,
                                   gUnknown_030046C0.unk06, 0x78, 0);
 
-            for (i = 0; i < ((struct Map61308 *)gUnknown_08499590)->unk02; i++)
+            for (i = 0; i < gMap->height; i++)
             {
-                for (j = 0; j < ((struct Map61308 *)gUnknown_08499590)->unk00; j++)
+                for (j = 0; j < gMap->width; j++)
                 {
                     if ((s8)gUnknown_03003340[i][j] < 0)
                         continue;
                     switch (a2)
                     {
                     case 0:
-                        if (gUnknown_085767D5[((struct Map61308 *)gUnknown_08499590)->unk1432[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0x1f] != 1)
+                        if (gUnknown_085767D5[(*mp)->terrain[
+                                (*mp)->rowOffset[i] + j] & 0x1f] != 1)
                             continue;
-                        if ((((struct Map61308 *)gUnknown_08499590)->unk1432[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0xe0)
+                        if (((*mp)->terrain[
+                                (*mp)->rowOffset[i] + j] & 0xe0)
                                     == gUnknown_03004084)
                             continue;
                         break;
                     case 1:
-                        if (((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] == 0)
+                        if ((*mp)->unit[
+                                (*mp)->rowOffset[i] + j] == 0)
                             continue;
-                        if ((((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0xc0)
+                        if (((*mp)->unit[
+                                (*mp)->rowOffset[i] + j] & 0xc0)
                                     != gUnknown_03003F2C)
                             continue;
-                        q = &gUnknown_08499594[((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j]];
+                        q = &gUnknown_08499594[(*mp)->unit[
+                                (*mp)->rowOffset[i] + j]];
                         if (q->type != 0x14)
                             continue;
                         if (q->unk07 != 0)
                             continue;
                         break;
                     case 2:
-                        if ((((struct Map61308 *)gUnknown_08499590)->unk1432[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0x1f) != 0xd
-                         && (((struct Map61308 *)gUnknown_08499590)->unk1432[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0x1f) != 0xb)
+                        if (((*mp)->terrain[
+                                (*mp)->rowOffset[i] + j] & 0x1f) != 0xd
+                         && ((*mp)->terrain[
+                                (*mp)->rowOffset[i] + j] & 0x1f) != 0xb)
                             continue;
                         p->x = j;
                         p->y = i;
@@ -136,30 +129,30 @@ u8 sub_08061308(u8 a1, u8 a2, u16 *a3)
                         p++;
                         continue;
                     case 3:
-                        if (((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] == 0)
+                        if ((*mp)->unit[
+                                (*mp)->rowOffset[i] + j] == 0)
                             continue;
-                        if ((((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0xc0)
+                        if (((*mp)->unit[
+                                (*mp)->rowOffset[i] + j] & 0xc0)
                                     != gUnknown_03003F2C)
                             continue;
-                        q = &gUnknown_08499594[((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j]];
+                        q = &gUnknown_08499594[(*mp)->unit[
+                                (*mp)->rowOffset[i] + j]];
                         if (q->type > 2)
                             continue;
                         if (q->flags & 8)
                             continue;
                         break;
                     case 4:
-                        if (((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] == 0)
+                        if ((*mp)->unit[
+                                (*mp)->rowOffset[i] + j] == 0)
                             continue;
-                        if ((((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j] & 0xc0)
+                        if (((*mp)->unit[
+                                (*mp)->rowOffset[i] + j] & 0xc0)
                                     != gUnknown_03003F2C)
                             continue;
-                        q = &gUnknown_08499594[((struct Map61308 *)gUnknown_08499590)->unk12[
-                                ((struct Map61308 *)gUnknown_08499590)->unk417A[i] + j]];
+                        q = &gUnknown_08499594[(*mp)->unit[
+                                (*mp)->rowOffset[i] + j]];
                         if (gUnknown_085767A0[q->type] == 0)
                             continue;
                         if (q->flags & 8)

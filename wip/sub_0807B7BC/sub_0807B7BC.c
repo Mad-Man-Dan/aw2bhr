@@ -82,33 +82,12 @@
  * axis is UNTRIED, not ruled out. */
 u16 sub_0807B7BC(u8 *str, u16 *outTotal, u8 *outWidths, int tile, void *a5)
 {
-    struct Unk08616194 *g;
-    int count;
-    u16 total;
-
-    total = 0;
-    count = 0;
-
-    while (*str != 0)
-    {
-        for (g = gUnknown_08616194; g->unk00 != 0; g++)
-        {
-            if (*str == g->unk00)
-            {
-                Decompress(g->unk04, (void *)(0x06010000 + ((tile & 0x3ff) << 5)));
-                total += g->unk08;
-                if (outWidths != NULL)
-                    outWidths[count + 1] = g->unk08;
-                tile += 8;
-                count++;
-                break;
-            }
-        }
-        str++;
-    }
-
-    if (outTotal != NULL)
-        *outTotal = total;
-
-    return count;
+  void *new_var2;
+  int new_var;
+  struct Unk08616194 *g;
+  int count;
+  int total;
+  total = 0;
+  count = 0;
+ do { new_var2 = (void *) 0; new_var = 0; while ((*str) != new_var) { do { for (g = gUnknown_08616194; g->unk00 != new_var; g++) { if (g->unk00 == (*str)) { Decompress(g->unk04, (void *) (0x06010000 + ((tile & 0x3ff) << 5))); total += g->unk08; if (outWidths != ((void *) 0)) { outWidths[count + 1] = g->unk08; } tile += 8; count++; break; } } str++; } while (0); } if (outTotal != new_var2) { *outTotal = total; } return count; } while (0);
 }

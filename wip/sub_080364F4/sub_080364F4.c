@@ -23,45 +23,57 @@
  */
 void sub_080364F4(void)
 {
-    int mode;
-    u8 i;
-
-    sub_080191B0();
-
-    mode = gPlaySt.gameMode;
-
-    switch (mode)
-    {
+  unsigned char isEmpty;
+  int mode;
+  u8 *t;
+  u8 *d1;
+  u8 *d2;
+  u8 *d3;
+  u8 i;
+  sub_080191B0();
+  mode = gPlaySt.gameMode;
+  switch (mode)
+  {
     case 1:
+
     case 2:
-        for (i = 0; i < 4; i++)
-        {
-            gPlaySt.unk42[i + 1] =
-                ((const u8 *)&gUnknown_085C77A0[gPlaySt.mapID].unk44)[i];
-            gPlaySt.armyColor[i + 1] =
-                gUnknown_085C77A0[gPlaySt.mapID].unk40[i];
-
-            if (gUnknown_085C77A0[gPlaySt.mapID].unk3c[i] == 0xff
-                && i + 1 <= 3)
-                gPlaySt.co[i + 1] = gUnknown_030058D4[i];
-            else
-                gPlaySt.co[i + 1] =
-                    gUnknown_085C77A0[gPlaySt.mapID].unk3c[i];
-        }
-        break;
-
-    case 0:
-        for (i = 0; i < 4; i++)
-            gPlaySt.co[i + 1] =
-                gUnknown_085C77A0[gPlaySt.mapID].unk3c[i];
-        break;
+      t = (u8 *) gUnknown_085C77A0;
+      for (i = 0; i < 4; i++)
+    {
+      mode = i + (gPlaySt.mapID * 0x5c);
+      gPlaySt.unk42[i + 1] = (d1 = t + 0x44, d1[(gPlaySt.mapID * 0x5c) + (i & 0xFF)]);
+      gPlaySt.armyColor[i + 1] = (d2 = t + 0x40, d2[mode]);
+      isEmpty = ((d3 = t + 0x3c, d3[(gPlaySt.mapID * 0x5c) + i])) == 0xff;
+      if (isEmpty && ((i + 1) <= 3))
+      {
+        gPlaySt.co[i + 1] = gUnknown_030058D4[i];
+      }
+      else
+      {
+ do { gPlaySt.co[i + 1] = d3[(gPlaySt.mapID * 0x5c) + i]; } while (0);
+      }
     }
 
-    if (gUnknown_085C77A0[gPlaySt.mapID].hardcodedUnits != NULL
-        && gUnknown_085C77A0[gPlaySt.mapID].category <= 2)
-        sub_080193B0(gUnknown_085C77A0[gPlaySt.mapID].hardcodedUnits);
-    else
-        sub_080364E0();
+      break;
+
+    case 0:
+      for (i = 0; i < 4; i++)
+    {
+      gPlaySt.co[i + 1] = gUnknown_085C77A0[gPlaySt.mapID].unk3c[i];
+    }
+
+      break;
+
+  }
+
+  if ((gUnknown_085C77A0[(&gPlaySt)->mapID].hardcodedUnits != ((void *) 0)) && (gUnknown_085C77A0[gPlaySt.mapID].category <= 2))
+  {
+    sub_080193B0(gUnknown_085C77A0[gPlaySt.mapID].hardcodedUnits);
+  }
+  else
+  {
+    sub_080364E0();
+  }
 }
 
 

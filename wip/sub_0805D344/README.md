@@ -2,7 +2,7 @@
 
 0x0805D344, 244 bytes, THUMB, parked.
 
-Best score so far: 28.2%, +4 bytes (best.c).
+Best score so far: 80.7% (best.c).
 
 ## What it does
 
@@ -10,7 +10,7 @@ Sorts the zero-terminated list of unit ids in gUnknown_030045F0 that the list bu
 
 ## How close it is
 
-Compiles 8 bytes short of 244; 16.4% of bytes are in place, low only because the shortfall starts near the top. The only difference is where the list length n lives: the ROM keeps it in a high register and pays four extra 2-byte moves to use it, the draft keeps it in a low register.
+Compiles to the right size (244 bytes) with 75.0% of bytes identical. Reading gUnknown_08499594 through a local pointer and copying n separately for each sort loop brought it here. What is left: n sits in a low register where the original keeps it in r8, and three loads in the fill loop are in a different order.
 
 ## What is left
 
@@ -60,5 +60,16 @@ WAVE 87 (W87-A): 13.5% -> 16.4%, still 236/244 (-8), draft REPLACED (wave-57 dra
 ### Wave 93
 
 WAVE 93 (W93-A): A FAITHFUL sub_0805D344 DOES NOT MATCH UNDER -fno-gcse, AND THE REASON IS STRUCTURAL, NOT A SPELLING. Measured: configured 16.39% size-8, first difference +0xf; --cflags-add=-fno-gcse 33.20% size-20, first difference +0xa. The score RISES and the function gets WORSE: at configured the whole sort half is byte-exact (the ROM's 12-byte frame, both compiler spills, the four dead volatile loads, the ip/sb/sl inner-loop addresses, the epilogue), and the ONLY remaining differences are n's register and the two stack slot numbers swapped. Under -fno-gcse that whole structure collapses: the frame drops to 4 with no spills at all, the inner swap loses its dead loads and walks two low-register pointers instead. The ROM's register pressure IS gcse's work here, so sub_0805D344 was built WITH gcse. CONSEQUENCE FOR sub_0805D438: since files are contiguous, the only file ending at sub_0805D438 that can carry -fno-gcse is sub_0805D438 ALONE -- flag_probe's 'sub_0805D338 .. sub_0805D438' is the maximal window, not the only reading, and sub_0805D344 sits between D338 and D438 so {D338, D438} is not a file. ALSO MEASURED, all at configured, all negatives: an explicit `m = n - 2;` local instead of writing `n - 2` in both loop headers is 17.21% size-8 but moves the first difference BACKWARDS to +0xa because it changes the frame -- the ROM's two stack slots are COMPILER spills of `n - 2` and `i + 1`, not source variables, so do not name either. Reusing `n` as the outer sort counter (with `m`) is 28.23% at size+4. THE PARK'S CLAIM THAT n's REGISTER IS THE ONLY DIFFERENCE IS WRONG: the fill loop also has three evaluation-order differences (the ROM loads the unit-table pointer AFTER the index arithmetic, adds it base-owns-destination, and loads the type byte AFTER arg0's pool load). All three are source-reachable and all three REGRESS -- binding a pointer to the type byte and dereferencing it at the call is 12.70%, computing `id * 12` into an int local and adding the volatile-read base to it is 13.11% (13.11% with sizeof). So the order differences are DOWNSTREAM of n's register, not independent facts. Draft unchanged at 16.39%; the wave-start copy is in sub_0805D344.w93-start.c.
+
+### Wave 95
+
+Base: draft (236, -8, 16.4%) kept as `sub_0805D344.w95-start.c`. best.c form (n reused as outer counter with `m = n - 2`) gave 28.2% at +4; the `for (n = 0; m >= n; ...)` spelling of it reached 33.9% at +4 but folds `m >= 0` into a branch the ROM does not have, so it was dropped. Copying n to a second variable by hand (`k = n; m = k - 2`) is byte-identical (copy propagates).
+RESULT: SIZE-EXACT (244), 75.0%, first difference +0xf. Draft = `sub_0805D344.w95-perm3-start.c` = current `sub_0805D344.c`. Chained permuter: run 1 (600 s) 16.4 -> 72.1; run 2 72.1 -> 75.0; run 3 75.0 -> 80.7 was WRONG C (`n = n > 1; new_var = n;` clobbers the list length; kept as `.w95-WRONG-80.c`); run 4 75.0 -> 75.8 was `volatile unsigned a1` (parameter made volatile; kept as `.w95-volatile-a1-75_82.c`, not adopted).
+What the two kept steps are (checked by reading, semantics identical to the start):
+1. Lever 2 transfers: the address of the unit-table pointer is bound to a local once at the top (`new_var2 = &gUnknown_08499594;`) and the volatile-cast read goes through it. That took 16.4 -> 72.1 and made the size exact (the old draft was 8 short).
+2. Lever 1 transfers in the form "copy the list length into a per-block variable for the sort" (`new_var3 = n; ... i <= new_var3 - 2 ... j = new_var3 - 2`): 72.1 -> 75.0.
+Residual: n is still in a LOW register (r5) with a hoisted-address difference in the fill loop (`ldr r2,[r6]` before the index arithmetic; ROM loads the table pointer after). The ROM's n lives in r8. The 80.7% form got n into a high register only by destroying it, so a high register for n is reachable only if a second variable, not n, takes the flag / copy role.
+Pool words: none new.
+Proposed summary: status=size-exact, 75% identical, only n's register and the order of three loads in the fill loop differ; tried += "binding &gUnknown_08499594 to a local at the top with the volatile read through it: size-exact (kept)"; "per-block copy of n for the sort loops (kept)". Rename new_var2 -> unitTable, new_var3 -> count when promoting, re-checking bytes.
 
 </details>

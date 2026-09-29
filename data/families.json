@@ -37,36 +37,11 @@
   "families": 102,
   "members": 724,
   "unmatched_members": 0,
-  "entirely_unmatched_families": 3,
+  "entirely_unmatched_families": 2,
   "fuzzy_clusters": 22
  },
  "batching_plan": {
   "cold": [
-   {
-    "id": "F041",
-    "n_members": 5,
-    "n_unmatched": 0,
-    "n_insns": 9,
-    "sizes": [
-     20
-    ],
-    "representative": "sub_08071868",
-    "exemplar_src": null,
-    "addr_span": [
-     "0x08071868",
-     "0x080718D0"
-    ],
-    "varies": [
-     "adds r2,#"
-    ],
-    "members": [
-     "sub_08071868",
-     "sub_0807187C",
-     "sub_08071890",
-     "sub_080718BC",
-     "sub_080718D0"
-    ]
-   },
    {
     "id": "F100",
     "n_members": 3,
@@ -6593,14 +6568,14 @@
    "id": "F041",
    "n_members": 5,
    "n_unmatched": 0,
-   "n_matched": 0,
+   "n_matched": 5,
    "n_insns": 9,
    "sizes": [
     20
    ],
    "representative": "sub_08071868",
-   "exemplar_is_matched": false,
-   "exemplar_src": null,
+   "exemplar_is_matched": true,
+   "exemplar_src": "src/decomp/c_080717F8.c",
    "shape": [
     "ldr r0,[r1,#]",
     "ldrb r0,[r0]",
@@ -6632,35 +6607,35 @@
      "addr": "0x08071868",
      "size": 20,
      "src": "code-0806CFC8.s",
-     "status": "asm-resident"
+     "status": "matched"
     },
     {
      "name": "sub_0807187C",
      "addr": "0x0807187C",
      "size": 20,
      "src": "code-0806CFC8.s",
-     "status": "asm-resident"
+     "status": "matched"
     },
     {
      "name": "sub_08071890",
      "addr": "0x08071890",
      "size": 20,
      "src": "code-0806CFC8.s",
-     "status": "asm-resident"
+     "status": "matched"
     },
     {
      "name": "sub_080718BC",
      "addr": "0x080718BC",
      "size": 20,
      "src": "code-0806CFC8.s",
-     "status": "asm-resident"
+     "status": "matched"
     },
     {
      "name": "sub_080718D0",
      "addr": "0x080718D0",
      "size": 20,
      "src": "code-0806CFC8.s",
-     "status": "asm-resident"
+     "status": "matched"
     }
    ]
   },
