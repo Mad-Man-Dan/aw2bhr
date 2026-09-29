@@ -1,23 +1,23 @@
 #include "global.h"
 
-/* PARKED at 568/572 bytes (-4), 58.6% identical.
- * Control flow, switch layout, calls, and pools are aligned. The ROM keeps
- * the force-address word for gUnknown_0300409C in r4 and creates a second
- * loop-local copy in r1, emitting `adds r1,r4,#0` at the swap-arm merge and
- * again at the do/while back edge. This draft reads [r4] directly at both
- * sites. Wave 61 tested binding `&gUnknown_0300409C` through a pointer local,
- * both for the whole outer loop and only after the swap merge. Both changed
- * the queue increment into a worse allocation and shortened the switch/tail;
- * neither created the two isolated copies. Prior 25,779-iteration permuter
- * and while-vs-do/while probes were also negative. Wave 65 re-measured the
- * after-merge pointer-to-pointer binding on the configured compiler: it emits
- * 564/572 bytes (-8), losing four more bytes rather than creating the ROM's
- * two copies. Wave 71 fixed that binding to r1 explicitly; CSE still emits
- * `ldr r1, [r4]` rather than the ROM's `adds r1, r4, #0`, so hard-register
- * binding does not expose the outer-address copies. The 568-byte direct-global
- * draft remains active. */
+/*
+ * sub_0801F4B4 -- walk outward over the map from the cell (a1, a2), round by round.
+ *
+ * It keeps two queues inside gUnknown_084999C8 (one at +0x2c, one at +0x5a4)
+ * and swaps them after each round: one is read while the next round is written
+ * to the other. The unk02 field of each queue entry selects which of the four
+ * neighbours (sub_0801F6F0 with directions 2 to 5) to visit; the exact meaning
+ * of the field is not worked out yet. The walk ends when a round leaves the
+ * queue empty.
+ *
+ * Why the C looks odd: `pp` is only used in the do/while condition. Reading
+ * the queue cursor through a pointer to it there, instead of naming the global,
+ * changes how the compiler keeps the global's address in a register.
+ */
 void sub_0801F4B4(int a1, int a2, int a3, int a4, int a5)
 {
+    struct Unk300409C **pp;
+
     gUnknown_030040E0 = 0;
     gUnknown_03003FBC = 0;
     gUnknown_03003F64 = (u8 *)gUnknown_084999C8 + 0x2c;
@@ -55,6 +55,7 @@ void sub_0801F4B4(int a1, int a2, int a3, int a4, int a5)
         if (gUnknown_0300409C->unk02 == 0)
             return;
 
+        pp = &gUnknown_0300409C;
         do {
             switch (gUnknown_0300409C->unk02) {
             case 1:
@@ -86,7 +87,7 @@ void sub_0801F4B4(int a1, int a2, int a3, int a4, int a5)
             }
             gUnknown_03003F64[2] = 0;
             gUnknown_0300409C++;
-        } while (gUnknown_0300409C->unk02 != 0);
+        } while ((*pp)->unk02 != 0);
     }
 }
 

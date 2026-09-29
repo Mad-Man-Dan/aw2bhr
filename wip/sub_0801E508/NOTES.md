@@ -78,3 +78,15 @@ shortened the live ranges further. The honest expression draft remains active.
 `sub_0801E3B4`, `sub_0808B710` (promoted-but-undeclared) and `sub_0808B91C`
 (draft only) declared in `include/unknown-functions.h`. `sub_0801E508` is the
 only caller of any of them outside their own files.
+
+## wave 96
+
+Base: sub_0801E508.c (22.64%, size-28; the wave 71 draft). Result: 56.9%, size-EXACT (976), first difference +0x12. NOT matched; the instruction-level diff is still large (about 80 differing lines vs 104 before).
+
+What moved it (permuter, 900 s, then cleaned by hand): a "mixed bind". `s16 angle = e[2];` assigned once per record before the `(w & 0x300) == 0x300` test, and used for exactly THREE of the four `(float)e[2]` arguments in the full-size arm (fx with cosine, fy with sine, fx of the y part with sine); the y part's cosine and all four reads in the half-size arm keep `e[2]`. Binding all of them, or all in the full-size arm, or all in the half-size arm, is far worse (14-30%, size -8 to -40): the size gain is the subset. This is the wave 95 "mixed bind" lever (item 2 in the brief) applied to a struct member read that is re-read across calls; it works on a subset here, and the failures match the brief's warning for re-read pointers.
+The size is exact but the ROM still re-loads e[2] from memory with `movs r1,#4; ldrsh r0,[r3,r1]` at every use (r3 = r9 copy of e), where this draft sign-extends `angle` in registers (`lsls; asrs`). So the bind is an approximation: it repairs the size, not the mechanism. The ROM has no local for e[2]; something else makes the first arm's reads differ from the second's.
+
+Not resolved: e is in r6 here, r9 in the ROM (the ROM keeps w in r8, v in sl, u in r7, e in r9, n in the stack); the high-to-low `mov`/`ldrsh` copy pairs before each sinf/cosf call are the +11 copy delta. The pre-registered "several source temps" hypothesis is therefore PARTLY right (the bind is a source temp) but the ROM's extra copies are the `mov rLo,rHi` before each call, which a temp for the ANGLE does not create; the hypothesis' mechanism did not hold.
+A second permuter chain (900 s) from the 56.9% file found nothing.
+
+Proposed summary: does = rotates and scales a list of OAM pieces by an affine entry, using soft-float; status = size exact, 56.9% identical; left = e/w/v/u register assignment and the per-call reload of e[2]; tried = temps for the accumulators (wave 65), distinct loop counter, angle temp at several subsets, permuter.

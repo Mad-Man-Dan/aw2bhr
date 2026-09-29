@@ -61,3 +61,8 @@ candidate that moves the first difference from +0xe to +0xa is reorganising the
 loop's opening rather than fixing it, and that is where the wrong-C forms live.
 
 Draft restored and re-verified: 268/268, 20.90%, first difference +0xe.
+
+## wave 96
+Base: draft unchanged (20.90%, size+0, first diff +0xe). One 900 s permuter run (2 threads): reported IMPROVED 20.90 -> 26.87%, first diff +0xa (earlier), and it is WRONG C: it introduced `idx = 0; e[i].unk02 = idx; e[i].unk06 = idx;` at the bottom of the body, which clobbers `idx` (the per-side table index) for passes 2-5 of the loop. Kept as `sub_08057164.w96-perm1-idx0-clobber.c.wrongc`; draft restored. Same signature as the wave-94 rejection (`idx` reassigned inside the loop, first diff moving earlier).
+Reading the ROM again: the ROM keeps `tbl` (0855203C) in sl as a register and steps the element index `idx + i` as its own +1 walker (r7) with an explicit `lsls #1; add sl` at each of its three uses, and `e` as a +0x24 walker (r5), `i` in sb, `b` in ip, `y` in r6, `&gUnknown_03004582[y]` spilled at [sp] (hoisted row address), `y*5` at [sp+4]. The draft folds `tbl + (idx+i)*2` into one address walker (steps by 2) — the GIV noted in wave 93. Also tried `for (...; i++, idx++)` with `tbl[idx]` reads: 20.2%, +4 bytes, first diff +0xc. No lever found to keep the idx+i giv unmerged with the base symbol.
+Proposed status: unchanged; left = whole-loop register roles and the unmerged idx+i walker.

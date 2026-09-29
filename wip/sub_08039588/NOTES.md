@@ -39,3 +39,14 @@ The impasse is now exactly stated:
 Every position in the body satisfies exactly one of the two.
 
 Draft unchanged: size-exact 172 bytes, 87.2%.
+
+## wave 96
+
+Base: `sub_08039588.c` (87.2%, size-exact, first diff +0x17); confirmed the parked residual (ROM hoists `dst` after the
+zero-trip guard and table base; draft computes it before the guard, j/dst in r3/r4 instead of the shared r4).
+Pre-registration (same LICM first-use family as sub_08037A78) NOT confirmed: the def has to be inside the inner loop to
+hoist, and every form that puts it there merges the constants (-8). Probed: fold-proof mask on j (`((u32)j<<16 &
+0xffff0000)>>16`) in the def, in the use inline, and in the reordered-constant use: 40.7% / 43.0% (-8), the mask does not
+split cse's merge of `0x06010000 + dst` because j is re-derived (not a held narrow operand) here; def in the `for`
+condition as `k=0; a[k]!=0 && (dst=..,1)`: 6.4%; `(dst=..., a[k]!=0)`: 39.7% +12; def in the increment clause: 19.8%. No match.
+Residual unchanged: the def cannot be both out of the use's EBB (pool words) and an inner-loop invariant (hoist).

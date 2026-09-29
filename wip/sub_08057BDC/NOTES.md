@@ -115,3 +115,10 @@ the two `ldr;mov` pairs, so both are LICM hoists) and the candidate now
 rematerialises all three inside the body, which is also why the tail pool words
 sit in a different order. The 08551A04 half of the park is solved; the hoist of
 the other two is not.
+
+## wave 96
+Base: the wave-93 draft (`sub_08057BDC.w96-start.c`, 76.94%). Now 81.11%, size+0, first diff +0xc1 (was +0x90): the FIRST LOOP IS NOW BYTE-EXACT.
+- What moved it: delete the `idx = p->unk02;` reuse in the first loop's else arm and write `((p->unk02 << 5) + p->unk00)` directly. The reuse forced `p->unk02` to be loaded into a register BEFORE the `14 - c` arithmetic (`ldrh r5,[r6,#2]` first); the ROM loads it after, at the use. So the wave-93 note that `idx` is reused in the else arm was a compensation for the old second-loop state and is now wrong; the source comment above the function still mentions it (leave for the orchestrator, or trim when promoting).
+- Second loop, unchanged residual: the ROM hoists gUnknown_085D6A48 (r9) and gUnknown_03004582 (r8) into the preheader after `movs r7,#0` and tests `gUnknown_030005E8[i]` with a plain `cmp r0,#0; beq`; the draft rematerialises both and uses the `negs/orrs/bge` form. Re-measured on the new base: plain `if (gUnknown_030005E8[i] != 0 && ...)` 63.9%, size-4 (with `rows` bound at the top or in-body, with `sel` bound or inline, with or without the do{}while(0)): 57.8-63.9%, all -4 at +0x19/+0xc0. Binding position of `rows` (top, in-body, inline cast): byte-identical at 81.11%. So the hoist is still unreached.
+- Permuter (900 s, 2 threads, from the new base): NO-IMPROVEMENT (scores 2660 -> 2340 candidates were not size/verify-clean).
+Proposed status: first loop matches; left = the second loop keeps two table addresses in registers in the ROM (LICM hoists) and the draft rematerialises them, plus the `ldrsh; cmp; beq` test form.

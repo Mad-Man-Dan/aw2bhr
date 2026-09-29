@@ -33,6 +33,7 @@ struct Unk359A4Proc
 
 void sub_080359A4(ProcPtr procArg)
 {
+  u32 pxVal;
   struct Unk359A4Proc *proc = procArg;
   s16 *py;
   s16 *px;
@@ -53,14 +54,22 @@ void sub_080359A4(ProcPtr procArg)
   {
     return;
   }
-  py2 = py;
   if ((proc->unk35 == 2) && ((gPlaySt.savingEnabled == 0) || (gUnknown_030032D8 != 0x13)))
   {
- do { sub_080358C4(*px, y); } while (0);
+    do
+    {
+      sub_080358C4(pxVal = *px, y);
+      py2 = py;
+    }
+    while (0);
+  }
+  else
+  {
+    py2 = py;
   }
   if ((gPlayers[gUnknown_030033EC].turnState & 2) == 0)
   {
-    if (gMap->unk234A[gMap->rowOffset[((*py2) + 8) / 16] + ((proc->unk42 + 8) / 16)] == 0)
+    if (gMap->unk234A[gMap->rowOffset[((*py) + 8) / 16] + ((proc->unk42 + 8) / 16)] == 0)
     {
       return;
     }

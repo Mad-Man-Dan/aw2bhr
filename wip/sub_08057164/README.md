@@ -2,7 +2,7 @@
 
 0x08057164, 268 bytes, THUMB, parked.
 
-Best score so far: 20.9%.
+Best score so far: 26.9% (best.c).
 
 ## What it does
 
@@ -25,6 +25,7 @@ Make the compiler step one element index by 1 and scale it at each table read, a
 ## Files
 
 - `sub_08057164.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -44,5 +45,11 @@ W93-E: two negatives recorded in work/sub_08057164/NOTES.md; never permuted yet.
 ### Wave 94
 
 W94-B: first permuter run on this function (--current, 900 s, 4 threads, length-penalised scorer). It reported and KEPT an improvement, 20.90% -> 30.22% size-exact -- and the form is WRONG C, now work/sub_08057164/w94b-perm1-idx-clobber.c.wrongc. It reassigns `idx` to `a * 5` inside the loop body, after the three unk1a table reads that use `idx` have already run once, so four of the five entries read the wrong table element. Neither guard can see it: every read follows an assignment, and the length does not change. Draft restored and re-verified at 268/268, 20.90%, first difference +0xe. Screen that works here: this candidate and both wave-93 negatives all move the first difference EARLIER, from +0xe to +0xa, while scoring higher -- on this function that signature marks a reorganised loop opening, not progress. The GIV residual in `left` is untouched.
+
+### Wave 96
+
+Base: draft unchanged (20.90%, size+0, first diff +0xe). One 900 s permuter run (2 threads): reported IMPROVED 20.90 -> 26.87%, first diff +0xa (earlier), and it is WRONG C: it introduced `idx = 0; e[i].unk02 = idx; e[i].unk06 = idx;` at the bottom of the body, which clobbers `idx` (the per-side table index) for passes 2-5 of the loop. Kept as `sub_08057164.w96-perm1-idx0-clobber.c.wrongc`; draft restored. Same signature as the wave-94 rejection (`idx` reassigned inside the loop, first diff moving earlier).
+Reading the ROM again: the ROM keeps `tbl` (0855203C) in sl as a register and steps the element index `idx + i` as its own +1 walker (r7) with an explicit `lsls #1; add sl` at each of its three uses, and `e` as a +0x24 walker (r5), `i` in sb, `b` in ip, `y` in r6, `&gUnknown_03004582[y]` spilled at [sp] (hoisted row address), `y*5` at [sp+4]. The draft folds `tbl + (idx+i)*2` into one address walker (steps by 2) — the GIV noted in wave 93. Also tried `for (...; i++, idx++)` with `tbl[idx]` reads: 20.2%, +4 bytes, first diff +0xc. No lever found to keep the idx+i giv unmerged with the base symbol.
+Proposed status: unchanged; left = whole-loop register roles and the unmerged idx+i walker.
 
 </details>

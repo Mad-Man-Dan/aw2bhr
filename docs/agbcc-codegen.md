@@ -54726,3 +54726,81 @@ a wider operand. Reach for the operand's provenance, not for a cast.
 The same measurement refutes one plausible-looking workaround: masking with
 `& 0xffff` to widen the range does nothing, because `nonzero_bits` already
 proves the AND is a no-op and it is folded along with the extension.
+
+## The same two-register sum spelled twice in one function is shared across blocks, and the shared temp costs a stack slot (wave 96, W96-A)
+
+`sub_0802216C` stores `t + r + 0x400` early and `t + r + 0x402` at the end of a
+later if/else chain, with `t` and `r` in callee-saved registers. Spelled the same
+way, global CSE computes `t + r` once, keeps it in a register across the calls
+in between, and that one extra live value pushes a parameter to a stack slot and
+moves the constants to different high registers: a 12-byte, 5-slot-vs-6-slot
+cascade that looked like a pure register-allocation residual for four waves.
+The ROM computes the sum again.
+
+Spell ONE of the two sums differently (`t + (r + 0x402)`) and the sharing stops:
+212 differing instruction lines drop to 102, the frame returns to the ROM's size
+and the parameter goes back to its high register. Commuting alone (`r + t` in
+both places) does nothing. The cost is that the changed sum compiles as
+`(t + 0x402) + r`, so this is a partial answer where the ROM needs `(r + t)`.
+
+Other measured spellings in the same function:
+
+* `a + (t + K)` with a u16 `t` versus `a + (u16)(t + K)`: same value, but the
+  cast form emits the store address (`dst + 0x42`) BEFORE the value, which is the
+  ROM's order, and loads `a` last. The cast only changes ordering here; it is
+  not creating a narrowing.
+* Inside `x + (y + K)`, the source association chooses which register gets the
+  constant first (`adds r0, rX, #K; adds r0, rY, r0`); try both associations per
+  sum, they are not equivalent even though `+` commutes.
+* A copy `u16 u = t;` taken after `r` to give the sums a higher-numbered operand
+  made things much worse; the copy gets its own register.
+
+To find this kind of sharing: count the distinct `adds rX, rY, rZ` sums in the
+ROM and in the candidate. A sum the candidate computes once and the ROM twice is
+a reuse; look for a register live across a call in the candidate that the ROM
+does not have.
+
+## A pointer-to-global bind used at ONE site, and u16 temps that make the mask-constant copy (wave 96, W96-A)
+
+Two levers from the 0x0801E-0x08022 block, both found by ablating permuter output:
+
+* `sub_0801F4B4`: `struct Unk300409C **pp = &gUnknown_0300409C;` assigned just
+  before the `do` and used ONLY in the `while` condition takes the function from
+  58.6% size-4 to 96.5% size-exact. Naming the same pointer in the empty test, in
+  the `switch`, or in all three (eight placements measured), or binding a second
+  pointer at the merge, is worse (70-100 instruction lines against 20). A bind
+  earns its second pseudo only where cse would otherwise fold the read into an
+  address load done earlier in the same block; give it one site, the last one.
+* `sub_0801E9B0`: `t0`, `t1`, `t2` and `h` read from u16 halfwords and declared
+  `u16`, not `int`, produce the ROM's `movs rA,#K; lsls; adds rB,rA,#0; ldr rC;
+  ands rC,rB` for every `x & K` test. The copy of the constant is what the ROM
+  has at those five sites; an `int` temp emits no copy. Five missing copies in a
+  function were narrow-type copies, not five extra source variables. The same
+  `u16` on `h` also copies `h` itself when `h` is live afterwards, which the ROM
+  does not do, so check that side before keeping it.
+
+A CELL ADDRESS BOUND ONCE HOISTS OUT OF A LOOP THAT CALLS; RE-BIND IT IN EACH ARM (sub_0804A760)
+
+The ROM often reaches a pointer global through its compiler-made cell every
+time it is used inside a loop (`ldr r0,[r7]; ldr r1,[r0]` in each arm), while
+the draft loads the cell once above the loop and keeps it in a register (a new
+pool word, +4 bytes). The chase is a loop-invariant memory read; move_movables
+hoists it when one pseudo carries it through several arms (savings of two or
+more). Binding the cell's address to a local once, before the loop, does not
+help: it is still one pseudo. What worked is assigning the local again at the
+top of each arm (`gp = &gUnknown_030044E0;` then reading through `(*gp)`): every
+arm gets its own single-use pseudo, below the threshold for a loop with a call,
+and the loads stay in the arms. sub_0804A760 went from 59% at +4 bytes to 92%
+at the exact size. Two limits: a read of the same field through the plain name
+in the SAME arm (`unk1e == 0` as an s16 test) brings the hoist back, and
+declaring the local at the top of the function moves the prologue. The opposite
+case is sub_08050FF8, where the ROM HOLDS the cell address in a hi register for
+the whole body: there, re-assigning per use is wrong (+12 bytes). Tell the two
+apart by the ROM: `ldr r0,[r7]` repeated inside the loop means re-derive;
+`mov r1,sl; ldr r2,[r1]` means held.
+
+A cell VALUE loaded eagerly and held (sub_0804CA98): declare the cell as an
+`extern T *const` object and bind its value, `base = gUnknown_08136060;` at the
+top and the second array's `b94 = gUnknown_08136064;` inside the guarded block.
+That reproduces the ROM's `ldr rA,=cell; ldr rB,[rA]; mov sl,rB` pair and its
+position; the array base is then spilled unless enough registers stay free.

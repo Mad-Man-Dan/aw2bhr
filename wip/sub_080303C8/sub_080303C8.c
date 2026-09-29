@@ -106,6 +106,7 @@
 u16 sub_080303C8(void)
 {
   struct KeySt *new_var;
+  int allOnes;
   int acc = 0;
   int new_var2;
   int v;
@@ -145,8 +146,9 @@ u16 sub_080303C8(void)
       }
       if (((gUnknown_0849B01C->unk208[i] & 0x1C00) >> 10) != gUnknown_0849B01C->unk00)
       {
+        allOnes = 0xFFFF;
         gUnknown_0849B018->unk1b++;
-        gUnknown_0849B01C->unk210 |= 0xFFFF;
+        gUnknown_0849B01C->unk210 |= allOnes;
         return 0;
       }
       acc |= gUnknown_0849B01C->unk208[i] & 0x3FF;

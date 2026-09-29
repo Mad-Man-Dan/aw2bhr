@@ -113,3 +113,16 @@ duplication by making the copy conditional, which is not available to us. The
 legitimate lever is whatever makes agbcc duplicate one unconditional copy into
 both predecessors of that join; that is the question for the next wave, and it
 is a much narrower one than "the pointer allocnos are rotated".
+
+## wave 96
+
+Base: `sub_080359A4.w96-start.c` (56.2%, first diff +0x2). `best.c` (79.3%) is wrong C: it assigns `py2 = py` only inside
+the `if` and reads it after. Its content is that the copy `py2` must be created on the call path AFTER the call. The legal
+spelling assigns `py2 = py` on BOTH paths (`if (...) { call; py2 = py; } else { py2 = py; }`): 75.3%, first diff still +0x2
+(the prologue register order). Transferred as a general trick: an "uninitialised on one path" permuter form has a legal
+twin that assigns the copy on every path. Then one 800 s permuter run: 75.3% -> 77.2%, kept change is a write-only temp
+around the first call argument (`sub_080358C4(pxVal = *px, y)`) and `(*py)` instead of `(*py2)` in the turnState read.
+Residual: register roles. ROM: proc r6, py r4, y in ip, px address r8, `*px` value r7, py2 r5, and
+`proc->unk35` computed as `px - 13` off the r8 copy of `&proc->unk42`; ours: proc r5, py r6, y r4, px address sl.
+Reading `unk35` through `((u8 *)px)[-13]` is byte-identical (cse already derives it). Not solved.
+Proposed summary: 77.2% size-exact; left: register roles for proc/py/y/px, first diff in the prologue.

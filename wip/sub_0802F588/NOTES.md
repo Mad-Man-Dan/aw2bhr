@@ -112,3 +112,16 @@ somewhere:
 FOR THE TOOLING: permute.py's keep rule should require the candidate's size
 delta to be no worse than the base's, or at least refuse to replace a
 size-exact draft with one that is not.
+
+## wave 96
+
+Base: existing draft (82.14%, size-exact), kept as `sub_0802F588.w96-start.c`; draft unchanged.
+The diff is two hi-register assignments swapped: the ROM keeps `chk` in r9 (zeroed in the prologue) and the ring base in ip
+(`mov ip,r0` after `ldr r0,[cell]`); the draft has them the other way round, and the cascade moves cur*2 / cur+1 and the mask.
+The final `chk = n; ... return chk;` copy is not in the ROM (it returns `adds r0,r6,#0`, i.e. n itself), but removing it (`return n;`)
+drops to 60.7%: the copy is what keeps `chk` off the register the ROM leaves alone (see the header comment), so the +2 copies of the
+pre-registration are NOT this one.
+Negatives: declaring `chk` before `sum` and moving `cur` in the declaration list are byte-identical. Permuter, one 900 s run:
+82.14 -> 82.50% but the kept change is WRONG C (`cur = chk; ... return cur;` stores n into the write cursor); rejected and the draft restored.
+Proposed summary: does = writes one packet into the send ring; status = 82.1%, size-exact; left = chk (r9) vs ring base (ip) swapped;
+tried = decl order, return n, one permuter run (its only gain was wrong C).

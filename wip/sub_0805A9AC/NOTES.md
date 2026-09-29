@@ -41,3 +41,26 @@ SEMANTICALLY WRONG C and was discarded. Its valid half (`vp =
 on the old draft and +8 on 10764: worse. THE DRAFT IS NOW
 w91-perm10764-clean.c (verified with trymatch: 732/732, 50.68%, first
 difference +0xa). The old +28 draft is w91-start.c.
+
+## wave 96
+
+Base: the 50.68% draft (`sub_0805A9AC.w96-start.c`, first +0xa, frame `sub sp,#40` vs ROM #36 because `i` spills).
+Un-binding, measured over all 32 subsets of the five `new_var->` sites (one unit, size + try_match):
+- Un-binding ONLY the last one (the post-loop `bv = ...` read after the n-loop, where `new_var` was a stale bind
+  from the j loop) gives the ROM's frame (`sub sp,#36`), size 728 (-4), first difference moves +0xa -> +0x3e
+  (score drops 50.7 -> 42.3 because the size shift moves later bytes). Kept as the draft and as `w96-m16.c`.
+  Mechanism: that use kept the map-address pseudo alive across the whole n-loop, which is what beat `i` for sl.
+- Un-binding the first two sites (unk2D5A guard, danger index) changes nothing (same bytes).
+- Un-binding site 3 or 4 (the `unk1432` sites) is worse (+8 / first +0xa again).
+- Un-binding all five and deleting the bind: 760 (+28), frame 44.
+- Removing the volatile read (plain cast at that site): 724 (-8), same frame.
+Residual after the kept change: the running best (`best.raw`) sits in r9/r4 with a `mov r4,r9; ands; orrs; mov r9,r4`
+round-trip where the ROM keeps it in r6; the map address is held in r8 (`mov r8,r1; mov r6,r8`) where the ROM
+re-derives `ldr r7,=gUnknown_08499590; ldr r2,[r7]` per site (rule 1: re-derive form); and the 4 missing bytes.
+NOT yet tried: re-assigning a pointer-to-cell local at the top of each of the four arms (rule 1 form).
+Proposed summary: left: map address held in a hi register (ROM re-derives per use); `best` in r9 not r6; -4 bytes.
+tried += new_var unbound at the post-loop use (frame now matches).
+Rule-1 re-derive probe (one unit, on the kept form): rebinding `gp = &gUnknown_08499590` per use inside the j body
+(expression form `(*(gp = (struct Map5A9AC **)&g))`): all sites 736 and frame 40 (worse); only the first site 728, frame 36 (= kept form);
+volatile site only 728 frame 36; unk1432 sites only 732... no variant reaches 732 with frame 36. The re-derive form does not transfer here
+because the ROM's per-site `ldr r7,=gUnknown_08499590; ldr r3,[r7]` uses the plain pool word, not a rodata cell.

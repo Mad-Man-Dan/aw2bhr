@@ -111,3 +111,22 @@ Read with the wave-92 direction note (the rotation must be one step BEHIND this
 draft's at the row-pointer copy, so the change has to remove one scratch
 hand-out BEFORE the key test, not add one after), this says the remaining work
 is a reload-ordering read off the RTL dumps, not a search.
+
+## wave 96
+
+Base: unchanged draft (98.95% size+0, first +0x34; only +0xd5/+0xd6 real).
+Hypothesis (move the zero local's first assignment, not its declaration) tested with the
+one-unit harness: 8 placements of `new_var3 = 0;` (after rowp / cells / first guard / props /
+third guard / after the volatile block / top / after off), read off the `.s`:
+- after rowp, top, after off: zero in r3, ip copy in r2 (current draft; the trade's first half)
+- after cells, first guard, third guard: zero in a hi reg copied down (`mov r2,sl` / `mov r2,r8`), ip copy r3
+- after the volatile block (just before p bind): `movs r0,#0`, ip copy r3 (= literal; second half)
+- after `props = q + 0x12`: zero HELD in sl and copied to r0 (`mov r0,sl; strh r0`) with ip copy in r2 -
+  the ROM's two registers, but the zero is held in a hi register instead of `movs r0,#0`. try_match:
+  21.58%, pool changes (an extra .rodata word appears, the 0816D980 alias is lost). Not a match.
+So the live-range START does not compose the trade: the placements between give either a hi-reg
+hold (more copies) or fall to one of the two known halves. Hypothesis refuted as a way to a match;
+the two-way trade stands.
+Proposed summary: does: lists candidate tiles for the active unit. status: 98.95%, 2 real code bytes.
+left: zero store uses r3 instead of r0 (or the next row-pointer copy lands in r3). tried: zero local
+placed at eight points, literal zero, dead extras, permuter runs (~50k iterations total).

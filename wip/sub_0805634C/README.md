@@ -2,7 +2,7 @@
 
 0x0805634C, 364 bytes, THUMB, parked.
 
-Best score so far: 38.2%, -4 bytes (best.c).
+Best score so far: 81.3% (best.c).
 
 ## What it does
 
@@ -10,7 +10,7 @@ Builds side `b`'s sort keys from ROM tables, adjusting the keys of up to five pa
 
 ## How close it is
 
-Compiles 4 bytes too short (360 against 364). 221 of 364 bytes differ (38.2% identical), which means little because the difference starts at the top; the first loop and everything before it are right apart from one register pair, and the gap is in the second loop.
+Compiles to the right size (364 bytes) with 79.4% of bytes identical. The compare row has its own variable (`side = b;`) and the D2A table's address is bound for the second loop's read only. What is left: the original's frame is 8 bytes where the draft's is 4, and it holds gUnknown_020298E0 in sl and adds 0x1a at run time.
 
 ## What is left
 
@@ -44,5 +44,14 @@ PARKED Wave 70 at 360/364 (-4). First loop and all semantics are settled; the se
 
 No probe run. Reading the pre-registered chapters (two-statement split, member-array giv order) against the record: the wave-70 park already ran the two-statement `p = base; p += K;` split, before the loop (spills, kills the inner CSE) and in the body (const-propagates back). The chapters' successful splits use a base that is a LOAD (`e4 = *pE4`) or a two-element row read; here the base is a bare SYMBOL_REF, so cse folds base+K back. Nothing in the chapters gives a non-constant base for gUnknown_020298E0 / gUnknown_08551D22. Left at the wave-70 draft (360/364).
 (draft left at the wave-70 draft.)
+
+### Wave 96
+
+Base: wave-70 draft unchanged (38.19%, -4, first diff +0xa). Pre-registered "try un-binding" had nothing to un-bind (the draft has no address binds). Read the diff instead:
+- First diff +0xa: the ROM keeps `c` in r8 (`mov r8,r2` straight from the zero-extended argument) and b*2 in r7; the draft puts `c` in r7 and b*2 in r8. Pure global-alloc priority between c and b*2; no source lever found.
+- The ROM has TWO spill slots (`sub sp,#8`: [sp]=b*0x6c, [sp+4]=b*0x90) and hoists `&gUnknown_030045A0[b ^ 1]` into r4 at the top of each outer-loop pass, then reuses it for both table reads. The draft has one slot and recomputes `b ^ 1` (`movs r1,#1; eors; lsls; ldr; adds`) inside the taken branch. Binding `u16 *q = &gUnknown_030045A0[b ^ 1];` at the top of the outer body and reading `*q` for one or both reads: 29.95%, still -4, first diff still +0xa (worse: the local adds a pseudo without moving c/b*2). So the missing copies are that hoist; it needs LICM to hoist a computation out of a conditional block, which a source bind does not reproduce.
+- The ROM also inlines `gUnknown_020298E0 + 0x1a` as `mov r0,sl; adds r0,#0x1a` per inner iteration (sl holds the bare symbol), i.e. `unk1a[j]` reached through the struct symbol, as the draft spells it, but the draft folds the +0x1a into a pool word.
+Not permuter-run this wave (one slot; 08057164 ran instead).
+Proposed status: unchanged; left = register roles of c/b*2 in loop 1 and the outer-loop hoist of the b^1 table address.
 
 </details>

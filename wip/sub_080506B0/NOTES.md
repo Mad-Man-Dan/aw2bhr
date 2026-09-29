@@ -14,3 +14,20 @@ Proposed summary:
 - status: 42% at +4 bytes; three of the ROM's three `.rodata` words are needed, the draft creates two
 - left: the `.rodata` word for gUnknown_03004580 (single use in the first region)
 - tried: two-index vs byte-offset spelling of the read (byte-offset is better, no word); four equivalent spellings; the u8-cast form does not create the word
+
+## wave 96
+
+Base: sub_080506B0.c unchanged (41.96%, size +4, first diff +0xa). Restored after probes.
+
+Classification (pre-registered): the ROM's three cells gUnknown_081360CC/D0/D4 are real .text pool words (`ldr rN,=gUnknown_081360D4; ldr rM,[rN]`), each used once. Same construct as sub_08050FF8 from the other side.
+
+Probes (trymatch, all worse):
+- Declare `extern u16 (*const gUnknown_081360D4)[8]` and read `*(u16 *)((u8 *)gUnknown_081360D4 + 2 + side*16)`: the double load appears and the pool word becomes gUnknown_081360D4, but 38.45%, size +4, and `sub sp` grows 12 -> 24: the added live pointer pushes the 0xf and -13 mask constants into hi registers (`mov sl,r3`, `mov r9,r0`) that the ROM rematerialises. The +2 also folds into the ldrh displacement (ROM: `adds r1,#2` on the loaded value first).
+- Statement-split (`c1 = (u16 *)gUnknown_081360D4 + 1;` then `(u8 *)c1 + side*16`): 33.7%, size +8.
+Mechanism: naming the cell object reproduces the double load but costs a live range; the draft's pressure is already at the limit so the mask constants spill to hi regs. Not resolved. Permuter not run (would need the cell reference to hold).
+
+Proposed summary:
+- does: sets up the sprite for a unit's tile-marker effect and stores its screen offsets
+- status: 42% at +4 bytes
+- left: the ROM reaches the mission-id table through the address cell gUnknown_081360D4; naming the cell adds the double load but the frame grows by 12 bytes
+- tried: byte-offset read; four equivalent spellings; cell object read inline (38%) and with the +2 bound first (34%)

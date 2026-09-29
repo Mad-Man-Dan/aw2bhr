@@ -28,3 +28,15 @@ gMap spelling was not separately needed). NEGATIVE by construction.
 Open: a source layout where y's last use precedes bestY's while the found
 block stays after the loop. Or settle -fno-gcse for this region (see
 sub_0805D438's NOTES).
+
+## wave 96
+
+Base: unchanged draft (52.17% size+0, first +0xa; still has the empty asm barrier).
+Lead's un-binding / barrier-deletion probe measured in a one-unit harness at configured:
+- barrier deleted: 542 bytes (+36 incl. pad), `sub sp,#28` (ROM #20, draft #16) -- the barrier is not masking a correct layout; deleting it makes the frame wrong in the other direction.
+- barrier deleted AND sx/sy un-bound (call with x,y directly): identical to the previous line (cse folds the copies).
+- same, plus the found block calling with x,y directly: identical.
+Under `-fno-gcse` (a diagnostic profile only) the barrier-free source is size-exact 508 at 64.76%, first diff +0x7a (the y-loop guard);
+`for (y = bestY; ...)` is byte-identical to `for (y = 0; ...)` there (bestY is the constant 0 and cse folds the copy).
+So the earlier wave-91 reading stands: the barrier is a stand-in for the gcse/PRE merge, and the last 2 bytes are which register class head cse2 picks for y.
+Proposed summary: left: y-loop guard compares y's register where the ROM compares bestY's spill slot; frame is 16 vs 20 with the barrier. tried += barrier removal (frame 28), un-binding sx/sy, y seeded from bestY (all folded).

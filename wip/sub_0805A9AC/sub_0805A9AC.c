@@ -155,7 +155,7 @@ void sub_0805A9AC(int a1, void *a2)
             continue;
         cur->unk00 = best.pos.unk00;
         cur->unk02 = best.pos.unk02;
-        bv = (s8)((struct Map5A9AC *)gUnknown_08499590)->unk2D5A[new_var->unk417A[best.pos.unk02] + best.pos.unk00];
+        bv = (s8)((struct Map5A9AC *)gUnknown_08499590)->unk2D5A[((struct Map5A9AC *)gUnknown_08499590)->unk417A[best.pos.unk02] + best.pos.unk00];
     }
 
     if (cur->unk00 != 0x270f)

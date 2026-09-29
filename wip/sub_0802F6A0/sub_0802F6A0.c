@@ -22,6 +22,8 @@
 s16 sub_0802F6A0(s8 slot, void *dst)
 {
   int i;
+  u16 *q;
+  int wrapped;
   s16 len;
   u16 t;
   u16 avail;
@@ -41,7 +43,7 @@ s16 sub_0802F6A0(s8 slot, void *dst)
   }
   if (gUnknown_03003128[slot] == gUnknown_03003F48[slot])
   {
-    return -4;
+    goto fail4;
   }
   do
   {
@@ -53,11 +55,12 @@ s16 sub_0802F6A0(s8 slot, void *dst)
     }
   }
   while (gUnknown_03003128[slot] != gUnknown_03003F48[slot]);
-  return -4;
+  goto fail4;
   found:
   if (gUnknown_03003F48[slot] < gUnknown_03003128[slot])
   {
-    avail = gUnknown_03003F48[slot] - (gUnknown_03003128[slot] + 0xFFFFFC00);
+    wrapped = gUnknown_03003128[slot] + 0xFFFFFC00;
+    avail = gUnknown_03003F48[slot] - wrapped;
   }
   else
   {
@@ -66,6 +69,7 @@ s16 sub_0802F6A0(s8 slot, void *dst)
 
   if (((s16) avail) <= 1)
   {
+    fail4:
     return -4;
   }
   t = ((gUnknown_03003128[slot] + 1) > 0x3ff) ? (0) : (gUnknown_03003128[slot] + 1);
@@ -74,7 +78,7 @@ s16 sub_0802F6A0(s8 slot, void *dst)
   {
     gUnknown_03003128[slot]++;
     gUnknown_03003128[slot] &= 0x3ff;
-    return -4;
+    goto fail4;
   }
   if ((len + 6) > ((s16) avail))
   {
@@ -90,15 +94,15 @@ s16 sub_0802F6A0(s8 slot, void *dst)
   gUnknown_03003128[slot] &= 0x3ff;
   sum += len + 0x4fff;
   i = 0;
+  q = (u16 *) dst;
   while (i < len)
   {
-    i++;
-    sum += gUnknown_02025C18[gUnknown_03003128[slot]][slot] * i;
+    sum += gUnknown_02025C18[gUnknown_03003128[slot]][slot] * ++i;
     comp += ~(gUnknown_02025C18[gUnknown_03003128[slot]][slot] * i);
-    *((u16 *) dst) = gUnknown_02025C18[gUnknown_03003128[slot]][slot];
+    *q = gUnknown_02025C18[gUnknown_03003128[slot]][slot];
     gUnknown_03003128[slot]++;
     gUnknown_03003128[slot] &= 0x3ff;
-    dst = ((u16 *) dst) + 1;
+    q++;
   }
 
   if ((sum != expSum) || (comp != expComp))

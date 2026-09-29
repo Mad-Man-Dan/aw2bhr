@@ -2,7 +2,7 @@
 
 0x0804FA2C, 632 bytes, THUMB, parked.
 
-Best score so far: 75.2%.
+Best score so far: 75.2% (best.c).
 
 ## What it does
 
@@ -29,6 +29,7 @@ Find what makes the compiler load gUnknown_03004580's address one step later, in
 ## Files
 
 - `sub_0804FA2C.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -81,5 +82,22 @@ Register allocation with NO source construct behind it. The instruction stream, 
 - **negatives_corrected:** The entry's claim that best.c held an unrelated variant is wrong -- it is this draft plus two address binds and the collapsed row local, and it is worth the +4 the function carried for four waves. It also re-opens the twins' lever: the wave-79 measurements that judged the sub_0804D290 / sub_0804DCA8 comma-anchor fix WORSE here (652 bytes at 16.6%, and 636 at 26.7%) were all taken with the four separate r1..r4 locals still in place. With them collapsed to one, an anchor of the same kind is worth 27 points and the exact size.
 - **anchor_position_swept:** Against the new residual, four positions for the comma anchor: inside the subscript (the base) 75.16% first +0x80; inside the cast's operand 75.16% and byte-identical; as its own statement before oam.tileNum 75.16% but first difference EARLIER at +0x7e; in the first operand of the + 36.23% and size -4. The base's position is the optimum of the four.
 - **residual:** 632/632, 157 of 632 bytes differ, first difference +0x80. The ROM loads three pool words before the index shift and parks the third in r8 (ldr r3,=B then mov r8,r3); the candidate loads two and pays adds r3,r1,#0 / muls r3,r0 / adds r0,r3,#0 where the ROM has a bare muls r0, r1. The copies are downstream of the allocation, not an operand-order choice.
+
+### Wave 96
+
+Base: sub_0804FA2C.c (75.16%, size-exact, first diff +0x80). Draft is now `sub_0804FA2C.w96-single.c` = the old draft with the two address binds merged into ONE variable (`sideData`, assigned inside the tileNum subscript by the comma anchor; the later `sideData = gUnknown_03004580;` statement is gone) and the sub_08057D44 second argument spelled `*(u16 *)((u8 *)sideData + 6 + side * 16)`. Score unchanged (75.16%): both are byte-neutral. Old draft kept as `.w96-start.c`.
+
+Reading of the ROM (target.s): ONE pseudo holds &gUnknown_03004580 (`ldr r3,=word; mov r8,r3`, placed right after the 085D6A48 word and BEFORE the row shift), and is used with immediates: `mov r1,r8; adds r1,#6` (sub_08057D44 argument, [side][3]) and `movs r2,#0xa; add r2,r8; mov sb,r2` (the [5] read, kept in sb and reused by the four position stores). So the ROM spells both reads as base + constant + side*16, i.e. the same "+N first" form as sub_080506B0. The pool word order confirms it: the ROM's 03004580 word sits before 03004582; the draft's sits after 0300450C.
+
+Negatives:
+- Converting the four `[side][5]` reads to `(u8 *)sideData + 10 + side*16`: 628 bytes (-4), 41.8%, first diff +0xc. Converting only the first, or only the fourth: +4 / +24 bytes, first diff +0xc. Any change to the count of by-name references to gUnknown_03004580 moves the start of the function (the pool word order shifts), so the [5] form cannot be tried without also getting the early pseudo.
+- Merged single variable: byte-neutral. cse propagates the constant address into the later uses (a pseudo set once to a symbol_ref is replaced by the symbol), so the held register the ROM has (r8 across the call) is not created. The comma anchor alone creates the early pool word in the old draft only because the write is dead there and survives as a separate pseudo.
+Not run: the permuter (75% base, prior 900s x4 run in wave 93 found only the do/while).
+
+Proposed summary:
+- does: sets up the cursor sprite for a side and slot, positions it from the position table and starts its effect
+- status: 75% at exact size; first difference at +0x80
+- left: the ROM holds &gUnknown_03004580 in one register from before the tile-number multiply and adds +6 / +10 to it for two later reads; the draft rebuilds the address at each read
+- tried: comma anchor (kept), do/while wrap (kept), single merged variable, +6/+10 byte-offset spellings of the later reads (see NOTES)
 
 </details>

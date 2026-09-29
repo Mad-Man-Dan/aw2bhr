@@ -1,11 +1,21 @@
 #include "global.h"
 
-/* Wave 71: the old inline arithmetic let agbcc move both trig calls ahead of
- * sub_0801E3B4. The explicit temporaries below now reproduce the ROM's
- * observable helper/libgcc call order in both arms. The residual is allocation:
- * this draft has a 0x20-byte frame versus the ROM's 0x24 and keeps e in r6
- * instead of r9, omitting the ROM's repeated high-to-low copies. */
-
+/*
+ * sub_0801E508 -- copy a list of sprite pieces into the OAM buffer, rotated
+ * and scaled by one entry of gUnknown_0200F720.
+ *
+ * a4 points at a count followed by that many records of three halfwords; a1 is
+ * the first OAM slot to fill, (a2, a3) the screen offset and a5 selects the
+ * entry: e[0] and e[1] are the x and y scale, e[2] the angle. Each record's
+ * x and y are turned into a float, rotated with sub_0808B91C and sub_0808B710
+ * (cosine and sine of the angle), divided by the scale and offset. Pieces
+ * flagged 0x300 use the full-size offset from sub_0801E3B4; the others use
+ * half of it. Returns 1 if the list does not fit in the 128 OAM slots.
+ *
+ * Why the C looks odd: `angle` holds e[2] for three of the four rotation calls
+ * in the full-size branch and the rest read e[2] again. The compiler only
+ * produces the original code with exactly this mix.
+ */
 int sub_0801E508(int a1, int a2, int a3, u16 *a4, int a5)
 {
     u16 *p;
@@ -24,6 +34,7 @@ int sub_0801E508(int a1, int a2, int a3, u16 *a4, int a5)
     float fv;
     float fx;
     float fy;
+    s16 angle;
 
     n = *a4;
     p = a4 + 1;
@@ -57,6 +68,8 @@ int sub_0801E508(int a1, int a2, int a3, u16 *a4, int a5)
         if (z & 0x100)
             z |= ~0x1FF;
 
+        angle = e[2];
+
         if ((w & 0x300) == 0x300)
         {
             z += sub_0801E3B4(u);
@@ -64,14 +77,14 @@ int sub_0801E508(int a1, int a2, int a3, u16 *a4, int a5)
 
             du = sub_0801E3B4(u);
             fz = (float)z;
-            fx = fz * sub_0808B91C((float)e[2]) / (float)e[0];
+            fx = fz * sub_0808B91C((float)angle) / (float)e[0];
             fv = (float)v;
-            fy = fv * sub_0808B710((float)e[2]) / (float)e[0];
+            fy = fv * sub_0808B710((float)angle) / (float)e[0];
             xr = (int)(fx + fy + (float)a2 - (float)du);
 
             dw = sub_0801E3B4(w);
             fz = (float)(-z);
-            fx = fz * sub_0808B710((float)e[2]) / (float)e[1];
+            fx = fz * sub_0808B710((float)angle) / (float)e[1];
             fy = fv * sub_0808B91C((float)e[2]) / (float)e[1];
             yr = (int)(fx + fy + (float)a3 - (float)dw);
         }

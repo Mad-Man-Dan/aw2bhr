@@ -2,7 +2,7 @@
 
 0x080303C8, 428 bytes, THUMB, parked.
 
-Best score so far: 48.6%.
+Best score so far: 49.8% (best.c).
 
 ## What it does
 
@@ -28,6 +28,7 @@ Two small code patterns differ. At two places the original sets the volatile fie
 ## Files
 
 - `sub_080303C8.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -82,5 +83,34 @@ Permuter (added at end of wave 95): two chained 600 s runs from the draft, 18.0 
 2. `new_var2 = 2;` holds the constant in the wait loop's `unk04 != 2` test.
 3. In the key word the OR is written with the `0x8000 | unk00 << 10` group first, then `~REG_KEYINPUT & 0x3FF`, then `unk02 << 13` (the same value; the ROM groups 0x8000 with the shifted field, which this ordering reproduces without the local for 0x8000).
 Lever 1 (copy of a value into a saved register): transferred through the permuter's `new_var = gpKeySt` form; my hand-written address locals were folded away. Remaining: unk210 read-modify-write still reads twice, r4 vs r2 for the &gUnknown_0849B018 address.
+
+### Wave 96
+
+Base: wave-95 permuter draft (428, 48.6%), kept as `sub_080303C8.w96-start.c`; draft unchanged at the end.
+
+gpKeySt check (the item wave 95 left open): nothing in the tree writes gpKeySt except the one-time init in src/decomp/c_08013434.c,
+and asm/ only loads it, so the top-of-function read is semantically harmless. BUT it is not what the ROM does: the ROM reads gpKeySt
+once, at the very end (`ldr r0,=gpKeySt; ldr r0,[r0]; ldrh r0,[r0,#6]` in the shared tail). Reading it at the end is the faithful
+spelling and scores 15.4% at 420 bytes (-8): the top-of-function read only pays for the missing 8 bytes by keeping a saved register
+alive, it does not describe the ROM. So the 428 draft is size-exact by an unfaithful route; the 8 bytes still need their real source.
+Where the 8 bytes really are (diff of the faithful form): the wait-loop's two rotation copies (`adds r3,r2,#0` / `adds r2,r4,#0`,
+4 bytes; the ROM keeps &gUnknown_0849B018 in r4 from the first load), and the ROM's two `unk210 |= 0xFFFF` sites carry ONE read
+where ours carry two (the 4 bytes the draft has extra are offset by 12 it lacks elsewhere).
+Negatives, each with mechanism (all -12 or unchanged):
+- `*(volatile u16 *)&...->unk210 |= 0xFFFF`, or through a `volatile u16 *` local: the pointer-rooted store loses the dead load (that is
+  the wanted effect, see the wave-49 chapter) but the constant OR folds to a plain `strh 0xFFFF` (-12). The member-rooted store keeps
+  the OR and the extra dead load. The ROM has the OR AND no dead load: it needs a pointer-rooted store whose value is not foldable.
+- `unk210 = 0xFFFF | unk210` is byte-identical to `|=`.
+Note the ROM's second site ORs with r5, the same register that holds the `== 0xFFFF` compare constant (built as `0xFFFF0000 >> 16`),
+so the source constant there is a variable/cse value, not a literal; the first site loads a literal from the pool.
+
+Permuter (wave 96, one 600 s run from the 48.6% draft): 48.60 -> 49.77%, size-exact 428. The kept change is right C: the bad-packet
+site's `unk210 |= 0xFFFF` uses a local `allOnes = 0xFFFF` (renamed from new_var3), which matches the ROM ORing with a live register
+(the same register that holds the `== 0xFFFF` compare constant) at that site while the first site keeps the pool literal. Adopted.
+Remaining: wait-loop copies / r4 vs r2 for &gUnknown_0849B018, the second dead `ldrh` at the first unk210 site, gpKeySt read at the top
+where the ROM reads it at the end (see above).
+Proposed summary: does = link handshake and key-word exchange; status = 49.8%, size-exact by an unfaithful gpKeySt read;
+left = 8 bytes' real source (wait-loop copies, single-read unk210 RMW); tried = pointer-rooted volatile stores (fold the OR away),
+faithful late gpKeySt read (-8), address locals (folded), permuter x3 across waves 95-96.
 
 </details>

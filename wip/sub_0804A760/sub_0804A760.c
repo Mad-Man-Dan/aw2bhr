@@ -124,6 +124,7 @@ void sub_0804A760(void)
     u16 i;
     u8 *dst;
     register int c asm("r3");
+    struct Unk030044E0 **gp;
 
     flag = 0;
     t = sub_0804A18C(gUnknown_030044E0->unk20 * 15 + gUnknown_030044E0->unk1e);
@@ -239,15 +240,20 @@ key_loop:
             do
             {
                 if (gpKeySt->repeated & 0x10)
-                    ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e =
-                        (((struct Unk030044E0View *)gUnknown_030044E0)->unk1e > 0xd)
-                            ? 0
-                            : ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e + 1;
-                else if (((struct Unk030044E0View *)gUnknown_030044E0)->unk1e == 0)
-                    ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e = 0xe;
+                {
+                    gp = &gUnknown_030044E0;
+                    ((struct Unk030044E0View *)(*gp))->unk1e = (((struct Unk030044E0View *)(*gp))->unk1e > 0xd) ? 0 : ((struct Unk030044E0View *)(*gp))->unk1e + 1;
+                }
+                else if (gUnknown_030044E0->unk1e == 0)
+                {
+                    gp = &gUnknown_030044E0;
+                    ((struct Unk030044E0View *)(*gp))->unk1e = 0xe;
+                }
                 else
-                    ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e =
-                        ((struct Unk030044E0View *)gUnknown_030044E0)->unk1e - 1;
+                {
+                    gp = &gUnknown_030044E0;
+                    ((struct Unk030044E0View *)(*gp))->unk1e = ((struct Unk030044E0View *)(*gp))->unk1e - 1;
+                }
             }
             while (sub_0804A18C(gUnknown_030044E0->unk20 * 15
                 + gUnknown_030044E0->unk1e) == u);

@@ -6,38 +6,44 @@
  * The `= 0` writes inside the guarded block come out as the register that
  * already holds unk00, which `cmp r3,#0; beq` proved zero -- agbcc substituting
  * the compare's register, the same thing src/decomp/c_08003DC4.c records. */
+extern struct Unk02029A10Group *const gUnknown_08136060;
+extern u16 (*const gUnknown_08136064)[5];
+
 void sub_0804CA98(u16 a1, u16 a2, s16 a3)
 {
     struct Unk56E28 s;
     u16 cnt;
+    struct Unk02029A10Group *base = gUnknown_08136060;
 
-    if (gUnknown_02029A10[a1].entries[a2].unk00 == 0)
+    if (base[a1].entries[a2].unk00 == 0)
     {
-        gUnknown_02029A10[a1].entries[a2].unk20 += gUnknown_02029B94[a1][a2];
-        if (((*(volatile u16 *)&gUnknown_02029A10[a1].entries[a2].unk20) & 0xf)
+        u16 (*b94)[5] = gUnknown_08136064;
+
+        base[a1].entries[a2].unk20 += b94[a1][a2];
+        if (((*(volatile u16 *)&base[a1].entries[a2].unk20) & 0xf)
             == 1)
         {
-            gUnknown_02029A10[a1].entries[a2].unk22++;
-            if (gUnknown_02029A10[a1].entries[a2].unk22 == 3)
+            base[a1].entries[a2].unk22++;
+            if (base[a1].entries[a2].unk22 == 3)
             {
-                gUnknown_02029B94[a1][a2] = 0;
-                gUnknown_02029A10[a1].entries[a2].unk20 = 0xff;
+                b94[a1][a2] = 0;
+                base[a1].entries[a2].unk20 = 0xff;
             }
-            cnt = gUnknown_02029A10[a1].entries[a2].unk22;
-            gUnknown_02029A10[a1].entries[cnt].x =
-                gUnknown_02029A10[a1].entries[gUnknown_08552148[a1]].x
+            cnt = base[a1].entries[a2].unk22;
+            base[a1].entries[cnt].x =
+                base[a1].entries[gUnknown_08552148[a1]].x
                 + ((u16 *)gUnknown_0855335C)[a1 * 10 + cnt * 2];
-            gUnknown_02029A10[a1].entries[cnt].y =
-                gUnknown_02029A10[a1].entries[gUnknown_08552148[a1]].y
+            base[a1].entries[cnt].y =
+                base[a1].entries[gUnknown_08552148[a1]].y
                 + ((u16 *)gUnknown_0855335C)[a1 * 10 + cnt * 2 + 1];
         }
         if (gUnknown_02029B80[a1][a2] != 0)
         {
             gUnknown_02029B80[a1][a2] = 0;
-            gUnknown_02029B94[a1][a2] = 1;
+            b94[a1][a2] = 1;
             ((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
                 + a1 * sizeof(struct Unk02029A10Group)
-                + (u8 *)gUnknown_02029A10))->frame = 0;
+                + (u8 *)base))->frame = 0;
             s.unk00 = a1;
             s.unk02 = a2;
             s.unk04 = ((u16 *)gUnknown_08553354)[a1 * 2];

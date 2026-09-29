@@ -52,4 +52,9 @@ W92-C: unchanged 95.83%/6 bytes, first difference +0x28. No new axis was measure
 
 W93-F: one 900 s run from the draft under the new length-penalty scorer returned nothing.
 
+### Wave 96
+
+Base: draft unchanged (95.83%, size+0, first diff +0x28). Pre-registered hypothesis (bind the keys table address for a subset of reads) tested three ways, bound as `u16 (*k)[54] = gUnknown_02029822;`: loads only 18.8% (size+0, diff at +0x2), all reads 15.3% (-12), stores only 10.1% (+24). Mechanism: the bind makes agbcc fold `side*0x6c` into the base (one shared row pointer), which the ROM plainly does not have (it keeps side*0x6c in r8 and the symbol separately). The wave-90 arithmetic still stands: the keys address needs 8-9 weighted refs with side*0x6c unchanged; a bind adds a ref but also restructures the address arithmetic. Not re-run through the permuter (waves 52/90 did ~110k iterations).
+Proposed status: unchanged; left = keys-vs-payload row symbol takes the callee-saved register (3 halfwords); tried adds "row-pointer bind of the keys table, three subsets, all restructure the address arithmetic".
+
 </details>

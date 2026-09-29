@@ -30,6 +30,7 @@ Across the call to sub_08035080 the original keeps the address of a compiler-mad
 
 - `sub_08035170.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -78,5 +79,17 @@ WAVE 89 (W89-C then W89-H): *** CLASSIFIED FINAL -- DO NOT PRE-REGISTER ANOTHER 
 ### Wave 89 permuter blocked
 
 WAVE89 PERMUTER-BLOCKED: this draft currently carries a wave-88-style `static inline` helper written with `__inline__`/`__typeof__`, which PYCPARSER REJECTS -- permute.py reports 'could not score the starting point', which is a SYNTAX ERROR, not a result. So no permuter run on the CURRENT draft has ever actually executed, and any permuter negative recorded against a draft carrying the helper is void. `static inline` plus the explicit struct tag is BYTE-IDENTICAL and parses (W89-F, measured). Re-spell before recording any permuter verdict here.
+
+### Wave 96
+
+Base: `sub_08035170.c` (50.78%, 4 bytes short; padding makes it read size+0). `best.c` (85.16%) is wrong C: `new_var = &gPlaySt`
+is assigned only in the `case 0` arm and read in `case 1/2`. Its value: it shows the ROM keeps the pool-word address
+(`.rodata` word) in r5 across `sub_08035080` and reloads `gPlaySt` through it, i.e. the post-call read of
+`defaultWeather` is a fresh load of the address word, not a reuse of the pre-call field address.
+Legal rewrites tried: `st = &gPlaySt` bound before the switch and used everywhere / for some reads: 8.6% -8 (the bind
+folds into the constant and the address word is used once, so there is no register to hold). Post-call read spelled
+plain while the pre-call one is volatile / the reverse / volatile `randomWeatherOn`: 49.2% -4, 47.7%, 46.1%. None
+reproduces the split. Left as the earlier note: the address word cannot be held from C. No permuter run (one slot, spent
+on sub_08037A78).
 
 </details>

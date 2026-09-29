@@ -51,4 +51,21 @@ Base: existing draft (844/864, -20, 13.5%), kept as `sub_08061308.w95-start.c`. 
 - The .rodata pool word for the map pointer: candidate emits `.rodata` for `gMap`; the ROM's word is gUnknown_0816DAF4 (same address); pool words to record if this ever matches: 0816DAEC, 0816DAF0, 0816DAF4.
 - Transfer test of the sub_08022BB8 lever (two variables, compare temp assigned before the bound value, one temp per block): NOT applicable, no probe run. That lever needs a narrowed or compare form of the same value beside an `adds rN,rM,#0` copy; here the copy is of the map pointer's ADDRESS word and there is no narrowed twin. The address bind already reproduces the copy (see above).
 
+### Wave 96
+
+Base: unchanged draft (864, 25.2%, first +0xa). Screened per rule 2 (delta +3 copies).
+Reading of the ROM (target.s): the compiler makes THREE distinct `.rodata` cells that hold &gUnknown_03003F20
+(0816DAEC), &gMap (0816DAF0 for the loop head, 0816DAF4 for the body). At the body start the ROM does
+`ldr r2,=0816DAF4; ldr r0,[r2]; ldr r3,[r0]` and later `mov r8,r2` -- r8 HOLDS THE CELL ADDRESS (the literal
+pool word), and every case arm reads the map as `mov r1,r8; ldr r0,[r1]; ldr r1,[r0]` (two loads). The draft's
+`mp = &gMap` instead loads the cell once (`ldr r1,=cell; ldr r2,[r1]; mov r8,r2`), so r8 holds &gMap and each arm
+needs ONE load. So the held-vs-re-derived question is answered ("held", per rule 1), but the held object is the
+compiler's own cell, which has no C name (unlike sub_08050FF8 where the cell is a real ROM object).
+Probe (one-unit harness, 5 placements of `mp = &gMap`): before the i loop gives the ROM's frame (`sub sp,#16`, the
+i*4 slot disappears) but size 852 (-12), 21.5%, first diff +0x16 -- saved as `.w96-e-bindbeforeloop.c`, not adopted
+(loses the size). After the sub_0801F92C call / before it: 864, frame unchanged. Before the unit test: 860.
+Residual: the two-load cell chase in every arm and the mid-loop `mov r8,r2` timing.
+Proposed summary: left: r8 holds the compiler's cell address (two loads per arm); draft holds &gMap (one).
+tried: mp bound at 6 positions; binding before the row loop fixes the frame but is 12 bytes short.
+
 </details>

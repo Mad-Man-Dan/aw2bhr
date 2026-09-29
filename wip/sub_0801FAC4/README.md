@@ -2,7 +2,7 @@
 
 0x0801FAC4, 540 bytes, THUMB, parked.
 
-Best score so far: 45.6%.
+Best score so far: 49.1% (best.c).
 
 ## What it does
 
@@ -27,6 +27,7 @@ The original keeps two loop values in two separate stack slots (the fixed bound 
 ## Files
 
 - `sub_0801FAC4.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -53,5 +54,19 @@ PARKED Wave 71 at 536/540 (-4), 36.3%. ROM uses two stack slots for loop invaria
 - **scope_measured:** volatile bound in case 0 only 45.56% size-exact; in cases 0, 2 and 3 it is 29.38% at +8; in all four cases 12.68% at +12. Case 0 alone is the answer, which also says the ROM's other three arms do not spend a second slot.
 - **permuter_REJECTED:** 900 s x 4 threads from the new base reported IMPROVED 45.56% -> 61.85%. REJECTED as wrong C, two defects. (1) s = a1 + 1; was hoisted out of case 0's loop to sit between case 1's break; and the case 0: label, which is unreachable, leaving case 0's body starting at s -= k; -- so s is read uninitialised on the first iteration and accumulates thereafter instead of being reset each iteration. (2) new_var was bound to (u16 *)(gUnknown_08499590 + 2) inside case 2's loop and then dereferenced for case 3's clip, and cases 2 and 3 are mutually exclusive switch arms. Output kept as w93-perm1-6185.c.wrongc and best.c.wrongc2; base restored and re-measured at 45.56%.
 - **residual:** 540/540, 294 of 540 bytes differ, first difference +0x24, a swap of two high registers in the prologue: the ROM has a4 (lsls/lsrs #16) -> r8 and a5 (lsls/lsrs #24) -> ip, the candidate has them exchanged. Everything downstream follows from that one transposition. Size-exact with the multiset right and two registers swapped is decomp-permuter's documented case, but the run above must be audited, not trusted.
+
+### Wave 96
+
+Base: sub_0801FAC4.c (volatile `bound`, 45.56%, size-exact). Kept as the final source; nothing beat it on score.
+
+Measured with a structural (register-blind) instruction diff against the ROM, because the score is dominated by the shifted bytes:
+
+* Removing the volatile `bound` and writing `y < a2 + a4` inline in case 0 (`sub_0801FAC4.w96-g1-novolatile.c` is the best of these) gives 258 vs 259 instructions, a ONE-slot frame (`sub sp, #4`; ROM #8), 36.3%, size-4. It is structurally closer (11 differing instruction lines against 17 for the volatile draft) and, unlike the volatile draft, it puts the high registers where the ROM has them (a4 in r8, a5 in ip; the volatile draft swaps those two). So the ROM's a4/a5 hi-register order is NOT the volatile's doing; the volatile is only buying the frame slot.
+* ROM case 0 recomputes `a2 + a4` in the loop head (`mov r6,r9; add r6,r8; str r6,[sp,#4]`) and reloads it at the bottom test, so the second slot is a spilled loop-invariant hoisted by the loop pass, not a source variable. The entry test uses registers directly. A `volatile` local reloads immediately after the store, which is not the ROM's shape.
+* ROM case 0 keeps the address of gUnknown_08499590 in one register for the whole loop (`ldr r6,=G` for the entry test, `adds r7,r6,#0`, then `[r7]` in the body). Binding `u8 **gp = &gUnknown_08499590` (function scope, or at the top of the loop body) does not reproduce that: agbcc reloads the pool word instead (two `ldr rX,=G` in the loop). Negative, mechanism: a bound constant address is rematerialised from the pool, it is not kept in a register.
+* The pre-registered copy hypothesis does not apply here (delta -1: the draft has one MORE copy than the ROM).
+
+Proposed summary: does = fills a diamond, square or line of tiles by looping outward from a centre; status = size-exact but register assignment differs in the hi registers; left = the ROM spills the case 0 bound to a second slot and keeps the global's address in a register; tried = volatile bound, inline bound, address bind, all measured.
+Permuter (600 s, --current, volatile draft): 'improved' 45.56% -> 49.07%, WRONG C: in case 0 it inserts `s = y;` between the clip and `for (x = s; ...)`, which overwrites the row's first column with the row index, and indexes the table with `[s]`. Kept as sub_0801FAC4.w96-perm1-WRONG.c; draft restored (45.56%, size-exact).
 
 </details>

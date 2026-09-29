@@ -270,3 +270,7 @@ What is left is the anchor direction, unchanged: the original loads
 gUnknown_020296E4 (row 1) and derives row 0 with a runtime `subs #0x28`, and
 every spelling that names row 1 folds to a single pool word of
 gUnknown_020296E4-0x28 (wave 80). Draft restored unchanged.
+
+## wave 96
+Base: draft unchanged (96.37%, size+0, 9 bytes, first diff +0x28). Tried one new axis: swap the two row tests in the loop body (row 1 first, with and without the do/while(0) moving to row 0): 93.6% (first diff +0x21) and 95.6% (+0x28). Mechanism: row-1-first makes the row-1 constant the first LICM hoist, but the counts[0] address then also moves and the pair/anchor still comes out lower-address-first; it perturbs the counters without producing the deferred row-0 hoist. Mixed-bind/row-pointer hypothesis not run again: waves 63/70/77/80/87 measured row-pointer locals at -12 bytes (they inhibit the loop's GIV).
+Proposed status: unchanged; left = which row address the pool word holds (bare row 1 plus a subtract vs bare row 0 plus an add) and the preheader order of four hoists.

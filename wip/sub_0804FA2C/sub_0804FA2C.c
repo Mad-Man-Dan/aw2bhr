@@ -61,7 +61,7 @@
  * THE TWINS' FIX WAS RE-TESTED IN ITS EXACT sub_0804DCA8 FORM AND IS WORSE, so
  * the "read the matched twins first" lead is now closed rather than open:
  *   - the twins' COMBINATION (`do { } while (0)` round the sub_08057D44
- *     statement WITH `(sideDataAnchor = gUnknown_03004580, ...)` inside argument 1's
+ *     statement WITH `(sideData = gUnknown_03004580, ...)` inside argument 1's
  *     subscript, which is what c_0804DCA8.c actually does and which this
  *     function's earlier notes had only ever tried as two separate changes):
  *     652 bytes (+20), 16.6%.
@@ -119,7 +119,7 @@ void sub_0804FA2C(void)
   sub_0801566C(gUnknown_03001FBC, (struct UnkVec *) (&oam));
   gUnknown_03001470[gUnknown_03001FBC].unk30 = gUnknown_0300453C;
   gUnknown_03001470[gUnknown_03001FBC].unk34 = gUnknown_0300451C;
- do { oam.hFlip = gUnknown_0300453C ^ 1; pal = gUnknown_08551D0C[gUnknown_0300453C][0]; oam.paletteNum = pal; oam.tileNum = (gUnknown_0300453C * 0x100) + (((struct Unk85D6A48Row *) gUnknown_085D6A48)[sideDataAnchor = gUnknown_03004580, gUnknown_03004582[gUnknown_0300453C][0]].unk12 * gUnknown_0300451C); prio = gUnknown_0855239C[(gUnknown_0300453C * 2) + gUnknown_0300450C]; oam.priority = prio; sideData = gUnknown_03004580; sub_08015608(gUnknown_03001FBC, *((struct UnkVec *) (&oam))); pos = (struct UnkPosPair (*)[10]) sub_08057D44(gUnknown_085D6A48[gUnknown_03004582[gUnknown_0300453C][0]][0], sideData[gUnknown_0300453C][3]); gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk04 = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].x; gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].x; gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06 = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].y; } while (0);
+ do { oam.hFlip = gUnknown_0300453C ^ 1; pal = gUnknown_08551D0C[gUnknown_0300453C][0]; oam.paletteNum = pal; oam.tileNum = (gUnknown_0300453C * 0x100) + (((struct Unk85D6A48Row *) gUnknown_085D6A48)[sideData = gUnknown_03004580, gUnknown_03004582[gUnknown_0300453C][0]].unk12 * gUnknown_0300451C); prio = gUnknown_0855239C[(gUnknown_0300453C * 2) + gUnknown_0300450C]; oam.priority = prio; sub_08015608(gUnknown_03001FBC, *((struct UnkVec *) (&oam))); pos = (struct UnkPosPair (*)[10]) sub_08057D44(gUnknown_085D6A48[gUnknown_03004582[gUnknown_0300453C][0]][0], *(u16 *)((u8 *)sideData + 6 + gUnknown_0300453C * 16)); gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk04 = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].x; gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].x; gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].unk06 = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].y; } while (0);
   gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y = (row = pos[gUnknown_03004580[gUnknown_0300453C][5]])[(gUnknown_0300453C * 5) + gUnknown_0300451C].y;
   sub_0804BCB8(gUnknown_0300453C, gUnknown_0300451C, 0, 0);
   sub_080155C0(gUnknown_03001FBC, gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].x, gUnknown_02029A10[gUnknown_0300453C].entries[gUnknown_0300451C].y);

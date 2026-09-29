@@ -71,4 +71,16 @@ WAVE 86 (W86-D, constant-twin axis): twin c_0805E440.c (three shared callees) su
 
 W91-B. Member form: the draft already uses struct Map members, so it is a NEGATIVE by construction. NEW, and it changes the park reason: the found block's conversions are merged by GCSE (PRE), not by CSE. Under a temporary -O2 -fno-gcse profile the barrier-free draft (work/sub_0805D888/w91-nogcse.c) is SIZE-EXACT at 64.76%, with no giv, the mask in sl and the ROM frame. The ONE residual is 2 bytes at the y-loop guard: the ROM compares bestY's slot (ldr r3,[sp,#8]) where the candidate compares y. The -da trace puts it in cse2's class-head choice (make_regs_eqv): y's REGNO_LAST_UID is the found block at the textual end, which is later than bestY's last use. cse1 forwards goto-site fx/fy copies, so they do not help. The inline found call fixes the guard but brings back the y<<16 giv (+4). Under the configured flags, a found flag (fnd=1; break; if (fnd) break;) removes the giv (first diff +0xa -> +0x33) but costs +8 in dead flag tests (w91-flag.c). The barrier draft stays the configured best. Settle -fno-gcse together with sub_0805D438.
 
+### Wave 96
+
+Base: unchanged draft (52.17% size+0, first +0xa; still has the empty asm barrier).
+Lead's un-binding / barrier-deletion probe measured in a one-unit harness at configured:
+- barrier deleted: 542 bytes (+36 incl. pad), `sub sp,#28` (ROM #20, draft #16) -- the barrier is not masking a correct layout; deleting it makes the frame wrong in the other direction.
+- barrier deleted AND sx/sy un-bound (call with x,y directly): identical to the previous line (cse folds the copies).
+- same, plus the found block calling with x,y directly: identical.
+Under `-fno-gcse` (a diagnostic profile only) the barrier-free source is size-exact 508 at 64.76%, first diff +0x7a (the y-loop guard);
+`for (y = bestY; ...)` is byte-identical to `for (y = 0; ...)` there (bestY is the constant 0 and cse folds the copy).
+So the earlier wave-91 reading stands: the barrier is a stand-in for the gcse/PRE merge, and the last 2 bytes are which register class head cse2 picks for y.
+Proposed summary: left: y-loop guard compares y's register where the ROM compares bestY's spill slot; frame is 16 vs 20 with the barrier. tried += barrier removal (frame 28), un-binding sx/sy, y seeded from bestY (all folded).
+
 </details>

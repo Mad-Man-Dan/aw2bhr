@@ -195,3 +195,32 @@ FOR THE TOOLING: harvest should take the best N candidates rather than all of
 them, or at least verify in score order and stop on a time budget. A search
 started from a weak base currently produces a verification phase far longer
 than the search it follows.
+
+## wave 96
+
+Base: `sub_0802F6A0.w96-start.c` (= faithful draft, 26.32%, size-exact). Now 61.2% at 608 bytes (+4), first difference +0xa (was +0xc).
+Three source changes, each measured:
+1. A separate payload pointer `u16 *q = dst;` walks the copy loop instead of `dst` itself. The ROM spills `dst` to [sp,#4] and loads it
+   into a fresh register just before the loop (`ldr r5,[sp,#4]`); with `dst` as the walker it lived in r8 for the whole function.
+   26.3% -> 30.1% (size -4). Two variables, not one: this is the wave-95 lever, and it transferred.
+2. One shared `return -4` label placed at the avail test (`fail4:`), every other -4 return a `goto`. The ROM has ONE -4 block right after
+   the avail test and every -4 branch goes there; the draft's return after the marker scan sat at the end of the loop. 30.1% -> 42.9%,
+   size-exact.
+3. `wrapped = cursor + 0xFFFFFC00; avail = write - wrapped;` as two statements. In one expression agbcc folds `w - (c + K)` into
+   `(w - K) - c` and builds 1024 with `movs;lsls;adds`; the ROM keeps `c + 0xFFFFFC00` in a pool word and subtracts it. Statement split
+   stops the fold. 42.9% -> 61.2% (size +4).
+Residual: frame is `sub sp,#16` vs ROM #12 (q got a stack slot; the ROM keeps its walker in r5), `sum` in r9 vs r8, the ring base
+(gUnknown_02025C18) sits in r8/ip where the ROM holds it in r6 via one direct pool load after the scan, and the ROM keeps the cell
+address of gUnknown_03003128 in sl for the whole function. The un-binding suggestion in the prompt did not apply: the draft had no binds.
+Proposed summary: does = pops one packet from a slot's receive ring; status = 61%, +4 bytes; left = walker register / frame slot,
+ring base register; tried = walker pointer, shared -4 label, statement-split avail arithmetic.
+
+### wave 96, permuter (two chained 600 s runs from the 61.2% file)
+Run 1: 61.18% -> 92.05%, size-exact, first difference +0x1c. Run 2 (from the 61.35% cleaned base): -> 80.30%. BOTH are wrong C and were
+rejected (kept as `permA-92-wrongc.c` and `permB-80-wrongc.c`): run 1 wrote `sum += ring[i = cursor][slot] * i;` and run 2
+`i = ring[cursor][slot] * (++i); sum += i;`, i.e. the loop counter `i` is overwritten inside the loop (the counter then holds the cursor /
+the product). Renaming the clobbered `i` to a fresh local (`cc = cursor`, or `prod`/`prod2`) drops both back to 61%. So the score comes
+from `i` being one pseudo with extra sets, which changes what the allocator does with the counter; the true source has the ROM's product
+in a separate register (`adds r1,r0,#0; muls r1,r2,r1; adds r0,r1,#0`) and the counter incremented AFTER the first ring load
+(`adds r2,#1` sits between the load and the `muls`), so `* ++i` in the first product is the right spelling (61.18 -> 61.35%).
+Adopted: the `* ++i` form (`vF96.c`), 608 bytes (+4), 61.35%.

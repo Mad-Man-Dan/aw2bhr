@@ -490,3 +490,12 @@ Base: existing draft (800, -4, 17.8%), kept as `sub_08050FF8.w95-start.c`; draft
 - Lever 2 (mixed bare / bound): this IS the mixed form for the side reads (statement 1 bare, others volatile); it fixes statement 1 but loses 8 bytes elsewhere, so not size-exact. Not transferred as a size fix.
 - Residual unchanged: ROM holds &gUnknown_0300453C in r8, &gUnknown_020298E0 in r9 and reloads &gUnknown_03001FBC per group; ours holds the 03001FBC address in r6.
 Proposed tried-line: "plain (non-volatile) side read in statement 1 only: that statement then matches but the function is 12 bytes short".
+
+## wave 96
+
+Base: unchanged draft (17.79%, size -4, first diff +0xc). Restored after one probe.
+
+Pre-registered classification (ROM 31 hi-register moves vs draft 26 in the disassembly; the screen's 22 vs 13 counts `adds rX,rY,#0` copies too): the ROM's extra copies are NOT copies of one register. They are copies from THREE held hi registers, each holding one plain pool address for the whole body: r8 = &gUnknown_0300453C (about 10 `mov rX,r8`, early; later re-pointed at the cell gUnknown_081360DC), sb = &gUnknown_020298E0 (about 6, later the cell 081360D8), sl = &gUnknown_03001470 (about 7, later the cell 081360E4). So it is neither pure (a) nor pure (b): it is (b) three times over, with the holds set up by `ldr rX,=sym; mov hi,rX` before the first use. The draft holds 0300453C in the LOW register r7 (volatile read, no copies) and gUnknown_03001FBC in r6, where the ROM re-loads 03001FBC from the pool at every use (`ldr r1,=; movs r2,#0; ldrsh r0,[r1,r2]`) and holds nothing for it. That is why the first difference is +0xc: the draft's r6 hold of 03001FBC is the first thing the ROM does not have.
+
+Probe: re-assigning `pE4 = &gUnknown_081360E4;` before each of the later cell reads (the lever that fixed the sub_0804A760 key loop by giving each arm its own pseudo): 816 bytes (+12), 18.4%, first diff +0xc. Wrong direction here: the ROM HOLDS the cell address in sl across the whole body (`mov r1,sl; ldr r2,[r1]` five times), it does not re-derive it. The loop-hoist mechanism of sub_0804A760 does not apply because this function has no loop.
+Open lever: whatever stops the compiler holding gUnknown_03001FBC (used 8 times, no pseudo in the ROM) while it holds the three others in hi registers. wave 89's static-inline reader deleted the hold but cost more elsewhere.

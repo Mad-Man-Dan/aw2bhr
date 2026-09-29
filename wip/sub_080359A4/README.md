@@ -10,7 +10,7 @@ Draws a map unit's sprite when the tile it stands on is on screen, visible and o
 
 ## How close it is
 
-Compiles to the right size (324 bytes); 142 bytes differ. The logic and the calls are settled. The difference is which registers hold the two position pointers, and one pointer copy the original makes on both sides of the optional camera call where our build makes it once.
+Compiles to the right size (324 bytes) with 77.2% of bytes identical. Assigning `py2 = py` on both paths after the call is the valid form of what the automatic search found. What is left is which registers hold proc, py and y.
 
 ## What is left
 
@@ -51,5 +51,18 @@ PARKED Wave 71 at 320/324 (-4), 45.1%, improved from 308 bytes using a private-s
 - **refuted:** - Writing the body with direct member access instead of the py / px / py2 pointer locals: 300 bytes (-24), 5.25% with the pin and 308 (-16), 7.10% without. The pointer locals are load-bearing.
 - Reading permuter.log's 'found a better score!' lines as candidates. The two best scores (3500, 3580) verified at 34.26% and 39.20% and were 8 bytes short; the winner sat at 5100 against a 5400 base.
 - **permuter_run_2:** Chained from 56.17%: reached 79.32% size-exact and was REJECTED. It deletes the unconditional `py2 = py;` and assigns py2 only inside the do/while that runs when the camera call runs, so on the other path py2 is read uninitialized (in the occupancy test and in sub_080255F4's third argument). Same class wave 74 rejected twice. Kept at work/sub_080359A4/w92-perm2-uninit.c. Two safe spellings of the same idea were measured and are worse: the copy written in both places is 328 bytes (+4), 18.90%, and deleting py2 entirely is 316 (-8), 14.51%. WHAT IT SHOWS: the ROM's two `adds r5,r4,#0` are ONE source statement duplicated by the compiler across the join, not two statements -- so the next wave's question is what makes agbcc duplicate one unconditional copy into both predecessors, which is much narrower than 'the pointer allocnos are rotated'.
+
+### Wave 96
+
+Base: `sub_080359A4.w96-start.c` (56.2%, first diff +0x2). `best.c` (79.3%) is wrong C: it assigns `py2 = py` only inside
+the `if` and reads it after. Its content is that the copy `py2` must be created on the call path AFTER the call. The legal
+spelling assigns `py2 = py` on BOTH paths (`if (...) { call; py2 = py; } else { py2 = py; }`): 75.3%, first diff still +0x2
+(the prologue register order). Transferred as a general trick: an "uninitialised on one path" permuter form has a legal
+twin that assigns the copy on every path. Then one 800 s permuter run: 75.3% -> 77.2%, kept change is a write-only temp
+around the first call argument (`sub_080358C4(pxVal = *px, y)`) and `(*py)` instead of `(*py2)` in the turnState read.
+Residual: register roles. ROM: proc r6, py r4, y in ip, px address r8, `*px` value r7, py2 r5, and
+`proc->unk35` computed as `px - 13` off the r8 copy of `&proc->unk42`; ours: proc r5, py r6, y r4, px address sl.
+Reading `unk35` through `((u8 *)px)[-13]` is byte-identical (cse already derives it). Not solved.
+Proposed summary: 77.2% size-exact; left: register roles for proc/py/y/px, first diff in the prologue.
 
 </details>

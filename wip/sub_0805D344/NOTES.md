@@ -49,3 +49,15 @@ What the two kept steps are (checked by reading, semantics identical to the star
 Residual: n is still in a LOW register (r5) with a hoisted-address difference in the fill loop (`ldr r2,[r6]` before the index arithmetic; ROM loads the table pointer after). The ROM's n lives in r8. The 80.7% form got n into a high register only by destroying it, so a high register for n is reachable only if a second variable, not n, takes the flag / copy role.
 Pool words: none new.
 Proposed summary: status=size-exact, 75% identical, only n's register and the order of three loads in the fill loop differ; tried += "binding &gUnknown_08499594 to a local at the top with the volatile read through it: size-exact (kept)"; "per-block copy of n for the sort loops (kept)". Rename new_var2 -> unitTable, new_var3 -> count when promoting, re-checking bytes.
+
+## wave 96
+
+Findings: (1) `best.c` (80.74%) is the known-wrong `n = n > 1; new_var = n;` form (byte-identical to `.w95-WRONG-80.c`); the drafts.py
+"better" hint is a trap. (2) The 75.00% size-exact draft is size-exact only by accident: replacing its `new_var = n > 1; if (new_var)` with
+plain `if (n > 1)` drops it to 236 bytes (-8, 18.4%). The 8 missing bytes are exactly n's four hi-register moves (+2 each), so n living in
+r8 (ROM) is the whole real residual; the flag temp was filling the gap with junk (`movs r0,#0 / cmp / movs r0,#1 / cmp r0,#0 / beq`).
+(3) Permuter run from the honest -8 form (900 s, 2 threads, `perm-w96-1.log`): 16.39 -> 70.90, size-exact, first +0xf. The kept change is
+`long long new_var = n;` used as the index in the fill loop: valid C, same meaning, but it buys the 8 bytes with a 64-bit pair, not n in r8.
+Saved as `sub_0805D344.w96-perm1-longlong.c`, NOT adopted. Draft `sub_0805D344.c` = the honest pure form (`.w96-perm1-start.c`, 236 bytes, -8).
+Not reached: why r6/r7 are unavailable to n in the fill loop (ROM keeps ptr in r5, walker r4, n in r8). NEXT: `tools/rtldump.py` .greg conflicts for n.
+Proposed summary: left: n in r5 where ROM keeps it in r8 (8 bytes); tried += flag-temp size padding is not real, long long index temp.

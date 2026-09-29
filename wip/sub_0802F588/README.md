@@ -74,4 +74,17 @@ Wave 74 W74-C. Requires a new allocation mechanism, not another unconstrained pe
 - **refuted:** - Folding the checksum's starting value into one statement (`sum = n + 0x4fff;`): 284 bytes (+4), 30.99%. The two-statement form stays.
 - **permuter_run_2:** Chained from 82.14%: reached 86.62% but FOUR BYTES TOO LONG, and tools/permute.py installed it over the size-exact draft because its keep rule compares percentage only and ignores the size delta. Restored to 82.14% size-exact; the rejected form is at work/sub_0802F588/w92-perm2-plus4.c. This is the SECOND time this function has been caught by the same trap -- the wave-74 entry records the first. Its one useful hint: it binds 0x1FF to a local in the payload loop, which is aimed at the ROM's single materialisation of that mask into a held register, but pays an extra instruction for it. FOR THE TOOLING: refuse to replace a size-exact draft with one that is not.
 
+### Wave 96
+
+Base: existing draft (82.14%, size-exact), kept as `sub_0802F588.w96-start.c`; draft unchanged.
+The diff is two hi-register assignments swapped: the ROM keeps `chk` in r9 (zeroed in the prologue) and the ring base in ip
+(`mov ip,r0` after `ldr r0,[cell]`); the draft has them the other way round, and the cascade moves cur*2 / cur+1 and the mask.
+The final `chk = n; ... return chk;` copy is not in the ROM (it returns `adds r0,r6,#0`, i.e. n itself), but removing it (`return n;`)
+drops to 60.7%: the copy is what keeps `chk` off the register the ROM leaves alone (see the header comment), so the +2 copies of the
+pre-registration are NOT this one.
+Negatives: declaring `chk` before `sum` and moving `cur` in the declaration list are byte-identical. Permuter, one 900 s run:
+82.14 -> 82.50% but the kept change is WRONG C (`cur = chk; ... return cur;` stores n into the write cursor); rejected and the draft restored.
+Proposed summary: does = writes one packet into the send ring; status = 82.1%, size-exact; left = chk (r9) vs ring base (ip) swapped;
+tried = decl order, return n, one permuter run (its only gain was wrong C).
+
 </details>

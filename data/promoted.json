@@ -22011,6 +22011,18 @@
   "size": 96
  },
  {
+  "file": "src/decomp/c_080611D8.c",
+  "obj": "src/decomp/c_080611D8.o",
+  "addr_hex": "0x080611D8",
+  "functions": [
+   "sub_080611D8"
+  ],
+  "size": 304,
+  "rodata": [
+   "0x0816DAE8"
+  ]
+ },
+ {
   "file": "src/decomp/c_08061668.c",
   "obj": "src/decomp/c_08061668.o",
   "addr_hex": "0x08061668",

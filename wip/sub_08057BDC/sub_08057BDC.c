@@ -73,9 +73,8 @@ void sub_08057BDC(void)
             }
             else
             {
-                idx = p->unk02;
                 sub_08071900(gUnknown_08499578 + (14 - c),
-                             gUnknown_08551A04 + ((idx << 5) + p->unk00),
+                             gUnknown_08551A04 + ((p->unk02 << 5) + p->unk00),
                              c, 6);
             }
         }

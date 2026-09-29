@@ -12,3 +12,21 @@ Proposed summary:
 - status: size-exact draft, ROM holds gUnknown_02029A10 in one held register from a `.rodata` word for the stepping block and a plain literal for the tail
 - left: the missing `.rodata` word for gUnknown_02029A10
 - tried: entry pointer / inline macro / by-name array / mixed tail spellings (see above); none creates the word for gUnknown_02029A10, though the exemplar spelling does create it for gUnknown_02029B94
+
+## wave 96
+
+Base: the wave-95 draft (`sub_0804CA98.w96-start.c`, 17.07%, size +0). Now `sub_0804CA98.c` = 25.72%, size -12 (404... measured 404/416), first diff +0x1a (was +0xa).
+
+What moved it: the ROM reaches both arrays through their compiler-made cells and loads the VALUE eagerly: `ldr r2,=gUnknown_08136060; ldr r0,[r2]; mov sl,r0` at the top (the array base, held in sl for the guarded region) and `ldr r4,=gUnknown_08136064; ldr r0,[r4]; mov r8,r0` after the unk00 test (the gUnknown_02029B94 base). Declaring the two cells as `extern ... *const gUnknown_08136060 / 08136064`, binding `base = gUnknown_08136060;` at the top of the function and `b94 = gUnknown_08136064;` INSIDE the guarded block, and spelling the guarded region through `base` / `b94`, reproduces those two loads (the draft never created the cells' words at all in its own pool: they are the force-addr words). 17.07% -> 25.72%; the two cell loads and their order now match the ROM. The b94 bind at function top instead of inside the block puts it on the stack (22.6%).
+
+Negatives (each one compile):
+- the B80 block's `gUnknown_02029B94[a1][a2] = 1` by plain name (ROM uses a plain literal there): 400 bytes, 15.9%; the `frame = 0` store through plain gUnknown_02029A10 (ROM also a plain literal): 400 bytes, 13.2%; both: 396 bytes, 13.5%. All worse: with them the frame layout changes; the ROM's mix is reached only together with the allocation it has (sl = base held, ip = a1*180, sb = the zero).
+- Residual: `base` is spilled to [sp,#20] instead of held in sl (the draft keeps a1*10 in sl), so every later use pays `ldr rX,[sp,#20]`; that accounts for the -12 bytes.
+
+Permuter, 900 s x 2 from this base: 25.72 -> 42.79 but the kept candidate is WRONG C for this repo's rules (adds `volatile unsigned int new_var` — a stack slot — and a `inline_fn(a1*2)` helper); saved as `sub_0804CA98.w96-perm1-WRONG-volatile.c`, not adopted. Useful hint inside it: a `volatile` copy of a2 used once as `b94[a1][new_var]` mimics the ROM's spill of a2*2 to [sp,#0x1c]; the ROM keeps a1*10 / a1*4 / a2*2 as three stack temporaries, so a source with three explicit index temporaries (not volatile) is the next thing to try.
+
+Proposed summary:
+- does: steps a sprite entry's animation counter and, when it wraps, advances the frame and starts the follow-up effect
+- status: 26% at -12 bytes; the two address cells are now read as the ROM reads them
+- left: the array base is spilled to the stack where the ROM holds it in sl; the ROM's three index temporaries (a1*10, a1*4, a2*2) live on the stack
+- tried: cell-object binds (the lever), plain-literal spellings for the block and tail stores (worse), permuter (only volatile/inline wrong-C gains)

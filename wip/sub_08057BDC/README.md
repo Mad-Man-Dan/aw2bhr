@@ -2,7 +2,7 @@
 
 0x08057BDC, 360 bytes, THUMB, parked.
 
-Best score so far: 77.5%, +4 bytes (best.c).
+Best score so far: 81.1%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Per-frame update of the two-side display. For the first eight frames it slides a
 
 ## How close it is
 
-Compiles to the right size (360 bytes) and about 77% of the bytes match. An empty statement between the two redraw calls stopped the compiler holding the wrong table address in a register, which was the long-standing problem. What is left is that the original keeps two other table addresses in registers for the whole of the second loop and this version reloads them each time round.
+Compiles to the right size (360 bytes) with 81.1% of bytes identical; the first loop matches exactly after writing `p->unk02 << 5` inline instead of reusing a local. What is left: in the second loop the original keeps gUnknown_085D6A48 and gUnknown_03004582 in registers across the loop and the draft reloads them.
 
 ## What is left
 
@@ -26,7 +26,6 @@ Get the compiler to keep the row table gUnknown_085D6A48 and the selector table 
 ## Files
 
 - `sub_08057BDC.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -47,5 +46,13 @@ MEASURED WARNING, do not 'fix' it: the guard `active = 0 != gUnknown_030005E8[i]
 EARLIER NEGATIVES THIS WAVE (all on the pre-permuter draft, and they narrow the park): the ROM's two hoists sit AFTER `movs r7,#0`, so by the preheader rule both are LICM hoists rather than source bindings -- yet moving the `rows` binding makes no difference anywhere. Removing it and casting inline is 57.78%%, moving it inside the loop body is BYTE-IDENTICAL to the draft, and pulling the selector into its own local is 57.78%%. So 'the compiler substitutes the global straight back' holds for every placement, not just the one the park measured. Also: +0x19 was never an early divergence -- it is an odd address, the high byte of the `ldr rN,[pc,#imm]` at +0x18, whose immediate moved because the pool at the END of the function was reordered.
 BASE REJECTED: `best.c` (61.94%%, size-exact) was the draft plus five dead statements (`gUnknown_08551A04[0] += 0;`, `rows += 0;`, `c = c;` and two more). Value-preserving, so not wrong C, but its first difference was +0x19 -- IDENTICAL to the draft's. Four bytes of padding that moved nothing. Renamed `best.c.wrongc`.
 RESIDUAL: size-exact, first difference +0x90. The ROM hoists gUnknown_085D6A48 and gUnknown_03004582 into sb/r8 in the second loop's preheader; the candidate now rematerialises all three inside the body, which is also why the tail pool words sit in a different order. The 08551A04 half of the park is solved, the other two are not.
+
+### Wave 96
+
+Base: the wave-93 draft (`sub_08057BDC.w96-start.c`, 76.94%). Now 81.11%, size+0, first diff +0xc1 (was +0x90): the FIRST LOOP IS NOW BYTE-EXACT.
+- What moved it: delete the `idx = p->unk02;` reuse in the first loop's else arm and write `((p->unk02 << 5) + p->unk00)` directly. The reuse forced `p->unk02` to be loaded into a register BEFORE the `14 - c` arithmetic (`ldrh r5,[r6,#2]` first); the ROM loads it after, at the use. So the wave-93 note that `idx` is reused in the else arm was a compensation for the old second-loop state and is now wrong; the source comment above the function still mentions it (leave for the orchestrator, or trim when promoting).
+- Second loop, unchanged residual: the ROM hoists gUnknown_085D6A48 (r9) and gUnknown_03004582 (r8) into the preheader after `movs r7,#0` and tests `gUnknown_030005E8[i]` with a plain `cmp r0,#0; beq`; the draft rematerialises both and uses the `negs/orrs/bge` form. Re-measured on the new base: plain `if (gUnknown_030005E8[i] != 0 && ...)` 63.9%, size-4 (with `rows` bound at the top or in-body, with `sel` bound or inline, with or without the do{}while(0)): 57.8-63.9%, all -4 at +0x19/+0xc0. Binding position of `rows` (top, in-body, inline cast): byte-identical at 81.11%. So the hoist is still unreached.
+- Permuter (900 s, 2 threads, from the new base): NO-IMPROVEMENT (scores 2660 -> 2340 candidates were not size/verify-clean).
+Proposed status: first loop matches; left = the second loop keeps two table addresses in registers in the ROM (LICM hoists) and the draft rematerialises them, plus the `ldrsh; cmp; beq` test form.
 
 </details>

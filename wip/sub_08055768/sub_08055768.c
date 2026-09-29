@@ -65,10 +65,9 @@ void sub_08055768(u16 side, u16 count)
     row = gUnknown_085D6A48[gUnknown_03004580[side][1]];
     if (row[2] == 1) {
         while (out != count) {
-            gUnknown_08551E64[0][0] += 0;
             x = gUnknown_08552150[side * 5 + i][0];
             if (gUnknown_02029A10[side].entries[x].unk00 != 0) {
-                gUnknown_020296BC[side][out] = gUnknown_08552148[side];
+                gUnknown_020296BC[side][out] = *(u16 *)((u8 *)gUnknown_08552148 + side * 2);
                 out++;
             }
             i++;
@@ -98,7 +97,7 @@ void sub_08055768(u16 side, u16 count)
     for (i = 0; i < count; i++) {
         gUnknown_020296CE[side][i] =
             p[gUnknown_08551E74[side * 2 + gUnknown_0300450C] * 5 + i]
-                + gUnknown_08551D22[gUnknown_030045A0[side]][2];
+                + gUnknown_08551D26[gUnknown_030045A0[side]][0];
     }
 }
 

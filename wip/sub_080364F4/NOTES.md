@@ -64,3 +64,17 @@ size-exact but structurally the ROM's *other* spelling: next step is to un-share
 distinct one-statement temps) while keeping the `& 0xFF` and the `isEmpty` temp. First difference is +0x10:
 the ROM's first `ldr r2,[r0]` uses r2 for the play-state pointer where the draft uses r1.
 Proposed summary status: 71.6% at the right size; the `.rodata` words for the play-state pointer and the map table are now both produced.
+
+## wave 96
+
+Base: `sub_080364F4.w96-start.c` (= wave 95 draft, 71.6%, size-exact, first diff +0x10). Pre-registration (un-share the
+`mapID * 0x5c` product) tested and REFUTED as stated: deleting `mode` and writing the product in both reads gives
+61.5% (size-exact), worse. Mechanism: the product is already recomputed in the ROM's sense (every `strb` through
+`gPlaySt` forces `mapID` to be reloaded, so cse cannot share it); what deleting `mode` changes is loop.c's hoisting:
+with both reads written as a plain `base + idx` the compiler hoists `t+0x44`, `t+0x40` and `t+0x3c` into registers
+(three invariants, r9/r8/r6), where the ROM hoists only `t+0x3c` and does `adds r1,r6,#0; adds r1,#68` inline per
+read. The `(i & 0xFF)` mask on the 0x44 read does NOT stop that hoist on its own (with `mode` gone); it is `mode`
+feeding the 0x40 read that keeps a hoistable invariant out. Other spellings measured: folding the constant into the
+index (`t[0x44 + ...]`, `(t+0x44)[...]`): 14.0% +4 (offset folds away entirely); a fresh `mode = i + mapID*0x5c;`
+statement before each read: 25% +4; before only read 1 or only read 2: 28-29% -8.
+Residual unchanged (71.6%): loop invariant set differs (ROM: only +0x3c hoisted).

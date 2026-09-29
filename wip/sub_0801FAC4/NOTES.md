@@ -118,3 +118,17 @@ clip dereferences it.
 Discarded. Output kept as `w93-perm1-6185.c.wrongc` and the permuter's `best.c`
 as `best.c.wrongc2`; `best.json` regenerated. The 45.56% base is restored and
 re-measured: **45.56%, size-exact, first difference +0x24.**
+
+## wave 96
+
+Base: sub_0801FAC4.c (volatile `bound`, 45.56%, size-exact). Kept as the final source; nothing beat it on score.
+
+Measured with a structural (register-blind) instruction diff against the ROM, because the score is dominated by the shifted bytes:
+
+* Removing the volatile `bound` and writing `y < a2 + a4` inline in case 0 (`sub_0801FAC4.w96-g1-novolatile.c` is the best of these) gives 258 vs 259 instructions, a ONE-slot frame (`sub sp, #4`; ROM #8), 36.3%, size-4. It is structurally closer (11 differing instruction lines against 17 for the volatile draft) and, unlike the volatile draft, it puts the high registers where the ROM has them (a4 in r8, a5 in ip; the volatile draft swaps those two). So the ROM's a4/a5 hi-register order is NOT the volatile's doing; the volatile is only buying the frame slot.
+* ROM case 0 recomputes `a2 + a4` in the loop head (`mov r6,r9; add r6,r8; str r6,[sp,#4]`) and reloads it at the bottom test, so the second slot is a spilled loop-invariant hoisted by the loop pass, not a source variable. The entry test uses registers directly. A `volatile` local reloads immediately after the store, which is not the ROM's shape.
+* ROM case 0 keeps the address of gUnknown_08499590 in one register for the whole loop (`ldr r6,=G` for the entry test, `adds r7,r6,#0`, then `[r7]` in the body). Binding `u8 **gp = &gUnknown_08499590` (function scope, or at the top of the loop body) does not reproduce that: agbcc reloads the pool word instead (two `ldr rX,=G` in the loop). Negative, mechanism: a bound constant address is rematerialised from the pool, it is not kept in a register.
+* The pre-registered copy hypothesis does not apply here (delta -1: the draft has one MORE copy than the ROM).
+
+Proposed summary: does = fills a diamond, square or line of tiles by looping outward from a centre; status = size-exact but register assignment differs in the hi registers; left = the ROM spills the case 0 bound to a second slot and keeps the global's address in a register; tried = volatile bound, inline bound, address bind, all measured.
+Permuter (600 s, --current, volatile draft): 'improved' 45.56% -> 49.07%, WRONG C: in case 0 it inserts `s = y;` between the clip and `for (x = s; ...)`, which overwrites the row's first column with the row index, and indexes the table with `[s]`. Kept as sub_0801FAC4.w96-perm1-WRONG.c; draft restored (45.56%, size-exact).

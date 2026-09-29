@@ -7136,6 +7136,7 @@ extern const u16 gUnknown_085523A8[];
  * Read `ldrh`, nothing signs them; the values are small y offsets that are
  * subtracted and added around gUnknown_020298EC. */
 extern const u16 gUnknown_08551D22[][5];
+extern const u16 gUnknown_08551D26[][5];
 extern const u16 gUnknown_08551D2A[][5];
 /* Wave 49, W49-M. A genuine ROM POINTER TABLE of four words, not a
  * -fforce-addr pool run: the words at 0x08551E64..0x08551E70 hold 0x08551E12,

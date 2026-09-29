@@ -2,7 +2,7 @@
 
 0x0801F234, 120 bytes, THUMB, parked.
 
-Best score so far: 31.4%, +4 bytes (best.c).
+Best score so far: 46.7% (best.c).
 
 ## What it does
 
@@ -30,6 +30,7 @@ Find out why the compiler will not use r7 for the tile count, even though neithe
 
 - `sub_0801F234.c`: the current draft
 - `best.c`: the closest attempt, when it is not the draft
+- `NOTES.md`: working notes
 - `target.s`: the original assembly
 
 ## Technical history
@@ -79,5 +80,12 @@ WAVE 86 (W86-F, vocabulary-twin axis): twin sub_0801F34C (src/decomp/c_0801F34C.
 ### Wave 89
 
 WAVE 89 (W89-D): SCREENED OUT before any probe. Residual (1) is a register assignment and residual (2) parks a call result; the one genuine memory re-read (`e->unk05`) is ALREADY REPRODUCED and sits in settled_by_this_attempt, not in the residual -- so the re-read lever family has no target here. W77-K's stated reason for withholding the parking lever was re-checked and still holds. HANDOFF FOR THE NEXT ATTEMPT: neither build has a stack frame, so r7 is not reserved as a frame pointer in either, yet the draft pays four instructions for an r8 round trip (plus a fifth to move the `muls` product out of a lo scratch) with r7 SITTING UNUSED. The question is what makes r7 unavailable to that compilation, not why `n` prefers r8. Evidence: work/sub_0801F234/W89-notes.md.
+
+### Wave 96
+
+Base: sub_0801F234.c unchanged (30.65%, size+4). Probes (structural instruction diff against the ROM, 16 lines for the draft): `tile` as int/u32, `n` as int/u16 and folding the `i` local into `e - gUnknown_0200F920` (which is worse, 26). Every retyping was byte-identical to the draft. Un-binding does not have a host: `tile` is read before the calls and the slot it reads is rewritten (e->unk05 is incremented) before its second use; `n` is one multiply used twice and the ROM has a single `muls`; removing `i` adds a subtraction and a shift. Nothing found for r7 vs r8 (see the wave 89 note in the source).
+Permuter (600 s, --current): 'improved' 30.65% -> 46.67% and size-exact, but the kept file is WRONG C (kept as sub_0801F234.w96-perm1-WRONG.c): it turns `n` (the product of two table bytes) into a copy of `e->unk05`, loses the multiply, and rewrites the final store as `unk08[n].unk00 = tile; unk08[n].unk00 += n`. The score rose because the changed statements happen to line up the register pool. Draft restored. Pre-registered un-binding: nothing to un-bind (see above); the delta -1 copy remained.
+
+Proposed summary: does = queues one tile upload (CpuFastSet) for a picture slot and appends its tile range to the slot's list; status = 30.65%, 4 bytes long; left = ROM keeps the four values live across both calls in r4-r7 while the draft spills one to r8 (extra push/pop and a mov after the multiply) and does not park sub_0801F444's result; tried = retyping tile and n, folding i, statement order (wave 86), permuter (wrong C only).
 
 </details>

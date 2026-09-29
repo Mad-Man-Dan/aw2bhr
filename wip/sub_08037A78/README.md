@@ -2,7 +2,7 @@
 
 0x08037A78, 268 bytes, THUMB, parked.
 
-Best score so far: 85.8%.
+Best score so far: 98.1%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ For every map cell that holds a unit, draws a small tile chosen by the unit's ar
 
 ## How close it is
 
-Compiles to the right size (268 bytes) with 85.8% of bytes identical, and the stack frame now matches. Both loops are written out by hand with the map pointer loaded in the loop tests. What is left: the mask table's address is loaded inside the loop where the original loads it before the outer loop, and two saved registers are swapped.
+Compiles to the right size (268 bytes) with 98.1% of bytes identical. Binding the mask table before the outer loop and the row table (`rowTable = gUnknown_030032E0;`) before the inner loop puts both addresses where the original has them. What is left: two stack slots are swapped (the original keeps the row pointer at [sp,#4] and the outer map at [sp,#12]); declaration order does not move them.
 
 ## What is left
 
@@ -84,5 +84,24 @@ Residual (38 of 268 bytes): the mask-table pool word is loaded in the outer preh
 (`ldr r4,=0849D534; mov sb,r4` before the outer loop) and inside the body in the draft; the r8/sb pair is
 swapped; slot numbers [sp,#4/8/12] are permuted. Names `new_var`, `new_var2`, `new_var3` are still permuter names
 (`tileBase`, `maskTable`, `outerMap` would be plain); rename when done, re-measure.
+
+### Wave 96
+
+Base: wave-95 draft (85.8%, size-exact). Pre-registration CONFIRMED in part: binding the mask table before the outer
+loop (`maskTable = gUnknown_0849D534;` right after `outerMap = map;`, deleted from the inner body) puts the
+`ldr r4,=0849D534; mov r9,r4` in the outer preheader like the ROM and fixes the r8/sb swap. Alone it is 29.4% +4: it also
+makes loop.c hoist `gUnknown_030032E0 + y*2` into a register (the ROM leaves it in the loop body) and the size grows
+by 4. Every respelling of the `dst` expression (order, split statements, row-base temp) is byte-identical 29.4%.
+A chained permuter run (900 s, 2 threads) from that start: 29.4% -> 97.4%, one kept change: a local
+`rowTable = gUnknown_030032E0;` bound in the inner preheader (after `p = ...`) and `rowTable[y]` in the dst
+expression. It is plain C: an invariant table-address bind, which is what keeps the sum out of the hoist.
+Then declaring `outerMap` second (right after `maskTable`): 98.1%. Residual (5 bytes, all stack slot numbers): the ROM's
+spill slots are row pointer [sp,#4], `map+0x12` [sp,#8], outer map [sp,#12], y+1 [sp,#16]; ours puts the outer map at
+[sp,#4] and the row pointer at [sp,#12]. All single moves in the 11-local declaration order and eight multi-move orders
+score 97.4-98.1%, so it is not declaration order; slots follow allocno priority (refs / live length), and the outer map
+needs a LOWER priority than the row pointer. The permuter cannot see this (its text score ignores the slot numbers:
+"starting point already scores 0" at 97.4%). Next: raise the row pointer's ref count or shorten the outer map's live
+range (e.g. reload it from `gUnknown_08499590` instead of a held copy in one of its three uses).
+Proposed summary: status 98.1% size-exact, only spill-slot numbering differs; left: swap of two spill slots between the outer map pointer and the row pointer.
 
 </details>

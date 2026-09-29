@@ -96,3 +96,20 @@ computation instead of rematerialising at the multiply. Note the ROM's `muls
 r0, r1` is bare: the two copies in the candidate are downstream of the
 allocation, not an operand-order choice (the parked entry already records that
 both operand orders compile identically).
+
+## wave 96
+
+Base: sub_0804FA2C.c (75.16%, size-exact, first diff +0x80). Draft is now `sub_0804FA2C.w96-single.c` = the old draft with the two address binds merged into ONE variable (`sideData`, assigned inside the tileNum subscript by the comma anchor; the later `sideData = gUnknown_03004580;` statement is gone) and the sub_08057D44 second argument spelled `*(u16 *)((u8 *)sideData + 6 + side * 16)`. Score unchanged (75.16%): both are byte-neutral. Old draft kept as `.w96-start.c`.
+
+Reading of the ROM (target.s): ONE pseudo holds &gUnknown_03004580 (`ldr r3,=word; mov r8,r3`, placed right after the 085D6A48 word and BEFORE the row shift), and is used with immediates: `mov r1,r8; adds r1,#6` (sub_08057D44 argument, [side][3]) and `movs r2,#0xa; add r2,r8; mov sb,r2` (the [5] read, kept in sb and reused by the four position stores). So the ROM spells both reads as base + constant + side*16, i.e. the same "+N first" form as sub_080506B0. The pool word order confirms it: the ROM's 03004580 word sits before 03004582; the draft's sits after 0300450C.
+
+Negatives:
+- Converting the four `[side][5]` reads to `(u8 *)sideData + 10 + side*16`: 628 bytes (-4), 41.8%, first diff +0xc. Converting only the first, or only the fourth: +4 / +24 bytes, first diff +0xc. Any change to the count of by-name references to gUnknown_03004580 moves the start of the function (the pool word order shifts), so the [5] form cannot be tried without also getting the early pseudo.
+- Merged single variable: byte-neutral. cse propagates the constant address into the later uses (a pseudo set once to a symbol_ref is replaced by the symbol), so the held register the ROM has (r8 across the call) is not created. The comma anchor alone creates the early pool word in the old draft only because the write is dead there and survives as a separate pseudo.
+Not run: the permuter (75% base, prior 900s x4 run in wave 93 found only the do/while).
+
+Proposed summary:
+- does: sets up the cursor sprite for a side and slot, positions it from the position table and starts its effect
+- status: 75% at exact size; first difference at +0x80
+- left: the ROM holds &gUnknown_03004580 in one register from before the tile-number multiply and adds +6 / +10 to it for two later reads; the draft rebuilds the address at each read
+- tried: comma anchor (kept), do/while wrap (kept), single merged variable, +6/+10 byte-offset spellings of the later reads (see NOTES)

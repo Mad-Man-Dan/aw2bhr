@@ -7,9 +7,9 @@ int sub_0801E9B0(s16 a1, s16 a2, s16 a3, void *a4, long long a5, s16 a6)
     u16 *t;
     s16 n;
     s16 i;
-    int t0;
-    int t1;
-    int t2;
+    u16 t0;
+    u16 t1;
+    u16 t2;
     int sx;
     int sy;
     int flag;
@@ -18,7 +18,7 @@ int sub_0801E9B0(s16 a1, s16 a2, s16 a3, void *a4, long long a5, s16 a6)
     int q2;
     int v0;
     int v1;
-    int h;
+    u16 h;
     int x;
     int y;
     int prio;
@@ -85,43 +85,46 @@ int sub_0801E9B0(s16 a1, s16 a2, s16 a3, void *a4, long long a5, s16 a6)
             y = -(y + gUnknown_0848B6F8[(v0 & 0xC000) >> 14][(v1 & 0xC000) >> 13]);
 
         h = gUnknown_03000548.unk02;
-        x = (u8)gUnknown_03000548.unk02;
+        x = *(u8 *)&gUnknown_03000548.unk02;
 
         if (h & 0x100)
             x |= -0x100;
 
-        if (flag == 0)
-        {
-            if (t1 & 0x1000)
-                x = -(x + gUnknown_0848B6F6[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13]);
+        if (flag == 0 && (t1 & 0x1000))
+            x = -(x + gUnknown_0848B6F6[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13]);
 
-            y = y + a3;
-            x = x + a2;
-        }
-        else if (t0 & 0x200)
+        if (flag != 0)
         {
-            const s16 (*widths)[8];
+            if (t0 & 0x200)
+            {
+                const s16 (*widths)[8];
 
-            widths = gUnknown_0848B6F6;
-            dx = widths[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13];
-            x = x + dx;
-            dy = gUnknown_0848B6F8[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13];
-            y = y + dy;
-            x = x * (s16)sx / 256;
-            y = y * (s16)sy / 256;
-            x = x + a2 - dx;
-            y = y + a3 - dy;
+                widths = gUnknown_0848B6F6;
+                dx = widths[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13];
+                x = x + dx;
+                dy = gUnknown_0848B6F8[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13];
+                y = y + dy;
+                x = x * (s16)sx / 256;
+                y = y * (s16)sy / 256;
+                x = x + a2 - dx;
+                y = y + a3 - dy;
+            }
+            else
+            {
+                ex = gUnknown_0848B6F6[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13] / 2;
+                x = x + ex;
+                ey = gUnknown_0848B6F8[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13] / 2;
+                y = y + ey;
+                x = x * (s16)sx / 256;
+                y = y * (s16)sy / 256;
+                x = x + a2 - ex;
+                y = y + a3 - ey;
+            }
         }
         else
         {
-            ex = gUnknown_0848B6F6[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13] / 2;
-            x = x + ex;
-            ey = gUnknown_0848B6F8[(gUnknown_03000548.unk00 & 0xC000) >> 14][(h & 0xC000) >> 13] / 2;
-            y = y + ey;
-            x = x * (s16)sx / 256;
-            y = y * (s16)sy / 256;
-            x = x + a2 - ex;
-            y = y + a3 - ey;
+            y = y + a3;
+            x = x + a2;
         }
 
         gUnknown_03000548.unk00 = (gUnknown_03000548.unk00 & 0xFF00) | (y & 0xFF);

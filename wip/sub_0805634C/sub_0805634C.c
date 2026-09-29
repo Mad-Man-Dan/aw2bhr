@@ -70,38 +70,39 @@
 
 void sub_0805634C(u16 a, u16 b, u16 c)
 {
-    u16 *p;
-    u16 i;
-    u16 j;
+  u16 *p;
+  u16 i;
+  u16 j;
+  int three;
+  const u16 (*d2a)[5];
+  unsigned int side;
+  d2a = gUnknown_08551D2A;
+  if (c == 0)
+  {
+    return;
+  }
+  c = sub_0805653C(c, b);
+  sub_080564B8(a, b, c);
+  p = gUnknown_08551E64[gUnknown_030045A0[gUnknown_0300450C]];
+  for (i = 0; i < c; i++)
+  {
+    gUnknown_02029822[b][i] = p[(gUnknown_08551E7C[(b * 2) + gUnknown_0300450C] * 5) + i] + gUnknown_08551D2A[gUnknown_030045A0[b ^ 1]][0];
+  }
 
-    if (c == 0)
-        return;
-
-    c = sub_0805653C(c, b);
-    sub_080564B8(a, b, c);
-
-    p = gUnknown_08551E64[gUnknown_030045A0[gUnknown_0300450C]];
-
-    for (i = 0; i < c; i++)
-        gUnknown_02029822[b][i] =
-            p[gUnknown_08551E7C[b * 2 + gUnknown_0300450C] * 5 + i]
-            + gUnknown_08551D2A[gUnknown_030045A0[b ^ 1]][0];
-
-    for (i = 0; i < c; i++)
+  for (i = 0; i < c; i++)
+  {
+    side = b;
+    for (j = 0; j < 5; j++)
     {
-        for (j = 0; j < 5; j++)
-        {
-            if (gUnknown_0202980A[b][i] == gUnknown_020298E0[b].unk1a[j])
-            {
-                gUnknown_02029822[b][i] =
-                    gUnknown_020298EC[b][j]
-                    - gUnknown_08551D22[gUnknown_030045A0[b ^ 1]][3]
-                    + gUnknown_08551D2A[gUnknown_030045A0[b ^ 1]][0];
-            }
-        }
+      if (gUnknown_0202980A[side][i] == gUnknown_020298E0[b].unk1a[j])
+      {
+        gUnknown_02029822[b][i] = (gUnknown_020298EC[b][j] - gUnknown_08551D22[gUnknown_030045A0[b ^ 1]][three = 3]) + d2a[gUnknown_030045A0[b ^ 1]][0];
+      }
     }
 
-    sub_08056638(b);
+  }
+
+  sub_08056638(b);
 }
 
 
