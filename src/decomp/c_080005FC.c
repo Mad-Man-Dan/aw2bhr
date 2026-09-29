@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_080005FC -- wait 30 frames, then hand one of two tables to sub_080193B0.
+ * DesignRoomMode_Start -- wait 30 frames, then hand one of two tables to sub_080193B0.
  *
  * On the first frame after the mode change (stateChanged set) it clears the
  * state and arms a 30-frame timer. While the state is 0 it counts the timer
@@ -23,7 +23,7 @@
  *     call in each arm leaves two call instructions in the output.
  */
 
-void sub_080005FC(void)
+void DesignRoomMode_Start(void)
 {
     if (gActiveMap->stateChanged != 0)
     {
@@ -41,3 +41,4 @@ void sub_080005FC(void)
         }
     }
 }
+asm(".global sub_080005FC\n.thumb_set sub_080005FC, DesignRoomMode_Start\n");

@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_0800057C -- run one frame of the handler for the current map mode.
+ * DesignRoomRunMode -- run one frame of the handler for the current map mode.
  *
  * gActiveMap->mode picks the handler; modes 4, 8 and 9 do nothing.
  *
@@ -19,21 +19,21 @@
  *     eight entries instead of ten and the bounds check changes with it.
  */
 
-void sub_0800057C(void)
+void DesignRoomRunMode(void)
 {
     switch (gActiveMap->mode)
     {
     case 0:
-        sub_080005FC();
+        DesignRoomMode_Start();
         break;
     case 1:
-        sub_0800081C();
+        DesignRoomMode_Paint();
         break;
     case 2:
-        sub_08005F4C();
+        DesignRoomMode_Ring();
         break;
     case 3:
-        sub_08004CA0();
+        DesignRoomMode_Menu();
         break;
     case 5:
         sub_08000694();
@@ -48,3 +48,4 @@ void sub_0800057C(void)
         break;
     }
 }
+asm(".global sub_0800057C\n.thumb_set sub_0800057C, DesignRoomRunMode\n");

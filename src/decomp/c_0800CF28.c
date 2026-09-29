@@ -9,8 +9,8 @@
  */
 
 /* The full "a cell changed" refresh, and the widest of the family: it is
- * sub_0800AF74's list (sub_0800A588 / sub_0800ABD0 / sub_08007F9C /
- * sub_0800BEE4) with sub_0800CFDC in front of it, wrapped in two guards.
+ * sub_0800AF74's list (sub_0800A588 / sub_0800ABD0 / RepaintNeighbours /
+ * sub_0800BEE4) with MakeForestBlocks in front of it, wrapped in two guards.
  *
  * The struct is c_0800C22C.c's / c_0800AF24.c's, copied verbatim.
  *
@@ -32,7 +32,7 @@ void MakeForest(int x, int y)
 
     if (GetPropertyKindAt(x, y))
     {
-        sub_0800C608(x, y);
+        RemovePropertyAt(x, y);
         SetTerrainAt(x, y, 1);
     }
 
@@ -46,10 +46,10 @@ void MakeForest(int x, int y)
         MakeForestSimple(x, y);
     }
 
-    sub_0800CFDC(x, y);
+    MakeForestBlocks(x, y);
     sub_0800A588(x, y);
     sub_0800ABD0(x, y);
-    sub_08007F9C(x, y);
+    RepaintNeighbours(x, y);
     sub_0800BEE4(x, y);
 }
 

@@ -12,7 +12,7 @@
 #define MAP gMap
 
 /*
- * sub_0800081C -- run one frame of the map editor's cursor and painting mode.
+ * DesignRoomMode_Paint -- run one frame of the map editor's cursor and painting mode.
  *
  * Reads the pad, works out whether the current selection may be placed under
  * the cursor, draws the cursor accordingly and acts on the buttons.
@@ -29,7 +29,7 @@
  *     movement type is charged for this terrain and a cost of -1 refuses the
  *     tile. sub_08023274 then draws the cursor for r.
  *   - A: in terrain mode paint the tile (MakeTile) unless refused; in unit
- *     mode ask sub_08008928 and place the unit when it answers 1, setting flag
+ *     mode ask DesignRoomPlaceUnitAtCursor and place the unit when it answers 1, setting flag
  *     0x1000 on any positive answer. A refused press plays sound 0x68 and
  *     counts cursorIdleFrames up; after 0x31 of them it calls sub_08004D10.
  *   - B: redraw the ring and re-test the tile under the cursor.
@@ -38,7 +38,7 @@
  *     need GetMapLock to be 0. When none of them is pressed the cursor
  *     position is resynchronised.
  *   - Last: play gActiveMap->soundId if it was set, otherwise the id
- *     sub_0800105C returned, and count inputDelay down, clearing flag 0x2000
+ *     DesignRoomHandleCursorInput returned, and count inputDelay down, clearing flag 0x2000
  *     when it reaches zero.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
@@ -50,7 +50,7 @@
  *     is known to be in `t`; the original reuses the register the key test
  *     left behind, so a literal 0 no longer matches.
  */
-void sub_0800081C(void)
+void DesignRoomMode_Paint(void)
 {
     int r;
     int v;
@@ -70,9 +70,9 @@ void sub_0800081C(void)
         sub_08002E5C();
         sub_08002D7C();
         sub_080059E4();
-        sub_08001D8C();
-        sub_08003934();
-        sub_080088F0();
+        DesignRoomShowTilePanel();
+        DesignRoomShowCoordBox();
+        DesignRoomCountArmyUnits();
     }
 
     if (gActiveMap->state == 0)
@@ -83,7 +83,7 @@ void sub_0800081C(void)
 
     gActiveMap->soundId = 0;
     sub_08023824();
-    v = sub_0800105C();
+    v = DesignRoomHandleCursorInput();
     sub_08023908(4);
 
     if (gUnknown_030033E4.unk00 != gActiveMap->cursorX
@@ -104,22 +104,22 @@ void sub_0800081C(void)
         if (gActiveMap->selectedTerrain == 0xd)
         {
             if (sub_0800B528(gActiveMap->cursorX, gActiveMap->cursorY) < 0
-             || sub_0800B61C(gActiveMap->cursorX, gActiveMap->cursorY) < 0)
+             || GetShoalTile(gActiveMap->cursorX, gActiveMap->cursorY) < 0)
                 r = 6;
         }
         else if (gActiveMap->selectedTerrain == 2)
         {
-            if (sub_0800AEAC(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
+            if (CanPlaceRiverAt(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
                 r = 6;
         }
         else if (gActiveMap->selectedTerrain == 0x13)
         {
-            if (sub_0800BC5C(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
+            if (CanPlaceReefAt(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
                 r = 6;
         }
         else if (gActiveMap->selectedTerrain == 0xc)
         {
-            if (sub_08009310(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
+            if (CanPlaceBridgeAt(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
                 r = 6;
         }
         else if (gActiveMap->selectedTerrain == 5)
@@ -127,7 +127,7 @@ void sub_0800081C(void)
             if (MAP->terrain[MAP->rowOffset[gActiveMap->cursorY]
                              + gActiveMap->cursorX] == 2)
             {
-                if (sub_08009310(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
+                if (CanPlaceBridgeAt(gActiveMap->cursorX, gActiveMap->cursorY) == 0)
                     r = 6;
             }
         }
@@ -170,7 +170,7 @@ void sub_0800081C(void)
         }
         else
         {
-            k = sub_08008928();
+            k = DesignRoomPlaceUnitAtCursor();
             if (k == 1)
             {
                 gActiveMap->soundId = 0;
@@ -201,7 +201,7 @@ void sub_0800081C(void)
         t = gpKeySt->pressed & 2;
         if (t != 0)
         {
-            sub_080088F0();
+            DesignRoomCountArmyUnits();
             sub_08000BF8();
         }
         else if (gActiveMap->cursorIdleTimer-- <= 0)
@@ -212,7 +212,7 @@ void sub_0800081C(void)
     }
 
     if (sub_0802DBF8() && (keys & 8))
-        sub_0800056C(5);
+        DesignRoomSetMode(5);
 
     if (gActiveMap->soundId != 0)
         sub_0803B4DC(gActiveMap->soundId);
@@ -231,7 +231,7 @@ void sub_0800081C(void)
         t = gpKeySt->pressed & 4;
         if (t != 0)
         {
-            sub_0800056C(3);
+            DesignRoomSetMode(3);
         }
         else
         {
@@ -239,12 +239,12 @@ void sub_0800081C(void)
             if (m == 0x100)
             {
                 gActiveMap->editMode = t;
-                sub_0800056C(2);
+                DesignRoomSetMode(2);
             }
             else if (m == 0x200)
             {
                 gActiveMap->editMode = 1;
-                sub_0800056C(2);
+                DesignRoomSetMode(2);
             }
             else
             {
@@ -254,3 +254,4 @@ void sub_0800081C(void)
         }
     }
 }
+asm(".global sub_0800081C\n.thumb_set sub_0800081C, DesignRoomMode_Paint\n");

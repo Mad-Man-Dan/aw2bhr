@@ -15,7 +15,7 @@
  *
  * `pop {r1}` says the function returns a value, and r0 already holds the
  * stored halfword, so the return costs nothing. */
-int sub_08007328(void)
+int DesignRoomGetPreviousRingIndex(void)
 {
     struct ActiveMap *p = gActiveMap;
     int n;
@@ -30,3 +30,4 @@ int sub_08007328(void)
     p->previousRingIndex = v;
     return v;
 }
+asm(".global sub_08007328\n.thumb_set sub_08007328, DesignRoomGetPreviousRingIndex\n");

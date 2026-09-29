@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0800C874.
- * CountProperties @ 0x0800C874, sub_0800C8A0 @ 0x0800C8A0, RegisterArmyHqs @ 0x0800C8D8, sub_0800C958 @ 0x0800C958, sub_0800C9E8 @ 0x0800C9E8
+ * CountProperties @ 0x0800C874, CountPropertiesOfType @ 0x0800C8A0, RegisterArmyHqs @ 0x0800C8D8, sub_0800C958 @ 0x0800C958, sub_0800C9E8 @ 0x0800C9E8
  */
 
 /* Counts the live entries in the gProperty list: 4-byte records whose
@@ -48,7 +48,7 @@ asm(".global sub_0800C874\n.thumb_set sub_0800C874, CountProperties\n");
  *
  * The extra `push {r4, lr}` over CountProperties is the parameter occupying r3,
  * which pushes the giv limit into r4. */
-u32 sub_0800C8A0(int a)
+u32 CountPropertiesOfType(int a)
 {
     int i;
     int n;
@@ -65,6 +65,7 @@ u32 sub_0800C8A0(int a)
 
     return n;
 }
+asm(".global sub_0800C8A0\n.thumb_set sub_0800C8A0, CountPropertiesOfType\n");
 
 int RegisterArmyHqs(void)
 {
@@ -91,7 +92,7 @@ int RegisterArmyHqs(void)
             case 0x48:
             case 0x68:
             case 0x88:
-                sub_0800C75C(gProperty[i].flags, gProperty[i].x,
+                SetArmyHq(gProperty[i].flags, gProperty[i].x,
                              gProperty[i].y);
                 n++;
                 break;
@@ -104,20 +105,20 @@ int RegisterArmyHqs(void)
 
 asm(".global sub_0800C8D8\n.thumb_set sub_0800C8D8, RegisterArmyHqs\n");
 
-/* Totals three sub_0800C8A0 counts for whichever id the caller names, after
+/* Totals three CountPropertiesOfType counts for whichever id the caller names, after
  * checking the id is currently valid.  Undeclared before this wave.
  *
  * The three ids per arm are the base id's nibble variants -- 0x2E/0x2A/0x2B for
  * 0x28, and the same +6/+2/+3 pattern for 0x48, 0x68 and 0x88 -- so the four
  * arms are one shape over a different base, which is why gcc cross-jumps their
- * tails: the final `bl sub_0800C8A0; adds r5, r5, r0` is emitted ONCE and all
+ * tails: the final `bl CountPropertiesOfType; adds r5, r5, r0` is emitted ONCE and all
  * four arms branch to it with the id already in r0.  That merge is the
  * compiler's, not the source's; the arms are written out in full.
  *
  * An accumulator, not a three-term sum -- `adds r5, r0, #0` then `adds r5, r5,
  * r0` -- the same shape sub_0800C6A8 needs and for the same reason.
  *
- * The two out-parameters sub_0800C6E8 fills are never read: this function only
+ * The two out-parameters GetArmyHq fills are never read: this function only
  * wants its yes/no, and the -1 it returns on failure is distinct from the 0 a
  * valid-but-empty id gives. */
 int sub_0800C958(int a)
@@ -126,7 +127,7 @@ int sub_0800C958(int a)
     int y;
     int n;
 
-    if (sub_0800C6E8(a, &x, &y) == 0)
+    if (GetArmyHq(a, &x, &y) == 0)
         return -1;
 
     n = 0;
@@ -134,24 +135,24 @@ int sub_0800C958(int a)
     switch (a)
     {
     case 0x28:
-        n = sub_0800C8A0(0x2E);
-        n += sub_0800C8A0(0x2A);
-        n += sub_0800C8A0(0x2B);
+        n = CountPropertiesOfType(0x2E);
+        n += CountPropertiesOfType(0x2A);
+        n += CountPropertiesOfType(0x2B);
         break;
     case 0x48:
-        n = sub_0800C8A0(0x4E);
-        n += sub_0800C8A0(0x4A);
-        n += sub_0800C8A0(0x4B);
+        n = CountPropertiesOfType(0x4E);
+        n += CountPropertiesOfType(0x4A);
+        n += CountPropertiesOfType(0x4B);
         break;
     case 0x68:
-        n = sub_0800C8A0(0x6E);
-        n += sub_0800C8A0(0x6A);
-        n += sub_0800C8A0(0x6B);
+        n = CountPropertiesOfType(0x6E);
+        n += CountPropertiesOfType(0x6A);
+        n += CountPropertiesOfType(0x6B);
         break;
     case 0x88:
-        n = sub_0800C8A0(0x8E);
-        n += sub_0800C8A0(0x8A);
-        n += sub_0800C8A0(0x8B);
+        n = CountPropertiesOfType(0x8E);
+        n += CountPropertiesOfType(0x8A);
+        n += CountPropertiesOfType(0x8B);
         break;
     }
 

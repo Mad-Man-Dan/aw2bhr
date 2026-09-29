@@ -75,7 +75,7 @@ void sub_0800C2D0(int x, int y, int f)
         MakeTile2(x, y, 1);
     else if (c == 5)
     {
-        v = sub_0800F418(x, y);
+        v = GetRoadTile(x, y);
         MakeTileSimple(x, y, v);
         v = sub_080016D0(x, y);
         MakeTileSimple(x, y, v);
@@ -98,16 +98,16 @@ void MakeProperty(int x, int y, int t)
     if ((s8)gActiveMap->propertyCount > 0x3B && GetPropertyKindAt(x, y) == 0)
         return;
 
-    if (sub_0800C6E8(t, &a, &b))
+    if (GetArmyHq(t, &a, &b))
     {
-        sub_0800C7A4(t);
-        sub_0800C608(a, b);
+        ClearArmyHq(t);
+        RemovePropertyAt(a, b);
         SetTerrainAt(a, b, 1);
         MakeTile2(a, b, 1);
     }
 
     if (GetPropertyKindAt(x, y) == 2)
-        sub_0800C7A4(MAP->terrain[MAP->rowOffset[y] + x]);
+        ClearArmyHq(MAP->terrain[MAP->rowOffset[y] + x]);
 
     u = (u16)GetDefaultTileForTerrain(t);
 
@@ -115,17 +115,17 @@ void MakeProperty(int x, int y, int t)
     {
         if (MAP->terrain[MAP->rowOffset[y] + x] == t)
             return;
-        sub_0800C608(x, y);
+        RemovePropertyAt(x, y);
     }
 
     SetTerrainAt(x, y, t);
     MakeTile2(x, y, u);
-    sub_0800C574(x, y, t);
+    AddPropertyRecord(x, y, t);
     RecountArmyProperties();
-    sub_0800C75C(t, x, y);
+    SetArmyHq(t, x, y);
     sub_0800A588(x, y);
     sub_0800ABD0(x, y);
-    sub_08007F9C(x, y);
+    RepaintNeighbours(x, y);
     sub_0800BEE4(x, y);
     sub_0800EC20(x, y);
 }

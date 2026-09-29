@@ -12,7 +12,7 @@ void sub_08009264(int x, int y)
     int v;
     int d;
 
-    if (sub_08009B38(x, y))
+    if (IsPlainRiverAt(x, y))
     {
         v = 0;
         switch (sub_08008CB8(x, y))
@@ -20,24 +20,24 @@ void sub_08009264(int x, int y)
         case 0:
         case 8:
         case 9:
-            d = sub_08008D14(x, y);
+            d = GetLandNeighbourMask(x, y);
             if (d & 6)
                 v = 0x13;
             break;
         case 2:
         case 4:
         case 6:
-            d = sub_08008D14(x, y);
+            d = GetLandNeighbourMask(x, y);
             if (d & 9)
                 v = 0x16;
             break;
         }
         if (v > 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 0xC);
             MakeTileSimple(x, y, v);
-            sub_08007F9C(x, y);
+            RepaintNeighbours(x, y);
         }
     }
 }

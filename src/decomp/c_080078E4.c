@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_080078E4 -- build the design ring's list of entries at
+ * DesignRoomBuildItemList -- build the design ring's list of entries at
  * gUnknown_0200B224.
  *
  * a picks the list: 0 walks the terrain template gUnknown_08488810, anything
@@ -40,7 +40,7 @@
  *     which the original does not do.
  */
 
-void sub_080078E4(int a, int b)
+void DesignRoomBuildItemList(int a, int b)
 {
     u16 *q;
     const u16 *s;
@@ -101,3 +101,4 @@ void sub_080078E4(int a, int b)
         }
     }
 }
+asm(".global sub_080078E4\n.thumb_set sub_080078E4, DesignRoomBuildItemList\n");

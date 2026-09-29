@@ -14,10 +14,10 @@
  *
  * Nothing happens unless the tile at (x, y) is one of the fourteen joining ids.
  * A cell showing 0x162 or 0x163 is rebuilt first: if sub_0800F8D4 accepts it the
- * function gives up with -1, otherwise sub_0800C608 clears the cell, the terrain
- * becomes 0xF and sub_0800FD44 supplies a fresh tile.
+ * function gives up with -1, otherwise RemovePropertyAt clears the cell, the terrain
+ * becomes 0xF and GetPipeTile supplies a fresh tile.
  *
- * Each direction is then asked whether sub_0800F564 reports 2 for it. The first
+ * Each direction is then asked whether GetPipeConnectionAt reports 2 for it. The first
  * one that does wins, but only if none of the other three does as well:
  * direction 0 gives tile 0x121, 1 gives 0x120, 2 gives 0x103 and 3 gives 0x102.
  * A cell that joins in no direction, or in more than one, gives -1.
@@ -50,47 +50,47 @@ int sub_08010B34(int x, int y)
         {
             if (sub_0800F8D4(x, y))
                 return -1;
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 0xf);
-            MakeTileSimple(x, y, sub_0800FD44(x, y, 1));
+            MakeTileSimple(x, y, GetPipeTile(x, y, 1));
         }
-        if (sub_0800F564(x, y, 0) == 2)
+        if (GetPipeConnectionAt(x, y, 0) == 2)
         {
-            if (sub_0800F564(x, y, 1) == 2)
+            if (GetPipeConnectionAt(x, y, 1) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 2) == 2)
+            if (GetPipeConnectionAt(x, y, 2) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 3) == 2)
+            if (GetPipeConnectionAt(x, y, 3) == 2)
                 return -1;
             return 0x121;
         }
-        if (sub_0800F564(x, y, 1) == 2)
+        if (GetPipeConnectionAt(x, y, 1) == 2)
         {
-            if (sub_0800F564(x, y, 0) == 2)
+            if (GetPipeConnectionAt(x, y, 0) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 2) == 2)
+            if (GetPipeConnectionAt(x, y, 2) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 3) == 2)
+            if (GetPipeConnectionAt(x, y, 3) == 2)
                 return -1;
             return 0x120;
         }
-        if (sub_0800F564(x, y, 2) == 2)
+        if (GetPipeConnectionAt(x, y, 2) == 2)
         {
-            if (sub_0800F564(x, y, 0) == 2)
+            if (GetPipeConnectionAt(x, y, 0) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 1) == 2)
+            if (GetPipeConnectionAt(x, y, 1) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 3) == 2)
+            if (GetPipeConnectionAt(x, y, 3) == 2)
                 return -1;
             return 0x103;
         }
-        if (sub_0800F564(x, y, 3) == 2)
+        if (GetPipeConnectionAt(x, y, 3) == 2)
         {
-            if (sub_0800F564(x, y, 0) == 2)
+            if (GetPipeConnectionAt(x, y, 0) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 1) == 2)
+            if (GetPipeConnectionAt(x, y, 1) == 2)
                 return -1;
-            if (sub_0800F564(x, y, 2) == 2)
+            if (GetPipeConnectionAt(x, y, 2) == 2)
                 return -1;
             return 0x102;
         }
@@ -101,24 +101,24 @@ int sub_08010B34(int x, int y)
 /*
  * MakePipe -- lay a pipe at (x, y) and refresh everything around it.
  *
- * The terrain becomes 0xF and the tile comes from sub_0800FD44. The six calls
+ * The terrain becomes 0xF and the tile comes from GetPipeTile. The six calls
  * that follow all take the same cell and redraw its surroundings; sub_0800A588
- * and sub_08007F9C are the neighbour sweeps in c_0800A588.c and c_08007F9C.c.
+ * and RepaintNeighbours are the neighbour sweeps in c_0800A588.c and c_08007F9C.c.
  *
  * Why the C looks odd: this spelling does not change what the code does, but
  * the original compiler only produces identical output with it.
- *   - sub_0800FD44's call stays nested inside MakeTileSimple. The original
+ *   - GetPipeTile's call stays nested inside MakeTileSimple. The original
  *     moves the result into the argument register and reloads the other two, so
  *     the nesting costs exactly what a temporary would.
  */
 void MakePipe(int x, int y)
 {
     SetTerrainAt(x, y, 0xf);
-    MakeTileSimple(x, y, sub_0800FD44(x, y, 1));
-    sub_08010ADC(x, y);
+    MakeTileSimple(x, y, GetPipeTile(x, y, 1));
+    RepaintPipesAround(x, y);
     sub_0800A588(x, y);
     sub_0800ABD0(x, y);
-    sub_08007F9C(x, y);
+    RepaintNeighbours(x, y);
     sub_0800BEE4(x, y);
     sub_0800EC20(x, y);
 }
@@ -131,7 +131,7 @@ asm(".global sub_08010D28\n.thumb_set sub_08010D28, MakePipe\n");
  * Nothing happens unless gActiveMap->propertyCount is 0x3B or less, or
  * GetPropertyKindAt already reports something for the cell. The terrain becomes
  * 0x10, GetSeamType gives the tile, which goes both to MakeTileSimple and to
- * sub_0800C574, and the per-army property totals are counted again.
+ * AddPropertyRecord, and the per-army property totals are counted again.
  *
  * Why the C looks odd: this spelling does not change what the code does, but
  * the original compiler only produces identical output with it.
@@ -148,7 +148,7 @@ void MakeSeam(int x, int y)
         SetTerrainAt(x, y, 0x10);
         t = GetSeamType(x, y);
         MakeTileSimple(x, y, t);
-        sub_0800C574(x, y, t);
+        AddPropertyRecord(x, y, t);
         RecountArmyProperties();
     }
 }

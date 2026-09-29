@@ -15,7 +15,7 @@
  * exit, so the 0 is one shared result variable rather than a `return 0` per
  * arm; the `beq` on the first value jumps INTO the `r = 1` block, which is what
  * `||` produces. */
-int sub_0800F2E0(int x, int y)
+int IsRoadOrBridgeAt(int x, int y)
 {
     int off;
     int v;
@@ -31,3 +31,4 @@ int sub_0800F2E0(int x, int y)
 
     return r;
 }
+asm(".global sub_0800F2E0\n.thumb_set sub_0800F2E0, IsRoadOrBridgeAt\n");

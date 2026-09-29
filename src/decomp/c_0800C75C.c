@@ -8,15 +8,15 @@
  * sub_0800C75C @ 0x0800C75C, sub_0800C7A4 @ 0x0800C7A4, GetPropertyKindForTerrain @ 0x0800C7E8, GetPropertyKindAt @ 0x0800C840
  */
 
-/* The SET half of the pair sub_0800C7A4 clears: the same binary-search switch
+/* The SET half of the pair ClearArmyHq clears: the same binary-search switch
  * mapping 0x28/0x48/0x68/0x88 to a slot index 0..3, then the caller's two
  * values into gActiveMap's unk17 and unk1b planes at that index.
  *
- * The extra `push {r4, lr}` over sub_0800C7A4 is the second argument being
+ * The extra `push {r4, lr}` over ClearArmyHq is the second argument being
  * carried across the decision tree; the third needs no saving because nothing
  * on the way clobbers r2.  Both stores are bare `strb`s, so the parameter
  * widths are a floor only and `int` is the weakest that fits. */
-void sub_0800C75C(int a, int b, int c)
+void SetArmyHq(int a, int b, int c)
 {
     int i;
 
@@ -41,8 +41,9 @@ void sub_0800C75C(int a, int b, int c)
     gActiveMap->hqX[i] = b;
     gActiveMap->hqY[i] = c;
 }
+asm(".global sub_0800C75C\n.thumb_set sub_0800C75C, SetArmyHq\n");
 
-/* The CLEAR half of the sub_0800C75C pair: same switch, same two planes, but
+/* The CLEAR half of the SetArmyHq pair: same switch, same two planes, but
  * both slots take a "none" constant instead of arguments.
  *
  * A `switch`, not an if/else chain -- the repeated `cmp r0,#0x48` with `beq`
@@ -58,7 +59,7 @@ void sub_0800C75C(int a, int b, int c)
  * really does spell one 0xFF and the other -1.  That says nothing about the
  * declared signedness of either member; both stores are byte-identical under
  * u8 or s8. */
-void sub_0800C7A4(int a)
+void ClearArmyHq(int a)
 {
     int i;
 
@@ -83,6 +84,7 @@ void sub_0800C7A4(int a)
     gActiveMap->hqX[i] = 0xFF;
     gActiveMap->hqY[i] = -1;
 }
+asm(".global sub_0800C7A4\n.thumb_set sub_0800C7A4, ClearArmyHq\n");
 
 /* A classification of the low five bits of a terrain byte into 0, 1 or 2.
  * agbcc emits a jump table because the twelve labels 6..17 are dense, and the

@@ -22,13 +22,13 @@ void sub_0800C124(int x, int y)
         if (sub_08008C34(x, y))
             return;
         if (GetPropertyKindAt(x, y))
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
         q = gActiveMap;
         q->cursorTerrain = gMap->tile[gMap->rowOffset[y] + x];
         sub_0800EC20(x, y);
         MakeTileSimple(x, y, 0x2A);
         SetTerrainAt(x, y, 7);
-        sub_08007F9C(x, y);
+        RepaintNeighbours(x, y);
     }
     else
     {

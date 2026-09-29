@@ -36,7 +36,7 @@ int sub_0800977C(int x, int y)
     {
         int tile;
 
-        ok = sub_08009BF4(x, y) != 0;
+        ok = CountRiverNeighbours(x, y) != 0;
 
         {
             struct Map *p;

@@ -8,7 +8,7 @@
  * sub_08007F9C @ 0x08007F9C
  */
 
-void sub_08007F9C(int x, int y)
+void RepaintNeighbours(int x, int y)
 {
     if (y > 0)
     {
@@ -112,16 +112,17 @@ void sub_08007F9C(int x, int y)
         }
     }
 
-    sub_08010ADC(x, y);
+    RepaintPipesAround(x, y);
 }
+asm(".global sub_08007F9C\n.thumb_set sub_08007F9C, RepaintNeighbours\n");
 
 /*
- * sub_08007F9C (the function above) -- redraw the eight cells around (x, y)
+ * RepaintNeighbours (the function above) -- redraw the eight cells around (x, y)
  * after (x, y) itself changed.
  *
  * For each of the eight neighbours that is on the map it asks sub_08007DD0 for
  * that cell's tile shape, stores it with MakeTileSimple and repaints the cell.
- * The centre cell is left to sub_08010ADC at the end.
+ * The centre cell is left to RepaintPipesAround at the end.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
  * the original compiler only produces identical output with them.

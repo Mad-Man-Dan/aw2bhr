@@ -122,17 +122,17 @@ void sub_08008E3C(int x, int y)
 /*
  * MakeBridge -- build a bridge at (x, y) and pick its graphic.
  *
- * sub_08008D14 and sub_08008CB8 describe the cell's surroundings; each returns
+ * GetLandNeighbourMask and sub_08008CB8 describe the cell's surroundings; each returns
  * a small number whose bits say which sides are joined. The terrain already at
  * (x, y) decides which half of the function runs:
  *
- *   terrain 7, 0xD or 0x13 -- a bridge is laid: sub_0800C608 clears the cell,
+ *   terrain 7, 0xD or 0x13 -- a bridge is laid: RemovePropertyAt clears the cell,
  *     0xD is turned to sea first (MakeSeaSafest), the terrain becomes 0xC and
  *     the tile is 0x36 for a straight span or 0x14 for the other case;
- *     sub_08007F9C then redraws the neighbours. Some surroundings (3, 5, 10 and
+ *     RepaintNeighbours then redraws the neighbours. Some surroundings (3, 5, 10 and
  *     12) build nothing, and the default arm asks sub_08008D70 for the tile
  *     instead and uses it when it is positive.
- *   any other terrain -- only if sub_08009B38 allows it, and then only the
+ *   any other terrain -- only if IsPlainRiverAt allows it, and then only the
  *     terrain and tile are set, to 0xC with tile 0x13 or 0x16, chosen from
  *     whether a bridge cell (terrain 0xC) already sits next to it in that
  *     direction.
@@ -169,7 +169,7 @@ void MakeBridge(int x, int y)
 
     if (cell == 7 || cell == 0xD || cell == 0x13)
     {
-        switch (sub_08008D14(x, y))
+        switch (GetLandNeighbourMask(x, y))
         {
         case 1:
         case 8:
@@ -183,12 +183,12 @@ void MakeBridge(int x, int y)
             }
         }
         case 9:
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             if (cell == 0xD)
                 MakeSeaSafest(x, y);
             SetTerrainAt(x, y, 0xC);
             MakeTileSimple(x, y, 0x36);
-            sub_08007F9C(x, y);
+            RepaintNeighbours(x, y);
             break;
 
         case 2:
@@ -204,34 +204,34 @@ void MakeBridge(int x, int y)
                 goto tile14;
             }
         }
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             if (cell == 0xD)
                 MakeSeaSafest(x, y);
             SetTerrainAt(x, y, 0xC);
             MakeTileSimple(x, y, 0x36);
-            sub_08007F9C(x, y);
+            RepaintNeighbours(x, y);
             break;
 
         case 11:
         case 13:
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             if (cell == 0xD)
                 MakeSeaSafest(x, y);
             SetTerrainAt(x, y, 0xC);
             MakeTileSimple(x, y, 0x36);
-            sub_08007F9C(x, y);
+            RepaintNeighbours(x, y);
             break;
 
         case 6:
         case 7:
         case 14:
         tile14:
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             if (cell == 0xD)
                 MakeSeaSafest(x, y);
             SetTerrainAt(x, y, 0xC);
             MakeTileSimple(x, y, 0x14);
-            sub_08007F9C(x, y);
+            RepaintNeighbours(x, y);
             break;
 
         case 3:
@@ -246,7 +246,7 @@ void MakeBridge(int x, int y)
 
             if (cell == 0xD)
             {
-                sub_0800C608(x, y);
+                RemovePropertyAt(x, y);
                 MakeSeaSafest(x, y);
             }
 
@@ -254,7 +254,7 @@ void MakeBridge(int x, int y)
 
             if (k > 0)
             {
-                sub_0800C608(x, y);
+                RemovePropertyAt(x, y);
                 SetTerrainAt(x, y, 0xC);
                 MakeTileSimple(x, y, k);
             }
@@ -267,7 +267,7 @@ void MakeBridge(int x, int y)
         int v;
         int k;
 
-        if (!sub_08009B38(x, y))
+        if (!IsPlainRiverAt(x, y))
             return;
 
         v = 0;
@@ -277,7 +277,7 @@ void MakeBridge(int x, int y)
         case 0:
         case 8:
         case 9:
-            k = sub_08008D14(x, y);
+            k = GetLandNeighbourMask(x, y);
             if (k & 6)
                 goto set13;
 
@@ -325,7 +325,7 @@ void MakeBridge(int x, int y)
         case 2:
         case 4:
         case 6:
-            k = sub_08008D14(x, y);
+            k = GetLandNeighbourMask(x, y);
             if (k & 9)
             {
                 v = 0x16;
@@ -380,7 +380,7 @@ void MakeBridge(int x, int y)
 
         if (v > 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 0xC);
             MakeTileSimple(x, y, v);
         }

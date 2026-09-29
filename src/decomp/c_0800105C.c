@@ -10,7 +10,7 @@
 
 #include "hardware.h"
 
-int sub_0800105C(void)
+int DesignRoomHandleCursorInput(void)
 {
     int r;
     int i;
@@ -47,3 +47,4 @@ int sub_0800105C(void)
 
     return r;
 }
+asm(".global sub_0800105C\n.thumb_set sub_0800105C, DesignRoomHandleCursorInput\n");

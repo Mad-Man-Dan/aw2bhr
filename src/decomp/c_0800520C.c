@@ -108,7 +108,7 @@ void sub_080053A8(void)
  * That is what frees r4 to hold the 0x200/0x400/0x800 mask; with a single
  * `int result = 0;` initialiser agbcc keeps r3 live across the whole body and
  * the masks land in r3 instead (measured with compile_probe, -4 bytes). */
-int sub_08005474(int a1)
+int DesignRoomRefreshSlotFlag(int a1)
 {
     int result;
 
@@ -146,3 +146,4 @@ int sub_08005474(int a1)
     }
     return result;
 }
+asm(".global sub_08005474\n.thumb_set sub_08005474, DesignRoomRefreshSlotFlag\n");

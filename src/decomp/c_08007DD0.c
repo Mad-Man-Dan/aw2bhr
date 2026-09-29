@@ -41,7 +41,7 @@ s16 sub_08007DD0(int x, int y)
 
     t = MAP->terrain[MAP->rowOffset[y] + x];
     if (t == 0xd)
-        return sub_0800B61C(x, y);
+        return GetShoalTile(x, y);
     if (t == 2)
         return -1;
     if (t == 0xc)
@@ -70,7 +70,7 @@ s16 sub_08007DD0(int x, int y)
  * bottom right. Cells off the edge of the map stay 0.
  *
  * What happens with the mask depends on the terrain already at (x, y):
- *   0xD  -- ignore it and return sub_0800B61C's answer for the cell.
+ *   0xD  -- ignore it and return GetShoalTile's answer for the cell.
  *   2    -- return -1, meaning no tile.
  *   0xC  -- use the mask only when sub_08008C34 returns 0, else return -1.
  *   any other terrain -- use the mask.

@@ -13,7 +13,7 @@
  * come out of the type; hand-rolled arithmetic on a flat array would put the
  * row multiply in the wrong place.
  *
- * The result is shifted left by 2 and sub_08002844 masks it with 0x3ff, so the
+ * The result is shifted left by 2 and DesignRoomDrawUnitIcon masks it with 0x3ff, so the
  * entries are tile indices. `pop {r4}; pop {r1}` is the value-returning
  * epilogue and both parameters arrive bare, hence `int` for both. */
 

@@ -14,17 +14,17 @@
  * The tile now at (x, y) says which pair of neighbours can be wrong: 0x39 the
  * two horizontal ones, 0x18 the two vertical ones. A neighbour is only touched
  * when IsTerrainWater says it is not water, (x, y) still reads that same tile,
- * and sub_0800AA30 has nothing against that direction (0 left, 1 right, 2 up,
+ * and CountLandOnSide has nothing against that direction (0 left, 1 right, 2 up,
  * 4 down). It is then made sea -- terrain 2 with a fixed tile, 0x11D, 0xFD,
  * 0xFC or 0x11C, one per direction. Finally, if the terrain in the cell
- * diagonally beyond it reads 0xD, sub_0800BA9C is called on that cell.
+ * diagonally beyond it reads 0xD, MakeShoal is called on that cell.
  *
  * The diagonal reads have no bounds check: with y == 0 the 0x39 arms read the
  * row table one entry before its start, and the 0x18 arms can reach column -1.
  * The original does the same.
  *
  * sub_0800A2EC below is a separate sweep: every one of the four neighbours that
- * sub_08009B38 accepts is set to terrain 1 with tile 1.
+ * IsPlainRiverAt accepts is set to terrain 1 with tile 1.
  *
  * Why the C looks odd: these spellings do not change what the code does, but
  * the original compiler only produces identical output with them.
@@ -49,13 +49,13 @@ void sub_0800A098(int x, int y)
             int nx = x - 1;
             if (IsTerrainWater(nx, y) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x39
-             && sub_0800AA30(nx, y, 0) == 0)
+             && CountLandOnSide(nx, y, 0) == 0)
             {
                 int t;
                 SetTerrainAt(nx, y, 2);
                 MakeTileSimple(nx, y, 0x11d);
                 if (MAP->terrain[(t = MAP->rowOffset[y - 1] - 1, t + x)] == 0xd)
-                    sub_0800BA9C(nx, y - 1);
+                    MakeShoal(nx, y - 1);
             }
         }
         if (x < MAP->width - 1)
@@ -63,13 +63,13 @@ void sub_0800A098(int x, int y)
             int nx = x + 1;
             if (IsTerrainWater(nx, y) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x39
-             && sub_0800AA30(nx, y, 1) == 0)
+             && CountLandOnSide(nx, y, 1) == 0)
             {
                 int t;
                 SetTerrainAt(nx, y, 2);
                 MakeTileSimple(nx, y, 0xfd);
                 if (MAP->terrain[(t = MAP->rowOffset[y - 1] + 1, t + x)] == 0xd)
-                    sub_0800BA9C(nx, y - 1);
+                    MakeShoal(nx, y - 1);
             }
         }
     }
@@ -80,13 +80,13 @@ void sub_0800A098(int x, int y)
             int ny = y - 1;
             if (IsTerrainWater(x, ny) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x18
-             && sub_0800AA30(x, ny, 2) == 0)
+             && CountLandOnSide(x, ny, 2) == 0)
             {
                 int t;
                 SetTerrainAt(x, ny, 2);
                 MakeTileSimple(x, ny, 0xfc);
                 if (MAP->terrain[(t = MAP->rowOffset[ny] - 1, t + x)] == 0xd)
-                    sub_0800BA9C(x - 1, ny);
+                    MakeShoal(x - 1, ny);
             }
         }
         if (y < MAP->height - 1)
@@ -94,13 +94,13 @@ void sub_0800A098(int x, int y)
             int ny = y + 1;
             if (IsTerrainWater(x, ny) == 0
              && MAP->tile[MAP->rowOffset[y] + x] == 0x18
-             && sub_0800AA30(x, ny, 4) == 0)
+             && CountLandOnSide(x, ny, 4) == 0)
             {
                 int t;
                 SetTerrainAt(x, ny, 2);
                 MakeTileSimple(x, ny, 0x11c);
                 if (MAP->terrain[(t = MAP->rowOffset[ny] - 1, t + x)] == 0xd)
-                    sub_0800BA9C(x - 1, ny);
+                    MakeShoal(x - 1, ny);
             }
         }
     }
@@ -111,7 +111,7 @@ void sub_0800A2EC(int x, int y)
     if (y > 0)
     {
         int n = y - 1;
-        if (sub_08009B38(x, n))
+        if (IsPlainRiverAt(x, n))
         {
             SetTerrainAt(x, n, 1);
             MakeTileSimple(x, n, 1);
@@ -121,7 +121,7 @@ void sub_0800A2EC(int x, int y)
     if (y < MAP->height - 1)
     {
         int n = y + 1;
-        if (sub_08009B38(x, n))
+        if (IsPlainRiverAt(x, n))
         {
             SetTerrainAt(x, n, 1);
             MakeTileSimple(x, n, 1);
@@ -131,7 +131,7 @@ void sub_0800A2EC(int x, int y)
     if (x > 0)
     {
         int n = x - 1;
-        if (sub_08009B38(n, y))
+        if (IsPlainRiverAt(n, y))
         {
             SetTerrainAt(n, y, 1);
             MakeTileSimple(n, y, 1);
@@ -141,7 +141,7 @@ void sub_0800A2EC(int x, int y)
     if (x < MAP->width - 1)
     {
         int n = x + 1;
-        if (sub_08009B38(n, y))
+        if (IsPlainRiverAt(n, y))
         {
             SetTerrainAt(n, y, 1);
             MakeTileSimple(n, y, 1);

@@ -13,8 +13,9 @@
  * back. The strh into ->unk1e is Unk03001470's own s16 member, so the int
  * parameter (which the existing declaration fixes) is narrowed there and
  * nowhere else. */
-void sub_08001038(int a)
+void StartDesignRoom(int a)
 {
     gUnknown_030040A0 = 1;
     sub_080152EC(gUnknown_084858DC, 0)->unk1e = a;
 }
+asm(".global sub_08001038\n.thumb_set sub_08001038, StartDesignRoom\n");

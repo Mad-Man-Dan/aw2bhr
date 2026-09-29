@@ -88,7 +88,7 @@ void MakeSeaSafest(int x, int y)
         return;
 
     if (GetPropertyKindAt(x, y))
-        sub_0800C608(x, y);
+        RemovePropertyAt(x, y);
 
     if (sub_0800977C(x, y))
     {
@@ -114,7 +114,7 @@ void MakeSeaSafest(int x, int y)
         MakeSeaSafe(x, y);
         sub_0800A588(x, y);
         sub_0800ABD0(x, y);
-        sub_08007F9C(x, y);
+        RepaintNeighbours(x, y);
         sub_0800EC20(x, y);
     }
 }

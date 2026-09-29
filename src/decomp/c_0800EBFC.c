@@ -10,7 +10,7 @@
 /* Re-tile (x, y) twice: once with the caller's tile id, once with whatever
  * sub_080016D0 answers for the same cell.  THREE parameters -- r2 is never
  * written before the first `bl`, so it is passed straight through to
- * MakeTileSimple's int third argument, and sub_0800EAF4 sets it to a literal
+ * MakeTileSimple's int third argument, and MakeForestBlock2x2 sets it to a literal
  * 0x25 and 0x65 at its two call sites.
  *
  * The first call costs no argument setup at all: r0, r1 and r2 already hold

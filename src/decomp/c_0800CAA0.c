@@ -24,7 +24,7 @@ struct Unk88Rows
  * changes which bases loop.c hoists: the ROM re-materialises only the
  * fourth base inside the loop, and every mixed spelling holds it
  * (+8 to +12 bytes). */
-int sub_0800CAA0(void)
+int GetArmyColorSetIndex(void)
 {
     int i;
     int result = 0;
@@ -42,3 +42,4 @@ int sub_0800CAA0(void)
     }
     return result;
 }
+asm(".global sub_0800CAA0\n.thumb_set sub_0800CAA0, GetArmyColorSetIndex\n");

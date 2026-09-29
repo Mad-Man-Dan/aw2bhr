@@ -15,7 +15,8 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_080005F0(void)
+void DesignRoomEnterPaintMode(void)
 {
-    sub_0800056C(1);
+    DesignRoomSetMode(1);
 }
+asm(".global sub_080005F0\n.thumb_set sub_080005F0, DesignRoomEnterPaintMode\n");

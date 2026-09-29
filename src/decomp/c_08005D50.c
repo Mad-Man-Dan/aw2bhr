@@ -9,7 +9,7 @@
 
 /* The deref stays live across all three stores, so the source held it in a
  * local; spelled `gActiveMap->unkNN` throughout it reloads between the
- * stores, as its neighbour sub_08003040 does.
+ * stores, as its neighbour DesignRoomResetArmyPanels does.
  */
 void sub_08005D50(void)
 {

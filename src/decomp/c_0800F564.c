@@ -27,7 +27,7 @@
  * The four `result = 3` tests are the same condition written out four times;
  * cross-jumping merges dir 0 with dir 1 and dir 2 with dir 3, which is why two
  * copies survive in the ROM rather than one or four. */
-int sub_0800F564(int x, int y, int dir)
+int GetPipeConnectionAt(int x, int y, int dir)
 {
     struct Map *map;
     int nx;
@@ -94,3 +94,4 @@ int sub_0800F564(int x, int y, int dir)
 
     return result;
 }
+asm(".global sub_0800F564\n.thumb_set sub_0800F564, GetPipeConnectionAt\n");

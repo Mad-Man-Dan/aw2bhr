@@ -18,7 +18,7 @@
  * `n` holds both sub_08008D70's result and the vertical-neighbour flag,
  * which is what puts both in r6. The right neighbour needs its own
  * index local, not `left` reused, to get the ROM's `ldrh r1`. */
-int sub_08009310(int x, int y)
+int CanPlaceBridgeAt(int x, int y)
 {
     int terrain = gMap->terrain[gMap->rowOffset[y] + x];
     int direction;
@@ -31,7 +31,7 @@ int sub_08009310(int x, int y)
 
     if (terrain == 7 || terrain == 0xD || terrain == 0x13)
     {
-        switch (sub_08008D14(x, y))
+        switch (GetLandNeighbourMask(x, y))
         {
         case 1: case 2: case 4: case 8:
             sub_08008CB8(x, y);
@@ -47,14 +47,14 @@ int sub_08009310(int x, int y)
         }
     }
 
-    if (!sub_08009B38(x, y))
+    if (!IsPlainRiverAt(x, y))
         goto fail;
 
     n = 0;
     switch (sub_08008CB8(x, y))
     {
     case 0: case 8: case 9:
-        direction = sub_08008D14(x, y);
+        direction = GetLandNeighbourMask(x, y);
         if (direction & 6)
             goto success;
         if (x > 0 && (left = gMap->rowOffset[y] - 1, gMap->terrain[left + x]) == 0xC)
@@ -65,7 +65,7 @@ int sub_08009310(int x, int y)
             break;
         goto success;
     case 2: case 4: case 6:
-        direction = sub_08008D14(x, y);
+        direction = GetLandNeighbourMask(x, y);
         if (direction & 9)
             goto success;
         if ((y > 0 && gMap->terrain[gMap->rowOffset[y - 1] + x] == 0xC)
@@ -79,3 +79,4 @@ int sub_08009310(int x, int y)
 success: return 1;
 fail: return 0;
 }
+asm(".global sub_08009310\n.thumb_set sub_08009310, CanPlaceBridgeAt\n");

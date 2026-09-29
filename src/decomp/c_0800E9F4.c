@@ -19,7 +19,7 @@
  * Every neighbour must be written as TILE(x + dx, y + dy), which expands to
  * `rowOffset[y + dy] + (x + dx)`. Spelled `rowOffset[..] + dx + x`, fold
  * reassociates and CSEs the column sums, and the function is 8 bytes short. */
-int sub_0800E9F4(int x, int y)
+int GetForestBlockCorner(int x, int y)
 {
     int result = 0;
 
@@ -48,3 +48,4 @@ int sub_0800E9F4(int x, int y)
     }
     return result;
 }
+asm(".global sub_0800E9F4\n.thumb_set sub_0800E9F4, GetForestBlockCorner\n");

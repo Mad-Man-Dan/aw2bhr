@@ -402,7 +402,7 @@ int sub_08001D04(int a1) {
   return result;
 }
 
-int sub_08001D24(int a1) {
+int DesignRoomFindItemIndex(int a1) {
   int i;
 
   if (gActiveMap->editMode == 0) {
@@ -421,12 +421,15 @@ int sub_08001D24(int a1) {
 
   return -1;
 }
+asm(".global sub_08001D24\n.thumb_set sub_08001D24, DesignRoomFindItemIndex\n");
 
-void sub_08001D8C(void) { gActiveMap->tilePanelYState = 10; }
+void DesignRoomShowTilePanel(void) { gActiveMap->tilePanelYState = 10; }
+asm(".global sub_08001D8C\n.thumb_set sub_08001D8C, DesignRoomShowTilePanel\n");
 
-void sub_08001D9C(void) { gActiveMap->tilePanelYState = 0; }
+void DesignRoomHideTilePanel(void) { gActiveMap->tilePanelYState = 0; }
+asm(".global sub_08001D9C\n.thumb_set sub_08001D9C, DesignRoomHideTilePanel\n");
 
-void sub_08001DAC(void) {
+void DesignRoomUpdateSelectionPanel(void) {
   int flag;
   int b;
   int sx;
@@ -515,7 +518,7 @@ void sub_08001DAC(void) {
 
   if (b == 0) {
     if ((gActiveMap->flags & 0x40) == 0)
-      sub_08002964(0, sx + 7, gActiveMap->tilePanelY + 0x26,
+      DesignRoomDrawTerrainName(0, sx + 7, gActiveMap->tilePanelY + 0x26,
                    gActiveMap->selectedTerrain, b, flag);
     sy = gActiveMap->tilePanelY;
     if ((gActiveMap->selectedTerrain & 0x1F) == 8)
@@ -523,7 +526,7 @@ void sub_08001DAC(void) {
   } else {
     m1 = gActiveMap->flags & 0x40;
     if (m1 == 0)
-      sub_080029F4(0, sx + 7, gActiveMap->tilePanelY + 0x26, gActiveMap->cursorUnit, m1,
+      DesignRoomDrawUnitName(0, sx + 7, gActiveMap->tilePanelY + 0x26, gActiveMap->cursorUnit, m1,
                    flag);
     sy = gActiveMap->tilePanelY;
   }
@@ -536,7 +539,7 @@ void sub_08001DAC(void) {
       gActiveMap->cursorMoveScale = 0;
       break;
     case 9:
-      sub_08000C68();
+      DesignRoomPickUnderCursor();
     case 8:
       gActiveMap->cursorMoveState++;
     case 0xA:
@@ -562,23 +565,23 @@ void sub_08001DAC(void) {
     m2 = gActiveMap->flags & 0x40;
     if (m2 == 0) {
       if (b == 0)
-        sub_0800272C(0, sx + 0xB, sy, gActiveMap->selectedTerrain, 1, b, flag);
+        DesignRoomDrawTerrainIcon(0, sx + 0xB, sy, gActiveMap->selectedTerrain, 1, b, flag);
       else
-        sub_08002844(0, sx + 0xB, sy, gActiveMap->cursorUnit, 1, 0, flag);
+        DesignRoomDrawUnitIcon(0, sx + 0xB, sy, gActiveMap->cursorUnit, 1, 0, flag);
     }
   } else {
     m3 = gActiveMap->flags & 0x40;
     if (m3 == 0) {
       if (b == 0)
-        sub_0800272C(0, sx + 0xB, sy, gActiveMap->selectedTerrain,
+        DesignRoomDrawTerrainIcon(0, sx + 0xB, sy, gActiveMap->selectedTerrain,
                      gActiveMap->spriteFrame, m3, flag);
       else
-        sub_08002844(0, sx + 0xB, sy, gActiveMap->cursorUnit, gActiveMap->spriteFrame, m3,
+        DesignRoomDrawUnitIcon(0, sx + 0xB, sy, gActiveMap->cursorUnit, gActiveMap->spriteFrame, m3,
                      flag);
     }
   }
 
-  sub_08003088(sx, sy);
+  DesignRoomUpdateArmyPanels(sx, sy);
 
   if (gActiveMap->tilePanelY > 0x9F)
     return;
@@ -595,6 +598,7 @@ void sub_08001DAC(void) {
   if (gActiveMap->mode != 4)
     ApplyPaletteExt(gUnknown_084891C0, 0x260, 0x20);
 }
+asm(".global sub_08001DAC\n.thumb_set sub_08001DAC, DesignRoomUpdateSelectionPanel\n");
 
 void sub_08002298(int a1, int a2) {
   int a;
@@ -753,7 +757,7 @@ void sub_08002510(int a1, int a2) {
   gActiveMap->sidePanelFrame = (gActiveMap->sidePanelFrame + 1) & 0x3F;
 }
 
-void sub_0800272C(int a1, int a2, int a3, int a4, int a5, int a6, int a7) {
+void DesignRoomDrawTerrainIcon(int a1, int a2, int a3, int a4, int a5, int a6, int a7) {
   void *dest;
 
   dest = (void *)(0x06010000 + ((gUnknown_08485C9C[a1] & 0x3FF) << 5));
@@ -797,8 +801,9 @@ void sub_0800272C(int a1, int a2, int a3, int a4, int a5, int a6, int a7) {
     sub_0801BD00(attr1, a3, gUnknown_08485CC8[a1], sub_08001D04(a4) << 12);
   }
 }
+asm(".global sub_0800272C\n.thumb_set sub_0800272C, DesignRoomDrawTerrainIcon\n");
 
-void sub_08002844(int a1, int a2, int a3, int a4, int a5, int a6, int a7) {
+void DesignRoomDrawUnitIcon(int a1, int a2, int a3, int a4, int a5, int a6, int a7) {
   int cls;
   int attr0, attr1;
   int pal;
@@ -833,8 +838,9 @@ void sub_08002844(int a1, int a2, int a3, int a4, int a5, int a6, int a7) {
   sub_0801BD00(attr1, attr0, gUnknown_08485D44[a1],
                a4 != 0x19 ? pal << 12 : 0xE000);
 }
+asm(".global sub_08002844\n.thumb_set sub_08002844, DesignRoomDrawUnitIcon\n");
 
-void sub_08002964(int a1, int a2, int a3, int a4, int a5, int a6) {
+void DesignRoomDrawTerrainName(int a1, int a2, int a3, int a4, int a5, int a6) {
   int idx;
   int attr0, attr1;
 
@@ -854,8 +860,9 @@ void sub_08002964(int a1, int a2, int a3, int a4, int a5, int a6) {
     attr0 |= 0x100;
   sub_0801BD00(attr1, attr0, gUnknown_08485CF4[a1], 0x1000);
 }
+asm(".global sub_08002964\n.thumb_set sub_08002964, DesignRoomDrawTerrainName\n");
 
-void sub_080029F4(int a1, int a2, int a3, int a4, int a5, int a6) {
+void DesignRoomDrawUnitName(int a1, int a2, int a3, int a4, int a5, int a6) {
   u8 t;
   int k;
   void *src;
@@ -894,8 +901,9 @@ void sub_080029F4(int a1, int a2, int a3, int a4, int a5, int a6) {
 
   sub_0801BD00(attr1, attr0, gUnknown_08485D68[a1], 0x1000);
 }
+asm(".global sub_080029F4\n.thumb_set sub_080029F4, DesignRoomDrawUnitName\n");
 
-void sub_08002AB0(void) {
+void DesignRoomDrawTerrainRing(void) {
   int i;
   int j;
   int flag;
@@ -933,17 +941,18 @@ void sub_08002AB0(void) {
       j -= 10;
     if (q->flags & 1) {
       if (!(q->flags & 0x80))
-        sub_08002964(q->spriteSlot + 1, (q->x >> 8) - 4, (q->y >> 8) + 0x21,
+        DesignRoomDrawTerrainName(q->spriteSlot + 1, (q->x >> 8) - 4, (q->y >> 8) + 0x21,
                      q->itemId, q->flags & 0x20, q->flags & 8);
       if (!(q->flags & 0x40))
-        sub_0800272C(q->spriteSlot + 1, q->x >> 8, q->y >> 8, q->itemId,
+        DesignRoomDrawTerrainIcon(q->spriteSlot + 1, q->x >> 8, q->y >> 8, q->itemId,
                      q->flags & 0x10, q->flags & 0x100, q->flags & 8);
       q->flags &= ~8;
     }
   }
 }
+asm(".global sub_08002AB0\n.thumb_set sub_08002AB0, DesignRoomDrawTerrainRing\n");
 
-void sub_08002C38(void) {
+void DesignRoomDrawUnitRing(void) {
   int i;
   int j;
   struct DesignRingEntry *q;
@@ -971,15 +980,16 @@ void sub_08002C38(void) {
       j -= 8;
     if (q->flags & 1) {
       if (!(q->flags & 0x80))
-        sub_080029F4(q->spriteSlot + 1, (q->x >> 8) - 4, (q->y >> 8) + 0x21,
+        DesignRoomDrawUnitName(q->spriteSlot + 1, (q->x >> 8) - 4, (q->y >> 8) + 0x21,
                      q->itemId, q->flags & 0x20, q->flags & 8);
       if (!(q->flags & 0x40))
-        sub_08002844(q->spriteSlot + 1, q->x >> 8, q->y >> 8, q->itemId,
+        DesignRoomDrawUnitIcon(q->spriteSlot + 1, q->x >> 8, q->y >> 8, q->itemId,
                      q->flags & 0x10, q->flags & 0x100, q->flags & 8);
       q->flags &= ~8;
     }
   }
 }
+asm(".global sub_08002C38\n.thumb_set sub_08002C38, DesignRoomDrawUnitRing\n");
 
 void sub_08002D7C(void) {
   sub_0801F114();
@@ -998,12 +1008,13 @@ void sub_08002D7C(void) {
   sub_08002EF8();
 }
 
-void sub_08002DEC(void) {
+void DesignRoomLoadTerrainNamePalettes(void) {
   ApplyPaletteExt((u16 *)GetTerrainNamePalette(3, 0), 0x2E0, 0x20);
   ApplyPaletteExt((u16 *)GetTerrainNamePalette(0xF, 0), 0x2C0, 0x20);
   ApplyPaletteExt((u16 *)GetTerrainNamePalette(1, 0), 0x3C0, 0x20);
   ApplyPaletteExt((u16 *)GetTerrainNamePalette(5, 0), 0x3E0, 0x20);
 }
+asm(".global sub_08002DEC\n.thumb_set sub_08002DEC, DesignRoomLoadTerrainNamePalettes\n");
 
 void sub_08002E3C(void) {
   sub_08011E54(gUnknown_0808D8AC, (void *)0x06014D40, 0x460);
@@ -1018,22 +1029,24 @@ void sub_08002E5C(void) {
   sub_08011E54(gUnknown_0808DF2C, (void *)0x06016160, 0x20);
 }
 
-void sub_08002EB4(void) {
-  sub_08002DEC();
+void DesignRoomLoadGraphics(void) {
+  DesignRoomLoadTerrainNamePalettes();
   sub_08002D7C();
   sub_08002E5C();
 }
+asm(".global sub_08002EB4\n.thumb_set sub_08002EB4, DesignRoomLoadGraphics\n");
 
-void sub_08002EC8(void) {
-  sub_08001DAC();
+void DesignRoomDrawUi(void) {
+  DesignRoomUpdateSelectionPanel();
 
   if ((gActiveMap->flags & 0x20) == 0) {
     if (gActiveMap->editMode == 0)
-      sub_08002AB0();
+      DesignRoomDrawTerrainRing();
     else
-      sub_08002C38();
+      DesignRoomDrawUnitRing();
   }
 }
+asm(".global sub_08002EC8\n.thumb_set sub_08002EC8, DesignRoomDrawUi\n");
 
 void sub_08002EF8(void) {
   int v;
@@ -1046,7 +1059,7 @@ void sub_08002EF8(void) {
   sub_0801F1EC(0xAA, v);
 }
 
-void sub_08002F1C(void) {
+void DesignRoomDrawPropertyCounts(void) {
   u16 buf[0x14];
   int i, j, k, x, y;
   u16 t;
@@ -1058,7 +1071,7 @@ void sub_08002F1C(void) {
     x = 0x4C;
     for (i = 0; i <= 3; i++) {
       t = buf[k];
-      sub_0802BD54((x + 0xA) & 0x1FF, (y + 0x10) | 0x400, sub_0800C8A0(t));
+      sub_0802BD54((x + 0xA) & 0x1FF, (y + 0x10) | 0x400, CountPropertiesOfType(t));
       sub_0801BD00((x + 2) & 0x1FF, y | 0x400, gUnknown_08485CC8[i + 1],
                    sub_08001D04(t) << 12);
       x += 0x14;
@@ -1067,6 +1080,7 @@ void sub_08002F1C(void) {
     y += 0x19;
   }
 }
+asm(".global sub_08002F1C\n.thumb_set sub_08002F1C, DesignRoomDrawPropertyCounts\n");
 
 void sub_08002FE4(void) {
   u8 buf[4];
@@ -1081,13 +1095,14 @@ void sub_08002FE4(void) {
   }
 }
 
-void sub_08003040(void)
+void DesignRoomResetArmyPanels(void)
 {
     gActiveMap->armyPanelState[0] = 0;
     gActiveMap->armyPanelState[1] = 0;
     gActiveMap->armyPanelState[2] = 0;
     gActiveMap->armyPanelState[3] = 0;
 }
+asm(".global sub_08003040\n.thumb_set sub_08003040, DesignRoomResetArmyPanels\n");
 
 void sub_08003064(void)
 {
@@ -1097,10 +1112,11 @@ void sub_08003064(void)
     gActiveMap->armyPanelState[3] = 0x32;
 }
 
-void sub_08003088(int a, int b)
+void DesignRoomUpdateArmyPanels(int a, int b)
 {
-    sub_080030BC(0, a, b);
-    sub_080030BC(1, a, b);
-    sub_080030BC(2, a, b);
-    sub_080030BC(3, a, b);
+    DesignRoomUpdateArmyPanel(0, a, b);
+    DesignRoomUpdateArmyPanel(1, a, b);
+    DesignRoomUpdateArmyPanel(2, a, b);
+    DesignRoomUpdateArmyPanel(3, a, b);
 }
+asm(".global sub_08003088\n.thumb_set sub_08003088, DesignRoomUpdateArmyPanels\n");

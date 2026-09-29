@@ -9,17 +9,17 @@
  */
 
 /*
- * sub_0800B61C -- choose the tile for the shoreline at (x, y).
+ * GetShoalTile -- choose the tile for the shoreline at (x, y).
  *
  * The nine-bit mask of which cells of the 3 x 3 block around (x, y) are land
  * (bit 8 the top left, bit 0 the bottom right, the centre bit dropped again
  * with `& ~0x10`) indexes gUnknown_084861C4. A negative entry is returned as it
  * stands. Otherwise bits 9 to 14 of the entry name one of nineteen shapes that
  * need a closer look, and that case picks the tile:
- *   - eleven of them ask sub_0800B4F0 about the single neighbour on the side
+ *   - eleven of them ask IsShoalAt about the single neighbour on the side
  *     the shape points at and choose between two tiles; off the edge of the map
  *     counts as the plain one.
- *   - the rest ask sub_0800B5C0 about the cell itself, mask its answer and
+ *   - the rest ask GetShoalNeighbourMask about the cell itself, mask its answer and
  *     choose between four tiles. Case 0xA00 has two further tests on the
  *     top-left diagonal.
  * A positive result is finally masked down to nine bits.
@@ -46,7 +46,7 @@
 
 #define MAP gMap
 
-s16 sub_0800B61C(int x, int y)
+s16 GetShoalTile(int x, int y)
 {
     int mask = 0;
     int t;
@@ -86,7 +86,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x400:
         if (x > 0)
         {
-            u = sub_0800B4F0(x - 1, y);
+            u = IsShoalAt(x - 1, y);
             r = 0xb6;
             if (u)
                 r = 0xf3;
@@ -97,7 +97,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x200:
         if (x < MAP->width - 1)
         {
-            u = sub_0800B4F0(x + 1, y);
+            u = IsShoalAt(x + 1, y);
             r = 0xb7;
             if (u)
                 r = 0xf2;
@@ -108,7 +108,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x800:
         if (x > 0)
         {
-            u = sub_0800B4F0(x, y - 1);
+            u = IsShoalAt(x, y - 1);
             r = 0xb6;
             if (u)
                 r = 0xd2;
@@ -119,7 +119,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x4a00:
         if (x < MAP->width - 1)
         {
-            u = sub_0800B4F0(x + 1, y);
+            u = IsShoalAt(x + 1, y);
             r = 0x8f;
             if (u)
                 r = 0x6d;
@@ -130,7 +130,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x4c00:
         if (x > 0)
         {
-            u = sub_0800B4F0(x - 1, y);
+            u = IsShoalAt(x - 1, y);
             r = 0x8f;
             if (u)
                 r = 0x6e;
@@ -141,7 +141,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x5200:
         if (x < MAP->width - 1)
         {
-            u = sub_0800B4F0(x + 1, y);
+            u = IsShoalAt(x + 1, y);
             r = 0xef;
             if (u)
                 r = 0xcd;
@@ -152,7 +152,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x5400:
         if (x > 0)
         {
-            u = sub_0800B4F0(x - 1, y);
+            u = IsShoalAt(x - 1, y);
             r = 0xef;
             if (u)
                 r = 0xce;
@@ -163,7 +163,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x2c00:
         if (y > 0)
         {
-            u = sub_0800B4F0(x, y - 1);
+            u = IsShoalAt(x, y - 1);
             r = 0x92;
             if (u)
                 r = 0xcf;
@@ -174,7 +174,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x3400:
         if (y < MAP->height - 1)
         {
-            u = sub_0800B4F0(x, y + 1);
+            u = IsShoalAt(x, y + 1);
             r = 0x92;
             if (u)
                 r = 0xaf;
@@ -185,7 +185,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x2a00:
         if (y > 0)
         {
-            u = sub_0800B4F0(x, y - 1);
+            u = IsShoalAt(x, y - 1);
             r = 0x93;
             if (u)
                 r = 0xd0;
@@ -196,7 +196,7 @@ s16 sub_0800B61C(int x, int y)
     case 0x3200:
         if (y < MAP->height - 1)
         {
-            u = sub_0800B4F0(x, y + 1);
+            u = IsShoalAt(x, y + 1);
             r = 0x93;
             if (u)
                 r = 0xb0;
@@ -205,7 +205,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0x93;
         break;
     case 0x4800:
-        t = sub_0800B5C0(x, y) & 7;
+        t = GetShoalNeighbourMask(x, y) & 7;
         if (t == 6)
             r = 0x10;
         else if (t == 4)
@@ -216,7 +216,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0x8f;
         break;
     case 0x5000:
-        t = sub_0800B5C0(x, y) & 0xe;
+        t = GetShoalNeighbourMask(x, y) & 0xe;
         if (t == 6)
             r = 0x50;
         else if (t == 2)
@@ -227,7 +227,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0xef;
         break;
     case 0x2400:
-        t = sub_0800B5C0(x, y) & 9;
+        t = GetShoalNeighbourMask(x, y) & 9;
         if (t == 9)
             r = 0x2e;
         else if (t == 8)
@@ -238,7 +238,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0x92;
         break;
     case 0x2200:
-        t = sub_0800B5C0(x, y) & 9;
+        t = GetShoalNeighbourMask(x, y) & 9;
         if (t == 9)
             r = 0x32;
         else if (t == 8)
@@ -249,7 +249,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0x93;
         break;
     case 0xc00:
-        t = sub_0800B5C0(x, y);
+        t = GetShoalNeighbourMask(x, y);
         if (t == 4)
             r = 0xf3;
         else if (t == 8)
@@ -260,7 +260,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0xb6;
         break;
     case 0xa00:
-        t = sub_0800B5C0(x, y);
+        t = GetShoalNeighbourMask(x, y);
         if (t == 2)
             r = 0xf2;
         else if (t == 8)
@@ -281,7 +281,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0xb7;
         break;
     case 0x1400:
-        t = sub_0800B5C0(x, y);
+        t = GetShoalNeighbourMask(x, y);
         if (t == 4)
             r = 0x113;
         else if (t == 1)
@@ -292,7 +292,7 @@ s16 sub_0800B61C(int x, int y)
             r = 0xd6;
         break;
     case 0x1200:
-        t = sub_0800B5C0(x, y);
+        t = GetShoalNeighbourMask(x, y);
         if (t == 2)
             r = 0x112;
         else if (t == 1)
@@ -309,3 +309,4 @@ s16 sub_0800B61C(int x, int y)
 
     return r;
 }
+asm(".global sub_0800B61C\n.thumb_set sub_0800B61C, GetShoalTile\n");

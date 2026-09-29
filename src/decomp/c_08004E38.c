@@ -18,7 +18,7 @@
  *
  * Two parameters, passed straight through: the forwarder sets up no
  * argument register, and sub_0808B678 (src/decomp/c_0808B678.c) is a strcpy
- * taking `char *, const char *`. Its caller sub_08004E88 supplies both
+ * taking `char *, const char *`. Its caller DesignRoomLoadFromSlot supplies both
  * (`ldr r0,[r4]; adds r0,#0x9c; adds r1, r5, #0`). The char * result is
  * dropped -- `pop {r0}`, not `pop {r1}`.
  */

@@ -10,7 +10,7 @@
 
 #define MAP gMap
 
-int sub_0800BA9C(int x, int y)
+int MakeShoal(int x, int y)
 {
     int t;
     int v;
@@ -22,7 +22,7 @@ int sub_0800BA9C(int x, int y)
     t = MAP->terrain[MAP->rowOffset[y] + x];
     SetTerrainAt(x, y, 0xd);
 
-    v = sub_0800B61C(x, y);
+    v = GetShoalTile(x, y);
 
     if (v < 0)
     {
@@ -33,21 +33,22 @@ int sub_0800BA9C(int x, int y)
     MakeTileSimple(x, y, v);
 
     if (IsTerrainAtCoordsType(x, y, 7) == 0)
-        sub_0800BB2C(x, y);
+        RepaintShoalNeighbours(x, y);
 
     return 1;
 }
+asm(".global sub_0800BA9C\n.thumb_set sub_0800BA9C, MakeShoal\n");
 
-void sub_0800BB2C(int x, int y)
+void RepaintShoalNeighbours(int x, int y)
 {
     int k = 0x2a;
 
     if (y > 0)
     {
         int n = y - 1;
-        if (sub_0800B4F0(x, n))
+        if (IsShoalAt(x, n))
         {
-            int v = sub_0800B61C(x, n);
+            int v = GetShoalTile(x, n);
             if (v < 0)
             {
                 SetTerrainAt(x, n, 7);
@@ -61,9 +62,9 @@ void sub_0800BB2C(int x, int y)
     if (x > 0)
     {
         int n = x - 1;
-        if (sub_0800B4F0(n, y))
+        if (IsShoalAt(n, y))
         {
-            int v = sub_0800B61C(n, y);
+            int v = GetShoalTile(n, y);
             if (v < 0)
             {
                 SetTerrainAt(n, y, 7);
@@ -77,9 +78,9 @@ void sub_0800BB2C(int x, int y)
     if (x < MAP->width - 1)
     {
         int n = x + 1;
-        if (sub_0800B4F0(n, y))
+        if (IsShoalAt(n, y))
         {
-            int v = sub_0800B61C(n, y);
+            int v = GetShoalTile(n, y);
             if (v < 0)
             {
                 SetTerrainAt(n, y, 7);
@@ -93,9 +94,9 @@ void sub_0800BB2C(int x, int y)
     if (y < MAP->height - 1)
     {
         int n = y + 1;
-        if (sub_0800B4F0(x, n))
+        if (IsShoalAt(x, n))
         {
-            int v = sub_0800B61C(x, n);
+            int v = GetShoalTile(x, n);
             if (v < 0)
             {
                 SetTerrainAt(x, n, 7);
@@ -106,3 +107,4 @@ void sub_0800BB2C(int x, int y)
         }
     }
 }
+asm(".global sub_0800BB2C\n.thumb_set sub_0800BB2C, RepaintShoalNeighbours\n");

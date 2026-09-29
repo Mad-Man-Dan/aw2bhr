@@ -31,7 +31,7 @@ void sub_0800ABD0(int x, int y)
         if (result)
         {
             if (sub_0800A798(x, bandY) < 0
-             || sub_08009BF4(x, bandY) == 0
+             || CountRiverNeighbours(x, bandY) == 0
              || sub_08009538(x, bandY) == 0)
             {
                 SetTerrainAt(x, bandY, 7);
@@ -45,7 +45,7 @@ void sub_0800ABD0(int x, int y)
             if (sub_080094EC(m, bandY))
             {
                 if (sub_0800A798(m, bandY) <= 0
-                 || sub_08009BF4(m, bandY) == 0
+                 || CountRiverNeighbours(m, bandY) == 0
                  || sub_08009538(m, bandY) == 0)
                 {
                     SetTerrainAt(m, bandY, 7);
@@ -60,7 +60,7 @@ void sub_0800ABD0(int x, int y)
             if (sub_080094EC(m, bandY))
             {
                 if (sub_0800A798(m, bandY) <= 0
-                 || sub_08009BF4(m, bandY) == 0
+                 || CountRiverNeighbours(m, bandY) == 0
                  || sub_08009538(m, bandY) == 0)
                 {
                     SetTerrainAt(m, bandY, 7);
@@ -81,7 +81,7 @@ void sub_0800ABD0(int x, int y)
         if (result)
         {
             if (sub_0800A798(x, bandY) < 0
-             || sub_08009BF4(x, bandY) == 0
+             || CountRiverNeighbours(x, bandY) == 0
              || sub_08009538(x, bandY) == 0)
             {
                 SetTerrainAt(x, bandY, 7);
@@ -95,7 +95,7 @@ void sub_0800ABD0(int x, int y)
             if (sub_080094EC(m, bandY))
             {
                 if (sub_0800A798(m, bandY) <= 0
-                 || sub_08009BF4(m, bandY) == 0
+                 || CountRiverNeighbours(m, bandY) == 0
                  || sub_08009538(m, bandY) == 0)
                 {
                     SetTerrainAt(m, bandY, 7);
@@ -110,7 +110,7 @@ void sub_0800ABD0(int x, int y)
             if (sub_080094EC(m, bandY))
             {
                 if (sub_0800A798(m, bandY) <= 0
-                 || sub_08009BF4(m, bandY) == 0
+                 || CountRiverNeighbours(m, bandY) == 0
                  || sub_08009538(m, bandY) == 0)
                 {
                     SetTerrainAt(m, bandY, 7);
@@ -126,7 +126,7 @@ void sub_0800ABD0(int x, int y)
         if (sub_080094EC(m, y))
         {
             if (sub_0800A798(m, y) < 0
-             || sub_08009BF4(m, y) == 0
+             || CountRiverNeighbours(m, y) == 0
              || sub_08009538(m, y) == 0)
             {
                 SetTerrainAt(m, y, 7);
@@ -141,7 +141,7 @@ void sub_0800ABD0(int x, int y)
         if (sub_080094EC(m, y))
         {
             if (sub_0800A798(m, y) < 0
-             || sub_08009BF4(m, y) == 0
+             || CountRiverNeighbours(m, y) == 0
              || sub_08009538(m, y) == 0)
             {
                 SetTerrainAt(m, y, 7);

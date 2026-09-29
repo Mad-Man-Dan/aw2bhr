@@ -9,10 +9,10 @@
 
 #include "map.h"
 /* Bridge auto-tiling around map cell (x, y). Tiles 0x86/0x87 are bridge
- * pieces; sub_0800EAF4 and sub_0800EB5C rewrite a 2x2 / 3x3 block whose
+ * pieces; MakeForestBlock2x2 and MakeForestBlock3x3 rewrite a 2x2 / 3x3 block whose
  * top-left corner they are given.
  *
- * Byte-matching notes (see docs/agbcc-codegen.md, sub_0800CFDC):
+ * Byte-matching notes (see docs/agbcc-codegen.md, MakeForestBlocks):
  * - Every cell read goes through TILE(), i.e. `rowOffset[y] + (x)` with the
  *   column parenthesised. `rowOffset[y] + x - 1` reassociates to
  *   `(row + x) - 1`; the ROM computes `(row - 1) + x`.
@@ -25,7 +25,7 @@
 #define BRIDGE(xx, yy) ((u16)(gMap->tile[gMap->rowOffset[(yy)] + (xx)] - 0x86) <= 1)
 #define TILE(xx, yy) (gMap->tile[gMap->rowOffset[(yy)] + (xx)])
 
-int sub_0800CFDC(int x, int y)
+int MakeForestBlocks(int x, int y)
 {
     int leftPair;
     int rightPair;
@@ -36,9 +36,9 @@ int sub_0800CFDC(int x, int y)
         return 0;
 
     wroteLeft = 0;
-    leftPair = x > 0 ? sub_0800E8CC(x - 1, y) : 0;
-    rightPair = sub_0800E8CC(x, y);
-    rightMask = x < gMap->width - 1 ? sub_0800E8CC(x + 1, y) : 0;
+    leftPair = x > 0 ? GetForestColumnMask(x - 1, y) : 0;
+    rightPair = GetForestColumnMask(x, y);
+    rightMask = x < gMap->width - 1 ? GetForestColumnMask(x + 1, y) : 0;
     leftPair &= rightPair;
     rightPair &= rightMask;
 
@@ -54,14 +54,14 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y - 1) &&
             BRIDGE(x - 1, y))
         {
-            sub_0800EAF4(x - 1, y - 1);
+            MakeForestBlock2x2(x - 1, y - 1);
             wroteLeft = 1;
         }
         break;
     case 7:
     case 23:
         {
-            int nextMask = sub_0800E9F4(x, y + 1);
+            int nextMask = GetForestBlockCorner(x, y + 1);
             if (nextMask == 1)
             {
                 if (x < gMap->width - 2 && y < gMap->height - 2 &&
@@ -70,7 +70,7 @@ int sub_0800CFDC(int x, int y)
                     BRIDGE(x + 2, y + 1) &&
                     BRIDGE(x + 2, y + 2))
                 {
-                    sub_0800EB5C(x, y);
+                    MakeForestBlock3x3(x, y);
                     wroteLeft = 1;
                 }
             }
@@ -83,7 +83,7 @@ int sub_0800CFDC(int x, int y)
                     BRIDGE(x + 1, y + 1) &&
                     BRIDGE(x + 1, y + 2))
                 {
-                    sub_0800EB5C(x - 1, y);
+                    MakeForestBlock3x3(x - 1, y);
                     wroteLeft = 1;
                 }
             }
@@ -97,7 +97,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x - 1, y - 1) &&
             BRIDGE(x, y - 1))
         {
-            sub_0800EAF4(x - 1, y - 1);
+            MakeForestBlock2x2(x - 1, y - 1);
             wroteLeft = 1;
         }
         break;
@@ -109,7 +109,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x - 1, y + 1) &&
             BRIDGE(x, y + 1))
         {
-            sub_0800EAF4(x - 1, y);
+            MakeForestBlock2x2(x - 1, y);
             wroteLeft = 1;
         }
         break;
@@ -128,11 +128,11 @@ int sub_0800CFDC(int x, int y)
             TILE(x + 1, y - 1) == 0x45 &&
             TILE(x + 2, y) == 0x67 &&
             BRIDGE(x, y - 1) && BRIDGE(x, y - 2))
-            sub_0800EB5C(x, y - 2);
+            MakeForestBlock3x3(x, y - 2);
         else if (x < gMap->width - 1 && y > 0 &&
                  BRIDGE(x, y) && BRIDGE(x + 1, y - 1) &&
                  BRIDGE(x, y - 1) && BRIDGE(x + 1, y))
-            sub_0800EAF4(x, y - 1);
+            MakeForestBlock2x2(x, y - 1);
         break;
 
     case 15:
@@ -142,37 +142,37 @@ int sub_0800CFDC(int x, int y)
             TILE(x + 2, y - 1) == 0x47 &&
             TILE(x + 1, y - 2) == 0x25 &&
             BRIDGE(x, y - 2) && BRIDGE(x, y - 1))
-            sub_0800EB5C(x, y - 2);
+            MakeForestBlock3x3(x, y - 2);
         else if (x < gMap->width - 1 && y > 0 &&
                  BRIDGE(x, y) && BRIDGE(x, y - 1) &&
                  BRIDGE(x + 1, y - 1) && BRIDGE(x + 1, y))
-            sub_0800EAF4(x, y - 1);
+            MakeForestBlock2x2(x, y - 1);
         break;
 
     case 30:
         if (x < gMap->width - 1 && y < gMap->height - 1 &&
             BRIDGE(x, y) && BRIDGE(x + 1, y) &&
             BRIDGE(x, y + 1) && BRIDGE(x + 1, y + 1))
-            sub_0800EAF4(x, y);
+            MakeForestBlock2x2(x, y);
         break;
 
     case 7:
     case 23:
         {
-            int nextMask = sub_0800E9F4(x, y + 1);
+            int nextMask = GetForestBlockCorner(x, y + 1);
             if (nextMask == 1)
             {
                 if (x < gMap->width - 2 && y < gMap->height - 2 &&
                     BRIDGE(x, y) && BRIDGE(x + 1, y) &&
                     BRIDGE(x + 2, y) && BRIDGE(x + 2, y + 1) &&
                     BRIDGE(x + 2, y + 2))
-                    sub_0800EB5C(x, y);
+                    MakeForestBlock3x3(x, y);
             }
             else if (nextMask == 2 && x > 0 && x < gMap->width - 1 &&
                      y < gMap->height - 2 && BRIDGE(x, y) &&
                      BRIDGE(x - 1, y) && BRIDGE(x + 1, y) &&
                      BRIDGE(x + 1, y + 1) && BRIDGE(x + 1, y + 2))
-                sub_0800EB5C(x - 1, y);
+                MakeForestBlock3x3(x - 1, y);
         }
         break;
 
@@ -181,7 +181,7 @@ int sub_0800CFDC(int x, int y)
         if (x < gMap->width - 1 && y > 0 &&
             BRIDGE(x, y) && BRIDGE(x + 1, y) &&
             BRIDGE(x + 1, y - 1) && BRIDGE(x, y - 1))
-            sub_0800EAF4(x, y - 1);
+            MakeForestBlock2x2(x, y - 1);
         break;
 
     case 6:
@@ -189,7 +189,7 @@ int sub_0800CFDC(int x, int y)
         if (x < gMap->width - 1 && y < gMap->height - 1 &&
             BRIDGE(x, y) && BRIDGE(x + 1, y) &&
             BRIDGE(x + 1, y + 1) && BRIDGE(x, y + 1))
-            sub_0800EAF4(x, y);
+            MakeForestBlock2x2(x, y);
         break;
     }
     /* 0x0800D9D4: a complete 3x3 bridge neighbourhood centred on (x, y). */
@@ -198,7 +198,7 @@ int sub_0800CFDC(int x, int y)
         BRIDGE(x - 1, y - 1) && BRIDGE(x, y - 1) && BRIDGE(x + 1, y - 1) &&
         BRIDGE(x - 1, y) && BRIDGE(x + 1, y) &&
         BRIDGE(x - 1, y + 1) && BRIDGE(x, y + 1) && BRIDGE(x + 1, y + 1))
-        sub_0800EB5C(x - 1, y - 1);
+        MakeForestBlock3x3(x - 1, y - 1);
 
     /* 0x0800DAC6..DC32: north-facing corners. The y - 1 read is
      * unconditional in the ROM too. */
@@ -211,7 +211,7 @@ int sub_0800CFDC(int x, int y)
             (u16)(TILE(x - 1, y - 2) - 0x24) <= 1 &&
             BRIDGE(x + 1, y - 2) && BRIDGE(x + 1, y - 1) &&
             BRIDGE(x + 1, y) && BRIDGE(x - 1, y))
-            sub_0800EB5C(x - 1, y - 2);
+            MakeForestBlock3x3(x - 1, y - 2);
         break;
     case 0x64:
     case 0x65:
@@ -219,7 +219,7 @@ int sub_0800CFDC(int x, int y)
             TILE(x + 1, y - 2) == 0x27 &&
             BRIDGE(x - 1, y - 2) && BRIDGE(x - 1, y - 1) &&
             BRIDGE(x - 1, y) && BRIDGE(x + 1, y))
-            sub_0800EB5C(x - 1, y - 2);
+            MakeForestBlock3x3(x - 1, y - 2);
         break;
     }
 
@@ -231,14 +231,14 @@ int sub_0800CFDC(int x, int y)
             (u16)(TILE(x, y - 2) - 0x24) <= 1 &&
             BRIDGE(x + 2, y - 2) && BRIDGE(x + 2, y - 1) &&
             BRIDGE(x + 2, y) && BRIDGE(x + 1, y))
-            sub_0800EB5C(x, y - 2);
+            MakeForestBlock3x3(x, y - 2);
         break;
     case 0x64:
     case 0x65:
         if (x < gMap->width - 2 && y > 1 && BRIDGE(x, y) &&
             TILE(x + 2, y - 2) == 0x27 && BRIDGE(x, y - 2) &&
             BRIDGE(x, y - 1) && BRIDGE(x + 1, y) && BRIDGE(x + 2, y))
-            sub_0800EB5C(x, y - 2);
+            MakeForestBlock3x3(x, y - 2);
         break;
     case 0x24:
     case 0x25:
@@ -246,7 +246,7 @@ int sub_0800CFDC(int x, int y)
             TILE(x + 2, y) == 0x67 && BRIDGE(x, y - 1) &&
             BRIDGE(x, y - 2) && BRIDGE(x + 1, y - 2) &&
             BRIDGE(x + 2, y - 2))
-            sub_0800EB5C(x, y - 2);
+            MakeForestBlock3x3(x, y - 2);
         break;
     }
 
@@ -259,7 +259,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && TILE(x + 2, y + 1) == 0x67 &&
             BRIDGE(x, y + 1) && BRIDGE(x, y - 1) &&
             BRIDGE(x + 1, y - 1) && BRIDGE(x + 2, y - 1))
-            sub_0800EB5C(x, y - 1);
+            MakeForestBlock3x3(x, y - 1);
         break;
     case 0x64:
     case 0x65:
@@ -267,7 +267,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && TILE(x + 2, y - 1) == 0x27 &&
             BRIDGE(x, y - 1) && BRIDGE(x, y + 1) &&
             BRIDGE(x + 1, y + 1) && BRIDGE(x + 2, y + 1))
-            sub_0800EB5C(x, y - 1);
+            MakeForestBlock3x3(x, y - 1);
         break;
     }
 
@@ -279,7 +279,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && (u16)(TILE(x, y + 2) - 0x64) <= 1 &&
             BRIDGE(x + 1, y) && BRIDGE(x + 2, y) &&
             BRIDGE(x + 2, y + 1) && BRIDGE(x + 2, y + 2))
-            sub_0800EB5C(x, y);
+            MakeForestBlock3x3(x, y);
         break;
     case 0x24:
     case 0x25:
@@ -287,7 +287,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && TILE(x + 2, y + 2) == 0x67 &&
             BRIDGE(x + 1, y) && BRIDGE(x + 2, y) &&
             BRIDGE(x, y + 1) && BRIDGE(x, y + 2))
-            sub_0800EB5C(x, y);
+            MakeForestBlock3x3(x, y);
         break;
     case 0x64:
     case 0x65:
@@ -295,7 +295,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && TILE(x + 2, y) == 0x27 &&
             BRIDGE(x, y + 1) && BRIDGE(x, y + 2) &&
             BRIDGE(x + 1, y + 2) && BRIDGE(x + 2, y + 2))
-            sub_0800EB5C(x, y);
+            MakeForestBlock3x3(x, y);
         break;
     }
 
@@ -307,7 +307,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && (u16)(TILE(x - 1, y + 2) - 0x64) <= 1 &&
             BRIDGE(x - 1, y) && BRIDGE(x + 1, y) &&
             BRIDGE(x + 1, y + 1) && BRIDGE(x + 1, y + 2))
-            sub_0800EB5C(x - 1, y);
+            MakeForestBlock3x3(x - 1, y);
         break;
     case 0x24:
     case 0x25:
@@ -315,7 +315,7 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && TILE(x + 1, y + 2) == 0x67 &&
             BRIDGE(x - 1, y) && BRIDGE(x + 1, y) &&
             BRIDGE(x - 1, y + 1) && BRIDGE(x - 1, y + 2))
-            sub_0800EB5C(x - 1, y);
+            MakeForestBlock3x3(x - 1, y);
         break;
     }
 
@@ -327,14 +327,14 @@ int sub_0800CFDC(int x, int y)
             (u16)(TILE(x - 2, y + 2) - 0x64) <= 1 &&
             BRIDGE(x - 2, y) && BRIDGE(x - 1, y) &&
             BRIDGE(x, y + 1) && BRIDGE(x, y + 2))
-            sub_0800EB5C(x - 2, y);
+            MakeForestBlock3x3(x - 2, y);
         break;
     case 0x67:
         if (x > 1 && y < gMap->height - 2 && BRIDGE(x, y) &&
             (u16)(TILE(x - 2, y) - 0x24) <= 1 &&
             BRIDGE(x, y + 1) && BRIDGE(x, y + 2) &&
             BRIDGE(x - 1, y + 2) && BRIDGE(x - 2, y + 2))
-            sub_0800EB5C(x - 2, y);
+            MakeForestBlock3x3(x - 2, y);
         break;
     case 0x24:
     case 0x25:
@@ -342,7 +342,7 @@ int sub_0800CFDC(int x, int y)
             TILE(x, y + 2) == 0x67 &&
             BRIDGE(x - 2, y) && BRIDGE(x - 1, y) &&
             BRIDGE(x - 2, y + 1) && BRIDGE(x - 2, y + 2))
-            sub_0800EB5C(x - 2, y);
+            MakeForestBlock3x3(x - 2, y);
         break;
     }
 
@@ -354,14 +354,14 @@ int sub_0800CFDC(int x, int y)
             BRIDGE(x, y) && (u16)(TILE(x - 2, y + 1) - 0x64) <= 1 &&
             BRIDGE(x - 2, y - 1) && BRIDGE(x - 1, y - 1) &&
             BRIDGE(x, y - 1) && BRIDGE(x, y + 1))
-            sub_0800EB5C(x - 2, y - 1);
+            MakeForestBlock3x3(x - 2, y - 1);
         break;
     case 0x67:
         if (x > 1 && y > 0 && y < gMap->height - 1 &&
             BRIDGE(x, y) && (u16)(TILE(x - 2, y - 1) - 0x24) <= 1 &&
             BRIDGE(x, y - 1) && BRIDGE(x, y + 1) &&
             BRIDGE(x - 1, y + 1) && BRIDGE(x - 2, y + 1))
-            sub_0800EB5C(x - 2, y - 1);
+            MakeForestBlock3x3(x - 2, y - 1);
         break;
     }
 
@@ -373,14 +373,14 @@ int sub_0800CFDC(int x, int y)
             (u16)(TILE(x - 2, y) - 0x64) <= 1 &&
             BRIDGE(x - 2, y - 2) && BRIDGE(x - 1, y - 2) &&
             BRIDGE(x, y - 2) && BRIDGE(x, y - 1))
-            sub_0800EB5C(x - 2, y - 2);
+            MakeForestBlock3x3(x - 2, y - 2);
         break;
     case 0x67:
         if (x > 1 && y > 1 && BRIDGE(x, y) &&
             (u16)(TILE(x - 2, y - 2) - 0x24) <= 1 &&
             BRIDGE(x, y - 2) && BRIDGE(x, y - 1) &&
             BRIDGE(x - 1, y) && BRIDGE(x - 2, y))
-            sub_0800EB5C(x - 2, y - 2);
+            MakeForestBlock3x3(x - 2, y - 2);
         break;
     case 0x64:
     case 0x65:
@@ -388,10 +388,11 @@ int sub_0800CFDC(int x, int y)
             TILE(x, y - 2) == 0x27 && BRIDGE(x - 2, y - 2) &&
             BRIDGE(x - 2, y - 1) && BRIDGE(x - 2, y) &&
             BRIDGE(x - 1, y))
-            sub_0800EB5C(x - 2, y - 2);
+            MakeForestBlock3x3(x - 2, y - 2);
         break;
     }
     return 0;
 #undef TILE
 #undef BRIDGE
 }
+asm(".global sub_0800CFDC\n.thumb_set sub_0800CFDC, MakeForestBlocks\n");

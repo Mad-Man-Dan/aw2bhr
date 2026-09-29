@@ -8,13 +8,13 @@
  */
 
 /*
- * sub_08005B24 -- run one frame of the two-page help screen.
+ * DesignRoomHelp_Loop -- run one frame of the two-page help screen.
  *
  * gActiveMap->state names the page: 0 and 1 are the first page, 0xA and 0xB
  * the second, and 0x5A means leave. A, B or SELECT at any point jumps straight
  * to 0x5A.
  *
- *   states 0 and 0xA draw their page (sub_080059FC, sub_08005AA0) and fall
+ *   states 0 and 0xA draw their page (DesignRoomDrawHelpPage1, DesignRoomDrawHelpPage2) and fall
  *     into the matching key state on the same frame.
  *   state 1 waits for DOWN and state 0xB for UP: the other page is selected,
  *     the BG0 window is blanked and sound 0x67 plays. State 0xB also draws the
@@ -33,7 +33,7 @@
 
 #include "hardware.h"
 
-void sub_08005B24(void)
+void DesignRoomHelp_Loop(void)
 {
     if (gActiveMap->stateChanged != 0)
     {
@@ -53,7 +53,7 @@ void sub_08005B24(void)
     case 0:
         sub_0801B780(0);
         gActiveMap->state++;
-        sub_080059FC();
+        DesignRoomDrawHelpPage1();
         sub_08005EF0(1);
         /* fallthrough */
     case 1:
@@ -69,7 +69,7 @@ void sub_08005B24(void)
     case 0xA:
         sub_0801B780(0);
         gActiveMap->state++;
-        sub_08005AA0();
+        DesignRoomDrawHelpPage2();
         sub_08005EF0(0);
         /* fallthrough */
     case 0xB:
@@ -101,3 +101,4 @@ void sub_08005B24(void)
         sub_08015C30(gUnknown_03001FBC);
     }
 }
+asm(".global sub_08005B24\n.thumb_set sub_08005B24, DesignRoomHelp_Loop\n");

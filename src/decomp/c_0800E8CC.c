@@ -10,7 +10,7 @@
 #include "map.h"
 
 /* Draft: five-cell vertical wood-neighbour mask. */
-int sub_0800E8CC(int x, int y)
+int GetForestColumnMask(int x, int y)
 {
     int mask = 0;
 
@@ -26,3 +26,4 @@ int sub_0800E8CC(int x, int y)
         mask |= sub_0800119C(x, y + 2, 4);
     return mask;
 }
+asm(".global sub_0800E8CC\n.thumb_set sub_0800E8CC, GetForestColumnMask\n");

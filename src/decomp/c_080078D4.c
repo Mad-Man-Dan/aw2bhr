@@ -7,7 +7,8 @@
  * sub_080078D4 @ 0x080078D4
  */
 
-void sub_080078D4(s8 a)
+void DesignRoomSetUnitArmy(s8 a)
 {
     gActiveMap->unitArmy = a;
 }
+asm(".global sub_080078D4\n.thumb_set sub_080078D4, DesignRoomSetUnitArmy\n");

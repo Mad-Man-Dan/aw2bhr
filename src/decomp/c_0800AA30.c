@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0800AA30.
- * sub_0800AA30 @ 0x0800AA30
+ * CountLandOnSide @ 0x0800AA30
  */
 
 /* Sums IsTerrainLand over the five in-bounds cells of one half-plane around
@@ -40,7 +40,7 @@
  * `t` is declared inside the guard on independent evidence: at function scope
  * its live range spans all four arms and it outranks the parameters, giving
  * t=r4/x=r5/y=r6 where the ROM has x=r4/y=r5/r=r6/t=r7. */
-int sub_0800AA30(int x, int y, int dir)
+int CountLandOnSide(int x, int y, int dir)
 {
     u8 **const *pp;
     int r = 0;
@@ -136,3 +136,5 @@ int sub_0800AA30(int x, int y, int dir)
 
     return r;
 }
+
+asm(".global sub_0800AA30\n.thumb_set sub_0800AA30, CountLandOnSide\n");

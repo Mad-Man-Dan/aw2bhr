@@ -29,7 +29,7 @@
  * byte-identical here (probed): there is only one exit block, so the
  * discriminator in docs/agbcc-codegen.md's two-guards rule does not apply. */
 
-void sub_08004EDC(int a, int b, u8 c)
+void DesignRoomMenu_PickSlot0(int a, int b, u8 c)
 {
     if ((gActiveMap->flags & 0x200) && c != 2)
     {
@@ -39,6 +39,7 @@ void sub_08004EDC(int a, int b, u8 c)
         gActiveMap->state = 7;
     }
 }
+asm(".global sub_08004EDC\n.thumb_set sub_08004EDC, DesignRoomMenu_PickSlot0\n");
 
 /* Family F057: one body three times, differing only in which bit of
  * gActiveMap->flags it tests (0x200 / 0x400 / 0x800) and which value it
@@ -62,7 +63,7 @@ void sub_08004EDC(int a, int b, u8 c)
  * byte-identical here (probed): there is only one exit block, so the
  * discriminator in docs/agbcc-codegen.md's two-guards rule does not apply. */
 
-void sub_08004F1C(int a, int b, u8 c)
+void DesignRoomMenu_PickSlot1(int a, int b, u8 c)
 {
     if ((gActiveMap->flags & 0x400) && c != 2)
     {
@@ -72,6 +73,7 @@ void sub_08004F1C(int a, int b, u8 c)
         gActiveMap->state = 7;
     }
 }
+asm(".global sub_08004F1C\n.thumb_set sub_08004F1C, DesignRoomMenu_PickSlot1\n");
 
 /* Family F057: one body three times, differing only in which bit of
  * gActiveMap->flags it tests (0x200 / 0x400 / 0x800) and which value it
@@ -95,7 +97,7 @@ void sub_08004F1C(int a, int b, u8 c)
  * byte-identical here (probed): there is only one exit block, so the
  * discriminator in docs/agbcc-codegen.md's two-guards rule does not apply. */
 
-void sub_08004F5C(int a, int b, u8 c)
+void DesignRoomMenu_PickSlot2(int a, int b, u8 c)
 {
     if ((gActiveMap->flags & 0x800) && c != 2)
     {
@@ -105,3 +107,4 @@ void sub_08004F5C(int a, int b, u8 c)
         gActiveMap->state = 7;
     }
 }
+asm(".global sub_08004F5C\n.thumb_set sub_08004F5C, DesignRoomMenu_PickSlot2\n");

@@ -8,7 +8,7 @@
  * sub_08009B38 @ 0x08009B38, sub_08009B84 @ 0x08009B84
  */
 
-int sub_08009B38(int x, int y)
+int IsPlainRiverAt(int x, int y)
 {
     int idx;
     int terrain;
@@ -20,6 +20,7 @@ int sub_08009B38(int x, int y)
         return sub_080094EC(x, y) == 0;
     return 0;
 }
+asm(".global sub_08009B38\n.thumb_set sub_08009B38, IsPlainRiverAt\n");
 
 int sub_08009B84(int x, int y)
 {

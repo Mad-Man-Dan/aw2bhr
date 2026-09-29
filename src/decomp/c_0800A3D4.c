@@ -8,11 +8,11 @@
  */
 
 /* For each of the four cardinal neighbours of (x, y) that is on the map, run
- * the same two-branch cell update: if sub_08009B38 accepts the cell, redraw it
+ * the same two-branch cell update: if IsPlainRiverAt accepts the cell, redraw it
  * with sub_08009B84's tile; otherwise, if it is a sub_080094EC cell that
  * sub_0800A798 does not veto, stamp the fixed pair (7, 0x2a).
  *
- * The first block reaches `bl sub_08009B38` with r0 never written -- x is still
+ * The first block reaches `bl IsPlainRiverAt` with r0 never written -- x is still
  * sitting in it from the prologue -- which is a pass-through, not a one-argument
  * call; the other three blocks copy it back out of r6.
  *
@@ -23,7 +23,7 @@
  * in source-statement order and the ROM copies the pool register into r8 AFTER
  * the bound is computed, so the bound needs a statement of its own ahead of
  * `pp = &g`.  Only one pool word here and both reads re-derive both levels, so
- * unlike sub_0800AA30 no middle-level local is wanted.
+ * unlike CountLandOnSide no middle-level local is wanted.
  *
  * `n` is block-scoped and `v` is not, and that is the whole of the last 48
  * bytes: at function scope `n` outranks `v` and the two callee-saved registers
@@ -43,7 +43,7 @@ void sub_0800A3D4(int x, int y)
     if (y > 0)
     {
         int n = y - 1;
-        if (sub_08009B38(x, n))
+        if (IsPlainRiverAt(x, n))
         {
             v = sub_08009B84(x, n);
             if (v > 0)
@@ -68,7 +68,7 @@ void sub_0800A3D4(int x, int y)
     if (y < lim)
     {
         int n = y + 1;
-        if (sub_08009B38(x, n))
+        if (IsPlainRiverAt(x, n))
         {
             v = sub_08009B84(x, n);
             if (v > 0)
@@ -90,7 +90,7 @@ void sub_0800A3D4(int x, int y)
     if (x > 0)
     {
         int n = x - 1;
-        if (sub_08009B38(n, y))
+        if (IsPlainRiverAt(n, y))
         {
             v = sub_08009B84(n, y);
             if (v > 0)
@@ -112,7 +112,7 @@ void sub_0800A3D4(int x, int y)
     if (x < *(u16 *)**pp - 1)
     {
         int n = x + 1;
-        if (sub_08009B38(n, y))
+        if (IsPlainRiverAt(n, y))
         {
             v = sub_08009B84(n, y);
             if (v > 0)

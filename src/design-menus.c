@@ -29,15 +29,16 @@ void sub_08004724(void)
             sub_08003F44(x, y, tiles[*p++]);
 }
 
-void sub_08004818(void)
+void DesignRoomMenu_EnterPaintMode(void)
 {
-    sub_0800056C(1);
+    DesignRoomSetMode(1);
 }
+asm(".global sub_08004818\n.thumb_set sub_08004818, DesignRoomMenu_EnterPaintMode\n");
 
 void sub_08004824(void)
 {
     sub_0803B4DC(0x66);
-    sub_0800056C(1);
+    DesignRoomSetMode(1);
 }
 
 int sub_08004838(void)
@@ -45,25 +46,28 @@ int sub_08004838(void)
     return 0;
 }
 
-void sub_0800483C(void)
+void DesignRoomMenu_CloseToPaint(void)
 {
     sub_0801A168();
-    sub_0800056C(1);
+    DesignRoomSetMode(1);
 }
+asm(".global sub_0800483C\n.thumb_set sub_0800483C, DesignRoomMenu_CloseToPaint\n");
 
-void sub_0800484C(void)
+void DesignRoomMenu_CloseToMainMenu(void)
 {
     sub_0801A168();
-    sub_0800485C();
+    DesignRoomOpenMainMenu();
 }
+asm(".global sub_0800484C\n.thumb_set sub_0800484C, DesignRoomMenu_CloseToMainMenu\n");
 
-void sub_0800485C(void)
+void DesignRoomOpenMainMenu(void)
 {
     sub_0801A664();
     sub_0803B4DC(0x66);
     gActiveMap->mode = 3;
     sub_08004C5C();
 }
+asm(".global sub_0800485C\n.thumb_set sub_0800485C, DesignRoomOpenMainMenu\n");
 
 void sub_0800487C(void)
 {
@@ -78,10 +82,10 @@ void sub_0800487C(void)
     sub_0803662C();
     sub_08024268();
     sub_08024830();
-    sub_08002DEC();
+    DesignRoomLoadTerrainNamePalettes();
 }
 
-void sub_080048D4(void)
+void DesignRoomStartNameEntry(void)
 {
     struct Unk03001470 *p;
     u8 *d;
@@ -104,17 +108,19 @@ void sub_080048D4(void)
 
     sub_0804B10C((int)q, 8);
 }
+asm(".global sub_080048D4\n.thumb_set sub_080048D4, DesignRoomStartNameEntry\n");
 
-void sub_0800492C(void)
+void DesignRoomOnNameEntryDone(void)
 {
     sub_0803B524(0xd8);
-    sub_0800056C(1);
+    DesignRoomSetMode(1);
     gActiveMap->designName[0x12] = 0;
 }
+asm(".global sub_0800492C\n.thumb_set sub_0800492C, DesignRoomOnNameEntryDone\n");
 
 void sub_0800494C(void)
 {
-    sub_0800056C(4);
+    DesignRoomSetMode(4);
 }
 
 void sub_08004958(void)
@@ -125,7 +131,7 @@ void sub_08004958(void)
 
 void sub_08004970(void)
 {
-    sub_08002F1C();
+    DesignRoomDrawPropertyCounts();
 
     if ((gpKeySt->pressed & 7) != 0)
     {
@@ -149,51 +155,58 @@ void sub_080049E8(void)
 {
     sub_0801A614();
     sub_0801A168();
-    sub_0800056C(6);
+    DesignRoomSetMode(6);
     sub_080152EC(gUnknown_084872B4, 0);
     gActiveMap->menuCursorX = 0x57;
     gActiveMap->menuCursorY = 0x10;
 }
 
-void sub_08004A20(void)
+void DesignRoomMenu_CloseToMainMenu2(void)
 {
     sub_0801A168();
-    sub_0800485C();
+    DesignRoomOpenMainMenu();
 }
+asm(".global sub_08004A20\n.thumb_set sub_08004A20, DesignRoomMenu_CloseToMainMenu2\n");
 
-void sub_08004A30(int a)
+void DesignRoomMenu_NewMap(int a)
 {
     sub_0801A168();
-    sub_08003C48(a);
+    DesignRoomNewMap(a);
     sub_08002E3C();
     sub_08024268();
     gActiveMap->flags |= 0x1000;
 }
+asm(".global sub_08004A30\n.thumb_set sub_08004A30, DesignRoomMenu_NewMap\n");
 
-void sub_08004A60(void)
+void DesignRoomMenu_NewMapSea(void)
 {
-    sub_08004A30(7);
+    DesignRoomMenu_NewMap(7);
 }
+asm(".global sub_08004A60\n.thumb_set sub_08004A60, DesignRoomMenu_NewMapSea\n");
 
-void sub_08004A6C(void)
+void DesignRoomMenu_NewMapPlain(void)
 {
-    sub_08004A30(1);
+    DesignRoomMenu_NewMap(1);
 }
+asm(".global sub_08004A6C\n.thumb_set sub_08004A6C, DesignRoomMenu_NewMapPlain\n");
 
-void sub_08004A78(void)
+void DesignRoomMenu_NewMapMountain(void)
 {
-    sub_08004A30(3);
+    DesignRoomMenu_NewMap(3);
 }
+asm(".global sub_08004A78\n.thumb_set sub_08004A78, DesignRoomMenu_NewMapMountain\n");
 
-void sub_08004A84(void)
+void DesignRoomMenu_NewMapForest(void)
 {
-    sub_08004A30(4);
+    DesignRoomMenu_NewMap(4);
 }
+asm(".global sub_08004A84\n.thumb_set sub_08004A84, DesignRoomMenu_NewMapForest\n");
 
-void sub_08004A90(void)
+void DesignRoomMenu_NewMapRandom(void)
 {
-    sub_08004A30(-1);
+    DesignRoomMenu_NewMap(-1);
 }
+asm(".global sub_08004A90\n.thumb_set sub_08004A90, DesignRoomMenu_NewMapRandom\n");
 
 void sub_08004AA0(void)
 {
@@ -261,8 +274,8 @@ void sub_08004B7C(void)
     sub_0801A168();
     sub_0801B780(0x70);
     sub_0801A148(gUnknown_084872FC, 2, 2, 0);
-    sub_0800056C(7);
-    sub_08002DEC();
+    DesignRoomSetMode(7);
+    DesignRoomLoadTerrainNamePalettes();
     gActiveMap->menuCursorX = 0x15;
     gActiveMap->menuCursorY = 0x10;
 }
@@ -275,7 +288,7 @@ void sub_08004BC0(void)
 void sub_08004BD8(void)
 {
     sub_0801A168();
-    sub_0800056C(9);
+    DesignRoomSetMode(9);
     sub_080193B0((gActiveMap->flags & 0x1000) ? gUnknown_08487B64
                                                      : gUnknown_08487AC4);
 }
@@ -306,11 +319,11 @@ void sub_08004C5C(void)
     gActiveMap->menuCursorY = 0x10;
     sub_0801B780(0x70);
     sub_08022AD0(0x10, 0x10);
-    sub_08001D9C();
-    sub_08003948();
+    DesignRoomHideTilePanel();
+    DesignRoomHideCoordBox();
 }
 
-void sub_08004CA0(void)
+void DesignRoomMode_Menu(void)
 {
     int x;
 
@@ -346,11 +359,12 @@ void sub_08004CA0(void)
         break;
     }
 }
+asm(".global sub_08004CA0\n.thumb_set sub_08004CA0, DesignRoomMode_Menu\n");
 
 void sub_08004D10(void)
 {
-    sub_08001D9C();
-    sub_08003040();
+    DesignRoomHideTilePanel();
+    DesignRoomResetArmyPanels();
     sub_080193B0(gUnknown_08487D44);
 }
 
@@ -359,13 +373,13 @@ void sub_08004D28(void)
     switch ((s8)gActiveMap->designSlot)
     {
     case 0:
-        sub_080055B8(0, 0, 0);
+        DesignRoomShowSlotPreview0(0, 0, 0);
         break;
     case 1:
-        sub_08005634(0, 0, 0);
+        DesignRoomShowSlotPreview1(0, 0, 0);
         break;
     case 2:
-        sub_080056B0(0, 0, 0);
+        DesignRoomShowSlotPreview2(0, 0, 0);
         break;
     }
 }

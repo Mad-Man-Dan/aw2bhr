@@ -13,7 +13,7 @@
  * the function pointer and the first is what it receives.
  *
  * The test is `!= 0` with the arms in this order, for the same layout reason as
- * sub_0800BC98: the ROM's `bne` reaches the 0x8004 pool load and `movs #0`
+ * IsSeaAt: the ROM's `bne` reaches the 0x8004 pool load and `movs #0`
  * falls through, so the then-arm is the error return. */
 int sub_0808B304(int a, int (*f)(int))
 {

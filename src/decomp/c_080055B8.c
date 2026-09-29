@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_080055B8 -- put save slot 0's name box on screen, or take it down.
+ * DesignRoomShowSlotPreview0 -- put save slot 0's name box on screen, or take it down.
  *
  * sub_0803CCB8 is asked about slot 0, with gDesignRoomName. Either way
  * sub_0803CEAC runs and the 0xF x 0xA tile window at (0xE, 4) of BG0 is
@@ -22,13 +22,13 @@
  *
  * Why the C looks odd: these spellings do not change what the code does, but
  * the original compiler only produces identical output with them.
- *   - sub_08005634 and sub_080056B0 are this function again for slots 1 and 2.
+ *   - DesignRoomShowSlotPreview1 and DesignRoomShowSlotPreview2 are this function again for slots 1 and 2.
  *     The original holds all three copies; do not factor them into one.
  *   - Both arms of the `if` repeat the same first two calls. Merged into a
  *     common prologue, the zero stored on the stack ends up in a different
  *     register from the original's.
  */
-void sub_080055B8(int a, int b, int c)
+void DesignRoomShowSlotPreview0(int a, int b, int c)
 {
     if (sub_0803CCB8(0, gDesignRoomName) != 1)
     {
@@ -45,9 +45,10 @@ void sub_080055B8(int a, int b, int c)
         gUnknown_03001FF8 = 0;
     }
 }
+asm(".global sub_080055B8\n.thumb_set sub_080055B8, DesignRoomShowSlotPreview0\n");
 
-/* sub_08005634 -- the same as sub_080055B8, for save slot 1. */
-void sub_08005634(int a, int b, int c)
+/* DesignRoomShowSlotPreview1 -- the same as DesignRoomShowSlotPreview0, for save slot 1. */
+void DesignRoomShowSlotPreview1(int a, int b, int c)
 {
     if (sub_0803CCB8(1, gDesignRoomName) != 1)
     {
@@ -64,9 +65,10 @@ void sub_08005634(int a, int b, int c)
         gUnknown_03001FF8 = 0;
     }
 }
+asm(".global sub_08005634\n.thumb_set sub_08005634, DesignRoomShowSlotPreview1\n");
 
-/* sub_080056B0 -- the same as sub_080055B8, for save slot 2. */
-void sub_080056B0(int a, int b, int c)
+/* DesignRoomShowSlotPreview2 -- the same as DesignRoomShowSlotPreview0, for save slot 2. */
+void DesignRoomShowSlotPreview2(int a, int b, int c)
 {
     if (sub_0803CCB8(2, gDesignRoomName) != 1)
     {
@@ -83,3 +85,4 @@ void sub_080056B0(int a, int b, int c)
         gUnknown_03001FF8 = 0;
     }
 }
+asm(".global sub_080056B0\n.thumb_set sub_080056B0, DesignRoomShowSlotPreview2\n");

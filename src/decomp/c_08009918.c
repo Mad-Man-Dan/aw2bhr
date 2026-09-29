@@ -10,8 +10,8 @@
 #include "map.h"
 
 /* Twin of sub_0800977C (src/decomp/c_0800977C.c), whose staged pointer
- * spelling this reuses. It differs in calling sub_08009CF8 instead of
- * sub_08009BF4, and each neighbour counted must also have the matching
+ * spelling this reuses. It differs in calling CountRiverOrBridgeNeighbours instead of
+ * CountRiverNeighbours, and each neighbour counted must also have the matching
  * tile: 0x16/0x36 horizontally, or tile 0x13 above / 0x14 below the cell
  * vertically. (The vertical tests read the same (x, y-1) and (x, y+1)
  * tiles for both neighbours; that is what the ROM does.)
@@ -47,7 +47,7 @@ int sub_08009918(int x, int y)
         int tile;
         int cnt;
 
-        ok = sub_08009CF8(x, y) != 0;
+        ok = CountRiverOrBridgeNeighbours(x, y) != 0;
 
         {
             struct Map *p;

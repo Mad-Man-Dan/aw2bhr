@@ -12,11 +12,11 @@
  * on-screen pick ring to it.
  *
  * a1 is a terrain id in terrain mode, or a unit id with the army in bits 6-7
- * in unit mode. sub_08001D24 turns the id into a position in that mode's list.
+ * in unit mode. DesignRoomFindItemIndex turns the id into a position in that mode's list.
  *
  *   1. Store that position offset back by 4 entries (terrain) or 3 (unit),
  *      wrapped into 0..0x10 or 0..0x13.
- *   2. sub_080073F8 redraws the ring around the new position.
+ *   2. DesignRoomBuildRing redraws the ring around the new position.
  *   3. Read the id now sitting 4 slots on in gDesignRing (3 in unit mode),
  *      wrapping at the end of the 10-entry ring (8 entries in unit mode), and
  *      store it as the selection: selectedTerrain, or cursorUnit with a1's
@@ -45,12 +45,12 @@ void SetSelectedTile(int a1)
 
     if (gActiveMap->editMode == 0)
     {
-        a = sub_08001D24(a1);
+        a = DesignRoomFindItemIndex(a1);
         a -= 4;
         if (a < 0)
             a += 0x11;
         gActiveMap->terrainListIndex = a;
-        sub_080073F8(gActiveMap->editMode, a1);
+        DesignRoomBuildRing(gActiveMap->editMode, a1);
         b = gActiveMap->ringIndex + 4;
         if (b > 9)
             b = gActiveMap->ringIndex - 6;
@@ -61,12 +61,12 @@ void SetSelectedTile(int a1)
     {
         if (a1 != 0x19)
             gActiveMap->unitArmy = (a1 >> 6) + 1;
-        a = sub_08001D24(a1);
+        a = DesignRoomFindItemIndex(a1);
         a -= 3;
         if (a < 0)
             a += 0x14;
         gActiveMap->unitListIndex = a;
-        sub_080073F8(gActiveMap->editMode, a1);
+        DesignRoomBuildRing(gActiveMap->editMode, a1);
         b = gActiveMap->ringIndex + 3;
         if (b > 7)
             b = gActiveMap->ringIndex - 5;

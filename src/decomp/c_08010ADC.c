@@ -24,7 +24,7 @@
  * 0x0808D8A4/0x0808D8A8 pair c_08010B34.c documents for &gUnknown_08499590.
  * The honest spelling below reproduces the two-level `ldr r7,=<word>` /
  * `ldr r0,[r7]` load and promotion must carry the rodata entry. */
-void sub_08010ADC(int x, int y)
+void RepaintPipesAround(int x, int y)
 {
     int i;
     int nx;
@@ -41,3 +41,4 @@ void sub_08010ADC(int x, int y)
         }
     }
 }
+asm(".global sub_08010ADC\n.thumb_set sub_08010ADC, RepaintPipesAround\n");

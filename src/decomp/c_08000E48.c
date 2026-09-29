@@ -22,7 +22,7 @@
  *
  * 0x084858AC has no symbol of its own: data/data.s covers 0x084857AC..0x084858DC
  * as one incbin, so the script is named as an offset into it. */
-void sub_08000E48(struct Unk03001470 *proc)
+void DesignRoomProc_Init(struct Unk03001470 *proc)
 {
     int a;
     int i;
@@ -36,7 +36,7 @@ void sub_08000E48(struct Unk03001470 *proc)
     {
         sub_08001124((u8 *)&gUnknown_0200B000, 0xB0);
         sub_08001124((u8 *)gDesignRing, 0x134);
-        sub_080078E4(0, 1);
+        DesignRoomBuildItemList(0, 1);
     }
 
     gUnknown_030040E4 = 0;
@@ -84,7 +84,7 @@ void sub_08000E48(struct Unk03001470 *proc)
     sub_080366C4(sub_080369BC);
     gUnknown_03003F3C = 0;
     sub_0801B780(0);
-    sub_08002EB4();
+    DesignRoomLoadGraphics();
     sub_08022AAC(7, 4);
     gActiveMap->designSlot = 0xFF;
     gActiveMap->tilePanelX = 0xFD80;
@@ -93,10 +93,11 @@ void sub_08000E48(struct Unk03001470 *proc)
     gActiveMap->selectedTerrain = 1;
     gActiveMap->propertyArmy = 1;
     gActiveMap->unitArmy = 1;
-    sub_08007328();
-    sub_0800056C(0);
+    DesignRoomGetPreviousRingIndex();
+    DesignRoomSetMode(0);
     sub_080152C0((s32)&gUnknown_084857AC[0x100], 0);
     SetSelectedTile(0x28);
-    sub_08003910();
+    DesignRoomStartCoordBox();
     sub_0803B524(0xD8);
 }
+asm(".global sub_08000E48\n.thumb_set sub_08000E48, DesignRoomProc_Init\n");

@@ -17,7 +17,7 @@ int sub_0800F77C(int x, int y, int dir)
     int r;
     int nx, ny;
 
-    r = sub_0800F564(x, y, dir);
+    r = GetPipeConnectionAt(x, y, dir);
     count = 0;
 
     nx = x + gUnknown_0848895C[dir];
@@ -38,9 +38,9 @@ int sub_0800F77C(int x, int y, int dir)
         {
             if (MAP->tile[MAP->rowOffset[ny] + nx] == 0x163)
             {
-                if (sub_0800F564(nx, ny, 2) == 2)
+                if (GetPipeConnectionAt(nx, ny, 2) == 2)
                     return 2;
-                if (sub_0800F564(x + gUnknown_0848895C[dir], y + gUnknown_08488964[dir], 3) == 2)
+                if (GetPipeConnectionAt(x + gUnknown_0848895C[dir], y + gUnknown_08488964[dir], 3) == 2)
                     return 2;
             }
             return 0;
@@ -49,9 +49,9 @@ int sub_0800F77C(int x, int y, int dir)
         {
             if (MAP->tile[MAP->rowOffset[ny] + nx] == 0x162)
             {
-                if (sub_0800F564(nx, ny, 0) == 2)
+                if (GetPipeConnectionAt(nx, ny, 0) == 2)
                     return 2;
-                if (sub_0800F564(x + gUnknown_0848895C[dir], y + gUnknown_08488964[dir], 1) == 2)
+                if (GetPipeConnectionAt(x + gUnknown_0848895C[dir], y + gUnknown_08488964[dir], 1) == 2)
                     return 2;
             }
             return 0;
@@ -65,7 +65,7 @@ int sub_0800F77C(int x, int y, int dir)
     {
         if (gUnknown_0848895C[dir] + gUnknown_0848895C[i] != 0)
         {
-            if (sub_0800F564(x + gUnknown_0848895C[dir], y + gUnknown_08488964[dir], i) == 2)
+            if (GetPipeConnectionAt(x + gUnknown_0848895C[dir], y + gUnknown_08488964[dir], i) == 2)
                 count++;
         }
     }

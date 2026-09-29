@@ -12,7 +12,7 @@
  * sub_0800A588 -- work out the tile for each of the four cells next to (x, y)
  * again.
  *
- * A neighbour is only looked at when it is on the map and sub_08009B38 accepts
+ * A neighbour is only looked at when it is on the map and IsPlainRiverAt accepts
  * it. sub_0800A95C then classifies it: a negative answer means the cell is
  * wrong and sub_08007F68 repairs it; a positive one is the new tile, which is
  * stored, and sub_0800A098 then tidies that cell's own neighbours. Zero leaves
@@ -44,7 +44,7 @@ void sub_0800A588(int x, int y)
     if (y > 0)
     {
         int n = y - 1;
-        if (sub_08009B38(x, n))
+        if (IsPlainRiverAt(x, n))
         {
             int v = sub_0800A95C(x, n);
             if (v < 0)
@@ -60,7 +60,7 @@ void sub_0800A588(int x, int y)
     if (y < MAP->height - 1)
     {
         int n = y + 1;
-        if (sub_08009B38(x, n))
+        if (IsPlainRiverAt(x, n))
         {
             int v = sub_0800A95C(x, n);
             if (v < 0)
@@ -76,7 +76,7 @@ void sub_0800A588(int x, int y)
     if (x > 0)
     {
         int n = x - 1;
-        if (sub_08009B38(n, y))
+        if (IsPlainRiverAt(n, y))
         {
             int v = sub_0800A95C(n, y);
             if (v < 0)
@@ -92,7 +92,7 @@ void sub_0800A588(int x, int y)
     if (x < MAP->width - 1)
     {
         int n = x + 1;
-        if (sub_08009B38(n, y))
+        if (IsPlainRiverAt(n, y))
         {
             int v = sub_0800A95C(n, y);
             if (v < 0)

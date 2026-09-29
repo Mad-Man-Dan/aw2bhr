@@ -13,10 +13,10 @@
  *
  * Compares what the player has selected with what is under the cursor -- the
  * terrain id in terrain mode, the unit type in unit mode -- and sets
- * gActiveMap->cursorMoved when they are not the same. sub_08001DAC reads that
+ * gActiveMap->cursorMoved when they are not the same. DesignRoomUpdateSelectionPanel reads that
  * flag.
  *
- * sub_08000C68 below does the opposite: it plays sound 0x65 and makes whatever
+ * DesignRoomPickUnderCursor below does the opposite: it plays sound 0x65 and makes whatever
  * is under the cursor the new selection (SetSelectedTile).
  *
  * Why the C looks odd: this spelling does not change what the code does, but
@@ -44,7 +44,7 @@ void sub_08000BF8(void)
     }
 }
 
-void sub_08000C68(void)
+void DesignRoomPickUnderCursor(void)
 {
     sub_0803B4DC(0x65);
 
@@ -55,3 +55,4 @@ void sub_08000C68(void)
     else
         SetSelectedTile(GetUnitTypeAt(gActiveMap->cursorX, gActiveMap->cursorY));
 }
+asm(".global sub_08000C68\n.thumb_set sub_08000C68, DesignRoomPickUnderCursor\n");

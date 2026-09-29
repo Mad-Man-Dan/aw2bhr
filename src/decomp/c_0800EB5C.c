@@ -9,7 +9,7 @@
  */
 
 /*
- * sub_0800EB5C -- draw the 3 x 3 block of tiles for a terrain-4 cell at (x, y).
+ * MakeForestBlock3x3 -- draw the 3 x 3 block of tiles for a terrain-4 cell at (x, y).
  *
  * Nothing happens unless the terrain at (x, y) reads 4. The left column goes
  * through sub_0800EBFC with tiles 0x25, 0x45 and 0x65; the other six are
@@ -25,7 +25,7 @@
  *     add the offsets in a different order.
  */
 
-void sub_0800EB5C(int x, int y)
+void MakeForestBlock3x3(int x, int y)
 {
     struct Map *map = gMap;
 
@@ -41,3 +41,4 @@ void sub_0800EB5C(int x, int y)
         MakeTileSimple(x + 2, y + 2, 0x67);
     }
 }
+asm(".global sub_0800EB5C\n.thumb_set sub_0800EB5C, MakeForestBlock3x3\n");

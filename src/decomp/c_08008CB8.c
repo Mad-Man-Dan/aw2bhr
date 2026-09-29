@@ -67,7 +67,7 @@ int sub_08008CB8(int x, int y)
  * front of it, and agbcc re-narrows a narrow-returning callee at every call
  * site. */
 
-int sub_08008D14(int x, int y)
+int GetLandNeighbourMask(int x, int y)
 {
     int r = 0;
 
@@ -85,3 +85,4 @@ int sub_08008D14(int x, int y)
 
     return r;
 }
+asm(".global sub_08008D14\n.thumb_set sub_08008D14, GetLandNeighbourMask\n");

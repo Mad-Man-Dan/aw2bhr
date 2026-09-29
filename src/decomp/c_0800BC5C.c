@@ -11,7 +11,7 @@
 /* Reports whether the terrain at (x, y) is one of the two bridge codes. Same
  * struct-through-a-cast reading of gUnknown_08499590 as sub_0800B1FC -- see
  * that function for why the flat pointer spelling does not match. */
-int sub_0800BC5C(int x, int y)
+int CanPlaceReefAt(int x, int y)
 {
     struct Map *s = gMap;
     u8 t = s->terrain[s->rowOffset[y] + x];
@@ -21,8 +21,9 @@ int sub_0800BC5C(int x, int y)
     else
         return 0;
 }
+asm(".global sub_0800BC5C\n.thumb_set sub_0800BC5C, CanPlaceReefAt\n");
 
-int sub_0800BC98(int x, int y)
+int IsSeaAt(int x, int y)
 {
     struct Map *s = gMap;
 
@@ -31,3 +32,4 @@ int sub_0800BC98(int x, int y)
     else
         return 1;
 }
+asm(".global sub_0800BC98\n.thumb_set sub_0800BC98, IsSeaAt\n");

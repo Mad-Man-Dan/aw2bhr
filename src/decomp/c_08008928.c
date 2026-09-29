@@ -10,7 +10,7 @@
 
 #include "hardware.h"
 
-int sub_08008928(void)
+int DesignRoomPlaceUnitAtCursor(void)
 {
     int x;
     int y;
@@ -84,10 +84,11 @@ int sub_08008928(void)
     }
 
     if (result > 0)
-        sub_080088F0();
+        DesignRoomCountArmyUnits();
 
     return result;
 }
+asm(".global sub_08008928\n.thumb_set sub_08008928, DesignRoomPlaceUnitAtCursor\n");
 
 int RemoveUnitAt(int mode, int x, int y)
 {
@@ -134,7 +135,7 @@ int RemoveUnitAt(int mode, int x, int y)
             e->type = 0;
         }
 
-        sub_080088F0();
+        DesignRoomCountArmyUnits();
 
         result = 1;
     }

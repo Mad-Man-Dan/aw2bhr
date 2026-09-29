@@ -17,7 +17,7 @@
  * being RTX_UNCHANGING, so every arm reloads after the intervening strh
  * exactly as the ROM does, while the -fforce-addr .rodata words survive.
  * Verified under the same header change: promoted sub_0802361C, sub_08023860
- * and sub_0800105C still byte-match, and sub_080236E8 improves to 76.3%. */
+ * and DesignRoomHandleCursorInput still byte-match, and sub_080236E8 improves to 76.3%. */
 
 void sub_08023518(void)
 {

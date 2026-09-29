@@ -17,10 +17,11 @@ void sub_08005154(void)
 
 /* A bare `strb` through `adds rN, #0x9c`, past `strb`'s imm5 range -- which is
  * the only reason the address arithmetic is a separate instruction. */
-void sub_0800517C(void)
+void DesignRoomClearName(void)
 {
     gActiveMap->designName[0] = 0;
 }
+asm(".global sub_0800517C\n.thumb_set sub_0800517C, DesignRoomClearName\n");
 
 /* gBG0TilemapBuffer and gBG2TilemapBuffer are POINTER variables, so each
  * argument is `ldr rN, =sym; ldr rN, [rN]`. The 0x14 that goes to [sp] is CSEd

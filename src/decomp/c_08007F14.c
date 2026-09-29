@@ -25,7 +25,7 @@ void MakeTile2(int x, int y, int v)
     }
 
     MakeForestSimple(x, y);
-    sub_08007F9C(x, y);
+    RepaintNeighbours(x, y);
     sub_0800A588(x, y);
 }
 

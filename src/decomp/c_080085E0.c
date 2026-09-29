@@ -47,11 +47,11 @@ void MakeTile(void)
     case 13:
         if (sub_0800B528(x, y) >= 0 && GetPropertyKindAt(x, y) != 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 1);
             MakeTile2(x, y, 1);
         }
-        sub_0800BA9C(x, y);
+        MakeShoal(x, y);
         EnsureValidTile(x, y);
         gActiveMap->soundId = 0x4b;
         break;
@@ -59,7 +59,7 @@ void MakeTile(void)
     case 5:
         if (GetPropertyKindAt(x, y) != 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 1);
             MakeTile2(x, y, 1);
         }
@@ -71,7 +71,7 @@ void MakeTile(void)
     case 2:
         if (GetPropertyKindAt(x, y) != 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 1);
             MakeTile2(x, y, 1);
         }
@@ -90,7 +90,7 @@ void MakeTile(void)
     case 3:
         if (GetPropertyKindAt(x, y) != 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 1);
             MakeTile2(x, y, 1);
         }
@@ -130,7 +130,7 @@ void MakeTile(void)
     case 15:
         if (GetPropertyKindAt(x, y) != 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 1);
             MakeTile2(x, y, 1);
         }
@@ -142,7 +142,7 @@ void MakeTile(void)
     case 16:
         if (GetPropertyKindAt(x, y) != 0)
         {
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
             SetTerrainAt(x, y, 1);
             MakeTile2(x, y, 1);
         }
@@ -153,7 +153,7 @@ void MakeTile(void)
 
     case 1:
         if (GetPropertyKindAt(x, y) != 0)
-            sub_0800C608(x, y);
+            RemovePropertyAt(x, y);
         SetTerrainAt(x, y, 1);
         MakeTile2(x, y, 1);
         sub_0800EC20(x, y);

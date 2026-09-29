@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_08004F9C -- run the save-slot call for the current design and redraw
+ * DesignRoomSaveToSlot -- run the save-slot call for the current design and redraw
  * that slot's row on screen.
  *
  * sub_0803CF54 is handed gActiveMap->designSlot, gActiveMap->designName and
@@ -32,7 +32,7 @@
  *     original uses does not come out.
  */
 
-void sub_08004F9C(void)
+void DesignRoomSaveToSlot(void)
 {
     int t;
     int v;
@@ -69,3 +69,4 @@ void sub_08004F9C(void)
 
     gActiveMap->flags &= 0xEFFF;
 }
+asm(".global sub_08004F9C\n.thumb_set sub_08004F9C, DesignRoomSaveToSlot\n");

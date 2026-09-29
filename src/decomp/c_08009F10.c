@@ -66,7 +66,7 @@ fail:
 
 placed:
     sub_0800A588(x, y);
-    if (sub_08009BF4(x, y))
+    if (CountRiverNeighbours(x, y))
         sub_0800A098(x, y);
 
     if (y > 0)
@@ -87,7 +87,7 @@ placed:
             MakeTile2(x, ny, 1);
     }
 
-    sub_08007F9C(x, y);
+    RepaintNeighbours(x, y);
     sub_0800EC20(x, y);
     return 1;
 }

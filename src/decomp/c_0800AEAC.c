@@ -8,7 +8,7 @@
  */
 
 /*
- * sub_0800AEAC -- may sea be placed at (x, y)? 1 means yes.
+ * CanPlaceRiverAt -- may sea be placed at (x, y)? 1 means yes.
  *
  * sub_0800A6AC gives the cell's land shape, and a negative answer refuses
  * outright. A non-zero shape is accepted when sub_0800A95C reports nothing
@@ -27,7 +27,7 @@
  *     the else arm. That is what the original does.
  */
 
-int sub_0800AEAC(int x, int y)
+int CanPlaceRiverAt(int x, int y)
 {
     int v;
     int w;
@@ -65,3 +65,4 @@ int sub_0800AEAC(int x, int y)
     }
     return 0;
 }
+asm(".global sub_0800AEAC\n.thumb_set sub_0800AEAC, CanPlaceRiverAt\n");

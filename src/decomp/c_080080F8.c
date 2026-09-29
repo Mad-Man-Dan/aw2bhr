@@ -13,7 +13,7 @@
  * tile through gMap->tile and, when it is one of the two bridge ids, clears it
  * unless the cell below is joinable.
  *
- * sub_0800B61C returns s16 -- the `lsls #0x10 / asrs #0x10` before the sign
+ * GetShoalTile returns s16 -- the `lsls #0x10 / asrs #0x10` before the sign
  * test is agbcc re-narrowing a narrow-returning callee, and the narrowed value
  * in r2 is then handed straight to MakeTileSimple as its third argument.
  *
@@ -47,7 +47,7 @@ void RepaintTile(int x, int y)
 
     if (IsTerrainAtCoordsType(x, y, 5))
     {
-        MakeTileSimple(x, y, sub_0800F418(x, y));
+        MakeTileSimple(x, y, GetRoadTile(x, y));
         MakeTileSimple(x, y, sub_080016D0(x, y));
     }
 
@@ -55,7 +55,7 @@ void RepaintTile(int x, int y)
     {
         s16 w;
 
-        height = sub_0800B61C(x, y);
+        height = GetShoalTile(x, y);
         w = height;
 
         if (w < 0)

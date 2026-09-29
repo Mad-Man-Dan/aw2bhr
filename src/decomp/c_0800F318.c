@@ -8,7 +8,7 @@
  * sub_0800F318 @ 0x0800F318, sub_0800F368 @ 0x0800F368, sub_0800F3B8 @ 0x0800F3B8, sub_0800F418 @ 0x0800F418, MakeRoad @ 0x0800F4E0
  */
 
-int sub_0800F318(int x, int y)
+int IsRoadOrHorizontalBridgeAt(int x, int y)
 {
     struct Map *p;
     u8 *rows;
@@ -36,8 +36,9 @@ int sub_0800F318(int x, int y)
         r = 1;
     return r;
 }
+asm(".global sub_0800F318\n.thumb_set sub_0800F318, IsRoadOrHorizontalBridgeAt\n");
 
-int sub_0800F368(int x, int y)
+int IsRoadOrVerticalBridgeAt(int x, int y)
 {
     struct Map *p;
     u8 *rows;
@@ -65,23 +66,24 @@ int sub_0800F368(int x, int y)
         r = 1;
     return r;
 }
+asm(".global sub_0800F368\n.thumb_set sub_0800F368, IsRoadOrVerticalBridgeAt\n");
 
 int sub_0800F3B8(int x, int y)
 {
     int m = 0;
 
     if (y > 0)
-        m |= sub_0800F368(x, y - 1) << 7;
+        m |= IsRoadOrVerticalBridgeAt(x, y - 1) << 7;
     if (x > 0)
-        m |= sub_0800F318(x - 1, y) << 5;
+        m |= IsRoadOrHorizontalBridgeAt(x - 1, y) << 5;
     if (x < gMap->width - 1)
-        m |= sub_0800F318(x + 1, y) << 3;
+        m |= IsRoadOrHorizontalBridgeAt(x + 1, y) << 3;
     if (y < gMap->height - 1)
-        m |= sub_0800F368(x, y + 1) << 1;
+        m |= IsRoadOrVerticalBridgeAt(x, y + 1) << 1;
     return m;
 }
 
-int sub_0800F418(int x, int y)
+int GetRoadTile(int x, int y)
 {
     int m = 0;
 
@@ -89,26 +91,27 @@ int sub_0800F418(int x, int y)
     {
         int ny = y - 1;
 
-        m |= sub_0800F368(x, ny) << 7;
+        m |= IsRoadOrVerticalBridgeAt(x, ny) << 7;
         if (x < gMap->width - 1)
-            m |= sub_0800F2E0(x + 1, ny) << 6;
+            m |= IsRoadOrBridgeAt(x + 1, ny) << 6;
     }
     if (x > 0)
-        m |= sub_0800F318(x - 1, y) << 5;
-    m |= sub_0800F2E0(x, y) << 4;
+        m |= IsRoadOrHorizontalBridgeAt(x - 1, y) << 5;
+    m |= IsRoadOrBridgeAt(x, y) << 4;
     if (x < gMap->width - 1)
-        m |= sub_0800F318(x + 1, y) << 3;
+        m |= IsRoadOrHorizontalBridgeAt(x + 1, y) << 3;
     if (y < gMap->height - 1)
     {
         y++;
         if (x > 0)
-            m |= sub_0800F2E0(x - 1, y) << 2;
-        m |= sub_0800F368(x, y) << 1;
+            m |= IsRoadOrBridgeAt(x - 1, y) << 2;
+        m |= IsRoadOrVerticalBridgeAt(x, y) << 1;
         if (x < gMap->width - 1)
-            m |= sub_0800F2E0(x + 1, y);
+            m |= IsRoadOrBridgeAt(x + 1, y);
     }
     return gUnknown_084865C4[m];
 }
+asm(".global sub_0800F418\n.thumb_set sub_0800F418, GetRoadTile\n");
 
 void MakeRoad(int x, int y)
 {
@@ -119,11 +122,11 @@ void MakeRoad(int x, int y)
     else
     {
         SetTerrainAt(x, y, 5);
-        MakeTileSimple(x, y, sub_0800F418(x, y));
+        MakeTileSimple(x, y, GetRoadTile(x, y));
         MakeTileSimple(x, y, sub_080016D0(x, y));
         sub_0800A588(x, y);
         sub_0800ABD0(x, y);
-        sub_08007F9C(x, y);
+        RepaintNeighbours(x, y);
         sub_0800BEE4(x, y);
         sub_0800EC20(x, y);
     }

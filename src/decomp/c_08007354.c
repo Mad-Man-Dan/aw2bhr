@@ -7,7 +7,7 @@
  * sub_08007354 @ 0x08007354
  */
 
-void sub_08007354(void)
+void DesignRoomSaveSelection(void)
 {
     struct ActiveMap *p = gActiveMap;
     int i;
@@ -43,3 +43,4 @@ void sub_08007354(void)
         gActiveMap->savedUnitArmy = gActiveMap->unitArmy;
     }
 }
+asm(".global sub_08007354\n.thumb_set sub_08007354, DesignRoomSaveSelection\n");

@@ -7,8 +7,9 @@
  * sub_0800056C @ 0x0800056C
  */
 
-void sub_0800056C(u16 a)
+void DesignRoomSetMode(u16 a)
 {
     gActiveMap->mode = a;
     gActiveMap->stateChanged = 1;
 }
+asm(".global sub_0800056C\n.thumb_set sub_0800056C, DesignRoomSetMode\n");

@@ -13,7 +13,7 @@
 /* Steps the gUnknown_030033E4 cursor cell one square in the direction the high
  * nibble of gpKeySt->repeated's low byte selects, using W33-D's gUnknown_08499C7C
  * (dx, dy) table, and drags the pixel-space gUnknown_030032C4 four times as far
- * -- the same pairing sub_0800105C uses. Each axis is bounds-checked against
+ * -- the same pairing DesignRoomHandleCursorInput uses. Each axis is bounds-checked against
  * the map header's own width/height and beeps only when the axis actually
  * moved, so a diagonal beeps twice.
  *

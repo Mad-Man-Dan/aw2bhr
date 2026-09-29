@@ -10,8 +10,8 @@
 /* Commits a tile edit at (x, y): stash the cell's current tile in
  * gActiveMap->cursorTerrain, repaint it, then re-run sub_0800C124 and then
  * sub_0800C22C over the cell and its four cardinal neighbours, and repaint
- * once more.  Returns 0 if sub_0800BC98 rejects the cell, 1 otherwise.  The
- * `bl sub_0800BC98` is reached with r0/r1 untouched from entry -- a
+ * once more.  Returns 0 if IsSeaAt rejects the cell, 1 otherwise.  The
+ * `bl IsSeaAt` is reached with r0/r1 untouched from entry -- a
  * pass-through, not a nullary call.  The tile fetch is the promoted
  * `c_08001158.c` idiom unchanged (rows at +0x417A, tiles at +0xA22).
  *
@@ -56,11 +56,11 @@ int MakeReefSafe(int x, int y)
     int off;
     int n;
 
-    if (sub_0800BC98(x, y) == 0)
+    if (IsSeaAt(x, y) == 0)
         return 0;
 
     if (GetPropertyKindAt(x, y))
-        sub_0800C608(x, y);
+        RemovePropertyAt(x, y);
 
     b = gActiveMap;
     q = gUnknown_0808D86C;

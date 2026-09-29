@@ -9,7 +9,7 @@
  */
 
 /*
- * sub_08009BF4 -- count how many of the four cells next to (x, y) are sea.
+ * CountRiverNeighbours -- count how many of the four cells next to (x, y) are sea.
  *
  * A neighbour counts when it is on the map, sub_080094EC returns 0 for it, and
  * its terrain is 2. The order is up, down, left, right, and the result is 0
@@ -23,7 +23,7 @@
  *     registers, and hoisting the multiply changes the order of the address
  *     load and the shift.
  */
-int sub_08009BF4(int x, int y)
+int CountRiverNeighbours(int x, int y)
 {
     int n;
     int yy;
@@ -101,12 +101,13 @@ int sub_08009BF4(int x, int y)
     }
     return n;
 }
+asm(".global sub_08009BF4\n.thumb_set sub_08009BF4, CountRiverNeighbours\n");
 
 /*
- * sub_08009CF8 -- count how many of the four cells next to (x, y) are sea or
+ * CountRiverOrBridgeNeighbours -- count how many of the four cells next to (x, y) are sea or
  * bridge.
  *
- * The same count as sub_08009BF4 above, except that terrain 0xC (a bridge) is
+ * The same count as CountRiverNeighbours above, except that terrain 0xC (a bridge) is
  * accepted as well as terrain 2, and the terrain byte is read before
  * sub_080094EC is called rather than after it.
  *
@@ -116,11 +117,11 @@ int sub_08009BF4(int x, int y)
  *     terrain byte in a register that survives it; the two are not
  *     interchangeable even though the result is the same.
  *   - The per-block p, rows, cells, t and idx, and the separate `t = yy * 2;`,
- *     matter here for the same reason as in sub_08009BF4.
+ *     matter here for the same reason as in CountRiverNeighbours.
  *   - The second and fourth blocks put the bound test inside the block, after
  *     `p = gMap;`, so that the map pointer is loaded before the comparison.
  */
-int sub_08009CF8(int x, int y)
+int CountRiverOrBridgeNeighbours(int x, int y)
 {
     int terrain;
     int n;
@@ -194,3 +195,4 @@ int sub_08009CF8(int x, int y)
     }
     return n;
 }
+asm(".global sub_08009CF8\n.thumb_set sub_08009CF8, CountRiverOrBridgeNeighbours\n");

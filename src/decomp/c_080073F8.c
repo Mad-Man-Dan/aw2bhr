@@ -24,7 +24,7 @@
  *    value and the army OR re-reads entry->itemId, as the ROM does.
  *  - army/armyIndex are declared before count/limit: that sets the order
  *    of the spilled stack slots (armyIndex sp+4, count sp+8, limit sp+12). */
-void sub_080073F8(int side, int selected)
+void DesignRoomBuildRing(int side, int selected)
 {
     int army = -1;
     int armyIndex = 0;
@@ -100,6 +100,7 @@ void sub_080073F8(int side, int selected)
         sub_08007B74();
     }
 }
+asm(".global sub_080073F8\n.thumb_set sub_080073F8, DesignRoomBuildRing\n");
 
 /* Loads army `army`'s five design-ring items (two halfwords each, from
  * gUnknown_084887AC) into gUnknown_0200B224[9..13], then copies their

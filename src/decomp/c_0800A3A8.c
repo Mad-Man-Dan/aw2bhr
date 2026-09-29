@@ -8,7 +8,7 @@
  */
 
 /* One quarter of src/decomp/c_0800A3D4.c, lifted out on its own and without
- * that function's sub_08009B38 guard: fetch the cell's tile and, if it is
+ * that function's IsPlainRiverAt guard: fetch the cell's tile and, if it is
  * positive, stamp kind 2 and draw it.
  *
  * `v` has to be a local rather than the call written inline twice -- the ROM

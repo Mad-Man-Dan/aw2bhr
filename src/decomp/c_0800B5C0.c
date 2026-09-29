@@ -28,21 +28,22 @@
  * front of it, and agbcc re-narrows a narrow-returning callee at every call
  * site. */
 
-int sub_0800B5C0(int x, int y)
+int GetShoalNeighbourMask(int x, int y)
 {
     int r = 0;
 
     if (y > 0)
-        r = sub_0800B4F0(x, y - 1) << 3;
+        r = IsShoalAt(x, y - 1) << 3;
 
     if (x > 0)
-        r |= sub_0800B4F0(x - 1, y) << 2;
+        r |= IsShoalAt(x - 1, y) << 2;
 
     if (x < gMap->width - 1)
-        r |= sub_0800B4F0(x + 1, y) << 1;
+        r |= IsShoalAt(x + 1, y) << 1;
 
     if (y < gMap->height - 1)
-        r |= sub_0800B4F0(x, y + 1);
+        r |= IsShoalAt(x, y + 1);
 
     return r;
 }
+asm(".global sub_0800B5C0\n.thumb_set sub_0800B5C0, GetShoalNeighbourMask\n");

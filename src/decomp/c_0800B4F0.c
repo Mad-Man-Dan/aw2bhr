@@ -11,7 +11,7 @@
 /* The `movs r4, #0` ahead of the base `ldr` is the initialiser hoisting to the
  * top of the function; `return cells[idx] == 0xD;` would materialise the zero
  * after the load instead (that is what sub_080094EC has). */
-int sub_0800B4F0(int x, int y)
+int IsShoalAt(int x, int y)
 {
     int result = 0;
     int idx;
@@ -23,3 +23,4 @@ int sub_0800B4F0(int x, int y)
 
     return result;
 }
+asm(".global sub_0800B4F0\n.thumb_set sub_0800B4F0, IsShoalAt\n");

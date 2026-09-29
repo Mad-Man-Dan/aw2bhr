@@ -70,7 +70,7 @@ void sub_080037AC(void)
     sub_0801F234(0x3C);
 }
 
-void sub_08003814(void)
+void DesignRoomDrawCoordBox(void)
 {
     int x;
     int t;
@@ -83,8 +83,9 @@ void sub_08003814(void)
     sub_0802BD54(t, 0xE, gActiveMap->cursorX + 1);
     sub_0802BD54(t, 0x18, gActiveMap->cursorY + 1);
 }
+asm(".global sub_08003814\n.thumb_set sub_08003814, DesignRoomDrawCoordBox\n");
 
-void sub_08003890(void)
+void DesignRoomUpdateCoordBox(void)
 {
     s16 * q;
     int v;
@@ -110,25 +111,29 @@ void sub_08003890(void)
         t = gActiveMap->panelSide == 0 ? 0x20 : 0xD0;
         DrawOamObject(0x8E, (t - 0x20) & 0x1FF,
                      (u8)gActiveMap->introScreenY, 0, 0);
-        sub_08003814();
+        DesignRoomDrawCoordBox();
     }
 }
+asm(".global sub_08003890\n.thumb_set sub_08003890, DesignRoomUpdateCoordBox\n");
 
-void sub_08003910(void)
+void DesignRoomStartCoordBox(void)
 {
     sub_080152EC(gUnknown_08485D8C, 0);
     gActiveMap->introScreenY = 0xFFF6;
 }
+asm(".global sub_08003910\n.thumb_set sub_08003910, DesignRoomStartCoordBox\n");
 
-void sub_08003934(void)
+void DesignRoomShowCoordBox(void)
 {
     gActiveMap->flags |= 8;
 }
+asm(".global sub_08003934\n.thumb_set sub_08003934, DesignRoomShowCoordBox\n");
 
-void sub_08003948(void)
+void DesignRoomHideCoordBox(void)
 {
     gActiveMap->flags &= ~8;
 }
+asm(".global sub_08003948\n.thumb_set sub_08003948, DesignRoomHideCoordBox\n");
 
 void sub_08003960(void)
 {
@@ -297,7 +302,7 @@ void GenerateRandomMap(void)
 
 asm(".global sub_08003B8C\n.thumb_set sub_08003B8C, GenerateRandomMap\n");
 
-void sub_08003C48(int a1)
+void DesignRoomNewMap(int a1)
 {
     int x, y;
 
@@ -343,6 +348,7 @@ void sub_08003C48(int a1)
     RegisterArmyHqs();
     gActiveMap->propertyCount = CountProperties();
 }
+asm(".global sub_08003C48\n.thumb_set sub_08003C48, DesignRoomNewMap\n");
 
 void FixShorelineAt(int x, int y, int kind)
 {
@@ -357,7 +363,7 @@ void FixShorelineAt(int x, int y, int kind)
             idx++;
             idx += x;
             if (gMap->terrain[idx] == 1 || gMap->terrain[idx] == 0xD)
-                sub_08007F9C(x + 1, y);
+                RepaintNeighbours(x + 1, y);
         }
         if (x > 0)
         {
@@ -367,7 +373,7 @@ void FixShorelineAt(int x, int y, int kind)
             idx--;
             idx += x;
             if (gMap->terrain[idx] == 1 || gMap->terrain[idx] == 0xD)
-                sub_08007F9C(x - 1, y);
+                RepaintNeighbours(x - 1, y);
         }
         break;
 
@@ -378,13 +384,13 @@ void FixShorelineAt(int x, int y, int kind)
             {
                 if (gMap->terrain[gMap->rowOffset[y - 1] + x] == 7
                  || gMap->terrain[gMap->rowOffset[y - 1] + x] == 0xD)
-                    sub_08007F9C(x, y);
+                    RepaintNeighbours(x, y);
             }
             if (y < gMap->height - 1)
             {
                 if (gMap->terrain[gMap->rowOffset[y + 1] + x] == 7
                  || gMap->terrain[gMap->rowOffset[y + 1] + x] == 0xD)
-                    sub_08007F9C(x, y);
+                    RepaintNeighbours(x, y);
             }
         }
         break;
@@ -439,7 +445,7 @@ void sub_08003F44(int x, int y, int v)
     }
 }
 
-void sub_0800401C(int cx, int cy, int w, int h, int t)
+void StampTerrainBlob(int cx, int cy, int w, int h, int t)
 {
     register int hh asm("r9") = h;
     register int tt asm("r10") = t;
@@ -487,6 +493,7 @@ void sub_0800401C(int cx, int cy, int w, int h, int t)
         }
     }
 }
+asm(".global sub_0800401C\n.thumb_set sub_0800401C, StampTerrainBlob\n");
 
 void sub_080040C8(void)
 {
@@ -514,7 +521,7 @@ void sub_080040C8(void)
         b = RandRange(0x12, 2);
         w = RandRange(0xA, 2);
         h = RandRange(0xC - w, 2);
-        sub_0800401C(a, b, w, h, 1);
+        StampTerrainBlob(a, b, w, h, 1);
     }
 
     n = RandRange(0xC, 8);
@@ -524,7 +531,7 @@ void sub_080040C8(void)
         b = RandRange(0x12, 2);
         w = RandRange(0xA, 4);
         h = RandRange(0xE - w, 4);
-        sub_0800401C(a, b, w, h, 1);
+        StampTerrainBlob(a, b, w, h, 1);
     }
 
     lim = RandRange(0x32, 0x28);
@@ -550,7 +557,7 @@ void sub_080040C8(void)
         b = RandRange(0x12, 2);
         w = RandRange(4, 1);
         h = RandRange(5 - w, 1);
-        sub_0800401C(a, b, w, h, 0x20);
+        StampTerrainBlob(a, b, w, h, 0x20);
     }
 
     n = 7 - n;
@@ -560,7 +567,7 @@ void sub_080040C8(void)
         b = RandRange(0x12, 2);
         w = RandRange(4, 2);
         h = RandRange(6 - w, 2);
-        sub_0800401C(a, b, w, h, 0x20);
+        StampTerrainBlob(a, b, w, h, 0x20);
     }
 
     lim = RandRange(0x32, 0x28);
@@ -603,15 +610,15 @@ void sub_080040C8(void)
              && gMap->terrain[gMap->rowOffset[y] + x] == 1)
             {
                 if (gMap->terrain[gMap->rowOffset[y - 1] + x] == 7)
-                    sub_0800BA9C(x, y - 1);
+                    MakeShoal(x, y - 1);
                 if (gMap->terrain[gMap->rowOffset[y + 1] + x] == 7)
-                    sub_0800BA9C(x, y + 1);
+                    MakeShoal(x, y + 1);
                 r = gMap->rowOffset[y] - 1;
                 if (gMap->terrain[r + x] == 7)
-                    sub_0800BA9C(x - 1, y);
+                    MakeShoal(x - 1, y);
                 r = gMap->rowOffset[y] + 1;
                 if (gMap->terrain[r + x] == 7)
-                    sub_0800BA9C(x + 1, y);
+                    MakeShoal(x + 1, y);
             }
         }
     }
@@ -641,7 +648,7 @@ void sub_0800449C(void)
         b = RandRange(0x1E, 0);
         w = RandRange(0xA, 6);
         h = RandRange(0x10 - w, 6);
-        sub_0800401C(a, b, w, h, 1);
+        StampTerrainBlob(a, b, w, h, 1);
     }
 
     for (i = RandRange(0x1E, 0x19); i > 0; i--)
@@ -650,7 +657,7 @@ void sub_0800449C(void)
         b = RandRange(0x1E, 0);
         w = RandRange(0xC, 4);
         h = RandRange(0x10 - w, 4);
-        sub_0800401C(a, b, w, h, 1);
+        StampTerrainBlob(a, b, w, h, 1);
     }
 
     lim = RandRange(100, 90);
@@ -676,7 +683,7 @@ void sub_0800449C(void)
         b = RandRange(0x12, 2);
         w = RandRange(4, 2);
         h = RandRange(6 - w, 2);
-        sub_0800401C(a, b, w, h, 0x20);
+        StampTerrainBlob(a, b, w, h, 0x20);
     }
 
     for (i = 12 - n; i > 0; i--)
@@ -685,7 +692,7 @@ void sub_0800449C(void)
         b = RandRange(0x12, 2);
         w = RandRange(4, 2);
         h = RandRange(6 - w, 2);
-        sub_0800401C(a, b, w, h, 0x20);
+        StampTerrainBlob(a, b, w, h, 0x20);
     }
 
     lim = RandRange(100, 0x50);

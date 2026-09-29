@@ -14,7 +14,7 @@
  * a button, fades back out and returns to mode 1.
  *
  * Driven by gActiveMap->state. The first frame after the mode change hides the
- * map (sub_08001D9C, sub_08003948, sub_080039D0), arms a two-frame timer and
+ * map (DesignRoomHideTilePanel, DesignRoomHideCoordBox, sub_080039D0), arms a two-frame timer and
  * plays sound 0x76. gUnknown_03001FFC is the fade level the screen waits on.
  *
  *   state 0:   count the timer down, then go to state 50.
@@ -30,7 +30,7 @@
  *              BG0 and BG2 control words, store 0xA0 in gUnknown_03002EFC and
  *              zero gUnknown_030030C4's low byte (both purposes unknown), then
  *              call sub_08024268 and go to state 100.
- *   state 100: bring the map back (sub_08001D8C, sub_08003934), switch to mode
+ *   state 100: bring the map back (DesignRoomShowTilePanel, DesignRoomShowCoordBox), switch to mode
  *              1 and leave the state at 40, which no case here handles.
  */
 
@@ -40,8 +40,8 @@ void sub_08000694(void)
     {
         gActiveMap->stateChanged = 0;
         gActiveMap->state = 0;
-        sub_08001D9C();
-        sub_08003948();
+        DesignRoomHideTilePanel();
+        DesignRoomHideCoordBox();
         gActiveMap->stateTimer = 2;
         sub_080039D0();
         sub_0803B4DC(0x76);
@@ -111,9 +111,9 @@ void sub_08000694(void)
 
     case 100:
         gActiveMap->state = 40;
-        sub_08001D8C();
-        sub_08003934();
-        sub_0800056C(1);
+        DesignRoomShowTilePanel();
+        DesignRoomShowCoordBox();
+        DesignRoomSetMode(1);
         break;
     }
 }

@@ -2,7 +2,7 @@
 #include "hardware.h"
 #include "map.h"
 
-void sub_080030BC(int a1, int a2, int a3)
+void DesignRoomUpdateArmyPanel(int a1, int a2, int a3)
 {
     u8 buf[8];
 
@@ -86,3 +86,4 @@ void sub_080030BC(int a1, int a2, int a3)
 
     sub_080032EC(a1, gActiveMap->armyPanelX[a1] >> 4, 0x6A);
 }
+asm(".global sub_080030BC\n.thumb_set sub_080030BC, DesignRoomUpdateArmyPanel\n");

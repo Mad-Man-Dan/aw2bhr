@@ -9,14 +9,14 @@
  */
 
 /*
- * sub_0800FD44 -- choose the tile for a cell that joins onto its neighbours,
+ * GetPipeTile -- choose the tile for a cell that joins onto its neighbours,
  * such as a road or a river, at (x, y).
  *
  * Two shortcuts come first: with a3 == 0 and the cell already showing tile
  * 0x162 or 0x163, GetSeamType answers instead; and if sub_0800F8D4 accepts the
  * cell, the tile it already has is kept.
  *
- * Otherwise sub_0800F564 is asked about each of the four directions -- 0 and 1
+ * Otherwise GetPipeConnectionAt is asked about each of the four directions -- 0 and 1
  * are the horizontal pair, 2 and 3 the vertical one -- and n counts how many
  * answered. The rest of the function is a ladder on n that names a tile:
  *
@@ -54,7 +54,7 @@
 
 #define MAP gMap
 
-int sub_0800FD44(int x, int y, int a3)
+int GetPipeTile(int x, int y, int a3)
 {
     u8 s[4];
     int i;
@@ -71,7 +71,7 @@ int sub_0800FD44(int x, int y, int a3)
 
     for (i = 0; i < 4; i++)
     {
-        s[i] = sub_0800F564(x, y, i);
+        s[i] = GetPipeConnectionAt(x, y, i);
         if (s[i])
             n++;
     }
@@ -438,3 +438,4 @@ ret142:
         return -1;
     }
 }
+asm(".global sub_0800FD44\n.thumb_set sub_0800FD44, GetPipeTile\n");

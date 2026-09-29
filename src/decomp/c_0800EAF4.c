@@ -26,7 +26,7 @@
  * sites leaves x's own parameter pseudo as the higher-priority allocno, which
  * is the ROM's assignment.  Same for a `n = y + 1;` statement, whether it sits
  * before or after the first call. */
-void sub_0800EAF4(int x, int y)
+void MakeForestBlock2x2(int x, int y)
 {
     u16 v;
 
@@ -40,3 +40,4 @@ void sub_0800EAF4(int x, int y)
         MakeTileSimple(x + 1, y + 1, 0x67);
     }
 }
+asm(".global sub_0800EAF4\n.thumb_set sub_0800EAF4, MakeForestBlock2x2\n");
