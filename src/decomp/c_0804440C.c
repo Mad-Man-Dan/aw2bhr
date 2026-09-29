@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804440C.
- * IsUnitDirectForCoPowerAnim @ 0x0804440C, HasMaxRangeGreaterThanOne @ 0x0804443C, IsUnitSoldier @ 0x08044460, IsUnitAir @ 0x08044488, sub_080444B4 @ 0x080444B4
+ * IsUnitDirectForCoPowerAnim @ 0x0804440C, HasMaxRangeGreaterThanOne @ 0x0804443C, IsUnitSoldier @ 0x08044460, IsUnitAir @ 0x08044488, IsUnitAirOrActedNonSoldier @ 0x080444B4
  */
 
 /* Named per Xenesis's AW2 Subroutine List: "Animation Check - Returns 0x1
@@ -60,7 +60,7 @@ int IsUnitAir(struct Unk030040D8 *p)
 
 asm(".global sub_08044488\n.thumb_set sub_08044488, IsUnitAir\n");
 
-int sub_080444B4(struct Unk030040D8 *p)
+int IsUnitAirOrActedNonSoldier(struct Unk030040D8 *p)
 {
     int t;
 
@@ -77,3 +77,4 @@ int sub_080444B4(struct Unk030040D8 *p)
         return 0;
     return 1;
 }
+asm(".global sub_080444B4\n.thumb_set sub_080444B4, IsUnitAirOrActedNonSoldier\n");

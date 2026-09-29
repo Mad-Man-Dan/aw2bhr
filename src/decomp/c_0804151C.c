@@ -16,7 +16,7 @@
  * in exactly one instruction, the `bl` target (IsCellCapturableByCurrentArmy vs IsTerrainSilo).
  *
  * gUnknown_03003F20 is declared `struct Unk03003338 *` -- a type inherited from
- * its only writer, sub_0803486C. This function reads it as a 4-byte
+ * its only writer, InitRecordListPointersAndTerrainTable. This function reads it as a 4-byte
  * {u8 x; u8 y; s16 v;} record (`strb`, `strb #1`, `strh #2`, `adds r5,#4`), so
  * the cast is deliberate; see include/unknown-globals.h. The declaration is
  * left alone rather than retyped because the writer's value genuinely is the
@@ -94,8 +94,8 @@ asm(".global sub_0804151C\n.thumb_set sub_0804151C, BuildCapturableCellList\n");
  * Cell addressing now uses the canonical gMap unit and rowOffset fields
  * directly.
  *
- * NOT a twin of sub_080416A4 despite the adjacency and the similar size. */
-int sub_080415E4(void)
+ * NOT a twin of BuildResupplyTargetList despite the adjacency and the similar size. */
+int BuildBoardableTransportList(void)
 {
     struct Unk03003338 *out;
     int off;
@@ -123,18 +123,19 @@ int sub_080415E4(void)
     out->unk00 = 0;
     return out - gUnknown_03003338;
 }
+asm(".global sub_080415E4\n.thumb_set sub_080415E4, BuildBoardableTransportList\n");
 
-/* The sub_080415E4 shape with a different predicate and a different order: here
- * sub_0804209C is asked BEFORE the map cell is addressed, and the cell is read
+/* The BuildBoardableTransportList shape with a different predicate and a different order: here
+ * IsResupplyableAllyAt is asked BEFORE the map cell is addressed, and the cell is read
  * only to be stored, so there is no `cell` local and no `!= 0` test.
- * Not a twin of sub_080415E4 -- 81 instructions against 84, four pool words
+ * Not a twin of BuildBoardableTransportList -- 81 instructions against 84, four pool words
  * against five.
  *
  * `gUnknown_08091314` is not an object either: the ROM word there holds
  * 0x03003338, the second of the two consecutive -fforce-addr words for
- * gUnknown_03003338 (0x08091310 is sub_080415E4's). One word per
+ * gUnknown_03003338 (0x08091310 is BuildBoardableTransportList's). One word per
  * (function, symbol), as documented in include/unknown-globals.h. */
-int sub_080416A4(void)
+int BuildResupplyTargetList(void)
 {
     struct Unk03003338 *out;
     int off;
@@ -146,7 +147,7 @@ int sub_080416A4(void)
     {
         for (x = 0; x < gMap->width; x++)
         {
-            if ((s8)gUnknown_03003340[y][x] >= 0 && sub_0804209C(x, y))
+            if ((s8)gUnknown_03003340[y][x] >= 0 && IsResupplyableAllyAt(x, y))
             {
                 off = gMap->rowOffset[y] + x;
                 out->unk00 = gMap->unit[off];
@@ -157,6 +158,7 @@ int sub_080416A4(void)
     out->unk00 = 0;
     return out - gUnknown_03003338;
 }
+asm(".global sub_080416A4\n.thumb_set sub_080416A4, BuildResupplyTargetList\n");
 
 int BuildSiloCellList(void)
 {

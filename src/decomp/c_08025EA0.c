@@ -7,7 +7,7 @@
  * sub_08025EA0 @ 0x08025EA0
  */
 
-void sub_08025EA0(void)
+void ReadyCurrentArmyUnits(void)
 {
     int i;
     struct Unit *p;
@@ -19,3 +19,4 @@ void sub_08025EA0(void)
             p->flags &= ~1;
     }
 }
+asm(".global sub_08025EA0\n.thumb_set sub_08025EA0, ReadyCurrentArmyUnits\n");

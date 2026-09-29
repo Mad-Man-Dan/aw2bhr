@@ -48,7 +48,7 @@ asm(".global sub_0807D800\n.thumb_set sub_0807D800, IsCoSelectionUnique\n");
 void sub_0807D860(struct Unk807D860 *p)
 {
     if (p->unk4c == 9)
-        sub_08043BA4(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], 0x40, 1);
+        LoadCoFullBodyAndPalette(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], 0x40, 1);
 
     if (p->unk4c == 0x10)
     {

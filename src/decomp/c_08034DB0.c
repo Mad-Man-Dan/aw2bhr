@@ -7,19 +7,21 @@
  * sub_08034DB0 @ 0x08034DB0, sub_08034DCC @ 0x08034DCC
  */
 
-void sub_08034DB0(void)
+void MapState_WaitForCampaignIntro(void)
 {
     if (sub_0803B628() == 0)
         gUnknown_030032D8 = 5;
 }
+asm(".global sub_08034DB0\n.thumb_set sub_08034DB0, MapState_WaitForCampaignIntro\n");
 
 /* gUnknown_030033EC is a u16 read here with a bare `ldrb` -- the truncation
- * folded into the load that sub_08043DAC's u8 parameter forces. */
-void sub_08034DCC(void)
+ * folded into the load that PlayArmyCoMusic's u8 parameter forces. */
+void MapState_PlayTurnMusic(void)
 {
     if (gUnknown_03004080 != 1)
-        sub_08043DAC(gUnknown_030033EC);
+        PlayArmyCoMusic(gUnknown_030033EC);
 
     sub_08074460();
     gUnknown_030032D8 = 6;
 }
+asm(".global sub_08034DCC\n.thumb_set sub_08034DCC, MapState_PlayTurnMusic\n");

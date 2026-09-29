@@ -30,7 +30,7 @@
  *   9          write the four tilemap entries of a 2 x 2 glyph, their tile
  *              numbers worked out from the next byte.
  *   10         draw a unit: the next byte picks which of gUnknown_030040D8's two
- *              units, and its hp is rounded up to tens for sub_0802216C.
+ *              units, and its hp is rounded up to tens for WriteUnitTileQuad.
  *   11         set the speed from the next byte. 0x80 switches the delay off
  *              (TextWriterDisableDelay); 0x81 to 0x89 store that byte plus 0x80 in unk3a
  *              and restart the counter; anything else is ignored.
@@ -202,7 +202,7 @@ entry_done:
             else
                 n = 0;
             s2 = (u8 *)p + 0x32;
-            sub_0802216C(p->unk28 + s2[0] + p->unk33 * 32, e->type,
+            WriteUnitTileQuad(p->unk28 + s2[0] + p->unk33 * 32, e->type,
                          gUnknown_03003F2C, e->unk07, 0, n, 0, 0);
             s2[0] += 2;
             p->unk20 += 2;
@@ -214,7 +214,7 @@ entry_done:
         else
             n = 0;
         s2 = (u8 *)p + 0x32;
-        sub_0802216C(p->unk28 + s2[0] + p->unk33 * 32, e->type,
+        WriteUnitTileQuad(p->unk28 + s2[0] + p->unk33 * 32, e->type,
                      gUnknown_03003F2C, e->unk07, 0, n, 0, 0);
         s2[0] += 2;
         p->unk20 += 2;

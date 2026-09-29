@@ -24,9 +24,9 @@
  * -- and called the draft "INSTRUCTION-EXACT".  IT WAS NOT.  `s16 dx = 0;` and
  * `s16 dy = 0;` as declaration initialisers make agbcc emit
  *      movs r0,#0 ; mov r8,r0 ; mov sb,r0
- * BEFORE the `bl sub_08022AAC`, where the ROM emits it AFTER.  Writing them as
+ * BEFORE the `bl SetMapCursorPosition`, where the ROM emits it AFTER.  Writing them as
  * plain statements after the call:
- *      sub_08022AAC(a1, a2);
+ *      SetMapCursorPosition(a1, a2);
  *      dx = 0;
  *      dy = 0;
  * moves the initialisation past the call and the entire three-cycle unwinds by
@@ -66,7 +66,7 @@ void StartCameraScroll(int a1, int a2, u8 a3)
     s16 cx;
     s16 cy;
 
-    sub_08022AAC(a1, a2);
+    SetMapCursorPosition(a1, a2);
 
     dx = 0;
     dy = 0;

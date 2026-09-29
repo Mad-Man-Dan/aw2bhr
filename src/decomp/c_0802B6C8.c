@@ -18,7 +18,7 @@
  * arguments, where the ROM computes it first; the local also moves the
  * gUnits base from r3 to the r1 the ROM uses.
  *
- * The (u8) is real, not a tidy-up: sub_0802706C's third parameter is u16 and
+ * The (u8) is real, not a tidy-up: ShouldDrawTransportMarker's third parameter is u16 and
  * the ROM truncates with `lsls #0x18; lsrs #0x18`. The prototype is right --
  * the promoted DrawCursorInfoUnitIcon passes an s16 there with no truncation at all. */
 /* WAVE 35: CANONICAL `struct Map`. Eight drafts across blocks 0x08029-0x0802B
@@ -46,7 +46,7 @@ u8 sub_0802B6C8(u8 x, u8 y)
     unit = &gUnits[gMap->unit[idx]];
     army = ((unit - gUnits) >> 6) + 1;
 
-    if (sub_0802706C(unit->type, gUnknown_030033EC, army))
+    if (ShouldDrawTransportMarker(unit->type, gUnknown_030033EC, army))
         return 2;
 
     if (unit->unk07 | unit->unk08)

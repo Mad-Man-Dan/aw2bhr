@@ -7,7 +7,8 @@
  * sub_0802A690 @ 0x0802A690
  */
 
-void sub_0802A690(void)
+void FuelUpkeep_Init(void)
 {
     gUnknown_03001470[gUnknown_03001FBC].unk38 = 0;
 }
+asm(".global sub_0802A690\n.thumb_set sub_0802A690, FuelUpkeep_Init\n");

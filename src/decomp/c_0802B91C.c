@@ -17,7 +17,7 @@
  *
  * (1) a4 is s16, NOT u16 with (s16) casts at the uses. The ROM materialises
  *     `a4 << 16` once (`lsls r4, r3, #0x10`) and derives BOTH the u16 third
- *     argument of sub_0802706C (`lsrs r2, r4, #0x10`) and every `(s16)a4`
+ *     argument of ShouldDrawTransportMarker (`lsrs r2, r4, #0x10`) and every `(s16)a4`
  *     (`asrs`, six sites) from it. A u16 parameter hands the already
  *     zero-extended pseudo to the callee with no shift pair at all. Same for
  *     a1/a2: `(s16)a2 | 0x400` lets combine sink the extension past the OR
@@ -56,13 +56,13 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
     if (a5 != 0)
         a5 = 1;
 
-    if (sub_0802706C(a3, gUnknown_030033EC, a4))
+    if (ShouldDrawTransportMarker(a3, gUnknown_030033EC, a4))
     {
         u8 *dst;
         int t;
         int u;
 
-        dst = sub_08026198() + (0x78 - sub_080261A0()) * 0x20;
+        dst = GetUnitExtraGraphics() + (0x78 - GetUnitSheetFrameTileCount()) * 0x20;
         t = a8 * 4;
         u = (a4 & 1) + 0x1dc;
         RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
@@ -76,7 +76,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
             int t;
             int u;
 
-            dst = sub_08026198() + (0x75 - sub_080261A0()) * 0x20;
+            dst = GetUnitExtraGraphics() + (0x75 - GetUnitSheetFrameTileCount()) * 0x20;
             t = a8 * 4;
             u = (a4 & 1) + 0x1dc;
             RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
@@ -89,7 +89,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
             int t;
             int u;
 
-            dst = sub_08026198() + (0x76 - sub_080261A0()) * 0x20;
+            dst = GetUnitExtraGraphics() + (0x76 - GetUnitSheetFrameTileCount()) * 0x20;
             t = a8 * 4;
             u = (a4 & 1) + 0x1dc;
             RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
@@ -102,7 +102,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
             int t;
             int u;
 
-            dst = sub_08026198() + (0x77 - sub_080261A0()) * 0x20;
+            dst = GetUnitExtraGraphics() + (0x77 - GetUnitSheetFrameTileCount()) * 0x20;
             t = a8 * 4;
             u = (a4 & 1) + 0x1dc;
             RegisterDataMove(dst, (void *)(0x06010000 + (t + u) * 0x20), 0x20);
@@ -110,7 +110,7 @@ void DrawCursorInfoUnitIcon(s16 a1, s16 a2, s16 a3, s16 a4, u8 a5, u8 a6, u8 a7,
         }
     }
 
-    RegisterDataMove(sub_08026190() + (sub_080261A4(a4, a3) & 0x3ff) * 0x20,
+    RegisterDataMove(GetUnitSheetGraphics() + (GetUnitSpriteTile(a4, a3) & 0x3ff) * 0x20,
                  (void *)(0x06013B40 + a8 * 0x80), 0x80);
 
     if (n != 0)

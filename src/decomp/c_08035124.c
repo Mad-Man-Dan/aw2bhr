@@ -7,11 +7,12 @@
  * sub_08035124 @ 0x08035124, ChangeGameWeather @ 0x08035144
  */
 
-void sub_08035124(u8 a)
+void ResetWeatherRoundCountersIfChanging(u8 a)
 {
     if (a != 0 && gPlaySt.weather != a)
         ResetWeatherRoundCounters();
 }
+asm(".global sub_08035124\n.thumb_set sub_08035124, ResetWeatherRoundCountersIfChanging\n");
 
 /* Named per Xenesis's AW2 Subroutine List: "Changes current game weather.
  * r0 = Weather ID". The old ChangeGameWeather symbol is kept as a linker alias

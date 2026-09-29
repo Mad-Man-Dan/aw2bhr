@@ -49,7 +49,7 @@ void DeploymentScreen_Loop(void)
     int t;
     struct Unk2023830 *tbl;
 
-    sub_0802776C(1);
+    SetInfoBoxMode(1);
 
     if (IsCoSpeechScriptRunning())
         return;
@@ -128,12 +128,12 @@ void DeploymentScreen_Loop(void)
 
     t = (u16)ent->unk20 - (u16)ent->unk1e + 2;
     gUnknown_030033E4.unk02 = t;
-    sub_0802323C(0x10, t * 16 + 8, 3);
+    EaseMapCursorAndDraw(0x10, t * 16 + 8, 3);
 
     if (ent->unk1e != 0)
-        sub_08043418(0x44, 0x2a, 0xe);
+        DrawMapCursorSprite(0x44, 0x2a, 0xe);
 
     if (ent->unk1e + 7 < *(s16 *)&gUnknown_0300055A)
-        sub_08043418(0x44, 0x96, 0xf);
+        DrawMapCursorSprite(0x44, 0x96, 0xf);
 }
 asm(".global sub_0802DA18\n.thumb_set sub_0802DA18, DeploymentScreen_Loop\n");

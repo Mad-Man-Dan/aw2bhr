@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x080627F4.
- * sub_080627F4 @ 0x080627F4
+ * AiAccumulateInfluence @ 0x080627F4
  */
 
 /* Accumulates each army's unit strength into the gUnknown_0202DAD8 grid.
@@ -15,7 +15,7 @@
  * wave-90 permuter with --stack-diffs on (8,473 iterations, first run); every
  * earlier permuter run scored this residual as a tie. */
 
-void sub_080627F4(u8 a1)
+void AiAccumulateInfluence(u8 a1)
 {
     int u;
     int t;
@@ -58,7 +58,7 @@ void sub_080627F4(u8 a1)
                     continue;
                 }
                 v = e->hp
-                    * sub_08043070(gPlayers[gUnknown_030033EC].co,
+                    * GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                                    gPlayers[gUnknown_030033EC].coMode,
                                    m, e->type, 0);
                 x = e->x >> 2;
@@ -88,3 +88,4 @@ void sub_080627F4(u8 a1)
         }
     }
 }
+asm(".global sub_080627F4\n.thumb_set sub_080627F4, AiAccumulateInfluence\n");

@@ -87,7 +87,7 @@ void JoinUnits(void)
         gSelectedUnit->fuel = sum;
 
     joiner->type = 0;
-    sub_080424E4();
+    RecordUnitActionCell();
 }
 
 asm(".global sub_08042998\n.thumb_set sub_08042998, JoinUnits\n");

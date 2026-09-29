@@ -24,7 +24,7 @@
  * the second test to a label the second test also falls into. Folded into one
  * `if (A && B) return 1; return 0;` the polarity flips: `return 1` goes inline
  * and `return 0` lands after the pool, which is 4 bytes wrong. */
-int sub_0804203C(struct Unit *p)
+int IsIndirectFireUnitArmed(struct Unit *p)
 {
     if (GetUnitFiringRangeWithCoBonus(((p - gUnits) >> 6) + 1, p->type) == 1)
         return 0;
@@ -34,3 +34,4 @@ int sub_0804203C(struct Unit *p)
 
     return 0;
 }
+asm(".global sub_0804203C\n.thumb_set sub_0804203C, IsIndirectFireUnitArmed\n");

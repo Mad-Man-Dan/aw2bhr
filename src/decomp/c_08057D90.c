@@ -37,7 +37,7 @@
  * `bx = x` a zero-extending `lsrs` rather than a sign-extending `asrs`.
  *
  * MATCHED. */
-void sub_08057D90(s16 *px, s16 *py)
+void AiPickSafestReachableCell(s16 *px, s16 *py)
 {
     struct Map *map;
     s16 x;
@@ -83,3 +83,4 @@ void sub_08057D90(s16 *px, s16 *py)
     *px = bx;
     *py = by;
 }
+asm(".global sub_08057D90\n.thumb_set sub_08057D90, AiPickSafestReachableCell\n");

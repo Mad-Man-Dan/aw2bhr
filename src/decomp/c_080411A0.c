@@ -21,9 +21,10 @@ struct Unk411A0Proc
 /* Three statements, not two: Proc_StartBlocking's result is dead (r0 is
  * reloaded by the pool `ldr` for the next call) and sub_0803B4DC takes no
  * argument from it. */
-void sub_080411A0(ProcPtr parent)
+void CaptureAnim_StartShake(ProcPtr parent)
 {
     AP_SwitchAnimation(((struct Unk411A0Proc *)Proc_Find(gUnknown_0849FD44))->unk34, 1);
     Proc_StartBlocking(gUnknown_0849FE0C, parent);
     sub_0803B4DC(0x6D);
 }
+asm(".global sub_080411A0\n.thumb_set sub_080411A0, CaptureAnim_StartShake\n");

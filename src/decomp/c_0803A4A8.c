@@ -13,7 +13,7 @@ void sub_0803A4A8(void)
     sub_08013AD4(2);
     sub_0803A190(gUnknown_0849D89C->unk00, gUnknown_0849D89C->unk04);
     sub_08013AD4(0);
-    sub_0802465C();
+    SetMapLayerPrioritiesDefault();
     StartTextBox((gUnknown_0849D89C->unk00 >> 3) + 1, 0xa, gBG0TilemapBuffer,
                  gUnknown_0849E398[gUnknown_081BA068[gUnknown_0849D89C->unk04->type] - 1][0],
                  0x8000, 0xf8)->unk3a = 1;

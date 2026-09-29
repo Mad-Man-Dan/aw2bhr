@@ -22,7 +22,7 @@
  *
  * The copy is field-by-field at matching offsets with a word at +8, so both
  * sides are one type. gUnknown_030044B0 is declared `u8 []` on the evidence of
- * sub_080344B4 / SendActionCommand / LinkQueueCommand and struct Unk030046C0's
+ * SendMoveCommand / SendActionCommand / LinkQueueCommand and struct Unk030046C0's
  * +0x04/+0x05, +0x08 and +0x0c..+0x12 are still filler, so the view is
  * file-local: retyping either shared declaration to suit this one function is
  * exactly what the "never reshape a shared member" rule forbids, and nothing
@@ -61,7 +61,7 @@ struct Unk0805D5ECCmd
     /* 0x12 */ u8 unk12;
 };
 
-void sub_0805D5EC(void)
+void AiSendActionCommand(void)
 {
   struct Unk0805D5ECCmd *d = (struct Unk0805D5ECCmd *) gUnknown_030044B0;
   struct Unk0805D5ECCmd *s = (struct Unk0805D5ECCmd *) (&gUnknown_030046C0);
@@ -83,3 +83,4 @@ void sub_0805D5EC(void)
 
   LinkQueueCommand(gUnknown_030044B0);
 }
+asm(".global sub_0805D5EC\n.thumb_set sub_0805D5EC, AiSendActionCommand\n");

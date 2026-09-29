@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* The per-proc sibling of the matched sub_08041E48 next door: the same three
+/* The per-proc sibling of the matched InventionAttack_CommitMove next door: the same three
  * bracketing calls and the same gPlaySt.unk32 gate on the same
  * SendActionCommand command, but issuing command 4 with the byte behind
  * GetAttackTargetRecord's result instead of the proc's own coordinates.
@@ -22,10 +22,10 @@ struct Unk41DF8Proc
     /* 0x00 */ PROC_HEADER;
     /* 0x29 */ STRUCT_PAD(0x29, 0x64);
     /* 0x64 */ s16 unk64; /* `ldrsh` through a scratch register, so signed --
-                           * the same member sub_08041E48 reads. */
+                           * the same member InventionAttack_CommitMove reads. */
 };
 
-void sub_08041DF8(struct Unk41DF8Proc *proc)
+void UnitAttack_CommitMove(struct Unk41DF8Proc *proc)
 {
     u8 *p;
 
@@ -41,3 +41,4 @@ void sub_08041DF8(struct Unk41DF8Proc *proc)
             SendActionCommand(4, gUnknown_03003F38, *p, 0);
     }
 }
+asm(".global sub_08041DF8\n.thumb_set sub_08041DF8, UnitAttack_CommitMove\n");

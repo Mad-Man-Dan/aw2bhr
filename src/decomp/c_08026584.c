@@ -9,6 +9,7 @@
 
 #include "unknown-functions.h"
 
-void sub_08026584(u8 a0, u16 a1)
+void AddArmyBonusPointsNoOp(u8 a0, u16 a1)
 {
 }
+asm(".global sub_08026584\n.thumb_set sub_08026584, AddArmyBonusPointsNoOp\n");

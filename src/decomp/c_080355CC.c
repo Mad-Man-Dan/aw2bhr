@@ -14,7 +14,7 @@
  * either way.
  *
  * Three spellings are load-bearing:
- *   - `sub_08035AE8(...) * 0x1000` and not `<< 12`. The shift lets combine
+ *   - `GetMoveSlidePaletteRow(...) * 0x1000` and not `<< 12`. The shift lets combine
  *     drop the s16 return's sign extension (the result is truncated by the
  *     `strh` anyway) and comes out `lsls #12`; the multiply keeps it and gives
  *     the ROM's `lsls #0x10; asrs #4`.
@@ -47,7 +47,7 @@ struct Unk355CCProc
     /* 48 */ void *unk48;
 };
 
-ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
+ProcPtr CreateMoveSlide(u16 x, u16 y, u16 a3, u16 a4)
 {
     struct Unk355CCProc *proc;
     void *gfx;
@@ -79,19 +79,20 @@ ProcPtr sub_080355CC(u16 x, u16 y, u16 a3, u16 a4)
     proc->unk3e = 0;
     proc->unk39 = 0;
     proc->unk36 = a4;
-    proc->unk40 = sub_08035B00(proc->unk36);
+    proc->unk40 = GetMoveSlideSpeed(proc->unk36);
     proc->unk37 = a3;
 
     AP_SwitchAnimation(proc->unk2c, proc->unk38);
     proc->unk2c->unk24 = proc->unk48;
-    proc->unk2c->unk22 = (proc->unk3a * 9 + 0x29A) | (sub_08035AE8(proc->unk3a) * 0x1000);
+    proc->unk2c->unk22 = (proc->unk3a * 9 + 0x29A) | (GetMoveSlidePaletteRow(proc->unk3a) * 0x1000);
 
     tbl = gUnknown_0810EA60;
     pal = gPlayers[proc->unk37 + 1].teamColor - 1;
     ApplyPaletteExt(tbl[pal],
-                    (u16)(0x20 * (sub_08035AE8(proc->unk3a) + 0x10)), 0x20);
+                    (u16)(0x20 * (GetMoveSlidePaletteRow(proc->unk3a) + 0x10)), 0x20);
 
     sub_080359A4(proc);
     Decompress(GetMoveSlideGraphicsPointer(proc), proc->unk48);
     return proc;
 }
+asm(".global sub_080355CC\n.thumb_set sub_080355CC, CreateMoveSlide\n");

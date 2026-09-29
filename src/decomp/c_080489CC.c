@@ -82,7 +82,7 @@ void ShopScreen_Init(void)
 
     LoadBg1WindowFrame(0);
     sub_0802D5CC(0, 1);
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
 
     gUnknown_084C30F8->unk020 = 0;
     gUnknown_084C30F8->unk01e = 0;

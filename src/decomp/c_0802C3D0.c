@@ -13,7 +13,7 @@
 void sub_0802C3D0(void)
 {
     HandleMoveMapCursor();
-    sub_08023518();
+    MoveMapCursorFromHeldKeys();
     HandleMoveCameraWithMapCursor(8);
 
     if (gMap->unk10 & 0xf)

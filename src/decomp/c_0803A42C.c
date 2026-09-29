@@ -22,7 +22,7 @@
  */
 
 
-/* BG_EnableSyncBG2 and sub_0802465C are both nullary (each writes r0 before any
+/* BG_EnableSyncBG2 and SetMapLayerPrioritiesDefault are both nullary (each writes r0 before any
  * read); sub_08013AD4 takes the u8 its promoted definition in
  * src/decomp/c_08013AD4.c declares. The same three-call sequence appears
  * open-coded at 0x0803A3B0 and 0x0801A414 in asm/.
@@ -32,5 +32,5 @@ void sub_0803A42C(void)
 {
     BG_EnableSyncBG2();
     sub_08013AD4(0);
-    sub_0802465C();
+    SetMapLayerPrioritiesDefault();
 }

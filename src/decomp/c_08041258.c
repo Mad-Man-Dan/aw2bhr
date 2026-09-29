@@ -15,7 +15,7 @@
  * Nested `if`s and not a three-way chain: the `bne` on unk1b jumps PAST both
  * inner arms to the 0x1DA call, and `movs r0, #0xed; lsls r0, r0, #1` is how
  * agbcc materialises 0x1DA. */
-void sub_08041258(int a, int b)
+void PlayCaptureCompleteSound(int a, int b)
 {
     if (gPlayers[a].aiControlled == 1)
     {
@@ -29,3 +29,4 @@ void sub_08041258(int a, int b)
         sub_0803B4DC(0x1DA);
     }
 }
+asm(".global sub_08041258\n.thumb_set sub_08041258, PlayCaptureCompleteSound\n");

@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08040984.
- * sub_08040984 @ 0x08040984
+ * SiloFire_ScrollToSilo @ 0x08040984
  */
 
 struct Unk40984Proc
@@ -17,7 +17,8 @@ struct Unk40984Proc
 /* MATCHED. Byte-for-byte the same function as sub_0803F1D8 -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
-void sub_08040984(struct Unk40984Proc *p)
+void SiloFire_ScrollToSilo(struct Unk40984Proc *p)
 {
     ScrollCameraToKeepCellInView(p->unk64, p->unk66);
 }
+asm(".global sub_08040984\n.thumb_set sub_08040984, SiloFire_ScrollToSilo\n");

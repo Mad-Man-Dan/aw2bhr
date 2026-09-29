@@ -46,7 +46,7 @@ struct Unk08028E24Proc
     /* 0x66 */ s16 unk66;
 };
 
-void sub_08028E24(struct Unk08028E24Proc *proc)
+void RangeSpread_Loop(struct Unk08028E24Proc *proc)
 {
     struct Unk08028E24Sprite *s = proc->unk4c;
     s16 i;
@@ -73,3 +73,4 @@ void sub_08028E24(struct Unk08028E24Proc *proc)
                   gUnknown_08499FE4, 0);
     }
 }
+asm(".global sub_08028E24\n.thumb_set sub_08028E24, RangeSpread_Loop\n");

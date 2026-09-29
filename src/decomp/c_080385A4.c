@@ -30,7 +30,7 @@
  * an array store.
  */
 
-void sub_080385A4(void)
+void SetDefaultArmySetup(void)
 {
     s16 i;
 
@@ -53,3 +53,4 @@ void sub_080385A4(void)
         SetFreeForAllTeams();
     }
 }
+asm(".global sub_080385A4\n.thumb_set sub_080385A4, SetDefaultArmySetup\n");

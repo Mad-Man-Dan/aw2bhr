@@ -12,7 +12,7 @@
 /* Scrolls the proc's animation up five pixels a frame and breaks the proc once
  * it has passed the top of the gUnknown_08499590 screen. The AP_Update
  * result is discarded here -- no `lsls #0x18` follows the `bl`, which is what
- * distinguishes this from sub_08040150 beside it, where the same call is
+ * distinguishes this from ExplosionEffect_Loop beside it, where the same call is
  * tested.
  *
  * `proc->unk30 -= 5` then re-reading unk30 in the comparison is one statement
@@ -26,7 +26,7 @@ struct Unk4050CProc
     /* 50 */ struct Unk0801C210 *unk50;
 };
 /* SIX parameters, the last two on the stack; the sixth is the
- * Proc_StartBlocking parent. The wider sibling of sub_0804046C: same three
+ * Proc_StartBlocking parent. The wider sibling of StartSiloMissileLaunch: same three
  * stores plus a fifth argument into unk44.
  *
  * The fifth parameter is `int` and not `u16`: its prologue is a bare
@@ -34,7 +34,7 @@ struct Unk4050CProc
  * anywhere is the `strh` itself, which is a conversion at the store.
  *
  * The unk4a store comes out as `adds r1,r0,#0; adds r1,#0x4a` where
- * sub_0804046C's is `adds r0,#0x4a`: r0 still has to survive for the unk44
+ * StartSiloMissileLaunch's is `adds r0,#0x4a`: r0 still has to survive for the unk44
  * store here, so the address goes to a scratch. That is register allocation,
  * not a source difference. */
 struct Unk40554Proc
@@ -54,7 +54,7 @@ struct Unk40554Proc
  *
  * `proc->unk50 = AP_Create(...)` followed by `AP_SwitchAnimation(proc->unk50, 2)`
  * is one `str` and a reuse of r0, not a reload -- exactly as the promoted
- * sub_08040CA4 spells the same idiom three times. */
+ * CaptureAnimSprites_Init spells the same idiom three times. */
 struct Unk40590Proc
 {
     /* 00 */ u8 filler_00[0x2c];
@@ -70,7 +70,7 @@ struct Unk40590Proc
     /* 66 */ u16 unk66;
 };
 
-void sub_0804050C(struct Unk4050CProc *proc)
+void SiloMissileLaunch_Loop(struct Unk4050CProc *proc)
 {
     AP_Update(proc->unk50,
                  proc->unk2c - gMap->scrollX,
@@ -84,8 +84,9 @@ void sub_0804050C(struct Unk4050CProc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_0804050C\n.thumb_set sub_0804050C, SiloMissileLaunch_Loop\n");
 
-void sub_08040554(int a, int b, int c, int d, int e, ProcPtr parent)
+void StartSiloMissileFall(int a, int b, int c, int d, int e, ProcPtr parent)
 {
     struct Unk40554Proc *proc = Proc_StartBlocking(gUnknown_0849FBBC, parent);
 
@@ -94,8 +95,9 @@ void sub_08040554(int a, int b, int c, int d, int e, ProcPtr parent)
     proc->unk4a = (d << 12) | c;
     proc->unk44 = e;
 }
+asm(".global sub_08040554\n.thumb_set sub_08040554, StartSiloMissileFall\n");
 
-void sub_08040590(struct Unk40590Proc *proc)
+void SiloMissileFall_Init(struct Unk40590Proc *proc)
 {
     proc->unk54 = (proc->unk2c << 4) + 8;
     proc->unk58 = (proc->unk30 << 4) + 0x10;
@@ -105,3 +107,4 @@ void sub_08040590(struct Unk40590Proc *proc)
     AP_SwitchAnimation(proc->unk50, 2);
     proc->unk50->unk22 = proc->unk4a;
 }
+asm(".global sub_08040590\n.thumb_set sub_08040590, SiloMissileFall_Init\n");

@@ -22,15 +22,15 @@ void sub_0802DFC8(void)
     u16 v;
 
     HandleMoveMapCursor();
-    sub_080236E8();
+    HandleMoveMapCursorInMoveRange();
     HandleMoveCameraWithMapCursor(4);
-    sub_08023274(1);
+    StepMapCursorAndDraw(1);
 
     v = gpKeySt->held & 2;
 
     if (v == 0)
     {
-        sub_08035810();
+        EndActiveMoveSlide();
         RebuildMapUnitLayers();
         HideRangeOverlay();
 

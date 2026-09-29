@@ -25,7 +25,7 @@
  * storing 0xFFFF directly costs an extra `adds r0,r1,#0`.
  */
 
-int sub_0805A6DC(u8 *out)
+int AiListLandersWithFreeBerth(u8 *out)
 {
   int new_var;
   struct Unit *u;
@@ -52,3 +52,4 @@ int sub_0805A6DC(u8 *out)
   *((u16 *) (out + 2)) = new_var;
   return (out - ((u8 *) gUnknown_03003F20)) >> 2;
 }
+asm(".global sub_0805A6DC\n.thumb_set sub_0805A6DC, AiListLandersWithFreeBerth\n");

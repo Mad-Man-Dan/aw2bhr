@@ -7,7 +7,7 @@
  * sub_08034A7C @ 0x08034A7C
  */
 
-void sub_08034A7C(int y, int b)
+void PutArmyNameBanner(int y, int b)
 {
     char *s = (char *)gTextTable[gUnknown_08499CCC[b]];
     int x = GetCenteredTextX(s);
@@ -17,3 +17,4 @@ void sub_08034A7C(int y, int b)
     DrawOamObject(b + 0x3d, x - 0x10, y - 4, 0, 0);
     DrawOamObject(b + 0x3d, x + sub_0808B6B0(s) * 8, y - 4, 0, 0);
 }
+asm(".global sub_08034A7C\n.thumb_set sub_08034A7C, PutArmyNameBanner\n");

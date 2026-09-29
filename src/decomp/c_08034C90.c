@@ -14,7 +14,7 @@
 
 void MapState_StartFuelUpkeep(void)
 {
-    sub_0802A7B0();
+    StartFuelUpkeep();
     gUnknown_030032D8 = 9;
 }
 asm(".global sub_08034C90\n.thumb_set sub_08034C90, MapState_StartFuelUpkeep\n");
@@ -23,7 +23,7 @@ asm(".global sub_08034C90\n.thumb_set sub_08034C90, MapState_StartFuelUpkeep\n")
 
 void MapState_StartTurnStartSupply(void)
 {
-    sub_0802A538();
+    StartTurnStartRepairAndSupply();
     gUnknown_030032D8 = 0xa;
 }
 asm(".global sub_08034CA4\n.thumb_set sub_08034CA4, MapState_StartTurnStartSupply\n");

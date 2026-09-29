@@ -33,7 +33,7 @@ void sub_08080498(struct Unk08080498 *proc)
     sub_08012B70(gBG0TilemapBuffer, gUnknown_080A31A4, 0, 0, 0x82B0);
     ApplyPalettes(gUnknown_080A36C8, 8, 1);
     BG_EnableSyncBG0();
-    sub_08043BA4(gUnknown_03005970, 0x1CA, 1);
+    LoadCoFullBodyAndPalette(gUnknown_03005970, 0x1CA, 1);
     Decompress(gUnknown_08239228, gUnknown_0200FC50);
     CpuFastSet(gUnknown_0200FC50, (void *)0x06017740, 8);
     ApplyPalettes(gUnknown_08239DE4, 0x10, 1);

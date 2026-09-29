@@ -20,7 +20,8 @@
  * sub_0801537C(const void *). Retyping it `const void *` needs one edit to
  * proc.c and a rebuild of that file to verify, which is why it was not done
  * here. */
-void sub_0802A7B0(void)
+void StartFuelUpkeep(void)
 {
     sub_080152C0((s32)gUnknown_0849A1C0, 0);
 }
+asm(".global sub_0802A7B0\n.thumb_set sub_0802A7B0, StartFuelUpkeep\n");

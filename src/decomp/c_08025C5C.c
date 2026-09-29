@@ -15,7 +15,7 @@
  * The three parameters are `s16`. Nothing in this body can tell s16 from u16 --
  * PROMOTE_MODE emits the same `lsls #0x10; lsrs #0x10` for both (probed) and
  * the values only ever reach a `strb` -- so the evidence is entirely at the two
- * callers, sub_08025C98 and CreateUnitAt, which SIGN-extend all three before
+ * callers, CreateExhaustedUnitAt and CreateUnitAt, which SIGN-extend all three before
  * the `bl`. `u16` here makes both of them emit `lsrs` instead.
  *
  * The `lsls #0x18; lsrs #0x18` on a3 is the conversion to InitUnit's u8. */
@@ -32,7 +32,7 @@ struct Unit *CreateUnitAtNoRefresh(s16 a1, s16 a2, s16 a3)
     u->x = a1;
     u->y = a2;
 
-    sub_08025D20(gUnknown_030033EC);
+    IncrementPlayerUnitsCreated(gUnknown_030033EC);
 
     return u;
 }
@@ -46,7 +46,7 @@ asm(".global sub_08025C5C\n.thumb_set sub_08025C5C, CreateUnitAtNoRefresh\n");
  * `orrs` on a bare `movs r0,#1`, so unk01 bit 0 is a plain mask and not a
  * bitfield. */
 
-void *sub_08025C98(s16 a1, s16 a2, s16 a3)
+void *CreateExhaustedUnitAt(s16 a1, s16 a2, s16 a3)
 {
     struct Unit *u = CreateUnitAtNoRefresh(a1, a2, a3);
 
@@ -58,14 +58,15 @@ void *sub_08025C98(s16 a1, s16 a2, s16 a3)
 
     return u;
 }
+asm(".global sub_08025C98\n.thumb_set sub_08025C98, CreateExhaustedUnitAt\n");
 
-/* sub_08025C98 without the `unk01 |= 1` -- see there for the guard-clause
+/* CreateExhaustedUnitAt without the `unk01 |= 1` -- see there for the guard-clause
  * shape. */
 
 /* Wave 32 (W32-B) RETYPES the return `void *` -> `struct Unit *`. It
  * returns CreateUnitAtNoRefresh's result unchanged, and that function is already
  * declared `struct Unit *` right here -- the `void *` was the weakest
- * type that fit when nothing read the result. sub_08045564, promoted this
+ * type that fit when nothing read the result. CoPowerCreateUnits_SpawnUnit, promoted this
  * wave, writes `->unk04_0 = 0x5a` through it, which is the discriminating use.
  * Byte-neutral; re-verified.
  *

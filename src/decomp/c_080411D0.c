@@ -31,10 +31,11 @@ struct Unk411D0Proc
  * four `adds rN, #imm` here are THUMB displacement limits (ldrb 0-31,
  * strh 0-62 even), not addresses being taken.
  */
-void sub_080411D0(struct Unk411D0Src *a)
+void CaptureAnim_StartCountUp(struct Unk411D0Src *a)
 {
     struct Unk411D0Proc *proc = Proc_StartBlocking(gUnknown_0849FE34, a);
 
     proc->unk4c = a->unk48;
     proc->unk4e = a->unk49;
 }
+asm(".global sub_080411D0\n.thumb_set sub_080411D0, CaptureAnim_StartCountUp\n");

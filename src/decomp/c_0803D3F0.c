@@ -56,7 +56,7 @@ void RebuildTerrainFromTiles(void)
         }
     }
     RecountArmyProperties();
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 asm(".global sub_0803D3F0\n.thumb_set sub_0803D3F0, RebuildTerrainFromTiles\n");
 

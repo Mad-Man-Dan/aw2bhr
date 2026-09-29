@@ -8,7 +8,7 @@
  * sub_08027710 @ 0x08027710, sub_0802776C @ 0x0802776C, sub_080277BC @ 0x080277BC
  */
 
-void sub_08027710(void)
+void PlaceInfoBoxAwayFromCursor(void)
 {
     u16 x;
     u16 y;
@@ -19,20 +19,21 @@ void sub_08027710(void)
     if ((s16)y <= 0x4f)
     {
         if ((s16)x <= 0x7f)
-            sub_080276F0();
+            SnapInfoBoxToSide1();
         else
-            sub_080276D0();
+            SnapInfoBoxToSide0();
     }
     else
     {
         if (gUnknown_03003130.unk00 == 0)
-            sub_080276D0();
+            SnapInfoBoxToSide0();
         else
-            sub_080276F0();
+            SnapInfoBoxToSide1();
     }
 }
+asm(".global sub_08027710\n.thumb_set sub_08027710, PlaceInfoBoxAwayFromCursor\n");
 
-void sub_0802776C(u8 a1)
+void SetInfoBoxMode(u8 a1)
 {
     switch (a1)
     {
@@ -41,18 +42,19 @@ void sub_0802776C(u8 a1)
         break;
 
     case 1:
-        RunOrQueueDrawCallback(sub_080276D0, 0);
+        RunOrQueueDrawCallback(SnapInfoBoxToSide0, 0);
         break;
 
     case 2:
-        RunOrQueueDrawCallback(sub_080276F0, 0);
+        RunOrQueueDrawCallback(SnapInfoBoxToSide1, 0);
         break;
 
     case 3:
-        RunOrQueueDrawCallback(sub_08027710, 0);
+        RunOrQueueDrawCallback(PlaceInfoBoxAwayFromCursor, 0);
         break;
     }
 }
+asm(".global sub_0802776C\n.thumb_set sub_0802776C, SetInfoBoxMode\n");
 
 void sub_080277BC(void)
 {

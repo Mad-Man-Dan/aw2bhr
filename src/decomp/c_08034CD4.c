@@ -17,7 +17,7 @@
  * `lsls r0, #0x18; cmp r0, #0` with no `lsrs` is the test-the-low-byte form
  * agbcc uses for a bool8/u8-returning callee under `if (f())`, which agrees
  * with sub_08019260's declared `bool8`. */
-void sub_08034CD4(void)
+void MapState_StartInventionTurnScript(void)
 {
     switch (gPlaySt.mapID)
     {
@@ -35,3 +35,4 @@ void sub_08034CD4(void)
     Proc_Start(gUnknown_0849F790, PROC_TREE_3);
     gUnknown_030032D8 = 0xc;
 }
+asm(".global sub_08034CD4\n.thumb_set sub_08034CD4, MapState_StartInventionTurnScript\n");

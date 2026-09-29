@@ -49,6 +49,6 @@ void BeginMoveSlidePath(ProcPtr proc, void *src)
                      ((struct Unk35760Proc *)proc)->unk44 / 16);
 
     gUnknown_030040E4 = 1;
-    sub_08035F68(proc);
+    StartMoveSlideMoveSound(proc);
 }
 asm(".global sub_08035760\n.thumb_set sub_08035760, BeginMoveSlidePath\n");

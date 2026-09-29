@@ -44,7 +44,7 @@ void UnitClassInfo_Loop(void)
   int col;
   int new_var;
   u16 *map;
-  sub_08023274(2);
+  StepMapCursorAndDraw(2);
   if (gpKeySt->repeated & (DPAD_LEFT | DPAD_UP))
   {
     sub_0803B4DC(0x67);

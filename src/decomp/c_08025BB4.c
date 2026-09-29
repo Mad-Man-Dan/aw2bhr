@@ -8,8 +8,8 @@
  */
 
 /* This function HAS a parameter, and that is refutable rather than merely
- * unproved: it opens with a bare `bl sub_08035740`, and sub_08035740 --
- * already matched in src/decomp/c_08035740.c as `void sub_08035740(void *a)` --
+ * unproved: it opens with a bare `bl BeginActiveMoveSlidePath`, and BeginActiveMoveSlidePath --
+ * already matched in src/decomp/c_08035740.c as `void BeginActiveMoveSlidePath(void *a)` --
  * reads r0. Any literal argument would cost a `movs r0,#N` the ROM does not
  * have, so the value has to be arriving in r0 already.
  *
@@ -20,10 +20,11 @@
  * than in the header because merging the two struct names would change
  * c_080424BC.c's `->unk05 &= 7` into the bitfield spelling. */
 
-void sub_08025BB4(void *a1)
+void StartUnitMoveSlide(void *a1)
 {
-    sub_08035740(a1);
+    BeginActiveMoveSlidePath(a1);
 
     if (gPlaySt.fog != 0)
         SubtractUnitFuel((struct Unit *)gUnknown_030040D8, gUnknown_03004074);
 }
+asm(".global sub_08025BB4\n.thumb_set sub_08025BB4, StartUnitMoveSlide\n");

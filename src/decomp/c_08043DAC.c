@@ -27,7 +27,7 @@
  * local spelling schedules the `ldr r1, [r1]` deref after the index arithmetic
  * instead of before it and swaps r0/r1 throughout.
  */
-int sub_08043DAC(u8 a)
+int PlayArmyCoMusic(u8 a)
 {
     switch (gPlayers[a].coMode)
     {
@@ -36,30 +36,33 @@ int sub_08043DAC(u8 a)
         PlayMusicIfEnabled((s16)GetCoMusic(a));
         break;
     case 1:
-        sub_08043DF4(gPlayers[a].co);
+        PlayCoPowerMusic(gPlayers[a].co);
         break;
     case 2:
-        sub_08043E18(gPlayers[a].co);
+        PlaySuperCoPowerMusic(gPlayers[a].co);
         break;
     }
 }
+asm(".global sub_08043DAC\n.thumb_set sub_08043DAC, PlayArmyCoMusic\n");
 
 /* The parameter is dead inside the body -- see the note on the declaration.
  * The bare `lsls r0, r0, #0x18` in front of the test is what retyped
  * IsBlackHoleCo's return from `int` to `bool8` (wave 28, W28-B).
  */
-void sub_08043DF4(int a)
+void PlayCoPowerMusic(int a)
 {
     if (IsBlackHoleCo(a))
         PlayMusicIfEnabled(0x1a3);
     else
         PlayMusicIfEnabled(0x1a4);
 }
+asm(".global sub_08043DF4\n.thumb_set sub_08043DF4, PlayCoPowerMusic\n");
 
-void sub_08043E18(int a)
+void PlaySuperCoPowerMusic(int a)
 {
     if (IsBlackHoleCo(a))
         PlayMusicIfEnabled(0x199);
     else
         PlayMusicIfEnabled(0x19a);
 }
+asm(".global sub_08043E18\n.thumb_set sub_08043E18, PlaySuperCoPowerMusic\n");

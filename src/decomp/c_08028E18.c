@@ -13,7 +13,7 @@
  * i.e. `f(proc->unk4c)`.
  *
  * The parameter is a Proc and this is PROVED, not assumed from the address:
- * the ROM holds `PROC_ONEND(sub_08028E18)` at 0x08499FEC -- a proc-script command whose
+ * the ROM holds `PROC_ONEND(RangeSpread_OnEnd)` at 0x08499FEC -- a proc-script command whose
  * callback is exactly this function, so what arrives in r0 is the running
  * proc. All six members of the family check out this way (five PROC_ONEND, one
  * PROC_CALL). PROC_HEADER is 0x29 bytes and every offset the family reaches
@@ -27,7 +27,8 @@ struct Unk08028E18Proc
     /* 4C */ void *unk4c;
 };
 
-void sub_08028E18(struct Unk08028E18Proc *proc)
+void RangeSpread_OnEnd(struct Unk08028E18Proc *proc)
 {
     HeapFree(proc->unk4c);
 }
+asm(".global sub_08028E18\n.thumb_set sub_08028E18, RangeSpread_OnEnd\n");

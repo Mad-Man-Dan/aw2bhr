@@ -7,7 +7,8 @@
  * sub_08034F10 @ 0x08034F10
  */
 
-void sub_08034F10(void)
+void SetMapStateResumeCursor(void)
 {
     gUnknown_030032D8 = 20;
 }
+asm(".global sub_08034F10\n.thumb_set sub_08034F10, SetMapStateResumeCursor\n");

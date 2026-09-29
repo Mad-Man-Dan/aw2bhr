@@ -17,9 +17,9 @@
  * the common edge. The default arm keeps the 0 the local was seeded with.
  *
  * The parameter widths come from the prologue's two PROMOTE_MODE pairs, which
- * is why include/unknown-functions.h's prototype-less `u8 sub_0805C290();` is
+ * is why include/unknown-functions.h's prototype-less `u8 AiPickMissileTargetUnit();` is
  * corrected to `(u16, u8)` this wave. */
-u8 sub_0805C290(u16 a, u8 b)
+u8 AiPickMissileTargetUnit(u16 a, u8 b)
 {
     u8 r;
 
@@ -28,15 +28,16 @@ u8 sub_0805C290(u16 a, u8 b)
     switch (GetNextRandomNumber() % 3)
     {
     case 0:
-        r = sub_0805C2DC(a, b);
+        r = AiPickMissileTargetByValue(a, b);
         break;
     case 1:
-        r = sub_0805C514(a, b);
+        r = AiPickMissileTargetByHp(a, b);
         break;
     case 2:
-        r = sub_0805C720(a, b);
+        r = AiPickMissileTargetWeightingIndirect(a, b);
         break;
     }
 
     return r;
 }
+asm(".global sub_0805C290\n.thumb_set sub_0805C290, AiPickMissileTargetUnit\n");

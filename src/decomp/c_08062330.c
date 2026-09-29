@@ -14,7 +14,7 @@ struct Unk62330Cell
     /* 02 */ s16 v;
 };
 
-void sub_08062330(void)
+void AiSeedInterestCandidates(void)
 {
     struct PlayerStruct *base;
     struct PlayerStruct *u;
@@ -56,3 +56,4 @@ void sub_08062330(void)
     }
     out->v = 0xFFFF;
 }
+asm(".global sub_08062330\n.thumb_set sub_08062330, AiSeedInterestCandidates\n");

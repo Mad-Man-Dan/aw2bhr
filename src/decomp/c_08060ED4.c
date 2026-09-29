@@ -53,7 +53,7 @@ struct Unk60F00Tbl
  * Counts the entries of the 0xFF-terminated gUnknown_085766E4 list that name
  * class `a1` and have not been marked consumed. The 4-byte stride, the 0xFF
  * terminator on unk00 and the 0xFE "consumed" marker on unk03 are all
- * sub_08061668's -- see src/decomp/c_08061668.c, the writer this reader pairs
+ * AiPickBestScoredBuildSite's -- see src/decomp/c_08061668.c, the writer this reader pairs
  * with, which sets unk03 = 0xFE on the record it claims.
  *
  * The walk is a POINTER local here where c_08061668.c needed the subscript

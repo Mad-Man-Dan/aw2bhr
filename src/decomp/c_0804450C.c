@@ -13,7 +13,8 @@ struct Unk0804450C
     /* 0x01 */ u8 unk01;
 };
 
-void sub_0804450C(struct Unk0804450C *p)
+void CopUnitClearActedFlag(struct Unk0804450C *p)
 {
     p->unk01 &= 0xfe;
 }
+asm(".global sub_0804450C\n.thumb_set sub_0804450C, CopUnitClearActedFlag\n");

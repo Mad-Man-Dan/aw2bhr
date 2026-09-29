@@ -23,20 +23,20 @@ struct Unk272C4Proc
     /* 64 */ s16 unk64;
 };
 
-/* MATCHED, and the first of a byte-identical pair with sub_08027428. Allocates
+/* MATCHED, and the first of a byte-identical pair with SupplyIconEffect_Init. Allocates
  * a sprite through AP_Create, stashes it at +0x50, sets its unk22 attribute
  * word and seeds three proc fields.
  *
  * Nothing here needed a probe -- the proc layout falls straight out of the
  * displacements and AP_Create / AP_SwitchAnimation were already typed. The one
- * readout is sub_08027560's arity: four parameters, of which the fourth is the
+ * readout is LoadPopupIcon's arity: four parameters, of which the fourth is the
  * AP_Create result on its way to AP_SwitchAnimation's `struct Unk0801C210 *`. */
 void sub_080272C4(struct Unk272C4Proc *proc)
 {
     proc->unk50 = AP_Create(gUnknown_08112614, 1, 1);
     proc->unk50->unk22 = 0x31CA;
 
-    sub_08027560(proc->unk2c, proc->unk30, proc->unk54, proc->unk50);
+    LoadPopupIcon(proc->unk2c, proc->unk30, proc->unk54, proc->unk50);
 
     proc->unk64 = 0x200;
     proc->unk44 = 0xFFFF;

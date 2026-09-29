@@ -7,17 +7,20 @@
  * sub_08035538 @ 0x08035538, sub_08035548 @ 0x08035548, sub_08035558 @ 0x08035558
  */
 
-void sub_08035538(void)
+void SetWeatherModeRandom(void)
 {
     gPlaySt.randomWeatherOn = 1;
 }
+asm(".global sub_08035538\n.thumb_set sub_08035538, SetWeatherModeRandom\n");
 
-void sub_08035548(void)
+void SetWeatherModeLocked(void)
 {
     gPlaySt.randomWeatherOn = 2;
 }
+asm(".global sub_08035548\n.thumb_set sub_08035548, SetWeatherModeLocked\n");
 
-void sub_08035558(void)
+void SetWeatherModeOff(void)
 {
     gPlaySt.randomWeatherOn = 0;
 }
+asm(".global sub_08035558\n.thumb_set sub_08035558, SetWeatherModeOff\n");

@@ -14,7 +14,7 @@ struct Unk3F1D8Proc
     /* 66 */ s16 unk66;
 };
 
-/* MATCHED, and the first of a byte-identical pair with sub_08040984. Forwards
+/* MATCHED, and the first of a byte-identical pair with SiloFire_ScrollToSilo. Forwards
  * a proc's +0x64/+0x66 coordinate pair to ScrollCameraToKeepCellInView. Both members are
  * `ldrsh`, so both are s16, and ScrollCameraToKeepCellInView's own `lsls #0x10; asrs #0x10`
  * pair on each argument is the parameter narrowing, not a cast here. */

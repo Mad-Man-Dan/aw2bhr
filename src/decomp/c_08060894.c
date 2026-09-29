@@ -21,7 +21,7 @@
  * The final compare is `bhs`, i.e. UNSIGNED, because GetNextRandomNumber returns `u32`
  * and the usual arithmetic conversions carry that through the `% 100` and into
  * the comparison against the sign-extended `s16` parameter. */
-void sub_08060894(s16 a)
+void AiConsiderBuildingFootUnit(s16 a)
 {
     int r;
     int n;
@@ -37,7 +37,7 @@ void sub_08060894(s16 a)
     if (gUnknown_030046D4 >= gUnknown_085766E0->unk00
         && r > gUnknown_085766E0->unk02)
     {
-        n = sub_08061DA8(0);
+        n = GetArmyFacilityCount(0);
 
         if (n == 0)
             return;
@@ -53,3 +53,4 @@ void sub_08060894(s16 a)
     else
         gUnknown_030046C0.unk06 = 1;
 }
+asm(".global sub_08060894\n.thumb_set sub_08060894, AiConsiderBuildingFootUnit\n");

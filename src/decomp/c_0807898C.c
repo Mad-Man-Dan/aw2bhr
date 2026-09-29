@@ -87,7 +87,7 @@ void sub_0807898C(ProcPtr proc)
     ClearBg0Tilemap();
     ClearBg1Tilemap();
     ClearBg2Tilemap();
-    sub_080616F0();
+    ClearBg3TilemapBuffer();
 
     gDispIo.disp_ct.obj_mapping = 1;
 }

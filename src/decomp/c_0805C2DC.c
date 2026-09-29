@@ -32,7 +32,7 @@
  *
  * MATCHED. */
 
-u8 sub_0805C2DC(u16 a1, u8 a2)
+u8 AiPickMissileTargetByValue(u16 a1, u8 a2)
 {
     int n;
     int i;
@@ -76,7 +76,7 @@ u8 sub_0805C2DC(u16 a1, u8 a2)
                     {
                         if ((e->flags & 0x20) != 0)
                             continue;
-                        if (!sub_080257C0(gMap->unit[gMap->rowOffset[y] + x]))
+                        if (!IsUnitVisibleToCurrentTeam(gMap->unit[gMap->rowOffset[y] + x]))
                             continue;
                     }
                     if (e->hp <= 10)
@@ -98,8 +98,9 @@ u8 sub_0805C2DC(u16 a1, u8 a2)
 
     return bestN;
 }
+asm(".global sub_0805C2DC\n.thumb_set sub_0805C2DC, AiPickMissileTargetByValue\n");
 
-u8 sub_0805C514(u16 a1, u8 a2)
+u8 AiPickMissileTargetByHp(u16 a1, u8 a2)
 {
     int n;
     int i;
@@ -143,7 +144,7 @@ u8 sub_0805C514(u16 a1, u8 a2)
                     {
                         if ((e->flags & 0x20) != 0)
                             continue;
-                        if (!sub_080257C0(gMap->unit[gMap->rowOffset[y] + x]))
+                        if (!IsUnitVisibleToCurrentTeam(gMap->unit[gMap->rowOffset[y] + x]))
                             continue;
                     }
                     if (e->hp <= 10)
@@ -165,8 +166,9 @@ u8 sub_0805C514(u16 a1, u8 a2)
 
     return bestN;
 }
+asm(".global sub_0805C514\n.thumb_set sub_0805C514, AiPickMissileTargetByHp\n");
 
-u8 sub_0805C720(u16 a1, u8 a2)
+u8 AiPickMissileTargetWeightingIndirect(u16 a1, u8 a2)
 {
     int n;
     int i;
@@ -211,7 +213,7 @@ u8 sub_0805C720(u16 a1, u8 a2)
                     {
                         if ((e->flags & 0x20) != 0)
                             continue;
-                        if (!sub_080257C0(gMap->unit[gMap->rowOffset[y] + x]))
+                        if (!IsUnitVisibleToCurrentTeam(gMap->unit[gMap->rowOffset[y] + x]))
                             continue;
                     }
                     if (e->hp <= 10)
@@ -236,3 +238,4 @@ u8 sub_0805C720(u16 a1, u8 a2)
 
     return bestN;
 }
+asm(".global sub_0805C720\n.thumb_set sub_0805C720, AiPickMissileTargetWeightingIndirect\n");

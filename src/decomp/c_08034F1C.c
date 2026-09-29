@@ -7,7 +7,7 @@
  * sub_08034F1C @ 0x08034F1C
  */
 
-void sub_08034F1C(void)
+void MapState_ResumeCursorAfterCommand(void)
 {
     if (gUnknown_03002F1C != 0)
     {
@@ -18,3 +18,4 @@ void sub_08034F1C(void)
 
     gUnknown_030032D8 = 0xd;
 }
+asm(".global sub_08034F1C\n.thumb_set sub_08034F1C, MapState_ResumeCursorAfterCommand\n");

@@ -22,16 +22,18 @@ struct Unk08044DF8
     /* 0x2b */ u8 unk2b;
 };
 
-void sub_08044DE0(struct Unk08044DE0 *p)
+void CoPowerDamageHeal_ResetCursors(struct Unk08044DE0 *p)
 {
     p->unk29 = 1;
     p->unk2a = 1;
     p->unk2b = 0;
 }
+asm(".global sub_08044DE0\n.thumb_set sub_08044DE0, CoPowerDamageHeal_ResetCursors\n");
 
-void sub_08044DF8(struct Unk08044DF8 *p)
+void CoPowerDamageHeal_ResetCursors2(struct Unk08044DF8 *p)
 {
     p->unk29 = 1;
     p->unk2a = 1;
     p->unk2b = 0;
 }
+asm(".global sub_08044DF8\n.thumb_set sub_08044DF8, CoPowerDamageHeal_ResetCursors2\n");

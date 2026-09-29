@@ -15,7 +15,8 @@ struct Unk452E4
     /* 0x40 */ int unk40;
 };
 
-void sub_080452E4(struct Unk452E4 *p)
+void CoPowerUnitSparkle_ScrollToUnit(struct Unk452E4 *p)
 {
     ScrollCameraToKeepCellInView(p->unk3c, p->unk40);
 }
+asm(".global sub_080452E4\n.thumb_set sub_080452E4, CoPowerUnitSparkle_ScrollToUnit\n");

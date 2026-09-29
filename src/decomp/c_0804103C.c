@@ -7,9 +7,9 @@
  * sub_0804103C @ 0x0804103C
  */
 
-/* Loads one unit's sprite sheet and palette -- the sub_08041128 shape with a
+/* Loads one unit's sprite sheet and palette -- the LoadCaptureUnitSprite shape with a
  * switch. a1 packs an army in its top three bits and a class in its low five:
- * the class picks the ROM sheet, the army picks both sub_08024984's variant
+ * the class picks the ROM sheet, the army picks both GetCellCountry's variant
  * index and the gPlayers record whose unk1a is the palette bank.
  *
  * THE FIELD EXTRACTIONS MUST BOTH BE MASKED. Wave 35 parked this at 82.2% with
@@ -31,12 +31,12 @@
  * Case-arm order is source order: case 8, `case 6: default:`, 14, 10, 11, 20.
  * `case 6` sharing the default arm is what makes the jump table run 6..20
  * (fifteen entries) rather than 8..20 -- the ROM's `subs r0,r5,#6; cmp r0,#0xe`.
- * `(u16)((a3 + 0x10) * 0x20)` is a MULTIPLY, as in the matched sub_08041128. */
-void sub_0804103C(int a1, int a2, int a3)
+ * `(u16)((a3 + 0x10) * 0x20)` is a MULTIPLY, as in the matched LoadCaptureUnitSprite. */
+void LoadCapturePropertySprite(int a1, int a2, int a3)
 {
     int sel = (u8)a1;
     int k = sel & 0x1f;
-    int i = sub_08024984(sel);
+    int i = GetCellCountry(sel);
     u8 pal = gPlayers[(sel >> 5) & 7].teamColor;
     u8 *src;
 
@@ -66,3 +66,4 @@ void sub_0804103C(int a1, int a2, int a3)
     RegisterDataMove(src, (void *)(0x06010000 + (a2 & 0x3ff) * 32), 0x400);
     ApplyPaletteExt(&gUnknown_081213F4[pal * 0x10], (u16)((a3 + 0x10) * 0x20), 0x20);
 }
+asm(".global sub_0804103C\n.thumb_set sub_0804103C, LoadCapturePropertySprite\n");

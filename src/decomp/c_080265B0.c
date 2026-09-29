@@ -16,10 +16,11 @@
  * docs/agbcc-codegen.md records for a u8 tested against zero. a1 gets the full
  * `lsls; lsrs` because it is passed on. */
 
-void sub_080265B0(u8 a1, u8 a2)
+void AwardCapturePoints(u8 a1, u8 a2)
 {
     if (a2 == 0)
-        sub_08026584(a1, 5);
+        AddArmyBonusPointsNoOp(a1, 5);
     else
-        sub_08026584(a1, 0xA);
+        AddArmyBonusPointsNoOp(a1, 0xA);
 }
+asm(".global sub_080265B0\n.thumb_set sub_080265B0, AwardCapturePoints\n");

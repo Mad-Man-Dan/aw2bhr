@@ -15,7 +15,8 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_080412E8(void)
+void CaptureAnimCountUp_PlaySound(void)
 {
     sub_0803B4DC(0x6E);
 }
+asm(".global sub_080412E8\n.thumb_set sub_080412E8, CaptureAnimCountUp_PlaySound\n");

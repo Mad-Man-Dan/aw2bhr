@@ -34,6 +34,6 @@ void ConfirmUnitDestination(s16 a1, s16 a2)
             gUnknown_03003110, 4) == 1)
         gUnknown_03003334 = 5;
 
-    sub_08025BB4(gUnknown_03003110);
+    StartUnitMoveSlide(gUnknown_03003110);
 }
 asm(".global sub_0802E60C\n.thumb_set sub_0802E60C, ConfirmUnitDestination\n");

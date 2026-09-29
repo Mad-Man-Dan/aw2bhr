@@ -18,14 +18,14 @@ void sub_0802D5A0(void *a1, int a2, int a3)
     sub_0802D5CC(a2, a3);
 }
 
-/* `Decompress(sub_08037250(), dest)` -- one statement. The accessor's result
+/* `Decompress(GetWindowFrameTileData(), dest)` -- one statement. The accessor's result
  * is already in r0 where Decompress's first parameter wants it, so the only
  * instruction the nesting costs is restoring the saved destination into r1.
- * sub_08037250 returns gUnknown_080D3FE4 (src/decomp/c_08037250.c). */
+ * GetWindowFrameTileData returns gUnknown_080D3FE4 (src/decomp/c_08037250.c). */
 
 void sub_0802D5B8(void *a1)
 {
-    Decompress(sub_08037250(), a1);
+    Decompress(GetWindowFrameTileData(), a1);
 }
 
 /* `lsls #0x15; lsrs #0x10` is a NET LEFT SHIFT OF FIVE under a (u16) cast, not

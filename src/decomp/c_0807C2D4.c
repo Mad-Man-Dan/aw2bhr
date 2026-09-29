@@ -29,7 +29,7 @@ void sub_0807C2D4(void *arg)
                      proc->unk60 * 16 + 16 ? proc->unk60 * 16 + 16 : 2));
 
     PutSpriteExt(0, 0x68, 0x108, gUnknown_08615C62, 0);
-    n = sub_0803840C();
+    n = GetCampaignResultCountPlusOne();
     if (n <= 9)
     {
         PutSpriteExt(0, 0xca, 0x108, gUnknown_0848B690, n * 4 + 0x1c);

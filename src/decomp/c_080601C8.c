@@ -7,12 +7,14 @@
  * sub_080601C8 @ 0x080601C8, sub_080601DC @ 0x080601DC
  */
 
-void sub_080601C8(void)
+void AiExecuteCoPower(void)
 {
     PayForCoPower(gUnknown_030046C0.unk06, 1);
 }
+asm(".global sub_080601C8\n.thumb_set sub_080601C8, AiExecuteCoPower\n");
 
-void sub_080601DC(void)
+void AiExecuteSuperCoPower(void)
 {
     PayForCoPower(gUnknown_030046C0.unk06, 2);
 }
+asm(".global sub_080601DC\n.thumb_set sub_080601DC, AiExecuteSuperCoPower\n");

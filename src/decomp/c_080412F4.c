@@ -46,7 +46,7 @@ struct Unk4134CProc
  * ZERO displacement -- the address was already materialised -- so the compare
  * is a signed one between two s16 fields. The `ldrh r3, [r2]` before it is the
  * unsigned copy agbcc keeps live for the increment. */
-void sub_080412F4(struct Unk412F4Proc *proc)
+void CaptureAnimCountUp_Loop(struct Unk412F4Proc *proc)
 {
     struct Unk412F4Owner *p = Proc_Find(gUnknown_0849FD44);
 
@@ -55,19 +55,21 @@ void sub_080412F4(struct Unk412F4Proc *proc)
     else
         p->unk46 = ++proc->unk4c;
 }
+asm(".global sub_080412F4\n.thumb_set sub_080412F4, CaptureAnimCountUp_Loop\n");
 
 /* The proc pointer survives the call in r4 only so that the store can happen
  * after it; `adds r4, #0x4c` is the strh displacement limit again. */
-void sub_08041334(struct Unk41334Proc *proc)
+void CaptureAnimCountDown_Init(struct Unk41334Proc *proc)
 {
     sub_0803B4DC(0x6F);
     proc->unk4c = 0x12;
 }
+asm(".global sub_08041334\n.thumb_set sub_08041334, CaptureAnimCountDown_Init\n");
 
-/* The countdown twin of sub_080412F4: same proc, same +0x46 mirror, and the
+/* The countdown twin of CaptureAnimCountUp_Loop: same proc, same +0x46 mirror, and the
  * Proc_Break arm additionally releases the sprite handle. Two statements in
  * that arm and not a nested call -- Proc_Break is void. */
-void sub_0804134C(struct Unk4134CProc *proc)
+void CaptureAnimCountDown_Loop(struct Unk4134CProc *proc)
 {
     struct Unk4134COwner *p = Proc_Find(gUnknown_0849FD44);
 
@@ -81,3 +83,4 @@ void sub_0804134C(struct Unk4134CProc *proc)
         p->unk46 = --proc->unk4c;
     }
 }
+asm(".global sub_0804134C\n.thumb_set sub_0804134C, CaptureAnimCountDown_Loop\n");

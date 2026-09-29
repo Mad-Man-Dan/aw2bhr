@@ -33,7 +33,7 @@ asm(".global sub_0802E920\n.thumb_set sub_0802E920, OnVBlank_SioError\n");
 void OnMain_SioErrorWait(void)
 {
     if ((~REG_KEYINPUT & 9) != 0)
-        sub_08036CB4();
+        ClearWorkRamAndSoftReset();
 
     VBlankIntrWait();
 }

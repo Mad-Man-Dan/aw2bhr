@@ -10,7 +10,7 @@
 /* The 1 written to unk0c, unk02 and unk09 is one CSEd constant that has to
  * survive two calls, which is why the ROM parks it in r5 behind
  * `push {r4, r5, lr}` -- plain literals reproduce it. */
-void sub_08034848(void)
+void InitVersusPlayState(void)
 {
     gPlaySt.bgmOn = 1;
     gPlaySt.gameMode = 3;
@@ -19,23 +19,26 @@ void sub_08034848(void)
     sub_08034838();
     gPlaySt.animOpts = 1;
 }
+asm(".global sub_08034848\n.thumb_set sub_08034848, InitVersusPlayState\n");
 
 /* TWO statements, not `a = b = v`. The chained form hoists all three pool words
  * ahead of the loads and comes out with the stores swapped; written as two
  * statements CSE keeps the loaded word in r1 and the second address load lands
  * between the two `str`s, which is the ROM's order. */
-void sub_0803486C(void)
+void InitRecordListPointersAndTerrainTable(void)
 {
     gUnknown_03003338 = gUnknown_0849FE74[0];
     gUnknown_03003F20 = gUnknown_03003338;
     LoadTileTerrainTable();
 }
+asm(".global sub_0803486C\n.thumb_set sub_0803486C, InitRecordListPointersAndTerrainTable\n");
 
-void sub_08034890(void)
+void InitMapGameState(void)
 {
     InitGameSettings();
     LoadMapIntoGMap(gPlaySt.mapID);
-    sub_08021598();
-    sub_080215B8();
+    InitNewMapState();
+    RecountPropertiesIncomeAndAiFacilities();
     StartArmyTurn();
 }
+asm(".global sub_08034890\n.thumb_set sub_08034890, InitMapGameState\n");

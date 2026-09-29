@@ -17,7 +17,7 @@
  *
  * The AI's unit-production pick. Loop A finds the type class with the highest
  * remaining demand in the volatile gUnknown_02029C20 table, loop B scores every
- * buildable type against that class through three sub_08043070 probes, loop C
+ * buildable type against that class through three GetCoAdjustedBaseDamage probes, loop C
  * strikes out types whose demand is below their gUnknown_03004640 score, and
  * loop D picks the best survivor and buys it if the army can afford it and the
  * purchase stays under the two gUnknown_085766E0 ceilings.
@@ -40,7 +40,7 @@
  * that is why it sits ahead of the gUnknown_030046C0.unk06 test rather than
  * after it.
  *
- * The `? :` on sub_08043070's fifth argument is NOT a `? :`. The ROM duplicates
+ * The `? :` on GetCoAdjustedBaseDamage's fifth argument is NOT a `? :`. The ROM duplicates
  * the whole gPlayers subscript and both `ldrb`s into each arm and
  * cross-jumps only from `str r2,[sp]` onward, which an argument-position
  * COND_EXPR cannot produce -- gcc evaluates that argument into one pseudo and
@@ -52,7 +52,7 @@
  * indexed 1..24. The file-local view struct is mandatory and a `volatile u16 *`
  * cast is NOT a substitute -- the dead `ldrh` in front of each `strh` needs a
  * COMPONENT_REF root (the W50-A / W56-I chapters in docs/agbcc-codegen.md).
- * sub_08062C94 reaches the same symbol the same way.
+ * AiCalcEnemyMassNetOfOwnCounters reaches the same symbol the same way.
  *
  * The pool words at 0x0816DAD8 and 0x0816DADC are agbcc's own -fforce-addr
  * address constants for gUnknown_030046C0 and gUnknown_085D5ABC, verified
@@ -93,7 +93,7 @@ struct Unk60AB0Tbl
     /* 0x14 */ struct Unk60AB0Row rows[1];
 };
 
-void sub_08060AB0(void)
+void AiConsiderBuildingCounterUnit(void)
 {
     u8 buf[24];
     u8 thr;
@@ -118,7 +118,7 @@ void sub_08060AB0(void)
         v = CountUnitsWithTypeTag(4) * 100 / gUnknown_03004674;
 
     AiCalcBuildPriorities();
-    sub_08062C94();
+    AiCalcEnemyMassNetOfOwnCounters();
 
 retry:
     pick = 0;
@@ -146,19 +146,19 @@ retry:
 
         if (((struct Unk60AB0Tbl *)gUnknown_085766E0)->rows[i - 1].unk07 != 0)
         {
-            a = sub_08043070(gPlayers[gUnknown_030033EC].co,
+            a = GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                              gPlayers[gUnknown_030033EC].coMode,
                              i, pick, 0);
-            b = sub_08043070(gPlayers[gUnknown_030033EC].co,
+            b = GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                              gPlayers[gUnknown_030033EC].coMode,
                              i, pick, 1);
 
             if (a > b)
-                r = sub_08043070(gPlayers[gUnknown_030033EC].co,
+                r = GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                                  gPlayers[gUnknown_030033EC].coMode,
                                  i, pick, 0);
             else
-                r = sub_08043070(gPlayers[gUnknown_030033EC].co,
+                r = GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                                  gPlayers[gUnknown_030033EC].coMode,
                                  i, pick, 1);
 
@@ -229,3 +229,4 @@ again:
     TAB->v[pick] = sel;
     goto retry;
 }
+asm(".global sub_08060AB0\n.thumb_set sub_08060AB0, AiConsiderBuildingCounterUnit\n");

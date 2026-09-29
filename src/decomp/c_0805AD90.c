@@ -8,14 +8,14 @@
  * sub_0805AD90 @ 0x0805AD90
  */
 
-/* Redraws the map's 0x2852 plane, hands the two out-params of sub_0805B4D8 to
+/* Redraws the map's 0x2852 plane, hands the two out-params of AiFindEnemyHqInInterestList to
  * the gUnknown_030013EC indirect hook, then sweeps every passable cell and
  * bumps the per-cell counter in the map's 0x3C72 plane wherever the terrain
  * code is 0xd or 0xb (the same two codes c_0805ACA8.c's AiCheckShoalParkNeighbour accepts,
  * spelled here as the positive `||` rather than that function's negative `&&`
  * guard).
  *
- * Cell addressing follows sub_080585D4 (matched this wave): `rows` must be its
+ * Cell addressing follows AiScoreEnemyPropertiesInReach (matched this wave): `rows` must be its
  * OWN local or agbcc reassociates the 0x417A pool constant to LAST, and the
  * 0x3C72 plane is reached with `p += 0x3c72; p += off;` -- the ROM's in-place
  * `adds r1,r1,r0` twice -- while the 0x1432 read keeps a separate `cells` local
@@ -36,7 +36,7 @@
  * list here.
  *
  * MATCHED (decomp-permuter, 380 iterations from the 94.8% hand draft). */
-void sub_0805AD90(void)
+void AiMarkLandingCellsNearEnemyHq(void)
 {
     int a;
     int b;
@@ -45,8 +45,8 @@ void sub_0805AD90(void)
     int off;
     int terrain;
 
-    if (sub_0805B4D8(sub_0805B4A8(), &a, &b) == 0)
-        sub_0805F7B8();
+    if (AiFindEnemyHqInInterestList(sub_0805B4A8(), &a, &b) == 0)
+        AiFallbackMove();
 
     SetWorkingMapPlane(gMap->move);
 
@@ -66,5 +66,6 @@ void sub_0805AD90(void)
         }
     }
 
-    sub_0805B744();
+    AiFinishLandingPlan();
 }
+asm(".global sub_0805AD90\n.thumb_set sub_0805AD90, AiMarkLandingCellsNearEnemyHq\n");

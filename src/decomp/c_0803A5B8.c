@@ -27,5 +27,5 @@ void sub_0803A5B8(void)
         c = GetStringPixelWidthSimple(gTextTable[gUnknown_085D5ABC[gUnknown_0849D89C->unk04->type].unk04]);
         break;
     }
-    sub_08022AF8(a + gUnknown_0849D89C->unk00, b, c, d);
+    DrawCornerBracketSprites(a + gUnknown_0849D89C->unk00, b, c, d);
 }

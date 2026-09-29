@@ -29,7 +29,7 @@
  *   state 90:  once the fade level is back to 0, clear the mosaic bit in the
  *              BG0 and BG2 control words, store 0xA0 in gUnknown_03002EFC and
  *              zero gUnknown_030030C4's low byte (both purposes unknown), then
- *              call sub_08024268 and go to state 100.
+ *              call RebuildMapUnitLayers2 and go to state 100.
  *   state 100: bring the map back (DesignRoomShowTilePanel, DesignRoomShowCoordBox), switch to mode
  *              1 and leave the state at 40, which no case here handles.
  */
@@ -76,7 +76,7 @@ void sub_08000694(void)
 
     case 70:
         HandleMoveMapCursor();
-        sub_08023518();
+        MoveMapCursorFromHeldKeys();
         HandleMoveCameraWithMapCursor(8);
         if (gpKeySt->pressed & (A_BUTTON | B_BUTTON | START_BUTTON))
         {
@@ -105,7 +105,7 @@ void sub_08000694(void)
             gUnknown_03001FE8.bits.mosaic = 0;
             ((union BgCntBuf *)&gUnknown_0300251C)->bits.mosaic = 0;
             *(u8 *)&gUnknown_030030C4 = 0;
-            sub_08024268();
+            RebuildMapUnitLayers2();
         }
         break;
 

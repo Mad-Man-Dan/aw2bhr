@@ -29,7 +29,7 @@ struct Unk40B08Proc
     /* 4c */ u16 unk4c;
 };
 
-void sub_08040B08(struct Unk40B08Proc *proc)
+void CaptureAnimPopup_Init(struct Unk40B08Proc *proc)
 {
     proc->unk30 = AP_Create((void *)gUnknown_08121870, 0, 1);
     AP_SwitchAnimation(proc->unk30, 1);
@@ -43,3 +43,4 @@ void sub_08040B08(struct Unk40B08Proc *proc)
 
     proc->unk4c = 0;
 }
+asm(".global sub_08040B08\n.thumb_set sub_08040B08, CaptureAnimPopup_Init\n");

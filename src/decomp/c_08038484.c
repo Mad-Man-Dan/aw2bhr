@@ -34,7 +34,7 @@ struct Unk38484Tbl
     /* 0x10 */ u16 unk10[2];
 };
 
-void sub_08038484(void)
+void EndOfGame_FinishCampaignMap(void)
 {
     struct Unk38484Tbl *tbl;
     int ok;
@@ -72,3 +72,4 @@ void sub_08038484(void)
         sub_0803BADC();
     }
 }
+asm(".global sub_08038484\n.thumb_set sub_08038484, EndOfGame_FinishCampaignMap\n");

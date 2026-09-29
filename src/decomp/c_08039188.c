@@ -15,8 +15,8 @@
 /* Draws the overworld marker sprites. Walks gUnknown_0849D5F8's parallel
  * per-slot tables from the last slot (unk45) down. For every marker whose 16x16
  * box is on screen (IsRectOnScreen) it puts a sprite at the camera-relative
- * position. The tile comes from gUnknown_0849D5C4 by what sub_080390CC and
- * sub_08039064 classify the slot as.
+ * position. The tile comes from gUnknown_0849D5C4 by what GetMovePathOutgoingDirection and
+ * GetMovePathIncomingDirection classify the slot as.
  *
  * Parked from wave 57 to wave 88 at +4. It matches unchanged against the current
  * headers, now that IsRectOnScreen is an old-style definition declared
@@ -44,7 +44,7 @@ void DrawMovePathArrow(void)
                       (x * 16 - gMap->scrollX) & 0x1FF,
                       (y * 16 - gMap->scrollY) & 0xFF,
                       gUnknown_0848B690,
-                      0x3000 | gUnknown_0849D5C4[sub_080390CC(i)][sub_08039064(i)]);
+                      0x3000 | gUnknown_0849D5C4[GetMovePathOutgoingDirection(i)][GetMovePathIncomingDirection(i)]);
         }
     }
 }

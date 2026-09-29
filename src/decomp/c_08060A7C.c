@@ -7,7 +7,7 @@
  * sub_08060A7C @ 0x08060A7C
  */
 
-void sub_08060A7C(void)
+void AiConsiderBuildingSubmarine(void)
 {
     int r;
 
@@ -21,3 +21,4 @@ void sub_08060A7C(void)
         }
     }
 }
+asm(".global sub_08060A7C\n.thumb_set sub_08060A7C, AiConsiderBuildingSubmarine\n");

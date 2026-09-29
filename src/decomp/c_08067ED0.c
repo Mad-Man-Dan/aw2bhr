@@ -37,8 +37,8 @@ void sub_08067ED0(u8 a1, u16 a2, int a3, int a4, int a5, int a6, u8 a7, u8 a8,
 {
     struct Unk08581108Proc *p;
 
-    sub_08043BC8(a2, gUnknown_08581104[a1]);
-    sub_08043AA0(a2, 0x12);
+    LoadCoFullBodyPart0(a2, gUnknown_08581104[a1]);
+    LoadCoPalette(a2, 0x12);
 
     p = Proc_Start(gUnknown_08581108, parent);
 

@@ -8,7 +8,7 @@
  */
 
 /* A percentage, capped at 100: this army's unk18 measured against the summed
- * sub_08025CF0 of every OTHER active army on a different team. Zero when the
+ * GetPlayerUnitsCreated of every OTHER active army on a different team. Zero when the
  * army is not live, and zero when nothing opposes it.
  *
  * `((31x) * 4 + x) * 8` is 1000x -- write the multiply and let agbcc build the
@@ -36,7 +36,7 @@ u8 GetPowerScore(u8 a)
     {
         if (gPlayers[i].aiControlled != 0
          && gPlayers[a].team != gPlayers[i].team)
-            sum += sub_08025CF0(i);
+            sum += GetPlayerUnitsCreated(i);
     }
 
     if (sum == 0)

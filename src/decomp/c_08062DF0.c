@@ -64,7 +64,7 @@ void sub_08062DF0(void)
     HandleMoveMapCursor();
     HandleGameMapCursorInput();
     HandleMoveCameraWithMapCursor(4);
-    sub_08023274(0);
+    StepMapCursorAndDraw(0);
 
     if ((MAP->unk10 & 0xF) == 0)
     {
@@ -116,5 +116,5 @@ void sub_08062DF0(void)
     }
 
     RefreshMapCursorInfoPanel();
-    sub_0802776C(0);
+    SetInfoBoxMode(0);
 }

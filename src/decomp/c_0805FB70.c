@@ -23,7 +23,7 @@ struct Unk5FB70Unit
     /* 0x0a */ u8 filler_0a[2];
 };
 
-void sub_0805FB70(void)
+void AiBoardTransport(void)
 {
     union Unk802C57CBuf v;
     struct Unit *u;
@@ -39,6 +39,7 @@ void sub_0805FB70(void)
                 gMap->rowOffset[v.pos.unk02]
                 + v.pos.unk00]];
         ((struct Unk5FB70Unit *)u)->unk09_6++;
-        sub_0805D648(v.spos.unk00, v.spos.unk02, 7, 0, 0);
+        AiPublishAction(v.spos.unk00, v.spos.unk02, 7, 0, 0);
     }
 }
+asm(".global sub_0805FB70\n.thumb_set sub_0805FB70, AiBoardTransport\n");

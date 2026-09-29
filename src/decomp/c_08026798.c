@@ -9,8 +9,9 @@
 
 /* Two statements; RecomputeArmyVisionMasks takes nothing, so the store is not feeding it. */
 
-void sub_08026798(void)
+void ResetUnitCycleAndVisionMasks(void)
 {
     gUnknown_030032C0 = 0;
     RecomputeArmyVisionMasks();
 }
+asm(".global sub_08026798\n.thumb_set sub_08026798, ResetUnitCycleAndVisionMasks\n");

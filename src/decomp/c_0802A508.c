@@ -24,7 +24,7 @@
 
 void sub_0802A508(void)
 {
-    sub_0802776C(0);
+    SetInfoBoxMode(0);
 }
 
 /* F002, but the callee is sub_080152C0 and NOT sub_080152EC -- the family is
@@ -70,7 +70,8 @@ void sub_0802A528(void)
  * sub_0801537C(const void *). Retyping it `const void *` needs one edit to
  * proc.c and a rebuild of that file to verify, which is why it was not done
  * here. */
-void sub_0802A538(void)
+void StartTurnStartRepairAndSupply(void)
 {
     sub_080152C0((s32)gUnknown_0849A128, 0);
 }
+asm(".global sub_0802A538\n.thumb_set sub_0802A538, StartTurnStartRepairAndSupply\n");

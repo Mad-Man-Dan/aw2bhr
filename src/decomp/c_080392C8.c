@@ -36,7 +36,7 @@ struct Unk392F4Proc
  * an alias costs an extra `adds r4, r2, #0` because it has to survive
  * Proc_Break separately from the parameter. */
 
-void sub_080392C8(struct Unk392C8Proc *proc)
+void CoPowerPortrait_SlideInLoop(struct Unk392C8Proc *proc)
 {
     proc->unk2c -= 8;
 
@@ -48,15 +48,16 @@ void sub_080392C8(struct Unk392C8Proc *proc)
         Proc_Break(proc);
     }
 
-    sub_0803927C(proc);
+    CoPowerPortrait_Draw(proc);
 }
+asm(".global sub_080392C8\n.thumb_set sub_080392C8, CoPowerPortrait_SlideInLoop\n");
 
 /* The slide-out step: 60 frames of Interpolate from 0xB0 to -64, unblocking
  * the script on the frame the end value is reached. -64 is CSEd into one
  * register and used both as the argument and as the compare, which is agbcc
  * reusing a register it already knows -- the literal is written twice here. */
 
-void sub_080392F4(struct Unk392F4Proc *proc)
+void CoPowerPortrait_SlideOutLoop(struct Unk392F4Proc *proc)
 {
     proc->unk2c = Interpolate(1, 0xb0, -64, proc->unk64, 60);
 
@@ -65,5 +66,6 @@ void sub_080392F4(struct Unk392F4Proc *proc)
     if (proc->unk2c == -64)
         Proc_Break(proc);
 
-    sub_0803927C(proc);
+    CoPowerPortrait_Draw(proc);
 }
+asm(".global sub_080392F4\n.thumb_set sub_080392F4, CoPowerPortrait_SlideOutLoop\n");

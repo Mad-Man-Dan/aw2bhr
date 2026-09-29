@@ -16,7 +16,7 @@ struct Unk2925CProc
     /* 0x66 */ s16 unk66;
 };
 
-void sub_0802925C(struct Unk2925CProc *proc)
+void TargetPickList_Loop(struct Unk2925CProc *proc)
 {
     struct Unk03003338 *p;
     s16 old;
@@ -81,6 +81,7 @@ void sub_0802925C(struct Unk2925CProc *proc)
         return;
     }
 
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
     RefreshMapCursorInfoPanel();
 }
+asm(".global sub_0802925C\n.thumb_set sub_0802925C, TargetPickList_Loop\n");

@@ -19,11 +19,12 @@
  * into named bytes -- include/unknown-globals.h records that its extent 5 is
  * corroborated by struct Unit's size, and a constant index folds into
  * the same `ldrb [rB, #0xa]` a named member would give. */
-void sub_0805DB0C(void)
+void AiDeliberateIndirectFire(void)
 {
-    sub_0805E5AC();
+    AiStayHomeIfEnemyInfantryNear();
 
     if (*gUnknown_03004784 > (u8)(gUnknown_030040D8->unk07[3] % 100)
         || IsCoPowerActive(gUnknown_030033EC))
-        sub_0805E718();
+        AiTryAttack();
 }
+asm(".global sub_0805DB0C\n.thumb_set sub_0805DB0C, AiDeliberateIndirectFire\n");

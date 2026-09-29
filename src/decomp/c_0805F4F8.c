@@ -8,12 +8,12 @@
  * sub_0805F4F8 @ 0x0805F4F8
  */
 
-/* sub_0805F4F8 @ 0x0805F4F8, 476 bytes. MATCHED.
+/* AiEmbarkOrFallback @ 0x0805F4F8, 476 bytes. MATCHED.
  *
  * The capture/repair-target chooser: it rebuilds the reachable-cell list, then
  * scans for the cheapest cell whose terrain low-5-bits are 0xd or 0xb, and
  * either hands the winning cell to AiAdvanceToward or moves onto it directly.
- * Every failure path calls sub_0805F7B8, which longjmps out -- which is why
+ * Every failure path calls AiFallbackMove, which longjmps out -- which is why
  * those calls read as unconditional statements with execution continuing after
  * them in the listing.
  *
@@ -29,7 +29,7 @@
  * basic block and combine merges the two inserts into the single
  * `(u16)x | (y << 16)` word store; the `y << 16` is LICM-hoisted into `ip`.
  * Reads stay ordinary -- extract_bit_field narrows an aligned half back to a
- * HImode load -- and `sub_0805D648(cur.x, cur.y, ...)` gets `ldrsh` with no
+ * HImode load -- and `AiPublishAction(cur.x, cur.y, ...)` gets `ldrsh` with no
  * cast in the source, because the u16 members convert to the callee's `s16`
  * parameters and combine folds the sign extension into the load.
  *
@@ -54,14 +54,14 @@
  * only ever returns 0 and 1, so the retype should be byte-neutral there; it
  * wants an orchestrator's re-sweep, not a mid-wave unilateral edit.
  *
- * sub_0805A744 takes `struct Unk5A514Cell *`, a file-local tag repeated
+ * AiFillLanderCostToShoalPlane takes `struct Unk5A514Cell *`, a file-local tag repeated
  * verbatim in c_0805A268.c / c_0805A514.c / c_0805A744.c and therefore
  * unnameable from a shared header (see the wave-52 note in
  * include/unknown-functions.h). An incomplete declaration is enough here.
  */
 
 struct Unk5A514Cell;
-void sub_0805A744(struct Unk5A514Cell *);
+void AiFillLanderCostToShoalPlane(struct Unk5A514Cell *);
 
 /* The file-local bitfield view of gUnknown_030040D8 offset 0x09 that
  * include/unknown-globals.h's struct Unk030040D8 unk07[] note (wave 47, W47-G)
@@ -77,7 +77,7 @@ struct Unk5F4F8Ctl
                u8 unk09_6 : 2;
 };
 
-void sub_0805F4F8(void)
+void AiEmbarkOrFallback(void)
 {
     struct { u16 x; u16 y; } cur;
     struct Unk03003338 *list;
@@ -91,16 +91,16 @@ void sub_0805F4F8(void)
     best = 0x7f;
 
     if (!(gUnknown_030046B8 & 2))
-        sub_0805F7B8();
+        AiFallbackMove();
     if (gUnknown_085767A0[gUnknown_030040D8->unk00 - 1] == 0)
-        sub_0805F7B8();
+        AiFallbackMove();
 
     ((struct Unk5F4F8Ctl *)gUnknown_030040D8)->unk09_3 = 3;
-    sub_0805FB70();
+    AiBoardTransport();
 
-    if (!sub_0805A6DC((u8 *)list))
-        sub_0805F7B8();
-    sub_0805A744((struct Unk5A514Cell *)list);
+    if (!AiListLandersWithFreeBerth((u8 *)list))
+        AiFallbackMove();
+    AiFillLanderCostToShoalPlane((struct Unk5A514Cell *)list);
 
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, 0x78, 0);
@@ -128,7 +128,7 @@ void sub_0805F4F8(void)
     }
 
     if (cur.x == 0x270f)
-        sub_0805F7B8();
+        AiFallbackMove();
 
     if ((s8)gUnknown_03003340[cur.y][cur.x] > GetUnitMovementBudget((struct Unit *)gUnknown_030040D8))
     {
@@ -138,7 +138,8 @@ void sub_0805F4F8(void)
     {
         GenerateUnitMovementMap(gUnknown_030040D8);
         if (!(u8)sub_0805A854((u16 *)&cur))
-            sub_0805F7B8();
-        sub_0805D648(cur.x, cur.y, 2, 0, 0);
+            AiFallbackMove();
+        AiPublishAction(cur.x, cur.y, 2, 0, 0);
     }
 }
+asm(".global sub_0805F4F8\n.thumb_set sub_0805F4F8, AiEmbarkOrFallback\n");

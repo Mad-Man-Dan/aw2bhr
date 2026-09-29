@@ -7,7 +7,7 @@
  * sub_0805FE0C @ 0x0805FE0C
  */
 
-void sub_0805FE0C(void)
+void AiExecutorBegin(void)
 {
     SetRandomSeed(gUnknown_030046C0.unk08);
 
@@ -60,3 +60,4 @@ void sub_0805FE0C(void)
 
     gUnknown_030045D4 = 1;
 }
+asm(".global sub_0805FE0C\n.thumb_set sub_0805FE0C, AiExecutorBegin\n");

@@ -26,7 +26,7 @@
  * object. Binding unk00 to a local `u8` also splits them, but costs a hoisted
  * `movs #1` and a third high register -- 4 bytes and the wrong allocation. */
 
-void sub_0805D2A0(void)
+void AiStartSupplyPass(void)
 {
     int i;
 
@@ -48,6 +48,7 @@ void sub_0805D2A0(void)
 
     *gUnknown_030046B0 = 0;
     gUnknown_030046B0 = gUnknown_030045F0;
-    gUnknown_03004778 = sub_0805E3BC;
+    gUnknown_03004778 = AiDeliberateSupply;
     gUnknown_03004780 = 2;
 }
+asm(".global sub_0805D2A0\n.thumb_set sub_0805D2A0, AiStartSupplyPass\n");

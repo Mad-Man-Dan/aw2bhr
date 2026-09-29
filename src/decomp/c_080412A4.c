@@ -30,7 +30,7 @@ struct Unk412A4Proc
 /* `adds r1, r4, #0; adds r1, #0x4c` is not an address being taken -- 0x4c is
  * past strh's 62-byte displacement limit, so agbcc has to materialise the
  * address. Same for +0x42 on the other proc. */
-void sub_080412A4(struct Unk412A4Proc *proc)
+void CaptureAnimShake_Loop(struct Unk412A4Proc *proc)
 {
     struct Unk412A4Owner *p = Proc_Find(gUnknown_0849FD44);
 
@@ -44,3 +44,4 @@ void sub_080412A4(struct Unk412A4Proc *proc)
         p->unk42 = proc->unk4c & 1;
     }
 }
+asm(".global sub_080412A4\n.thumb_set sub_080412A4, CaptureAnimShake_Loop\n");

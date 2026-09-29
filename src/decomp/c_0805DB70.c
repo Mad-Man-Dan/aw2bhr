@@ -7,7 +7,7 @@
  * sub_0805DB70 @ 0x0805DB70
  */
 
-/* sub_0805DB70 @ 0x0805DB70, 308 bytes.
+/* AiDeliberateCoPower @ 0x0805DB70, 308 bytes.
  *
  * gUnknown_0816DA4C is not an object: the ROM word at 0x0816DA4C holds
  * 0x030033EC, agbcc's own -fforce-addr address constant for
@@ -23,7 +23,7 @@
  * `bl _call_via_r1`, and the veneer's register index is what fixes its arity at
  * one argument.
  */
-void sub_0805DB70(void)
+void AiDeliberateCoPower(void)
 {
     u8 (*fn)(int);
     int v;
@@ -62,3 +62,4 @@ void sub_0805DB70(void)
         }
     }
 }
+asm(".global sub_0805DB70\n.thumb_set sub_0805DB70, AiDeliberateCoPower\n");

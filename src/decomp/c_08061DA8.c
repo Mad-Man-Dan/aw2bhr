@@ -7,9 +7,10 @@
  * sub_08061DA8 @ 0x08061DA8
  */
 
-int sub_08061DA8(int index)
+int GetArmyFacilityCount(int index)
 {
     struct PlayerStruct *p = &gPlayers[index];
 
     return p->bases + p->cities + p->airports + p->ports + 1;
 }
+asm(".global sub_08061DA8\n.thumb_set sub_08061DA8, GetArmyFacilityCount\n");

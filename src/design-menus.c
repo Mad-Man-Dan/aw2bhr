@@ -80,8 +80,8 @@ void sub_0800487C(void)
 
     sub_08023348();
     InstallMapFrameCallbacks();
-    sub_08024268();
-    sub_08024830();
+    RebuildMapUnitLayers2();
+    ReloadGameplayPalettes();
     DesignRoomLoadTerrainNamePalettes();
 }
 
@@ -173,7 +173,7 @@ void DesignRoomMenu_NewMap(int a)
     CloseTopMenu();
     DesignRoomNewMap(a);
     sub_08002E3C();
-    sub_08024268();
+    RebuildMapUnitLayers2();
     gActiveMap->flags |= 0x1000;
 }
 asm(".global sub_08004A30\n.thumb_set sub_08004A30, DesignRoomMenu_NewMap\n");
@@ -305,7 +305,7 @@ void sub_08004C34(void)
 {
     PushMenu();
     CloseTopMenu();
-    sub_08024268();
+    RebuildMapUnitLayers2();
     CreateSubMenu(gUnknown_08487C04, 2, 3, 0);
     sub_08004C10();
 }
@@ -318,7 +318,7 @@ void sub_08004C5C(void)
     gActiveMap->menuCursorX = 0x15;
     gActiveMap->menuCursorY = 0x10;
     InitTextTileCache(0x70);
-    sub_08022AD0(0x10, 0x10);
+    SetMapCursorDisplayPosition(0x10, 0x10);
     DesignRoomHideTilePanel();
     DesignRoomHideCoordBox();
 }
@@ -330,7 +330,7 @@ void DesignRoomMode_Menu(void)
     if (gActiveMap->stateChanged != 0)
     {
         sub_08004C5C();
-        sub_08024268();
+        RebuildMapUnitLayers2();
         CreateRootMenuWithSfx(gUnknown_08487C84, 2, 2, 0);
     }
 

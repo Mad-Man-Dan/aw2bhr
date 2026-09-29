@@ -13,7 +13,8 @@ struct Unk804129C
     /* 0x4c */ u16 unk4c;
 };
 
-void sub_0804129C(struct Unk804129C *s)
+void CaptureAnimShake_Init(struct Unk804129C *s)
 {
     s->unk4c = 0;
 }
+asm(".global sub_0804129C\n.thumb_set sub_0804129C, CaptureAnimShake_Init\n");

@@ -22,7 +22,7 @@
  * `push {r4,lr}` and the ROM's `push {r4,r5,lr}`. */
 void BattleAnimScene_Init(void)
 {
-    sub_08036C08();
+    InstallQueuedSpritesFrameCallbacks();
     sub_080546F0();
 
     if (!gUnknown_03004504.bit0)

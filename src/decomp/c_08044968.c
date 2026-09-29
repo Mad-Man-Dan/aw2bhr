@@ -15,7 +15,7 @@ struct UnkP448E4
     /* 66 */ s16 unk66;
 };
 
-/* sub_080448E4's second half on its own, against sub_0806AA80 instead of
+/* CoPowerMeteor_PickTarget's second half on its own, against sub_0806AA80 instead of
  * ScrollCameraToKeepCellInView. Here the single `ldrsh` serves both the guard and the index,
  * which is what the field being read directly looks like. */
 void sub_08044968(struct UnkP448E4 *proc)

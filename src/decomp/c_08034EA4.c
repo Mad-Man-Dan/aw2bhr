@@ -35,7 +35,7 @@ asm(".global sub_08034ED0\n.thumb_set sub_08034ED0, MapState_RunParkedWinLossChe
 /* The local is load-bearing: the ROM stores r4 -- the narrowed return value,
  * known to be zero on this path -- into gUnknown_030032D8 rather than a fresh
  * `movs r0, #0`. Writing the constant instead costs an extra instruction. */
-void sub_08034EF0(void)
+void MapState_EndOfGame(void)
 {
     u8 v = sub_08019260();
 
@@ -45,3 +45,4 @@ void sub_08034EF0(void)
         gUnknown_030032D8 = v;
     }
 }
+asm(".global sub_08034EF0\n.thumb_set sub_08034EF0, MapState_EndOfGame\n");

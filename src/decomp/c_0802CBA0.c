@@ -36,7 +36,7 @@ asm(".global sub_0802CBA0\n.thumb_set sub_0802CBA0, UnitMenu_LoadUsability\n");
  * not match).
  *
  * The coordinate pair goes through union Unk802C57CBuf's signed view for the
- * `ldrsh` pair, and sub_080421D0's own prologue confirms the s16 parameters
+ * `ldrsh` pair, and CanDropFirstCargoAt's own prologue confirms the s16 parameters
  * (`lsls #0x10; asrs #0x10` on both) and the wide leading pointer (bare
  * `adds r7, r0, #0`, then `ldrb r4, [r7]` -- struct Unk030040D8's unk00).
  */
@@ -44,14 +44,14 @@ asm(".global sub_0802CBA0\n.thumb_set sub_0802CBA0, UnitMenu_LoadUsability\n");
 bool8 sub_0802CBC8(void)
 {
     if (!UnitMenu_LoadUsability()
-        || sub_080421D0(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
+        || CanDropFirstCargoAt(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
         return TRUE;
 
     return FALSE;
 }
 
-/* sub_0802CBC8's twin: byte-identical apart from the callee, sub_0804223C
- * instead of sub_080421D0. The two callees are themselves near-duplicates --
+/* sub_0802CBC8's twin: byte-identical apart from the callee, CanDropSecondCargoAt
+ * instead of CanDropFirstCargoAt. The two callees are themselves near-duplicates --
  * same prologue, same 0x5c-stride gUnknown_085D5ABC lookup, differing only in
  * which byte of the leading pointer they forward (+7 vs +8).
  */
@@ -59,7 +59,7 @@ bool8 sub_0802CBC8(void)
 bool8 sub_0802CC04(void)
 {
     if (!UnitMenu_LoadUsability()
-        || sub_0804223C(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
+        || CanDropSecondCargoAt(gUnknown_030040D8, gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02) != TRUE)
         return TRUE;
 
     return FALSE;

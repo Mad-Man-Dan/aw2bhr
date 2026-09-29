@@ -27,7 +27,7 @@
  *     In terrain mode each of terrain 2, 5, 0xC, 0xD, 0x10 and 0x13 has its
  *     own test, and flag 0x2000 refuses everything. In unit mode the unit's
  *     movement type is charged for this terrain and a cost of -1 refuses the
- *     tile. sub_08023274 then draws the cursor for r.
+ *     tile. StepMapCursorAndDraw then draws the cursor for r.
  *   - A: in terrain mode paint the tile (MakeTile) unless refused; in unit
  *     mode ask DesignRoomPlaceUnitAtCursor and place the unit when it answers 1, setting flag
  *     0x1000 on any positive answer. A refused press plays sound 0x68 and
@@ -155,7 +155,7 @@ void DesignRoomMode_Paint(void)
         r = tbl[index] != -1 ? 1 : 6;
     }
 
-    sub_08023274(r);
+    StepMapCursorAndDraw(r);
 
     if (keys & 1)
     {
@@ -164,8 +164,8 @@ void DesignRoomMode_Paint(void)
             if (r != 6)
             {
                 MakeTile();
-                sub_08021D10();
-                sub_08024268();
+                RenderMap();
+                RebuildMapUnitLayers2();
             }
         }
         else

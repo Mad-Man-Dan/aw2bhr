@@ -13,7 +13,7 @@
  * i.e. `f(proc->unk50)`.
  *
  * The parameter is a Proc and this is PROVED, not assumed from the address:
- * the ROM holds `PROC_ONEND(sub_08027554)` at 0x08499D2C -- a proc-script command whose
+ * the ROM holds `PROC_ONEND(SupplyIconEffect_OnEnd)` at 0x08499D2C -- a proc-script command whose
  * callback is exactly this function, so what arrives in r0 is the running
  * proc. All six members of the family check out this way (five PROC_ONEND, one
  * PROC_CALL). PROC_HEADER is 0x29 bytes and every offset the family reaches
@@ -27,7 +27,8 @@ struct Unk08027554Proc
     /* 50 */ void *unk50;
 };
 
-void sub_08027554(struct Unk08027554Proc *proc)
+void SupplyIconEffect_OnEnd(struct Unk08027554Proc *proc)
 {
     AP_Delete(proc->unk50);
 }
+asm(".global sub_08027554\n.thumb_set sub_08027554, SupplyIconEffect_OnEnd\n");

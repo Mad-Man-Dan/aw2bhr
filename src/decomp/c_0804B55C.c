@@ -40,7 +40,7 @@ u16 GetBattleBackdropId(u16 a, u8 *p, int unused)
     x = p[2];
     y = p[3];
     m = gMap;
-    t = sub_08024984(m->terrain[m->rowOffset[y] + x]);
+    t = GetCellCountry(m->terrain[m->rowOffset[y] + x]);
 
     switch (a)
     {

@@ -8,7 +8,7 @@
  * sub_08025744 @ 0x08025744
  */
 
-u8 sub_08025744(int a1, int a2)
+u8 IsVisibleAllyUnitAtCell(int a1, int a2)
 {
     int off;
     int id;
@@ -27,3 +27,4 @@ u8 sub_08025744(int a1, int a2)
 
     return IsUnitOnCurrentTeam(id);
 }
+asm(".global sub_08025744\n.thumb_set sub_08025744, IsVisibleAllyUnitAtCell\n");

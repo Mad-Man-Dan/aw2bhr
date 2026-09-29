@@ -18,7 +18,7 @@ struct Unk41820Proc
     /* 64 */ s16 unk64;
 };
 
-void sub_08041820(int a1, int a2, int a3)
+void StartAttackOnInventionAt(int a1, int a2, int a3)
 {
     u8 c = a3;
     struct Unk02028360 *ent = sub_0803DF54(a1, a2);
@@ -29,14 +29,14 @@ void sub_08041820(int a1, int a2, int a3)
 
     if (ent == NULL)
     {
-        sub_0804189C(a1, a2, c);
+        StartAttackOnPipeSeamAt(a1, a2, c);
         return;
     }
 
     st = gUnknown_030044B0;
     *(u32 *)(st + 8) = gUnknown_03001FD4;
 
-    sub_080251D8(gUnknown_03003F38);
+    CalcBattleDamageVsStructure(gUnknown_03003F38);
 
     hp = ent->unk04;
     lim = (u8 *)gBattleAttacker;
@@ -53,3 +53,4 @@ void sub_08041820(int a1, int a2, int a3)
     proc->unk4c = ent;
     proc->unk64 = c;
 }
+asm(".global sub_08041820\n.thumb_set sub_08041820, StartAttackOnInventionAt\n");

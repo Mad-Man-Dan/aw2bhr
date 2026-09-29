@@ -7,7 +7,7 @@
  * sub_08029880 @ 0x08029880
  */
 
-void sub_08029880(void)
+void DropCellPicker_Finish(void)
 {
     if (gUnknown_030040E4 != 0)
         return;
@@ -38,5 +38,6 @@ void sub_08029880(void)
     CommitUnitMove();
 
     if (gPlaySt.savingEnabled != 0)
-        sub_080344B4(gUnknown_03003F38, gUnknown_030033E8[0], gUnknown_030033E8[1]);
+        SendMoveCommand(gUnknown_03003F38, gUnknown_030033E8[0], gUnknown_030033E8[1]);
 }
+asm(".global sub_08029880\n.thumb_set sub_08029880, DropCellPicker_Finish\n");

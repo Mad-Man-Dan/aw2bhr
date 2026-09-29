@@ -7,7 +7,8 @@
  * sub_080375A4 @ 0x080375A4
  */
 
-void sub_080375A4(u8 a)
+void BuildMapListForMode(u8 a)
 {
     BuildMapListForCategory(gUnknown_08090EF0[a]);
 }
+asm(".global sub_080375A4\n.thumb_set sub_080375A4, BuildMapListForMode\n");

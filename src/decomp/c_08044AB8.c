@@ -20,7 +20,7 @@
  *    third position and the one that wins the base callee-saved r4.
  * See the W43-J chapter in docs/agbcc-codegen.md. */
 
-void sub_08044AB8(int a)
+void StartCoPowerAnimation(int a)
 {
     const u8 *p;
     int i;
@@ -39,3 +39,4 @@ void sub_08044AB8(int a)
 
     sub_08039A5C(GetCoPowerAnimation(b0), GetCoPowerAnimationPalette(b1), 0x1ca, 5);
 }
+asm(".global sub_08044AB8\n.thumb_set sub_08044AB8, StartCoPowerAnimation\n");

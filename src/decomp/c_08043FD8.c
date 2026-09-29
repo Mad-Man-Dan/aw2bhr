@@ -32,7 +32,7 @@ void sub_08043FD8(int x, int y, int oam2, int layer)
  * gUnknown_084A07DA. Matched first try from that function's derivation; see
  * its comment for why the write-back to the parameters is what closed both. */
 
-void sub_0804402C(int x, int y, int oam2, int layer)
+void PutCoMinimugSprite(int x, int y, int oam2, int layer)
 {
     u16 xh = x & ~0x1ff;
     u16 yh = y & ~0xff;
@@ -42,3 +42,4 @@ void sub_0804402C(int x, int y, int oam2, int layer)
 
     PutSpriteExt(layer, x | xh, y | yh, gUnknown_084A07DA, oam2);
 }
+asm(".global sub_0804402C\n.thumb_set sub_0804402C, PutCoMinimugSprite\n");

@@ -14,7 +14,7 @@ void sub_08042B84(void)
     p->unk20 = 1;
 }
 
-void sub_08042B9C(void)
+void EndCurrentArmyTurn(void)
 {
     u8 *q;
 
@@ -29,13 +29,15 @@ void sub_08042B9C(void)
     }
 
     gUnknown_030032D8 = 1;
-    sub_08025EA0();
+    ReadyCurrentArmyUnits();
 }
+asm(".global sub_08042B9C\n.thumb_set sub_08042B9C, EndCurrentArmyTurn\n");
 
-void sub_08042C10(void)
+void StartSiloTargetSelect(void)
 {
     Proc_Start(gUnknown_0849FC0C, PROC_TREE_3);
 }
+asm(".global sub_08042C10\n.thumb_set sub_08042C10, StartSiloTargetSelect\n");
 
 struct Unk08042C24Proc
 {
@@ -49,7 +51,7 @@ struct Unk08042C24Proc
     u16 unk66;
 };
 
-void sub_08042C24(int a, int b, int c, int d, ProcPtr parent)
+void StartSiloFire(int a, int b, int c, int d, ProcPtr parent)
 {
     struct Unk08042C24Proc *proc;
 
@@ -64,8 +66,9 @@ void sub_08042C24(int a, int b, int c, int d, ProcPtr parent)
     proc->unk30 = d;
     proc->unk4a = 0x1e;
 }
+asm(".global sub_08042C24\n.thumb_set sub_08042C24, StartSiloFire\n");
 
-int sub_08042C68(int a, int b)
+int GetCoDailyFuelBurnBonus(int a, int b)
 {
     int lo;
     int hi;
@@ -80,6 +83,7 @@ int sub_08042C68(int a, int b)
 
     return 0;
 }
+asm(".global sub_08042C68\n.thumb_set sub_08042C68, GetCoDailyFuelBurnBonus\n");
 
 int GetUnitCostWithCoBonus(int a, int b)
 {
@@ -135,15 +139,17 @@ asm(".global sub_08042C9C\n.thumb_set sub_08042C9C, GetUnitCostWithCoBonus\n"
     ".global sub_08042D50\n.thumb_set sub_08042D50, GetUnitFiringRangeWithCoBonus\n"
     ".global sub_08042D84\n.thumb_set sub_08042D84, GetUnitVisionWithCoBonus\n");
 
-int sub_08042DCC(int a1)
+int GetCoCountry(int a1)
 {
     return gUnknown_085D3DD0[a1].unk15 + 1;
 }
+asm(".global sub_08042DCC\n.thumb_set sub_08042DCC, GetCoCountry\n");
 
-int sub_08042DE0(int a1)
+int GetPlayerCoCountry(int a1)
 {
-    return sub_08042DCC(gPlayers[a1].co);
+    return GetCoCountry(gPlayers[a1].co);
 }
+asm(".global sub_08042DE0\n.thumb_set sub_08042DE0, GetPlayerCoCountry\n");
 
 int GetPlayerCoDefaultTeamColor(int a1)
 {
@@ -270,7 +276,7 @@ u32 GetPlayerSpecialAbilities(int a1)
 
 asm(".global sub_08043050\n.thumb_set sub_08043050, GetPlayerSpecialAbilities\n");
 
-int sub_08043070(int a1, int a2, int a3, int a4, int a5)
+int GetCoAdjustedBaseDamage(int a1, int a2, int a3, int a4, int a5)
 {
     int v = gUnknown_085D5ABC[a3].baseDamage[a5][a4];
     int base = GetCoAttackBonus(a1, a2, a3) + 100;
@@ -289,6 +295,7 @@ int sub_08043070(int a1, int a2, int a3, int a4, int a5)
 
     return r;
 }
+asm(".global sub_08043070\n.thumb_set sub_08043070, GetCoAdjustedBaseDamage\n");
 
 int GetCoAttackBonus(int a, int b, int c)
 {
@@ -406,7 +413,7 @@ int GetBattleUnitTerrainDefense(struct BattleUnit *p)
 }
 asm(".global sub_08043304\n.thumb_set sub_08043304, GetBattleUnitTerrainDefense\n");
 
-int sub_0804334C(struct BattleUnit *p)
+int GetBattleUnitTerrainFirepowerBonus(struct BattleUnit *p)
 {
     int r;
 
@@ -417,6 +424,7 @@ int sub_0804334C(struct BattleUnit *p)
 
     return r;
 }
+asm(".global sub_0804334C\n.thumb_set sub_0804334C, GetBattleUnitTerrainFirepowerBonus\n");
 
 int GetBattleUnitCounterattackBonus(struct BattleUnit *p)
 {
@@ -455,7 +463,7 @@ int GetUnitBaseDamage(int a, int b, int c)
 }
 asm(".global sub_080433F8\n.thumb_set sub_080433F8, GetUnitBaseDamage\n");
 
-void sub_08043418(int x, int y, int id)
+void DrawMapCursorSprite(int x, int y, int id)
 {
     int idx;
     int col;
@@ -470,16 +478,16 @@ void sub_08043418(int x, int y, int id)
         idx = gMap->rowOffset[row];
         col = (x + gMap->scrollX) >> 4;
         idx += col;
-        if (gMap->unit[idx] == 0 && sub_08042424(col, row))
+        if (gMap->unit[idx] == 0 && IsOwnFactoryCell(col, row))
             id = 4;
         else
             id = 0;
-        id = sub_08043574(x, y, id);
+        id = GetCursorPointerSpriteId(x, y, id);
         break;
     case 1:
         x += 8;
         y += 8;
-        id = sub_08043574(x, y, 0);
+        id = GetCursorPointerSpriteId(x, y, 0);
         break;
     case 2:
         x += 8;
@@ -492,12 +500,12 @@ void sub_08043418(int x, int y, int id)
     case 5:
         x += 8;
         y += 8;
-        id = sub_08043574(x, y, 8);
+        id = GetCursorPointerSpriteId(x, y, 8);
         break;
     case 6:
         x += 8;
         y += 8;
-        id = sub_08043574(x, y, 0xc);
+        id = GetCursorPointerSpriteId(x, y, 0xc);
         break;
     case 7:
         x += 8;
@@ -536,8 +544,9 @@ void sub_08043418(int x, int y, int id)
     AP_PutAnimFrameAtTime(gUnknown_08101EC0, id, gGameClock,
                  x & 0x1FF, y & 0xFF, 0x1365, 1);
 }
+asm(".global sub_08043418\n.thumb_set sub_08043418, DrawMapCursorSprite\n");
 
-int sub_08043574(int x, int y, int id)
+int GetCursorPointerSpriteId(int x, int y, int id)
 {
     if (x > 0xcf)
     {
@@ -553,8 +562,9 @@ int sub_08043574(int x, int y, int id)
 
     return id;
 }
+asm(".global sub_08043574\n.thumb_set sub_08043574, GetCursorPointerSpriteId\n");
 
-void sub_08043590(void)
+void AnimateCoPowerStatusPalette(void)
 {
     volatile u32 t = gGameClock;
 
@@ -568,9 +578,11 @@ void sub_08043590(void)
     else
         ApplyPaletteAndUploadNow((u16 *)((((t >> 1) & 0xf) * 2) + (int)gUnknown_08104304), 0x2f6, 2);
 }
+asm(".global sub_08043590\n.thumb_set sub_08043590, AnimateCoPowerStatusPalette\n");
 
-void sub_0804360C(int a)
+void DrawCoPanelWithDaysRemaining(int a)
 {
-    sub_080436DC(a, 3, gUnknown_030033EC);
+    DrawArmyCoPanel(a, 3, gUnknown_030033EC);
     DrawDaysRemaining(a, 6);
 }
+asm(".global sub_0804360C\n.thumb_set sub_0804360C, DrawCoPanelWithDaysRemaining\n");

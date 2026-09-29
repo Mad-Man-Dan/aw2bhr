@@ -21,7 +21,7 @@ void MapState_TurnHandoverPrompt(void)
 {
     if (ShouldPromptCountryName())
     {
-        sub_08034A7C(0x4e, gPlayers[GetNextActiveArmy(gUnknown_030033EC)].teamColor);
+        PutArmyNameBanner(0x4e, gPlayers[GetNextActiveArmy(gUnknown_030033EC)].teamColor);
         switch (gUnknown_02028E40)
         {
         case 0:
@@ -49,10 +49,10 @@ void MapState_TurnHandoverPrompt(void)
             return;
     }
     AdvanceToNextActiveArmy();
-    sub_080268F4();
+    StartArmyTurn2();
     ClearPlayerCoPowerStatus(gUnknown_030033EC);
-    sub_08024268();
-    sub_08062038();
+    RebuildMapUnitLayers2();
+    AiBuildInterestLists();
     if (ShouldPromptCountryName())
         sub_0802BFBC();
     sub_08034C8C();

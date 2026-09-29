@@ -7,7 +7,7 @@
  * sub_0806279C @ 0x0806279C
  */
 
-/* sub_0806279C @ 0x0806279C, 88 bytes, THUMB.  MATCHED (wave 48, W48-D).
+/* AiClearInfluenceGrid @ 0x0806279C, 88 bytes, THUMB.  MATCHED (wave 48, W48-D).
  * Clears the whole [10][12] grid of 0x2c-byte records at gUnknown_0202DAD8.
  *
  * The ten words at offset 0 are ONE array, not two of five: the k-loop stores
@@ -21,7 +21,7 @@
  * address into a scratch for the two `strh`s after the k-loop instead of
  * parking it in a callee-saved register, which is the tell for the address
  * expression being written out at each statement. */
-void sub_0806279C(void)
+void AiClearInfluenceGrid(void)
 {
     int i;
     int j;
@@ -37,3 +37,4 @@ void sub_0806279C(void)
             gUnknown_0202DAD8[i][j].unk2a = 0;
         }
 }
+asm(".global sub_0806279C\n.thumb_set sub_0806279C, AiClearInfluenceGrid\n");

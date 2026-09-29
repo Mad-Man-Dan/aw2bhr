@@ -23,7 +23,7 @@
  *
  * Three readings that each cost an attempt:
  *
- *  - `v` is u16, not int.  It reaches sub_0802239C's u16 fifth parameter, and
+ *  - `v` is u16, not int.  It reaches WriteUnitTileQuadAt's u16 fifth parameter, and
  *    an int local spills SHIFTED (`lsls #16; str` / `ldr; lsrs #16`) where the
  *    ROM stores and reloads the value straight.  +4 bytes.
  *
@@ -85,7 +85,7 @@ void DrawDeploymentList(int a1)
                      GetUnitCostWithCoBonus(gUnknown_030033EC,
                                   gUnknown_02023830[((s16)base + i) * 4]) * 10,
                      0x8000, flag);
-        sub_0802239C(gBG0TilemapBuffer, 2, row,
+        WriteUnitTileQuadAt(gBG0TilemapBuffer, 2, row,
                      gUnknown_02023830[((s16)base + i) * 4], v, 0, 0);
     }
 

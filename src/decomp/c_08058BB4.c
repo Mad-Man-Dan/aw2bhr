@@ -269,7 +269,7 @@ void AiGetReachBudget(u8 * out)
 }
 asm(".global sub_08058F30\n.thumb_set sub_08058F30, AiGetReachBudget\n");
 
-/* Runs sub_08059050 once per set bit of the current army's four-bit mask at
+/* Runs AiConsiderEnemyHq once per set bit of the current army's four-bit mask at
  * gPlayers[gUnknown_030033EC].unk2c, passing the 1-based army index
  * and a shared s16 sentinel. Returns -1 if nothing wrote the sentinel.
  *
@@ -291,26 +291,27 @@ asm(".global sub_08058F30\n.thumb_set sub_08058F30, AiGetReachBudget\n");
  * callee-saved registers.
  *
  * MATCHED. */
-int sub_08058F90(void * arg)
+int AiFindNearestEnemyHq(void * arg)
 {
     s16 best;
 
     best = 0x7FFF;
 
     if (gPlayers[gUnknown_030033EC].unk2c & 1)
-        sub_08059050(1, &best, arg);
+        AiConsiderEnemyHq(1, &best, arg);
 
     if (gPlayers[gUnknown_030033EC].unk2c & 2)
-        sub_08059050(2, &best, arg);
+        AiConsiderEnemyHq(2, &best, arg);
 
     if (gPlayers[gUnknown_030033EC].unk2c & 4)
-        sub_08059050(3, &best, arg);
+        AiConsiderEnemyHq(3, &best, arg);
 
     if (gPlayers[gUnknown_030033EC].unk2c & 8)
-        sub_08059050(4, &best, arg);
+        AiConsiderEnemyHq(4, &best, arg);
 
     if (best != 0x7FFF)
         return 0;
 
     return -1;
 }
+asm(".global sub_08058F90\n.thumb_set sub_08058F90, AiFindNearestEnemyHq\n");

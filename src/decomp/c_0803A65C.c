@@ -15,7 +15,7 @@ void sub_0803A65C(void)
 {
     gUnknown_0849D89C->unk09 = 0;
     gUnknown_0849D89C->unk0a = 0xff;
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
     sub_080152EC(gUnknown_0849E2C0, 0);
     DrawWindowBackgroundOnBg2(gUnknown_0849D89C->unk02, gUnknown_0849D89C->unk03, 0x10, 0xa);
     sub_08013AD4(2);

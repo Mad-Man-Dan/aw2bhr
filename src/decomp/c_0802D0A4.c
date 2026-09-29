@@ -18,7 +18,7 @@
 
 void UnitMenu_Launch(void)
 {
-    sub_08042C10();
+    StartSiloTargetSelect();
     CloseTopMenu();
 }
 asm(".global sub_0802D0A4\n.thumb_set sub_0802D0A4, UnitMenu_Launch\n");

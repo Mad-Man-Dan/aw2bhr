@@ -8,12 +8,12 @@ void LoadMapData(u16 a1)
 
     if (a1 >= 0xb4 && a1 <= 0xbf)
     {
-        sub_08037B84(HeapMalloc(0x724));
+        SetLoadedMapBlob(HeapMalloc(0x724));
         ReadSaveSlot(8, (u8 *)gUnknown_03003F68);
     }
     else
     {
-        sub_08037B84(HeapMalloc(0xa14));
+        SetLoadedMapBlob(HeapMalloc(0xa14));
 
         p = gUnknown_085C77A0[a1].mapData[IsHardCampaignMode()];
         if (p == NULL)
@@ -32,7 +32,7 @@ void FreeMapLoadBuffer(void)
 
 asm(".global sub_0802481C\n.thumb_set sub_0802481C, FreeMapLoadBuffer\n");
 
-void sub_08024830(void)
+void ReloadGameplayPalettes(void)
 {
     ApplyPaletteExt((u16 *)(gUnknown_0810E6E0 + (gPlayers[1].teamColor - 1) * 0x20),
                     0x180, 0x20);
@@ -48,13 +48,14 @@ void sub_08024830(void)
 
     ApplyPaletteExt(gUnknown_0809163C, 0x240, 0x20);
 
-    sub_08035020(gPlaySt.weather);
-    sub_08022A34();
+    ApplyWeatherPalette(gPlaySt.weather);
+    LoadCursorSpriteGraphics();
 
     LoadBg1WindowFrame(gUnknown_030033EC);
-    sub_08043834(gUnknown_030033EC);
+    LoadCoPanelGraphics(gUnknown_030033EC);
     LoadArmyObjPalette(gUnknown_030033EC);
 }
+asm(".global sub_08024830\n.thumb_set sub_08024830, ReloadGameplayPalettes\n");
 
 u8 *GetLoadedMapName(void)
 {
@@ -68,13 +69,14 @@ u8 GetLoadedMapArmyCount(void)
 }
 asm(".global sub_080248F8\n.thumb_set sub_080248F8, GetLoadedMapArmyCount\n");
 
-u8 sub_0802490C(u16 a1)
+u8 GetMapArmyCount(u16 a1)
 {
     if ((u16)(a1 - 0xB4) <= 0xB)
         return sub_0803CD14(a1 + 0x4C);
 
     return gUnknown_085C77A0[a1].unk18;
 }
+asm(".global sub_0802490C\n.thumb_set sub_0802490C, GetMapArmyCount\n");
 
 u8 *GetMapName(u16 a1)
 {
@@ -85,7 +87,7 @@ u8 *GetMapName(u16 a1)
 }
 asm(".global sub_08024944\n.thumb_set sub_08024944, GetMapName\n");
 
-int sub_08024984(int a1)
+int GetCellCountry(int a1)
 {
     int r = gUnknown_085C77A0[gPlaySt.mapID].unk58;
 
@@ -94,13 +96,14 @@ int sub_08024984(int a1)
         int i = a1 & 0xE0;
 
         if (i != 0)
-            r = sub_08042DE0(i >> 5);
+            r = GetPlayerCoCountry(i >> 5);
         else
             r = 0;
     }
 
     return r;
 }
+asm(".global sub_08024984\n.thumb_set sub_08024984, GetCellCountry\n");
 
 int GetCellOwnerTeamColor(int a)
 {

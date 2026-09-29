@@ -12,7 +12,7 @@
  * accepts (a) versus how many carry a nonzero top-three-bit terrain flag (b),
  * and stores the ratio as a percentage in gUnknown_0202DAD8[j][i].unk28. The
  * source is permuter output, kept because it is what the bytes require. */
-void sub_08062AE4(void)
+void AiCalcPropertyControlPerBlock(void)
 {
   int i;
   int j;
@@ -70,3 +70,4 @@ void sub_08062AE4(void)
   }
 
 }
+asm(".global sub_08062AE4\n.thumb_set sub_08062AE4, AiCalcPropertyControlPerBlock\n");

@@ -23,7 +23,7 @@
  *
  * The counter is s16 (`lsls #0x10; asrs #0x10` at the head, `ble` at the
  * bottom), unlike the u16 counters of the RedrawUnitLayer twins. */
-void sub_08021D10(void)
+void RenderMap(void)
 {
     s16 y;
 
@@ -37,3 +37,4 @@ void sub_08021D10(void)
 
     BG_EnableSyncBG3();
 }
+asm(".global sub_08021D10\n.thumb_set sub_08021D10, RenderMap\n");

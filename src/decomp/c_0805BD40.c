@@ -8,7 +8,7 @@
  * sub_0805BD40 @ 0x0805BD40
  */
 
-int sub_0805BD40(int x, int y, int t, int id, s16 *out)
+int AiConsiderSecondCargoDropNeighbour(int x, int y, int t, int id, s16 *out)
 {
     s8 *costs;
     int idx;
@@ -46,3 +46,4 @@ int sub_0805BD40(int x, int y, int t, int id, s16 *out)
 
     return 0;
 }
+asm(".global sub_0805BD40\n.thumb_set sub_0805BD40, AiConsiderSecondCargoDropNeighbour\n");

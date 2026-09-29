@@ -181,7 +181,7 @@ void sub_0803BFBC(void *a1)
       }
 
     }
-    d->unk08 = sub_0802490C(gPlaySt.mapID);
-    sub_08021810(&d->unk15, &d->unk16);
+    d->unk08 = GetMapArmyCount(gPlaySt.mapID);
+    LoadMapAndCountProperties(&d->unk15, &d->unk16);
   }
 }

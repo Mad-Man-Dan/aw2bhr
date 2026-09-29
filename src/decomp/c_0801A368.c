@@ -42,7 +42,7 @@ void DrawWindowBackground(int a1, int a2, int a3, int a4, u16 *a5, int a6)
     if (a5 == gBG3TilemapBuffer)
         sub_08013AD4(3);
 
-    sub_0802465C();
+    SetMapLayerPrioritiesDefault();
 }
 
 asm(".global sub_0801A368\n.thumb_set sub_0801A368, DrawWindowBackground\n");

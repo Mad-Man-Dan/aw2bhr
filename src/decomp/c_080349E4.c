@@ -7,7 +7,7 @@
  * sub_080349E4 @ 0x080349E4
  */
 
-void sub_080349E4(void)
+void MapState_PrepareTurnHandover(void)
 {
     u8 v;
 
@@ -23,3 +23,4 @@ void sub_080349E4(void)
 
     gUnknown_030032D8 = 3;
 }
+asm(".global sub_080349E4\n.thumb_set sub_080349E4, MapState_PrepareTurnHandover\n");

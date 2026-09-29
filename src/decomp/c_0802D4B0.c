@@ -25,7 +25,7 @@ void OpenOptionsMenu(void)
     if (gUnknown_030033E4.unk00 - gMap->scrollX / 16 <= 6)
         v = 0x14;
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     sub_08019F2C(gUnknown_0849AC60, v, 1, 1, gUnknown_030044A0);
     IncrementMapLock();
 }
@@ -42,7 +42,7 @@ void OpenIntelMenu(void)
     if (gUnknown_030033E4.unk00 - gMap->scrollX / 16 <= 6)
         v = 0x14;
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     sub_08019F2C(gUnknown_0849ABC0, v, 1, 1, gUnknown_030040F0);
     IncrementMapLock();
 }
@@ -58,7 +58,7 @@ void sub_0802D558(void)
     if (gUnknown_030033E4.unk00 - gMap->scrollX / 16 <= 6)
         v = 0x14;
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     CreateRootMenuWithSfx(gUnknown_0849AE28, v, 1, 1);
     IncrementMapLock();
 }

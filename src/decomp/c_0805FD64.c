@@ -20,40 +20,40 @@ void AiExecuteActionStep(void)
     switch ((s16)*(volatile u16 *)&gUnknown_030045D4)
     {
     case 0:
-        sub_0805FE0C();
+        AiExecutorBegin();
         break;
     case 1:
-        sub_0805FF64();
+        AiExecutorStartMoveSlide();
         break;
     case 2:
-        sub_0805FFA0();
+        AiExecutorDispatchAction();
         break;
     case 3:
-        sub_08060424();
+        AiExecutorStartUnitAttack();
         break;
     case 4:
-        sub_0806044C();
+        AiExecutorStartStructureAttack();
         break;
     case 5:
-        sub_08060474();
+        AiExecutorLaunchMissile();
         break;
     case 6:
-        sub_080604A4();
+        AiExecutorFinishAfterLaunch();
         break;
     case 7:
-        sub_08060324();
+        AiExecutorDwellOnTargetUnit();
         break;
     case 8:
-        sub_08060384();
+        AiExecutorDwellOnTargetCell();
         break;
     case 9:
-        sub_080603D4();
+        AiExecutorDwellOnMissileTarget();
         break;
     case 10:
-        sub_0806050C();
+        AiExecutorFinishAfterDrop();
         break;
     case 11:
-        sub_08060554();
+        AiExecutorFinishAfterBuy();
         break;
     }
 }

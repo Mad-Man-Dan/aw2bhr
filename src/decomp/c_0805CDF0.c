@@ -7,7 +7,7 @@
  * sub_0805CDF0 @ 0x0805CDF0, sub_0805CE20 @ 0x0805CE20
  */
 
-void sub_0805CDF0(void)
+void AiStartClearEscortTallyPass(void)
 {
     volatile u8 **pp;
     volatile u8 *p;
@@ -23,22 +23,24 @@ void sub_0805CDF0(void)
     p[0] = 0x40;
     p[1] = 0;
     *pp = p;
-    gUnknown_03004778 = sub_0805DB64;
+    gUnknown_03004778 = AiDeliberateClearEscortTally;
     gUnknown_03004780 = 2;
 }
+asm(".global sub_0805CDF0\n.thumb_set sub_0805CDF0, AiStartClearEscortTallyPass\n");
 
-void sub_0805CE20(void)
+void AiStartCoPowerPass(void)
 {
     volatile u8 **pp;
     volatile u8 *p;
 
-    /* Twin of sub_0805CDF0, differing only in the callback stored into
+    /* Twin of AiStartClearEscortTallyPass, differing only in the callback stored into
      * gUnknown_03004778; see that function for why the two locals are needed. */
     pp = &gUnknown_030046B0;
     p = gUnknown_030045F0;
     p[0] = 0x40;
     p[1] = 0;
     *pp = p;
-    gUnknown_03004778 = sub_0805DB70;
+    gUnknown_03004778 = AiDeliberateCoPower;
     gUnknown_03004780 = 2;
 }
+asm(".global sub_0805CE20\n.thumb_set sub_0805CE20, AiStartCoPowerPass\n");

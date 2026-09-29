@@ -9,7 +9,7 @@
 
 void MapState_DispatchTurnByController(void)
 {
-    sub_0802776C(0);
+    SetInfoBoxMode(0);
 
     switch (gPlayers[gUnknown_030033EC].aiControlled)
     {

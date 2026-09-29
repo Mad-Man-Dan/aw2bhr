@@ -19,7 +19,7 @@ void RebuildMapUnitLayers(void)
     gMap->camY = gMap->scrollY / 16;
     gMap->unk08 = gMap->scrollX;
     gMap->unk0a = gMap->scrollY;
-    sub_08023860();
+    UpdateMapBgScroll();
     RebuildVisionPlanes();
 
     for (i = 0; i < gMap->height; i++)
@@ -66,7 +66,7 @@ void RebuildMapUnitLayers(void)
             continue;
         if (gPlayers[gUnknown_030033EC].aiControlled == 2)
             continue;
-        if (sub_0802571C(id))
+        if (IsUnitIdVisibleToViewer(id))
         {
             if (gMap->visible[gMap->rowOffset[gUnits[id].y]
                               + gUnits[id].x] != 0)
@@ -76,7 +76,7 @@ void RebuildMapUnitLayers(void)
                    + gUnits[id].x] = 0;
     }
 
-    sub_08021D10();
+    RenderMap();
     RedrawUnitLayer();
     RedrawUnitIconLayer();
 }

@@ -18,7 +18,7 @@ struct Unk2C2D8Proc
 
 void sub_0802C2D8(struct Unk2C2D8Proc *proc)
 {
-    sub_08024268();
+    RebuildMapUnitLayers2();
 
     proc->unk20 = gMap->scrollX;
     proc->unk22 = gMap->scrollY;

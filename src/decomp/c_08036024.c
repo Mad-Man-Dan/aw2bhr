@@ -15,7 +15,7 @@ struct Unk36024Proc
     /* 0x36 */ u8 unk36;
 };
 
-void sub_08036024(ProcPtr procArg)
+void PlayMoveSlideStopSfx(ProcPtr procArg)
 {
     struct Unk36024Proc *proc = procArg;
     struct Unk03001470 *p;
@@ -26,7 +26,7 @@ void sub_08036024(ProcPtr procArg)
         break;
 
     case 0x8000:
-        sub_08035E90(proc);
+        PlayMoveSlideMoveSfx(proc);
         break;
 
     case 0x4000:
@@ -39,3 +39,4 @@ void sub_08036024(ProcPtr procArg)
         break;
     }
 }
+asm(".global sub_08036024\n.thumb_set sub_08036024, PlayMoveSlideStopSfx\n");

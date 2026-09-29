@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08027428.
- * sub_08027428 @ 0x08027428
+ * SupplyIconEffect_Init @ 0x08027428
  */
 
 #include "proc.h"
@@ -26,13 +26,14 @@ struct Unk27428Proc
 /* MATCHED. Byte-for-byte the same function as sub_080272C4 -- identical
  * instruction stream and identical pool words. One C body, two
  * addresses; read that one for the derivation. */
-void sub_08027428(struct Unk27428Proc *proc)
+void SupplyIconEffect_Init(struct Unk27428Proc *proc)
 {
     proc->unk50 = AP_Create(gUnknown_08112614, 1, 1);
     proc->unk50->unk22 = 0x31CA;
 
-    sub_08027560(proc->unk2c, proc->unk30, proc->unk54, proc->unk50);
+    LoadPopupIcon(proc->unk2c, proc->unk30, proc->unk54, proc->unk50);
 
     proc->unk64 = 0x200;
     proc->unk44 = 0xFFFF;
 }
+asm(".global sub_08027428\n.thumb_set sub_08027428, SupplyIconEffect_Init\n");

@@ -47,7 +47,7 @@ void ApplySiloDamage(struct Unk40640Proc *proc)
     DamageUnitAtCell(proc->unk2c,     proc->unk30 + 1, proc->unk44);
     DamageUnitAtCell(proc->unk2c + 1, proc->unk30 + 1, proc->unk44);
     DamageUnitAtCell(proc->unk2c,     proc->unk30 + 2, proc->unk44);
-    sub_08024268();
+    RebuildMapUnitLayers2();
     APProc_Create(gUnknown_08111D94,
                  proc->unk54 - gMap->scrollX,
                  proc->unk58 - gMap->scrollY,

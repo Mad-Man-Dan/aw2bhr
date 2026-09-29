@@ -42,7 +42,7 @@ asm(".global sub_08026704\n.thumb_set sub_08026704, GetNextActiveArmy\n");
  * IsPlayerAliveAndActive call clobbers it, and the compare is `blo`, unsigned.
  * The `movs #0` / `movs #1` split across an unconditional `b` is the
  * if/else-return spelling, not a returned comparison. */
-bool8 sub_0802672C(void)
+bool8 IsCurrentArmyLastInTurnOrder(void)
 {
     u16 i;
 
@@ -60,8 +60,9 @@ bool8 sub_0802672C(void)
     else
         return 0;
 }
+asm(".global sub_0802672C\n.thumb_set sub_0802672C, IsCurrentArmyLastInTurnOrder\n");
 
-/* The same wrap-at-5 retry as sub_0802672C, but the counter IS the global:
+/* The same wrap-at-5 retry as IsCurrentArmyLastInTurnOrder, but the counter IS the global:
  * gUnknown_030033EC is incremented in memory each pass, and reaching 5 calls
  * IncrementDayCount and resets it to 1.
  *
@@ -70,7 +71,7 @@ bool8 sub_0802672C(void)
  * the same halfword is read `ldrh` two instructions earlier.
  *
  * Here the pool word is an ordinary inline `=gUnknown_030033EC`, where
- * sub_0802672C's is a -fforce-addr .rodata word for the same symbol. */
+ * IsCurrentArmyLastInTurnOrder's is a -fforce-addr .rodata word for the same symbol. */
 void AdvanceToNextActiveArmy(void)
 {
     do

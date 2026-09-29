@@ -50,7 +50,7 @@
  *
  * The predicate's result is narrowed `lsls r0,#0x18` before the test, which
  * argues for a u8/bool8 return, but unknown-functions.h declares
- * `int (*)(u8 *)` to agree with sub_08034380 and sub_08034394. The declaration
+ * `int (*)(u8 *)` to agree with IsLinkCommandIdValid and RemoteTurn_WaitForCommand. The declaration
  * is left alone and the `(u8)` cast carries the narrowing -- see the existing
  * W43-C note recording the same disagreement. */
 

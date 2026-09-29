@@ -8,7 +8,7 @@
  */
 
 /* Reverses the byte string [dst, end) in place through a 20-byte stack buffer
- * and terminates it with the sentinel 4 -- the same terminator sub_08020680
+ * and terminates it with the sentinel 4 -- the same terminator ScanMovementScriptToEnd
  * just below stops on.
  *
  * The copy-back loop is peeled by hand in the source: the first byte is stored

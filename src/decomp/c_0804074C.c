@@ -8,7 +8,7 @@
  */
 
 #include "proc.h"
-/* One of the two arms of sub_08041958. Resolves the entry's tile position with
+/* One of the two arms of InventionAttack_StartHit. Resolves the entry's tile position with
  * GetInventionTargetCell, starts the 0x0849FBEC proc under the caller's parent, and
  * copies the position, the entry's 4-bit field and its unk04 byte into it,
  * keeping the entry itself at unk4c.
@@ -29,7 +29,7 @@ struct Unk4074CProc
     /* 66 */ s16 unk66;
 };
 
-void sub_0804074C(struct Unk02028360 *ent, ProcPtr parent)
+void StartInventionHit(struct Unk02028360 *ent, ProcPtr parent)
 {
     struct Unk02028360Pos pos;
     struct Unk4074CProc *proc;
@@ -43,3 +43,4 @@ void sub_0804074C(struct Unk02028360 *ent, ProcPtr parent)
     proc->unk66 = ent->unk04;
     proc->unk4c = ent;
 }
+asm(".global sub_0804074C\n.thumb_set sub_0804074C, StartInventionHit\n");

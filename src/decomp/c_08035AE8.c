@@ -7,7 +7,8 @@
  * sub_08035AE8 @ 0x08035AE8
  */
 
-s16 sub_08035AE8(s16 a)
+s16 GetMoveSlidePaletteRow(s16 a)
 {
     return gUnknown_08090EAC[a & 1];
 }
+asm(".global sub_08035AE8\n.thumb_set sub_08035AE8, GetMoveSlidePaletteRow\n");

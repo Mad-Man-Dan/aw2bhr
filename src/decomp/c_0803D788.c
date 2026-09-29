@@ -33,7 +33,7 @@ void sub_0803D788(void)
     CpuCopyAuto(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
     CpuCopyAuto(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
     CpuCopyAuto(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     InitTextTileCache(0);
     LoadBg1WindowFrame(0);
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);

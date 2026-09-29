@@ -16,7 +16,7 @@
  * the original. The pool word for gUnknown_085766E4 is the compiler's own
  * address copy (0x0816DAE8). */
 
-u8 sub_080611D8(void *arg)
+u8 AiPickBuildCell(void *arg)
 {
   u16 *out;
   u16 none;
@@ -57,8 +57,9 @@ u8 sub_080611D8(void *arg)
   gUnknown_085766E4[best].unk03 = 0xfe;
   return r;
   alt:
-  r = sub_08061668(out);
+  r = AiPickBestScoredBuildSite(out);
   if (r == 0)
     return 0;
   return 1;
 }
+asm(".global sub_080611D8\n.thumb_set sub_080611D8, AiPickBuildCell\n");

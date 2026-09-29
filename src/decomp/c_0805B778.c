@@ -18,22 +18,23 @@
  * This is wave 49's `LinkReceiveCommand` / `LinkReceiveBlock` finding applied to the
  * measurement the -fforce-addr chapter itself was still citing as open. */
 
-void sub_0805B778(void)
+void AiMoveTowardLandingCell(void)
 {
     union Unk802C57CBuf v;
     void *p;
 
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, 0x78, 0);
-    sub_0805B980();
+    AiListLandingCells();
 loop:
     p = gUnknown_03003F20;
     v.pos.unk00 = 0x270F;
     AiPopLastNearestCandidate(p, (u16 *)&v);
     if (v.pos.unk00 == 0x270F)
-        sub_0805F7B8();
+        AiFallbackMove();
     if ((s8)gUnknown_03003340[v.pos.unk02][v.pos.unk00]
         <= GetUnitMovementBudget((struct Unit *)gUnknown_030040D8))
         goto loop;
     AiAdvanceToward(&v);
 }
+asm(".global sub_0805B778\n.thumb_set sub_0805B778, AiMoveTowardLandingCell\n");

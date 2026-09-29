@@ -19,7 +19,7 @@ void sub_0802CF48(int a1, int a2, u8 a3)
     {
         PushMenu();
         CloseTopMenu();
-        sub_08034F10();
+        SetMapStateResumeCursor();
         StartUnitListScreen();
     }
 }
@@ -39,14 +39,14 @@ void sub_0802CF48(int a1, int a2, u8 a3)
 void MapMenu_End(void)
 {
     CloseTopMenu();
-    sub_08042B9C();
+    EndCurrentArmyTurn();
 
     if (gPlaySt.savingEnabled != 0)
         sub_080344F0(gPlaySt.unk2e);
 }
 asm(".global sub_0802CF6C\n.thumb_set sub_0802CF6C, MapMenu_End\n");
 
-/* A wrapping 0-1-2 counter published to sub_08035020.
+/* A wrapping 0-1-2 counter published to ApplyWeatherPalette.
  *
  * gUnknown_08090C00 is NOT a global and must not be declared as one: the ROM
  * word at 0x08090C00 is 0x03003FC0, i.e. &gPlaySt, and its immediate
@@ -72,7 +72,7 @@ void sub_0802CF94(void)
     else
         gPlaySt.weather++;
 
-    sub_08035020(gPlaySt.weather);
+    ApplyWeatherPalette(gPlaySt.weather);
 }
 
 /* A three-argument callback that acts only when bit 1 of its third argument is

@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_08024268(void)
+void RebuildMapUnitLayers2(void)
 {
     RebuildMapUnitLayers();
 }
+asm(".global sub_08024268\n.thumb_set sub_08024268, RebuildMapUnitLayers2\n");

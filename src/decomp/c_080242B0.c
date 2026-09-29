@@ -21,7 +21,7 @@
  * measured it); case-BODY order is the lever. See the wave-80 chapter in
  * docs/agbcc-codegen.md. */
 
-u8 sub_080242B0(s16 a1, s16 a2)
+u8 CanBuildAtCell(s16 a1, s16 a2)
 {
     struct Map *map;
     int idx;
@@ -56,3 +56,4 @@ u8 sub_080242B0(s16 a1, s16 a2)
 
     return FALSE;
 }
+asm(".global sub_080242B0\n.thumb_set sub_080242B0, CanBuildAtCell\n");

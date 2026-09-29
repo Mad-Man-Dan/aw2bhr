@@ -63,7 +63,7 @@ void sub_080875A4(int a, int n, struct Unk80875A4Proc *proc)
         if (n >= 0)
             DrawOamObject(DivRem(n, 10) + 0x55, 0x46, 0x94, 0, 2);
 
-        sub_0804402C(0x18, 0xa0, 0x7490, 6);
+        PutCoMinimugSprite(0x18, 0xa0, 0x7490, 6);
     }
 
     for (i = 0; i < proc->unk38 - 1; i++)
@@ -73,6 +73,6 @@ void sub_080875A4(int a, int n, struct Unk80875A4Proc *proc)
         v = (x - m * 0x20) | 0x1000;
         u = (i + 8) << 12;
         t = ((i + 1) * 12 + 0x90) | 0x400;
-        sub_0804402C(v, 0xa0, u | t, 6);
+        PutCoMinimugSprite(v, 0xa0, u | t, 6);
     }
 }

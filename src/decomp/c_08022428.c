@@ -60,7 +60,7 @@ void DrawUnitAt(u16 x, u16 y)
                      ->unitUnk[gMap->rowOffset[y] + x]) == 0
         || gMap
                ->unk234A[gMap->rowOffset[y] + x] == 0
-        || !sub_0802571C(id)
+        || !IsUnitIdVisibleToViewer(id)
         || (gUnits[id].flags & 4) != 0)
     {
         ClearUnitTileQuadAt(x, y);
@@ -82,7 +82,7 @@ void DrawUnitAt(u16 x, u16 y)
         else
             hp = 0;
 
-        sub_0802216C((gBG1TilemapBuffer + (new_var = cx)) + cy * 32,
+        WriteUnitTileQuad((gBG1TilemapBuffer + (new_var = cx)) + cy * 32,
                      gUnits[id].type,
                      v,
                      e->unk07 | e->unk08,

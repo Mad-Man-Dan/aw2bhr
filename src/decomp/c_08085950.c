@@ -13,7 +13,7 @@
  * ROM has, where `x << 5` needs three. */
 void sub_08085950(int a1, int a2)
 {
-    RegisterDataMove(sub_08026190(), (void *)0x06012000, (sub_080261A0() & 0x3FF) << 5);
+    RegisterDataMove(GetUnitSheetGraphics(), (void *)0x06012000, (GetUnitSheetFrameTileCount() & 0x3FF) << 5);
 
-    ApplyPaletteExt((u16 *)sub_080261C8(a2), (u16)((a1 + 0x10) * 0x20), 0x20);
+    ApplyPaletteExt((u16 *)GetArmyTeamColorPalette(a2), (u16)((a1 + 0x10) * 0x20), 0x20);
 }

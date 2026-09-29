@@ -7,14 +7,16 @@
  * sub_08060684 @ 0x08060684, sub_080606A0 @ 0x080606A0
  */
 
-void sub_08060684(void)
+void DiveSelectedUnit(void)
 {
     StartSubmarineDiveEffectDive();
     gUnknown_030040D8->unk01 |= 0x20;
 }
+asm(".global sub_08060684\n.thumb_set sub_08060684, DiveSelectedUnit\n");
 
-void sub_080606A0(void)
+void SurfaceSelectedUnit(void)
 {
     StartSubmarineDiveEffectRise();
     gUnknown_030040D8->unk01 &= ~0x20;
 }
+asm(".global sub_080606A0\n.thumb_set sub_080606A0, SurfaceSelectedUnit\n");

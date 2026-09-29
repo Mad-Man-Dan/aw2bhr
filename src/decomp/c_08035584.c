@@ -32,12 +32,12 @@ struct Unk35584Proc
     /* 0x30 */ int unk30;
 };
 
-ProcPtr sub_08035584(struct Unk030040D8 *p)
+ProcPtr CreateMoveSlideForActiveUnit(struct Unk030040D8 *p)
 {
     struct Unk35584Proc *proc;
 
     p->unk01 |= 6;
-    proc = sub_080355CC(p->unk02, p->unk03,
+    proc = CreateMoveSlide(p->unk02, p->unk03,
                         ((struct Unit *)p - gUnits) >> 6,
                         p->unk00);
     if (proc == NULL)
@@ -48,3 +48,4 @@ ProcPtr sub_08035584(struct Unk030040D8 *p)
         return proc;
     }
 }
+asm(".global sub_08035584\n.thumb_set sub_08035584, CreateMoveSlideForActiveUnit\n");

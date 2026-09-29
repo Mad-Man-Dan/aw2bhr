@@ -28,8 +28,8 @@ void PlanBattleAnim(void)
     b = gUnknown_03004580[1][3];
     gUnknown_03004580[0][3] = a & 0x1F;
     gUnknown_03004580[1][3] = b & 0x1F;
-    gUnknown_030045A8[0] = sub_08024984(a);
-    gUnknown_030045A8[1] = sub_08024984(b);
+    gUnknown_030045A8[0] = GetCellCountry(a);
+    gUnknown_030045A8[1] = GetCellCountry(b);
 
     gUnknown_03004500[0] = gUnknown_03004580[0][0];
     gUnknown_03004500[1] = gUnknown_03004580[1][0];

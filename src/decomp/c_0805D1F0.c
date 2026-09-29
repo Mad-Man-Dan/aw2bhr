@@ -20,7 +20,7 @@
  * pair per builder, address order), so they are NOT globals of their own.
  */
 
-void sub_0805D1F0(void)
+void AiStartLanderPass(void)
 {{
     int i;
 
@@ -38,6 +38,7 @@ void sub_0805D1F0(void)
 
     *gUnknown_030046B0 = 0;
     gUnknown_030046B0 = gUnknown_030045F0;
-    gUnknown_03004778 = sub_0805E160;
+    gUnknown_03004778 = AiDeliberateLander;
     gUnknown_03004780 = 2;
 }}
+asm(".global sub_0805D1F0\n.thumb_set sub_0805D1F0, AiStartLanderPass\n");

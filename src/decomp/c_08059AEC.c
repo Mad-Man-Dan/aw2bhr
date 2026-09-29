@@ -18,6 +18,6 @@ void AiMarkAttackRings(void)
         n = gUnknown_085D5ABC[gUnknown_030040D8->unk00].minRange;
 
     for (i = 0; i < n; i++)
-        sub_0801FD9C((u8)(0x79 + i));
+        MapMarkHalo((u8)(0x79 + i));
 }
 asm(".global sub_08059AEC\n.thumb_set sub_08059AEC, AiMarkAttackRings\n");

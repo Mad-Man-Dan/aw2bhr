@@ -27,9 +27,9 @@ void sub_0802C4F0(ProcPtr proc)
         p = GetAttackTargetRecord(gUnknown_03003F40);
 
         if (p->unk02 == 0)
-            sub_080425E0(p->unk00);
+            StartRecordedUnitAttack(p->unk00);
         else
-            sub_08042618(p->unk04, p->unk06);
+            StartRecordedInventionAttack(p->unk04, p->unk06);
 
         Proc_Break(proc);
     }

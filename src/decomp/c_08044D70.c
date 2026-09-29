@@ -32,7 +32,7 @@ struct Unk08044D70Child
     /* 0x50 */ void *unk50;
 };
 
-void sub_08044D70(const struct ProcCmd *a1, void *a2, void *a3, int a4, int a5,
+void StartCoPowerDamageHealScript(const struct ProcCmd *a1, void *a2, void *a3, int a4, int a5,
                   int a6, int a7, u8 a8, ProcPtr a9)
 {
     struct Unk084A08ECProc *p;
@@ -51,3 +51,4 @@ void sub_08044D70(const struct ProcCmd *a1, void *a2, void *a3, int a4, int a5,
     q->unk4c = a2;
     q->unk50 = a3;
 }
+asm(".global sub_08044D70\n.thumb_set sub_08044D70, StartCoPowerDamageHealScript\n");

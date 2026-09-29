@@ -9,8 +9,9 @@
 
 #include "proc.h"
 
-void sub_0804483C(ProcPtr parent)
+void CoPowerHachi(ProcPtr parent)
 {
     sub_0803B4DC(502);
-    sub_080443C4(parent);
+    StartCoPowerWhiteFlash(parent);
 }
+asm(".global sub_0804483C\n.thumb_set sub_0804483C, CoPowerHachi\n");

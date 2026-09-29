@@ -23,7 +23,7 @@ void sub_0804A048(void)
     ClearBg0Tilemap();
     ClearBg1Tilemap();
     ClearBg2Tilemap();
-    sub_080616F0();
+    ClearBg3TilemapBuffer();
     BG_EnableSyncBG0();
     BG_EnableSyncBG1();
     BG_EnableSyncBG2();

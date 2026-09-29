@@ -9,7 +9,7 @@
  */
 
 #include "proc.h"
-/* The pair starter behind the sub_080409D0 group: one proc on tree 3 and a
+/* The pair starter behind the SiloFire_StartStrike group: one proc on tree 3 and a
  * second parented on the first, both carrying the same clamped screen position
  * and the same three bytes. The map byte is split differently between them --
  * low five bits plus a5 in the top three on the parent, the whole byte and its

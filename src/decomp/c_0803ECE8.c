@@ -33,6 +33,6 @@ void InventionFire_ApplyDamage(struct Unk803ECE8 *p)
         unit->hp = 1;
 
     p->unk4c++;
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 asm(".global sub_0803ECE8\n.thumb_set sub_0803ECE8, InventionFire_ApplyDamage\n");

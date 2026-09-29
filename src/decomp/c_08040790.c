@@ -9,15 +9,15 @@
  */
 
 #include "proc.h"
-/* The other arm of the matched sub_08041958: where sub_0804074C starts the
+/* The other arm of the matched InventionAttack_StartHit: where StartInventionHit starts the
  * 0x0849FBEC proc from an existing entry, this one starts it from a bare
  * (x, y) with no entry -- unk4c is NULL, unk64 is the literal 6, and unk66
  * comes from the cell plane instead of the entry's unk04. Store order is
- * sub_0804074C's: unk2c, unk30, unk64, unk66, unk4c.
+ * StartInventionHit's: unk2c, unk30, unk64, unk66, unk4c.
  *
  * gUnknown_020288B4 is named directly here with a CLEAN pool word (a single
  * `ldr`), which is what proves it a real global rather than a -fforce-addr
- * artefact -- sub_0804189C reaches the same array through agbcc's word at
+ * artefact -- StartAttackOnPipeSeamAt reaches the same array through agbcc's word at
  * 0x08091338, whose ROM content is 0x020288B4.
  *
  * The row table MUST be reached as a member of a struct laid over the map
@@ -47,7 +47,7 @@ struct Unk40790Proc
  * switch's own sign extension -- `switch (proc->unk64)` on the s16 member would
  * have emitted `ldrsh` and no shift pair.
  *
- * sub_0803FF48's fourth argument and sub_0803FECC's third are both invisible:
+ * StartExplosionEffect's fourth argument and StartExplosionEffectDefault's third are both invisible:
  * r3 and r2 already hold the proc. Case bodies are emitted in source order,
  * which is why the unk64 == 6 arm comes first in the ROM. */
 struct Unk407E4Proc
@@ -62,7 +62,7 @@ struct Unk407E4Proc
     /* 66 */ s16 unk66;
 };
 
-void sub_08040790(int a1, int a2, ProcPtr a3)
+void StartPipeSeamHit(int a1, int a2, ProcPtr a3)
 {
     struct Unk40790Proc *proc = Proc_StartBlocking(gUnknown_0849FBEC, a3);
 
@@ -73,17 +73,18 @@ void sub_08040790(int a1, int a2, ProcPtr a3)
         gMap->rowOffset[a2] + a1];
     proc->unk4c = NULL;
 }
+asm(".global sub_08040790\n.thumb_set sub_08040790, StartPipeSeamHit\n");
 
-void sub_080407E4(struct Unk407E4Proc *proc)
+void InventionHit_Run(struct Unk407E4Proc *proc)
 {
     s16 k;
 
     if (proc->unk66 > 0)
     {
         if (proc->unk64 == 6)
-            sub_0803FF48(proc->unk2c, proc->unk30, -3, proc);
+            StartExplosionEffect(proc->unk2c, proc->unk30, -3, proc);
         else
-            sub_0803FECC(proc->unk2c, proc->unk30, proc);
+            StartExplosionEffectDefault(proc->unk2c, proc->unk30, proc);
     }
     else
     {
@@ -96,14 +97,15 @@ void sub_080407E4(struct Unk407E4Proc *proc)
             break;
         case 0:
         case 3:
-            sub_08040200(proc->unk4c, proc);
+            DestroyLaserOrMinicannon(proc->unk4c, proc);
             break;
         case 2:
-            sub_0804026C(proc->unk4c, proc);
+            StartBlackCannonDestroyedEffect(proc->unk4c, proc);
             break;
         case 4:
-            sub_08040290(proc->unk4c, proc);
+            StartDeathRayDestroyedEffect(proc->unk4c, proc);
             break;
         }
     }
 }
+asm(".global sub_080407E4\n.thumb_set sub_080407E4, InventionHit_Run\n");

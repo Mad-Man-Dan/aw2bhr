@@ -16,8 +16,8 @@
  * comes out the other way round, so the two spellings are distinguishable and
  * this block contains one of each.
  *
- * gUnknown_030040D8->unk00 is the byte at offset 0, newly named: sub_080421D0
- * and sub_0804223C read the same byte off the same pointer to index
+ * gUnknown_030040D8->unk00 is the byte at offset 0, newly named: CanDropFirstCargoAt
+ * and CanDropSecondCargoAt read the same byte off the same pointer to index
  * gUnknown_085D5ABC by 0x5c, so it is a record selector rather than a flag.
  *
  * Named per Xenesis's AW2 Subroutine List: "Menu Item Visibility Check -

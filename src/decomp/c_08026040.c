@@ -21,7 +21,7 @@
  * the ASCENDING `i < 0x100` counter, not a descending source loop. The four
  * arguments living in sl / [sp] / r8 / sb is plain register allocation; they
  * are four ordinary ints. */
-void sub_08026040(int a1, int a2, int a3, int a4)
+void RemapArmyRosters(int a1, int a2, int a3, int a4)
 {
     struct Unit *buf;
     int i;
@@ -40,3 +40,4 @@ void sub_08026040(int a1, int a2, int a3, int a4)
     CopyRosterToArmy(&buf[0xc0], a4);
     HeapFree(buf);
 }
+asm(".global sub_08026040\n.thumb_set sub_08026040, RemapArmyRosters\n");

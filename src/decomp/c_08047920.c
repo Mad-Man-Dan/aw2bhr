@@ -86,7 +86,7 @@ void DrawUnitListRows(void *arg)
         else
             c = gUnknown_03003F2C;
 
-        sub_0802239C(gBG0TilemapBuffer, n + 3, i * 2 + 7, u->type, c, u->unk07,
+        WriteUnitTileQuadAt(gBG0TilemapBuffer, n + 3, i * 2 + 7, u->type, c, u->unk07,
                      u->unk05_3);
         b = (u->flags >> 3) & m;
         PutTextTableEntryImmediate(8, (s16)(i * 2 + 7), gBG0TilemapBuffer,

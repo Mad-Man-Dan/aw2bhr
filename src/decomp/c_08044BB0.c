@@ -7,7 +7,7 @@
  * sub_08044BB0 @ 0x08044BB0
  */
 
-void sub_08044BB0(void)
+void BuildUnlockedCoGroupList(void)
 {
     int i;
     int n;
@@ -36,3 +36,4 @@ void sub_08044BB0(void)
         }
     }
 }
+asm(".global sub_08044BB0\n.thumb_set sub_08044BB0, BuildUnlockedCoGroupList\n");

@@ -125,10 +125,10 @@ asm(".global sub_08019DA8\n.thumb_set sub_08019DA8, Menu_OnEndReleaseMapLock\n")
 /*
  * Menu_PlaceCursorSprite -- put the cursor sprite on the row the object names.
  *
- * sub_08022AD0 gets the object's .unk24 and a y in pixels, .unk20 * 16 +
+ * SetMapCursorDisplayPosition gets the object's .unk24 and a y in pixels, .unk20 * 16 +
  * .unk26.
  *
- * This call site is the only evidence there is for sub_08022AD0's parameter
+ * This call site is the only evidence there is for SetMapCursorDisplayPosition's parameter
  * widths, and it is why that definition takes s16: the first argument is a
  * signed halfword handed over with no conversion at all, and the second is
  * narrowed as a signed halfword too. u16 parameters would be zero-extended
@@ -136,7 +136,7 @@ asm(".global sub_08019DA8\n.thumb_set sub_08019DA8, Menu_OnEndReleaseMapLock\n")
  */
 void Menu_PlaceCursorSprite(struct Unk08019DCC *p)
 {
-    sub_08022AD0(p->unk24, p->unk20 * 16 + p->unk26);
+    SetMapCursorDisplayPosition(p->unk24, p->unk20 * 16 + p->unk26);
 }
 asm(".global sub_08019DCC\n.thumb_set sub_08019DCC, Menu_PlaceCursorSprite\n");
 
@@ -145,7 +145,7 @@ asm(".global sub_08019DCC\n.thumb_set sub_08019DCC, Menu_PlaceCursorSprite\n");
  *
  * The target is .unk26 + 0x10 + .unk20 * 32; .unk1e is moved to the average of
  * itself and that, so each frame closes half the remaining distance. Then
- * sub_0802323C is called with .unk24, the same y in pixels Menu_PlaceCursorSprite
+ * EaseMapCursorAndDraw is called with .unk24, the same y in pixels Menu_PlaceCursorSprite
  * computes, and 3.
  *
  * Why the C looks odd: the quotient goes through `u16 t` rather than straight
@@ -163,6 +163,6 @@ void Menu_SlideCursorSprite(struct Unk08019DCC *p)
 
     t = ((s16)(p->unk26 + 0x10 + p->unk20 * 32) + p->unk1e) / 2;
     p->unk1e = t;
-    sub_0802323C(p->unk24, p->unk20 * 16 + p->unk26, 3);
+    EaseMapCursorAndDraw(p->unk24, p->unk20 * 16 + p->unk26, 3);
 }
 asm(".global sub_08019DEC\n.thumb_set sub_08019DEC, Menu_SlideCursorSprite\n");

@@ -7,7 +7,8 @@
  * sub_08037B84 @ 0x08037B84
  */
 
-void sub_08037B84(void *p)
+void SetLoadedMapBlob(void *p)
 {
     gUnknown_03003F68 = p;
 }
+asm(".global sub_08037B84\n.thumb_set sub_08037B84, SetLoadedMapBlob\n");

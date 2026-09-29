@@ -7,7 +7,7 @@
  * sub_08039064 @ 0x08039064, sub_080390CC @ 0x080390CC
  */
 
-u8 sub_08039064(u8 n)
+u8 GetMovePathIncomingDirection(u8 n)
 {
     struct Unk0849D5F8 *p;
 
@@ -25,8 +25,9 @@ u8 sub_08039064(u8 n)
     if (p->unk2c[n - 1] > p->unk2c[n])
         return 2;
 }
+asm(".global sub_08039064\n.thumb_set sub_08039064, GetMovePathIncomingDirection\n");
 
-u8 sub_080390CC(u8 n)
+u8 GetMovePathOutgoingDirection(u8 n)
 {
     struct Unk0849D5F8 *p;
 
@@ -44,3 +45,4 @@ u8 sub_080390CC(u8 n)
     if (p->unk2c[n] > p->unk2c[n + 1])
         return 4;
 }
+asm(".global sub_080390CC\n.thumb_set sub_080390CC, GetMovePathOutgoingDirection\n");

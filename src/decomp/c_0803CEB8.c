@@ -11,8 +11,8 @@ void LoadDesignRoomSlot(u8 a1, const void *a2)
 {
     ReadSaveSlot(a1 + 5, gUnknown_02000000);
     ApplyMapRecord((int)a2, gUnknown_02000000);
-    sub_08026040(gPlaySt.armyColor[1], gPlaySt.armyColor[2],
+    RemapArmyRosters(gPlaySt.armyColor[1], gPlaySt.armyColor[2],
                  gPlaySt.armyColor[3], gPlaySt.armyColor[4]);
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 asm(".global sub_0803CEB8\n.thumb_set sub_0803CEB8, LoadDesignRoomSlot\n");

@@ -7,17 +7,19 @@
  * sub_08035020 @ 0x08035020, sub_0803504C @ 0x0803504C, PlayWeatherChangeSound @ 0x08035064
  */
 
-void sub_08035020(u16 a)
+void ApplyWeatherPalette(u16 a)
 {
     sub_0803F5E4(a, 0x48);
     ApplyPaletteExt(gUnknown_0849BD20[a].unk00, 0, 0x100);
 }
+asm(".global sub_08035020\n.thumb_set sub_08035020, ApplyWeatherPalette\n");
 
-void sub_0803504C(struct Unk03001470 *p)
+void WeatherChange_CommitWeather(struct Unk03001470 *p)
 {
     gPlaySt.weather = p->unk20;
-    sub_08035020(gPlaySt.weather);
+    ApplyWeatherPalette(gPlaySt.weather);
 }
+asm(".global sub_0803504C\n.thumb_set sub_0803504C, WeatherChange_CommitWeather\n");
 
 /* Named per Xenesis's AW2 Subroutine List: "Code that retrieves the Sound
  * Effects for weather change IDs". The old PlayWeatherChangeSound symbol is kept as a

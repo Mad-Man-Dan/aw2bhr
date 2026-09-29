@@ -25,7 +25,7 @@
  * 8-bit `cmp` immediate) does not, so only the twin gets a preheader and with
  * it the rotation. */
 
-int sub_0805C988(int x, int y)
+int AiIsOnLaserLine(int x, int y)
 {
     struct Unk02028360 *p;
 
@@ -40,8 +40,9 @@ int sub_0805C988(int x, int y)
 
     return 0;
 }
+asm(".global sub_0805C988\n.thumb_set sub_0805C988, AiIsOnLaserLine\n");
 
-/* sub_0805C988's near-twin -- same list walk, different selector and hit test.
+/* AiIsOnLaserLine's near-twin -- same list walk, different selector and hit test.
  * See that function for why the 0x3C0 compare is a bitfield read and why this
  * one alone gets the guard-plus-do/while shape.
  *

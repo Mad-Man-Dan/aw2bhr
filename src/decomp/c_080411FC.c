@@ -11,11 +11,11 @@
 /* Either restarts the proc's script from the top, or installs the unit art and
  * starts the two follow-on procs, handing the cursor pair at +0x3c/+0x3e to the
  * gUnknown_0849FD14 one (the script whose PROC_ONEND callback is the matched
- * sub_08040AFC).
+ * CaptureAnimPopup_OnEnd).
  *
  * All four `adds rN, #imm` are THUMB displacement limits -- ldrb reaches only
  * 0..31 -- and not addresses being taken; +0x4a is bound to r5 because it is
- * read twice, once for sub_08041258 and again for sub_0804103C. */
+ * read twice, once for PlayCaptureCompleteSound and again for LoadCapturePropertySprite. */
 struct Unk411FCProc
 {
     /* 0x00 */ PROC_HEADER;
@@ -29,7 +29,7 @@ struct Unk411FCProc
     /* 0x4a */ u8 unk4a;
 };
 
-void sub_080411FC(struct Unk411FCProc *proc)
+void CaptureAnim_CheckComplete(struct Unk411FCProc *proc)
 {
     struct Unk411FCProc *newProc;
 
@@ -39,8 +39,8 @@ void sub_080411FC(struct Unk411FCProc *proc)
     }
     else
     {
-        sub_08041258(proc->unk44, proc->unk4a);
-        sub_0804103C(proc->unk4a, 0x22A, 5);
+        PlayCaptureCompleteSound(proc->unk44, proc->unk4a);
+        LoadCapturePropertySprite(proc->unk4a, 0x22A, 5);
 
         Proc_StartBlocking(gUnknown_0849FE54, proc);
 
@@ -49,3 +49,4 @@ void sub_080411FC(struct Unk411FCProc *proc)
         newProc->unk3e = proc->unk3e;
     }
 }
+asm(".global sub_080411FC\n.thumb_set sub_080411FC, CaptureAnim_CheckComplete\n");

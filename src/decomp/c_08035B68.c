@@ -8,7 +8,7 @@
  */
 
 /* Returns `void *` and not the `u32` this was first promoted as: the only
- * caller is sub_080355CC, which hands the result straight to Decompress, and
+ * caller is CreateMoveSlide, which hands the result straight to Decompress, and
  * unknown-functions.h documents the neighbouring GetMoveSlideGraphicsPointer the same way.
  * Both spellings are one word and compile identically -- re-verified
  * byte-for-byte after the change -- so this is a type-honesty fix, not a

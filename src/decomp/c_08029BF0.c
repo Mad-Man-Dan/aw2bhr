@@ -27,8 +27,8 @@ struct Unk29BF0Obj
     /* 28 */ u8 filler_28[0x04];
     /* 2c */ int unk2c;
 };
-/* A two-field forwarder. Both reads are plain `ldrh`, where sub_08029BF0 reads
- * the SAME two offsets with `ldrsh` -- sub_0802723C takes `int` and would have
+/* A two-field forwarder. Both reads are plain `ldrh`, where SupplyAnimation_Init reads
+ * the SAME two offsets with `ldrsh` -- StartSupplyIconEffect takes `int` and would have
  * sign-extended an s16 field, so as far as this unit can tell the fields are
  * unsigned here. The two readings are recorded, not reconciled; a third caller
  * would settle it. */
@@ -39,7 +39,7 @@ struct Unk29C28Obj
     /* 22 */ u16 unk22;
 };
 
-void sub_08029BF0(struct Unk29BF0Obj *p)
+void SupplyAnimation_Init(struct Unk29BF0Obj *p)
 {
     ScrollCameraToKeepCellInView(p->unk20, p->unk22);
 
@@ -57,8 +57,10 @@ void sub_08029BF0(struct Unk29BF0Obj *p)
 
     sub_0803B4DC(0x6B);
 }
+asm(".global sub_08029BF0\n.thumb_set sub_08029BF0, SupplyAnimation_Init\n");
 
-void sub_08029C28(struct Unk29C28Obj *p)
+void SupplyAnimation_StartIcon(struct Unk29C28Obj *p)
 {
-    sub_0802723C(p->unk20, p->unk22);
+    StartSupplyIconEffect(p->unk20, p->unk22);
 }
+asm(".global sub_08029C28\n.thumb_set sub_08029C28, SupplyAnimation_StartIcon\n");

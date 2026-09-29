@@ -14,9 +14,10 @@
  * of them reads r0-r3 before writing it) and all three end `pop {r0}`, i.e.
  * void, so there is no value to nest. src/decomp/c_08048558.c is the matched
  * exemplar of the same shape. */
-void sub_08028154(void)
+void DayStartScreen_Finish(void)
 {
     ClearBg0Tilemap();
     BG_EnableSyncBG0();
     SetMapLayersDefault();
 }
+asm(".global sub_08028154\n.thumb_set sub_08028154, DayStartScreen_Finish\n");

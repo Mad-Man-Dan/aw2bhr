@@ -60,13 +60,13 @@
  * cse keeps the pointer live. Binding it to a local instead loads it before the
  * store's own address and reverses that pool pair. */
 
-void sub_080377C4(void *a1)
+void RenderMapPreviewToVram(void *a1)
 {
     u16 *dst;
     int x;
     int y;
 
-    sub_08037B84(HeapMalloc(0xa14));
+    SetLoadedMapBlob(HeapMalloc(0xa14));
 
     ((u8 *)gUnknown_03003F68)[0] = gMap->width;
     ((u8 *)gUnknown_03003F68)[1] = gMap->height;
@@ -89,3 +89,4 @@ void sub_080377C4(void *a1)
     gUnknown_03001418 = (((u8 *)gUnknown_03003F68)[1] * 4 - 0xa0) >> 1;
     HeapFree(gUnknown_03003F68);
 }
+asm(".global sub_080377C4\n.thumb_set sub_080377C4, RenderMapPreviewToVram\n");

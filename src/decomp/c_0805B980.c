@@ -19,7 +19,7 @@
  * here, exactly as the promoted readers do. Do NOT reshape struct Unk03003338.
  *
  * `gMap->unk3C72[gMap->rowOffset[y] + x]` (include/map.h) reproduces
- * sub_080415E4's cell-addressing idiom without naming p/rows/off/cells by
+ * BuildBoardableTransportList's cell-addressing idiom without naming p/rows/off/cells by
  * hand -- the struct member keeps the same `(base + 0x3C72) + idx`
  * association those intermediates existed to force. `t = y * 2` and
  * `&gUnknown_03003340[y]` both end up in the OUTER loop's preheader (sl and r4);
@@ -40,7 +40,7 @@ struct UnitTypeUnk14
     /* 0x1a */ u8 terrainOk[0x20];
 };
 
-void sub_0805B980(void)
+void AiListLandingCells(void)
 {
     struct Unk5B980Cell *out;
     int x;
@@ -67,8 +67,9 @@ void sub_0805B980(void)
 
     out->v = 0xFFFF;
 }
+asm(".global sub_0805B980\n.thumb_set sub_0805B980, AiListLandingCells\n");
 
-u8 sub_0805BA34(int x, int y, u16 *out)
+u8 AiPickCargoDropCell(int x, int y, u16 *out)
 {
     struct Unit *unit;
     struct UnitTypeUnk14 *tbl;
@@ -91,18 +92,19 @@ u8 sub_0805BA34(int x, int y, u16 *out)
     best = 9999;
     out[0] = best;
 
-    sub_0805BAFC(x - 1, y, unit->type, out);
-    sub_0805BAFC(x + 1, y, unit->type, out);
-    sub_0805BAFC(x, y - 1, unit->type, out);
-    sub_0805BAFC(x, y + 1, unit->type, out);
+    AiConsiderCargoDropNeighbour(x - 1, y, unit->type, out);
+    AiConsiderCargoDropNeighbour(x + 1, y, unit->type, out);
+    AiConsiderCargoDropNeighbour(x, y - 1, unit->type, out);
+    AiConsiderCargoDropNeighbour(x, y + 1, unit->type, out);
 
     if (out[0] == best)
         return 0;
 
     return 1;
 }
+asm(".global sub_0805BA34\n.thumb_set sub_0805BA34, AiPickCargoDropCell\n");
 
-void sub_0805BAFC(int x, int y, int t, u16 *out)
+void AiConsiderCargoDropNeighbour(int x, int y, int t, u16 *out)
 {
     s8 *costs;
     int idx;
@@ -134,8 +136,9 @@ void sub_0805BAFC(int x, int y, int t, u16 *out)
     out[0] = x;
     out[1] = y;
 }
+asm(".global sub_0805BAFC\n.thumb_set sub_0805BAFC, AiConsiderCargoDropNeighbour\n");
 
-u8 sub_0805BB8C(int x, int y)
+u8 AiHasCargoRoomBeside(int x, int y)
 {
     int n;
 
@@ -144,16 +147,17 @@ u8 sub_0805BB8C(int x, int y)
         != 0)
         return 0;
 
-    n = sub_0805BBF8(x - 1, y) + sub_0805BBF8(x + 1, y)
-        + sub_0805BBF8(x, y - 1) + sub_0805BBF8(x, y + 1);
+    n = AiIsCellEmptyAndFootPassable(x - 1, y) + AiIsCellEmptyAndFootPassable(x + 1, y)
+        + AiIsCellEmptyAndFootPassable(x, y - 1) + AiIsCellEmptyAndFootPassable(x, y + 1);
 
     if (n > 0)
         return 1;
 
     return 0;
 }
+asm(".global sub_0805BB8C\n.thumb_set sub_0805BB8C, AiHasCargoRoomBeside\n");
 
-int sub_0805BBF8(int x, int y)
+int AiIsCellEmptyAndFootPassable(int x, int y)
 {
     s8 *costs;
     int idx;
@@ -184,3 +188,4 @@ int sub_0805BBF8(int x, int y)
 
     return 1;
 }
+asm(".global sub_0805BBF8\n.thumb_set sub_0805BBF8, AiIsCellEmptyAndFootPassable\n");

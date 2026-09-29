@@ -31,7 +31,7 @@ bool8 EventOp_CreateExhaustedUnit(s16 a)
 {
     struct Unk0200C528Node *p = gUnknown_0200C528[a].unk04;
 
-    sub_08025C98((s16)p->unk08, (s16)p->unk0a, (s16)p->unk0c);
+    CreateExhaustedUnitAt((s16)p->unk08, (s16)p->unk0a, (s16)p->unk0c);
     gUnknown_0200C528[a].unk04++;
     return FALSE;
 }

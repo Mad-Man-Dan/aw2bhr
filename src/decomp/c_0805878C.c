@@ -29,7 +29,7 @@
  * r1); the 0x8000 and 0xff00 constants in ip/r4 are LICM hoists, not source.
  *
  * MATCHED. */
-struct Unk03003338 *sub_0805878C(void)
+struct Unk03003338 *AiPickBestAttackCandidate(void)
 {
     struct Unk03003338 *p;
     struct Unk03003338 *best;
@@ -71,3 +71,4 @@ struct Unk03003338 *sub_0805878C(void)
         return bestF;
     return 0;
 }
+asm(".global sub_0805878C\n.thumb_set sub_0805878C, AiPickBestAttackCandidate\n");

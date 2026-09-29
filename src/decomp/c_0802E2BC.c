@@ -15,6 +15,6 @@
 
 void sub_0802E2BC(void)
 {
-    sub_080245D4();
+    SetMapLayersUnitsTranslucent();
     gUnknown_03003334 = 8;
 }

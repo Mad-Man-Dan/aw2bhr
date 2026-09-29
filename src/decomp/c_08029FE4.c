@@ -73,7 +73,7 @@
  *  - `pt` is a 4-byte struct, so both member stores are SImode bitfield
  *    inserts on one stack word.
  */
-void sub_08029FE4(void)
+void TurnStartRepair_Loop(void)
 {
   struct Unit *u;
   struct Unk802C57C pt;
@@ -147,3 +147,4 @@ void sub_08029FE4(void)
     ClearSlotScriptCallback(gUnknown_03001FBC);
   }
 }
+asm(".global sub_08029FE4\n.thumb_set sub_08029FE4, TurnStartRepair_Loop\n");

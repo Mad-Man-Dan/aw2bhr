@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08024454(void)
+void SetMapLayersRangeBlend(void)
 {
     gUnknown_030030B4.bits.priority = 0;
     gUnknown_03001FE8.bits.priority = 1;
@@ -36,3 +36,4 @@ void sub_08024454(void)
 
     ResetWindowShadows();
 }
+asm(".global sub_08024454\n.thumb_set sub_08024454, SetMapLayersRangeBlend\n");

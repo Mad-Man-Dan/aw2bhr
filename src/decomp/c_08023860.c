@@ -24,7 +24,7 @@
  * product puts the assignment second, where expand_expr emits it after the
  * multiply. */
 
-void sub_08023860(void)
+void UpdateMapBgScroll(void)
 {
     int x;
     int y;
@@ -42,3 +42,4 @@ void sub_08023860(void)
     gUnknown_0300200C = x - gMap->camX * 16;
     gUnknown_03002000 = y - gMap->camY * 16;
 }
+asm(".global sub_08023860\n.thumb_set sub_08023860, UpdateMapBgScroll\n");

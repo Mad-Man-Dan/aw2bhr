@@ -9,7 +9,7 @@
 
 /* Returns 0 when the move stack visits any cell twice, 1 when every step is
  * distinct -- the O(n^2) self-intersection test over the unk20/unk2c pair. */
-int sub_08038C08(void)
+int IsMovePathSelfAvoiding(void)
 {
     s8 i;
     s8 j;
@@ -26,3 +26,4 @@ int sub_08038C08(void)
 
     return 1;
 }
+asm(".global sub_08038C08\n.thumb_set sub_08038C08, IsMovePathSelfAvoiding\n");

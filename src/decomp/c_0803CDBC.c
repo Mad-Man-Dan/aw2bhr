@@ -17,9 +17,9 @@ int sub_0803CDBC(int a1, int a2, u8 a3)
     if (IsSaveSlotInvalid(a3 + 5) != 0)
         return 0;
     ReadSaveSlot(a3 + 5, p);
-    sub_08037B84(p);
+    SetLoadedMapBlob(p);
     sub_0803D6FC((struct Unk3D6FC *)p);
-    sub_080376DC((void *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
+    DrawMapPreviewToBg((void *)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  1, 0, a1, a2, 5);
     return 1;
 }
@@ -30,7 +30,7 @@ void sub_0803CE28(int a1, int a2)
 
     p = gUnknown_02000000;
     sub_0803CFA4(gUnknown_0809113C, p, 1);
-    sub_08037B84(p);
+    SetLoadedMapBlob(p);
     sub_0803D6D0();
     ShowMapPreview((int)(0x06000000 + gUnknown_03002B6C.bits.chr_block * 0x4000),
                  (int)(gBG0TilemapBuffer + (a2 * 32 + a1)), 1, 5);

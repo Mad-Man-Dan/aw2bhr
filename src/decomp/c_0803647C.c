@@ -15,11 +15,12 @@ struct Unk3647CProc
     /* 0x35 */ u8 unk35;
 };
 
-void sub_0803647C(ProcPtr procArg)
+void StopMoveSlideWalk(ProcPtr procArg)
 {
     struct Unk3647CProc *proc = procArg;
 
-    sub_08036024(proc);
+    PlayMoveSlideStopSfx(proc);
     proc->unk35 = 1;
     gUnknown_030040E4 = 0;
 }
+asm(".global sub_0803647C\n.thumb_set sub_0803647C, StopMoveSlideWalk\n");

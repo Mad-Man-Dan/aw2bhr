@@ -7,9 +7,10 @@
  * sub_080261C8 @ 0x080261C8
  */
 
-u8 *sub_080261C8(int index)
+u8 *GetArmyTeamColorPalette(int index)
 {
     u8 *base = gUnknown_0810E6E0;
 
     return base + (gPlayers[index].teamColor - 1) * 0x20;
 }
+asm(".global sub_080261C8\n.thumb_set sub_080261C8, GetArmyTeamColorPalette\n");

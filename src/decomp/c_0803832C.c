@@ -7,20 +7,21 @@
  * sub_0803832C @ 0x0803832C
  */
 
-void sub_0803832C(void)
+void EndOfGame_Finish(void)
 {
     sub_0803CA28(gPlaySt.mapID, 1);
 
     switch (gPlaySt.gameMode)
     {
     case 1:
-        sub_08038484();
+        EndOfGame_FinishCampaignMap();
         break;
     case 2:
         sub_08038548();
         break;
     case 3:
-        sub_08038568();
+        EndOfGame_FinishVersusMap();
         break;
     }
 }
+asm(".global sub_0803832C\n.thumb_set sub_0803832C, EndOfGame_Finish\n");

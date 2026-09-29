@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_08028ED0(ProcPtr parent)
+void StartRangeSpread(ProcPtr parent)
 {
     Proc_StartBlocking(gUnknown_08499FEC, parent);
 }
+asm(".global sub_08028ED0\n.thumb_set sub_08028ED0, StartRangeSpread\n");

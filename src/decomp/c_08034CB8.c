@@ -9,7 +9,7 @@
 
 void sub_08034CB8(void)
 {
-    sub_0802776C(0);
+    SetInfoBoxMode(0);
     sub_080742FC();
     gUnknown_030032D8 = 0xb;
 }

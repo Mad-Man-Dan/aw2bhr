@@ -10,24 +10,26 @@
 #include "proc.h"
 
 /* Asks GetInventionTargetCell for the entry's tile position into a stack pair, then
- * starts the 0x0849FADC proc through sub_0803FEDC with that position and its
+ * starts the 0x0849FADC proc through StartBlackCannonExplosion with that position and its
  * own parent argument. GetInventionTargetCell returns bool8 and the result is dropped --
- * no narrowing follows the `bl`. The twin sub_08040290 differs only in calling
- * sub_0803FF04. */
-void sub_0804026C(struct Unk02028360 *ent, ProcPtr parent)
+ * no narrowing follows the `bl`. The twin StartDeathRayDestroyedEffect differs only in calling
+ * StartDeathRayExplosion. */
+void StartBlackCannonDestroyedEffect(struct Unk02028360 *ent, ProcPtr parent)
 {
     struct Unk02028360Pos pos;
 
     GetInventionTargetCell(ent, &pos);
-    sub_0803FEDC(pos.unk00, pos.unk02, parent);
+    StartBlackCannonExplosion(pos.unk00, pos.unk02, parent);
 }
+asm(".global sub_0804026C\n.thumb_set sub_0804026C, StartBlackCannonDestroyedEffect\n");
 
-/* The twin of sub_0804026C, differing only in which of the two 0x0849FADC
- * starters it calls (sub_0803FF04 rather than sub_0803FEDC). */
-void sub_08040290(struct Unk02028360 *ent, ProcPtr parent)
+/* The twin of StartBlackCannonDestroyedEffect, differing only in which of the two 0x0849FADC
+ * starters it calls (StartDeathRayExplosion rather than StartBlackCannonExplosion). */
+void StartDeathRayDestroyedEffect(struct Unk02028360 *ent, ProcPtr parent)
 {
     struct Unk02028360Pos pos;
 
     GetInventionTargetCell(ent, &pos);
-    sub_0803FF04(pos.unk00, pos.unk02, parent);
+    StartDeathRayExplosion(pos.unk00, pos.unk02, parent);
 }
+asm(".global sub_08040290\n.thumb_set sub_08040290, StartDeathRayDestroyedEffect\n");

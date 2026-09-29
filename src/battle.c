@@ -19,17 +19,17 @@ void SelectBattleWeapon(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
     {
         v2 = GetUnitBaseDamage(a->unit->type, b->unit->type, 1);
         if (v2 != 0)
-            v1 = (u16)sub_08043070(gPlayers[army].co,
+            v1 = (u16)GetCoAdjustedBaseDamage(gPlayers[army].co,
                               gPlayers[army].coMode,
                               a->unit->type, b->unit->type, c);
         if (t->minRange == 1 && a->unit->ammo != 0)
         {
             if ((b->unit->flags & 0x20) != 0)
-                v3 = (u16)sub_08043070(gPlayers[army].co,
+                v3 = (u16)GetCoAdjustedBaseDamage(gPlayers[army].co,
                                   gPlayers[army].coMode,
                                   a->unit->type, 0x19, v3);
             else
-                v3 = (u16)sub_08043070(gPlayers[army].co,
+                v3 = (u16)GetCoAdjustedBaseDamage(gPlayers[army].co,
                                   gPlayers[army].coMode,
                                   a->unit->type, b->unit->type, v3);
         }
@@ -38,11 +38,11 @@ void SelectBattleWeapon(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
              && a->unit->ammo != 0 && d == 1)
     {
         if ((b->unit->flags & 0x20) != 0)
-            v3 = (u16)sub_08043070(gPlayers[army].co,
+            v3 = (u16)GetCoAdjustedBaseDamage(gPlayers[army].co,
                               gPlayers[army].coMode,
                               a->unit->type, 0x19, v3);
         else
-            v3 = (u16)sub_08043070(gPlayers[army].co,
+            v3 = (u16)GetCoAdjustedBaseDamage(gPlayers[army].co,
                               gPlayers[army].coMode,
                               a->unit->type, b->unit->type, v3);
     }
@@ -65,7 +65,7 @@ void SelectBattleWeapon(struct BattleUnit *a, struct BattleUnit *b, s16 c, u8 d)
 
 asm(".global sub_08024ABC\n.thumb_set sub_08024ABC, SelectBattleWeapon\n");
 
-void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
+void CalcBattleUnitAttackAndDefense(struct BattleUnit *a1, int a2, u8 a3)
 {
     int idx;
     int firepower;
@@ -105,7 +105,7 @@ void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
     if (a2 == 1)
         acc += GetBattleUnitCounterattackBonus(a1);
 
-    acc += sub_0804334C(a1);
+    acc += GetBattleUnitTerrainFirepowerBonus(a1);
     acc += firepower;
 
     a1->damage = Div(acc * a1->damage, 100);
@@ -127,6 +127,7 @@ void sub_08024C58(struct BattleUnit *a1, int a2, u8 a3)
         }
     }
 }
+asm(".global sub_08024C58\n.thumb_set sub_08024C58, CalcBattleUnitAttackAndDefense\n");
 
 void ApplyBattleHit(struct BattleUnit *a1, struct BattleUnit *a2)
 {
@@ -238,8 +239,8 @@ void CalcBattleDamage(s16 a1, s16 a2, struct Unk802C57C *a3)
                  gBattleDefender, d, 1);
     SelectBattleWeapon(gBattleDefender,
                  gBattleAttacker, d, 0);
-    sub_08024C58(gBattleAttacker, 0, 1);
-    sub_08024C58(gBattleDefender, 1, 1);
+    CalcBattleUnitAttackAndDefense(gBattleAttacker, 0, 1);
+    CalcBattleUnitAttackAndDefense(gBattleDefender, 1, 1);
 
     if ((GetPlayerSpecialAbilities(((gBattleDefender->unit
                         - gUnits) >> 6) + 1) & 4) != 0)
@@ -313,15 +314,16 @@ void WriteBackBattleAttacker(void)
 }
 asm(".global sub_080251AC\n.thumb_set sub_080251AC, WriteBackBattleAttacker\n");
 
-void sub_080251BC(int a1, int a2, struct Unk802C57C *a3)
+void CalcAttackOutcome(int a1, int a2, struct Unk802C57C *a3)
 {
     if (a2 == 0)
-        sub_080251D8(a1);
+        CalcBattleDamageVsStructure(a1);
     else
         CalcBattleDamage(a1, a2, a3);
 }
+asm(".global sub_080251BC\n.thumb_set sub_080251BC, CalcAttackOutcome\n");
 
-void sub_080251D8(int a1)
+void CalcBattleDamageVsStructure(int a1)
 {
     struct Unit *e;
     int a;
@@ -339,7 +341,7 @@ void sub_080251D8(int a1)
 
     if (e->ammo != 0)
     {
-        a = sub_08043070(gPlayers[gUnknown_030033EC].co,
+        a = GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                          gPlayers[gUnknown_030033EC].coMode,
                          e->type, 3, 0);
     }
@@ -347,7 +349,7 @@ void sub_080251D8(int a1)
     {
         ok = GetUnitBaseDamage(e->type, 3, 1);
         if (ok != 0)
-            b = sub_08043070(gPlayers[gUnknown_030033EC].co,
+            b = GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co,
                              gPlayers[gUnknown_030033EC].coMode,
                              e->type, 3, 1);
     }
@@ -367,7 +369,7 @@ void sub_080251D8(int a1)
         gBattleAttacker->ammo--;
     }
 
-    sub_08024C58(gBattleAttacker, 0, 0);
+    CalcBattleUnitAttackAndDefense(gBattleAttacker, 0, 0);
 
     if (gBattleAttacker->unit->hp != 0)
         t = gBattleAttacker->displayDamage
@@ -378,6 +380,7 @@ void sub_080251D8(int a1)
     gBattleAttacker->displayDamage =
         gBattleAttacker->damage = Div(t, 10);
 }
+asm(".global sub_080251D8\n.thumb_set sub_080251D8, CalcBattleDamageVsStructure\n");
 
 void sub_080252E8(void *arg)
 {

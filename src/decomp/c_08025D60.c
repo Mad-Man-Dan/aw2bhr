@@ -15,7 +15,7 @@ void DestroyUnitAndCargo(int a1)
 
     p = &gUnits[a1];
 
-    sub_0802A5C4(p);
+    NoteFlaggedUnitRemoved(p);
     IncrementPlayerUnitsLost((a1 >> 6) + 1);
 
     if (p->unk07 != 0)
@@ -61,7 +61,7 @@ void *BuyUnit(int a1, int a2, int a3)
     if (gPlayers[gUnknown_030033EC].funds < cost)
         return NULL;
 
-    r = sub_08025C98(a1, a2, a3);
+    r = CreateExhaustedUnitAt(a1, a2, a3);
 
     if (r == NULL)
         return NULL;

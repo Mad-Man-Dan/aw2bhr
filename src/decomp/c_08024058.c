@@ -8,7 +8,7 @@
  * sub_08024058 @ 0x08024058
  */
 
-void sub_08024058(s16 a1, s16 a2)
+void CapturePropertyAt(s16 a1, s16 a2)
 {
     struct Map *map;
     int idx;
@@ -20,7 +20,8 @@ void sub_08024058(s16 a1, s16 a2)
     map->terrain[idx] = v;
 
     SetPropertyTileForOwner(a1, a2, v & 0xe0);
-    sub_08024268();
+    RebuildMapUnitLayers2();
     RecountArmyProperties();
     RecountArmyIncome();
 }
+asm(".global sub_08024058\n.thumb_set sub_08024058, CapturePropertyAt\n");

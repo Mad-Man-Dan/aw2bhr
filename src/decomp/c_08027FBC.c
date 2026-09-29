@@ -15,9 +15,10 @@
  * produce it, so a2 and a3 are u16. The `& 0x3ff` then `<< 5` is the usual
  * tile-index wrap times 0x20 bytes per tile, and `movs r1,#0xe5; lsls r1,#1`
  * is just the constant 0x1ca. */
-void sub_08027FBC(void *a1, u16 a2, u16 a3)
+void CopyDayGlyphTiles(void *a1, u16 a2, u16 a3)
 {
     RegisterDataMove((u8 *)a1 + (((a2 * 0x10) & 0x3ff) << 5),
                  (void *)((((a3 * 0x10 + 0x1ca) & 0x3ff) << 5) + 0x06010000),
                  0x200);
 }
+asm(".global sub_08027FBC\n.thumb_set sub_08027FBC, CopyDayGlyphTiles\n");

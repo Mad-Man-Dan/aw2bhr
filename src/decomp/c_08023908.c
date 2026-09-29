@@ -178,6 +178,6 @@ void HandleMoveCameraWithMapCursor(int a1)
         }
     }
 
-    sub_08023860();
+    UpdateMapBgScroll();
 }
 asm(".global sub_08023908\n.thumb_set sub_08023908, HandleMoveCameraWithMapCursor\n");

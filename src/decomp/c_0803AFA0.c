@@ -88,7 +88,7 @@ void DebugBackupUtility_Loop(struct Unk0803AFA0 *p)
     case 2:
         if ((gpKeySt->held & (R_BUTTON | L_BUTTON)) == 0x300 && (gpKeySt->pressed & 4)) {
             sub_0803AF90();
-            sub_08036CB4();
+            ClearWorkRamAndSoftReset();
             return;
         }
         break;

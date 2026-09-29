@@ -10,7 +10,7 @@
 
 #include "hardware.h"
 
-/* The unit-id form of sub_080255F4's "is this unit boxed in?" test, and NOT a
+/* The unit-id form of IsUnitVisibleToViewer's "is this unit boxed in?" test, and NOT a
  * sibling of it -- the callee sets are disjoint and only the four-neighbour
  * tail is shared (family F061's shape, see src/decomp/c_0800B5C0.c, with a u16
  * accumulator).
@@ -24,7 +24,7 @@
  *    `x` in r8 and shuffles it into r4 at the first use, which is what the ROM
  *    does; with `int` the pair lands in r5/r4 and no high register is pushed.
  *
- * 2. sub_08025744's parameters are `int`. This function is the only evidence
+ * 2. IsVisibleAllyUnitAtCell's parameters are `int`. This function is the only evidence
  *    for that width and it is an ORDERING readout, not a narrowing one: every
  *    argument here is `ldrb`-derived so an s16 conversion would be elided and
  *    invisible. With `int` parameters the ROM's `subs r1, r5, #1; adds r0, r4,
@@ -41,7 +41,7 @@
  *    are almost certainly a macro in the original; what matters is that they
  *    are the only spelling found that emits the LOAD where the ROM has it. The
  *    map lookup is gMap->terrain[gMap->rowOffset[y] + x]. */
-u8 sub_080257C0(u16 id)
+u8 IsUnitVisibleToCurrentTeam(u16 id)
 {
     struct Unit *unit = &gUnits[id];
     u16 total = 0;
@@ -62,19 +62,20 @@ u8 sub_080257C0(u16 id)
         return 1;
 
     if (x > 0)
-        total = sub_08025744(x - 1, y);
+        total = IsVisibleAllyUnitAtCell(x - 1, y);
 
     if (y > 0)
-        total += sub_08025744(x, y - 1);
+        total += IsVisibleAllyUnitAtCell(x, y - 1);
 
     if (x < gMap->width - 1)
-        total += sub_08025744(x + 1, y);
+        total += IsVisibleAllyUnitAtCell(x + 1, y);
 
     if (y < gMap->height - 1)
-        total += sub_08025744(x, y + 1);
+        total += IsVisibleAllyUnitAtCell(x, y + 1);
 
     if (total != 0)
         return 1;
 
     return 0;
 }
+asm(".global sub_080257C0\n.thumb_set sub_080257C0, IsUnitVisibleToCurrentTeam\n");

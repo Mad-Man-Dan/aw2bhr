@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08060D4C.
- * AiPickUnitToBuild @ 0x08060D4C, sub_08060D78 @ 0x08060D78
+ * AiPickUnitToBuild @ 0x08060D4C, AiCalcMechChance @ 0x08060D78
  */
 
 void AiPickUnitToBuild(void)
@@ -23,7 +23,7 @@ void AiPickUnitToBuild(void)
 
 asm(".global sub_08060D4C\n.thumb_set sub_08060D4C, AiPickUnitToBuild\n");
 
-void sub_08060D78(s16 *p)
+void AiCalcMechChance(s16 *p)
 {
     if (gUnknown_03004080 <= 3)
     {
@@ -36,3 +36,4 @@ void sub_08060D78(s16 *p)
             *p = 0x50;
     }
 }
+asm(".global sub_08060D78\n.thumb_set sub_08060D78, AiCalcMechChance\n");

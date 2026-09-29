@@ -47,14 +47,14 @@
  * is worth 4 bytes: with a separate `i` declared, x lands in ip and
  * the map pointer in r6, which is the reverse of the ROM. Merging them adds
  * the reset loop's references to x's allocno and moves it ahead of the address
- * constant they were tying with. sub_08021810 in this same block needed the
+ * constant they were tying with. LoadMapAndCountProperties in this same block needed the
  * identical fix; see docs/agbcc-codegen.md.
  *
  * Case 16 in pass two falls THROUGH into the main group when
  * gPlaySt.gameMode == 5; the ROM's `bne` to the skip label plus a
  * fall-in to the shared block is exactly a case label with no break. */
 
-void sub_08021810(u8 *a, u8 *b)
+void LoadMapAndCountProperties(u8 *a, u8 *b)
 {
     u8 x;
     u8 y;
@@ -106,6 +106,7 @@ void sub_08021810(u8 *a, u8 *b)
 
     *a = gUnknown_030032D0[0];
 }
+asm(".global sub_08021810\n.thumb_set sub_08021810, LoadMapAndCountProperties\n");
 
 void RecountArmyProperties(void)
 {

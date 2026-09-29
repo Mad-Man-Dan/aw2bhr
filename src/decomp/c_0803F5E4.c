@@ -23,13 +23,13 @@ void sub_0803F5E4(int a1, int a2)
         table = gUnknown_080D1BC4;
     }
     RegisterDataMove(src, (void *)(0x06010000 + ((a2 & 0x3FF) << 5)), 0xB80);
-    CpuFastSet(table + ((((sub_08042DE0(1) - 1) << 3) & 0x3FF) << 5),
+    CpuFastSet(table + ((((GetPlayerCoCountry(1) - 1) << 3) & 0x3FF) << 5),
                (void *)(0x06010000 + (((a2 + 0x5C) & 0x3FF) << 5)), 0x40);
-    CpuFastSet(table + ((((sub_08042DE0(2) - 1) << 3) & 0x3FF) << 5),
+    CpuFastSet(table + ((((GetPlayerCoCountry(2) - 1) << 3) & 0x3FF) << 5),
                (void *)(0x06010000 + (((a2 + 0x64) & 0x3FF) << 5)), 0x40);
-    CpuFastSet(table + ((((sub_08042DE0(3) - 1) << 3) & 0x3FF) << 5),
+    CpuFastSet(table + ((((GetPlayerCoCountry(3) - 1) << 3) & 0x3FF) << 5),
                (void *)(0x06010000 + (((a2 + 0x6C) & 0x3FF) << 5)), 0x40);
-    CpuFastSet(table + ((((sub_08042DE0(4) - 1) << 3) & 0x3FF) << 5),
+    CpuFastSet(table + ((((GetPlayerCoCountry(4) - 1) << 3) & 0x3FF) << 5),
                (void *)(0x06010000 + (((a2 + 0x74) & 0x3FF) << 5)), 0x40);
     sub_0803FD80(a1, a2);
 }

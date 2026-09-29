@@ -8,7 +8,7 @@
  */
 
 /* Ghidra-assisted, matched with the neighboring map-record vocabulary. */
-int sub_0805B6A0(int *slot, int *cursor, int *outX, int *outY)
+int AiNextInterestListEntry(int *slot, int *cursor, int *outX, int *outY)
 {
     int index;
     u8 *record;
@@ -36,3 +36,4 @@ int sub_0805B6A0(int *slot, int *cursor, int *outX, int *outY)
     }
     return 0;
 }
+asm(".global sub_0805B6A0\n.thumb_set sub_0805B6A0, AiNextInterestListEntry\n");

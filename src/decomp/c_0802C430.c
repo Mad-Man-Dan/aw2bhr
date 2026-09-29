@@ -45,7 +45,7 @@ struct Unk2C450Proc
 
 void sub_0802C430(struct Unk2C430Proc *proc)
 {
-    sub_08024268();
+    RebuildMapUnitLayers2();
     ClearBg0Tilemap();
     BG_EnableSyncBG0();
     HideMapPreview();

@@ -52,11 +52,11 @@
  *  - gUnknown_03003340's element is read two ways in one function:
  *    `((s8 *)g[y])[x]` (ldrsb) in the first scan, `(s8)g[y][x]` (ldrb +
  *    lsls/asrs) for the `best` store and throughout the second scan.
- *  - the second scan is sub_0805F7B8's scoring idiom (W53-E):
+ *  - the second scan is AiFallbackMove's scoring idiom (W53-E):
  *    gUnknown_085D584C[terrain & 0x1f].unk00 * 10, compared signed.
  */
 
-void sub_0805F914(void)
+void AiRetreat(void)
 {
     int best = 0x7fff;
     int selX = -1;
@@ -66,7 +66,7 @@ void sub_0805F914(void)
     int y;
     int v;
 
-    sub_08062474();
+    AiBuildThreatPlane();
 
     if ((gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d
          & gMap->dangerMask[
@@ -97,7 +97,7 @@ void sub_0805F914(void)
     }
 
     if (selX != -1)
-        sub_0805D648(selX, selY, 2, 0, 0);
+        AiPublishAction(selX, selY, 2, 0, 0);
 
     if (gUnknown_030045CC.unk00_1)
         return;
@@ -129,5 +129,6 @@ void sub_0805F914(void)
     }
 
     if (selX != -1)
-        sub_0805D648(selX, selY, 2, 0, 0);
+        AiPublishAction(selX, selY, 2, 0, 0);
 }
+asm(".global sub_0805F914\n.thumb_set sub_0805F914, AiRetreat\n");

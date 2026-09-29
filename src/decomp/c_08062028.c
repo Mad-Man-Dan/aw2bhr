@@ -16,8 +16,9 @@
  * would be byte-identical only if `g` had a parameter, and none of the 19
  * second callees does -- see the F005 block in unknown-functions.h. */
 
-void sub_08062028(void)
+void AiBuildCapturePlaneAndClearEscortTally(void)
 {
-    sub_08061B4C();
+    AiBuildCapturablePropertyProximityPlane();
     AiClearEscortTally();
 }
+asm(".global sub_08062028\n.thumb_set sub_08062028, AiBuildCapturePlaneAndClearEscortTally\n");

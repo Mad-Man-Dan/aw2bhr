@@ -34,14 +34,14 @@ struct Unk08040CA4
  * Div, tests the result, and calls it a second time on the non-zero path.
  * agbcc cannot CSE the two because Div is an ordinary call, so the duplicate
  * call IS the source and not a codegen artefact. */
-void sub_08040CA4(struct Unk08040CA4 *proc)
+void CaptureAnimSprites_Init(struct Unk08040CA4 *proc)
 {
     proc->unk34 = 0;
     proc->unk38 = 0;
     proc->unk2c = 0;
 
-    sub_0804103C(proc->unk4a, 0x22A, 5);
-    sub_08041128(proc->unk44, 0x24A, 4);
+    LoadCapturePropertySprite(proc->unk4a, 0x22A, 5);
+    LoadCaptureUnitSprite(proc->unk44, 0x24A, 4);
     Decompress(gUnknown_081214B4, (void *)0x06013940);
     ApplyPaletteExt(gUnknown_0812189C, 0x260, 0x20);
 
@@ -81,3 +81,4 @@ void sub_08040CA4(struct Unk08040CA4 *proc)
     proc->unk46 = proc->unk48;
     proc->unk42 = 0;
 }
+asm(".global sub_08040CA4\n.thumb_set sub_08040CA4, CaptureAnimSprites_Init\n");

@@ -45,7 +45,7 @@ u8 GetDropDirectionMask(int x, int y, int id)
 }
 asm(".global sub_08041F38\n.thumb_set sub_08041F38, GetDropDirectionMask\n");
 
-/* The same army-number idiom the matched sub_0804203C uses one function over:
+/* The same army-number idiom the matched IsIndirectFireUnitArmed uses one function over:
  * `(p - gUnits) >> 6` is the exact division by the 0x0c stride
  * (`mul 0x55555555; neg; asr #2`) with the `>> 6` merged into the ROM's single
  * `asr #8`, and `+ 1` makes it the 1-based army GetUnitFiringRangeWithCoBonus takes.
@@ -54,7 +54,7 @@ asm(".global sub_08041F38\n.thumb_set sub_08041F38, GetDropDirectionMask\n");
  * and GetUnitFiringRangeWithCoBonus's second argument -- there is no call between the two uses.
  * The 0x780 mask is the four-bit bitfield unk04_7; testing a bitfield against
  * zero needs only the mask, not the usual extract shift pair. */
-int sub_08041FE0(struct Unit *p)
+int IsDirectFireUnitArmed(struct Unit *p)
 {
     if (gUnknown_085D5ABC[p->type].unk11 == 1)
         return 1;
@@ -67,3 +67,4 @@ int sub_08041FE0(struct Unit *p)
 
     return 0;
 }
+asm(".global sub_08041FE0\n.thumb_set sub_08041FE0, IsDirectFireUnitArmed\n");

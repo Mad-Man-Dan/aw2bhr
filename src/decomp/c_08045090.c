@@ -27,7 +27,7 @@
  * gUnknown_084995FE is a declared `s16 []` and the ROM reads it with a plain
  * `ldrh`, so the source has a `(u16)` cast on the entry -- without it agbcc
  * emits `movs r1,#0; ldrsh r0,[r0,r1]`, the same size and a different opcode.
- * Same finding as work/sub_080287D0.
+ * Same finding as work/ArmyDefeat_Loop.
  *
  * `proc->unk2a` is re-read from memory inside the second loop rather than
  * reusing `i`, and `proc->unk2d * 10` is NAMED TWICE so it becomes one CSE
@@ -43,7 +43,7 @@ struct Unk45090Proc
     /* 2d */ u8 unk2d;
 };
 
-void sub_08045090(struct Unk45090Proc *proc)
+void CoPowerDamageHeal_DamageLoopSimple(struct Unk45090Proc *proc)
 {
     u8 i;
     u16 j;
@@ -92,7 +92,7 @@ void sub_08045090(struct Unk45090Proc *proc)
         else
             unit->hp = unit->hp - proc->unk2d * 10;
 
-        sub_080452C0(unit->x, unit->y, proc->unk2c);
+        StartCoPowerUnitSparkle(unit->x, unit->y, proc->unk2c);
         break;
     }
 
@@ -104,3 +104,4 @@ void sub_08045090(struct Unk45090Proc *proc)
         proc->unk2a++;
     }
 }
+asm(".global sub_08045090\n.thumb_set sub_08045090, CoPowerDamageHeal_DamageLoopSimple\n");

@@ -48,7 +48,7 @@
  * `adds rD,rB,rI; ldrb; lsls #24; asrs #24`.
  *
  * c_08020984.c is this function's near-twin -- same sub_0803DF54 /
- * gUnknown_020288B4 / unk02_6 / AreUnitsOnSameTeam / sub_080251BC sequence over the
+ * gUnknown_020288B4 / unk02_6 / AreUnitsOnSameTeam / CalcAttackOutcome sequence over the
  * same map -- and settled the unk18 and unk02_6 spellings. */
 
 #define MAP gMap
@@ -83,7 +83,7 @@ int BuildAttackTargetList(void)
 
             if (v)
             {
-                sub_080251BC(gUnknown_03003F38, 0, &gUnknown_03003100.pos);
+                CalcAttackOutcome(gUnknown_03003F38, 0, &gUnknown_03003100.pos);
 
                 if (gBattleAttacker->attackType == 0)
                     continue;
@@ -100,7 +100,7 @@ int BuildAttackTargetList(void)
                 if (AreUnitsOnSameTeam(gUnknown_03003F38, t) == 1)
                     continue;
 
-                sub_080251BC(gUnknown_03003F38, t, &gUnknown_03003100.pos);
+                CalcAttackOutcome(gUnknown_03003F38, t, &gUnknown_03003100.pos);
 
                 if (gBattleAttacker->attackType == 0)
                     continue;

@@ -67,7 +67,7 @@ struct Unk39544Slot
  *    `beq; beq; <default>; <shared +6>`; in source order 0x6c-first the last
  *    dispatch test falls through into the 0x6c body and the 0x69 body is
  *    reached by the `beq`, which is the ROM's layout. */
-void sub_080394B4(struct Unk394B4Proc *proc)
+void CoPowerNameBanner_Loop(struct Unk394B4Proc *proc)
 {
     int again;
     u8 c;
@@ -94,7 +94,7 @@ void sub_080394B4(struct Unk394B4Proc *proc)
                 }
                 else
                 {
-                    sub_0803941C(proc->unk22, proc->unk24);
+                    SpawnCoPowerNameLetter(proc->unk22, proc->unk24);
                     proc->unk24++;
 
                     switch (proc->unk26[proc->unk20])
@@ -121,9 +121,10 @@ void sub_080394B4(struct Unk394B4Proc *proc)
         }
     } while (again);
 }
+asm(".global sub_080394B4\n.thumb_set sub_080394B4, CoPowerNameBanner_Loop\n");
 
 /* Start the text proc, then copy a NUL-terminated byte string into its script
- * buffer -- the buffer sub_080394B4 later walks.
+ * buffer -- the buffer CoPowerNameBanner_Loop later walks.
  *
  * THE BUFFER IS A MEMBER ARRAY, not `(u8 *)proc + 0x26`. Written with pointer
  * arithmetic, fold's `(A + C) + B -> (A + B) + C` reassociation moves the

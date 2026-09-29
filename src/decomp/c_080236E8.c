@@ -10,7 +10,7 @@
 #include "map.h"
 #include "hardware.h"
 
-void sub_080236E8(void)
+void HandleMoveMapCursorInMoveRange(void)
 {
     s16 (*tbl)[2];
     u16 keys;
@@ -52,3 +52,4 @@ void sub_080236E8(void)
             sub_0803B4DC(0x6a);
     }
 }
+asm(".global sub_080236E8\n.thumb_set sub_080236E8, HandleMoveMapCursorInMoveRange\n");

@@ -115,7 +115,7 @@ void CoDesignRoot_Init(struct Unk87C94Proc *proc)
     proc->unk58 = 0;
     proc->unk5c = 0;
 
-    sub_08043BA4(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], 0x40, 1);
+    LoadCoFullBodyAndPalette(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], 0x40, 1);
     LoadCoNameGraphic(gUnknown_030058E0[0], 0x2cc);
     LoadCoFace(gUnknown_030058E0[DivRem(0, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013000, 0x12);
     LoadCoFace(gUnknown_030058E0[DivRem(1, gUnknown_03005948[proc->unk58]) + proc->unk5c], (void *)0x06013480, 0x13);

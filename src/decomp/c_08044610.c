@@ -77,7 +77,7 @@ struct Unk08044610Proc
     /* 0x66 */ u8 filler_66[0x02];
     /* 0x68 */ s16 unk68;
 };
-void sub_08044610(struct Unk08044610Proc *proc)
+void CoPowerUnitEffects_Loop(struct Unk08044610Proc *proc)
 {
     struct Unit *unit;
     struct Map *m;
@@ -148,5 +148,6 @@ void sub_08044610(struct Unk08044610Proc *proc)
     if (proc->unk68 == 0x33)
         Proc_Break(proc);
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
+asm(".global sub_08044610\n.thumb_set sub_08044610, CoPowerUnitEffects_Loop\n");

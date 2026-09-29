@@ -21,5 +21,5 @@ struct Unk67DF8Proc
  * id. sub_08067E88 reads the same +0x2a through the same table. */
 void sub_08067DF8(struct Unk67DF8Proc *proc)
 {
-    sub_08043BF8(proc->unk29, gUnknown_08581104[proc->unk2a]);
+    LoadCoFullBodyPart1(proc->unk29, gUnknown_08581104[proc->unk2a]);
 }

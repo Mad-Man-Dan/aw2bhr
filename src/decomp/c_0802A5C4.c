@@ -29,7 +29,7 @@
  * is what expand_expr does for a plain ARRAY_REF that is not already a CSE
  * of three sibling reads. */
 
-void sub_0802A5C4(struct Unit *p)
+void NoteFlaggedUnitRemoved(struct Unit *p)
 {
     struct Unit *q;
     int base;
@@ -53,3 +53,4 @@ void sub_0802A5C4(struct Unit *p)
         gUnknown_030030F8 = ((p - gUnits) >> 6) + 1;
     }
 }
+asm(".global sub_0802A5C4\n.thumb_set sub_0802A5C4, NoteFlaggedUnitRemoved\n");

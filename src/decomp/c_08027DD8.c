@@ -59,7 +59,7 @@ void DayStartScreen_Loop(struct Unk27DD8 *e)
         break;
 
     case 15:
-        if (sub_0802813C() != (void *)4)
+        if (GetDayWordGlyphCount() != (void *)4)
             break;
         /* fall through */
     case 0:

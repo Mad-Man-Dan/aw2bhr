@@ -27,7 +27,7 @@ void RunWinLossCheck(void)
         if (r != 0)
             DefeatOtherTeamsAndEndMatch(r, 0x20);
         else
-            sub_08028A68();
+            DefeatArmiesFailingRules();
     }
 }
 asm(".global sub_08028CF4\n.thumb_set sub_08028CF4, RunWinLossCheck\n");

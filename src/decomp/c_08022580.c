@@ -11,7 +11,7 @@
 /* gUnknown_080909A4 in the asm is NOT a global: the ROM word at 0x080909A4
  * holds 0x08499590, i.e. it is agbcc's own -fforce-addr address constant for
  * gUnknown_08499590.  Same for gUnknown_080909B0 (RedrawUnitIconLayer),
- * gUnknown_08090978 (sub_08021D10) and gUnknown_0809099C; gUnknown_080909A0
+ * gUnknown_08090978 (RenderMap) and gUnknown_0809099C; gUnknown_080909A0
  * holds 0x08499594.  Writing the honest name reproduces the whole chain:
  * `ldr rX,=.LC0; ldr rY,[rX]; ldr rZ,[rY]` is &word -> &global -> map pointer.
  *

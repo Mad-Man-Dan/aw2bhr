@@ -14,7 +14,7 @@ struct Unk59C60Cell
     /* 0x02 */ s16 v;
 };
 
-void sub_08059C60(void *a1)
+void AiListHuntTargets(void *a1)
 {
     struct Unk59C60Cell *out;
     struct Unit *p;
@@ -38,19 +38,19 @@ void sub_08059C60(void *a1)
                 continue;
             if ((s8)gUnknown_03003340[p->y][p->x] <= 0)
                 continue;
-            if (p->type == 0x18 && !sub_080257C0(j))
+            if (p->type == 0x18 && !IsUnitVisibleToCurrentTeam(j))
                 continue;
             if (!IsCellVisibleToArmy(gUnknown_030033EC, p->x, p->y))
                 continue;
-            x = sub_08043070(gPlayers[k].co, gPlayers[k].coMode,
+            x = GetCoAdjustedBaseDamage(gPlayers[k].co, gPlayers[k].coMode,
                              gUnknown_030040D8->unk00, p->type, 0);
-            y = sub_08043070(gPlayers[k].co, gPlayers[k].coMode,
+            y = GetCoAdjustedBaseDamage(gPlayers[k].co, gPlayers[k].coMode,
                              gUnknown_030040D8->unk00, p->type, 1);
             if (x < y)
-                z = sub_08043070(gPlayers[k].co, gPlayers[k].coMode,
+                z = GetCoAdjustedBaseDamage(gPlayers[k].co, gPlayers[k].coMode,
                                  gUnknown_030040D8->unk00, p->type, 1);
             else
-                z = sub_08043070(gPlayers[k].co, gPlayers[k].coMode,
+                z = GetCoAdjustedBaseDamage(gPlayers[k].co, gPlayers[k].coMode,
                                  gUnknown_030040D8->unk00, p->type, 0);
             if (z <= 0x31)
                 continue;
@@ -62,3 +62,4 @@ void sub_08059C60(void *a1)
     }
     out->v = 0xffff;
 }
+asm(".global sub_08059C60\n.thumb_set sub_08059C60, AiListHuntTargets\n");

@@ -33,7 +33,7 @@ asm(".global sub_08020354\n.thumb_set sub_08020354, FillUnitAttackRange\n");
  * rather than a struct: two reads of one global, which is the documented case
  * where agbcc keeps the SYMBOL address in a callee-saved register (r4) and
  * reloads the pointer, exactly as the ROM does. */
-void sub_080203C0(int x, int y)
+void MapZeroNeighbors(int x, int y)
 {
     if (x > 0)
         gUnknown_03003340[y][x - 1] = 0;
@@ -44,3 +44,4 @@ void sub_080203C0(int x, int y)
     if (y <= gMap->height)
         gUnknown_03003340[y + 1][x] = 0;
 }
+asm(".global sub_080203C0\n.thumb_set sub_080203C0, MapZeroNeighbors\n");

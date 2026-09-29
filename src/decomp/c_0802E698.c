@@ -10,13 +10,13 @@
 /* Family F077 (see src/decomp/c_0802E2BC.c): do the work, then park a state id
  * in gUnknown_03003334.
  *
- * The two `ldrsh` reads are what forced sub_08022AAC's parameters from u16 to
+ * The two `ldrsh` reads are what forced SetMapCursorPosition's parameters from u16 to
  * s16 -- see the note on the declaration in include/unknown-functions.h. The
  * union's `spos` view is the signed one, and passing it to a u16 parameter
  * would have cost a zero-extending shift pair the ROM does not have. */
 void sub_0802E698(void)
 {
-    sub_08022AAC(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02);
+    SetMapCursorPosition(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02);
     sub_0802D558();
     gUnknown_03003334 = 4;
 }
@@ -35,7 +35,7 @@ void sub_0802E6C0(void)
 {
     if (GetUnitSelectionLock() == 0)
     {
-        sub_08035810();
+        EndActiveMoveSlide();
         RebuildMapUnitLayers();
         MapCursor_OnPressA(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
     }
@@ -50,7 +50,7 @@ void sub_0802E6C0(void)
  * derived from it -- two calls differ, not one constant. */
 void sub_0802E6F8(void)
 {
-    sub_08022AAC(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02);
+    SetMapCursorPosition(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02);
     LockUnitSelection();
     CommitUnitMove();
     gUnknown_03003334 = 0;

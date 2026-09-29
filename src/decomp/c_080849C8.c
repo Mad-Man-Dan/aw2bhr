@@ -34,14 +34,14 @@
  *   0x081D93DC -> 0x08499598  gPlayers (already `struct PlayerStruct *`)
  *   0x081D93E0 -> 0x03003FC0  gPlaySt
  *   0x081D93E4 -> 0x08616BE4  the Proc_Start script
- *   0x081D93E8 -> 0x08043591  sub_08043590, THUMB bit set
+ *   0x081D93E8 -> 0x08043591  AnimateCoPowerStatusPalette, THUMB bit set
  * The loop's `+0x56` off a 0x3c-stride element is `[i + 1].unk1a`, i.e. armies
  * 1..n, not an out-of-range field.
  *
  * RULED OUT by compile_probe: binding the script and the function pointer to
  * locals before the loop. It does move `parent` out of r7 -- but into sl, with
  * a THIRD high register saved -- and, worse, it DEFEATS -fforce-addr: agbcc
- * then emits plain `.word ProcScr_CoInfo` / `.word sub_08043590` pool words
+ * then emits plain `.word ProcScr_CoInfo` / `.word AnimateCoPowerStatusPalette` pool words
  * where the ROM has the double indirection through 0x081D93E4/E8. The naming-
  * the-symbol-directly spelling below is the one that reproduces those.
  * NOT tried: decomp-permuter. This is exactly its case (same instructions,
@@ -60,7 +60,7 @@ void CoInfoScreen_LoadGraphics(ProcPtr parent)
     sub_0802D5A0((void *)(gUnknown_030030B4.bits.chr_block * 0x4000 + 0x06006C00),
                  gUnknown_08616B1C[gPlayers[gUnknown_030033EC].teamColor], 0);
     CoInfoScreen_LoadBg2Backdrop();
-    sub_08043BA4(gPlayers[gUnknown_030033EC].co, 0xB6 * 2, 5);
+    LoadCoFullBodyAndPalette(gPlayers[gUnknown_030033EC].co, 0xB6 * 2, 5);
     LoadCoMiniPortrait(gPlayers[gUnknown_030033EC].co, (void *)0x06015700, 0x16);
     sub_08043B44(8);
     LoadCoNameGraphic(gPlayers[gUnknown_030033EC].co, 0xAB * 4);
@@ -72,7 +72,7 @@ void CoInfoScreen_LoadGraphics(ProcPtr parent)
     LoadTilePoolGraphic(0x14);
 
     for (i = 0;
-         i < (gPlaySt.gameMode == 2 ? sub_0802490C(gPlaySt.mapID)
+         i < (gPlaySt.gameMode == 2 ? GetMapArmyCount(gPlaySt.mapID)
                                            : GetLoadedMapArmyCount());
          i++)
         LoadTilePoolGraphic(gPlayers[i + 1].teamColor + 0x3D);
@@ -105,7 +105,7 @@ void CoInfoScreen_LoadGraphics(ProcPtr parent)
     LoadTilePoolGraphic(0x92);
 
     Proc_Start(ProcScr_CoInfo, savedParent);
-    AddVBlankHook((void *)sub_08043590);
+    AddVBlankHook((void *)AnimateCoPowerStatusPalette);
 }
 
 asm(".global sub_080849C8\n.thumb_set sub_080849C8, CoInfoScreen_LoadGraphics\n");

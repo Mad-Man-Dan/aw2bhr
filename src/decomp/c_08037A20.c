@@ -27,7 +27,7 @@
  *
  * `ww >> 1` is a shift, not `/ 2`: a signed divide adds the round-toward-zero
  * correction and the ROM has a bare `asrs`. */
-void sub_08037A20(u16 *dst, int base)
+void FillMapPreviewTilemap(u16 *dst, int base)
 {
     int ww;
     int hh;
@@ -47,3 +47,4 @@ void sub_08037A20(u16 *dst, int base)
         }
     }
 }
+asm(".global sub_08037A20\n.thumb_set sub_08037A20, FillMapPreviewTilemap\n");

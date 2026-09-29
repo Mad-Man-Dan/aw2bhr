@@ -32,7 +32,7 @@ void sub_0803F6BC(int a1, int a2, void *a3, int a4)
         RegisterDataMove(gUnknown_08485A2C, (u8 *)a3 + 0xc0, 0x40);
         break;
     case 8:
-        RegisterDataMove(table + ((((sub_08042DE0(a2) - 1) << 3) & 0x3ff) << 5),
+        RegisterDataMove(table + ((((GetPlayerCoCountry(a2) - 1) << 3) & 0x3ff) << 5),
                      a3, 0x100);
         break;
     case 11:

@@ -24,7 +24,7 @@ struct Unk27428Proc
     /* 64 */ s16 unk64;
 };
 
-void sub_0802746C(struct Unk27428Proc *proc)
+void SupplyIconEffect_Loop(struct Unk27428Proc *proc)
 {
     int v;
 
@@ -44,3 +44,4 @@ void sub_0802746C(struct Unk27428Proc *proc)
 
     proc->unk64 = v;
 }
+asm(".global sub_0802746C\n.thumb_set sub_0802746C, SupplyIconEffect_Loop\n");

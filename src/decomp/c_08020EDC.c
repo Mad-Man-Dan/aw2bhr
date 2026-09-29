@@ -17,7 +17,7 @@
  * 1, when bit 3 of sub_08043050(flags) is clear, a cell of terrain type 4 or
  * 0x13 is skipped if it holds no unit or a unit whose type is outside
  * 0x10..0x14. StampVisionByPlaneMask calls it with planes in gMap->visible. Twin of
- * sub_08020B88, which writes an overlay instead of adding.
+ * MarkAttackableCellsInRange, which writes an overlay instead of adding.
  *
  * Measured spelling notes (parked since wave 49 at 90.7%):
  * - `flags` is an INT parameter. The one caller, StampVisionByPlaneMask, narrows its

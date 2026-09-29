@@ -18,7 +18,7 @@ void sub_0803A07C(void)
     u = gUnknown_0849D89C->unk04;
     x = gUnknown_0849D89C->unk00 + 0x30;
     tbl = gUnknown_0849DC18;
-    n = sub_08042DE0(gUnknown_0849D89C->unk08) - 1;
+    n = GetPlayerCoCountry(gUnknown_0849D89C->unk08) - 1;
     PutOamHi(x, 0x39, tbl[u->type * 15 + n], 0x32E8);
     DrawOamObject(gUnknown_0849E224[u->type], gUnknown_0849D89C->unk00 + 0x3a, 8, 0, 0);
     DrawOamObject(0x23, gUnknown_0849D89C->unk00 + 0x3a, 0x18, 0, 0);

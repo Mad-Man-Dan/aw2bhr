@@ -7,7 +7,7 @@
  * sub_0805FFA0 @ 0x0805FFA0
  */
 
-void sub_0805FFA0(void)
+void AiExecutorDispatchAction(void)
 {
     if (gUnknown_030046C0.unk00 != 1
      && gUnknown_030046C0.unk00 != 0xe
@@ -27,19 +27,19 @@ void sub_0805FFA0(void)
     switch (gUnknown_030046C0.unk00)
     {
     case 1:
-        sub_080600F0();
+        AiExecuteBuildUnit();
         break;
     case 0xe:
-        sub_08060110();
+        AiExecuteBuildUnitWithRole();
         break;
     case 0xd:
-        sub_08060170();
+        AiExecuteTurnEnd();
         break;
     case 0xf:
-        sub_080601C8();
+        AiExecuteCoPower();
         break;
     case 0x10:
-        sub_080601DC();
+        AiExecuteSuperCoPower();
         break;
     case 3:
         ApplyCaptureProgress();
@@ -48,17 +48,17 @@ void sub_0805FFA0(void)
         CommitUnitMove();
         break;
     case 4:
-        sub_080601F0();
+        AiExecutorCheckTargetUnitVisible();
         return;
     case 5:
-        sub_08060264();
+        AiExecutorCheckTargetCellVisible();
         return;
     case 7:
         LoadUnitIntoTransport();
         goto _redraw;
     case 8:
-        sub_0806056C(1);
-        sub_0806056C(0);
+        AiExecutorStartCargoDrop(1);
+        AiExecutorStartCargoDrop(0);
         gUnknown_030045D4 = 0xa;
         return;
     case 0xa:
@@ -68,22 +68,23 @@ void sub_0805FFA0(void)
         sub_08042B84();
         break;
     case 0xb:
-        sub_08060684();
+        DiveSelectedUnit();
         goto _redraw;
     case 0xc:
-        sub_080606A0();
+        SurfaceSelectedUnit();
         goto _redraw;
     case 0x12:
-        sub_080606BC();
+        AiExecuteDestroyUnit();
         break;
     case 0x13:
         sub_0802C16C();
         break;
     case 0x14:
-        sub_080602C4();
+        AiExecutorCheckMissileTargetVisible();
         return;
     }
 
     gUnknown_03004780 = 2;
     gUnknown_030045D4 = 0;
 }
+asm(".global sub_0805FFA0\n.thumb_set sub_0805FFA0, AiExecutorDispatchAction\n");

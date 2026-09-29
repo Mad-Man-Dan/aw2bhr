@@ -14,7 +14,7 @@
  * ROM puts BOTH compares up front, ends the run with an unconditional `b` to
  * the join, and places the two call arms after the literal pool. An if /
  * else-if emits the first arm between the two compares instead. */
-void sub_0805DCA4(void)
+void AiDeliberatePickup(void)
 {
     struct Unk030040D8 *p = gUnknown_030040D8;
 
@@ -31,3 +31,4 @@ void sub_0805DCA4(void)
         }
     }
 }
+asm(".global sub_0805DCA4\n.thumb_set sub_0805DCA4, AiDeliberatePickup\n");

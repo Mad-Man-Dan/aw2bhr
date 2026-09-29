@@ -14,10 +14,11 @@
  * reading it, and all four end `pop {r0}; bx r0`. So this is four statements
  * of `void f(void)`, not a chain. */
 
-void sub_080215B8(void)
+void RecountPropertiesIncomeAndAiFacilities(void)
 {
     RecountArmyProperties();
     RecountArmyIncome();
     AiScanBuildableFacilities();
-    sub_08062038();
+    AiBuildInterestLists();
 }
+asm(".global sub_080215B8\n.thumb_set sub_080215B8, RecountPropertiesIncomeAndAiFacilities\n");

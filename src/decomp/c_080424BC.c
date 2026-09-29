@@ -19,8 +19,9 @@ void ResetCaptureProgressIfMoved(void)
 }
 asm(".global sub_080424BC\n.thumb_set sub_080424BC, ResetCaptureProgressIfMoved\n");
 
-void sub_080424E4(void)
+void RecordUnitActionCell(void)
 {
     gUnknown_03003F24.pos.unk00 = gUnknown_03003100.pos.unk00;
     gUnknown_03003F24.pos.unk02 = gUnknown_03003100.pos.unk02;
 }
+asm(".global sub_080424E4\n.thumb_set sub_080424E4, RecordUnitActionCell\n");

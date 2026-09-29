@@ -16,7 +16,7 @@
  * The clean gMap field spelling is byte-exact here: the repeated
  * rowOffset/terrain expressions preserve the original reload shape without a
  * local byte-pointer overlay. */
-int sub_080585D4(void)
+int AiScoreEnemyPropertiesInReach(void)
 {
     int acc;
     int x;
@@ -47,3 +47,4 @@ int sub_080585D4(void)
 
     return acc;
 }
+asm(".global sub_080585D4\n.thumb_set sub_080585D4, AiScoreEnemyPropertiesInReach\n");

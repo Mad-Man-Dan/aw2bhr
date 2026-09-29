@@ -93,7 +93,7 @@ void sub_0807F630(struct Unk807CE5C *p)
     {
         k = 0;
 
-        for (i = 0; i < sub_0802490C(gPlaySt.mapID); i++)
+        for (i = 0; i < GetMapArmyCount(gPlaySt.mapID); i++)
         {
             if (gUnknown_085C77A0[gPlaySt.mapID].unk3c[i] == 0xff)
             {

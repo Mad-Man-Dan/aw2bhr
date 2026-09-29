@@ -18,7 +18,7 @@
  *     entry-order parameter conversion; an `int` with a `u16` local assigned as
  *     the first statement puts the narrowing after `lsls r1,r1,#0x18` instead.
  *     Its one caller (src/decomp/c_080328EC.c) passes the constant 0x200.
- *   - sub_08037B84 takes `void *`. It was declared `void (void)` while its own
+ *   - SetLoadedMapBlob takes `void *`. It was declared `void (void)` while its own
  *     promoted definition in src/decomp/c_08037B84.c has taken a pointer since
  *     it landed; this function and sub_0803CDBC / sub_0803CE28 all materialise
  *     the argument. Fixing it is what let sub_0803CDBC and sub_0803CE28 match.
@@ -26,7 +26,7 @@
  *     the ROM loads that pool word ABOVE the `bne`, which no in-expression
  *     spelling reproduces. The same lever matched sub_0803CDBC and sub_0803CE28.
  *
- * THE WHOLE REMAINING DIFF IS THE SAVE/RESTORE PAIR AROUND sub_080376DC, and it
+ * THE WHOLE REMAINING DIFF IS THE SAVE/RESTORE PAIR AROUND DrawMapPreviewToBg, and it
  * is which of the two values gets the high register:
  *
  *   ROM:  ldr r0,=gUnknown_03001418 ; mov r8, r0 ; ldrh r5,[r0]
@@ -64,11 +64,11 @@ u8 sub_0803CD2C(u16 a1, u8 a2)
     if (IsSaveSlotInvalid(a2 + 5) != 0)
         return 0;
     ReadSaveSlot(a2 + 5, p);
-    sub_08037B84(p);
+    SetLoadedMapBlob(p);
     sub_0803D6FC((struct Unk3D6FC *)p);
     s1 = gUnknown_03001418;
     s2 = gUnknown_03001FF8;
-    sub_080376DC((void *)(0x06000000 + gUnknown_03001FE8.bits.chr_block * 0x4000),
+    DrawMapPreviewToBg((void *)(0x06000000 + gUnknown_03001FE8.bits.chr_block * 0x4000),
                  a1, 1, 0, 0, 5);
     gUnknown_03001418 = s1;
     gUnknown_03001FF8 = s2;

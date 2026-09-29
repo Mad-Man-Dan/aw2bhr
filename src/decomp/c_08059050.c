@@ -7,7 +7,7 @@
  * sub_08059050 @ 0x08059050
  */
 
-void sub_08059050(int a1, s16 *best, void *out)
+void AiConsiderEnemyHq(int a1, s16 *best, void *out)
 {
     u8 army;
     s8 v;
@@ -34,3 +34,4 @@ void sub_08059050(int a1, s16 *best, void *out)
         }
     }
 }
+asm(".global sub_08059050\n.thumb_set sub_08059050, AiConsiderEnemyHq\n");

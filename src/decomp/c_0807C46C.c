@@ -13,7 +13,7 @@ void sub_0807C46C(void *arg)
     int i;
 
     PutSprite(0, 0x68, 8, gUnknown_08615C62, 0);
-    n = sub_0803840C();
+    n = GetCampaignResultCountPlusOne();
     if (n <= 9)
     {
         PutSprite(0, 0xca, 8, gUnknown_0848B690, n * 4 + 0x1c);

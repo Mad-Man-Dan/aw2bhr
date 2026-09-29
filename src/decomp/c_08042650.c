@@ -38,7 +38,7 @@
  *     (five arguments, the `str r3,[sp]` being the fifth, and void).
  *   - gUnknown_03003100 is read BOTH ways in one function: `.pos` (u16, the
  *     `ldrh`s feeding address arithmetic and StartCaptureAnimation) and `.spos` (s16,
- *     the `movs rI,#0; ldrsh` pair feeding sub_08024058). The union already
+ *     the `movs rI,#0; ldrsh` pair feeding CapturePropertyAt). The union already
  *     models this; do not pick one view for the whole function.
  *   - `t` is a `u8` local, not an `int`: `t >> 5` is `lsrs`. That is the
  *     OPPOSITE of the neighbouring MapEventCond_Army1UnitAtX7Y2, whose `>> 6` is `asrs` and
@@ -71,7 +71,7 @@ void ApplyCaptureProgress(void)
                 + gUnknown_03003100.pos.unk00];
     }
     ResetCaptureProgressIfMoved();
-    sub_080424E4();
+    RecordUnitActionCell();
 
     n += gUnknown_030040D8->unk05 >> 3;
     if (n > 0x13)
@@ -101,7 +101,7 @@ do_body:
                          ((((struct Unit *)gUnknown_030040D8
                             - gUnits) & 0xc0) >> 6) + 1);
         else if (n > 0x13)
-            sub_08041258(((((struct Unit *)gUnknown_030040D8
+            PlayCaptureCompleteSound(((((struct Unit *)gUnknown_030040D8
                             - gUnits) & 0xc0) >> 6) + 1, t & 0x1f);
     }
 after_body:
@@ -112,12 +112,12 @@ after_body:
 
     if ((gUnknown_030040D8->unk05 >> 3) > 0x13)
     {
-        sub_080265B0((((struct Unit *)gUnknown_030040D8
+        AwardCapturePoints((((struct Unit *)gUnknown_030040D8
                        - gUnits) >> 6) + 1, t >> 5);
         gUnknown_030040D8->unk05 &= 7;
         if ((t & 0x1f) == 8 || (t & 0x1f) == 0x14)
             gPlayers[t >> 5].killOnEndTurn = 1;
-        sub_08024058(gUnknown_03003100.spos.unk00,
+        CapturePropertyAt(gUnknown_03003100.spos.unk00,
                      gUnknown_03003100.spos.unk02);
     }
 

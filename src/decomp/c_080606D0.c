@@ -10,19 +10,19 @@
 /* AiProduceUnits @ 0x080606D0, 72 bytes.
  *
  * The AI turn's outer driver: seed a difficulty budget, ask AiBuildPropertyList how
- * many decision passes this turn gets, then run sub_08060718 that many times
+ * many decision passes this turn gets, then run AiBuildOneUnit that many times
  * with the budget.
  *
  * The frame is the whole job. `sub sp, #4; movs r1, #0; mov r0, sp;
  * strh r1, [r0]` is a plain `s16 v = 0;` -- and the r0 that `mov r0, sp` set up
- * for the `strh` is STILL LIVE at the `bl`, so sub_08060D78 receives the
+ * for the `strh` is STILL LIVE at the `bl`, so AiCalcMechChance receives the
  * local's ADDRESS. That is the only evidence for its prototype, and it agrees
  * with the promoted definition in src/decomp/c_08060D4C.c, which writes
  * through the pointer on both arms.
  *
  * `movs r1, #0; ldrsh r0, [r5, r1]` inside the loop is agbcc's only spelling of
  * `ldrsh` (it has no immediate form), and it is INSIDE the loop because
- * sub_08060D78 may have changed the local and nothing here caches it -- do not
+ * AiCalcMechChance may have changed the local and nothing here caches it -- do not
  * hoist the read into a variable.
  *
  * The loop is a plain counted `for`, not a decrement of the count itself:
@@ -37,18 +37,18 @@ void AiProduceUnits(void)
     int j;
 
     v = 0;
-    sub_08060D78(&v);
+    AiCalcMechChance(&v);
     n = AiBuildPropertyList();
     gUnknown_030045D8 = AiCountEnemyUnitsOfType(0x15);
 
     for (j = 0; j < n; j++)
-        sub_08060718(v);
+        AiBuildOneUnit(v);
 
     gUnknown_03004780 = 4;
 }
 asm(".global sub_080606D0\n.thumb_set sub_080606D0, AiProduceUnits\n");
 
-/* sub_08060718 @ 0x08060718, 208 bytes.
+/* AiBuildOneUnit @ 0x08060718, 208 bytes.
  *
  * One AI decision pass: clear the chosen-action state, retally the army's 64
  * unit slots into the two counters the scorers divide by, then run the scoring
@@ -79,8 +79,8 @@ asm(".global sub_080606D0\n.thumb_set sub_080606D0, AiProduceUnits\n");
  *
  * The parameter arrives zero-extended (PROMOTE_MODE does that whatever the
  * signedness) and is re-signed with `lsls #0x10; asrs #0x10` before
- * sub_08060894, whose promoted definition takes s16. */
-void sub_08060718(s16 a1)
+ * AiConsiderBuildingFootUnit, whose promoted definition takes s16. */
+void AiBuildOneUnit(s16 a1)
 {
     int k;
     int end;
@@ -101,12 +101,13 @@ void sub_08060718(s16 a1)
     }
 
     gUnknown_030046D4 = CountUnitsWithTypeTag(1);
-    sub_08060894(a1);
-    sub_08060930();
-    sub_08060AB0();
-    sub_08060A7C();
+    AiConsiderBuildingFootUnit(a1);
+    AiConsiderBuildingSupportUnits();
+    AiConsiderBuildingCounterUnit();
+    AiConsiderBuildingSubmarine();
     AiPickUnitToBuild();
 
     if (gUnknown_030046C0.unk06 != 0)
-        sub_080610D0();
+        AiCommitBuild();
 }
+asm(".global sub_08060718\n.thumb_set sub_08060718, AiBuildOneUnit\n");

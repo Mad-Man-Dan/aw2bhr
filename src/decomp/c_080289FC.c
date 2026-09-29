@@ -50,7 +50,7 @@ bool8 sub_080289FC(int a1)
  * `i` is s16 and that is what the whole body's shift pattern is: agbcc keeps the
  * induction variable as `i << 16` in r6 and re-derives every argument from it
  * per the callee's own parameter type -- `lsls/lsrs #0x18` for IsPlayerAliveAndActive's
- * u8, `lsrs #0x10` for the three u16 predicates, `asrs #0x10` for sub_080289BC's
+ * u8, `lsrs #0x10` for the three u16 predicates, `asrs #0x10` for CheckArmySurvivesHumanNoUnitsRule's
  * and DefeatArmy's `int`. Nothing here is a mask and nothing is authored: the
  * `movs r1,#0x80; lsls #9` at the bottom is the loop optimiser adding 0x10000 to
  * the shifted biv, i.e. `i++`.
@@ -58,7 +58,7 @@ bool8 sub_080289FC(int a1)
  * r4 is a COUNTER, not a walking bitmask -- it holds 1,2,3,4,5 and the bottom
  * adds one, not doubles. Its reuse for the sign-extended copy inside the body is
  * register allocation reclaiming a dead range, not a second variable. */
-void sub_08028A68(void)
+void DefeatArmiesFailingRules(void)
 {
     s16 i;
 
@@ -66,22 +66,23 @@ void sub_08028A68(void)
     {
         if (IsPlayerAliveAndActive(i))
         {
-            if (!sub_08028904(i))
+            if (!CheckArmySurvivesTeamRule(i))
                 DefeatArmy(i, 8);
-            else if (!sub_080289BC(i))
+            else if (!CheckArmySurvivesHumanNoUnitsRule(i))
                 DefeatArmy(i, 0x10);
-            else if (!sub_08028990(i))
+            else if (!CheckArmySurvivesNoUnitsRule(i))
                 DefeatArmy(i, 1);
-            else if (!sub_08028944(i))
+            else if (!CheckArmySurvivesHqRule(i))
                 DefeatArmy(i, 2);
         }
     }
 }
+asm(".global sub_08028A68\n.thumb_set sub_08028A68, DefeatArmiesFailingRules\n");
 
-/* Byte-for-byte the same function as sub_08028A68 with RecordArmyDefeat in place of
+/* Byte-for-byte the same function as DefeatArmiesFailingRules with RecordArmyDefeat in place of
  * DefeatArmy at all four call sites -- 132 bytes and 56 instructions each,
  * differing in nothing else, not a register, an immediate or a branch. See the
- * comment on sub_08028A68 for the readout of the s16 induction variable. */
+ * comment on DefeatArmiesFailingRules for the readout of the s16 induction variable. */
 void MarkDefeatedArmies(void)
 {
     s16 i;
@@ -90,13 +91,13 @@ void MarkDefeatedArmies(void)
     {
         if (IsPlayerAliveAndActive(i))
         {
-            if (!sub_08028904(i))
+            if (!CheckArmySurvivesTeamRule(i))
                 RecordArmyDefeat(i, 8);
-            else if (!sub_080289BC(i))
+            else if (!CheckArmySurvivesHumanNoUnitsRule(i))
                 RecordArmyDefeat(i, 0x10);
-            else if (!sub_08028990(i))
+            else if (!CheckArmySurvivesNoUnitsRule(i))
                 RecordArmyDefeat(i, 1);
-            else if (!sub_08028944(i))
+            else if (!CheckArmySurvivesHqRule(i))
                 RecordArmyDefeat(i, 2);
         }
     }

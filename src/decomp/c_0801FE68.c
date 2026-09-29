@@ -43,8 +43,8 @@
  * inner loop reorders the allocnos in the FIRST pass too.
  *
  * MATCHED (decomp-permuter, 426 iterations from the 444-byte hand draft --
- * the same lever the permuter found for sub_0805AD90, found again). */
-void sub_0801FE68(void)
+ * the same lever the permuter found for AiMarkLandingCellsNearEnemyHq, found again). */
+void MapMarkAdjacentToReach(void)
 {
     u8 x;
     u8 y;
@@ -91,3 +91,4 @@ void sub_0801FE68(void)
         } while (0);
     }
 }
+asm(".global sub_0801FE68\n.thumb_set sub_0801FE68, MapMarkAdjacentToReach\n");

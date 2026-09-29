@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* The `(u16)` cast on sub_080261A0's result is load-bearing and is NOT the
+/* The `(u16)` cast on GetUnitSheetFrameTileCount's result is load-bearing and is NOT the
  * same thing as declaring the callee `u16`: agbcc trusts a narrow RETURN
  * TYPE to have been narrowed by the callee and emits nothing, while an
  * explicit cast leaves both operands of the `&` in their own pseudos --
@@ -29,12 +29,12 @@ void LoadGameplayGraphics(int a)
         ForceScreenWhite();
 
     SetupBackgrounds(gUnknown_0849D16C);
-    sub_08023860();
+    UpdateMapBgScroll();
     FlushLCDControl();
 
     CpuCopyAuto(gUnknown_0809175C, (void *)0x06003600, 0xa0);
-    CpuCopyAuto(sub_08026190(), (void *)0x060046A0, ((u16)sub_080261A0() & 0x3ff) * 0x20);
-    CpuCopyAuto(sub_08026198(), (void *)0x06005440, 0x200);
+    CpuCopyAuto(GetUnitSheetGraphics(), (void *)0x060046A0, ((u16)GetUnitSheetFrameTileCount() & 0x3ff) * 0x20);
+    CpuCopyAuto(GetUnitExtraGraphics(), (void *)0x06005440, 0x200);
 
     Decompress(gUnknown_080BD1EC, (void *)0x06008000);
 
@@ -54,7 +54,7 @@ void LoadGameplayGraphics(int a)
     ApplyPalette(gUnknown_0809163C, 18);
 
     sub_08037150(0x1a6);
-    sub_08024268();
+    RebuildMapUnitLayers2();
     HideRangeOverlay();
 
     CpuCopyAuto(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
@@ -62,11 +62,11 @@ void LoadGameplayGraphics(int a)
     ClearMoveSlideSlots();
     sub_080116E8();
     LoadWeatherData();
-    sub_08035020(gPlaySt.weather);
-    sub_08022A34();
+    ApplyWeatherPalette(gPlaySt.weather);
+    LoadCursorSpriteGraphics();
 
     LoadBg1WindowFrame(gUnknown_030033EC);
-    sub_08043834(gUnknown_030033EC);
+    LoadCoPanelGraphics(gUnknown_030033EC);
     LoadArmyObjPalette(gUnknown_030033EC);
 }
 

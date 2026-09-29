@@ -27,7 +27,7 @@ struct Unk45358Proc
     /* 0x50 */ u16 *unk50;
 };
 
-void sub_080452FC(struct Unk452FC *proc)
+void CoPowerUnitSparkle_Loop(struct Unk452FC *proc)
 {
     u8 x;
     u8 y;
@@ -46,10 +46,11 @@ void sub_080452FC(struct Unk452FC *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080452FC\n.thumb_set sub_080452FC, CoPowerUnitSparkle_Loop\n");
 
 /* `gUnknown_03002B6C.bits.chr_block * 0x4000` is the promoted c_08013C00.c
  * idiom; only the base differs (0x06005600 rather than 0x06000000). */
-void sub_08045358(struct Unk45358Proc *proc)
+void CoPowerOverlay_Init(struct Unk45358Proc *proc)
 {
     Decompress(gUnknown_08112704, (void *)(gUnknown_03002B6C.bits.chr_block * 0x4000 + 0x06005600));
     Decompress(proc->unk4c, gBG0TilemapBuffer);
@@ -57,3 +58,4 @@ void sub_08045358(struct Unk45358Proc *proc)
     ApplyPaletteExt(proc->unk50, 0x100, 0x20);
     BG_EnableSyncBG0();
 }
+asm(".global sub_08045358\n.thumb_set sub_08045358, CoPowerOverlay_Init\n");

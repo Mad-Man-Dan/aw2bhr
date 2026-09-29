@@ -9,6 +9,6 @@
 
 void sub_080604BC(void)
 {
-    sub_080425FC(gUnknown_030046C0.unk06);
+    StartUnrecordedUnitAttack(gUnknown_030046C0.unk06);
     ClearSlotScriptCallback(gUnknown_03001FBC);
 }

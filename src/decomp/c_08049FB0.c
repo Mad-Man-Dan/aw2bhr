@@ -11,17 +11,17 @@
  * with the multiply: (x << 16) >> 16 sign-extends the low half, and `b * 16`
  * shifted left another 16 is `b << 20`, with `movs r0,#0x90; lsls r0,#0xd`
  * being the constant 18 << 16. It is not a shift in the source and the
- * conversion comes from sub_08022AD0's declared `s16` second parameter. */
+ * conversion comes from SetMapCursorDisplayPosition's declared `s16` second parameter. */
 void sub_08049FB0(void)
 {
-    sub_08022A34();
-    sub_08022AD0(0x60, gUnknown_02028E40 * 16 + 18);
+    LoadCursorSpriteGraphics();
+    SetMapCursorDisplayPosition(0x60, gUnknown_02028E40 * 16 + 18);
 }
 
-/* sub_08049FB0's twin on sub_0802323C instead of sub_08022AD0 -- same
+/* sub_08049FB0's twin on EaseMapCursorAndDraw instead of SetMapCursorDisplayPosition -- same
  * `gUnknown_02028E40 * 16 + 18` argument and the same s16 conversion fused into
  * it. See sub_08049FB0. */
 void sub_08049FD4(void)
 {
-    sub_0802323C(0x60, gUnknown_02028E40 * 16 + 18, 3);
+    EaseMapCursorAndDraw(0x60, gUnknown_02028E40 * 16 + 18, 3);
 }

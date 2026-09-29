@@ -7,10 +7,11 @@
  * sub_08044404 @ 0x08044404, CopUnitCondAlways @ 0x08044408
  */
 
-bool8 sub_08044404(void *unit)
+bool8 CopUnitCondAlways2(void *unit)
 {
     return 1;
 }
+asm(".global sub_08044404\n.thumb_set sub_08044404, CopUnitCondAlways2\n");
 
 bool8 CopUnitCondAlways(void *unit)
 {

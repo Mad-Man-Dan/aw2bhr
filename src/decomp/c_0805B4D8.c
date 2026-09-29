@@ -27,7 +27,7 @@ struct Unk2029ED8Rec
     /* 0x61 */ u8 y;
 };
 
-u8 sub_0805B4D8(int a1, int *outX, int *outY)
+u8 AiFindEnemyHqInInterestList(int a1, int *outX, int *outY)
 {
     struct Unk2029ED8Rec *p;
     int i;
@@ -82,8 +82,9 @@ u8 sub_0805B4D8(int a1, int *outX, int *outY)
 
     return 0;
 }
+asm(".global sub_0805B4D8\n.thumb_set sub_0805B4D8, AiFindEnemyHqInInterestList\n");
 
-int sub_0805B5BC(int *a1, int *a2, int *outX, int *outY)
+int AiNextEnemyPropertyInInterestList(int *a1, int *a2, int *outX, int *outY)
 {
     struct Unk2029ED8Rec *p;
     int i;
@@ -128,3 +129,4 @@ int sub_0805B5BC(int *a1, int *a2, int *outX, int *outY)
 
     return 0;
 }
+asm(".global sub_0805B5BC\n.thumb_set sub_0805B5BC, AiNextEnemyPropertyInInterestList\n");

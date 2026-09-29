@@ -10,7 +10,7 @@
 #include "map.h"
 /* Picks the best cell for the current unit (first by the
  * gUnknown_03003340 score, falling back to gMap->unk376A), spends one of the
- * unit's top-two-bit charges and calls sub_0805D648 with the resulting
+ * unit's top-two-bit charges and calls AiPublishAction with the resulting
  * direction.
  *
  * `dir` is a u8 local: with an int the ROM's argument setup order (dir loaded
@@ -24,7 +24,7 @@ struct Unk5DCD4Unit
     u8 unk09_6 : 2;
 };
 
-void sub_0805DCD4(void)
+void AiDeliberateDrop(void)
 {
   int bx;
   int by;
@@ -44,7 +44,7 @@ void sub_0805DCD4(void)
   if ((((struct Unk5DCD4Unit *)gUnknown_030040D8)->unk09_6 != 0) && ((gUnknown_030040D8->unk00 == 7) || (gUnknown_030040D8->unk00 == 0x14)))
   {
     GenerateUnitMovementMap(gUnknown_030040D8);
-    sub_0801FD9C(0x79);
+    MapMarkHalo(0x79);
     for (y = 0; y < gMap->height; y++)
     {
       for (x = 0; x < gMap->width; x++)
@@ -74,7 +74,7 @@ void sub_0805DCD4(void)
       {
         dir = (u8) ((by - ty) + 2);
       }
-      sub_0805D648(tx, ty, 8, dir, 0);
+      AiPublishAction(tx, ty, 8, dir, 0);
     }
     else
     {
@@ -110,8 +110,9 @@ void sub_0805DCD4(void)
             dir = (u8) ((by - ty) + 2);
           }
         }
-        sub_0805D648(tx, ty, 8, dir, 0);
+        AiPublishAction(tx, ty, 8, dir, 0);
       }
     }
   }
 }
+asm(".global sub_0805DCD4\n.thumb_set sub_0805DCD4, AiDeliberateDrop\n");

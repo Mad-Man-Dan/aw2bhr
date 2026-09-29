@@ -64,7 +64,7 @@ void BattleAnimScene_OnEnd(ProcPtr proc)
 
     EndAllSpriteScripts();
     Proc_End(proc);
-    sub_08036B34();
+    ClearMainLoopFrameMaskAndEnableSpriteLayer();
     EnableSpriteLayerMode();
 }
 asm(".global sub_080532D8\n.thumb_set sub_080532D8, BattleAnimScene_OnEnd\n");

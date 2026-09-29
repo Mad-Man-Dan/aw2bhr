@@ -11,10 +11,11 @@
  * The second GetUnitFiringRangeWithCoBonus call is spelled out again rather than bound to a
  * local: the ROM recomputes the whole army-number chain and re-issues the call
  * before comparing the result against 1. */
-void sub_080201E0(s16 x, s16 y, struct Unit *e)
+void PaintUnitAttackRange(s16 x, s16 y, struct Unit *e)
 {
     MapSetInRangeSigned(x, y,
                  GetUnitFiringRangeWithCoBonus(((e - gUnits) >> 6) + 1, e->type), 1);
     if (GetUnitFiringRangeWithCoBonus(((e - gUnits) >> 6) + 1, e->type) != 1)
         MapSetInRangeSigned(x, y, gUnknown_085D5ABC[e->type].minRange - 1, -1);
 }
+asm(".global sub_080201E0\n.thumb_set sub_080201E0, PaintUnitAttackRange\n");

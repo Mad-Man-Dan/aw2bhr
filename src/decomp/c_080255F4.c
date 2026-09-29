@@ -32,7 +32,7 @@
  * with a u16 accumulator: the first is a plain assignment and the rest are
  * `+=`, which is what puts the lone `lsls #0x18; lsrs #0x18` on the first call
  * and the `(u16)` re-truncation on the other three. */
-u8 sub_080255F4(struct Unit *unit, s16 ax, s16 ay)
+u8 IsUnitVisibleToViewer(struct Unit *unit, s16 ax, s16 ay)
 {
     u16 total = 0;
     u16 id = unit - gUnits;
@@ -53,19 +53,20 @@ u8 sub_080255F4(struct Unit *unit, s16 ax, s16 ay)
         return 1;
 
     if (ax > 0)
-        total = sub_08025598(ax - 1, ay);
+        total = IsViewerUnitAtCell(ax - 1, ay);
 
     if (ay > 0)
-        total += sub_08025598(ax, ay - 1);
+        total += IsViewerUnitAtCell(ax, ay - 1);
 
     if (ax < gMap->width - 1)
-        total += sub_08025598(ax + 1, ay);
+        total += IsViewerUnitAtCell(ax + 1, ay);
 
     if (ay < gMap->height - 1)
-        total += sub_08025598(ax, ay + 1);
+        total += IsViewerUnitAtCell(ax, ay + 1);
 
     if (total != 0)
         return 1;
 
     return 0;
 }
+asm(".global sub_080255F4\n.thumb_set sub_080255F4, IsUnitVisibleToViewer\n");

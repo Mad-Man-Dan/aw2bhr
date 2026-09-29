@@ -13,7 +13,8 @@
  * byte-neutral -- the value is only ever `str`-ed -- and c_0804018C.c was
  * re-verified with trymatch. */
 
-void sub_080606BC(void)
+void AiExecuteDestroyUnit(void)
 {
     StartUnitDestroyed(gUnknown_030040D8);
 }
+asm(".global sub_080606BC\n.thumb_set sub_080606BC, AiExecuteDestroyUnit\n");

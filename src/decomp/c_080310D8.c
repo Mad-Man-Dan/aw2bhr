@@ -19,7 +19,7 @@
  * elements of the byte array already declared there give. */
 void sub_080310D8(void)
 {
-    sub_08034848();
+    InitVersusPlayState();
 
     gPlaySt.savingEnabled = 1;
     gPlaySt.aiControlled[1] = 0;
@@ -42,7 +42,7 @@ void sub_080310D8(void)
  * here because 3 is not the 1 already live for the other stores. */
 void sub_08031128(void)
 {
-    sub_08034848();
+    InitVersusPlayState();
 
     gPlaySt.savingEnabled = 1;
     gPlaySt.aiControlled[1] = 0;
@@ -64,7 +64,7 @@ void sub_08031128(void)
  * why the four zeroes are unk38[1..4]. */
 void sub_0803117C(void)
 {
-    sub_08034848();
+    InitVersusPlayState();
 
     gPlaySt.savingEnabled = 1;
     gPlaySt.aiControlled[1] = 0;

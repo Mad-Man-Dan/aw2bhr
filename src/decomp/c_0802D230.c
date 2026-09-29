@@ -23,7 +23,7 @@ void sub_0802D230(void)
         v = 0;
 
     AddPlayerFunds(gUnknown_030033EC, v);
-    sub_0804256C();
+    CommitUnitMoveBare();
     DestroyUnitAndCargo(gUnknown_03003F38);
     RebuildMapUnitLayers();
 }
@@ -33,11 +33,11 @@ void UnitMenu_Fire(int a1, int a2, u8 a3)
     if (!(a3 & 2))
     {
         FillMovementMap(0xff);
-        sub_08020D50(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02,
+        FillUnitTargetRange(gUnknown_03003100.spos.unk00, gUnknown_03003100.spos.unk02,
             (struct Unit *)gUnknown_030040D8);
         Proc_Start(gUnknown_0849A9F8, PROC_TREE_3);
         CloseTopMenu();
-        sub_08024500();
+        SetMapLayersTargetBlend();
         IncrementMapLock();
     }
 }

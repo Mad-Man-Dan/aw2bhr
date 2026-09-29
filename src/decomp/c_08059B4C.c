@@ -21,7 +21,7 @@
  * gUnknown_03004788 is VOLATILE and this function is what proves it: the ROM
  * keeps its ADDRESS in r2 and issues a SECOND `ldr r1,[r2]` for the clamp,
  * where CSE otherwise folds the assignment to `adds r1,r0,#0`.  See that
- * symbol's comment in include/unknown-globals.h; sub_08061CF8, the only other
+ * symbol's comment in include/unknown-globals.h; AiCountEnemyFacilities, the only other
  * reader, was re-verified byte-exact after the change.
  *
  * The loop is a `goto` loop, as its sibling c_0805B778.c is: nothing is

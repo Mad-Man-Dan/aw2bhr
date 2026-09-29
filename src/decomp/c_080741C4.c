@@ -35,11 +35,11 @@ void sub_080741C4(int a1, int a2, int a3)
     BG_EnableSyncBG3();
 }
 
-/* sub_08037F1C is registered by ADDRESS and so is cast to `void *`, which is
+/* Bg3AutoScroll_Loop is registered by ADDRESS and so is cast to `void *`, which is
  * the AddVBlankHook convention unknown-functions.h already records.
  */
 void sub_0807420C(void)
 {
     CpuCopyAuto(gUnknown_0812B29C, (void *)0x06001F00, 0x100);
-    AddVBlankHook((void *)sub_08037F1C);
+    AddVBlankHook((void *)Bg3AutoScroll_Loop);
 }

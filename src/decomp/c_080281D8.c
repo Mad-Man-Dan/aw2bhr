@@ -8,7 +8,7 @@
  */
 
 /* Starts the gUnknown_08499EE4 script and parks the second argument in the new
- * slot's +0x18, where sub_08028190 picks it up. The first parameter is dead --
+ * slot's +0x18, where ApplyUnitSpawnTableFromSlot picks it up. The first parameter is dead --
  * r0 is overwritten by the pool word before anything reads it. */
 void sub_080281D8(u8 a1, u32 a2)
 {

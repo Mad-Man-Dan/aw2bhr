@@ -7,7 +7,7 @@
  * sub_080424FC @ 0x080424FC, sub_0804256C @ 0x0804256C
  */
 
-/* sub_0804256C with three extra calls and the gPlaySt.unk0d gate.
+/* CommitUnitMoveBare with three extra calls and the gPlaySt.unk0d gate.
  * SubtractUnitFuel's parameter is declared `struct Unit *` and the argument
  * is gUnknown_030040D8, so the cast is unavoidable here -- the two struct tags
  * describe the same object and unknown-globals.h records why they are kept
@@ -23,7 +23,7 @@ void CommitUnitMove(void)
     if (gPlaySt.fog == 0)
         SubtractUnitFuel((struct Unit *)gUnknown_030040D8, gUnknown_03004074);
 
-    sub_08035810();
+    EndActiveMoveSlide();
     gUnknown_030040D8->unk01 |= 1;
 
     if (gUnknown_030040D8->unk01 & 8)
@@ -44,15 +44,16 @@ asm(".global sub_080424FC\n.thumb_set sub_080424FC, CommitUnitMove\n");
  * it can alias the pointer global itself -- the same reason c_080425B8.c
  * records. Within the final `if` the two reads share one `ldrb`, since no
  * store separates the test from the OR. */
-void sub_0804256C(void)
+void CommitUnitMoveBare(void)
 {
     ResetCaptureProgressIfMoved();
     sub_080176A4();
     gUnknown_030040D8->unk02 = gUnknown_03003100.pos.unk00;
     gUnknown_030040D8->unk03 = gUnknown_03003100.pos.unk02;
-    sub_08035810();
+    EndActiveMoveSlide();
     gUnknown_030040D8->unk01 |= 1;
 
     if (gUnknown_030040D8->unk01 & 8)
         gUnknown_030040D8->unk01 |= 2;
 }
+asm(".global sub_0804256C\n.thumb_set sub_0804256C, CommitUnitMoveBare\n");

@@ -59,15 +59,15 @@
  * `(p + idx) + K`. Every use in the function -- including the
  * `MarkInventionFireArea`/`SetWorkingMapPlane` setup calls -- must name `gMap`, since
  * agbcc's CSE only reuses a pointer load across identical symbols (see
- * sub_08057D90 for the fuller writeup). */
+ * AiPickSafestReachableCell for the fuller writeup). */
 
 struct Unk0803E9F8;
-void sub_08024404(void);
+void SetMapLayersRangeBehindUnits(void);
 void sub_0802E2BC(void);
-void sub_080201E0(s16, s16, struct Unit *);
+void PaintUnitAttackRange(s16, s16, struct Unit *);
 int MarkInventionFireArea(struct Unk0803E9F8 *, u8 *, u8, u8);
-int sub_08041FE0(struct Unit *);
-int sub_0804203C(struct Unit *);
+int IsDirectFireUnitArmed(struct Unit *);
+int IsIndirectFireUnitArmed(struct Unit *);
 void sub_0801FE68(int);
 
 u8 MapCursor_OnPressB(s16 x, s16 y)
@@ -82,7 +82,7 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
      && (u8)MarkInventionFireArea((struct Unk0803E9F8 *)unit,
                          gMap->move, 0xFF, 0))
     {
-        sub_08024404();
+        SetMapLayersRangeBehindUnits();
     }
     else
     {
@@ -98,8 +98,8 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
             return 1;
         }
 
-        a = sub_08041FE0((struct Unit *)gUnknown_030040D8);
-        b = sub_0804203C((struct Unit *)gUnknown_030040D8);
+        a = IsDirectFireUnitArmed((struct Unit *)gUnknown_030040D8);
+        b = IsIndirectFireUnitArmed((struct Unit *)gUnknown_030040D8);
 
         if (a == 0 && b == 0)
         {
@@ -108,8 +108,8 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
         }
 
         SetWorkingMapPlane(gMap->move);
-        sub_08035584(gUnknown_030040D8);
-        sub_08024404();
+        CreateMoveSlideForActiveUnit(gUnknown_030040D8);
+        SetMapLayersRangeBehindUnits();
         RebuildMapUnitLayers();
 
         if (a)
@@ -127,7 +127,7 @@ u8 MapCursor_OnPressB(s16 x, s16 y)
             if (a == 0)
                 FillMovementMap(0xFF);
 
-            sub_080201E0(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
+            PaintUnitAttackRange(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                          (struct Unit *)gUnknown_030040D8);
 
             if (a)

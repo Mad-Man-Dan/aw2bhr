@@ -7,7 +7,7 @@
  * sub_080261A4 @ 0x080261A4
  */
 
-/* A 2-D table lookup: the row is `sub_08042DE0(a1) - 1` scaled by `muls #0x32`
+/* A 2-D table lookup: the row is `GetPlayerCoCountry(a1) - 1` scaled by `muls #0x32`
  * (0x32 BYTES, i.e. 0x19 halfwords) and the column is a2 scaled by `lsls #1`.
  * gUnknown_08499608 is declared as `u16 [][0x19]` in wave 29 so both scales
  * come out of the type; hand-rolled arithmetic on a flat array would put the
@@ -17,7 +17,8 @@
  * entries are tile indices. `pop {r4}; pop {r1}` is the value-returning
  * epilogue and both parameters arrive bare, hence `int` for both. */
 
-int sub_080261A4(int a1, int a2)
+int GetUnitSpriteTile(int a1, int a2)
 {
-    return gUnknown_08499608[sub_08042DE0(a1) - 1][a2] << 2;
+    return gUnknown_08499608[GetPlayerCoCountry(a1) - 1][a2] << 2;
 }
+asm(".global sub_080261A4\n.thumb_set sub_080261A4, GetUnitSpriteTile\n");

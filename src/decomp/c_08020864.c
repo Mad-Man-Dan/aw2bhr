@@ -8,7 +8,7 @@
  */
 
 /* Walks the other three factions in turn order, wrapping against 4 so slot 0 is
- * never visited, and reports whether any is both "agreeing" under sub_08020824
+ * never visited, and reports whether any is both "agreeing" under GetArmyTeamRelation
  * and active. The wrap is spelled out twice because the ROM computes it twice.
  *
  * `a + k` MUST be written out rather than bound to a local. With
@@ -22,21 +22,22 @@
  * spellings normalise to it, so the arm order is not selectable by rewriting
  * the condition.
  *
- * The `lsls #0x10; lsrs #0x10` on sub_08020824's result is a u16 local at this
+ * The `lsls #0x10; lsrs #0x10` on GetArmyTeamRelation's result is a u16 local at this
  * call site, not a narrow return type -- c_08020824.c returns `int`. */
-int sub_08020864(u16 a)
+int HasHumanTeammate(u16 a)
 {
     u16 k;
     u16 r;
 
     for (k = 1; k <= 3; k++)
     {
-        r = sub_08020824(a, a + k <= 4 ? a + k : a + k - 4);
+        r = GetArmyTeamRelation(a, a + k <= 4 ? a + k : a + k - 4);
         if (r == 2 && gPlayers[a + k <= 4 ? a + k : a + k - 4].aiControlled == 1)
             return 1;
     }
     return 0;
 }
+asm(".global sub_08020864\n.thumb_set sub_08020864, HasHumanTeammate\n");
 
 /* True when some OTHER live faction's allegiance byte differs from both the
  * subject's and the first such byte already seen -- i.e. when at least two
@@ -51,7 +52,7 @@ int sub_08020864(u16 a)
  * 0x08090940 that gen_lds.py calls gUnknown_08090940. Declaring that word as a
  * `struct PlayerStruct **` global is NOT needed and would be wrong -- it is
  * agbcc's own address-constant pool entry. */
-int sub_080208C8(int a)
+int HasTwoOpposingHumanTeamsOnCpuTurn(int a)
 {
     int k;
     int seen;
@@ -87,3 +88,4 @@ int sub_080208C8(int a)
     }
     return 0;
 }
+asm(".global sub_080208C8\n.thumb_set sub_080208C8, HasTwoOpposingHumanTeamsOnCpuTurn\n");

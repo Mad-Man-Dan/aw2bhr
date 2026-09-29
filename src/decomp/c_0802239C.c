@@ -7,7 +7,7 @@
  * sub_0802239C @ 0x0802239C
  */
 
-/* A seven-argument wrapper over the eight-argument sub_0802216C: it folds the
+/* A seven-argument wrapper over the eight-argument WriteUnitTileQuad: it folds the
  * (x, y) cell into the tilemap pointer and passes four zeroes for the trailing
  * options.
  *
@@ -16,10 +16,11 @@
  * u16 parameters' entry narrowing with the pointer scale, which is why the
  * halves of each pair sit apart in the listing.
  *
- * Every parameter width below is read off sub_0802216C's own prologue, not
+ * Every parameter width below is read off WriteUnitTileQuad's own prologue, not
  * guessed here: r1/r3 and the first and last stack arguments narrow to u8, r2
  * and the middle two stack arguments to u16, and r0 is untouched. */
-void sub_0802239C(u16 *dst, u16 x, u16 y, u8 a4, u16 a5, u8 a6, u8 a7)
+void WriteUnitTileQuadAt(u16 *dst, u16 x, u16 y, u8 a4, u16 a5, u8 a6, u8 a7)
 {
-    sub_0802216C(dst + x + y * 32, a4, a5, a6, a7, 0, 0, 0);
+    WriteUnitTileQuad(dst + x + y * 32, a4, a5, a6, a7, 0, 0, 0);
 }
+asm(".global sub_0802239C\n.thumb_set sub_0802239C, WriteUnitTileQuadAt\n");

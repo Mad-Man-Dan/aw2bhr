@@ -7,8 +7,8 @@
  * sub_08022878 @ 0x08022878, sub_080228B8 @ 0x080228B8
  */
 
-/* The stop half of sub_08022878's blink: push the OFF frame unconditionally
- * through RegisterDataMove (the immediate path, where sub_08022878 uses the queued
+/* The stop half of BlinkRangeOverlayTile's blink: push the OFF frame unconditionally
+ * through RegisterDataMove (the immediate path, where BlinkRangeOverlayTile uses the queued
  * one) and park a 2 in the proc.
  *
  * RegisterDataMove returns int and the result is discarded here, so nothing about
@@ -23,16 +23,18 @@ struct Unk228B8Proc
  * to 0x06003600. Both arms carry their OWN copy of the destination constant --
  * two pool words holding 0x06003600 -- because agbcc gives each basic block its
  * own literal; that is not evidence of two different addresses. */
-void sub_08022878(void)
+void BlinkRangeOverlayTile(void)
 {
     if (gGameClock & 1)
         CpuCopyAuto(gUnknown_08091B9C, (void *)0x06003600, 0x80);
     else
         CpuCopyAuto(gUnknown_0809181C, (void *)0x06003600, 0x80);
 }
+asm(".global sub_08022878\n.thumb_set sub_08022878, BlinkRangeOverlayTile\n");
 
-void sub_080228B8(struct Unk228B8Proc *proc)
+void RangeOverlayScript_Init(struct Unk228B8Proc *proc)
 {
     RegisterDataMove(gUnknown_0809181C, (void *)0x06003600, 0x80);
     proc->unk20 = 2;
 }
+asm(".global sub_080228B8\n.thumb_set sub_080228B8, RangeOverlayScript_Init\n");

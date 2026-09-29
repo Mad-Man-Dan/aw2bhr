@@ -7,8 +7,9 @@
  * sub_08043D5C @ 0x08043D5C
  */
 
-void sub_08043D5C(void)
+void BuildUnlockedCoCarousel(void)
 {
-    sub_08043D00();
+    RepeatUnlockedCoList();
     gUnknown_020288B0 = 0;
 }
+asm(".global sub_08043D5C\n.thumb_set sub_08043D5C, BuildUnlockedCoCarousel\n");

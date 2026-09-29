@@ -64,6 +64,6 @@ void sub_080590DC(void *a1)
   }
   else
   {
-    sub_0805F7B8();
+    AiFallbackMove();
   }
 }

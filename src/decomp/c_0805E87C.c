@@ -84,7 +84,7 @@ struct Unk5E87CCmd
     /* 0x09 */ u8 unk09_6 : 2;
 };
 
-void sub_0805E87C(void)
+void AiSeekSupplier(void)
 {
     int i;
     int id;
@@ -94,7 +94,7 @@ void sub_0805E87C(void)
 
     list = gUnknown_03003F20;
     GenerateUnitMovementMap(gUnknown_030040D8);
-    sub_0801FD9C(0x79);
+    MapMarkHalo(0x79);
     AiListSuppliersInReach((struct Unk5A514Cell *)list);
 
     for (i = 0; i < 2; i++)
@@ -123,7 +123,7 @@ void sub_0805E87C(void)
                             u->unk09_6++;
                             ((struct Unk5E87CCmd *)gUnknown_030040D8)->unk09_3 = 0;
                             ((struct Unk5E87CCmd *)gUnknown_030040D8)->unk09_0 = 0;
-                            sub_0805D648(pos.x, pos.y, 7, 0, 0);
+                            AiPublishAction(pos.x, pos.y, 7, 0, 0);
                         }
                     }
                 }
@@ -132,3 +132,4 @@ void sub_0805E87C(void)
         }
     }
 }
+asm(".global sub_0805E87C\n.thumb_set sub_0805E87C, AiSeekSupplier\n");

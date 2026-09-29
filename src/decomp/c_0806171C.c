@@ -28,7 +28,7 @@
  * -- a volatile-qualified read -- leaves the two halves apart.
  *
  * That is a REPRODUCTION, not a claim that the object is volatile:
- * src/decomp/c_08034394.c's sub_080343D8 reads the same symbol with the
+ * src/decomp/c_08034394.c's RemoteTurn_ExecuteCommand reads the same symbol with the
  * register-offset `ldrsh` that only a non-volatile s16 object gives, and it is
  * matched. The two readings cannot both come from one declaration, so the
  * original's two translation units declared gUnknown_03004780 differently. The
@@ -68,7 +68,7 @@ void AiDriverStep(void)
 }
 asm(".global sub_0806171C\n.thumb_set sub_0806171C, AiDriverStep\n");
 
-/* Two arms that do NOT cross-jump: both end in the same sub_08061A40 call but
+/* Two arms that do NOT cross-jump: both end in the same CopyAiPersonality call but
  * they compare different values (unk27 reloaded off the element address r3 vs
  * the local v), which is the documented condition for the tails to stay
  * separate. Only the third call, after the join, is shared. */
@@ -78,7 +78,7 @@ void AiLoadPersonality(u16 a)
 
     if (gUnknown_085C77A0[gPlaySt.mapID].unk27 != 0)
     {
-        sub_08061A40(SCRATCH,
+        CopyAiPersonality(SCRATCH,
             &gUnknown_085771C4[gUnknown_0857690C[gUnknown_085C77A0[gPlaySt.mapID].unk27][gPlayers[a].co]]);
     }
     else
@@ -88,11 +88,11 @@ void AiLoadPersonality(u16 a)
         else
             v = 4;
 
-        sub_08061A40(SCRATCH,
+        CopyAiPersonality(SCRATCH,
             &gUnknown_085771C4[gUnknown_0857690C[v][gPlayers[a].co]]);
     }
 
-    sub_08061A40(&gUnknown_02029D84, SCRATCH);
+    CopyAiPersonality(&gUnknown_02029D84, SCRATCH);
 }
 asm(".global sub_08061788\n.thumb_set sub_08061788, AiLoadPersonality\n");
 
@@ -112,14 +112,14 @@ void RunAiTurn(void)
         ? gUnknown_08615194[gPlaySt.mapID - 0x8a].factoryScriptHc
         : gUnknown_08615194[gPlaySt.mapID - 0x8a].factoryScriptNc;
 
-    sub_08061CDC();
-    sub_08061CF8();
+    AiClearTerritoryCounters();
+    AiCountEnemyFacilities();
     AiScanBuildableFacilities();
     AiLoadPersonality(gUnknown_030033EC);
-    sub_08062028();
-    sub_0806279C();
-    sub_08062C7C(0);
-    sub_08061E98();
+    AiBuildCapturePlaneAndClearEscortTally();
+    AiClearInfluenceGrid();
+    AiUpdateInfluence(0);
+    AiUpdateUnitModes();
 
     gUnknown_03004780 = 1;
     gUnknown_030044D8 = gUnknown_03004770 = 0;

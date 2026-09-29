@@ -28,7 +28,7 @@
  * The parameter is an int, not a pointer: `adds r0,#0x4c` runs on it before the
  * `lsls #0x18; lsrs #0x18`, and that truncation is the conversion to
  * sub_0803CF3C's already-promoted `u8` first parameter. */
-void sub_08021750(int a)
+void LoadSavedMapIntoGMap(int a)
 {
     int x;
     int y;
@@ -53,3 +53,4 @@ void sub_08021750(int a)
         }
     }
 }
+asm(".global sub_08021750\n.thumb_set sub_08021750, LoadSavedMapIntoGMap\n");

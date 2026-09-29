@@ -20,7 +20,7 @@ struct Unk40BB8Proc
     /* 4c */ s16 unk4c;
 };
 
-void sub_08040BB8(struct Unk40BB8Proc *proc)
+void CaptureAnimPopup_Loop(struct Unk40BB8Proc *proc)
 {
     int t = Interpolate(1, 0, 0x100, proc->unk4c, 10);
     int xv = proc->unk3c & 0x1FF;
@@ -37,3 +37,4 @@ void sub_08040BB8(struct Unk40BB8Proc *proc)
     if (proc->unk4c <= 9)
         proc->unk4c++;
 }
+asm(".global sub_08040BB8\n.thumb_set sub_08040BB8, CaptureAnimPopup_Loop\n");

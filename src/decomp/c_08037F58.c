@@ -18,8 +18,9 @@
  * unknown-functions.h flags as SUSPECT (the parameter is almost certainly
  * `const void *`). It is byte-neutral -- `ldr r0,=gSym` either way -- so this
  * is one more call site paying the cast, and it comes out free. */
-void sub_08037F58(void)
+void StartBg3AutoScroll(void)
 {
     sub_08037F18();
     sub_080152C0((s32)gUnknown_0849D55C, 0);
 }
+asm(".global sub_08037F58\n.thumb_set sub_08037F58, StartBg3AutoScroll\n");

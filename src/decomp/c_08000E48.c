@@ -57,7 +57,7 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     sub_08000DF8(a);
     ClearAllUnits();
     sub_0803DE68();
-    sub_080268F4();
+    StartArmyTurn2();
     RebuildMapUnitLayers();
     sub_08023348();
 
@@ -85,7 +85,7 @@ void DesignRoomProc_Init(struct Unk03001470 *proc)
     gUnknown_03003F3C = 0;
     InitTextTileCache(0);
     DesignRoomLoadGraphics();
-    sub_08022AAC(7, 4);
+    SetMapCursorPosition(7, 4);
     gActiveMap->designSlot = 0xFF;
     gActiveMap->tilePanelX = 0xFD80;
     gActiveMap->tilePanelY = 0xB8;

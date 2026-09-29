@@ -19,7 +19,7 @@
  *
  * gUnknown_080909FC, gUnknown_08090A00 and gUnknown_08090A04 in the asm are
  * agbcc -fforce-addr .rodata words holding 0x08499590, 0x030033E4 and
- * 0x08499C7C, not objects; gUnknown_08090A14 in sub_08023860 is a second
+ * 0x08499C7C, not objects; gUnknown_08090A14 in UpdateMapBgScroll is a second
  * private copy of the first of them. The map header is reached as a `u8 *`
  * with `*(u16 *)(p + k)` reads, which is the spelling c_0800119C.c and
  * c_08001158.c already use for gUnknown_08499590.

@@ -11,7 +11,7 @@
  * byte-identical under either return type, but sub_0802CC40 (wave 35, W35-H)
  * emits `bl HasSupplyAbility; lsls r0,r0,#0x18; cmp r0,#0` -- the narrowing agbcc
  * inserts at every call site of a sub-word-returning callee. Two instructions
- * earlier the same function calls sub_080416A4 and tests it with a bare
+ * earlier the same function calls BuildResupplyTargetList and tests it with a bare
  * `cmp r0,#0`, so the shift is not decoration. */
 /* Named per Xenesis's AW2 Subroutine List: "Gathers a unit's Supplying
  * ability". The old HasSupplyAbility symbol is kept as a linker alias below so

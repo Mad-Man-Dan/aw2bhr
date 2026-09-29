@@ -193,7 +193,7 @@ void MapMainLoopCallback(void)
 }
 asm(".global sub_080369BC\n.thumb_set sub_080369BC, MapMainLoopCallback\n");
 
-void sub_08036A50(void)
+void QueuedSpritesVBlankCallback(void)
 {
     RunSoundVSync();
     sub_0802FACC();
@@ -219,8 +219,9 @@ void sub_08036A50(void)
     gGameClock++;
     RunSoundMain();
 }
+asm(".global sub_08036A50\n.thumb_set sub_08036A50, QueuedSpritesVBlankCallback\n");
 
-void sub_08036AB8(void)
+void QueuedSpritesMainLoopCallback(void)
 {
     if (gUnknown_03004094 == 0 && (gGameClock & gUnknown_030043F4) == 0)
     {
@@ -239,3 +240,4 @@ void sub_08036AB8(void)
         gUnknown_03004094 = 1;
     }
 }
+asm(".global sub_08036AB8\n.thumb_set sub_08036AB8, QueuedSpritesMainLoopCallback\n");

@@ -4,14 +4,14 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08034534.
- * SendActionCommand @ 0x08034534, sub_08034598 @ 0x08034598
+ * SendActionCommand @ 0x08034534, RemoteTurn_UpdateCursorAndCamera @ 0x08034598
  */
 
 #include "hardware.h"
 
-/* The full builder of the LinkQueueCommand command block: sub_080344B4 is this one
+/* The full builder of the LinkQueueCommand command block: SendMoveCommand is this one
  * with the id fixed at 8 and the +2..+5 cursor snapshot dropped, and
- * sub_0803446C is the +2..+5 snapshot on its own. The store order is the
+ * SnapshotActionCommandContext is the +2..+5 snapshot on its own. The store order is the
  * source's -- +0 first, then the two cursor pairs, then +1/+6/+7 -- and it is
  * not reorderable, which is what fixes this as one statement per line. */
 void SendActionCommand(int a, u8 b, u8 c, u8 d)
@@ -31,17 +31,18 @@ void SendActionCommand(int a, u8 b, u8 c, u8 d)
     LinkQueueCommand(gUnknown_030044B0);
 }
 
-/* The shared per-frame tail of sub_08034394 and sub_080343D8. */
-void sub_08034598(void)
+/* The shared per-frame tail of RemoteTurn_WaitForCommand and RemoteTurn_ExecuteCommand. */
+void RemoteTurn_UpdateCursorAndCamera(void)
 {
     HandleMoveMapCursor();
-    sub_08023518();
+    MoveMapCursorFromHeldKeys();
     HandleMoveCameraWithMapCursor(4);
 
     if (gpKeySt->pressed & 2)
         sub_0802FA64();
 
-    sub_0802776C(3);
+    SetInfoBoxMode(3);
 }
+asm(".global sub_08034598\n.thumb_set sub_08034598, RemoteTurn_UpdateCursorAndCamera\n");
 
 asm(".global sub_08034534\n.thumb_set sub_08034534, SendActionCommand\n");

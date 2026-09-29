@@ -21,8 +21,9 @@ struct Unk61E80
     /* 09 */ u8 unk09_3 : 5;
 };
 
-void sub_08061E80(struct Unk61E80 *p)
+void AiUpdateModeRepair(struct Unk61E80 *p)
 {
     if (p->unk04_0 > 0x5b)
         p->unk09_0 = 0;
 }
+asm(".global sub_08061E80\n.thumb_set sub_08061E80, AiUpdateModeRepair\n");

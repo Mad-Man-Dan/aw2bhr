@@ -14,7 +14,7 @@
  * `*(u16 *)(gUnknown_08499590 + 0x417A + y * 2)` reassociates to
  * `(map + y * 2) + 0x417A` and the ROM has `(map + 0x417A) + y * 2`. */
 
-/* sub_0805CA24 is DEFINED `int` in src/decomp/c_0805CA24.c, but every use here
+/* AiUnitHasUsableWeapon is DEFINED `int` in src/decomp/c_0805CA24.c, but every use here
  * is narrowed to a byte before the test (`lsls #24; cmp #0`), which is the
  * re-narrowing agbcc emits for a u8-returning callee. The promoted definition
  * wins, so the cast is written at the call site instead of retyping it. */
@@ -27,7 +27,7 @@ void sub_0805F6D4(void)
 
     fx = -1;
     fy = 0;
-    if ((u8)sub_0805CA24())
+    if ((u8)AiUnitHasUsableWeapon())
     {
         gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                           gUnknown_030040D8->unk00, 0x78, 0);
@@ -44,6 +44,6 @@ void sub_0805F6D4(void)
             }
         }
         if (fx != -1)
-            sub_0805D648(fx, fy, 2, 0, 0);
+            AiPublishAction(fx, fy, 2, 0, 0);
     }
 }

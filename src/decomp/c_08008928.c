@@ -31,7 +31,7 @@ int DesignRoomPlaceUnitAtCursor(void)
     {
         if (RemoveUnitAt(1, x, y))
         {
-            sub_08024268();
+            RebuildMapUnitLayers2();
             result = 2;
         }
     }

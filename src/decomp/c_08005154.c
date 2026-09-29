@@ -12,7 +12,7 @@ void sub_08005154(void)
     CloseTopMenu();
     sub_080152EC(gUnknown_08487E8C, 0);
     gActiveMap->state = 7;
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 
 /* A bare `strb` through `adds rN, #0x9c`, past `strb`'s imm5 range -- which is

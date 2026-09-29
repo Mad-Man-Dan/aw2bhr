@@ -27,7 +27,7 @@
  * not a live range. gcc 2.9 ranks allocnos by
  *     floor_log2(n_refs) * n_refs / live_length
  * and `proc` has seven references in the flat spelling (its def, the two
- * Proc_Break arguments, the sub_0802A54C argument, and the three address bases
+ * Proc_Break arguments, the StartUnitDestroy argument, and the three address bases
  * &unk64, &unk66, &unk68) against five for `proc + 0x68` in a range a little
  * over half as long -- 14/45 to 10/26, so `proc + 0x68` sorted first and took
  * r4, where the ROM gives r4 to `proc`.
@@ -60,7 +60,7 @@ struct Unk080287D0Proc
     /* 0x68 */ s16 unk68;
 };
 
-void sub_080287D0(struct Unk080287D0Proc *proc)
+void ArmyDefeat_Loop(struct Unk080287D0Proc *proc)
 {
     struct Unit *unit;
 
@@ -76,7 +76,7 @@ void sub_080287D0(struct Unk080287D0Proc *proc)
             {
                 unit = &gUnits[(u16)gUnknown_084995FE[proc->unk64] + proc->unk68];
                 proc->unk68++;
-                sub_0802A54C(unit, proc);
+                StartUnitDestroy(unit, proc);
             } while (0);
         }
         else
@@ -85,3 +85,4 @@ void sub_080287D0(struct Unk080287D0Proc *proc)
         }
     }
 }
+asm(".global sub_080287D0\n.thumb_set sub_080287D0, ArmyDefeat_Loop\n");

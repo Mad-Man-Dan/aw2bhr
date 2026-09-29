@@ -44,7 +44,7 @@ void InitMovePathForActiveUnit(void)
     PushMovePathStep(((struct Unit *)gUnknown_030040D8)->x,
                  ((struct Unit *)gUnknown_030040D8)->y);
     gUnknown_0849D5F8->unk38[0] = gUnknown_0849D5F8->unk38[0xc];
-    sub_080386DC(0xFFFF, 0xFFFF);
+    SetMovePathLastCursor(0xFFFF, 0xFFFF);
     UpdateMovePathToCursor();
 }
 asm(".global sub_08038C98\n.thumb_set sub_08038C98, InitMovePathForActiveUnit\n");

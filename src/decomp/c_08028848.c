@@ -19,10 +19,11 @@ struct Unk28848Proc
     /* 66 */ u16 unk66;
 };
 
-void sub_08028848(u16 a, u16 b)
+void StartArmyDefeat(u16 a, u16 b)
 {
     struct Unk28848Proc *proc = Proc_Start(gUnknown_08499FAC, PROC_TREE_3);
 
     proc->unk64 = a;
     proc->unk66 = b;
 }
+asm(".global sub_08028848\n.thumb_set sub_08028848, StartArmyDefeat\n");

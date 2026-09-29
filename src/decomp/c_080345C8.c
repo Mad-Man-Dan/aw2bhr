@@ -40,30 +40,30 @@ void MapMainIdle(void)
         {
         case 0:  break;
         case 1:  MapState_CheckTurnLimit(); break;
-        case 2:  sub_080349E4(); break;
+        case 2:  MapState_PrepareTurnHandover(); break;
         case 3:  MapState_TurnHandoverPrompt(); break;
-        case 4:  sub_08034DB0(); break;
-        case 5:  sub_08034DCC(); break;
+        case 4:  MapState_WaitForCampaignIntro(); break;
+        case 5:  MapState_PlayTurnMusic(); break;
         case 6:  sub_08034DF8(); break;
         case 7:  MapState_StartDayStartScreen(); break;
         case 8:  MapState_StartFuelUpkeep(); break;
         case 9:  MapState_StartTurnStartSupply(); break;
         case 10: sub_08034CB8(); break;
-        case 11: sub_08034CD4(); break;
+        case 11: MapState_StartInventionTurnScript(); break;
         case 12: MapState_DispatchTurnByController(); break;
         case 13: RunMapCursorState(); break;
         case 14: AiDriverStep(); break;
-        case 19: sub_08034350(); break;
+        case 19: MapState_RemoteTurn(); break;
         case 16: MapState_RunParkedWinLossCheck(); break;
-        case 18: sub_08034EF0(); break;
-        case 20: sub_08034F1C(); return;
+        case 18: MapState_EndOfGame(); break;
+        case 20: MapState_ResumeCursorAfterCommand(); return;
         }
     }
 
     if (**state == 14 || gUnknown_030044DC == 14)
     {
         if (FindSlotScript((s32)gUnknown_0849A00C) != -1 || GetMapLock() == 0)
-            sub_0802776C(3);
+            SetInfoBoxMode(3);
     }
 }
 

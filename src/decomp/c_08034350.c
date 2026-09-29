@@ -10,17 +10,18 @@
 /* A two-arm `switch`, not an if/else chain: the literal pool sits between the
  * dispatch and the two case bodies, which is where agbcc parks it for a switch
  * that falls out of the compare chain with a `b` to the epilogue. */
-void sub_08034350(void)
+void MapState_RemoteTurn(void)
 {
     gUnknown_030040DC = 0;
 
     switch (gUnknown_03003F60)
     {
     case 0:
-        sub_08034394();
+        RemoteTurn_WaitForCommand();
         break;
     case 4:
-        sub_080343D8();
+        RemoteTurn_ExecuteCommand();
         break;
     }
 }
+asm(".global sub_08034350\n.thumb_set sub_08034350, MapState_RemoteTurn\n");

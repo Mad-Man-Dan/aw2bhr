@@ -13,8 +13,9 @@
  * with no conversion and a computed expression narrowed `lsls #0x10; asrs
  * #0x10`, where the u16 spelling probes as `ldrh` plus a zero-extending `lsrs`.
  * Re-verified byte-exact with trymatch after the change. */
-void sub_08022AD0(s16 x, s16 y)
+void SetMapCursorDisplayPosition(s16 x, s16 y)
 {
     gUnknown_030033E0.unk00 = x;
     gUnknown_030033E0.unk02 = y;
 }
+asm(".global sub_08022AD0\n.thumb_set sub_08022AD0, SetMapCursorDisplayPosition\n");

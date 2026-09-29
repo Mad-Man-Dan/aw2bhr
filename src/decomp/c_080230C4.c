@@ -10,7 +10,8 @@
 /* A pure forwarder whose three `lsls #0x10; asrs #0x10` pairs are PROMOTE_MODE
  * fused with the s16 conversion each argument needs at the `bl` -- combine
  * collapses the entry zero-extend and the sign-extend into one pair. */
-void sub_080230C4(s16 a1, s16 a2, s16 a3)
+void DrawMapCursorSpriteUnused2(s16 a1, s16 a2, s16 a3)
 {
-    sub_08022DD4(a1, a2, a3);
+    DrawMapCursorSpriteUnused(a1, a2, a3);
 }
+asm(".global sub_080230C4\n.thumb_set sub_080230C4, DrawMapCursorSpriteUnused2\n");

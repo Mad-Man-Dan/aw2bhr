@@ -9,12 +9,12 @@
  */
 
 #include "proc.h"
-/* Reports the cell to sub_0803FF48 and then, for exactly two tile ids, rewrites
+/* Reports the cell to StartExplosionEffect and then, for exactly two tile ids, rewrites
  * both map planes at that cell. The two `if`s are separate statements and not
  * an `else if` chain -- the ROM re-tests the snapshot after the first block
  * falls through rather than branching past it.
  *
- * The snapshot is taken BEFORE the sub_0803FF48 call and held in a
+ * The snapshot is taken BEFORE the StartExplosionEffect call and held in a
  * callee-saved register: gUnknown_08499590 is not const, so every store and
  * every call kills it, which is why the ROM reloads the base
  * (`ldr r1,[r6]`) for each of the four subsequent plane accesses while keeping
@@ -26,7 +26,7 @@
  * preserves. */
 /* The sibling of DestroyPipeSeam next door: same snapshot-then-rewrite shape on
  * the two map planes, but keyed on tile 0x180 and driving the 0x0849FB8C
- * loader pair (sub_08040430 / sub_0804046C) instead of sub_0803FF48.
+ * loader pair (LoadSiloMissileGraphics / StartSiloMissileLaunch) instead of StartExplosionEffect.
  *
  * 0x1CA is written twice and CSEd into r4 across both calls. The snapshot is
  * taken BEFORE them because gUnknown_08499590 is not const and every call kills
@@ -44,7 +44,7 @@ void DestroyPipeSeam(int x, int y, ProcPtr parent)
     u16 v = gMap->tile[
         gMap->rowOffset[y] + x];
 
-    sub_0803FF48(x, y, -3, parent);
+    StartExplosionEffect(x, y, -3, parent);
 
     if (v == 0x162)
     {
@@ -62,7 +62,7 @@ void DestroyPipeSeam(int x, int y, ProcPtr parent)
             gMap->rowOffset[y] + x] = 0x123;
     }
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     RecountArmyProperties();
 }
 
@@ -73,8 +73,8 @@ void StartSiloLaunch(int x, int y, ProcPtr parent)
     u16 v = gMap->tile[
         gMap->rowOffset[y] + x];
 
-    sub_08040430(0x1CA, 5);
-    sub_0804046C(x, y, 0x1CA, 5, parent);
+    LoadSiloMissileGraphics(0x1CA, 5);
+    StartSiloMissileLaunch(x, y, 0x1CA, 5, parent);
 
     if (v == 0x180)
     {
@@ -85,6 +85,6 @@ void StartSiloLaunch(int x, int y, ProcPtr parent)
     }
 
     RefreshPropertyTerrainBytes();
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 asm(".global sub_08040380\n.thumb_set sub_08040380, StartSiloLaunch\n");

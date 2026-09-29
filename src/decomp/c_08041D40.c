@@ -10,7 +10,7 @@
 /* Orders two units for a queue: by the cell column unk02 first, then by the
  * low seven bits of their army's gPlayers record.
  *
- * `(p - gUnits) >> 6` is the matched sub_0804203C's army idiom --
+ * `(p - gUnits) >> 6` is the matched IsIndirectFireUnitArmed's army idiom --
  * exact division by the 0x0c stride (`mul 0x55555555; neg; asr #2`) with the
  * `>> 6` merged into the single `asr #8`. The `+ 1` then indexes
  * gPlayers ONE-BASED, which is what puts the member at a runtime
@@ -22,7 +22,7 @@
  * the same predicate, but only this polarity leaves `return 1` inline ahead of
  * the literal pool with `return 0` after it; the other spelling swaps the two
  * blocks. Same lever c_0804203C.c documents for its own pair of returns. */
-int sub_08041D40(struct Unit *a, struct Unit *b)
+int GetBattleSceneAttackerSide(struct Unit *a, struct Unit *b)
 {
     if (a->x > b->x)
         return 1;
@@ -36,3 +36,4 @@ int sub_08041D40(struct Unit *a, struct Unit *b)
 
     return 1;
 }
+asm(".global sub_08041D40\n.thumb_set sub_08041D40, GetBattleSceneAttackerSide\n");

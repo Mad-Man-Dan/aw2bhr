@@ -17,7 +17,7 @@ struct Unk0807FA34
 
 void CoPowerScene_Init(struct Unk0807FA34 *proc)
 {
-    sub_08043BA4(gUnknown_03005970, 0x1CA, 4);
+    LoadCoFullBodyAndPalette(gUnknown_03005970, 0x1CA, 4);
     ApplyPalettes(gUnknown_08239DE4, 0x13, 1);
     proc->unk4c = 0;
     Proc_Start(gUnknown_086167EC, proc);

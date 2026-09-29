@@ -44,12 +44,12 @@ void sub_08088CDC(struct Unk08088CDC *p)
     m = &p->unk4c;
 
     if (*m == 9)
-        sub_08043BC8(v0, 0x40);
+        LoadCoFullBodyPart0(v0, 0x40);
 
     if (*m == 0xa)
     {
-        sub_08043BF8(v0, 0x40);
-        sub_08043AA0(v0, 0x11);
+        LoadCoFullBodyPart1(v0, 0x40);
+        LoadCoPalette(v0, 0x11);
     }
 
     if (*m == 0x10)
@@ -74,12 +74,12 @@ void sub_08088DA4(struct Unk08088DA4 *p)
     m = &p->unk4c;
 
     if (*m == 0xd)
-        sub_08043BC8(v0, 0x40);
+        LoadCoFullBodyPart0(v0, 0x40);
 
     if (*m == 0xe)
     {
-        sub_08043BF8(v0, 0x40);
-        sub_08043AA0(v0, 0x11);
+        LoadCoFullBodyPart1(v0, 0x40);
+        LoadCoPalette(v0, 0x11);
     }
 
     if (p->unk60 < 0)

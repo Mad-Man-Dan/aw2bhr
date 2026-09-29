@@ -35,7 +35,7 @@
  * -fforce-addr: the symbol is named from two basic blocks, so agbcc gives it a
  * private .rodata word -- that word is the ROM's gUnknown_0816DAFC, which holds
  * 0x085766E4. */
-int sub_08061668(u16 *out)
+int AiPickBestScoredBuildSite(u16 *out)
 {
     u16 none;
     int i;
@@ -67,3 +67,4 @@ int sub_08061668(u16 *out)
     gUnknown_085766E4[best].unk03 = 0xfe;
     return 1;
 }
+asm(".global sub_08061668\n.thumb_set sub_08061668, AiPickBestScoredBuildSite\n");

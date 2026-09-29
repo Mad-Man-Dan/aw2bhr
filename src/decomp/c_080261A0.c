@@ -9,7 +9,8 @@
 
 #include "unknown-functions.h"
 
-int sub_080261A0(void)
+int GetUnitSheetFrameTileCount(void)
 {
     return 0x6c;
 }
+asm(".global sub_080261A0\n.thumb_set sub_080261A0, GetUnitSheetFrameTileCount\n");

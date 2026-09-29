@@ -16,9 +16,10 @@
  */
 
 
-/* The stop half of sub_0802723C's Proc_Start on tree 3. */
+/* The stop half of StartSupplyIconEffect's Proc_Start on tree 3. */
 
-void sub_080272B4(void)
+void EndSupplyIconEffect(void)
 {
     Proc_EndEach(gUnknown_08499D2C);
 }
+asm(".global sub_080272B4\n.thumb_set sub_080272B4, EndSupplyIconEffect\n");

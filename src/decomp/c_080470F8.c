@@ -33,7 +33,7 @@
 void ShowTerrainInfoWindow(u16 a1)
 {
     gUnknown_02028DD6 = a1 & 0x1f;
-    gUnknown_02028DD7 = sub_08024984(a1);
+    gUnknown_02028DD7 = GetCellCountry(a1);
     gUnknown_02028DD4 = 1;
 
     switch (gUnknown_02028DD6)
@@ -55,7 +55,7 @@ void ShowTerrainInfoWindow(u16 a1)
         break;
     }
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     sub_080152EC(gUnknown_084C2140, 0);
     sub_080152EC(gUnknown_084C2198, 0);
 

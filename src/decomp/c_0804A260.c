@@ -89,7 +89,7 @@ void NameEntry_Init(void)
     gUnknown_030044E0->unk66 = 0;
     LoadBg1WindowFrame(0);
     sub_0802D5CC(0, 8);
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);
     gUnknown_03002B6C.bits.size = 1;
     gDispIo.disp_ct.bg1_enable = 0;
@@ -111,7 +111,7 @@ void NameEntry_Init(void)
     ClearBg0Tilemap();
     CpuCopyAuto(gBG0TilemapBuffer, (void *)0x06007800, 0x800);
     ClearBg2Tilemap();
-    sub_080616F0();
+    ClearBg3TilemapBuffer();
     PutTextScriptImmediate(6, 6, gBG0TilemapBuffer, gUnknown_084C3B3C[0], 0x8000, 0);
     PutTextScriptImmediate(6, 8, gBG0TilemapBuffer, gUnknown_084C3B3C[1], 0x8000, 0);
     PutTextScriptImmediate(6, 0xA, gBG0TilemapBuffer, gUnknown_084C3B3C[2], 0x8000, 0);
@@ -160,7 +160,7 @@ void NameEntry_Init(void)
     BG_EnableSyncBG0();
     BG_EnableSyncBG2();
     BG_EnableSyncBG3();
-    sub_08043BA4(0, 0x27, 6);
+    LoadCoFullBodyAndPalette(0, 0x27, 6);
     sub_080152C0((s32)gUnknown_084C3D8C, 0);
     PlayMusic(0x190);
 }

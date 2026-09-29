@@ -17,8 +17,8 @@ void sub_0805BEA0(int x, int y, u16 *out)
 
     gUnknown_030013EC(x, y, gUnknown_030046D4, gUnknown_085766E0->unk0f, 0);
 
-    n = sub_080583DC();
-    if (n != 0 && sub_08058254() < n + 5)
+    n = AiCountEnemyLandUnitsInReach();
+    if (n != 0 && AiCountFriendlyArmedVehiclesInReach() < n + 5)
     {
         out[0] = x;
         out[1] = y;

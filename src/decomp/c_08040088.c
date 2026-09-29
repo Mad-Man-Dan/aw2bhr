@@ -12,7 +12,7 @@
  * members: `movs rI,#0x2c / ldrsh rD,[rB,rI]` is the s16-object tell -- an int
  * member converted to ScrollCameraToKeepCellInView's s16 parameters would emit `ldr` and let
  * the callee narrow, and an (s16) cast on an int member would emit
- * `ldr; lsls #16; asrs #16`. Same shape as sub_08040984 next door, at 0x2c/0x30
+ * `ldr; lsls #16; asrs #16`. Same shape as SiloFire_ScrollToSilo next door, at 0x2c/0x30
  * instead of 0x64/0x66. */
 struct Unk40088Proc
 {
@@ -22,7 +22,8 @@ struct Unk40088Proc
     /* 30 */ s16 unk30;
 };
 
-void sub_08040088(struct Unk40088Proc *proc)
+void ExplosionEffect_ScrollToCell(struct Unk40088Proc *proc)
 {
     ScrollCameraToKeepCellInView(proc->unk2c, proc->unk30);
 }
+asm(".global sub_08040088\n.thumb_set sub_08040088, ExplosionEffect_ScrollToCell\n");

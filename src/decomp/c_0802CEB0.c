@@ -20,7 +20,7 @@ void MapMenu_Power(void)
         SendActionCommand(0xf, 0, gUnknown_030033EC, 0);
 
     PayForCoPower(gUnknown_030033EC, 1);
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 asm(".global sub_0802CEB0\n.thumb_set sub_0802CEB0, MapMenu_Power\n");
 
@@ -37,6 +37,6 @@ void MapMenu_SuperPower(void)
         SendActionCommand(0x10, 0, gUnknown_030033EC, 0);
 
     PayForCoPower(gUnknown_030033EC, 2);
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }
 asm(".global sub_0802CEFC\n.thumb_set sub_0802CEFC, MapMenu_SuperPower\n");

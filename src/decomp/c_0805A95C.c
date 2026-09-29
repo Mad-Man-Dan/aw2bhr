@@ -30,7 +30,7 @@
  *
  * +0x09 of struct Unk030040D8 is unk07[2]: unk07 is the five-byte member array
  * at +0x07 that c_0805DB0C.c also indexes. */
-void sub_0805A95C(void)
+void AiUpdateNeededPropertyKind(void)
 {
     if (gUnknown_0857680F[gUnknown_030040D8->unk00] == 4
      && (gUnknown_030040D8->unk07[2] & 7) == 0)
@@ -38,3 +38,4 @@ void sub_0805A95C(void)
     else
         gUnknown_030046AC = gUnknown_0857680F[gUnknown_030040D8->unk00];
 }
+asm(".global sub_0805A95C\n.thumb_set sub_0805A95C, AiUpdateNeededPropertyKind\n");

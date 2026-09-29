@@ -10,11 +10,12 @@
 /* The consumer of the word sub_080281D8 parks in the slot's +0x18 -- the shared
  * displacement on a sub_080152EC result is what makes the parameter a
  * struct Unk03001470 rather than a Proc. */
-void sub_08028190(struct Unk03001470 *p)
+void ApplyUnitSpawnTableFromSlot(struct Unk03001470 *p)
 {
     if (p->unk18 != 0)
         ApplyUnitSpawnTable((void *)p->unk18);
 }
+asm(".global sub_08028190\n.thumb_set sub_08028190, ApplyUnitSpawnTableFromSlot\n");
 
 /* "Is the gUnknown_08499EE4 script running?". The `movs #1` and `movs #0` are
  * split across an unconditional `b`, which is the if/else spelling rather than

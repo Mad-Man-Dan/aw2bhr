@@ -11,7 +11,7 @@
 #include "proc.h"
 
 /* The cursor-confirm loop for the gUnknown_0849FC64 script the matched
- * sub_0804087C installs: A commits the picked square, B restores the saved
+ * SiloTargetSelect_Init installs: A commits the picked square, B restores the saved
  * cursor and restarts the script.
  *
  * gpKeySt->pressed is NAMED TWICE rather than bound to a local. CSE collapses the
@@ -24,8 +24,8 @@
  * The A-branch reads gUnknown_030033E4's two halves as u8 for SendActionCommand's
  * declared u8 third and fourth parameters (`ldrb`), while the B-branch reads
  * the same two as s16 for ScrollCameraToKeepCellInView (`ldrsh`) -- the widths come from the
- * callees, not from the object, exactly as in the matched sub_08041E48. */
-void sub_080408A0(ProcPtr proc)
+ * callees, not from the object, exactly as in the matched InventionAttack_CommitMove. */
+void SiloTargetSelect_Loop(ProcPtr proc)
 {
     if (sub_08019260() != 0)
         return;
@@ -33,15 +33,15 @@ void sub_080408A0(ProcPtr proc)
     HandleMoveMapCursor();
     HandleGameMapCursorInput();
     HandleMoveCameraWithMapCursor(4);
-    sub_080232CC(2, 0x12);
+    StepMapCursorAndDrawTwo(2, 0x12);
 
     if (IsMapCursorSettled() == 0)
         return;
 
     if (gpKeySt->pressed & 1)
     {
-        sub_0804096C(proc);
-        sub_08042C24(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
+        CommitSiloLaunchMove(proc);
+        StartSiloFire(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
                      gUnknown_030033E4.unk00, gUnknown_030033E4.unk02, proc);
 
         if (gPlaySt.savingEnabled != 0)
@@ -61,3 +61,4 @@ void sub_080408A0(ProcPtr proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080408A0\n.thumb_set sub_080408A0, SiloTargetSelect_Loop\n");

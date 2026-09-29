@@ -7,7 +7,8 @@
  * sub_0802813C @ 0x0802813C
  */
 
-void *sub_0802813C(void)
+void *GetDayWordGlyphCount(void)
 {
     return gUnknown_08499E38[gUnknown_02028E40];
 }
+asm(".global sub_0802813C\n.thumb_set sub_0802813C, GetDayWordGlyphCount\n");

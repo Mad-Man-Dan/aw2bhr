@@ -8,7 +8,7 @@
  */
 
 /* Collects every gUnknown_085C77A0 row whose unk1a equals the requested id and
- * that sub_080373F0 accepts, into gUnknown_02027F78, then arms the
+ * that IsMapSelectableForSlots accepts, into gUnknown_02027F78, then arms the
  * gUnknown_02027F74 cursor pair over the result. Returns whether anything was
  * found.
  *
@@ -36,7 +36,7 @@ u8 BuildMapListForCategory(u8 a1)
     count = 0;
     for (i = 0; i < 0xc0; i++)
     {
-        if (gUnknown_085C77A0[i].category == a1 && sub_080373F0(i, v))
+        if (gUnknown_085C77A0[i].category == a1 && IsMapSelectableForSlots(i, v))
             gUnknown_02027F78[count++] = i;
         if (count > 0x31)
             break;

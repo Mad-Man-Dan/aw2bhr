@@ -27,7 +27,7 @@ struct Unk4009CProc
     /* 54 */ int unk54;
 };
 
-void sub_0804009C(struct Unk4009CProc *proc)
+void ExplosionEffect_StartSoundAndScreenFx(struct Unk4009CProc *proc)
 {
     switch (proc->unk54)
     {
@@ -54,3 +54,4 @@ void sub_0804009C(struct Unk4009CProc *proc)
     if (gPlaySt.gameMode != 5)
         StartWhiteFlash(4, 0, 2, proc->unk14);
 }
+asm(".global sub_0804009C\n.thumb_set sub_0804009C, ExplosionEffect_StartSoundAndScreenFx\n");

@@ -9,14 +9,14 @@
 
 #include "hardware.h"
 
-/* Sibling of sub_08024378 / sub_08024500 -- same shape. Here target1 is BG1,
+/* Sibling of SetMapLayersBg0BlendFade / SetMapLayersTargetBlend -- same shape. Here target1 is BG1,
  * so the constant reused by the byte-0 store is the 2 left in r4 by the
  * gUnknown_03001FE8 priority write rather than the 1 from gUnknown_030030B4;
  * that is why gUnknown_030030B4's `movs #1` lands in the scratch r0 and the
- * push list is only {r4, lr}. See the note in work/sub_08024378.
+ * push list is only {r4, lr}. See the note in work/SetMapLayersBg0BlendFade.
  */
 
-void sub_080245D4(void)
+void SetMapLayersUnitsTranslucent(void)
 {
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_03001FE8.bits.priority = 2;
@@ -31,3 +31,4 @@ void sub_080245D4(void)
     gUnknown_03002B28 = 0x10;
     ResetWindowShadows();
 }
+asm(".global sub_080245D4\n.thumb_set sub_080245D4, SetMapLayersUnitsTranslucent\n");

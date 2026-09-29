@@ -14,7 +14,7 @@
 #include "proc.h"
 /* The proc's own fields. unk66 is SIGNED: it is written from the u16
  * gUnknown_030033EC but read back `movs r1,#0; ldrsh r0,[r5,r1]` for
- * sub_08043834. The `adds rN,#0x64` / `#0x66` / `#0x4e` base bumps are not a
+ * LoadCoPanelGraphics. The `adds rN,#0x64` / `#0x66` / `#0x4e` base bumps are not a
  * spelling choice -- `strh`'s immediate offset stops at 62. */
 struct UnkBD4Proc
 {
@@ -38,7 +38,7 @@ void CoInfoScreen_Init(struct UnkBD4Proc *proc)
     proc->unk4c = 0;
     sub_08085298(proc);
     CoInfoScreen_DrawPageText((struct Unk080852A8 *)proc);
-    sub_08043834(proc->unk66);
+    LoadCoPanelGraphics(proc->unk66);
 }
 
 asm(".global sub_08084BD4\n.thumb_set sub_08084BD4, CoInfoScreen_Init\n");

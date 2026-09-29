@@ -12,7 +12,7 @@
 /* SetMapLayersDefault without the trailing ResetWindowShadows -- see
  * src/decomp/c_08024404.c for the 2-bit-field reading. */
 
-void sub_0802465C(void)
+void SetMapLayerPrioritiesDefault(void)
 {
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_03001FE8.bits.priority = 2;
@@ -20,3 +20,4 @@ void sub_0802465C(void)
     gUnknown_0300251C.bits.priority = 3;
     SetDefaultColorEffects();
 }
+asm(".global sub_0802465C\n.thumb_set sub_0802465C, SetMapLayerPrioritiesDefault\n");

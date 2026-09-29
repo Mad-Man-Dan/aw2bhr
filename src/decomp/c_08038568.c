@@ -7,7 +7,7 @@
  * sub_08038568 @ 0x08038568
  */
 
-void sub_08038568(void)
+void EndOfGame_FinishVersusMap(void)
 {
     ResetRulesAfterCampaignMap();
 
@@ -22,3 +22,4 @@ void sub_08038568(void)
         LinkShutdown();
     }
 }
+asm(".global sub_08038568\n.thumb_set sub_08038568, EndOfGame_FinishVersusMap\n");

@@ -64,12 +64,12 @@ void sub_08085B30(struct Unk8085B30 *proc)
 
     sub_08087938();
     InitTextTileCache(0);
-    sub_08037750(6);
+    StartMapPreviewPalette(6);
 
     if (gPlaySt.gameMode == 2)
     {
         gUnknown_03005928 = 7;
-        sub_080375A4(2);
+        BuildMapListForMode(2);
         sub_08086A58(gUnknown_03005900, gUnknown_03005928, 0);
         BuildMapSelectPreviewNow(gUnknown_03005900 + gUnknown_03005930);
     }

@@ -7,8 +7,9 @@
  * sub_08044560 @ 0x08044560
  */
 
-void sub_08044560(void)
+void CopActivatePowerOfMoney(void)
 {
     gPlayers[gUnknown_030033EC].tempFirepower = Div(gPlayers[gUnknown_030033EC].funds, 300);
     gPlayers[gUnknown_030033EC].tempDefense = 10;
 }
+asm(".global sub_08044560\n.thumb_set sub_08044560, CopActivatePowerOfMoney\n");

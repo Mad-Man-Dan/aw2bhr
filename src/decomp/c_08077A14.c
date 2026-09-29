@@ -56,7 +56,7 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
                  (void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)),
                  0x200);
     ApplyPaletteExt(gUnknown_080A1138, 0x80, 0x40);
-    sub_08037750(4);
+    StartMapPreviewPalette(4);
 
     for (i = 0; i < 4; i++)
         gPlayers[i + 1].teamColor = gUnknown_085C77A0[proc->unk34].unk40[i];
@@ -64,7 +64,7 @@ void sub_08077A14(struct Unk8077A14Proc * proc)
     sub_0803D6D0();
     sub_0801B6EC((void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)));
     sub_0801B6FC((void *)(0x06001000 + (gUnknown_03002B6C.bits.chr_block << 14)));
-    sub_08037A20(gUnknown_08551A04 + 0x100, 0x4080);
+    FillMapPreviewTilemap(gUnknown_08551A04 + 0x100, 0x4080);
 
     proc->unk4c = ((u8 *)gUnknown_03003F68)[0];
     proc->unk4e = ((u8 *)gUnknown_03003F68)[1];

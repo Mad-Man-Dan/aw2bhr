@@ -11,7 +11,7 @@
 /* FIVE parameters, the fifth on the stack and the Proc_StartBlocking parent.
  * unk4a packs the last two as `hi << 12 | lo`, the same OAM-shaped
  * `tile | pal << 12` halfword struct Unk0801C210's +0x22 carries -- and
- * sub_08040590 next door copies this very field into that slot. */
+ * SiloMissileFall_Init next door copies this very field into that slot. */
 struct Unk4046CProc
 {
     /* 00 */ u8 filler_00[0x2c];
@@ -35,13 +35,14 @@ struct Unk4046CProc
  * The tile index really is a mask plus a shift, and the two are distinguishable
  * here: `ands` against a pool-loaded 0x3FF is an instruction of its own, where
  * the truncation form emits nothing. */
-void sub_08040430(int tile, int pal)
+void LoadSiloMissileGraphics(int tile, int pal)
 {
     Decompress(gUnknown_08111000, (void *)(0x06010000 + (tile & 0x3FF) * 0x20));
     ApplyPaletteExt(gUnknown_08111D74, (u16)((pal + 0x10) * 0x20), 0x20);
 }
+asm(".global sub_08040430\n.thumb_set sub_08040430, LoadSiloMissileGraphics\n");
 
-void sub_0804046C(int a, int b, int c, int d, ProcPtr parent)
+void StartSiloMissileLaunch(int a, int b, int c, int d, ProcPtr parent)
 {
     struct Unk4046CProc *proc = Proc_StartBlocking(gUnknown_0849FB8C, parent);
 
@@ -49,3 +50,4 @@ void sub_0804046C(int a, int b, int c, int d, ProcPtr parent)
     proc->unk30 = b;
     proc->unk4a = (d << 12) | c;
 }
+asm(".global sub_0804046C\n.thumb_set sub_0804046C, StartSiloMissileLaunch\n");

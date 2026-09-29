@@ -14,13 +14,14 @@
  */
 
 
-/* Stop half of sub_08037F58's `sub_080152C0(gUnknown_0849D55C, 0)`. Note
+/* Stop half of StartBg3AutoScroll's `sub_080152C0(gUnknown_0849D55C, 0)`. Note
  * gUnknown_0849D55C sits immediately before gUnknown_0849D56C, which IS a proc
  * script -- the two kinds are interleaved in ROM, so address adjacency is not
  * evidence of kind. The consumer is.
  */
 
-void sub_08037F70(void)
+void EndBg3AutoScroll(void)
 {
     sub_0801537C(gUnknown_0849D55C);
 }
+asm(".global sub_08037F70\n.thumb_set sub_08037F70, EndBg3AutoScroll\n");

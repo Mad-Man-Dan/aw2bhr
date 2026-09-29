@@ -79,7 +79,7 @@ void PickBestInventionTarget(int a1, int a2, int a3, int a4, int a5)
             {
                 if ((u->flags & 0x20) != 0)
                     continue;
-                if (!sub_080257C0(gMap->unit[MAP->rowOffset[j] + i]))
+                if (!IsUnitVisibleToCurrentTeam(gMap->unit[MAP->rowOffset[j] + i]))
                     continue;
             }
             score = u->hp * (u16)(gUnknown_085D5ABC[u->type].cost / 10);

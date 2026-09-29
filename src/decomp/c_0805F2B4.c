@@ -8,11 +8,11 @@
  * AiProtectHq @ 0x0805F2B4
  */
 
-/* sub_0805F0EC's twin: same double scan over the map, same 4-byte (u16, u16)
+/* AiMoveToHighInfluence's twin: same double scan over the map, same 4-byte (u16, u16)
  * buffer seeded with the 0x270F sentinel and handed to AiAdvanceToward, but the
  * ranking key is the +0x2D5A plane rather than the gUnknown_0202DAD8 influence
  * record, and it is gated on IsPlayerAliveAndActive plus two SetWorkingMapPlane plane rebuilds.
- * Read work/sub_0805F0EC/sub_0805F0EC.c first -- every lever is documented
+ * Read work/AiMoveToHighInfluence/AiMoveToHighInfluence.c first -- every lever is documented
  * there and all of them transferred.
  *
  * WAVE 66 PARK: 96.6%, size exact (536), 18 bytes different. One uninterrupted
@@ -82,7 +82,7 @@ void AiProtectHq(void)
 
     if (!IsPlayerAliveAndActive(gUnknown_030033EC))
     {
-        sub_0805F7B8();
+        AiFallbackMove();
         return;
     }
 
@@ -138,9 +138,9 @@ void AiProtectHq(void)
     p = (u16 *)&v;
 
     if (p[0] == 0x270F)
-        sub_0805F7B8();
+        AiFallbackMove();
     AiAdvanceToward(p);
-    sub_0805F7B8();
+    AiFallbackMove();
 }
 
 asm(".global sub_0805F2B4\n.thumb_set sub_0805F2B4, AiProtectHq\n");

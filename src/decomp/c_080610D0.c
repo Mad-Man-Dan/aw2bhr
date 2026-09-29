@@ -7,7 +7,7 @@
  * sub_080610D0 @ 0x080610D0
  */
 
-/* sub_080610D0 @ 0x080610D0, 168 bytes.
+/* AiCommitBuild @ 0x080610D0, 168 bytes.
  *
  * The ONLY difference between this and the obvious spelling is where the
  * constant 0 shared by the two `strb`s is materialised, and it is worth one
@@ -25,11 +25,11 @@
  *
  * The `do { } while (0)` around the PickWeightedAiUnit store is what does move it
  * (found by decomp-permuter): it ends the basic block before the
- * sub_080611D8 call, so the constant cannot be hoisted above it. It is
+ * AiPickBuildCell call, so the constant cannot be hoisted above it. It is
  * standing in for whatever the original had there -- a macro, most likely --
  * and it is byte-neutral apart from that one effect.
  */
-void sub_080610D0(void)
+void AiCommitBuild(void)
 {
     struct Unk802C57C pos;
     struct Unit *unit;
@@ -43,7 +43,7 @@ void sub_080610D0(void)
             gUnknown_030046C0.unk07 = PickWeightedAiUnit(gUnknown_030046C0.unk06 - 1);
         } while (0);
 
-        if (sub_080611D8(&pos))
+        if (AiPickBuildCell(&pos))
         {
             unit = BuyUnit(pos.unk00, pos.unk02, gUnknown_030046C0.unk06);
             unit->unk09 = 0;
@@ -56,3 +56,4 @@ void sub_080610D0(void)
         }
     }
 }
+asm(".global sub_080610D0\n.thumb_set sub_080610D0, AiCommitBuild\n");

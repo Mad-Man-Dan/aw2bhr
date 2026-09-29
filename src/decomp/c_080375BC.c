@@ -16,8 +16,9 @@
  * would be byte-identical only if `g` had a parameter, and none of the 19
  * second callees does -- see the F005 block in unknown-functions.h. */
 
-void sub_080375BC(void)
+void MapPreviewScript_Init(void)
 {
     ClearBg1Tilemap();
     BG_EnableSyncBG1();
 }
+asm(".global sub_080375BC\n.thumb_set sub_080375BC, MapPreviewScript_Init\n");

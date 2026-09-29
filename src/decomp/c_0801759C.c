@@ -46,9 +46,9 @@ void RebuildTerrainPlaneFromTiles(void)
         }
     }
 
-    sub_080215B8();
+    RecountPropertiesIncomeAndAiFacilities();
     sub_08023348();
-    sub_08024268();
+    RebuildMapUnitLayers2();
     ApplyArmyWindowFramePalette(gUnknown_030033EC);
 }
 asm(".global sub_0801759C\n.thumb_set sub_0801759C, RebuildTerrainPlaneFromTiles\n");

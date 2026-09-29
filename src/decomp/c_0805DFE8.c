@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0805DFE8(void)
+void AiDeliberateIndirectRoleMove(void)
 {
     AiRunRoleMove();
 }
+asm(".global sub_0805DFE8\n.thumb_set sub_0805DFE8, AiDeliberateIndirectRoleMove\n");

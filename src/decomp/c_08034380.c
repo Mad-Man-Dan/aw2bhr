@@ -10,7 +10,7 @@
 /* The `subs #1` happens in u8 width (`lsls #24; lsrs #24` after it), so the
  * temporary is a u8 and not an int; an int temp would compare against a
  * sign-extended value and lose the truncation pair. */
-int sub_08034380(u8 *p)
+int IsLinkCommandIdValid(u8 *p)
 {
     u8 v = *p - 1;
 
@@ -19,3 +19,4 @@ int sub_08034380(u8 *p)
 
     return 1;
 }
+asm(".global sub_08034380\n.thumb_set sub_08034380, IsLinkCommandIdValid\n");

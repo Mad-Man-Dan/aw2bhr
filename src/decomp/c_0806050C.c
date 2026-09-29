@@ -7,7 +7,7 @@
  * sub_0806050C @ 0x0806050C
  */
 
-void sub_0806050C(void)
+void AiExecutorFinishAfterDrop(void)
 {
     int v = gUnknown_030040E4;
 
@@ -22,3 +22,4 @@ void sub_0806050C(void)
         gUnknown_030045D4 = v;
     }
 }
+asm(".global sub_0806050C\n.thumb_set sub_0806050C, AiExecutorFinishAfterDrop\n");

@@ -19,7 +19,7 @@
  * and every narrowing comes from the declared prototype, not from a cast here:
  * `lsls/lsrs #0x18` for IsPlayerAliveAndActive's u8, ONE `lsls/lsrs #0x10` pair CSEd
  * across all three u16 predicates (r4), and a bare `adds r0,r5,#0` for
- * sub_080289BC's int. Flattening them to one width loses the r4 reuse.
+ * CheckArmySurvivesHumanNoUnitsRule's int. Flattening them to one width loses the r4 reuse.
  *
  * Pass 2's `buf[i] = 0` reuses the register the `!buf[j]` test just loaded
  * (`strb r0,[r7]` where r0 is the zero from `ldrb r0,[sp+j]`) -- ordinary CSE
@@ -46,8 +46,8 @@ u8 IsOnlyOneTeamLeft(void)
     {
         buf[i] = 0;
 
-        if (IsPlayerAliveAndActive(i) && sub_08028904(i) && sub_080289BC(i)
-         && sub_08028990(i) && sub_08028944(i))
+        if (IsPlayerAliveAndActive(i) && CheckArmySurvivesTeamRule(i) && CheckArmySurvivesHumanNoUnitsRule(i)
+         && CheckArmySurvivesNoUnitsRule(i) && CheckArmySurvivesHqRule(i))
             buf[i] = 1;
     }
 

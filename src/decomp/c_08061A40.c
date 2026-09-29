@@ -35,7 +35,7 @@
  * shape no compiler block-move path produces is itself the evidence that the
  * source spelled the moves out. */
 
-void sub_08061A40(struct Unk085771C4 *dstArg, const struct Unk085771C4 *srcArg)
+void CopyAiPersonality(struct Unk085771C4 *dstArg, const struct Unk085771C4 *srcArg)
 {
     u8 *d = (u8 *)dstArg;
     const u8 *s = (const u8 *)srcArg;
@@ -80,3 +80,4 @@ void sub_08061A40(struct Unk085771C4 *dstArg, const struct Unk085771C4 *srcArg)
         ss += 12;
     }
 }
+asm(".global sub_08061A40\n.thumb_set sub_08061A40, CopyAiPersonality\n");

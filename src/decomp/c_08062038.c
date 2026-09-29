@@ -7,7 +7,7 @@
  * sub_08062038 @ 0x08062038
  */
 
-void sub_08062038(void)
+void AiBuildInterestLists(void)
 {
     u16 saved;
     u16 *p;
@@ -23,8 +23,9 @@ void sub_08062038(void)
             gUnknown_030033EC = i;
             *p = i;
             if (IsPlayerAliveAndActive(i))
-                sub_0806209C();
+                AiBuildInterestListsForArmy();
         }
         gUnknown_03004480 = gUnknown_030033EC = saved;
     }
 }
+asm(".global sub_08062038\n.thumb_set sub_08062038, AiBuildInterestLists\n");

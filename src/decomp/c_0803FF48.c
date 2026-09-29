@@ -23,7 +23,7 @@ struct Unk3FF48Proc
  * through ExplosionEffect_EndIfStale (which ends the ones whose stashed counter is stale),
  * then starts a fresh blocking instance and stamps the same counter into it.
  * a1 and a2 have to survive both calls, which is what costs the r8/sb pair. */
-void sub_0803FF48(int a1, int a2, int a3, ProcPtr parent)
+void StartExplosionEffect(int a1, int a2, int a3, ProcPtr parent)
 {
     struct Unk3FF48Proc *proc;
 
@@ -35,3 +35,4 @@ void sub_0803FF48(int a1, int a2, int a3, ProcPtr parent)
     proc->unk30 = a2;
     proc->unk54 = a3;
 }
+asm(".global sub_0803FF48\n.thumb_set sub_0803FF48, StartExplosionEffect\n");

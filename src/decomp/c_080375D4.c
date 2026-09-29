@@ -11,7 +11,7 @@
  * the frame counter struct Unk03001470 already documents; the `ldrh` before
  * the increment is the POST-increment's saved value, and `& 0x3f` makes the
  * cycle 64 frames long. Three of the 64 phases do something. */
-void sub_080375D4(struct Unk03001470 *p)
+void MapPreviewPictureScript_Loop(struct Unk03001470 *p)
 {
     switch (p->unk1e++ & 0x3f)
     {
@@ -26,3 +26,4 @@ void sub_080375D4(struct Unk03001470 *p)
         break;
     }
 }
+asm(".global sub_080375D4\n.thumb_set sub_080375D4, MapPreviewPictureScript_Loop\n");

@@ -16,11 +16,11 @@
  * constant to the base first, then the index -- and costs far more than the
  * tail below. `gMap` is named directly at every use rather than bound to a
  * local: the ROM keeps only its ADDRESS in sl and re-loads the pointer each
- * time. The two `SetWorkingMapPlane`/`sub_080581A4` setup calls must also pass
+ * time. The two `SetWorkingMapPlane`/`FillMapPlane` setup calls must also pass
  * `gMap->move` / `gMap->unk376A` (the plane's own array member, decays to
  * `u8 *`), not `gUnknown_08499590 + offset` or a cast -- agbcc's CSE only
  * reuses a pointer load across identical symbols, and mixing in the raw name
- * anywhere forces a second pool load (see sub_08057D90 for the fuller
+ * anywhere forces a second pool load (see AiPickSafestReachableCell for the fuller
  * writeup of this).
  *
  * gUnits is a REAL declared global, not a pool word, and so is
@@ -55,7 +55,7 @@
 
 #define MAP gMap
 
-void sub_08061B4C(void)
+void AiBuildCapturablePropertyProximityPlane(void)
 {
     int i;
     struct Unit *u;
@@ -64,7 +64,7 @@ void sub_08061B4C(void)
     u8 c;
 
     SetWorkingMapPlane(gMap->move);
-    sub_080581A4(gMap->unk376A, 0);
+    FillMapPlane(gMap->unk376A, 0);
 
     for (i = 0; gUnknown_084995A0[i].unk00 != 0xFF; i++)
     {
@@ -96,3 +96,4 @@ void sub_08061B4C(void)
         }
     }
 }
+asm(".global sub_08061B4C\n.thumb_set sub_08061B4C, AiBuildCapturablePropertyProximityPlane\n");

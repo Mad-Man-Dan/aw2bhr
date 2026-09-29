@@ -35,21 +35,21 @@ asm(".global sub_080397BC\n.thumb_set sub_080397BC, CoPowerSequence_Activate\n")
 
 /* No `adds rN, r0, #0` here, unlike its two neighbours: the base stays in r0
  * to the end, so this call really does take one argument. The
- * `lsls #0x18; lsrs #0x18` is sub_08043DAC's declared u8 parameter narrowing
+ * `lsls #0x18; lsrs #0x18` is PlayArmyCoMusic's declared u8 parameter narrowing
  * the int field. */
 
 void CoPowerSequence_PlayMusic(struct Unk397CCProc *proc)
 {
-    sub_08043DAC(proc->unk54);
+    PlayArmyCoMusic(proc->unk54);
 }
 asm(".global sub_080397CC\n.thumb_set sub_080397CC, CoPowerSequence_PlayMusic\n");
 
 /* Two statements, not a nest: r0 is overwritten by the pool `ldr` between the
- * calls, so nothing survives from sub_08022A34. */
+ * calls, so nothing survives from LoadCursorSpriteGraphics. */
 
 void sub_080397DC(void)
 {
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     LoadBg1WindowFrame(gUnknown_030033EC);
 }
 

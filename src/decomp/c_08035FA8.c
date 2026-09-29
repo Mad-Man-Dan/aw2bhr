@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* Third reader of the gUnknown_0849CD88 row keyed by the proc's unk36, after
- * sub_08035F68 and sub_08035E90. Dispatches on the row's unk1e sentinel:
+ * StartMoveSlideMoveSound and PlayMoveSlideMoveSfx. Dispatches on the row's unk1e sentinel:
  * 0 and 0x8000 do nothing, 0x4000 installs the row's unk20 pointer into the
  * gUnknown_0849BDE8 entry's unk18, and anything else is a help id.
  *
@@ -33,7 +33,7 @@ struct Unk35FA8Proc
     /* 0x36 */ u8 unk36;
 };
 
-void sub_08035FA8(ProcPtr procArg)
+void PlayMoveSlideStopSfxNoStep(ProcPtr procArg)
 {
     struct Unk35FA8Proc *proc = procArg;
 
@@ -53,3 +53,4 @@ void sub_08035FA8(ProcPtr procArg)
         break;
     }
 }
+asm(".global sub_08035FA8\n.thumb_set sub_08035FA8, PlayMoveSlideStopSfxNoStep\n");

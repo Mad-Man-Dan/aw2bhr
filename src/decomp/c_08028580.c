@@ -88,7 +88,7 @@ struct Unk28580
     /* 0x0068 */ u16 unk68;
 };
 
-void sub_08028580(struct Unk28580 *p)
+void ArmyDefeat_Init(struct Unk28580 *p)
 {
     u16 i;
     int team;
@@ -155,8 +155,9 @@ void sub_08028580(struct Unk28580 *p)
         }
     }
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     RecountArmyProperties();
     RecountArmyIncome();
     p->unk68 = 1;
 }
+asm(".global sub_08028580\n.thumb_set sub_08028580, ArmyDefeat_Init\n");

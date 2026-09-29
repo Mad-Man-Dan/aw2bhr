@@ -22,7 +22,7 @@
  * pseudo to the register the ROM gives it settles the tie that global_alloc
  * was resolving the other way; nothing else in the function changed. See the
  * "Three levers that move a PURE REGISTER-ALLOCATION residual" chapter of
- * docs/agbcc-codegen.md -- the same lever closed sub_08028EF0 and
+ * docs/agbcc-codegen.md -- the same lever closed CameraScroll_Init and
  * sub_0807EEEC in the same batch. */
 #include "global.h"
 #include "proc.h"

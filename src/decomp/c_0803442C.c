@@ -63,7 +63,7 @@ asm(".global sub_0803442C\n.thumb_set sub_0803442C, UnpackPathNibbles\n");
  * u16 cursor pairs are truncated into bytes 2..5 and the six-byte nibble-packed
  * copy PackPathNibbles does lands at +0x0c. gUnknown_030040DC is the guard and the
  * done-flag both. */
-void sub_0803446C(void)
+void SnapshotActionCommandContext(void)
 {
     if (gUnknown_030040DC != 1)
     {
@@ -75,12 +75,13 @@ void sub_0803446C(void)
         gUnknown_030040DC = 1;
     }
 }
+asm(".global sub_0803446C\n.thumb_set sub_0803446C, SnapshotActionCommandContext\n");
 
 /* The sibling of SendActionCommand: same command block, command id hard-coded to 8.
  * `unit` is bound before the block is filled -- the ROM computes
  * &gUnits[a] into r5 first and keeps it live across the four stores,
  * which is what a local declared here gives. */
-void sub_080344B4(u8 a, int b, int c)
+void SendMoveCommand(u8 a, int b, int c)
 {
     struct Unit *unit = &gUnits[a];
 
@@ -91,3 +92,4 @@ void sub_080344B4(u8 a, int b, int c)
     gUnknown_030044B0[0x12] = unit->fuel;
     LinkQueueCommand(gUnknown_030044B0);
 }
+asm(".global sub_080344B4\n.thumb_set sub_080344B4, SendMoveCommand\n");

@@ -44,19 +44,19 @@ struct Unk08044E10Proc
 };
 /* MATCHED -- wave 45 (W45-A), 2 attempts.
  *
- * The DAMAGE twin of sub_08044E10: same 5-frame gate, same inner unit scan,
+ * The DAMAGE twin of CoPowerDamageHeal_HealLoop: same 5-frame gate, same inner unit scan,
  * same 7-bit unk04_0 bitfield store -- but subtracting unk2d * 10 with a floor
  * of 1 instead of adding unk2e * 10 with a ceiling of 100, plus a halving of
  * unk06_0 when unk30 is set. It is wrapped in an outer scan for the first army
  * 0..4 that is alive (IsPlayerAliveAndActive) and shares the current army's unk2a.
  *
- * TWO THINGS THE 0.746 MNEMONIC SIMILARITY WITH sub_08044E10 DOES NOT GIVE
+ * TWO THINGS THE 0.746 MNEMONIC SIMILARITY WITH CoPowerDamageHeal_HealLoop DOES NOT GIVE
  * YOU. Both were the attempt-1 miss; both are invisible in the shared shape.
  *
  * 1. THE INNER LOOP INDEXES gUnknown_084995FE[proc->unk2a], NOT unk2c.
- *    sub_08044E10's reads unk2c. Here the ROM reads it through `sl`, which is
+ *    CoPowerDamageHeal_HealLoop's reads unk2c. Here the ROM reads it through `sl`, which is
  *    &proc->unk2a -- the army the outer loop just selected and stored --
- *    while `sb` = &proc->unk2c is used only for sub_080452C0's third
+ *    while `sb` = &proc->unk2c is used only for StartCoPowerUnitSparkle's third
  *    argument. Two different member addresses in two high registers, and
  *    picking the wrong one is byte-identical in shape.
  *
@@ -71,7 +71,7 @@ struct Unk08044E10Proc
  *    test stays at the top, `adds r6, #0x3c` appears in the bottom block
  *    ahead of `adds r5, #1`, and the biv/giv init lands in the preheader.
  *
- *    WHY IT STAYS UN-ROTATED WHEN sub_08044E10's INNER `for` DOES ROTATE, and
+ *    WHY IT STAYS UN-ROTATED WHEN CoPowerDamageHeal_HealLoop's INNER `for` DOES ROTATE, and
  *    this is the transferable part: stmt.c's `expand_end_loop` only moves a
  *    leading conditional jump to the bottom when that jump targets the loop's
  *    own exit label. Here it targets a `Proc_Break(proc); return;` block
@@ -94,7 +94,7 @@ struct Unk08044F24Proc
     /* 0x30 */ u8 unk30;
 };
 
-void sub_08044E10(struct Unk08044E10Proc *proc)
+void CoPowerDamageHeal_HealLoop(struct Unk08044E10Proc *proc)
 {
     int i;
     struct Unit *unit;
@@ -137,7 +137,7 @@ void sub_08044E10(struct Unk08044E10Proc *proc)
             unit->hp = unit->hp + proc->unk2e * 10;
 
         RedrawUnitLayer();
-        sub_080452C0(unit->x, unit->y, proc->unk2c);
+        StartCoPowerUnitSparkle(unit->x, unit->y, proc->unk2c);
         break;
     }
 
@@ -150,8 +150,9 @@ void sub_08044E10(struct Unk08044E10Proc *proc)
         proc->unk2a = 0;
     }
 }
+asm(".global sub_08044E10\n.thumb_set sub_08044E10, CoPowerDamageHeal_HealLoop\n");
 
-void sub_08044F24(struct Unk08044F24Proc *proc)
+void CoPowerDamageHeal_DamageLoop(struct Unk08044F24Proc *proc)
 {
     int i;
     int j;
@@ -211,7 +212,7 @@ void sub_08044F24(struct Unk08044F24Proc *proc)
             unit->fuel = unit->fuel >> 1;
 
         RedrawUnitLayer();
-        sub_080452C0(unit->x, unit->y, proc->unk2c);
+        StartCoPowerUnitSparkle(unit->x, unit->y, proc->unk2c);
         break;
     }
 
@@ -223,3 +224,4 @@ void sub_08044F24(struct Unk08044F24Proc *proc)
         proc->unk2a++;
     }
 }
+asm(".global sub_08044F24\n.thumb_set sub_08044F24, CoPowerDamageHeal_DamageLoop\n");

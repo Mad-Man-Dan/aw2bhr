@@ -18,7 +18,7 @@
  * The `u16` is a LOCAL and the parameter is `int`. Both readings -- `int a`
  * with `u16 v = a`, and a bare `u16` parameter -- are byte-identical here and
  * were probed as such, so the body cannot settle it; the CALLERS can, and they
- * say `int`: all four (sub_0803B660, sub_08043DAC, sub_08043DF4, sub_08043E18)
+ * say `int`: all four (sub_0803B660, PlayArmyCoMusic, PlayCoPowerMusic, PlaySuperCoPowerMusic)
  * are still assembly, but the (s16) cast below is only reachable with a
  * non-`u16` parameter -- with `u16` the cast would fold away and the ROM's
  * `lsls #0x10; asrs #0x10` in front of the `bl` would be a zero-extending

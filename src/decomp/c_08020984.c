@@ -10,8 +10,8 @@
 
 /* Recomputes every army's gPlayers unk1c "stance" byte for the current
  * army gUnknown_030033EC: clear all five, seed the current one from the
- * gUnknown_08090944 table (upgraded to 3 when sub_08020864 agrees), propagate it
- * to every army sub_08020824 rates 2, then -- unless sub_080208C8 vetoes -- paint
+ * gUnknown_08090944 table (upgraded to 3 when HasHumanTeammate agrees), propagate it
+ * to every army GetArmyTeamRelation rates 2, then -- unless HasTwoOpposingHumanTeamsOnCpuTurn vetoes -- paint
  * the complement (v ^ 3) onto the rated-1 live armies and their own rated-2
  * neighbours (`v ^ 3` written at both uses -- the ROM's copy of it sits AFTER
  * the loop's `i = 1` init in the preheader, which is where LICM puts a hoist and
@@ -33,7 +33,7 @@ void RecomputeArmyVisionMasks(void)
         gPlayers[i].turnState = 0;
 
     v = gUnknown_08090944[gPlayers[gUnknown_030033EC].aiControlled];
-    if (v == 1 && (u8)sub_08020864(gUnknown_030033EC))
+    if (v == 1 && (u8)HasHumanTeammate(gUnknown_030033EC))
         v = 3;
     gPlayers[gUnknown_030033EC].turnState = v;
 
@@ -42,24 +42,24 @@ void RecomputeArmyVisionMasks(void)
         t = gUnknown_030033EC + i <= 4
           ? gUnknown_030033EC + i
           : gUnknown_030033EC + i - 4;
-        if ((u16)sub_08020824(gUnknown_030033EC, t) == 2)
+        if ((u16)GetArmyTeamRelation(gUnknown_030033EC, t) == 2)
             gPlayers[t].turnState = v;
     }
 
-    if (!(u8)sub_080208C8(gUnknown_030033EC))
+    if (!(u8)HasTwoOpposingHumanTeamsOnCpuTurn(gUnknown_030033EC))
     {
         for (i = 1; i <= 3; i++)
         {
             t = gUnknown_030033EC + i <= 4
               ? gUnknown_030033EC + i
               : gUnknown_030033EC + i - 4;
-            if ((u16)sub_08020824(gUnknown_030033EC, t) == 1
+            if ((u16)GetArmyTeamRelation(gUnknown_030033EC, t) == 1
              && gPlayers[t].aiControlled == 1)
             {
                 gPlayers[t].turnState = v ^ 3;
                 for (j = 1; j <= 3; j++)
                 {
-                    if ((u16)sub_08020824(t, t + j <= 4 ? t + j : t + j - 4) == 2)
+                    if ((u16)GetArmyTeamRelation(t, t + j <= 4 ? t + j : t + j - 4) == 2)
                         gPlayers[t + j <= 4 ? t + j : t + j - 4].turnState = v ^ 3;
                 }
             }
@@ -96,7 +96,7 @@ asm(".global sub_08020984\n.thumb_set sub_08020984, RecomputeArmyVisionMasks\n")
  * instruction and negates the sign-extended copy instead.
  *
  * The map reads go straight through gMap->rowOffset[] and gMap->unit[]. */
-void sub_08020B88(s16 x, s16 y, s16 r, s16 v)
+void MarkAttackableCellsInRange(s16 x, s16 y, s16 r, s16 v)
 {
     s16 xx;
     s16 yy;
@@ -134,7 +134,7 @@ void sub_08020B88(s16 x, s16 y, s16 r, s16 v)
 
             if (n)
             {
-                sub_080251BC(gUnknown_03003F38, 0, &gUnknown_03003100.pos);
+                CalcAttackOutcome(gUnknown_03003F38, 0, &gUnknown_03003100.pos);
                 if (gBattleAttacker->attackType != 0)
                     gUnknown_03003340[yy][xx] = v;
             }
@@ -145,10 +145,11 @@ void sub_08020B88(s16 x, s16 y, s16 r, s16 v)
                     continue;
                 if (AreUnitsOnSameTeam(gUnknown_03003F38, t) == 1)
                     continue;
-                sub_080251BC(gUnknown_03003F38, t, &gUnknown_03003100.pos);
+                CalcAttackOutcome(gUnknown_03003F38, t, &gUnknown_03003100.pos);
                 if (gBattleAttacker->attackType != 0)
                     gUnknown_03003340[yy][xx] = v;
             }
         }
     }
 }
+asm(".global sub_08020B88\n.thumb_set sub_08020B88, MarkAttackableCellsInRange\n");

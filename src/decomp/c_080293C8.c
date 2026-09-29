@@ -24,15 +24,15 @@
  * draft referenced any filler. Keep the drafts in sync; sync_work.py
  * reintroduces whatever the drafts say. */
 
-void sub_080293C8(ProcPtr proc)
+void TargetPickCursor_Loop(ProcPtr proc)
 {
     HandleMoveMapCursor();
-    sub_080236E8();
+    HandleMoveMapCursorInMoveRange();
     HandleMoveCameraWithMapCursor(4);
 
     if (sub_08029490(proc))
     {
-        sub_08023274(2);
+        StepMapCursorAndDraw(2);
 
         if (gpKeySt->pressed & 1)
         {
@@ -46,7 +46,7 @@ void sub_080293C8(ProcPtr proc)
     }
     else
     {
-        sub_08023274(1);
+        StepMapCursorAndDraw(1);
     }
 
     if (gpKeySt->pressed & 2)
@@ -58,6 +58,7 @@ void sub_080293C8(ProcPtr proc)
         sub_08028EE4();
     }
 }
+asm(".global sub_080293C8\n.thumb_set sub_080293C8, TargetPickCursor_Loop\n");
 
 bool8 sub_08029490(ProcPtr proc)
 {

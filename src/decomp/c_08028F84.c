@@ -20,7 +20,7 @@ struct Unk28F84Proc
     /* 0x2c */ u16 unk2c;
 };
 
-void sub_08028F84(struct Unk28F84Proc *proc)
+void CameraScroll_Loop(struct Unk28F84Proc *proc)
 {
     int x;
     int y;
@@ -67,5 +67,6 @@ void sub_08028F84(struct Unk28F84Proc *proc)
         proc->unk2a--;
     }
 
-    sub_08023860();
+    UpdateMapBgScroll();
 }
+asm(".global sub_08028F84\n.thumb_set sub_08028F84, CameraScroll_Loop\n");

@@ -9,7 +9,8 @@
 
 #include "proc.h"
 
-void sub_080443C4(ProcPtr parent)
+void StartCoPowerWhiteFlash(ProcPtr parent)
 {
     Proc_StartBlocking(gUnknown_084A07E8, parent);
 }
+asm(".global sub_080443C4\n.thumb_set sub_080443C4, StartCoPowerWhiteFlash\n");

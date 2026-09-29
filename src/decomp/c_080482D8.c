@@ -25,7 +25,7 @@
  *  - `p->unk20` needs its own `adds rN, #0x20` because 0x20 is outside the
  *    `ldrb rd,[rn,#imm5]` range. That is NOT an address bind and there is
  *    nothing to spell for it.
- *  - `sub_0802323C(0x1e, (p->unk1f - p->unk20) * 16 + 0x36, 3)`. The
+ *  - `EaseMapCursorAndDraw(0x1e, (p->unk1f - p->unk20) * 16 + 0x36, 3)`. The
  *    `lsls #0x14 / +0xd8<<0xe / asrs #0x10` triple is the s16 conversion of
  *    `x * 16 + 0x36` done in the high half -- read it as one (s16) cast, not as
  *    a shift and a mask.
@@ -81,7 +81,7 @@ void UnitList_DrawFrame(struct Unk0804769C *p)
     if (p->unk21 != 0)
     {
         UnitList_HandleInput((struct Unk08047B98 *)p);
-        sub_0802323C(0x1e, (p->unk1f - p->unk20) * 16 + 0x36, 3);
+        EaseMapCursorAndDraw(0x1e, (p->unk1f - p->unk20) * 16 + 0x36, 3);
     }
 
     UnitList_DrawSprites((struct Unk08047B98 *)p);

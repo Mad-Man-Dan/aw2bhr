@@ -14,5 +14,5 @@ void sub_08085168(s16 *p)
     DrawOamObject(gPlayers[p[0x33]].teamColor + 0x3D, 8, 0x28, 0, 1);
 
     if (IsPlayerAliveAndActive(p[0x33]) != 0)
-        sub_080436DC(0x98, 0x70, p[0x33]);
+        DrawArmyCoPanel(0x98, 0x70, p[0x33]);
 }

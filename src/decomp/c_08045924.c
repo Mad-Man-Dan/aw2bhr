@@ -14,8 +14,8 @@
  *
  * gUnknown_084995FE is declared `const s16 []` but is really u16 -- the ROM
  * reads it with a bare `ldrh`, so the source has the `(u16)` cast; without it
- * agbcc emits `movs r1,#0; ldrsh`.  Same finding as work/sub_08045090 and
- * work/sub_080287D0.
+ * agbcc emits `movs r1,#0; ldrsh`.  Same finding as work/CoPowerDamageHeal_DamageLoopSimple and
+ * work/ArmyDefeat_Loop.
  *
  * The bound is NAMED TWICE (init and test) and CSEs to one `ldrh` chain; with no
  * call in the body everything is loop-invariant, so check_dbra_loop reverses the

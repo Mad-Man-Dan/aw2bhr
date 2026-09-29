@@ -11,7 +11,8 @@
  * caller either of this pair has ever had -- takes the result with a bare
  * `adds r4, r0, #0` and no re-narrowing, and agbcc re-narrows a u8-returning
  * callee at every call site. Byte-identical here either way. */
-int sub_08025CF0(int index)
+int GetPlayerUnitsCreated(int index)
 {
     return gPlayers[index].unitCount;
 }
+asm(".global sub_08025CF0\n.thumb_set sub_08025CF0, GetPlayerUnitsCreated\n");

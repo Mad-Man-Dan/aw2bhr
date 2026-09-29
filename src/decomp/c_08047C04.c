@@ -138,7 +138,7 @@ void UnitList_Init(struct Unk08047C04 * a)
     DrawUnitListRows(a);
     BG_EnableSyncBG0();
     BG_EnableSyncBG2();
-    sub_08022A34();
-    sub_08022AD0(0x1E, (a->unk1f - a->unk20) * 16 + 0x36);
+    LoadCursorSpriteGraphics();
+    SetMapCursorDisplayPosition(0x1E, (a->unk1f - a->unk20) * 16 + 0x36);
 }
 asm(".global sub_08047C04\n.thumb_set sub_08047C04, UnitList_Init\n");

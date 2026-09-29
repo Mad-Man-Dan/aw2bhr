@@ -16,7 +16,7 @@
  * Stages the slot's 0x180-byte tile blob into gUnknown_02017C50 and rewrites
  * it into the caller's buffer, forcing every zero 4bpp nibble to a non-zero
  * palette index (1 per nibble position) so nothing in the portrait is
- * transparent.  a3 is either a palette slot (<= 14, handed to sub_08043AA0)
+ * transparent.  a3 is either a palette slot (<= 14, handed to LoadCoPalette)
  * or a raw CpuFastSet destination.
  *
  * Two spellings were the whole cost, and both refute a rule in the wave brief:
@@ -41,7 +41,7 @@
  *    That was the last 4 bytes, and ~19,400 permuter iterations did not find
  *    it.
  */
-void sub_08043E8C(int a1, u16 *a2, int a3)
+void LoadCoMiniPortraitOpaque(int a1, u16 *a2, int a3)
 {
     u16 *src;
     int j;
@@ -76,7 +76,8 @@ void sub_08043E8C(int a1, u16 *a2, int a3)
         }
     }
     if (a3 <= 14)
-        sub_08043AA0(a1, a3);
+        LoadCoPalette(a1, a3);
     else
         CpuFastSet(gUnknown_084A0090[a1 % 24].palette + GetLoadedCoPalette(a1 % 24) * 16, (void *)a3, 8);
 }
+asm(".global sub_08043E8C\n.thumb_set sub_08043E8C, LoadCoMiniPortraitOpaque\n");

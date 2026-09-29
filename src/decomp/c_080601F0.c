@@ -27,7 +27,7 @@
  * The column is assigned inside the offset expression -- see c_08060264.c for
  * why that spelling and not a statement of its own. Row/tile arithmetic is
  * c_08001158.c's idiom with the plane at +0x234A. */
-void sub_080601F0(void)
+void AiExecutorCheckTargetUnitVisible(void)
 {
     struct Map *map;
     int i;
@@ -49,6 +49,7 @@ void sub_080601F0(void)
     else
         gUnknown_030045D4 = 3;
 }
+asm(".global sub_080601F0\n.thumb_set sub_080601F0, AiExecutorCheckTargetUnitVisible\n");
 
 /* One arm of the 0x08060 cursor state machine: if the cursor's own cell
  * (gUnknown_030046C0.unk06/.unk07) is occupied on the gMap->unk234A plane, hand it to
@@ -61,7 +62,7 @@ void sub_080601F0(void)
  * sets r0 first. The embedded assignment is the only spelling that gets both.
  *
  * The cell is gMap->unk234A[gMap->rowOffset[y] + x]. */
-void sub_08060264(void)
+void AiExecutorCheckTargetCellVisible(void)
 {
     struct Map *map;
     int x;
@@ -81,13 +82,14 @@ void sub_08060264(void)
     else
         gUnknown_030045D4 = 4;
 }
+asm(".global sub_08060264\n.thumb_set sub_08060264, AiExecutorCheckTargetCellVisible\n");
 
-/* sub_08060264's twin, states 9 and 5. The ONLY structural difference is that
+/* AiExecutorCheckTargetCellVisible's twin, states 9 and 5. The ONLY structural difference is that
  * both cursor bytes are read before gUnknown_08499590 -- `ldrb r3, [r0, #6];
  * ldrb r4, [r0, #7]` off one pool word, ahead of the map pointer -- so the
  * column is bound first here and last there. Two functions of the same shape
  * that are not the same spelling; see c_08060264.c. */
-void sub_080602C4(void)
+void AiExecutorCheckMissileTargetVisible(void)
 {
     struct Map *map;
     int x;
@@ -108,8 +110,9 @@ void sub_080602C4(void)
     else
         gUnknown_030045D4 = 5;
 }
+asm(".global sub_080602C4\n.thumb_set sub_080602C4, AiExecutorCheckMissileTargetVisible\n");
 
-/* sub_08060384's variant that parks gUnknown_030033E4 on the CURRENT UNIT's
+/* AiExecutorDwellOnTargetCell's variant that parks gUnknown_030033E4 on the CURRENT UNIT's
  * cell instead of the cursor's: gUnknown_030046C0.unk06 indexes
  * gUnits and unk02/unk03 are the unit's own column and row.
  *
@@ -118,7 +121,7 @@ void sub_080602C4(void)
  * into gUnknown_030033E4 may alias the pointer global gUnits, so
  * agbcc rebuilds the whole subscript for the second member and the function
  * comes out 12 bytes long. c_080601F0.c has no store between its two reads. */
-void sub_08060324(void)
+void AiExecutorDwellOnTargetUnit(void)
 {
     struct Unit *u;
 
@@ -127,16 +130,17 @@ void sub_08060324(void)
     gUnknown_030033E4.unk00 = u->x;
     gUnknown_030033E4.unk02 = u->y;
 
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
 
     gUnknown_030046D4++;
 
     if (gUnknown_030046D4 > 0x1e || (gpKeySt->held & 1))
         gUnknown_030045D4 = 3;
 }
+asm(".global sub_08060324\n.thumb_set sub_08060324, AiExecutorDwellOnTargetUnit\n");
 
 /* A wait state of the 0x08060 cursor machine: it parks gUnknown_030033E4 on the
- * cursor's own cell, kicks sub_08023274, and leaves for state 4 after thirty
+ * cursor's own cell, kicks StepMapCursorAndDraw, and leaves for state 4 after thirty
  * frames or on the A button, whichever comes first.
  *
  * gUnknown_030046D4 is VOLATILE and this function is what measures it: the ROM
@@ -147,31 +151,33 @@ void sub_08060324(void)
  *
  * gUnknown_030033E4 is a `struct Unk802C57C` pair, so both halves come off one
  * pool word; the two sources are u8 members widened by the `strh`. */
-void sub_08060384(void)
+void AiExecutorDwellOnTargetCell(void)
 {
     gUnknown_030033E4.unk00 = gUnknown_030046C0.unk06;
     gUnknown_030033E4.unk02 = gUnknown_030046C0.unk07;
 
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
 
     gUnknown_030046D4++;
 
     if (gUnknown_030046D4 > 0x1e || (gpKeySt->held & 1))
         gUnknown_030045D4 = 4;
 }
+asm(".global sub_08060384\n.thumb_set sub_08060384, AiExecutorDwellOnTargetCell\n");
 
-/* sub_08060384's twin, byte-for-byte except the state it leaves for (5 rather
+/* AiExecutorDwellOnTargetCell's twin, byte-for-byte except the state it leaves for (5 rather
  * than 4). See src/decomp/c_08060384.c for the gUnknown_030046D4 volatile and
  * signedness readings. */
-void sub_080603D4(void)
+void AiExecutorDwellOnMissileTarget(void)
 {
     gUnknown_030033E4.unk00 = gUnknown_030046C0.unk06;
     gUnknown_030033E4.unk02 = gUnknown_030046C0.unk07;
 
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
 
     gUnknown_030046D4++;
 
     if (gUnknown_030046D4 > 0x1e || (gpKeySt->held & 1))
         gUnknown_030045D4 = 5;
 }
+asm(".global sub_080603D4\n.thumb_set sub_080603D4, AiExecutorDwellOnMissileTarget\n");

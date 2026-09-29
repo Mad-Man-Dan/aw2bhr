@@ -10,7 +10,7 @@
 
 void sub_0803A8F0(struct Unit *a)
 {
-    sub_08024268();
+    RebuildMapUnitLayers2();
     gUnknown_03001418 = 0;
     gUnknown_03001FF8 = 0;
     sub_080152EC(gUnknown_0849E2C8, 0);

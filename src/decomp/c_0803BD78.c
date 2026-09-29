@@ -31,7 +31,7 @@ void sub_0803BD78(void)
         gPlaySt.animOpts = 1;
 }
 
-/* Re-arm gPlaySt across a sub_08034848 reset, carrying unk0c over it
+/* Re-arm gPlaySt across a InitVersusPlayState reset, carrying unk0c over it
  * by hand -- the byte is read into a callee-saved register before the call and
  * written straight back after, which is the whole reason r4 is pushed.
  *
@@ -43,7 +43,7 @@ void sub_0803BDBC(void)
 {
     u8 saved = gPlaySt.bgmOn;
 
-    sub_08034848();
+    InitVersusPlayState();
     gPlaySt.bgmOn = saved;
     gPlaySt.aiControlled[1] = 0;
     gPlaySt.aiControlled[2] = 0;

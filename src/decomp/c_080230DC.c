@@ -30,7 +30,7 @@
  * difference pseudos coalesced and cross-jumping merged the compare too. Same
  * source for both halves. */
 
-void sub_080230DC(s16 a1, s16 a2, s16 a3, s16 *outX, s16 *outY)
+void EaseMapCursorDisplayToward(s16 a1, s16 a2, s16 a3, s16 *outX, s16 *outY)
 {
     u16 x;
     u16 y;
@@ -99,9 +99,10 @@ ydone:
     *outX = x;
     *outY = y;
 }
+asm(".global sub_080230DC\n.thumb_set sub_080230DC, EaseMapCursorDisplayToward\n");
 
 /* Camera step: snap straight to the target if either axis is more than 0x10
- * away, otherwise creep 4 pixels per call. Sibling of sub_080230DC, parked in
+ * away, otherwise creep 4 pixels per call. Sibling of EaseMapCursorDisplayToward, parked in
  * wave 35 at 38.7%. Three things here each cost a wave; all three are written
  * up in the wave-42 chapters of docs/agbcc-codegen.md.
  *
@@ -125,7 +126,7 @@ ydone:
  *    copy-then-conditionally-apply optimisation and presets instead of
  *    branching. Widening x to int is why the snap arm needs `(u16)a1`. */
 
-void sub_08023168(s16 a1, s16 a2, s16 a3, s16 *outX, s16 *outY)
+void StepMapCursorDisplayToward(s16 a1, s16 a2, s16 a3, s16 *outX, s16 *outY)
 {
     int x;
     int y;
@@ -241,3 +242,4 @@ store:
     *outX = x;
     *outY = y;
 }
+asm(".global sub_08023168\n.thumb_set sub_08023168, StepMapCursorDisplayToward\n");

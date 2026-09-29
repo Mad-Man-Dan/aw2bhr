@@ -7,6 +7,7 @@
  * sub_08044530 @ 0x08044530
  */
 
-void sub_08044530(void)
+void CopUnitEffectNone(void)
 {
 }
+asm(".global sub_08044530\n.thumb_set sub_08044530, CopUnitEffectNone\n");

@@ -37,7 +37,7 @@ void MapState_CheckTurnLimit(void)
     u8 i;
     u8 best;
 
-    if (gPlaySt.turnLimit == 0 || !sub_0802672C()
+    if (gPlaySt.turnLimit == 0 || !IsCurrentArmyLastInTurnOrder()
         || gPlaySt.turnLimit != gUnknown_03004080)
     {
         gUnknown_030032D8 = 2;

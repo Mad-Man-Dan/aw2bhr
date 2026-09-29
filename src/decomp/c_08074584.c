@@ -9,7 +9,7 @@
 
 const struct Unk08074584 *GetMapEventTable(void)
 {
-    return sub_08035000(gPlaySt.mapID)->dialogueHeader;
+    return GetMapListEntry(gPlaySt.mapID)->dialogueHeader;
 }
 asm(".global sub_08074584\n.thumb_set sub_08074584, GetMapEventTable\n");
 

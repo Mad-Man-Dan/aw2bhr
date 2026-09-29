@@ -27,10 +27,10 @@
  * alone; that partial merge is the fingerprint of the source order, exactly as
  * in UpdateTerrainAnimation.
  *
- * Case 0 discards a sub_080261A0() result before the blit and adds no tile
- * offset to the source; the other three add `(sub_080261A0() & 0x3ff) * 0x20`
+ * Case 0 discards a GetUnitSheetFrameTileCount() result before the blit and adds no tile
+ * offset to the source; the other three add `(GetUnitSheetFrameTileCount() & 0x3ff) * 0x20`
  * (0x40 for case 0x19) instead. */
-void sub_08022048(void)
+void UpdateUnitSheetAnimation(void)
 {
     if (GetCopyQueuePendingSize() <= 0x1000)
     {
@@ -39,26 +39,27 @@ void sub_08022048(void)
         switch (gUnknown_03003330 % 0x32)
         {
         case 0:
-            sub_080261A0();
-            CpuCopyAuto(sub_08026190(),
+            GetUnitSheetFrameTileCount();
+            CpuCopyAuto(GetUnitSheetGraphics(),
                          (void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x060046A0),
-                         (sub_080261A0() & 0x3ff) << 5);
+                         (GetUnitSheetFrameTileCount() & 0x3ff) << 5);
             break;
         case 0x11:
-            CpuCopyAuto(sub_08026190() + ((sub_080261A0() & 0x3ff) << 5),
+            CpuCopyAuto(GetUnitSheetGraphics() + ((GetUnitSheetFrameTileCount() & 0x3ff) << 5),
                          (void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x060046A0),
-                         (sub_080261A0() & 0x3ff) << 5);
+                         (GetUnitSheetFrameTileCount() & 0x3ff) << 5);
             break;
         case 0x19:
-            CpuCopyAuto(sub_08026190() + ((sub_080261A0() & 0x3ff) << 6),
+            CpuCopyAuto(GetUnitSheetGraphics() + ((GetUnitSheetFrameTileCount() & 0x3ff) << 6),
                          (void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x060046A0),
-                         (sub_080261A0() & 0x3ff) << 5);
+                         (GetUnitSheetFrameTileCount() & 0x3ff) << 5);
             break;
         case 0x2a:
-            CpuCopyAuto(sub_08026190() + ((sub_080261A0() & 0x3ff) << 5),
+            CpuCopyAuto(GetUnitSheetGraphics() + ((GetUnitSheetFrameTileCount() & 0x3ff) << 5),
                          (void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x060046A0),
-                         (sub_080261A0() & 0x3ff) << 5);
+                         (GetUnitSheetFrameTileCount() & 0x3ff) << 5);
             break;
         }
     }
 }
+asm(".global sub_08022048\n.thumb_set sub_08022048, UpdateUnitSheetAnimation\n");

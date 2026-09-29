@@ -17,7 +17,7 @@ void MapCursorIdle(void)
     HandleMoveMapCursor();
     HandleGameMapCursorInput();
     HandleMoveCameraWithMapCursor(4);
-    sub_08023274(0);
+    StepMapCursorAndDraw(0);
 
     if (IsMapCursorSettled())
     {
@@ -86,6 +86,6 @@ void MapCursorIdle(void)
     }
 
     RefreshMapCursorInfoPanel();
-    sub_0802776C(0);
+    SetInfoBoxMode(0);
 }
 asm(".global sub_0802DCB4\n.thumb_set sub_0802DCB4, MapCursorIdle\n");

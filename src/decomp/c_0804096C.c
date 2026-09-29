@@ -7,7 +7,7 @@
  * sub_0804096C @ 0x0804096C
  */
 
-/* Family F072, second member -- see sub_080215B8. The bracketing here is
+/* Family F072, second member -- see RecountPropertiesIncomeAndAiFacilities. The bracketing here is
  * legible: sub_0802C57C saves gUnknown_03003F24.pos into gUnknown_030044A4 and
  * sub_0802C594 puts it back, so the two middle calls run with the position
  * stashed. */
@@ -17,10 +17,11 @@
  * that a void(void) prototype cannot emit. That is a caller-side fact, so it
  * beats this body, which simply never reads the parameter. Unused, so the
  * definition stays byte-for-byte identical. */
-void sub_0804096C(ProcPtr proc)
+void CommitSiloLaunchMove(ProcPtr proc)
 {
     sub_0802C57C();
     CommitUnitMove();
     sub_0802C594();
     LockUnitSelection();
 }
+asm(".global sub_0804096C\n.thumb_set sub_0804096C, CommitSiloLaunchMove\n");

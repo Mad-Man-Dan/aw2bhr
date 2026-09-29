@@ -35,10 +35,10 @@ void sub_08049D88(void)
 
     Decompress(sub_0801F494(), gUnknown_0200FC50);
 
-    sub_08027FBC(gUnknown_0200FC50, 0, 0);
-    sub_08027FBC(gUnknown_0200FC50, 1, 1);
-    sub_08027FBC(gUnknown_0200FC50, 2, 2);
-    sub_08027FBC(gUnknown_0200FC50, 3, 3);
+    CopyDayGlyphTiles(gUnknown_0200FC50, 0, 0);
+    CopyDayGlyphTiles(gUnknown_0200FC50, 1, 1);
+    CopyDayGlyphTiles(gUnknown_0200FC50, 2, 2);
+    CopyDayGlyphTiles(gUnknown_0200FC50, 3, 3);
 
     ApplyPaletteExt(gUnknown_081268B8, 0x260, 0x20);
 }

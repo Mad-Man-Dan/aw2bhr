@@ -18,7 +18,7 @@
  * instruction multiset but left the `adds r6, r3, #0` copy 4th in the loop
  * preheader where the ROM has it last, and no source spelling moved it.
  */
-void sub_0805CA60(void)
+void AiStartCaptureGrabPass(void)
 {
     int i;
 
@@ -40,3 +40,4 @@ void sub_0805CA60(void)
     gUnknown_03004778 = sub_0805D888;
     gUnknown_03004780 = 2;
 }
+asm(".global sub_0805CA60\n.thumb_set sub_0805CA60, AiStartCaptureGrabPass\n");

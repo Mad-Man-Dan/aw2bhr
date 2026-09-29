@@ -13,7 +13,7 @@
  * include/unknown-globals.h: only a COMPONENT_REF keeps agbcc from folding
  * 0x12 into a load displacement or reassociating the 0x417A row table.
  * Wave 56, W56-H. */
-void sub_08022DD4(s16 a1, s16 a2, s16 a3)
+void DrawMapCursorSpriteUnused(s16 a1, s16 a2, s16 a3)
 {
     struct Map *m;
     struct UnkVec vec;
@@ -35,7 +35,7 @@ void sub_08022DD4(s16 a1, s16 a2, s16 a3)
         y = (a2 + m->scrollY) >> 4;
         row = m->rowOffset[y];
         x = (a1 + m->scrollX) >> 4;
-        if (m->unit[row + x] == 0 && sub_08042424(x, y) != 0)
+        if (m->unit[row + x] == 0 && IsOwnFactoryCell(x, y) != 0)
         {
             a3 = 4;
             if (v <= 4)
@@ -169,5 +169,6 @@ void sub_08022DD4(s16 a1, s16 a2, s16 a3)
         ((struct OamData *)&vec)->paletteNum = 1;
         sub_0801C01C(a1, a2, gUnknown_0848AE98[v], vec, 1);
     }
-    sub_08022BB8(a1, a2, a3);
+    DrawMapCursorPointerSpriteUnused(a1, a2, a3);
 }
+asm(".global sub_08022DD4\n.thumb_set sub_08022DD4, DrawMapCursorSpriteUnused\n");

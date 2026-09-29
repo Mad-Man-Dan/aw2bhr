@@ -14,13 +14,14 @@
  */
 
 
-/* gUnknown_03001470 list, not a proc: sub_08037610 starts it with
+/* gUnknown_03001470 list, not a proc: StartMapPreviewPictureScript starts it with
  * `sub_080152EC(gUnknown_0849D41C, 0)` and stashes a word at +0x18 of the slot
  * it gets back; this stops it. sub_080152EC's parameter is already
  * `const void *`, which is where sub_0801537C's comes from.
  */
 
-void sub_08037628(void)
+void EndMapPreviewPictureScript(void)
 {
     sub_0801537C(gUnknown_0849D41C);
 }
+asm(".global sub_08037628\n.thumb_set sub_08037628, EndMapPreviewPictureScript\n");

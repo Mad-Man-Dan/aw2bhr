@@ -16,7 +16,7 @@ struct UnkFFA0Proc
     /* 54 */ int unk54;
 };
 
-void sub_0803FFA0(struct UnkFFA0Proc *proc)
+void ExplosionEffect_Init(struct UnkFFA0Proc *proc)
 {
     u8 *blob;
     u16 *palette;
@@ -66,3 +66,4 @@ void sub_0803FFA0(struct UnkFFA0Proc *proc)
     Decompress(blob, (void *)0x06013940);
     ApplyPaletteExt(palette, 0x2A0, 0x20);
 }
+asm(".global sub_0803FFA0\n.thumb_set sub_0803FFA0, ExplosionEffect_Init\n");

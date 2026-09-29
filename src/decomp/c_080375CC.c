@@ -13,7 +13,8 @@ struct Unk080375CC
     /* 0x1e */ u16 unk1e;
 };
 
-void sub_080375CC(struct Unk080375CC *p)
+void MapPreviewPictureScript_Init(struct Unk080375CC *p)
 {
     p->unk1e = 0;
 }
+asm(".global sub_080375CC\n.thumb_set sub_080375CC, MapPreviewPictureScript_Init\n");

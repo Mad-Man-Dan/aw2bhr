@@ -51,7 +51,7 @@
  * the constant in r8, which is where `off` then lives, and the ROM's
  * `movs r0,#0; mov r8,r0; mov r1,r8` round trip is exactly that. */
 
-void sub_080378A8(void *a1)
+void DrawMapPreviewFromBlob(void *a1)
 {
     const u16 *src;
     u16 *dst;
@@ -125,3 +125,4 @@ void sub_080378A8(void *a1)
         off += ((u8 *)gUnknown_03003F68)[0];
     }
 }
+asm(".global sub_080378A8\n.thumb_set sub_080378A8, DrawMapPreviewFromBlob\n");

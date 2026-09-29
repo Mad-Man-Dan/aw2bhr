@@ -32,7 +32,7 @@
  *
  * The `blt`/`ble`/`bne` chain rather than a jump table is agbcc's sparse-switch
  * form; the compares are signed, so `cell & 0x1f` is an int. */
-u8 sub_08042424(s16 x, s16 y)
+u8 IsOwnFactoryCell(s16 x, s16 y)
 {
     int off;
 
@@ -51,3 +51,4 @@ u8 sub_08042424(s16 x, s16 y)
         return FALSE;
     }
 }
+asm(".global sub_08042424\n.thumb_set sub_08042424, IsOwnFactoryCell\n");

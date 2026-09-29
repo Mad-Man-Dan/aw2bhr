@@ -37,19 +37,19 @@ void StartArmyTurn(void)
     AddPlayerIncomeToFunds();
     ApplyArmyWindowFramePalette(gUnknown_030033EC);
     LoadArmyObjPalette(gUnknown_030033EC);
-    sub_08043834(gUnknown_030033EC);
+    LoadCoPanelGraphics(gUnknown_030033EC);
     if (gUnknown_03004080 == 1)
     {
         if (DoesArmyHaveHq(gUnknown_030033EC))
-            sub_08022AAC(gPlayers[gUnknown_030033EC].hqX & 0x7f,
+            SetMapCursorPosition(gPlayers[gUnknown_030033EC].hqX & 0x7f,
                          gPlayers[gUnknown_030033EC].hqY & 0x7f);
         else
-            sub_08022AAC(gMap->scrollX / 16 + 7,
+            SetMapCursorPosition(gMap->scrollX / 16 + 7,
                          gMap->scrollY / 16 + 4);
         gPlayers[gUnknown_030033EC].cursorX = gUnknown_030033E4.unk00;
         gPlayers[gUnknown_030033EC].cursorY = gUnknown_030033E4.unk02;
     }
-    sub_08022AAC(gPlayers[gUnknown_030033EC].cursorX,
+    SetMapCursorPosition(gPlayers[gUnknown_030033EC].cursorX,
                  gPlayers[gUnknown_030033EC].cursorY);
 }
 asm(".global sub_080267AC\n.thumb_set sub_080267AC, StartArmyTurn\n");

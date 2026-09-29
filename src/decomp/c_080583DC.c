@@ -8,7 +8,7 @@
  */
 
 /* Counts the deployed units of every army that IS masked out -- the inverse of
- * sub_08058254's army selection. Three differences from that exemplar, and
+ * AiCountFriendlyArmedVehiclesInReach's army selection. Three differences from that exemplar, and
  * they are the whole function:
  *
  *  - The army-mask test is INVERTED (`cmp r1,#0; beq` where the exemplar has
@@ -25,7 +25,7 @@
  * `lsls #0x18; asrs #0x18` pair on the map read IS the `(s8)` cast.
  *
  * MATCHED first draft. */
-int sub_080583DC(void)
+int AiCountEnemyLandUnitsInReach(void)
 {
     int count;
     int i;
@@ -56,6 +56,7 @@ int sub_080583DC(void)
 
     return count;
 }
+asm(".global sub_080583DC\n.thumb_set sub_080583DC, AiCountEnemyLandUnitsInReach\n");
 
 /* Counts the units of the NOT-masked-out armies whose unk00 is 1 or 2. Same
  * skeleton as c_08058254.c; two differences, both in the predicate block:
@@ -78,7 +79,7 @@ int sub_080583DC(void)
  * expression) is the tell that the for-init precedes the preheader.
  *
  * MATCHED. */
-int sub_0805848C(void)
+int AiCountFriendlyFootUnitsInReach(void)
 {
     int count;
     int i;
@@ -107,8 +108,9 @@ int sub_0805848C(void)
 
     return count;
 }
+asm(".global sub_0805848C\n.thumb_set sub_0805848C, AiCountFriendlyFootUnitsInReach\n");
 
-/* The inverted-mask twin of sub_0805848C: identical in every instruction
+/* The inverted-mask twin of AiCountFriendlyFootUnitsInReach: identical in every instruction
  * except the army-mask branch, which is `beq` here and `bne` there, so this
  * one counts the units of the armies that ARE masked out. Read c_0805848C's
  * header for the `(u8)(unk00 - 1) > 1` range idiom and for why the mask

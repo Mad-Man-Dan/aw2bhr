@@ -15,10 +15,11 @@
  * callee's declaration in unknown-functions.h and nothing else.
  * Exemplar: src/decomp/c_08004A60.c. */
 
-void sub_08041DC0(void)
+void DuckMusicForBattleScene(void)
 {
     StartMusicDuck(0xC0);
 }
+asm(".global sub_08041DC0\n.thumb_set sub_08041DC0, DuckMusicForBattleScene\n");
 
 /* Family F001 forwarder, 12 bytes:
  *     push {lr}
@@ -32,10 +33,11 @@ void sub_08041DC0(void)
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_08041DCC(void)
+void ReleaseMusicDuckAfterBattleScene(void)
 {
     StartMusicDuckRelease();
 }
+asm(".global sub_08041DCC\n.thumb_set sub_08041DCC, ReleaseMusicDuckAfterBattleScene\n");
 
 /* Family F005 (data/families.json): 19 sixteen-byte wrappers shaped
  * `push {lr}; bl S; bl S; pop {r0}; bx r0` -- two calls, nothing between
@@ -46,11 +48,12 @@ void sub_08041DCC(void)
  * would be byte-identical only if `g` had a parameter, and none of the 19
  * second callees does -- see the F005 block in unknown-functions.h. */
 
-void sub_08041DD8(void)
+void RestoreMapAfterBattleScene(void)
 {
     sub_08023348();
     InstallMapFrameCallbacks();
 }
+asm(".global sub_08041DD8\n.thumb_set sub_08041DD8, RestoreMapAfterBattleScene\n");
 
 /* Family F005 (data/families.json): 19 sixteen-byte wrappers shaped
  * `push {lr}; bl S; bl S; pop {r0}; bx r0` -- two calls, nothing between
@@ -61,8 +64,9 @@ void sub_08041DD8(void)
  * would be byte-identical only if `g` had a parameter, and none of the 19
  * second callees does -- see the F005 block in unknown-functions.h. */
 
-void sub_08041DE8(void)
+void RefreshMapAndLockSelection(void)
 {
     RebuildMapUnitLayers();
     LockUnitSelection();
 }
+asm(".global sub_08041DE8\n.thumb_set sub_08041DE8, RefreshMapAndLockSelection\n");

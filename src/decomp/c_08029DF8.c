@@ -65,7 +65,7 @@
  * The table reads that feed int arithmetic are `(s16)` casts and emit `ldrsh`;
  * the two that feed pt's u16 members emit a plain `ldrh` from the identical
  * spelling, because only the low half is live there. */
-void sub_08029DF8(struct Unk03001470 *proc)
+void SupplyCommand_Loop(struct Unk03001470 *proc)
 {
   struct Unit **pp;
   struct Unit *u;
@@ -131,3 +131,4 @@ void sub_08029DF8(struct Unk03001470 *proc)
   }
 
 }
+asm(".global sub_08029DF8\n.thumb_set sub_08029DF8, SupplyCommand_Loop\n");

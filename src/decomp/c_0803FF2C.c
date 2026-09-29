@@ -15,13 +15,13 @@ struct Unk3FF2CProc
     /* 54 */ int unk54;
 };
 
-/* sub_0803FF48 passes this to Proc_ForEach over the 0849FB04 script right
+/* StartExplosionEffect passes this to Proc_ForEach over the 0849FB04 script right
  * after setting gUnknown_030044D4 from its own third argument and stashing the
  * same value at +0x54 of the proc it then starts. So this ends every stale
  * instance and spares the one just refreshed.
  *
  * Wave 32 (W32-B) RETYPES the parameter `struct Unk3FF2CProc *` -> `ProcPtr`.
- * sub_0803FF48, promoted this wave, is its only reference and passes it to
+ * StartExplosionEffect, promoted this wave, is its only reference and passes it to
  * Proc_ForEach, whose second parameter is `ProcFunc`; the narrower spelling
  * cannot be declared in a header at all, because the struct was file-local.
  * `ProcPtr` is `void *`, so the body's binding is an implicit conversion and

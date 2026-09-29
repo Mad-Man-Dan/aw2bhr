@@ -20,9 +20,10 @@
  * header (the "adding a field is normal" case), not to invent a local type that
  * would implicitly deny sub_080152EC's declared return type. */
 
-void sub_08037610(int a)
+void StartMapPreviewPictureScript(int a)
 {
     struct Unk03001470 *slot = sub_080152EC(gUnknown_0849D41C, 0);
 
     slot->unk18 = a;
 }
+asm(".global sub_08037610\n.thumb_set sub_08037610, StartMapPreviewPictureScript\n");

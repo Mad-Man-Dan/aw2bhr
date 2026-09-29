@@ -10,7 +10,7 @@
 void ShowMapPreview(int a, int b, int c, int d)
 {
     AddVBlankHook((void *)AnimateMapPreviewPalette);
-    sub_08037610(a + ((c & 0x3ff) << 5));
-    sub_0803768C(a, b, c, d);
+    StartMapPreviewPictureScript(a + ((c & 0x3ff) << 5));
+    DrawMapPreviewTiles(a, b, c, d);
 }
 asm(".global sub_08037638\n.thumb_set sub_08037638, ShowMapPreview\n");

@@ -85,7 +85,7 @@ void DebugArmyEditor_Loop(struct Unk3D9FC *proc)
     PutAsciiStringSprites(8, 0x38, "TURN");
     PutAsciiStringSprites(8, 0x40, "COLOR");
 
-    sub_0802BD54(0x50, 0x00, sub_0802490C(gPlaySt.mapID));
+    sub_0802BD54(0x50, 0x00, GetMapArmyCount(gPlaySt.mapID));
     sub_0802BD54(0x40, 0x00, proc->unk1E);
     PutAsciiStringSprites(0x40, 0x08, sCtrl[gPlayers[army].aiControlled]);
     sub_0802BD54(0x68, 0x10, gPlayers[army].funds);
@@ -182,7 +182,7 @@ void DebugArmyEditor_Loop(struct Unk3D9FC *proc)
 
     if (gpKeySt->pressed & 3)
     {
-        sub_08026B28();
+        BuildEnemyArmyMasks();
         ClearSlotScriptCallback(gUnknown_03001FBC);
     }
 }

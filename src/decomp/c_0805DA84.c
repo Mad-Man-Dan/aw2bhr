@@ -9,7 +9,7 @@
 
 /* Picks a unit with AiPickSupplyWard, finds a destination cell next to it with
  * AiPickFiringCellBesideUnit, clears that unit's three-bit +0x09 field and hands the cell to
- * sub_0805D648. Does nothing if either step comes back empty.
+ * AiPublishAction. Does nothing if either step comes back empty.
  *
  * The scratch cell is a four-byte struct local, so the 0x270F seed is a
  * bitfield insert (`ldr; and #0xFFFF0000; orr; str`) and the sentinel must be
@@ -34,7 +34,7 @@
  * and does not match. struct Unit's unk09 is left alone so the layout
  * stays shared.
  *
- * sub_0805D648's first two arguments come out as `movs rK,#0; ldrsh` off the
+ * AiPublishAction's first two arguments come out as `movs rK,#0; ldrsh` off the
  * `u16` pair because the parameters are `s16`; the third is the literal 6, the
  * fourth is `(u8)id` from the declared `u8` parameter, and the fifth is the
  * stack word. */
@@ -50,14 +50,14 @@ struct Unk5DA84
     /* 0x09 */ u8 unk09_3 : 5;
 };
 
-void sub_0805DA84(void)
+void AiDeliberateSupplyInReach(void)
 {
     int id;
     struct CellXY pos;
     struct Unk5DA84 * u;
 
     GenerateUnitMovementMap(gUnknown_030040D8);
-    sub_0801FD9C(0x79);
+    MapMarkHalo(0x79);
     AiPickSupplyWard(&id);
 
     if (id == -1)
@@ -73,5 +73,6 @@ void sub_0805DA84(void)
     u = (struct Unk5DA84 *)(gUnits + id);
     u->unk09_0 = 0;
 
-    sub_0805D648(pos.x, pos.y, 6, id, 0);
+    AiPublishAction(pos.x, pos.y, 6, id, 0);
 }
+asm(".global sub_0805DA84\n.thumb_set sub_0805DA84, AiDeliberateSupplyInReach\n");

@@ -7,7 +7,7 @@
  * sub_08078AF0 @ 0x08078AF0
  */
 
-/* Family F072, third member -- see sub_080215B8. All four callees were already
+/* Family F072, third member -- see RecountPropertiesIncomeAndAiFacilities. All four callees were already
  * declared `void f(void)`. */
 
 void SyncAllBgTilemaps(void)

@@ -133,7 +133,7 @@ struct Unk62C94Tab
  *     while the if arm leaves it inline -- the two arms are deliberately
  *     ASYMMETRIC.
  * Re-run try_match after any cosmetic edit. */
-void sub_08062C94(void)
+void AiCalcEnemyMassNetOfOwnCounters(void)
 {
   u16 loc[0x19];
   int t;
@@ -177,10 +177,11 @@ void sub_08062C94(void)
     {
       for (t = 1; t <= 0x18; t++)
       {
-        ((struct Unk62C94Tab *) gUnknown_02029C20)->v[k] -= sub_08043070(gPlayers[gUnknown_030033EC].co, gPlayers[gUnknown_030033EC].coMode, t, k, 0) * loc[t];
+        ((struct Unk62C94Tab *) gUnknown_02029C20)->v[k] -= GetCoAdjustedBaseDamage(gPlayers[gUnknown_030033EC].co, gPlayers[gUnknown_030033EC].coMode, t, k, 0) * loc[t];
       }
 
     }
   }
 
 }
+asm(".global sub_08062C94\n.thumb_set sub_08062C94, AiCalcEnemyMassNetOfOwnCounters\n");

@@ -26,7 +26,7 @@ struct Unk7D918
 void sub_0807D918(struct Unk7D918 *p)
 {
     if (p->unk4c == 13)
-        sub_08043BA4(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], 0x40, 1);
+        LoadCoFullBodyAndPalette(gUnknown_030058E0[DivRem(p->unk52, gUnknown_03005948[p->unk58]) + p->unk5c], 0x40, 1);
 
     if (p->unk60 < 0)
     {

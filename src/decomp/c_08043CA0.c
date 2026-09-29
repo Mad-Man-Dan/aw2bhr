@@ -56,7 +56,7 @@ asm(".global sub_08043CA0\n.thumb_set sub_08043CA0, BuildUnlockedCoList\n");
  * (`adds r0, r3, r2`), which is only equal to n because the guard keeps n
  * non-zero.  A doubling would have been `lsls r0, r3, #1`.
  */
-void sub_08043D00(void)
+void RepeatUnlockedCoList(void)
 {
     u8 n;
     u8 k;
@@ -70,3 +70,4 @@ void sub_08043D00(void)
     }
     gUnknown_020288A0[n] = 0xff;
 }
+asm(".global sub_08043D00\n.thumb_set sub_08043D00, RepeatUnlockedCoList\n");

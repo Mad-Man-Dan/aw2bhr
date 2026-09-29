@@ -26,7 +26,7 @@
  * nevertheless reads gUnknown_03003F2C exactly once and check_dbra_loop turns
  * the exit test into a countdown, which it only does on an invariant bound. The
  * sibling builders that re-read the global in the loop (src/decomp/c_0805CA60.c,
- * sub_0805D2A0) are the contrast case. */
+ * AiStartSupplyPass) are the contrast case. */
 
 struct Unk0805C0ACOut
 {
@@ -34,7 +34,7 @@ struct Unk0805C0ACOut
     /* 0x02 */ u16 unk02;
 };
 
-void sub_0805C0AC(void *a1)
+void AiFindEmptyTCopter(void *a1)
 {
     struct Unk0805C0ACOut *out = a1;
     int i;
@@ -54,3 +54,4 @@ void sub_0805C0AC(void *a1)
         }
     }
 }
+asm(".global sub_0805C0AC\n.thumb_set sub_0805C0AC, AiFindEmptyTCopter\n");

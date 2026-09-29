@@ -21,15 +21,15 @@
  * `mov r4,sl` -- the two instructions in the other order. That was the entire
  * residual at 98.7%.
  *
- * Cell addressing is sub_080415E4's idiom -- p, then t, then rows, then off,
+ * Cell addressing is BuildBoardableTransportList's idiom -- p, then t, then rows, then off,
  * then cells, each its own local -- which is what keeps 0x417A and 0x1432 in
  * pool words rather than folding either into a load displacement. The offset
- * here is 0x1432, not sub_080415E4's 0x12.
+ * here is 0x1432, not BuildBoardableTransportList's 0x12.
  *
  * `cells[off]` is written TWICE rather than bound to a local: the ROM loads the
  * byte twice off one CSE'd address (`ldrb r1,[r2]` before the table lookup and
  * again as the second argument), which is the discriminator against
- * sub_080415E4's `cell` local.
+ * BuildBoardableTransportList's `cell` local.
  */
 
 struct Unk59A0CCell

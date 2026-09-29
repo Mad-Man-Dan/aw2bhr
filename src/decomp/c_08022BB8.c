@@ -16,7 +16,7 @@
  * bits for the later sprite call. The compiler then keeps the two forms in
  * separate registers, as the original does. */
 
-void sub_08022BB8(s16 x, s16 y, s16 kind)
+void DrawMapCursorPointerSpriteUnused(s16 x, s16 y, s16 kind)
 {
     struct UnkVec oam = { 0, 0 };
     u8 i;
@@ -166,3 +166,4 @@ void sub_08022BB8(s16 x, s16 y, s16 kind)
         break;
     }
 }
+asm(".global sub_08022BB8\n.thumb_set sub_08022BB8, DrawMapCursorPointerSpriteUnused\n");

@@ -7,7 +7,7 @@
  * sub_0802A304 @ 0x0802A304
  */
 
-/* A callback handed to sub_0802A38C beside sub_0802A2E4, so its parameter is
+/* A callback handed to ResupplyUnitWithAnimation beside sub_0802A2E4, so its parameter is
  * the same object: a struct Unit unit record. It is NOT spelled that
  * way here on purpose. The loop reads the bytes at +7 and +8 through a
  * VARIABLE index, which the shared struct cannot express (they are the

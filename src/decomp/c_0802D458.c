@@ -19,7 +19,7 @@ void OpenMapMenu(void)
     if (gUnknown_030033E4.unk00 - gMap->scrollX / 16 <= 6)
         v = 0x14;
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     CreateRootMenuWithSfx(gUnknown_0849AAC0, v, 1, 1);
     IncrementMapLock();
 }

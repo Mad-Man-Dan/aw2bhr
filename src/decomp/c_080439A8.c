@@ -18,7 +18,7 @@
  * Three things that are not free choices:
  *
  * - The switch is `case 0: default:` sharing one label, exactly like
- *   sub_08043DAC next door.  The ROM tests `cmp #0; beq default`, then
+ *   PlayArmyCoMusic next door.  The ROM tests `cmp #0; beq default`, then
  *   `cmp #1; beq case1`, and FALLS THROUGH into the default block -- which
  *   only happens when case 0's body IS the default body and is written FIRST.
  *

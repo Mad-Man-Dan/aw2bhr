@@ -24,14 +24,14 @@
  * (the ROM pushes only r6/r7 for r8/sb) and pushes gUnknown_030013EC's
  * -fforce-addr pointer out of r5.  A goto loop has no NOTE_INSN_LOOP_BEG, LICM
  * never runs, and all of it comes back at once.  This is exactly the
- * measurement recorded on sub_0805B778 (wave 51, W51-E), which is this
+ * measurement recorded on AiMoveTowardLandingCell (wave 51, W51-E), which is this
  * function's twin: same scratch cell, same 0x270F seed, same
  * gUnknown_03003340 / GetUnitMovementBudget / AiAdvanceToward tail.
  *
  * _call_via_r4 here is a FIVE-argument indirect call, not a four-argument one:
  * r4 is callee-saved, so the register index is not an arity readout (W46-D).
  *
- * The `(x & 0xc0) != 0` arm is written as the ELSE so that sub_0805B3F4 lands
+ * The `(x & 0xc0) != 0` arm is written as the ELSE so that AiPlanLoadedLander lands
  * after the body; an early `return` puts that block before the body instead.
  *
  * struct Unk5A514Cell is repeated here rather than declared in a shared header
@@ -45,7 +45,7 @@
  * member, decays to `u8 *`), not `gUnknown_08499590 + 0x2852` or a cast --
  * agbcc's CSE only reuses a pointer load across identical symbols, so mixing
  * in the raw name anywhere forces a second pool load and breaks the match
- * (see sub_08057D90 for the fuller writeup of this). */
+ * (see AiPickSafestReachableCell for the fuller writeup of this). */
 
 struct Unk5A514Cell
 {
@@ -60,7 +60,7 @@ struct CellXY
     /* 0x02 */ u16 y;
 };
 
-void sub_0805E160(void)
+void AiDeliberateLander(void)
 {
     struct CellXY pos;
     struct Unk03003338 *list;
@@ -73,14 +73,14 @@ void sub_0805E160(void)
     {
         gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                           gUnknown_030040D8->unk00, 0x78, 1);
-        sub_0801FD9C(0x79);
+        MapMarkHalo(0x79);
         AiListEmbarkBoundUnits((struct Unk5A514Cell *)list);
     loop:
         pos.x = 0x270F;
         AiPopLastNearestCandidate(list, (u16 *)&pos);
         if (pos.x == 0x270F)
         {
-            sub_0805E2AC();
+            AiMoveLanderToNearestPort();
             return;
         }
         gUnknown_03004730[gMap->unit[gMap->rowOffset[pos.y] + pos.x] & 0x3f]++;
@@ -93,10 +93,11 @@ void sub_0805E160(void)
         if ((s8)gUnknown_03003340[gUnknown_030040D8->unk03][gUnknown_030040D8->unk02] > GetUnitMovementBudget((struct Unit *)gUnknown_030040D8))
             AiAdvanceToward(&pos);
         else
-            sub_0805D648(pos.x, pos.y, 2, 0, 0);
+            AiPublishAction(pos.x, pos.y, 2, 0, 0);
     }
     else
     {
-        sub_0805B3F4();
+        AiPlanLoadedLander();
     }
 }
+asm(".global sub_0805E160\n.thumb_set sub_0805E160, AiDeliberateLander\n");

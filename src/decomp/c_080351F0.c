@@ -7,10 +7,11 @@
  * sub_080351F0 @ 0x080351F0
  */
 
-void sub_080351F0(void)
+void StartPendingWeatherChange(void)
 {
-    sub_08035124(gPlaySt.unk2e);
+    ResetWeatherRoundCountersIfChanging(gPlaySt.unk2e);
 
     if (gPlaySt.weather != gPlaySt.unk2e)
         sub_080152EC(gUnknown_0849BD38, 0)->unk20 = gPlaySt.unk2e;
 }
+asm(".global sub_080351F0\n.thumb_set sub_080351F0, StartPendingWeatherChange\n");

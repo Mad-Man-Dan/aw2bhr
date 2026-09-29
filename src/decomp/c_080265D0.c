@@ -17,7 +17,7 @@
  *
  * WHAT THE FUNCTION DOES
  * Scales a payout for army a2 by how far gUnknown_03004080 has drifted from
- * that chapter record's unk20, then hands it to sub_08026584 with a1. Three
+ * that chapter record's unk20, then hands it to AddArmyBonusPointsNoOp with a1. Three
  * mutually exclusive comparisons, each re-reading both globals:
  *   X <  Y : start at 500 and grow by 1.2 per step, capped at 9999
  *   X == Y : 500 flat
@@ -31,7 +31,7 @@
  *    again at the use, which is the s16 local pattern. u16 emits the 3-insn
  *    `adds #1; lsls; lsrs` and compares the zero-extended value.
  *
- * 2. sub_08026584's SECOND PARAMETER IS u16, and this is the only caller that
+ * 2. AddArmyBonusPointsNoOp's SECOND PARAMETER IS u16, and this is the only caller that
  *    can prove it -- the `lsls #0x10; lsrs #0x10` on the value immediately
  *    before the `bl`, on a quantity held at full width everywhere else.
  *    include/unknown-functions.h retyped from `int`; c_080265B0.c re-verified
@@ -83,7 +83,7 @@
  * in r0, while the following `adds r6, r1, #0` becomes the binding of Y. The
  * resulting source matches; the two force-addr pool words at 0x08090A68 and
  * 0x08090A6C must be carried during promotion. */
-void sub_080265D0(u8 a1, u8 a2)
+void AwardSpeedBonusPoints(u8 a1, u8 a2)
 {
     u32 v;
     s16 i;
@@ -135,5 +135,6 @@ void sub_080265D0(u8 a1, u8 a2)
         }
     }
 
-    sub_08026584(a1, v);
+    AddArmyBonusPointsNoOp(a1, v);
 }
+asm(".global sub_080265D0\n.thumb_set sub_080265D0, AwardSpeedBonusPoints\n");

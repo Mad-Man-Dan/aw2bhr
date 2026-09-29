@@ -21,7 +21,7 @@ struct Unk452C0Proc
     /* 40 */ int unk40;
 };
 
-void sub_080452C0(int a, int b, int c)
+void StartCoPowerUnitSparkle(int a, int b, int c)
 {
     struct Unk452C0Proc *proc = Proc_Start(gUnknown_084A096C, PROC_TREE_3);
 
@@ -29,3 +29,4 @@ void sub_080452C0(int a, int b, int c)
     proc->unk40 = b;
     proc->unk2c = c;
 }
+asm(".global sub_080452C0\n.thumb_set sub_080452C0, StartCoPowerUnitSparkle\n");

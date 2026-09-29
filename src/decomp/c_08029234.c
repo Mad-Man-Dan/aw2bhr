@@ -23,10 +23,11 @@ struct Unk29234Proc
     /* 66 */ u16 unk66;
 };
 
-void sub_08029234(struct Unk29234Proc *proc)
+void TargetPickList_Init(struct Unk29234Proc *proc)
 {
     proc->unk64 = 0;
     proc->unk66 = GetAttackTargetCount();
-    sub_08028ED0(proc);
+    StartRangeSpread(proc);
     sub_0803B4DC(0x77);
 }
+asm(".global sub_08029234\n.thumb_set sub_08029234, TargetPickList_Init\n");

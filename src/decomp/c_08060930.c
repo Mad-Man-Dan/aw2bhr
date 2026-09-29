@@ -7,7 +7,7 @@
  * sub_08060930 @ 0x08060930
  */
 
-void sub_08060930(void)
+void AiConsiderBuildingSupportUnits(void)
 {
     if (gUnknown_030046C0.unk06 == 0)
     {
@@ -18,3 +18,4 @@ void sub_08060930(void)
             AiConsiderBuildingLander();
     }
 }
+asm(".global sub_08060930\n.thumb_set sub_08060930, AiConsiderBuildingSupportUnits\n");

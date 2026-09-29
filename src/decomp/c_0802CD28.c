@@ -22,7 +22,7 @@ void sub_0802CD28(int a1, u8 a2)
     gUnknown_030040F0 = a2;
     PushMenu();
     CloseTopMenu();
-    sub_08034F10();
+    SetMapStateResumeCursor();
     Proc_Start(gUnknown_0849AA68, PROC_TREE_3);
 }
 
@@ -46,7 +46,7 @@ void sub_0802CD54(int a1, u8 a2)
     gUnknown_030040F0 = a2;
     PushMenu();
     CloseTopMenu();
-    sub_08034F10();
+    SetMapStateResumeCursor();
     StartIntelStatusScreen();
 }
 
@@ -62,6 +62,6 @@ void sub_0802CD78(int a1, u8 a2)
     gUnknown_030040F0 = a2;
     PushMenu();
     CloseTopMenu();
-    sub_08034F10();
+    SetMapStateResumeCursor();
     sub_080152EC(gUnknown_0849ADD0, 0);
 }

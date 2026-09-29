@@ -46,13 +46,13 @@ struct Unk6E5A0Proc
 
 void sub_0806E574(struct Unk6E574Proc *proc)
 {
-    sub_08043BC8(proc->unk34, 0x120);
-    sub_08043AA0(proc->unk34, 0x10);
+    LoadCoFullBodyPart0(proc->unk34, 0x120);
+    LoadCoPalette(proc->unk34, 0x10);
 }
 
 void sub_0806E590(struct Unk6E590Proc *proc)
 {
-    sub_08043BF8(proc->unk34, 0x120);
+    LoadCoFullBodyPart1(proc->unk34, 0x120);
 }
 
 void sub_0806E5A0(struct Unk6E5A0Proc *proc)

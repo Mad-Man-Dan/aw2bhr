@@ -15,7 +15,7 @@
  * two instructions. */
 void LinkC3_Parallel_080338FD(void)
 {
-    sub_08043BA4(0, 0x17C, 7);
+    LoadCoFullBodyAndPalette(0, 0x17C, 7);
 }
 
 /* FIVE arguments, the fifth on the stack. 0x717C needs a pool word, so it is

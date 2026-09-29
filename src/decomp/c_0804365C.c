@@ -4,7 +4,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x0804365C.
- * DrawDaysRemaining @ 0x0804365C, sub_080436DC @ 0x080436DC
+ * DrawDaysRemaining @ 0x0804365C, DrawArmyCoPanel @ 0x080436DC
  */
 
 /* `t -= gUnknown_03004080 - 1;` written in ONE expression reassociates to
@@ -38,7 +38,7 @@ void DrawDaysRemaining(int x, int y)
 
 asm(".global sub_0804365C\n.thumb_set sub_0804365C, DrawDaysRemaining\n");
 
-void sub_080436DC(int x, int y, int pid)
+void DrawArmyCoPanel(int x, int y, int pid)
 {
     int off;
 
@@ -52,7 +52,7 @@ void sub_080436DC(int x, int y, int pid)
     PutSprite(0, x, y, gUnknown_084A0032, 0x7000);
     PutSprite(0, x, y, gUnknown_084A003A, 0xe03a);
 
-    sub_08043AA0(gPlayers[pid].co, 0x1e);
+    LoadCoPalette(gPlayers[pid].co, 0x1e);
     off = ((gPlayers[pid].co * 8) & 0x3ff) * 0x20;
     RegisterDataMove(gUnknown_08102F64 + off, (void *)0x06010740, 0x100);
 
@@ -72,3 +72,4 @@ void sub_080436DC(int x, int y, int pid)
             sub_0803B4DC(0x75);
     }
 }
+asm(".global sub_080436DC\n.thumb_set sub_080436DC, DrawArmyCoPanel\n");

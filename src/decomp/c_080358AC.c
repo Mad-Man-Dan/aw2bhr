@@ -21,13 +21,13 @@
  * the callee returned, so nothing about the callee is visible from
  * here. Everything below was read off the callee's own body instead.
  *
- * One pointer passed through. sub_08035F68 reads r0 first thing
+ * One pointer passed through. StartMoveSlideMoveSound reads r0 first thing
  * (`adds r4, r0, #0`) and dereferences +0x36, past PROC_HEADER's 0x29
  * bytes; its other caller BeginMoveSlidePath treats the same object as a proc.
  */
 void DesignRoomPlaceUnit_080358AD(ProcPtr proc)
 {
-    sub_08035F68(proc);
+    StartMoveSlideMoveSound(proc);
 }
 
 /* Family F001 forwarder, 12 bytes:
@@ -40,11 +40,11 @@ void DesignRoomPlaceUnit_080358AD(ProcPtr proc)
  * here. Everything below was read off the callee's own body instead.
  *
  * One pointer passed through, same shape as DesignRoomPlaceUnit_080358AD twelve bytes above:
- * sub_08035FA8 opens `adds r3, r0, #0` and reads +0x36.
+ * PlayMoveSlideStopSfxNoStep opens `adds r3, r0, #0` and reads +0x36.
  */
 void DesignRoomPlaceUnit_CB_080358B9(ProcPtr proc)
 {
-    sub_08035FA8(proc);
+    PlayMoveSlideStopSfxNoStep(proc);
 }
 
 asm(".global sub_080358B8\n.thumb_set sub_080358B8, DesignRoomPlaceUnit_CB_080358B9\n"

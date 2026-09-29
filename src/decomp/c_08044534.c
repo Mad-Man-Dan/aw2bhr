@@ -7,8 +7,9 @@
  * sub_08044534 @ 0x08044534
  */
 
-void sub_08044534(void)
+void CopActivateStandardBoost(void)
 {
     gPlayers[gUnknown_030033EC].tempFirepower = 0;
     gPlayers[gUnknown_030033EC].tempDefense = 10;
 }
+asm(".global sub_08044534\n.thumb_set sub_08044534, CopActivateStandardBoost\n");

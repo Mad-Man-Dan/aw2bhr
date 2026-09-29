@@ -11,10 +11,11 @@
  * each. The (index, value) pairs are 0/1, 1/6 and 2/5 -- an index that steps
  * and a value that does not, so the second argument is data rather than a
  * count. */
-void sub_0806209C(void)
+void AiBuildInterestListsForArmy(void)
 {
-    sub_080620C0();
-    sub_080620FC(0, 1);
-    sub_080620FC(1, 6);
-    sub_080620FC(2, 5);
+    AiClearInterestLists();
+    AiFillInterestList(0, 1);
+    AiFillInterestList(1, 6);
+    AiFillInterestList(2, 5);
 }
+asm(".global sub_0806209C\n.thumb_set sub_0806209C, AiBuildInterestListsForArmy\n");

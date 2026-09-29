@@ -48,7 +48,7 @@ struct Unk2A38C
     /* 0x03 */ u8 unk03;
 };
 
-bool8 sub_0802A38C(struct Unk2A38C *p, int (*fn)(struct Unk2A38C *))
+bool8 ResupplyUnitWithAnimation(struct Unk2A38C *p, int (*fn)(struct Unk2A38C *))
 {
     const u16 *q;
     int r;
@@ -73,3 +73,4 @@ bool8 sub_0802A38C(struct Unk2A38C *p, int (*fn)(struct Unk2A38C *))
     StartSupplyAnimation((struct Unk802C57C *)&v, *q, r, 0);
     return 1;
 }
+asm(".global sub_0802A38C\n.thumb_set sub_0802A38C, ResupplyUnitWithAnimation\n");

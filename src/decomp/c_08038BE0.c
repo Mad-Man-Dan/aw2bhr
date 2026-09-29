@@ -10,7 +10,7 @@
 void RebuildBestMovePath(void)
 {
     TruncateMovePath(1);
-    sub_08038B84();
+    FillMovementMapFromMovePathEnd();
     GenerateBestMovementScript(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02, gUnknown_03003110);
     RebuildMovePathFromDirections();
 }

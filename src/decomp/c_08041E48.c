@@ -25,7 +25,7 @@ struct Unk41E48Proc
  * retyped SendActionCommand's third and fourth parameters to u8; c_0802CFFC.c's two
  * literal zeros could never have shown it. */
 
-void sub_08041E48(struct Unk41E48Proc *proc)
+void InventionAttack_CommitMove(struct Unk41E48Proc *proc)
 {
     sub_0802C57C();
     CommitUnitMove();
@@ -34,3 +34,4 @@ void sub_08041E48(struct Unk41E48Proc *proc)
     if (proc->unk64 != 0 && gPlaySt.savingEnabled != 0)
         SendActionCommand(5, gUnknown_03003F38, proc->unk2c, proc->unk30);
 }
+asm(".global sub_08041E48\n.thumb_set sub_08041E48, InventionAttack_CommitMove\n");

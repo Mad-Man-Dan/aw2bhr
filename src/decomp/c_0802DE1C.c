@@ -16,17 +16,17 @@ void MapCursorState_ChooseDestination(void)
     int v;
 
     HandleMoveMapCursor();
-    sub_080236E8();
+    HandleMoveMapCursorInMoveRange();
     HandleMoveCameraWithMapCursor(4);
 
     off = gMap->rowOffset[gUnknown_030033E4.unk02] + gUnknown_030033E4.unk00;
 
     if (gMap->move[off] < 0)
-        sub_08023274(1);
+        StepMapCursorAndDraw(1);
     else
-        sub_08023274(1);
+        StepMapCursorAndDraw(1);
 
-    sub_08039264();
+    UpdateMovePathAndQueueDraw();
 
     if (!IsMapCursorSettled())
         return;
@@ -47,7 +47,7 @@ void MapCursorState_ChooseDestination(void)
         SendActionCommand(0x11, gUnknown_03003F38, 0, 0);
 
     ScrollCameraToKeepCellInView(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03);
-    sub_08035810();
+    EndActiveMoveSlide();
     RebuildMapUnitLayers();
     HideRangeOverlay();
     gUnknown_03003334 = v;
@@ -64,7 +64,7 @@ void MapCursorState_DeleteUnit(void)
     HandleMoveMapCursor();
     HandleGameMapCursorInput();
     HandleMoveCameraWithMapCursor(4);
-    sub_08023274(5);
+    StepMapCursorAndDraw(5);
 
     if (!IsMapCursorSettled())
         return;

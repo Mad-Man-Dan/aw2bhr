@@ -4,11 +4,11 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08058254.
- * sub_08058254 @ 0x08058254, sub_08058318 @ 0x08058318
+ * AiCountFriendlyArmedVehiclesInReach @ 0x08058254, AiCountFriendlyArmedVehiclesInReach2 @ 0x08058318
  */
 
 /* MATCHED, first draft, one attempt, and the first of a byte-identical pair
- * with sub_08058318. Counts the deployed units of every army that is not masked
+ * with AiCountFriendlyArmedVehiclesInReach2. Counts the deployed units of every army that is not masked
  * out: for each of the four armies, skip it if bit i of
  * gPlayers[gUnknown_030033EC].unk2c is set, then scan that army's 64
  * slots and count the ones that are a real unit of class 2, whose type has a
@@ -32,7 +32,7 @@
  * gUnknown_030033EC's load is hoisted out of the outer loop and
  * gPlayers's deref is NOT, although both are invariant. That falls out
  * of gcc's own invariant motion and needs nothing in the source. */
-int sub_08058254(void)
+int AiCountFriendlyArmedVehiclesInReach(void)
 {
     int count;
     int i;
@@ -65,10 +65,11 @@ int sub_08058254(void)
 
     return count;
 }
+asm(".global sub_08058254\n.thumb_set sub_08058254, AiCountFriendlyArmedVehiclesInReach\n");
 
-/* MATCHED. Byte-for-byte the same function as sub_08058254 -- same loops, same
+/* MATCHED. Byte-for-byte the same function as AiCountFriendlyArmedVehiclesInReach -- same loops, same
  * predicates, same pool. Read that one for the loop-bound readout. */
-int sub_08058318(void)
+int AiCountFriendlyArmedVehiclesInReach2(void)
 {
     int count;
     int i;
@@ -101,3 +102,4 @@ int sub_08058318(void)
 
     return count;
 }
+asm(".global sub_08058318\n.thumb_set sub_08058318, AiCountFriendlyArmedVehiclesInReach2\n");

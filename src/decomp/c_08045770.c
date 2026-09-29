@@ -7,7 +7,7 @@
  * sub_08045770 @ 0x08045770
  */
 
-/* One of three identical wrappers -- sub_08038548 and sub_08038568 are the
+/* One of three identical wrappers -- sub_08038548 and EndOfGame_FinishVersusMap are the
  * others, and the only thing that changes between them is the callback.
  * The `lsls #24; lsrs #24` between the two calls is the s8 -> u8 conversion
  * of GetSuspendIdForGameMode's result for sub_0803D73C's `u8` first parameter; see the

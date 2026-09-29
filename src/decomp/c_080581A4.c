@@ -29,7 +29,7 @@
  * and the ROM's re-read of `->unk02` at the loop bottom disappears (-4 bytes).
  */
 
-void sub_080581A4(u8 *dst, int a2)
+void FillMapPlane(u8 *dst, int a2)
 {
     u8 *rows[40];
     u8 v;
@@ -47,3 +47,4 @@ void sub_080581A4(u8 *dst, int a2)
             rows[i][j] = v;
     }
 }
+asm(".global sub_080581A4\n.thumb_set sub_080581A4, FillMapPlane\n");

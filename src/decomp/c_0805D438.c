@@ -21,8 +21,8 @@
  *      unit with flag bit 0 set or type 0. Otherwise save its position in
  *      gUnknown_03003F24, clear some AI state, lift it off the map's unit
  *      layer, set flag bit 2, store a random 0..99 in byte 0x0A and call
- *      sub_0805A95C.
- *   3. If sub_08071908(gUnknown_03004680) returns 0, call sub_0805E9DC (unit
+ *      AiUpdateNeededPropertyKind.
+ *   3. If sub_08071908(gUnknown_03004680) returns 0, call AiRunResupplyOrRepairMission (unit
  *      entries only) and then the handler in gUnknown_03004778.
  *   4. If gUnknown_030046C0.unk13 is still 0, put the unit back on the map,
  *      clear flag bit 2 and advance the list. Otherwise advance the list and
@@ -76,7 +76,7 @@ void AiRunNextWorklistUnit(void)
 
         gUnknown_030040D8->unk01 |= 4;
         gUnknown_030040D8->unk07[3] = sub_080129E0() % 100;
-        sub_0805A95C();
+        AiUpdateNeededPropertyKind();
     }
     else
     {
@@ -86,7 +86,7 @@ void AiRunNextWorklistUnit(void)
     if (sub_08071908(gUnknown_03004680) == 0)
     {
         if (*gUnknown_030046B0 != 0x40)
-            sub_0805E9DC();
+            AiRunResupplyOrRepairMission();
 
         gUnknown_030045CC.unk00_1 = 0;
         gUnknown_03004778();

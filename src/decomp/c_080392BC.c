@@ -16,12 +16,13 @@
  * the callee returned, so nothing about the callee is visible from
  * here. Everything below was read off the callee's own body instead.
  *
- * One pointer passed through. sub_0803927C reads +0x2c and +0x30 off r0, and
- * its two siblings sub_080392C8 / sub_080392F4 hand the identical pointer
+ * One pointer passed through. CoPowerPortrait_Draw reads +0x2c and +0x30 off r0, and
+ * its two siblings CoPowerPortrait_SlideInLoop / CoPowerPortrait_SlideOutLoop hand the identical pointer
  * to Proc_Break -- which is what makes it a proc rather than a bare
  * pointer.
  */
-void sub_080392BC(ProcPtr proc)
+void CoPowerPortrait_Draw2(ProcPtr proc)
 {
-    sub_0803927C(proc);
+    CoPowerPortrait_Draw(proc);
 }
+asm(".global sub_080392BC\n.thumb_set sub_080392BC, CoPowerPortrait_Draw2\n");

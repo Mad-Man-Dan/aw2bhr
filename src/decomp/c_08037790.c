@@ -15,7 +15,7 @@
  * relocation's addend does. Four spellings were probed side by side and only
  * the `&gUnknown_081253F0[16 + i]` one reproduces the order.
  *
- * So 0x081253F0 is a 0x40-byte palette: sub_08037750 applies its first half
+ * So 0x081253F0 is a 0x40-byte palette: StartMapPreviewPalette applies its first half
  * wholesale and this picks one colour out of the second half, phase
  * `(gGameClock & 0x3c) >> 2`, a 16-step cycle off the frame counter. */
 void AnimateMapPreviewPalette(void)

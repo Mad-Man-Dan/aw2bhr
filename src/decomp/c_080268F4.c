@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_080268F4(void)
+void StartArmyTurn2(void)
 {
     StartArmyTurn();
 }
+asm(".global sub_080268F4\n.thumb_set sub_080268F4, StartArmyTurn2\n");

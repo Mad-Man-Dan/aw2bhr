@@ -7,8 +7,9 @@
  * sub_080604A4 @ 0x080604A4
  */
 
-void sub_080604A4(void)
+void AiExecutorFinishAfterLaunch(void)
 {
     gUnknown_03004780 = 2;
     gUnknown_030045D4 = 0;
 }
+asm(".global sub_080604A4\n.thumb_set sub_080604A4, AiExecutorFinishAfterLaunch\n");

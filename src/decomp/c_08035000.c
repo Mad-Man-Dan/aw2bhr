@@ -7,7 +7,8 @@
  * sub_08035000 @ 0x08035000
  */
 
-const struct Unk085C77A0 *sub_08035000(int index)
+const struct Unk085C77A0 *GetMapListEntry(int index)
 {
     return &gUnknown_085C77A0[index];
 }
+asm(".global sub_08035000\n.thumb_set sub_08035000, GetMapListEntry\n");

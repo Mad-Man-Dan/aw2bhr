@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-void sub_08037260(void)
+void SetDefaultDisplayState(void)
 {
     u16 v;
 
@@ -78,3 +78,4 @@ void sub_08037260(void)
     gUnknown_030030B4.bits.priority = 0;
     ((union BgCntBuf *)&gUnknown_0300251C)->bits.priority = 0;
 }
+asm(".global sub_08037260\n.thumb_set sub_08037260, SetDefaultDisplayState\n");

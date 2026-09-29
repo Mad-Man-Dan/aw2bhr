@@ -24,7 +24,7 @@ struct Unk2723CProc
     /* 0x34 */ STRUCT_PAD(0x34, 0x54);
     /* 0x54 */ s32 unk54;
 };
-/* Same body as sub_0802723C two functions above; only the script and the
+/* Same body as StartSupplyIconEffect two functions above; only the script and the
  * constant stashed at +0x54 differ. */
 struct Unk27278Proc
 {
@@ -36,7 +36,7 @@ struct Unk27278Proc
     /* 0x54 */ s32 unk54;
 };
 
-void sub_0802723C(int x, int y)
+void StartSupplyIconEffect(int x, int y)
 {
     struct Unk2723CProc *proc = Proc_Start(gUnknown_08499D2C, PROC_TREE_3);
 
@@ -44,6 +44,7 @@ void sub_0802723C(int x, int y)
     proc->unk30 = (y << 4) - gMap->scrollY;
     proc->unk54 = 2;
 }
+asm(".global sub_0802723C\n.thumb_set sub_0802723C, StartSupplyIconEffect\n");
 
 void sub_08027278(int x, int y)
 {

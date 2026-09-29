@@ -17,5 +17,5 @@
 
 void sub_08046D24(void)
 {
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
 }

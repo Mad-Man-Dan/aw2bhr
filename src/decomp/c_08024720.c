@@ -27,7 +27,7 @@
  * the else) which is what preserves the guard's adds r0,r5,#0 copy and its
  * double read by compare + shift. */
 
-void sub_08024720(void)
+void AnimatePowerActiveCoPalettes(void)
 {
     u16 i;
     int idx;
@@ -56,3 +56,4 @@ void sub_08024720(void)
         }
     }
 }
+asm(".global sub_08024720\n.thumb_set sub_08024720, AnimatePowerActiveCoPalettes\n");

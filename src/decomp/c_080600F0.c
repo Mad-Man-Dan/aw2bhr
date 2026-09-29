@@ -7,8 +7,9 @@
  * sub_080600F0 @ 0x080600F0
  */
 
-void sub_080600F0(void)
+void AiExecuteBuildUnit(void)
 {
     BuyUnit(gUnknown_030046C0.unk02, gUnknown_030046C0.unk03, gUnknown_030046C0.unk01);
     gUnknown_030045D4 = 0xb;
 }
+asm(".global sub_080600F0\n.thumb_set sub_080600F0, AiExecuteBuildUnit\n");

@@ -23,7 +23,7 @@ int AiBuildPropertyList(void)
 
     for (i = 0; gUnknown_084995A0[i].unk00 != 0xFF; i++)
     {
-        if (sub_08042424(gUnknown_084995A0[i].unk01, gUnknown_084995A0[i].unk02) == 1
+        if (IsOwnFactoryCell(gUnknown_084995A0[i].unk01, gUnknown_084995A0[i].unk02) == 1
             && gMap->unit[gMap->rowOffset[gUnknown_084995A0[i].unk02] + gUnknown_084995A0[i].unk01] == 0
             && gUnknown_085767F2[gMap->terrain[gMap->rowOffset[gUnknown_084995A0[i].unk02] + gUnknown_084995A0[i].unk01] & 0x1f] != 0)
         {

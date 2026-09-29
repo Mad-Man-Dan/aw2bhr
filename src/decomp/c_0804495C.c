@@ -21,5 +21,5 @@
  */
 void sub_0804495C(void)
 {
-    sub_08024830();
+    ReloadGameplayPalettes();
 }

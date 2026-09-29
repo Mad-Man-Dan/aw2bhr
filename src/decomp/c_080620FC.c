@@ -43,7 +43,7 @@ struct Unk620FCBuf
     struct Unk620FCBlk blk[1];
 };
 
-void sub_080620FC(int a1, int a2)
+void AiFillInterestList(int a1, int a2)
 {
     int x;
     int y;
@@ -55,11 +55,11 @@ void sub_080620FC(int a1, int a2)
 
     n = 0;
     k = 0;
-    sub_080581A4(gMap->dangerMask, 0);
+    FillMapPlane(gMap->dangerMask, 0);
     SetWorkingMapPlane((u8 *)gMap->move);
-    sub_08062330();
+    AiSeedInterestCandidates();
 
-    while ((u8)sub_080623C4(&x, &y)) {
+    while ((u8)AiPopNextInterestSeed(&x, &y)) {
         gUnknown_030013EC(x, y, a2, 0x78, 0);
         n = gUnknown_02029ED8[k + a1 * 0x20 + gUnknown_030033EC * 0xc00];
         for (j = 0; j < gMap->height; j++) {
@@ -91,3 +91,4 @@ void sub_080620FC(int a1, int a2)
     ((struct Unk620FCBuf *)gUnknown_02029ED8)->blk[gUnknown_030033EC].rec[a1][n].x = 0xff;
     gUnknown_02029ED8[k + a1 * 0x20 + gUnknown_030033EC * 0xc00] = -1;
 }
+asm(".global sub_080620FC\n.thumb_set sub_080620FC, AiFillInterestList\n");

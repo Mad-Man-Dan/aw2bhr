@@ -12,7 +12,7 @@
  */
 
 #include "proc.h"
-/* Lays out one sub_0804402C sprite per unit past the first, right-to-left from
+/* Lays out one PutCoMinimugSprite sprite per unit past the first, right-to-left from
  * x = 0xd8, then draws two fixed DrawOamObject sprites.
  *
  * All THREE loop quantities -- the x coordinate, the 0xc-stride tile index and
@@ -40,10 +40,10 @@ void EnemyCoMinimugs_Loop(struct Unk080878A8Proc *proc)
     int n;
     int i;
 
-    n = sub_0802490C(gUnknown_02027F74.unk04[proc->unk54]);
+    n = GetMapArmyCount(gUnknown_02027F74.unk04[proc->unk54]);
 
     for (i = 0; i < n - 1; i++)
-        sub_0804402C(0x1000 | (0xd8 - (n - 2) * 0x20 + i * 0x20), 0xa0,
+        PutCoMinimugSprite(0x1000 | (0xd8 - (n - 2) * 0x20 + i * 0x20), 0xa0,
             0x400 | (0x7000 + i * 0x1000) | (0x90 + i * 0xc), 6);
 
     DrawOamObject(0x69, 0x26, 0x98, 0, 2);

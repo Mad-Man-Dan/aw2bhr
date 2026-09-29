@@ -26,11 +26,11 @@ u8 sub_0803CC3C(u16 a)
 
 /* Two compares that share the `return 0` arm, which is what `||` gives. The
  * `lsls #0x18; lsrs #0x18` after the `bl` is agbcc re-narrowing a u8-returning
- * callee, not a cast here -- 0xff is sub_0802490C's empty-slot sentinel and
+ * callee, not a cast here -- 0xff is GetMapArmyCount's empty-slot sentinel and
  * the same one gUnknown_020280C0.unk13 uses. */
 int sub_0803CC64(u16 a)
 {
-    u8 v = sub_0802490C(a);
+    u8 v = GetMapArmyCount(a);
 
     if (v == 0xff || v == 0)
         return 0;

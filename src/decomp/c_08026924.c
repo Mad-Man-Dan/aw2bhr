@@ -10,7 +10,7 @@
 /* Chapter setup: clears the unused army slots' gUnknown_03003FF8 entries, then
  * copies the four per-slot arrays out of gPlaySt into the army
  * records, and finally walks the unit table handing every live unit to
- * sub_08025D20.
+ * IncrementPlayerUnitsCreated.
  *
  * TWO READ-OUTS THAT ARE NOT FREE:
  *
@@ -70,12 +70,12 @@ void InitPlayersFromSettings(void)
     if (gPlaySt.coAbilities == 0)
         gPlaySt.coPowersEnabled = 0;
 
-    sub_08026B28();
+    BuildEnemyArmyMasks();
 
     for (i = 1; i <= 0xff; i++)
     {
         if (gUnits[i].type != 0)
-            sub_08025D20((i >> 6) + 1);
+            IncrementPlayerUnitsCreated((i >> 6) + 1);
     }
 }
 asm(".global sub_08026924\n.thumb_set sub_08026924, InitPlayersFromSettings\n");

@@ -42,7 +42,7 @@
 s16 sub_0802A258(struct Unit *);
 bool8 sub_0802A38C(void *, int (*)(void *));
 
-void sub_0802A3FC(void)
+void TurnStartSupply_Loop(void)
 {
     struct Unit *p;
     u16 i;
@@ -76,3 +76,4 @@ void sub_0802A3FC(void)
     if (i == 0x33)
         ClearSlotScriptCallback(gUnknown_03001FBC);
 }
+asm(".global sub_0802A3FC\n.thumb_set sub_0802A3FC, TurnStartSupply_Loop\n");

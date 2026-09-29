@@ -8,7 +8,7 @@
  * sub_08062560 @ 0x08062560
  */
 
-void sub_08062560(u16 a1, u8 a2)
+void AiAddArmyThreat(u16 a1, u8 a2)
 {
     struct Unit *e;
     int u;
@@ -25,16 +25,16 @@ void sub_08062560(u16 a1, u8 a2)
             continue;
         if ((u8)(e->flags & 8) != 0)
             continue;
-        if ((u8)sub_08062730((struct Unit *)gUnknown_030040D8, e) == 0)
+        if ((u8)AiIsEnemyThreatWindowNearUnit((struct Unit *)gUnknown_030040D8, e) == 0)
             continue;
-        if (e->type == 0x18 && (u8)sub_080257C0(u) == 0)
+        if (e->type == 0x18 && (u8)IsUnitVisibleToCurrentTeam(u) == 0)
             continue;
         if ((u8)IsCellVisibleToArmy(gUnknown_03004480, e->x, e->y) == 0)
             continue;
         if (GetUnitFiringRangeWithCoBonus(gUnknown_030033EC, e->type) == 1) {
             gUnknown_030013EC(e->x, e->y, e->type,
                               GetUnitMovementWithCoBonus(gUnknown_030033EC, e->type), -1);
-            sub_0801FD9C(0x79);
+            MapMarkHalo(0x79);
         } else {
             gUnknown_030013EC(e->x, e->y, 0x10,
                               GetUnitFiringRangeWithCoBonus(gUnknown_030033EC, e->type), 0);
@@ -49,3 +49,4 @@ void sub_08062560(u16 a1, u8 a2)
         }
     }
 }
+asm(".global sub_08062560\n.thumb_set sub_08062560, AiAddArmyThreat\n");

@@ -56,7 +56,7 @@ struct Unk0805D648Cmd
     /* 0x13 */ u8 unk13;
 };
 
-void sub_0805D648(s16 a1, s16 a2, u8 a3, u8 a4, u8 a5)
+void AiPublishAction(s16 a1, s16 a2, u8 a3, u8 a4, u8 a5)
 {
     int x;
     int y;
@@ -126,7 +126,8 @@ void sub_0805D648(s16 a1, s16 a2, u8 a3, u8 a4, u8 a5)
     d->unk13 = 1;
 
     if (gPlaySt.savingEnabled != 0)
-        sub_0805D5EC();
+        AiSendActionCommand();
 
     sub_08071910(gUnknown_03004680, 1);
 }
+asm(".global sub_0805D648\n.thumb_set sub_0805D648, AiPublishAction\n");

@@ -817,7 +817,7 @@ void DesignRoomDrawUnitIcon(int a1, int a2, int a3, int a4, int a5, int a6, int 
   if (a4 != 0x19) {
     if (a7) {
       RegisterDataMove(
-          sub_08026190() + ((sub_080261A4(cls, a4) & 0x3FF) << 5),
+          GetUnitSheetGraphics() + ((GetUnitSpriteTile(cls, a4) & 0x3FF) << 5),
           (void *)(0x06010000 + ((gUnknown_08485D20[a1] & 0x3FF) << 5)), 0x80);
     }
     ApplyPalette(

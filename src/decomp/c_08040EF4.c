@@ -51,7 +51,7 @@ struct Unk40EF4Proc
     /* 46 */ u16 unk46;
 };
 
-void sub_08040EF4(struct Unk40EF4Proc *proc)
+void CaptureAnimSprites_Loop(struct Unk40EF4Proc *proc)
 {
   s16 x;
   short new_var;
@@ -80,3 +80,4 @@ void sub_08040EF4(struct Unk40EF4Proc *proc)
   SetObjAffine(3, Div(gSinLut[0x40] * 16, 0x100), Div((-gSinLut[0]) * 16, (s != 0) ? (s) : (2)), Div(gSinLut[0] * 16, 0x100), Div(gSinLut[0x40] * 16, (s != 0) ? (s) : (2)));
   sub_0802BD54(x, new_var - 0xc, 0x14 - proc->unk46);
 }
+asm(".global sub_08040EF4\n.thumb_set sub_08040EF4, CaptureAnimSprites_Loop\n");

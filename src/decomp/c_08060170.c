@@ -7,7 +7,7 @@
  * sub_08060170 @ 0x08060170
  */
 
-/* sub_08060170 @ 0x08060170, 88 bytes. MATCHED in Wave 63 with a label/goto
+/* AiExecuteTurnEnd @ 0x08060170, 88 bytes. MATCHED in Wave 63 with a label/goto
  * loop. That suppresses loop.c entirely, so two explicit pointer variables
  * walk source and destination while the explicit counter remains ascending.
  *
@@ -66,14 +66,14 @@
  * unk0e[4], carved out of filler_08 in include/unknown-globals.h. That part is
  * independent of the loop shape and is proved by the pre-loop stores. */
 
-void sub_08060170(void)
+void AiExecuteTurnEnd(void)
 {
     int i;
     u8 *src;
     u8 *dst;
 
     gUnknown_030032D8 = 1;
-    sub_08025EA0();
+    ReadyCurrentArmyUnits();
     gUnknown_03004780 = 0;
     gPlaySt.unk2e = gUnknown_030046C0.unk06;
     gUnknown_03004490[0] = gUnknown_030046C0.unk07;
@@ -91,3 +91,4 @@ loop:
     if (i <= 3)
         goto loop;
 }
+asm(".global sub_08060170\n.thumb_set sub_08060170, AiExecuteTurnEnd\n");

@@ -9,7 +9,7 @@
  */
 
 /* Loads map <a> into gUnknown_08499590: for the 0xB4..0xBF range it forwards to
- * sub_08021750 (the "rebuild from the tile table already in the map" path), and
+ * LoadSavedMapIntoGMap (the "rebuild from the tile table already in the map" path), and
  * otherwise it seeds the header from the gUnknown_03003F68 blob, copies the
  * name, and fills tile[]/plane[] from the blob's halfword tile stream.
  *
@@ -17,7 +17,7 @@
  * fold's build_range_check and comes out as `(unsigned)(a - 0xb4) <= 0xb`,
  * which is the ROM's `subs r0,#0xb4 / cmp r0,#0xb / bhi`.  The parameter is an
  * `int` (unknown-functions.h already says so), so the subtraction happens in
- * SImode and there is no truncation -- contrast sub_08021810, whose copy of the
+ * SImode and there is no truncation -- contrast LoadMapAndCountProperties, whose copy of the
  * same test runs on a u8 member and therefore carries `lsls #0x18; lsrs #0x18`.
  *
  * gUnknown_03003F68's blob is u8 width, u8 height, then the halfword tile
@@ -33,7 +33,7 @@ void LoadMapIntoGMap(int a)
 
     if (a >= 0xb4 && a <= 0xbf)
     {
-        sub_08021750(a);
+        LoadSavedMapIntoGMap(a);
         return;
     }
 
@@ -53,7 +53,7 @@ void LoadMapIntoGMap(int a)
 
     CopyString(gMap->unk421a,
                  GetMapName(a));
-    gMap->unk4233 = sub_0802490C(a);
+    gMap->unk4233 = GetMapArmyCount(a);
 
     InitMapRowOffsets();
 

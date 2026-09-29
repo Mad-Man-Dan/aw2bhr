@@ -25,7 +25,7 @@ asm(".global sub_0802E250\n.thumb_set sub_0802E250, MapCursor_OnPressStart\n");
 void sub_0802E260(void)
 {
     HandleMoveMapCursor();
-    sub_08023518();
+    MoveMapCursorFromHeldKeys();
     HandleMoveCameraWithMapCursor(4);
     IsMapCursorSettled();
 }
@@ -44,7 +44,7 @@ void sub_0802E278(void)
     u16 k;
 
     HandleMoveMapCursor();
-    sub_08023518();
+    MoveMapCursorFromHeldKeys();
     HandleMoveCameraWithMapCursor(8);
 
     if (IsMapCursorSettled())

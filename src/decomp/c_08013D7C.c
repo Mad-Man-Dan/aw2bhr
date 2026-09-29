@@ -49,7 +49,7 @@ void DrawShiftJisText(int x, int y, u16 *tilemap, u8 *s, u16 attr)
                 n = Div(e->hp - 1, 10) + 1;
             else
                 n = 0;
-            sub_0802216C(tilemap + (x + i) + y * 32, e->type,
+            WriteUnitTileQuad(tilemap + (x + i) + y * 32, e->type,
                          gUnknown_03003F2C, e->unk07, 0, n, 0, 0);
             i += 2;
             s += 2;
@@ -62,7 +62,7 @@ void DrawShiftJisText(int x, int y, u16 *tilemap, u8 *s, u16 attr)
                 n = Div(e->hp - 1, 10) + 1;
             else
                 n = 0;
-            sub_0802216C(tilemap + (x + i) + y * 32, e->type,
+            WriteUnitTileQuad(tilemap + (x + i) + y * 32, e->type,
                          gUnknown_03003F2C, e->unk07, 0, n, 0, 0);
             i += 2;
             s += 2;

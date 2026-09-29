@@ -7,7 +7,7 @@
  * sub_0806056C @ 0x0806056C
  */
 
-/* sub_0806056C @ 0x0806056C, 280 bytes.
+/* AiExecutorStartCargoDrop @ 0x0806056C, 280 bytes.
  *
  * The byte at gUnknown_030046C0 + 6 + a1 has to be reached through a POINTER
  * LOCAL that is advanced by 6 in a statement of its own. Every spelling that
@@ -20,9 +20,9 @@
  *
  * The `(((struct Unit *)gUnknown_030040D8 - gUnits) & 0xc0)
  * >> 6` army index is copied from the matched c_0802966C.c, which makes the
- * same sub_080357E0 call.
+ * same CreateMoveSlideWithPath call.
  */
-void sub_0806056C(u8 a1)
+void AiExecutorStartCargoDrop(u8 a1)
 {
     struct Unit *unit;
     u8 *p;
@@ -37,7 +37,7 @@ void sub_0806056C(u8 a1)
         unit = &gUnits[gUnknown_030040D8->unk07[a1]];
         gUnknown_03003110[0] = 0xa;
         gUnknown_03003110[1] = 4;
-        gUnknown_030045E0[a1] = (struct Unk35828Proc *)sub_080357E0(
+        gUnknown_030045E0[a1] = (struct Unk35828Proc *)CreateMoveSlideWithPath(
             gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
             (((struct Unit *)gUnknown_030040D8 - gUnits) & 0xc0) >> 6,
             unit->type, gUnknown_03003110);
@@ -46,7 +46,7 @@ void sub_0806056C(u8 a1)
     {
         gUnknown_03003F40 = p[a1] - 1;
         unit = &gUnits[gUnknown_030040D8->unk07[a1]];
-        gUnknown_030045E0[a1] = (struct Unk35828Proc *)sub_080357E0(
+        gUnknown_030045E0[a1] = (struct Unk35828Proc *)CreateMoveSlideWithPath(
             gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
             (((struct Unit *)gUnknown_030040D8 - gUnits) & 0xc0) >> 6,
             unit->type, &gUnknown_08576900[gUnknown_03003F40]);
@@ -55,3 +55,4 @@ void sub_0806056C(u8 a1)
         sub_08029868(unit->type);
     }
 }
+asm(".global sub_0806056C\n.thumb_set sub_0806056C, AiExecutorStartCargoDrop\n");

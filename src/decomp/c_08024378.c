@@ -20,7 +20,7 @@
  * write left in r4 (which is what forces r4/r5 into the push list).
  */
 
-void sub_08024378(void)
+void SetMapLayersBg0BlendFade(void)
 {
     gUnknown_03002B6C.bits.priority = 0;
     gUnknown_03001FE8.bits.priority = 2;
@@ -37,3 +37,4 @@ void sub_08024378(void)
     gUnknown_03002B28 = 0x10;
     ResetWindowShadows();
 }
+asm(".global sub_08024378\n.thumb_set sub_08024378, SetMapLayersBg0BlendFade\n");

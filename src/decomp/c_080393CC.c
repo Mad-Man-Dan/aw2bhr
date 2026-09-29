@@ -48,7 +48,7 @@ void sub_080393CC(void)
  * 0x3FF is written as itself even though agbcc emits it as `adds r3,#0xf5` on
  * top of the 0x30A already in r3: that is the compiler reusing a live
  * constant, not a source-level relationship between the two numbers. */
-void sub_0803941C(int a, int b)
+void SpawnCoPowerNameLetter(int a, int b)
 {
     struct UnkVec v;
     s8 i;
@@ -68,3 +68,4 @@ void sub_0803941C(int a, int b)
     SetSlotSpriteScaleX(i, 0x200);
     SetSlotSpriteScaleY(i, 0x200);
 }
+asm(".global sub_0803941C\n.thumb_set sub_0803941C, SpawnCoPowerNameLetter\n");

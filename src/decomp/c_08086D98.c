@@ -69,7 +69,7 @@ void WarRoomScroll_08086DD5(void)
  * view explicitly; 0x6200 is `movs #0xc4; lsls #7`. */
 void MapSelectPreview_FillTilemap(void)
 {
-    sub_08037A20(gBG1TilemapBuffer, 0x6200);
+    FillMapPreviewTilemap(gBG1TilemapBuffer, 0x6200);
     gUnknown_03005918 = ((u8 *)gUnknown_03003F68)[0];
     gUnknown_030058F4 = ((u8 *)gUnknown_03003F68)[1];
     BG_EnableSyncBG1();

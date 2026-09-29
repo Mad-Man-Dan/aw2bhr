@@ -57,7 +57,7 @@ bool8 ApplyDailyFuelBurn(struct Unit *a1)
     if (a1->flags & 0x20)
         cost = 5;
 
-    sum = (s8)cost + sub_08042C68(gUnknown_030033EC, a1->type);
+    sum = (s8)cost + GetCoDailyFuelBurnBonus(gUnknown_030033EC, a1->type);
     cost = sum;
 
     if ((s8)sum < 0)

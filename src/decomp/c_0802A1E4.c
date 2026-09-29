@@ -19,7 +19,7 @@
  * instead of the adjacent pair the ROM has. Same operand-order rule as
  * c_0802966C.c.
  *
- * The return is s16, NOT bool8: the only caller (sub_0802A258) truth-tests it
+ * The return is s16, NOT bool8: the only caller (HasAdjacentOwnSupplyUnit) truth-tests it
  * with `lsls #0x10`, and the body's `movs r0, #1` / `movs r0, #0` is identical
  * at every width. */
 /* WAVE 35: CANONICAL `struct Map`. Eight drafts across blocks 0x08029-0x0802B
@@ -40,7 +40,7 @@ struct Unk2A258
     /* 0x03 */ u8 unk03;
 };
 
-s16 sub_0802A1E4(s16 x, s16 y)
+s16 IsOwnSupplyUnitAtCell(s16 x, s16 y)
 {
     struct Unit *unit;
 
@@ -53,25 +53,27 @@ s16 sub_0802A1E4(s16 x, s16 y)
 
     return 0;
 }
+asm(".global sub_0802A1E4\n.thumb_set sub_0802A1E4, IsOwnSupplyUnitAtCell\n");
 
-bool8 sub_0802A258(struct Unk2A258 *p)
+bool8 HasAdjacentOwnSupplyUnit(struct Unk2A258 *p)
 {
     if (gUnknown_084995A8[p->unk00] == 0)
         return 0;
 
-    if (p->unk02 != 0 && sub_0802A1E4(p->unk02 - 1, p->unk03))
+    if (p->unk02 != 0 && IsOwnSupplyUnitAtCell(p->unk02 - 1, p->unk03))
         return 1;
 
-    if (p->unk03 != 0 && sub_0802A1E4(p->unk02, p->unk03 - 1))
+    if (p->unk03 != 0 && IsOwnSupplyUnitAtCell(p->unk02, p->unk03 - 1))
         return 1;
 
     if (p->unk02 < gMap->width - 1
-        && sub_0802A1E4(p->unk02 + 1, p->unk03))
+        && IsOwnSupplyUnitAtCell(p->unk02 + 1, p->unk03))
         return 1;
 
     if (p->unk03 < gMap->height - 1
-        && sub_0802A1E4(p->unk02, p->unk03 + 1))
+        && IsOwnSupplyUnitAtCell(p->unk02, p->unk03 + 1))
         return 1;
 
     return 0;
 }
+asm(".global sub_0802A258\n.thumb_set sub_0802A258, HasAdjacentOwnSupplyUnit\n");

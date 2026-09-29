@@ -31,7 +31,7 @@ void sub_0803A190(int a1, struct Unit *a2)
   new_var2 = gPlayers[gUnknown_0849D89C->unk08].teamColor;
   n = new_var2;
   n = n - 1;
-  k = sub_08042DE0(gUnknown_0849D89C->unk08) - 1;
+  k = GetPlayerCoCountry(gUnknown_0849D89C->unk08) - 1;
   new_var = ((struct Unk0803A190Tbl *) gUnknown_0849DC18)->unk14[(a2->type * 15) + k];
   Decompress(new_var, gUnknown_0200FD50);
   QueueVBlankCallback((void *) sub_0803A174);

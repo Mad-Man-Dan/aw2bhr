@@ -10,7 +10,7 @@
 #include "proc.h"
 
 /* A bare `bx lr` -- it does nothing at all, so its arity is invisible from the
- * body and can only come from a call site. Wave 43 found one: sub_08038484
+ * body and can only come from a call site. Wave 43 found one: EndOfGame_FinishCampaignMap
  * emits `ldrb r0, [r5, #2]; subs r0, #0x8a; bl CampaignMapNoOp`, materialising an
  * int argument in r0 immediately before the call. The earlier reading -- "no
  * caller anywhere in the ROM reaches it by `bl`, so `void (void)` is all the

@@ -15,7 +15,7 @@
  * is the early-`return TRUE` spelling. Nesting the two inner tests inside the
  * flag test and returning TRUE at the bottom emits them the other way round --
  * same size, different bytes. */
-bool8 sub_08028944(u16 a)
+bool8 CheckArmySurvivesHqRule(u16 a)
 {
     if ((gPlaySt.event20 & 2) == 0)
         return TRUE;
@@ -28,3 +28,4 @@ bool8 sub_08028944(u16 a)
 
     return TRUE;
 }
+asm(".global sub_08028944\n.thumb_set sub_08028944, CheckArmySurvivesHqRule\n");

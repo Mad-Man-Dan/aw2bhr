@@ -7,7 +7,7 @@
  * sub_08061CDC @ 0x08061CDC
  */
 
-void sub_08061CDC(void)
+void AiClearTerritoryCounters(void)
 {
     struct PropertyListEntry *p;
     int i;
@@ -24,3 +24,4 @@ void sub_08061CDC(void)
         p++;
     }
 }
+asm(".global sub_08061CDC\n.thumb_set sub_08061CDC, AiClearTerritoryCounters\n");

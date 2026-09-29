@@ -69,9 +69,9 @@ struct Unk61E98Unit
  * The two clears are ONE chained assignment: the ROM loads both pool addresses
  * before materialising the 0, which is the operand-class grouping of a single
  * statement. Written as two statements agbcc interleaves the ldr/strb pairs. */
-void sub_08061E98(void)
+void AiUpdateUnitModes(void)
 {
-    void (*fns[3])() = {sub_08061DCC, sub_08061E54, sub_08061E80};
+    void (*fns[3])() = {sub_08061DCC, AiUpdateModeResupply, AiUpdateModeRepair};
     struct Unk61E98Unit *p;
     int i;
 
@@ -87,6 +87,7 @@ void sub_08061E98(void)
         }
     }
 }
+asm(".global sub_08061E98\n.thumb_set sub_08061E98, AiUpdateUnitModes\n");
 
 void AiScanBuildableFacilities(void)
 {

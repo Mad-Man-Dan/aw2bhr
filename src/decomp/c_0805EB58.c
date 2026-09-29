@@ -24,7 +24,7 @@ union Unk5EB58Sel
     } f;
 };
 
-void sub_0805EB58(void)
+void AiMoveToNearestNonTeamCell(void)
 {
     union Unk5EB58Sel v;
     s16 best;
@@ -69,5 +69,6 @@ void sub_0805EB58(void)
     if (v.f.unk00 != 0x270f)
         AiAdvanceToward(&v);
     else
-        sub_0805F7B8();
+        AiFallbackMove();
 }
+asm(".global sub_0805EB58\n.thumb_set sub_0805EB58, AiMoveToNearestNonTeamCell\n");

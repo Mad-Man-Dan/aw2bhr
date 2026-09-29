@@ -7,7 +7,7 @@
  * sub_08022AF8 @ 0x08022AF8
  */
 
-void sub_08022AF8(u8 a, u8 b, u8 c, u8 d)
+void DrawCornerBracketSprites(u8 a, u8 b, u8 c, u8 d)
 {
     u8 t;
 
@@ -30,3 +30,4 @@ void sub_08022AF8(u8 a, u8 b, u8 c, u8 d)
     PutOamHi(a + t, (d + b - t) | 0x400, gUnknown_08499B7C, 0x1365);
     PutOamHi(a + c - t, (d + b - t) | 0x400, gUnknown_08499B84, 0x1365);
 }
+asm(".global sub_08022AF8\n.thumb_set sub_08022AF8, DrawCornerBracketSprites\n");

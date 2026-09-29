@@ -9,16 +9,16 @@
  */
 
 #include "proc.h"
-/* Hands the proc's entry to sub_0803FF48 with the entry's cell pair and its
+/* Hands the proc's entry to StartExplosionEffect with the entry's cell pair and its
  * class tag, then reports the entry's index and refreshes the list.
  *
- * sub_0803FF48's FOURTH argument is invisible at the call: r3 still holds the
+ * StartExplosionEffect's FOURTH argument is invisible at the call: r3 still holds the
  * proc from the `adds r3, r0, #0` in the prologue, so no instruction sets it
  * up -- the declared `ProcPtr` fourth parameter is what proves it is there.
  *
  * The magic-number chain ends `asr #2` and NOT `asr #8`, so this is the bare
  * pointer subtraction `ent - gUnits` with no `>> 6`: it is the unit
- * index, not the army number that sub_0804203C and sub_08041FE0 derive. */
+ * index, not the army number that IsIndirectFireUnitArmed and IsDirectFireUnitArmed derive. */
 struct Unk401B4Proc
 {
     /* 00 */ u8 filler_00[0x4c];
@@ -26,7 +26,7 @@ struct Unk401B4Proc
 };
 /* Marks the entry's cell as occupied on two planes of the gUnknown_08499590
  * map, then refreshes. The map header is modelled as a struct for the same
- * reason IsCellOpenForDrop and sub_08040790 need it: the ROM computes every plane
+ * reason IsCellOpenForDrop and StartPipeSeamHit need it: the ROM computes every plane
  * address as `(map + K) + idx`, an association that only survives through a
  * COMPONENT_REF.
  *
@@ -35,21 +35,22 @@ struct Unk401B4Proc
  * `u8 *` and kills the non-const pointer global's MEM, so writing the global
  * honestly twice is what reproduces the reload.
  *
- * sub_0803FECC's third argument is invisible at the call -- r1 still holds this
+ * StartExplosionEffectDefault's third argument is invisible at the call -- r1 still holds this
  * function's own second parameter -- which its declared `ProcPtr` third
  * parameter is what proves. */
-void sub_080401B4(struct Unk401B4Proc *proc)
+void UnitDestroyed_ExplodeAndRemoveUnit(struct Unk401B4Proc *proc)
 {
     struct Unit *ent = proc->unk4c;
 
-    sub_0803FF48(ent->x, ent->y, gUnknown_085D5ABC[ent->type].unitClass, proc);
+    StartExplosionEffect(ent->x, ent->y, gUnknown_085D5ABC[ent->type].unitClass, proc);
     DestroyUnitAndCargo(ent - gUnits);
     RebuildMapUnitLayers();
 }
+asm(".global sub_080401B4\n.thumb_set sub_080401B4, UnitDestroyed_ExplodeAndRemoveUnit\n");
 
-void sub_08040200(struct Unk02028360 *ent, ProcPtr a2)
+void DestroyLaserOrMinicannon(struct Unk02028360 *ent, ProcPtr a2)
 {
-    sub_0803FECC(ent->unk00, ent->unk01, a2);
+    StartExplosionEffectDefault(ent->unk00, ent->unk01, a2);
 
     gMap->terrain[
         gMap->rowOffset[ent->unk01]
@@ -59,7 +60,8 @@ void sub_08040200(struct Unk02028360 *ent, ProcPtr a2)
         gMap->rowOffset[ent->unk01]
         + ent->unk00] = 4;
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     RemoveInventionRecord((struct Unk3E0D0 *)ent);
     RecountArmyProperties();
 }
+asm(".global sub_08040200\n.thumb_set sub_08040200, DestroyLaserOrMinicannon\n");

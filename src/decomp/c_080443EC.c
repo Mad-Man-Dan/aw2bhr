@@ -7,9 +7,10 @@
  * sub_080443EC @ 0x080443EC
  */
 
-void sub_080443EC(void)
+void CoPowerOlafBlizzard(void)
 {
     sub_0803B4DC(0x23);
     ChangeGameWeather(1);
     sub_08039F58();
 }
+asm(".global sub_080443EC\n.thumb_set sub_080443EC, CoPowerOlafBlizzard\n");

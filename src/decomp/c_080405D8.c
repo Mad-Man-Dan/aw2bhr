@@ -9,18 +9,18 @@
  */
 
 #include "proc.h"
-/* The vertical twin of the matched sub_0804050C next door: same
+/* The vertical twin of the matched SiloMissileLaunch_Loop next door: same
  * AP_Update / AP_Delete / Proc_Break shape, but scrolling the animation
  * DOWN eight pixels a frame and stopping once it has passed the proc's own
  * target row rather than the top of the screen.
  *
- * unk66 is s16 and not the u16 sub_08040590 stores it as: every read here is
+ * unk66 is s16 and not the u16 SiloMissileFall_Init stores it as: every read here is
  * `ldrsh`, including the re-read after `unk66 += 8` -- the stored value is not
  * reused because the comparison needs it sign-extended. The `+= 8` itself is
  * `ldrh; adds; strh`, which is the same for either signedness.
  *
- * unk54 is the pixel x sub_08040590 precomputed as `(unk2c << 4) + 8`, which is
- * why no `- 8` appears here and one does in sub_08040150 beside it. */
+ * unk54 is the pixel x SiloMissileFall_Init precomputed as `(unk2c << 4) + 8`, which is
+ * why no `- 8` appears here and one does in ExplosionEffect_Loop beside it. */
 struct Unk405D8Proc
 {
     /* 00 */ u8 filler_00[0x2c];
@@ -33,7 +33,7 @@ struct Unk405D8Proc
     /* 66 */ s16 unk66;
 };
 
-void sub_080405D8(struct Unk405D8Proc *proc)
+void SiloMissileFall_Loop(struct Unk405D8Proc *proc)
 {
     AP_Update(proc->unk50,
                  proc->unk54 - gMap->scrollX,
@@ -47,3 +47,4 @@ void sub_080405D8(struct Unk405D8Proc *proc)
         Proc_Break(proc);
     }
 }
+asm(".global sub_080405D8\n.thumb_set sub_080405D8, SiloMissileFall_Loop\n");

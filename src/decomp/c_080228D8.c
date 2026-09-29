@@ -29,7 +29,7 @@ struct Unk80228D8Proc
     /* 0x20 */ s16 unk20;
 };
 
-void sub_080228D8(struct Unk80228D8Proc *proc)
+void RangeOverlayScript_Loop(struct Unk80228D8Proc *proc)
 {
     if (proc->unk20 <= 7)
     {
@@ -52,3 +52,4 @@ void sub_080228D8(struct Unk80228D8Proc *proc)
         sub_08013664((u16 *)(i * 2 + (u32)gUnknown_08091C5E), 0x102, 0x1e);
     }
 }
+asm(".global sub_080228D8\n.thumb_set sub_080228D8, RangeOverlayScript_Loop\n");

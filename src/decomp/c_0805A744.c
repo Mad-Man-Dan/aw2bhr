@@ -22,7 +22,7 @@
  * parameter.
  * TWO THINGS IN THE INNER BODY WERE MEASURED, NOT GUESSED:
  *  - `cell` is bound as a pointer, and that is what makes the two sign-extended
- *    reads `ldrsb rN,[cell,rZERO]` instead of sub_0805AD90's `ldrb; lsl; asr`.
+ *    reads `ldrsb rN,[cell,rZERO]` instead of AiMarkLandingCellsNearEnemyHq's `ldrb; lsl; asr`.
  *    THUMB ldrsb has only a register-offset form, so agbcc will materialise a
  *    zero register for it when the address is a live pointer local and will not
  *    when the address dies at the load. Reading it as evidence that the array
@@ -40,7 +40,7 @@ struct Unk5A514Cell
     /* 0x02 */ s16 v;
 };
 
-void sub_0805A744(struct Unk5A514Cell *p)
+void AiFillLanderCostToShoalPlane(struct Unk5A514Cell *p)
 {
     int x;
     int y;
@@ -49,7 +49,7 @@ void sub_0805A744(struct Unk5A514Cell *p)
     int w;
     int off;
 
-    sub_080581A4(gMap->unk3C72, 0x7f);
+    FillMapPlane(gMap->unk3C72, 0x7f);
     SetWorkingMapPlane(gMap->move);
 
     while (p->v != -1)
@@ -79,3 +79,4 @@ void sub_0805A744(struct Unk5A514Cell *p)
         p++;
     }
 }
+asm(".global sub_0805A744\n.thumb_set sub_0805A744, AiFillLanderCostToShoalPlane\n");

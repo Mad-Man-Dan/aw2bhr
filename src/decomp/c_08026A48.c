@@ -23,7 +23,7 @@
  *
  * gUnknown_08090A80 in the asm is NOT a global: the ROM word at 0x08090A80
  * holds 0x08499598, agbcc's -fforce-addr address constant for
- * gPlayers. (Contrast gUnknown_08090A84 in sub_08026B28, which IS a
+ * gPlayers. (Contrast gUnknown_08090A84 in BuildEnemyArmyMasks, which IS a
  * real table -- the prefix decides nothing.)
  *
  * The 0x3c running offset is strength reduction of the element stride. */
@@ -114,7 +114,7 @@ asm(".global sub_08026AC0\n.thumb_set sub_08026AC0, PickArmyTeamColor\n");
  * Both counters are u8 -- truncated `lsls/lsrs #0x18` each pass and compared
  * `bls`, unsigned -- and `i + 1` computed at the top of the outer body is
  * loop-optimiser output, not source. */
-void sub_08026B28(void)
+void BuildEnemyArmyMasks(void)
 {
     u8 i;
     u8 j;
@@ -131,3 +131,4 @@ void sub_08026B28(void)
         }
     }
 }
+asm(".global sub_08026B28\n.thumb_set sub_08026B28, BuildEnemyArmyMasks\n");

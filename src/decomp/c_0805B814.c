@@ -25,7 +25,7 @@ struct Unk5B980Cell
     /* 0x02 */ s16 v;
 };
 
-void sub_0805B814(u16 *p)
+void AiUnloadCargoAt(u16 *p)
 {
     struct CellXY a;
     struct CellXY b;
@@ -36,7 +36,7 @@ void sub_0805B814(u16 *p)
     u8 d1;
     u8 d2;
 
-    if (sub_0805BA34(p[0], p[1], (u16 *)&a) == 0)
+    if (AiPickCargoDropCell(p[0], p[1], (u16 *)&a) == 0)
         return;
 
     d1 = 0;
@@ -57,7 +57,7 @@ void sub_0805B814(u16 *p)
 
     gUnknown_030045C8 = d1;
 
-    if (sub_0805BC7C(x, y, (u16 *)&b) == 1)
+    if (AiPickSecondCargoDropCell(x, y, (u16 *)&b) == 1)
     {
         d2 = 0;
         if (b.x != p[0])
@@ -66,16 +66,17 @@ void sub_0805B814(u16 *p)
             d2 = b.y - p[1] + 2;
 
         ((struct Unk40D8Bits *)gUnknown_030040D8)->unk09_6 -= 2;
-        sub_0805D648(p[0], p[1], 8, d1, d2);
+        AiPublishAction(p[0], p[1], 8, d1, d2);
     }
     else if (d1 != 0)
     {
         ((struct Unk40D8Bits *)gUnknown_030040D8)->unk09_6 -= 1;
-        sub_0805D648(p[0], p[1], 8, d1, 0);
+        AiPublishAction(p[0], p[1], 8, d1, 0);
     }
 }
+asm(".global sub_0805B814\n.thumb_set sub_0805B814, AiUnloadCargoAt\n");
 
-u8 sub_0805B8F4(u16 *outp)
+u8 AiPickUnloadCell(u16 *outp)
 {
     struct CellXY *out;
     struct Unk5B980Cell *p;
@@ -90,7 +91,7 @@ u8 sub_0805B8F4(u16 *outp)
     {
         if (p->v <= limit)
         {
-            if (sub_0805BB8C(p->x, p->y) == 1)
+            if (AiHasCargoRoomBeside(p->x, p->y) == 1)
             {
                 out->x = p->x;
                 out->y = p->y;
@@ -107,3 +108,4 @@ u8 sub_0805B8F4(u16 *outp)
 
     return 0;
 }
+asm(".global sub_0805B8F4\n.thumb_set sub_0805B8F4, AiPickUnloadCell\n");

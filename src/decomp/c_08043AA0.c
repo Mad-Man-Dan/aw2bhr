@@ -7,14 +7,15 @@
  * sub_08043AA0 @ 0x08043AA0, sub_08043AC0 @ 0x08043AC0, sub_08043AFC @ 0x08043AFC, sub_08043B14 @ 0x08043B14, sub_08043B44 @ 0x08043B44, sub_08043B60 @ 0x08043B60, sub_08043BA4 @ 0x08043BA4, sub_08043BC8 @ 0x08043BC8, sub_08043BF8 @ 0x08043BF8
  */
 
-/* GetLoadedCoPalette's result reaches sub_08043AC0's third parameter with a bare
+/* GetLoadedCoPalette's result reaches LoadCoPaletteVariant's third parameter with a bare
  * `adds r2, r0, #0` and no re-narrowing, which is what forced GetLoadedCoPalette's
  * return type from `u8` to `int` (wave 28, W28-B).
  */
-void sub_08043AA0(int a, int b)
+void LoadCoPalette(int a, int b)
 {
-    sub_08043AC0(a % 24, b, GetLoadedCoPalette(a % 24));
+    LoadCoPaletteVariant(a % 24, b, GetLoadedCoPalette(a % 24));
 }
+asm(".global sub_08043AA0\n.thumb_set sub_08043AA0, LoadCoPalette\n");
 
 /* Loads one 16-colour palette out of the slot's palette run.
  *
@@ -29,18 +30,20 @@ void sub_08043AA0(int a, int b)
  * shift of five under a u16 truncation, which shorten_binary_op folds into two
  * instructions for a MULT_EXPR and not for a shift.
  */
-void sub_08043AC0(int a, int b, int c)
+void LoadCoPaletteVariant(int a, int b, int c)
 {
     int i = a % 24;
 
     ApplyPaletteExt(gUnknown_084A0090[i % 24].palette + c * 16, (u16)(b * 0x20), 0x20);
 }
+asm(".global sub_08043AC0\n.thumb_set sub_08043AC0, LoadCoPaletteVariant\n");
 
-void sub_08043AFC(int a, int b)
+void LoadCoFullBody(int a, int b)
 {
-    sub_08043BC8(a, b);
-    sub_08043BF8(a, b);
+    LoadCoFullBodyPart0(a, b);
+    LoadCoFullBodyPart1(a, b);
 }
+asm(".global sub_08043AFC\n.thumb_set sub_08043AFC, LoadCoFullBody\n");
 
 /* Decompresses the slot's +0x04 blob into OBJ VRAM at tile `b & 0x3ff`.
  * 0x06010000 is the OBJ tile base and 0x20 the bytes per 4bpp tile.
@@ -58,7 +61,7 @@ void sub_08043B44(int a)
 
 /* A PutSpriteExt front end.  The two masked ORs look like no-ops and are:
  * `xh | x` where `xh` is `(u16)(x & ~0x1ff)` is just x.  The sibling wrappers
- * next door (sub_08043FD8, sub_0804402C) build the same two words as
+ * next door (sub_08043FD8, PutCoMinimugSprite) build the same two words as
  * `(x & 0x1ff) | (u16)(x & ~0x1ff)` and `((y - k) & 0xff) | (u16)(y & ~0xff)`,
  * i.e. they replace the coordinate field of a packed coordinate/flags word and
  * keep the flag bits; this one passes the coordinate straight through and so
@@ -78,22 +81,25 @@ void sub_08043B60(int x, int y, u32 oam2, u32 layer)
     PutSpriteExt(layer, xh | x, yh | y, gUnknown_084A0730, oam2);
 }
 
-void sub_08043BA4(int a, int b, int c)
+void LoadCoFullBodyAndPalette(int a, int b, int c)
 {
-    sub_08043BC8(a, b);
-    sub_08043BF8(a, b);
-    sub_08043AA0(a, c + 0x10);
+    LoadCoFullBodyPart0(a, b);
+    LoadCoFullBodyPart1(a, b);
+    LoadCoPalette(a, c + 0x10);
 }
+asm(".global sub_08043BA4\n.thumb_set sub_08043BA4, LoadCoFullBodyAndPalette\n");
 
 /* +0x00 of the slot record points at a two-element table of Decompress
- * sources; this loads element [0] and sub_08043BF8 element [1].
+ * sources; this loads element [0] and LoadCoFullBodyPart1 element [1].
  */
-void sub_08043BC8(int a, int b)
+void LoadCoFullBodyPart0(int a, int b)
 {
     Decompress(gUnknown_084A0090[a].fullBody[0], (void *)(0x06010000 + (b & 0x3ff) * 32));
 }
+asm(".global sub_08043BC8\n.thumb_set sub_08043BC8, LoadCoFullBodyPart0\n");
 
-void sub_08043BF8(int a, int b)
+void LoadCoFullBodyPart1(int a, int b)
 {
     Decompress(gUnknown_084A0090[a].fullBody[1], (void *)(0x06010000 + ((b + 0x80) & 0x3ff) * 32));
 }
+asm(".global sub_08043BF8\n.thumb_set sub_08043BF8, LoadCoFullBodyPart1\n");

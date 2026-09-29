@@ -24,12 +24,13 @@ struct Unk44AA0Proc
     /* 64 */ u16 unk64;
 };
 
-void sub_08044A88(ProcPtr parent)
+void CoPowerSturmMeteorStrike(ProcPtr parent)
 {
     struct Unk44A88Proc *proc = Proc_StartBlocking(gUnknown_084A0858, parent);
 
     proc->unk64 = 0x50;
 }
+asm(".global sub_08044A88\n.thumb_set sub_08044A88, CoPowerSturmMeteorStrike\n");
 
 void sub_08044AA0(ProcPtr parent)
 {

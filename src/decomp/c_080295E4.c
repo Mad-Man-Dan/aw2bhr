@@ -7,7 +7,7 @@
  * sub_080295E4 @ 0x080295E4
  */
 
-void sub_080295E4(void)
+void DropCellPicker_Init(void)
 {
     gUnknown_03001470[gUnknown_03001FBC].unk1e =
         GetDropDirectionMask(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02,
@@ -17,7 +17,8 @@ void sub_080295E4(void)
     gUnknown_03001470[gUnknown_03001FBC].unk24 = 0;
 
     if (gPlaySt.savingEnabled != 0)
-        sub_0803446C();
+        SnapshotActionCommandContext();
 
-    sub_080294FC();
+    DropCellPicker_SelectNext();
 }
+asm(".global sub_080295E4\n.thumb_set sub_080295E4, DropCellPicker_Init\n");

@@ -18,5 +18,5 @@ void sub_08039F58(void)
     gUnknown_03001418 = 0;
 
     SetPlayerCoPowerStatus(gUnknown_030033EC);
-    sub_08024268();
+    RebuildMapUnitLayers2();
 }

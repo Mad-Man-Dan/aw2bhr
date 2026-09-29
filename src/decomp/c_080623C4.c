@@ -8,7 +8,7 @@
  * sub_080623C4 @ 0x080623C4
  */
 
-/* sub_080623C4 @ 0x080623C4, 176 bytes, THUMB.  MATCHED (wave 48, W48-D).
+/* AiPopNextInterestSeed @ 0x080623C4, 176 bytes, THUMB.  MATCHED (wave 48, W48-D).
  *
  * Walks the {u8 x; u8 y; s16 v;} list at gUnknown_03003F20 -- the same 4-byte
  * view of that buffer src/decomp/c_0804151C.c builds and terminates with a
@@ -44,7 +44,7 @@ struct Unk623C4Cell
     /* 02 */ s16 v;
 };
 
-int sub_080623C4(int *outX, int *outY)
+int AiPopNextInterestSeed(int *outX, int *outY)
 {
     struct Unk623C4Cell *q;
     struct Unk623C4Cell *best;
@@ -78,3 +78,4 @@ int sub_080623C4(int *outX, int *outY)
         return 1;
     }
 }
+asm(".global sub_080623C4\n.thumb_set sub_080623C4, AiPopNextInterestSeed\n");

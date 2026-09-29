@@ -35,7 +35,7 @@
  * The `x << 16` in r8 is strength_reduce's giv for the `(s16)x` that
  * IsCellCapturableByCurrentArmy's declared parameters force; it is not authored. */
 
-void sub_0805E440(void)
+void AiTryJoinUnitOnProperty(void)
 {
     int x;
     int y;
@@ -85,12 +85,13 @@ void sub_0805E440(void)
                 if (n > 10)
                     continue;
             }
-            sub_0805D648(x, y, 10, 0, 0);
+            AiPublishAction(x, y, 10, 0, 0);
         }
     }
 }
+asm(".global sub_0805E440\n.thumb_set sub_0805E440, AiTryJoinUnitOnProperty\n");
 
-void sub_0805E5AC(void)
+void AiStayHomeIfEnemyInfantryNear(void)
 {
     s16 x;
     s16 y;
@@ -116,9 +117,10 @@ void sub_0805E5AC(void)
                 if (AreUnitsOnSameTeam(gUnknown_03003F38, u - gUnits) == 0)
                 {
                     if (u->type == 1)
-                        sub_0805D648(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03, 2, 0, 0);
+                        AiPublishAction(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03, 2, 0, 0);
                 }
             }
         }
     }
 }
+asm(".global sub_0805E5AC\n.thumb_set sub_0805E5AC, AiStayHomeIfEnemyInfantryNear\n");

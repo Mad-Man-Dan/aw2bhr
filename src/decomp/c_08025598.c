@@ -8,7 +8,7 @@
  * sub_08025598 @ 0x08025598
  */
 
-u8 sub_08025598(s16 a1, s16 a2)
+u8 IsViewerUnitAtCell(s16 a1, s16 a2)
 {
     int off;
     int id;
@@ -24,3 +24,4 @@ u8 sub_08025598(s16 a1, s16 a2)
 
     return 0;
 }
+asm(".global sub_08025598\n.thumb_set sub_08025598, IsViewerUnitAtCell\n");

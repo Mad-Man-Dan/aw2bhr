@@ -19,7 +19,7 @@
  * statement and the pool `ldr` moves ahead of it, leave the subscript inline
  * in the call arguments and the pool `ldr` sinks past the whole (s8) cast.
  * The ROM has it between the two, which is one statement boundary and 6 bytes.
- * Same lever as sub_08043AC0 in the 0x08043000 block.
+ * Same lever as LoadCoPaletteVariant in the 0x08043000 block.
  */
 struct Unk8074AAC
 {

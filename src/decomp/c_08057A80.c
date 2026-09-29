@@ -26,8 +26,8 @@ void sub_08057A80(u16 *dst)
     int i;
     int idx;
 
-    sub_08043E8C(gUnknown_03004580[0][4], (u16 *)0x060059C0, 0x050000E0);
-    sub_08043E8C(gUnknown_03004580[1][4], (u16 *)0x06005DC0, 0x05000100);
+    LoadCoMiniPortraitOpaque(gUnknown_03004580[0][4], (u16 *)0x060059C0, 0x050000E0);
+    LoadCoMiniPortraitOpaque(gUnknown_03004580[1][4], (u16 *)0x06005DC0, 0x05000100);
 
     for (i = 0; i <= 1; i++)
     {

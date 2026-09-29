@@ -11,7 +11,7 @@
 
 void TerrainInfoInput_Loop(void)
 {
-    sub_08023274(2);
+    StepMapCursorAndDraw(2);
 
     switch (gUnknown_02028DD4)
     {
@@ -58,7 +58,7 @@ void TerrainInfoWindow_Init(void)
     gUnknown_03001418 = 0;
 
     InitTextTileCache(0);
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     TmApplyTsaClipped(gBG2TilemapBuffer, gUnknown_02028DD5 >> 3, 0, gUnknown_0812AF68, 0x8360);
     BG_EnableSyncBG2();
     sub_0801F114();
@@ -125,7 +125,7 @@ void TerrainInfoWindow_Init(void)
         break;
     }
 
-    sub_0802465C();
+    SetMapLayerPrioritiesDefault();
     sub_0803B4DC(0x65);
 }
 asm(".global sub_08046E48\n.thumb_set sub_08046E48, TerrainInfoWindow_Init\n");

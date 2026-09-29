@@ -36,7 +36,7 @@ struct Unk45490Proc
     /* 30 */ int unk30;
 };
 
-void sub_08045490(struct Unk45490Proc *proc)
+void CoPowerCreateUnits_FindCity(struct Unk45490Proc *proc)
 {
     int idx;
 
@@ -68,3 +68,4 @@ void sub_08045490(struct Unk45490Proc *proc)
 
     Proc_Goto(proc, 1);
 }
+asm(".global sub_08045490\n.thumb_set sub_08045490, CoPowerCreateUnits_FindCity\n");

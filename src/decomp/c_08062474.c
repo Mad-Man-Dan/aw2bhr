@@ -8,7 +8,7 @@
  * sub_08062474 @ 0x08062474
  */
 
-void sub_08062474(void)
+void AiBuildThreatPlane(void)
 {
     int army;
     int saved;
@@ -22,18 +22,19 @@ void sub_08062474(void)
     gUnknown_030045CC.unk00_0 = 1;
 
     SetWorkingMapPlane(gMap->move);
-    sub_080581A4(gMap->dangerMask, 0);
+    FillMapPlane(gMap->dangerMask, 0);
 
     mask = gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d;
 
     if (gPlayers[army].unk2c & 1)
-        sub_08062560(1, mask);
+        AiAddArmyThreat(1, mask);
     if (gPlayers[army].unk2c & 2)
-        sub_08062560(2, mask);
+        AiAddArmyThreat(2, mask);
     if (gPlayers[army].unk2c & 4)
-        sub_08062560(3, mask);
+        AiAddArmyThreat(3, mask);
     if (gPlayers[army].unk2c & 8)
-        sub_08062560(4, mask);
+        AiAddArmyThreat(4, mask);
 
     gUnknown_03004480 = saved;
 }
+asm(".global sub_08062474\n.thumb_set sub_08062474, AiBuildThreatPlane\n");

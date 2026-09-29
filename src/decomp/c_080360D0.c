@@ -50,7 +50,7 @@ void RunMoveSlideCommand(ProcPtr procArg)
             return;
 
         case 10:
-            sub_08036024(proc);
+            PlayMoveSlideStopSfx(proc);
             proc->unk35 = 5;
             sub_08027278(proc->unk42 >> 4, proc->unk44 >> 4);
             sub_0803B4DC(0x7d);
@@ -61,11 +61,11 @@ void RunMoveSlideCommand(ProcPtr procArg)
             return;
 
         case 4:
-            sub_0803647C(proc);
+            StopMoveSlideWalk(proc);
             return;
 
         case -1:
-            sub_08036024(proc);
+            PlayMoveSlideStopSfx(proc);
             EndMoveSlide((struct Unk35828Proc *)proc);
             return;
 
@@ -73,7 +73,7 @@ void RunMoveSlideCommand(ProcPtr procArg)
         case 1:
         case 2:
         case 3:
-            sub_080360A4(proc);
+            PlayMoveSlideStepSfx(proc);
             proc->unk39++;
             if ((gPlayers[gUnknown_030033EC].turnState & 2) == 0)
             {

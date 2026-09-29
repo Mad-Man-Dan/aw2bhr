@@ -5,7 +5,7 @@
  * identical to the original. Order is address order and must
  * stay that way -- the linker places this file's .text as one
  * contiguous block at 0x08057F00.
- * CountUnitsWithTypeTag @ 0x08057F00, CountUnitsByDeployLocation @ 0x08057F54, CountUnitsOfType @ 0x08057FA8, AiCountEnemyUnitsOfType @ 0x08057FE8, sub_08058058 @ 0x08058058, sub_08058144 @ 0x08058144
+ * CountUnitsWithTypeTag @ 0x08057F00, CountUnitsByDeployLocation @ 0x08057F54, CountUnitsOfType @ 0x08057FA8, AiCountEnemyUnitsOfType @ 0x08057FE8, AiAppendSiloCandidates @ 0x08058058, AiClaimTerritoryCandidate @ 0x08058144
  */
 
 /* c_0804151C.c's list builder again, appending to the gUnknown_03003F20 list
@@ -124,7 +124,7 @@ int AiCountEnemyUnitsOfType(int a1)
 }
 asm(".global sub_08057FE8\n.thumb_set sub_08057FE8, AiCountEnemyUnitsOfType\n");
 
-int sub_08058058(int n)
+int AiAppendSiloCandidates(int n)
 {
     struct Unk58058Cell *out;
     int off;
@@ -162,6 +162,7 @@ int sub_08058058(int n)
     out->v = 0xFFFF;
     return n;
 }
+asm(".global sub_08058058\n.thumb_set sub_08058058, AiAppendSiloCandidates\n");
 
 /* Repeatedly pulls the next candidate cell off AiPopFirstNearestCandidate and maps it through
  * gMap's rowOffset table into the property plane; that byte selects a
@@ -174,7 +175,7 @@ int sub_08058058(int n)
  * place.  That is what puts the `ldr r6, =...` in the loop preheader: written
  * as a bare `gUnknown_084995A0[v]` the address load stays inside the loop, and
  * the pool word moves with it. */
-struct Unit *sub_08058144(int a1, int a2)
+struct Unit *AiClaimTerritoryCandidate(int a1, int a2)
 {
     struct Unk08057EC0Rec *e;
     struct PropertyListEntry **arrp;
@@ -199,3 +200,4 @@ struct Unit *sub_08058144(int a1, int a2)
 
     return (struct Unit *)q;
 }
+asm(".global sub_08058144\n.thumb_set sub_08058144, AiClaimTerritoryCandidate\n");

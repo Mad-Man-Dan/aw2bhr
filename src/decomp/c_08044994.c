@@ -14,7 +14,7 @@ struct Unk8044994
     /* 0x66 */ s16 unk66;
 };
 
-void sub_08044994(struct Unk8044994 *proc)
+void CoPowerMeteor_ApplyDamage(struct Unk8044994 *proc)
 {
     struct Unit *e;
     int col;
@@ -47,3 +47,4 @@ void sub_08044994(struct Unk8044994 *proc)
 
     sub_08039F58();
 }
+asm(".global sub_08044994\n.thumb_set sub_08044994, CoPowerMeteor_ApplyDamage\n");

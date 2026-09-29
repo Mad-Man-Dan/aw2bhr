@@ -15,7 +15,7 @@
  *
  * Both binding locals are load-bearing, and both are the c_080355CC.c rules:
  *  - `tbl` as its own statement, or the table's pool `ldr` lands AFTER the
- *    sub_08042DE0 call instead of in the callee-saved register the ROM keeps it
+ *    GetPlayerCoCountry call instead of in the callee-saved register the ROM keeps it
  *    in across the call.
  *  - `k` as its own statement, or agbcc reassociates the `- 1` into the
  *    relocation addend and emits `.word gUnknown_0849CD88-0x4`, losing the
@@ -33,13 +33,14 @@ struct Unk35B3CProc
  * for a MULT_EXPR and does not do for a shift. Both arms return, so they are
  * written in ROM-block order with the `== 1` arm second (the c_08017CF0.c
  * rule). */
-s16 sub_08035B00(u16 i)
+s16 GetMoveSlideSpeed(u16 i)
 {
     if (gPlaySt.animOpts == 1)
         return gUnknown_0849CD88[i].unk18;
     else
         return gUnknown_0849CD88[i].unk18 * 2;
 }
+asm(".global sub_08035B00\n.thumb_set sub_08035B00, GetMoveSlideSpeed\n");
 
 u8 *GetMoveSlideGraphicsPointer(ProcPtr procArg)
 {
@@ -48,7 +49,7 @@ u8 *GetMoveSlideGraphicsPointer(ProcPtr procArg)
     int k;
 
     tbl = (u8 **)gUnknown_0849CD88;
-    k = sub_08042DE0(proc->unk37 + 1) - 1;
+    k = GetPlayerCoCountry(proc->unk37 + 1) - 1;
 
     return tbl[proc->unk36 * 9 + k];
 }

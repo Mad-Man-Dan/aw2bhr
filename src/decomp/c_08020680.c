@@ -24,7 +24,7 @@
  * first four table entries points at the loop head.  The values themselves are
  * not recoverable -- only the fact that the four cases were written out
  * separately is. */
-void sub_08020680(int a, int b, u8 *p)
+void ScanMovementScriptToEnd(int a, int b, u8 *p)
 {
     int x;
 
@@ -50,3 +50,4 @@ void sub_08020680(int a, int b, u8 *p)
         }
     }
 }
+asm(".global sub_08020680\n.thumb_set sub_08020680, ScanMovementScriptToEnd\n");

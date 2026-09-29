@@ -14,7 +14,7 @@
  * src/decomp/c_080859E0.c uses (`void sub_080859E0(u16 *p) { p[0x32] = 0; }`).
  * A struct tag was deliberately NOT invented: +0x66 is read twice with two
  * different widths -- `ldrb [r4]` for IsPlayerAliveAndActive's u8 parameter and
- * `movs r0,#0; ldrsh r2,[r4,r0]` for sub_080436DC's int one -- and both are the
+ * `movs r0,#0; ldrsh r2,[r4,r0]` for DrawArmyCoPanel's int one -- and both are the
  * one s16 element `p[0x33]`, the ldrb being the prototype's narrowing folded
  * into the load. `adds r4, #0x66` is computed once and shared because THUMB has
  * no ldrsh immediate form and 0x66 is past ldrb's imm5 limit.
@@ -27,7 +27,7 @@ void sub_080851CC(s16 *p)
     DrawOamObject(0x13, 8, 0x28, 0, 1);
 
     if (IsPlayerAliveAndActive(p[0x33]) != 0)
-        sub_080436DC(0x98, 0x70, p[0x33]);
+        DrawArmyCoPanel(0x98, 0x70, p[0x33]);
 }
 
 /* Twin of sub_080851CC; see that function for the derivation. The only
@@ -38,5 +38,5 @@ void sub_08085208(s16 *p)
     DrawOamObject(0x14, 8, 0x28, 0, 1);
 
     if (IsPlayerAliveAndActive(p[0x33]) != 0)
-        sub_080436DC(0x98, 0x70, p[0x33]);
+        DrawArmyCoPanel(0x98, 0x70, p[0x33]);
 }

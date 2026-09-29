@@ -20,8 +20,9 @@
  * The `(void *)` cast is that family's house convention and is what makes the
  * pool word relocate against the symbol rather than become a plain constant.
  * RunOrQueueDrawCallback returns a value; this discards it. */
-void sub_08039264(void)
+void UpdateMovePathAndQueueDraw(void)
 {
     UpdateMovePathToCursor();
     RunOrQueueDrawCallback((void *)sub_08039188, 2);
 }
+asm(".global sub_08039264\n.thumb_set sub_08039264, UpdateMovePathAndQueueDraw\n");

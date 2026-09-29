@@ -18,7 +18,7 @@ struct UnkP448E4
 /* Look up a unit id and, if there is one, report its cell to ScrollCameraToKeepCellInView.
  *
  * The guard tests the RETURN VALUE, not the field: the `cmp r0,#0` reuses the
- * byte sub_0805C290 handed back, whereas the index a few instructions later is
+ * byte AiPickMissileTargetUnit handed back, whereas the index a few instructions later is
  * a fresh `ldrsh` off the proc. A single `proc->unk66 != 0` guard would have
  * been the same `ldrsh` both times, so the local is in the ROM and not a
  * convenience here.
@@ -26,9 +26,9 @@ struct UnkP448E4
  * `&gUnits[...]` is bound to a pointer before the two byte reads;
  * that is what keeps the pool word in its own register and defers the
  * dereference past the index arithmetic, which is the ROM's order. */
-void sub_080448E4(struct UnkP448E4 *proc)
+void CoPowerMeteor_PickTarget(struct UnkP448E4 *proc)
 {
-    u8 id = sub_0805C290(gUnknown_030033EC, 1);
+    u8 id = AiPickMissileTargetUnit(gUnknown_030033EC, 1);
     struct Unit *e;
 
     proc->unk66 = id;
@@ -37,3 +37,4 @@ void sub_080448E4(struct UnkP448E4 *proc)
         ScrollCameraToKeepCellInView(e->x, e->y);
     }
 }
+asm(".global sub_080448E4\n.thumb_set sub_080448E4, CoPowerMeteor_PickTarget\n");

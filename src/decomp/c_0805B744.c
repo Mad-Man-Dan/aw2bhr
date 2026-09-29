@@ -7,13 +7,14 @@
  * sub_0805B744 @ 0x0805B744
  */
 
-void sub_0805B744(void)
+void AiFinishLandingPlan(void)
 {
     u16 pos[2];
 
     GenerateUnitMovementMap(gUnknown_030040D8);
-    sub_0805B980();
-    if (sub_0805B8F4(pos) == 1)
-        sub_0805B814(pos);
-    sub_0805B778();
+    AiListLandingCells();
+    if (AiPickUnloadCell(pos) == 1)
+        AiUnloadCargoAt(pos);
+    AiMoveTowardLandingCell();
 }
+asm(".global sub_0805B744\n.thumb_set sub_0805B744, AiFinishLandingPlan\n");

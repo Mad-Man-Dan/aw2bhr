@@ -11,10 +11,11 @@
  * the guard reads gUnknown_085D5ABC[t].unk0f rather than re-calling
  * GetUnitFiringRangeWithCoBonus, and the ROM keeps the element ADDRESS live across the test to
  * reach .unk0e -- one subscript expression, two members. */
-void sub_08020D50(s16 x, s16 y, struct Unit *e)
+void FillUnitTargetRange(s16 x, s16 y, struct Unit *e)
 {
-    sub_08020B88(x, y,
+    MarkAttackableCellsInRange(x, y,
                  GetUnitFiringRangeWithCoBonus(((e - gUnits) >> 6) + 1, e->type), 0);
     if (gUnknown_085D5ABC[e->type].maxRange != 1)
-        sub_08020B88(x, y, gUnknown_085D5ABC[e->type].minRange - 1, -1);
+        MarkAttackableCellsInRange(x, y, gUnknown_085D5ABC[e->type].minRange - 1, -1);
 }
+asm(".global sub_08020D50\n.thumb_set sub_08020D50, FillUnitTargetRange\n");

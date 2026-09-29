@@ -7,8 +7,9 @@
  * sub_080374F0 @ 0x080374F0
  */
 
-void sub_080374F0(void)
+void ResetMapListCursor(void)
 {
     gUnknown_02027F74.unk36 = 0;
     gUnknown_02027F74.unk37 = 0xFF;
 }
+asm(".global sub_080374F0\n.thumb_set sub_080374F0, ResetMapListCursor\n");

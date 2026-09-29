@@ -26,9 +26,9 @@ struct Unk5EA54Flags
                u8 unk09_3 : 5;
 };
 
-void sub_0805E9DC(void)
+void AiRunResupplyOrRepairMission(void)
 {
-    void (*fns[2])(void) = { sub_0805E87C, sub_0805E778 };
+    void (*fns[2])(void) = { AiSeekSupplier, AiSeekRepairProperty };
 
     SetWorkingMapPlane(gMap->move);
 
@@ -37,12 +37,13 @@ void sub_0805E9DC(void)
         && ((struct Unk5E9DCFlags *)gUnknown_030040D8)->unk09_0 <= 2)
     {
         gUnknown_030045CC.unk00_1 = 1;
-        sub_0805EA54();
+        AiTryJoinHealthiestSameTypeUnit();
         fns[((struct Unk5E9DCFlags *)gUnknown_030040D8)->unk09_0 - 1]();
     }
 }
+asm(".global sub_0805E9DC\n.thumb_set sub_0805E9DC, AiRunResupplyOrRepairMission\n");
 
-void sub_0805EA54(void)
+void AiTryJoinHealthiestSameTypeUnit(void)
 {
     int best;
     int bestX;
@@ -88,5 +89,6 @@ void sub_0805EA54(void)
         return;
 
     ((struct Unk5EA54Flags *)gUnknown_030040D8)->unk09_0 = 0;
-    sub_0805D648(bestX, bestY, 0xa, 0, 0);
+    AiPublishAction(bestX, bestY, 0xa, 0, 0);
 }
+asm(".global sub_0805EA54\n.thumb_set sub_0805EA54, AiTryJoinHealthiestSameTypeUnit\n");

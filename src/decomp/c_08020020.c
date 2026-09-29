@@ -21,7 +21,7 @@
 #define MAP gMap
 #define ROW(n) ((s8 *)gUnknown_03003340[n])
 
-void sub_08020020(void)
+void MapMarkHaloOneUnused(void)
 {
     int x, y;
 
@@ -42,3 +42,4 @@ void sub_08020020(void)
         }
     }
 }
+asm(".global sub_08020020\n.thumb_set sub_08020020, MapMarkHaloOneUnused\n");

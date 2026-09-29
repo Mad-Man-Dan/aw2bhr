@@ -13,11 +13,11 @@ struct Unk37CF8
     /* 0x1e */ u16 unk1e;
 };
 
-void sub_08037CF8(struct Unk37CF8 *a)
+void LoadAndDrawMapPreview(struct Unk37CF8 *a)
 {
     LoadMapData(a->unk1e);
-    sub_080378A8((void *)0x06000020);
-    sub_08037B90();
+    DrawMapPreviewFromBlob((void *)0x06000020);
+    LayoutMapPreviewTilemap();
 
     gUnknown_03002B34 = ((u8 *)gUnknown_03003F68)[0] * 2 - 0xa8;
     gUnknown_03002F18 = ((u8 *)gUnknown_03003F68)[1] * 2 - 0x60;
@@ -27,3 +27,4 @@ void sub_08037CF8(struct Unk37CF8 *a)
     gUnknown_03002B44 = 0xa0;
     sub_0802481C();
 }
+asm(".global sub_08037CF8\n.thumb_set sub_08037CF8, LoadAndDrawMapPreview\n");

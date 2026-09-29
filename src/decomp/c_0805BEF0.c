@@ -11,7 +11,7 @@ void sub_0805BEF0(int x, int y, u16 *out)
 {
     gUnknown_030013EC(x, y, gUnknown_030046D4, gUnknown_085766E0->unk0f, 0);
 
-    if (sub_0805848C() < sub_080585D4() + 2)
+    if (AiCountFriendlyFootUnitsInReach() < AiScoreEnemyPropertiesInReach() + 2)
     {
         out[0] = x;
         out[1] = y;

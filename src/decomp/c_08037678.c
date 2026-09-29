@@ -8,7 +8,7 @@
  */
 
 /* Two independent statements, not a nest: no argument register is set up in
- * front of the second `bl`, and sub_08037628 takes nothing.
+ * front of the second `bl`, and EndMapPreviewPictureScript takes nothing.
  *
  * The cast on AnimateMapPreviewPalette is not cosmetic. RemoveVBlankHook's parameter is
  * `void *` (that is how src/decomp/c_08011B34.c defines the insert half of the
@@ -20,6 +20,6 @@
 void HideMapPreview(void)
 {
     RemoveVBlankHook((void *)AnimateMapPreviewPalette);
-    sub_08037628();
+    EndMapPreviewPictureScript();
 }
 asm(".global sub_08037678\n.thumb_set sub_08037678, HideMapPreview\n");

@@ -12,7 +12,7 @@
  * the ROM's order. Written inline three times it CSEs into r5 and the argument
  * expressions stay in source order. See the unk20/unk2c/unk38 split note in
  * unknown-globals.h for why the three tables are separate members. */
-void sub_08038B84(void)
+void FillMovementMapFromMovePathEnd(void)
 {
     GenerateMovementMapForArmy((gUnknown_03003F38 >> 6) + 1,
                  gUnknown_0849D5F8->unk20[gUnknown_0849D5F8->unk45],
@@ -21,3 +21,4 @@ void sub_08038B84(void)
                  gUnknown_0849D5F8->unk38[gUnknown_0849D5F8->unk45],
                  1);
 }
+asm(".global sub_08038B84\n.thumb_set sub_08038B84, FillMovementMapFromMovePathEnd\n");

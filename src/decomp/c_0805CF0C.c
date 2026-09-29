@@ -20,7 +20,7 @@
  * pair per builder, address order), so they are NOT globals of their own.
  */
 
-void sub_0805CF0C(void)
+void AiStartFootUnitPass(void)
 {{
     int i;
 
@@ -38,6 +38,7 @@ void sub_0805CF0C(void)
 
     *gUnknown_030046B0 = 0;
     gUnknown_030046B0 = gUnknown_030045F0;
-    gUnknown_03004778 = sub_0805DFF4;
+    gUnknown_03004778 = AiDeliberateFootUnit;
     gUnknown_03004780 = 2;
 }}
+asm(".global sub_0805CF0C\n.thumb_set sub_0805CF0C, AiStartFootUnitPass\n");

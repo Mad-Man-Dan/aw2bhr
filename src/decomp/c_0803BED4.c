@@ -11,7 +11,7 @@
 void sub_0803BED4(void)
 {
     SetupBackgrounds(gUnknown_0849D16C);
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     LoadBg1WindowFrame(0);
     sub_08037F18();
 }

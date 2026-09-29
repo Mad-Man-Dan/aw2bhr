@@ -8,7 +8,7 @@
  * sub_080275B4 @ 0x080275B4, sub_08027608 @ 0x08027608, DrawInfoBoxCombobox @ 0x08027658
  */
 
-void sub_080275B4(void)
+void SlideInfoBoxToSide1(void)
 {
     int v;
 
@@ -33,8 +33,9 @@ void sub_080275B4(void)
             gUnknown_03003130.unk04 = 0xad;
     }
 }
+asm(".global sub_080275B4\n.thumb_set sub_080275B4, SlideInfoBoxToSide1\n");
 
-void sub_08027608(void)
+void SlideInfoBoxToSide0(void)
 {
     int v;
 
@@ -59,10 +60,11 @@ void sub_08027608(void)
             gUnknown_03003130.unk04 = 3;
     }
 }
+asm(".global sub_08027608\n.thumb_set sub_08027608, SlideInfoBoxToSide0\n");
 
 /* Named per Xenesis's AW2 Subroutine List: "Draws the CO/CO Power/Funds
  * Combobox in the Main Game Window". Chooses which screen side the box
- * slides to (via sub_080275B4/sub_08027608, whichever eases the box's x
+ * slides to (via SlideInfoBoxToSide1/SlideInfoBoxToSide0, whichever eases the box's x
  * position away from the cursor) before the actual draw call. The old
  * DrawInfoBoxCombobox symbol is kept as a linker alias below so every other unit
  * keeps resolving it unchanged. */
@@ -77,19 +79,19 @@ void DrawInfoBoxCombobox(void)
     if ((s16)y <= 0x4f)
     {
         if ((s16)x <= 0x7f)
-            sub_080275B4();
+            SlideInfoBoxToSide1();
         else
-            sub_08027608();
+            SlideInfoBoxToSide0();
     }
     else
     {
         if (gUnknown_03003130.unk00 == 1)
-            sub_080275B4();
+            SlideInfoBoxToSide1();
         else
-            sub_08027608();
+            SlideInfoBoxToSide0();
     }
 
-    sub_0804360C(gUnknown_03003130.unk04);
+    DrawCoPanelWithDaysRemaining(gUnknown_03003130.unk04);
 }
 
 asm(".global sub_08027658\n.thumb_set sub_08027658, DrawInfoBoxCombobox\n");

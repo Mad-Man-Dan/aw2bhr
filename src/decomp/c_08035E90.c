@@ -9,7 +9,7 @@
 
 #include "proc.h"
 /* Fires the help line for the proc's current mode (unk36, the same
- * gUnknown_0849CD88 row index sub_08035F68 and sub_08035FA8 use).
+ * gUnknown_0849CD88 row index StartMoveSlideMoveSound and PlayMoveSlideStopSfxNoStep use).
  *
  * The two `PlayMusicOrSfx(row->unk1a)` tails are written TWICE in the ROM, once
  * for case 0x18's fall-through and once for the default arm -- they are
@@ -33,7 +33,7 @@ struct Unk35E90Proc
     /* 0x39 */ u8 unk39;
 };
 
-void sub_08035E90(ProcPtr procArg)
+void PlayMoveSlideMoveSfx(ProcPtr procArg)
 {
     struct Unk35E90Proc *proc = procArg;
     int a;
@@ -77,3 +77,4 @@ void sub_08035E90(ProcPtr procArg)
         break;
     }
 }
+asm(".global sub_08035E90\n.thumb_set sub_08035E90, PlayMoveSlideMoveSfx\n");

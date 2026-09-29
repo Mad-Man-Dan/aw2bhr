@@ -18,7 +18,7 @@
  * instruction multiset but left the `adds r6, r3, #0` copy 4th in the loop
  * preheader where the ROM has it last, and no source spelling moved it.
  */
-void sub_0805CE50(void)
+void AiStartPickupPass(void)
 {
     int i;
 
@@ -37,6 +37,7 @@ void sub_0805CE50(void)
     *gUnknown_030046B0 = 0;
     gUnknown_030046B0 = gUnknown_030045F0;
     sub_0805D344(gUnknown_0300477C);
-    gUnknown_03004778 = sub_0805DCA4;
+    gUnknown_03004778 = AiDeliberatePickup;
     gUnknown_03004780 = 2;
 }
+asm(".global sub_0805CE50\n.thumb_set sub_0805CE50, AiStartPickupPass\n");

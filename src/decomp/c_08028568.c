@@ -9,7 +9,7 @@
 
 void FinalizeBattleResult(void)
 {
-    sub_08027118();
+    ClearTeammateDefeats();
     sub_0807443C();
     gUnknown_030032D8 = 0x12;
 }

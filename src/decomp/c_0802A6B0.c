@@ -24,7 +24,7 @@
  * while the VALUE use expands to the `lsls #0x19; lsrs #0x19` pair, which is
  * the pair of spellings only a bitfield gives. */
 
-void sub_0802A6B0(void)
+void FuelUpkeep_Loop(void)
 {
     struct Unit *p;
 
@@ -49,3 +49,4 @@ void sub_0802A6B0(void)
     if ((s16)gUnknown_03001470[gUnknown_03001FBC].unk38 > 0x32)
         ClearSlotScriptCallback(gUnknown_03001FBC);
 }
+asm(".global sub_0802A6B0\n.thumb_set sub_0802A6B0, FuelUpkeep_Loop\n");

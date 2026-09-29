@@ -16,7 +16,7 @@ void sub_08037E90(void)
     CpuCopyAuto(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
     CpuCopyAuto(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
     CpuCopyAuto(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     sub_080366C4(DefaultMainLoopCallback);
     sub_080366D0(DefaultVBlankCallback);
 }

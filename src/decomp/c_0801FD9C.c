@@ -47,7 +47,7 @@
  * block its OWN pointer local (`q` distinct from `p`) rather than reassigning
  * `p` changes nothing at all -- byte-identical, still row-first. The operand
  * order is not an allocation or live-range effect. */
-void sub_0801FD9C(int a1)
+void MapMarkHalo(int a1)
 {
     int x;
     int y;
@@ -75,3 +75,4 @@ void sub_0801FD9C(int a1)
         }
     }
 }
+asm(".global sub_0801FD9C\n.thumb_set sub_0801FD9C, MapMarkHalo\n");

@@ -36,7 +36,7 @@ int AiPrepareAttackReach(void)
     if (GetUnitFiringRangeWithCoBonus(gUnknown_030033EC, gUnknown_030040D8->unk00) == 1)
     {
         GenerateUnitMovementMap(gUnknown_030040D8);
-        sub_0801FD9C(0x79);
+        MapMarkHalo(0x79);
     }
     else
     {

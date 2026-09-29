@@ -9,8 +9,9 @@
 
 #include "proc.h"
 
-void sub_080447EC(ProcPtr parent)
+void CoPowerSonja(ProcPtr parent)
 {
     sub_0803B4DC(0xc4);
-    sub_080443C4(parent);
+    StartCoPowerWhiteFlash(parent);
 }
+asm(".global sub_080447EC\n.thumb_set sub_080447EC, CoPowerSonja\n");

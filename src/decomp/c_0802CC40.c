@@ -19,9 +19,9 @@ int sub_0802CC40(void)
         return 1;
 
     FillMovementMap(0xff);
-    sub_080203C0(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02);
+    MapZeroNeighbors(gUnknown_03003100.pos.unk00, gUnknown_03003100.pos.unk02);
 
-    if (sub_080416A4())
+    if (BuildResupplyTargetList())
         return 0;
 
     return 1;

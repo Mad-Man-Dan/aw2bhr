@@ -24,7 +24,7 @@
  * this discards it. */
 void StartCoDesign(void)
 {
-    sub_08044BB0();
+    BuildUnlockedCoGroupList();
     Proc_Start(ProcScr_CoDesign, PROC_TREE_3);
 }
 asm(".global sub_0803B9D4\n.thumb_set sub_0803B9D4, StartCoDesign\n");

@@ -30,7 +30,7 @@
  */
 bool8 EventOp_EndCurrentArmyTurn(s16 a)
 {
-    sub_08042B9C();
+    EndCurrentArmyTurn();
 
     gUnknown_0200C528[a].unk04++;
 

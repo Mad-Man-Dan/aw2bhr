@@ -40,7 +40,7 @@ struct Unk40150Proc
     /* 50 */ struct Unk0801C210 *unk50;
 };
 
-void sub_08040150(struct Unk40150Proc *proc)
+void ExplosionEffect_Loop(struct Unk40150Proc *proc)
 {
     int dx;
     int dy;
@@ -52,3 +52,4 @@ void sub_08040150(struct Unk40150Proc *proc)
                           - (dy = gMap->scrollY - 0x10)))
         Proc_Break(proc);
 }
+asm(".global sub_08040150\n.thumb_set sub_08040150, ExplosionEffect_Loop\n");

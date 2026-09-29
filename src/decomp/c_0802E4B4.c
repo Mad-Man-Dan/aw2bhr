@@ -10,7 +10,7 @@
 
 /* The cell fetch is gMap->unit[gMap->rowOffset[sy] + sx], read twice.
  *
- * The whole address chain is recomputed after the sub_080242B0 call because
+ * The whole address chain is recomputed after the CanBuildAtCell call because
  * the call clobbers memory; only the two s16 casts survive as common
  * subexpressions, which is why sx/sy read as locals.
  *
@@ -37,7 +37,7 @@ void MapCursor_OnPressA(s16 x, s16 y)
     gUnknown_03003F38 = gMap->unit[idx];
     gUnknown_030040D8 = (struct Unk030040D8 *)&gUnits[*sel];
 
-    if (sub_080242B0(sx, sy))
+    if (CanBuildAtCell(sx, sy))
     {
         sub_0802D5E8(sx, sy);
         return;
@@ -52,8 +52,8 @@ void MapCursor_OnPressA(s16 x, s16 y)
 
     sub_08074320(gUnknown_030040D8);
     gUnknown_03003110[0] = 4;
-    sub_08035584(gUnknown_030040D8);
-    sub_08024454();
+    CreateMoveSlideForActiveUnit(gUnknown_030040D8);
+    SetMapLayersRangeBlend();
     RebuildMapUnitLayers();
     gUnknown_03004480 = (*sel >> 6) + 1;
     SetWorkingMapPlane(gMap->move);

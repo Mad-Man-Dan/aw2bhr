@@ -9,7 +9,7 @@
 
 #include "hardware.h"
 
-/* Sets up the map-view window layout. Sibling of sub_08037260, which resets
+/* Sets up the map-view window layout. Sibling of SetDefaultDisplayState, which resets
  * the same shadows. The three branches differ only in which of the four
  * scroll/extent bytes they load and whether win0 is enabled. */
 void sub_080876B4(void)

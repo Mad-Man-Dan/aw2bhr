@@ -8,7 +8,7 @@
  */
 
 /* Five statements, no control flow: hand the current gUnknown_030040D8 record to
- * sub_08035584 (whose ProcPtr result is discarded), then a copy from
+ * CreateMoveSlideForActiveUnit (whose ProcPtr result is discarded), then a copy from
  * gUnknown_030046CC into gUnknown_03003110 and a hand-off of the destination.
  *
  * Both buffer arguments are ADDRESSES -- `ldr rN, =sym` with no following load
@@ -19,11 +19,12 @@
  * `strh` of 2 into gUnknown_030045D4, which is already typed u16.
  */
 
-void sub_0805FF64(void)
+void AiExecutorStartMoveSlide(void)
 {
-    sub_08035584(gUnknown_030040D8);
+    CreateMoveSlideForActiveUnit(gUnknown_030040D8);
     RebuildMapUnitLayers();
     UnpackPathNibbles(gUnknown_030046CC, gUnknown_03003110);
-    sub_08025BB4(gUnknown_03003110);
+    StartUnitMoveSlide(gUnknown_03003110);
     gUnknown_030045D4 = 2;
 }
+asm(".global sub_0805FF64\n.thumb_set sub_0805FF64, AiExecutorStartMoveSlide\n");

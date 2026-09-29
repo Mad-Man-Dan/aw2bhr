@@ -31,7 +31,7 @@ u8 AiIsSettleCellOk(s16 x, s16 y)
         && gMap->unit[
             gMap->rowOffset[y] + x] != 0)
         return 0;
-    if ((u8)sub_0805C988(x, y))
+    if ((u8)AiIsOnLaserLine(x, y))
         return 0;
     if (gUnknown_085767D5[gMap->terrain[
             gMap->rowOffset[y] + x] & 0x1f] == 0)
@@ -69,7 +69,7 @@ void AiDeliberateApcPickup(void)
     SetWorkingMapPlane(gMap->danger);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, 0x78, -1);
-    sub_0801FD9C(0x79);
+    MapMarkHalo(0x79);
     v.pos.unk00 = 0x270F;
     sub_0805A9AC(0, &v);
     if (v.pos.unk00 != 0x270F)
@@ -79,12 +79,12 @@ void AiDeliberateApcPickup(void)
     else
     {
         if (gUnknown_03004784[1] > (u8)(gUnknown_030040D8->unk07[3] % 100))
-            sub_0805F914();
+            AiRetreat();
         if (gUnknown_03004784[0] > (u8)(gUnknown_030040D8->unk07[3] % 100)
             || IsCoPowerActive(gUnknown_030033EC))
-            sub_0805E718();
+            AiTryAttack();
     }
-    sub_0805F7B8();
+    AiFallbackMove();
 }
 asm(".global sub_08059760\n.thumb_set sub_08059760, AiDeliberateApcPickup\n");
 
@@ -95,7 +95,7 @@ void AiDeliberateTCopterPickup(void)
     SetWorkingMapPlane(gMap->danger);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, 0x78, 0);
-    sub_0801FD9C(0x79);
+    MapMarkHalo(0x79);
     v.pos.unk00 = 0x270F;
     sub_0805A9AC(1, &v);
     if (v.pos.unk00 != 0x270F)
@@ -105,9 +105,9 @@ void AiDeliberateTCopterPickup(void)
     else
     {
         if (gUnknown_03004784[1] > (u8)(gUnknown_030040D8->unk07[3] % 100))
-            sub_0805F914();
+            AiRetreat();
     }
-    sub_0805EB58();
+    AiMoveToNearestNonTeamCell();
 }
 asm(".global sub_08059824\n.thumb_set sub_08059824, AiDeliberateTCopterPickup\n");
 
@@ -118,7 +118,7 @@ void AiDeliberateApcDeliver(void)
     int q;
 
     p = gUnknown_03003F20;
-    sub_0805DCD4();
+    AiDeliberateDrop();
     SetWorkingMapPlane(gMap->move);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, 0x78, 0);
@@ -133,10 +133,10 @@ void AiDeliberateApcDeliver(void)
     else if (gUnknown_030046B8 == 2)
     {
         ((struct Unk0805DFF4Rec *)gUnknown_030040D8)->unk09_3 = 3;
-        sub_0805FB70();
-        sub_0805F4F8();
+        AiBoardTransport();
+        AiEmbarkOrFallback();
     }
-    sub_0805F7B8();
+    AiFallbackMove();
 }
 asm(".global sub_080598BC\n.thumb_set sub_080598BC, AiDeliberateApcDeliver\n");
 
@@ -147,7 +147,7 @@ void AiDeliberateTCopterDeliver(void)
     int q;
 
     p = gUnknown_03003F20;
-    sub_0805DCD4();
+    AiDeliberateDrop();
     SetWorkingMapPlane(gMap->move);
     gUnknown_030013EC(gUnknown_030040D8->unk02, gUnknown_030040D8->unk03,
                       gUnknown_030040D8->unk00, 0x78, 0);
@@ -156,7 +156,7 @@ void AiDeliberateTCopterDeliver(void)
     v.pos.unk00 = 0x270F;
     AiAllocateTerritoryTarget(q, gUnknown_085766E0->unk04[6], 0, p, &v);
     if (v.pos.unk00 == 0x270F)
-        sub_0805F7B8();
+        AiFallbackMove();
     AiAdvanceToward(&v);
 }
 asm(".global sub_08059978\n.thumb_set sub_08059978, AiDeliberateTCopterDeliver\n");

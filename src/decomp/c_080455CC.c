@@ -12,7 +12,7 @@
  * the pointer: the ROM computes `(map + 0x417A) + y * 2` and `(map + 0x1432)
  * + idx`, and only a COMPONENT_REF preserves that association -- a `u16 *`
  * cast reassociates to `(map + y * 2) + 0x417A`. Same spelling that closed
- * sub_08040790 and sub_0804189C.
+ * StartPipeSeamHit and StartAttackOnPipeSeamAt.
  *
  * gUnknown_08499590 is named honestly and inline at every read: the `strb`
  * into gUnknown_020288B4 kills the CSE of the pointer deref, which is why the

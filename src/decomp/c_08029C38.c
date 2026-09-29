@@ -25,7 +25,7 @@ struct Unk29C38Proc
  *
  * a2 is never read -- r1 is overwritten with the literal 0 for sub_080152EC
  * before anything touches it -- so its WIDTH is invisible here and is settled
- * at the only call site: sub_0802A38C loads gUnknown_030033EC (a u16 global)
+ * at the only call site: ResupplyUnitWithAnimation loads gUnknown_030033EC (a u16 global)
  * with `ldrb`, which is the u8 conversion of a halfword on a little-endian
  * target. It cannot be dropped either, since a3 arrives in r2 and a4 in r3. */
 struct Unk29CB8Proc
@@ -39,7 +39,7 @@ struct Unk29CB8Proc
     /* 0x30 */ u8 unk30;
 };
 
-void sub_08029C38(struct Unk29C38Proc *proc)
+void SupplyAnimation_Loop(struct Unk29C38Proc *proc)
 {
     proc->unk24 -= proc->unk2c;
 
@@ -54,13 +54,14 @@ void sub_08029C38(struct Unk29C38Proc *proc)
     if (proc->unk30 == 1)
         gPlayers[gUnknown_030033EC].funds = proc->unk28;
 
-    sub_080272B4();
+    EndSupplyIconEffect();
     EndSlotScriptAt(gUnknown_03001FBC);
     sub_0803B4DC(0x6c);
 }
+asm(".global sub_08029C38\n.thumb_set sub_08029C38, SupplyAnimation_Loop\n");
 
 /* Named per Xenesis's AW2 Subroutine List: "Animates Supply? (0802A182)" --
- * sets up the proc sub_08029C38 ticks each frame (funds delta, screen
+ * sets up the proc SupplyAnimation_Loop ticks each frame (funds delta, screen
  * position, whether to actually deduct funds). The old StartSupplyAnimation symbol
  * is kept as a linker alias below so every other unit keeps resolving it
  * unchanged. */

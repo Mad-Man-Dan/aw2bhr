@@ -11,7 +11,7 @@ void DeploymentScreen_Init(void)
 {
     struct Unk03001470 *proc;
 
-    sub_08024268();
+    RebuildMapUnitLayers2();
     SaveMapCursorPosition();
 
     gUnknown_03001418 = gUnknown_03001FF8 = 0;
@@ -24,9 +24,9 @@ void DeploymentScreen_Init(void)
     sub_0802D7B0();
     DrawWindowBackgroundOnBg2(1, 4, 0xf, 0x10);
     DrawDeploymentList(0);
-    sub_08022AD0(8, 0x28);
+    SetMapCursorDisplayPosition(8, 0x28);
     sub_0803B4DC(0x65);
     sub_0803A9C8(gUnknown_02023830[0]);
-    sub_0802776C(1);
+    SetInfoBoxMode(1);
 }
 asm(".global sub_0802D918\n.thumb_set sub_0802D918, DeploymentScreen_Init\n");

@@ -13,6 +13,6 @@ void CoInfoScreen_DrawUnitBonusPage(s16 *p)
     CoInfoScreen_DrawUnitBonusGrid(p, p[0x33]);
     CoInfoScreen_DrawArmyIcons();
     sub_08043B60(0x78, 8, 0x82AC, 3);
-    sub_0804402C(0x10D0, 0x18, 0x62B8, 5);
+    PutCoMinimugSprite(0x10D0, 0x18, 0x62B8, 5);
 }
 asm(".global sub_08085244\n.thumb_set sub_08085244, CoInfoScreen_DrawUnitBonusPage\n");

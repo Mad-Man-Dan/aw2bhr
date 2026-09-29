@@ -8,7 +8,7 @@
  * sub_0805B3F4 @ 0x0805B3F4
  */
 
-void sub_0805B3F4(void)
+void AiPlanLoadedLander(void)
 {
     u8 buf[0x19];
     struct Unit *u;
@@ -19,7 +19,7 @@ void sub_0805B3F4(void)
     buf[7] = 8;
     buf[9] = 9;
 
-    sub_080581A4(gMap->unk3C72, 0);
+    FillMapPlane(gMap->unk3C72, 0);
     SetWorkingMapPlane(gMap->move);
 
     u = &gUnits[gUnknown_030040D8->unk07[0]];
@@ -33,3 +33,4 @@ void sub_0805B3F4(void)
     else
         gUnknown_08576890[buf[gUnknown_030046D4]]();
 }
+asm(".global sub_0805B3F4\n.thumb_set sub_0805B3F4, AiPlanLoadedLander\n");

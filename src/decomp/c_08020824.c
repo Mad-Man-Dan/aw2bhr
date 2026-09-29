@@ -17,7 +17,7 @@
  * The `return 1` comes FIRST in the source and LAST in the layout -- that
  * inversion is what a single condition does, and writing the equality test
  * first puts the constants the other way round. */
-int sub_08020824(u16 a, u16 b)
+int GetArmyTeamRelation(u16 a, u16 b)
 {
     if (gPlayers[b].aiControlled == 0)
         return 0;
@@ -27,3 +27,4 @@ int sub_08020824(u16 a, u16 b)
 
     return 2;
 }
+asm(".global sub_08020824\n.thumb_set sub_08020824, GetArmyTeamRelation\n");

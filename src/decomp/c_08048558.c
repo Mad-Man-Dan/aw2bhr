@@ -9,7 +9,7 @@
 
 void sub_08048558(void)
 {
-    sub_08024268();
+    RebuildMapUnitLayers2();
     ClearBg0Tilemap();
     BG_EnableSyncBG0();
 }

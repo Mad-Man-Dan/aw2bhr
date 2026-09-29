@@ -8,7 +8,7 @@
  * sub_0805E778 @ 0x0805E778
  */
 
-void sub_0805E778(void)
+void AiSeekRepairProperty(void)
 {
   union Unk802C57CBuf v;
   int new_var;
@@ -35,7 +35,7 @@ void sub_0805E778(void)
     gUnknown_03004784[1] = (new_var = 0, save);
     if (((s8 *) gUnknown_03003340[v.pos.unk02])[v.pos.unk00] <= GetUnitMovementBudget((struct Unit *) gUnknown_030040D8))
     {
-      sub_0805D648(v.spos.unk00, v.spos.unk02, 2, 0, new_var);
+      AiPublishAction(v.spos.unk00, v.spos.unk02, 2, 0, new_var);
     }
     else
     {
@@ -46,3 +46,4 @@ void sub_0805E778(void)
 
   gUnknown_03004784[1] = save;
 }
+asm(".global sub_0805E778\n.thumb_set sub_0805E778, AiSeekRepairProperty\n");

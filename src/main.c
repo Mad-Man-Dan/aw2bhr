@@ -8,11 +8,12 @@ void ClearMainLoopFrameMask(void)
 }
 asm(".global sub_08036B28\n.thumb_set sub_08036B28, ClearMainLoopFrameMask\n");
 
-void sub_08036B34(void)
+void ClearMainLoopFrameMaskAndEnableSpriteLayer(void)
 {
     gUnknown_030043F4 = 0;
     EnableSpriteLayerMode();
 }
+asm(".global sub_08036B34\n.thumb_set sub_08036B34, ClearMainLoopFrameMaskAndEnableSpriteLayer\n");
 
 static void sub_08036B48(void)
 {
@@ -33,10 +34,10 @@ void InitGameSystems(void)
     gUnknown_03004078 = 0;
     gUnknown_030043F0 = 0;
     gUnknown_030033F0 = 0;
-    sub_08036B34();
+    ClearMainLoopFrameMaskAndEnableSpriteLayer();
     StoreRoutinesToIRAM();
-    sub_0803486C();
-    sub_08034848();
+    InitRecordListPointersAndTerrainTable();
+    InitVersusPlayState();
     InitSpriteEngine();
     ClearAllSpriteScripts2();
     ClearTileRigistry();
@@ -60,23 +61,25 @@ void InitGameSystems(void)
 }
 asm(".global sub_08036B4C\n.thumb_set sub_08036B4C, InitGameSystems\n");
 
-void sub_08036C08(void)
+void InstallQueuedSpritesFrameCallbacks(void)
 {
     DisableSpriteLayerMode();
-    sub_080366D0(sub_08036A50);
-    sub_080366C4(sub_08036AB8);
+    sub_080366D0(QueuedSpritesVBlankCallback);
+    sub_080366C4(QueuedSpritesMainLoopCallback);
     ClearMainLoopFrameMask();
 }
+asm(".global sub_08036C08\n.thumb_set sub_08036C08, InstallQueuedSpritesFrameCallbacks\n");
 
-void sub_08036C2C(void)
+void StartBattleAnimParamMenu(void)
 {
     InitGameSystems();
-    sub_08036C08();
+    InstallQueuedSpritesFrameCallbacks();
     Proc_Start(gUnknown_08553754, PROC_TREE_3);
-    sub_08036B34();
+    ClearMainLoopFrameMaskAndEnableSpriteLayer();
 }
+asm(".global sub_08036C2C\n.thumb_set sub_08036C2C, StartBattleAnimParamMenu\n");
 
-void sub_08036C4C(void)
+void BootToIntroSequence(void)
 {
     EnableSpriteLayerMode();
     InitGameSystems();
@@ -85,8 +88,9 @@ void sub_08036C4C(void)
     sub_080366C4(DefaultMainLoopCallback);
     sub_0806A454();
 }
+asm(".global sub_08036C4C\n.thumb_set sub_08036C4C, BootToIntroSequence\n");
 
-void sub_08036C80(void)
+void BootToIntroSequence2(void)
 {
     EnableSpriteLayerMode();
     InitGameSystems();
@@ -95,8 +99,9 @@ void sub_08036C80(void)
     sub_080366C4(DefaultMainLoopCallback);
     sub_0806A454();
 }
+asm(".global sub_08036C80\n.thumb_set sub_08036C80, BootToIntroSequence2\n");
 
-void sub_08036CB4(void)
+void ClearWorkRamAndSoftReset(void)
 {
     u8 buf[4];
     vu16 fill;
@@ -118,6 +123,7 @@ void sub_08036CB4(void)
     gUnknown_02028E41[3] = buf[3];
     SoftReset(0xFE);
 }
+asm(".global sub_08036CB4\n.thumb_set sub_08036CB4, ClearWorkRamAndSoftReset\n");
 
 void AgbMain(void)
 {
@@ -148,7 +154,7 @@ void AgbMain(void)
     if (flag)
         StartEraseSaveDataScreen();
     else
-        sub_08036C4C();
+        BootToIntroSequence();
     UpdateInterruptEnable(2, 0x00012001);
     for (;;) {
         if (gUnknown_030040EC != 0)
@@ -168,7 +174,7 @@ void CheckSoftResetCombo(void)
         if (gUnknown_02028E41[0] != 0xaa || gUnknown_02028E41[1] != 0x55)
             sub_0804A010();
 
-        sub_08036CB4();
+        ClearWorkRamAndSoftReset();
     }
 }
 
@@ -182,7 +188,7 @@ void StartEraseSaveDataScreen(void)
 }
 asm(".global sub_08036E54\n.thumb_set sub_08036E54, StartEraseSaveDataScreen\n");
 
-void sub_08036E70(void)
+void EraseSaveScreen_Init(void)
 {
     SetupBackgrounds(gUnknown_0849D16C);
     gDispIo.disp_ct.forced_blank = 0;
@@ -192,30 +198,32 @@ void sub_08036E70(void)
     CpuCopyAuto(gBG1TilemapBuffer, (void *)0x0600F000, 0x800);
     CpuCopyAuto(gBG2TilemapBuffer, (void *)0x06007800, 0x800);
     CpuCopyAuto(gBG3TilemapBuffer, (void *)0x0600F800, 0x800);
-    sub_0802465C();
+    SetMapLayerPrioritiesDefault();
     LoadBg1WindowFrame(0);
     ApplyPaletteExt(gUnknown_0809165C, 0x140, 0x20);
     sub_08011B18();
     sub_080366C4(DefaultMainLoopCallback);
     sub_080366D0(DefaultVBlankCallback);
 }
+asm(".global sub_08036E70\n.thumb_set sub_08036E70, EraseSaveScreen_Init\n");
 
-void sub_08036F20(void)
+void EraseSaveScreen_OpenPrompt(void)
 {
     gUnknown_02028E40 = gUnknown_0200C420.unk08 >> 6;
     StartEventScript(gUnknown_0849D34C);
 }
+asm(".global sub_08036F20\n.thumb_set sub_08036F20, EraseSaveScreen_OpenPrompt\n");
 
 void sub_08036F44(void)
 {
     gDispIo.disp_ct.bg0_enable = 1;
     gDispIo.disp_ct.bg2_enable = 1;
 
-    sub_08022A34();
+    LoadCursorSpriteGraphics();
     LoadBg1WindowFrame(0);
 }
 
-void sub_08036F68(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7, u8 a8,
+void StartBattleAnimScene(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7, u8 a8,
                   u8 a9, u8 a10, u8 a11, u8 a12, u8 a13, u8 a14, u8 a15,
                   u8 a16, u16 a17)
 {
@@ -257,6 +265,7 @@ void sub_08036F68(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7, u8 a8,
 
     Proc_Start(gUnknown_0849D3BC, PROC_TREE_3);
 }
+asm(".global sub_08036F68\n.thumb_set sub_08036F68, StartBattleAnimScene\n");
 
 void SetDefaultFrameCallbacks(void)
 {
@@ -265,19 +274,21 @@ void SetDefaultFrameCallbacks(void)
 }
 asm(".global sub_080370F0\n.thumb_set sub_080370F0, SetDefaultFrameCallbacks\n");
 
-int sub_0803710C(void)
+int IsBattleAnimSceneRunning(void)
 {
     return Proc_Find(gUnknown_0849D3BC) != 0;
 }
+asm(".global sub_0803710C\n.thumb_set sub_0803710C, IsBattleAnimSceneRunning\n");
 
-void sub_08037124(void)
+void EndBattleAnimScene(void)
 {
     EndAllSpriteScripts();
     sub_0801537C(gUnknown_08553820);
     Proc_EndEach(gUnknown_0855379C);
     Proc_EndEach(gUnknown_0849D3BC);
-    sub_08036B34();
+    ClearMainLoopFrameMaskAndEnableSpriteLayer();
 }
+asm(".global sub_08037124\n.thumb_set sub_08037124, EndBattleAnimScene\n");
 
 void sub_08037150(int a)
 {

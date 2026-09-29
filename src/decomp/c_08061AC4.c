@@ -18,7 +18,7 @@ void AiEndTurnStep(void)
 {
     if (gUnknown_030044D8 != 1)
     {
-        sub_08042B9C();
+        EndCurrentArmyTurn();
         gUnknown_03004780 = 0;
 
         if (gPlaySt.savingEnabled != 0)

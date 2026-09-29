@@ -26,9 +26,9 @@ void sub_08034DF8(void)
 
     if (FindSlotScript((s32)gUnknown_0849A00C) == -1)
     {
-        sub_08043DAC(gUnknown_030033EC);
+        PlayArmyCoMusic(gUnknown_030033EC);
         sub_0802BB98();
-        sub_080351F0();
+        StartPendingWeatherChange();
         gUnknown_030032D8 = 7;
     }
 }

@@ -8,11 +8,11 @@
  */
 
 /* Three statements. RestoreMapCursorPosition and DecrementMapLock take nothing, so the
- * sub_0802776C(1) result cannot be flowing into either of them. */
+ * SetInfoBoxMode(1) result cannot be flowing into either of them. */
 
 void sub_0802DBD0(void)
 {
-    sub_0802776C(1);
+    SetInfoBoxMode(1);
     RestoreMapCursorPosition();
     DecrementMapLock();
 }

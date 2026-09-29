@@ -9,10 +9,11 @@
 
 /* The `lsls #0x18; lsrs #0x18` is THIS function's own u8 parameter narrowing --
  * agbcc's PROMOTE_MODE re-narrows at entry -- and the copy into r4 is what
- * keeps it alive across the first call. It says nothing about sub_080627F4's
+ * keeps it alive across the first call. It says nothing about AiAccumulateInfluence's
  * parameter type, which stays unconstrained. */
-void sub_08062C7C(u8 a)
+void AiUpdateInfluence(u8 a)
 {
-    sub_08062AE4();
-    sub_080627F4(a);
+    AiCalcPropertyControlPerBlock();
+    AiAccumulateInfluence(a);
 }
+asm(".global sub_08062C7C\n.thumb_set sub_08062C7C, AiUpdateInfluence\n");

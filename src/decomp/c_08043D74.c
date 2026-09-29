@@ -15,7 +15,7 @@
  * where the caller left it, so falling off the end returns it.  Every spelling
  * with an explicit `return a;` costs an instruction -- gcc then needs a real
  * pseudo for `a`, which loses r0 to the (u8) temp and pays `adds r0, r1, #0`
- * to put the value back.  Same shape as sub_08043DAC in this block, which is
+ * to put the value back.  Same shape as PlayArmyCoMusic in this block, which is
  * also implicit-int with no return statement at all.
  */
 int sub_08043D74(int a)

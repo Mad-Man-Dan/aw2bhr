@@ -7,7 +7,7 @@
  * sub_0805BC7C @ 0x0805BC7C
  */
 
-/* sub_0805BA34's shape (src/decomp/c_0805B980.c) with a fifth stack argument on
+/* AiPickCargoDropCell's shape (src/decomp/c_0805B980.c) with a fifth stack argument on
  * each probe and one extra local. `cmn r5, r0` is an ADD-and-test-zero, so the
  * four results are SUMMED and the sum compared with 0 -- not r5 compared with
  * -r0. 0x270F is the 9999 sentinel: stored through the out pointer before the
@@ -37,7 +37,7 @@ struct UnkPos5BC7C
     /* 0x02 */ u16 unk02;
 };
 
-u8 sub_0805BC7C(int x, int y, u16 *out)
+u8 AiPickSecondCargoDropCell(int x, int y, u16 *out)
 {
     struct Unit *e;
     struct UnkPos5BC7C loc;
@@ -49,10 +49,10 @@ u8 sub_0805BC7C(int x, int y, u16 *out)
 
     e = &gUnits[gUnknown_030040D8->unk07[1]];
 
-    if (sub_0805BD40(x - 1, y, e->type, 4, (s16 *)(p = &loc))
-        + sub_0805BD40(x + 1, y, e->type, 2, (s16 *)&loc)
-        + sub_0805BD40(x, y - 1, e->type, 1, (s16 *)&loc)
-        + sub_0805BD40(x, y + 1, e->type, 3, (s16 *)&loc) == 0)
+    if (AiConsiderSecondCargoDropNeighbour(x - 1, y, e->type, 4, (s16 *)(p = &loc))
+        + AiConsiderSecondCargoDropNeighbour(x + 1, y, e->type, 2, (s16 *)&loc)
+        + AiConsiderSecondCargoDropNeighbour(x, y - 1, e->type, 1, (s16 *)&loc)
+        + AiConsiderSecondCargoDropNeighbour(x, y + 1, e->type, 3, (s16 *)&loc) == 0)
         return 0;
 
     best = 9999;
@@ -65,3 +65,4 @@ u8 sub_0805BC7C(int x, int y, u16 *out)
 
     return 1;
 }
+asm(".global sub_0805BC7C\n.thumb_set sub_0805BC7C, AiPickSecondCargoDropCell\n");

@@ -20,13 +20,14 @@ struct Unk41958Proc
     /* 4c */ void *unk4c;
 };
 
-/* sub_08040790's THIRD argument is invisible at this call: r2 already holds
- * the proc, so no instruction sets it up. sub_08040790's own prologue does
+/* StartPipeSeamHit's THIRD argument is invisible at this call: r2 already holds
+ * the proc, so no instruction sets it up. StartPipeSeamHit's own prologue does
  * `adds r1, r2, #0; bl Proc_StartBlocking`, which is what proves it is there. */
-void sub_08041958(struct Unk41958Proc *proc)
+void InventionAttack_StartHit(struct Unk41958Proc *proc)
 {
     if (proc->unk4c != 0)
-        sub_0804074C(proc->unk4c, proc);
+        StartInventionHit(proc->unk4c, proc);
     else
-        sub_08040790(proc->unk2c, proc->unk30, proc);
+        StartPipeSeamHit(proc->unk2c, proc->unk30, proc);
 }
+asm(".global sub_08041958\n.thumb_set sub_08041958, InventionAttack_StartHit\n");

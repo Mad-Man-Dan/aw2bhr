@@ -43,10 +43,10 @@ void UnitList_DrawSprites(struct Unk08047B98 *p)
     }
 
     if (p->unk20 != 0)
-        sub_08043418(0x29, 0x38, 0xe);
+        DrawMapCursorSprite(0x29, 0x38, 0xe);
 
     if (p->unk21 > 5 && p->unk20 < p->unk21 - 6)
-        sub_08043418(0x29, 0x97, 0xf);
+        DrawMapCursorSprite(0x29, 0x97, 0xf);
 
     i = DivRem(Div(0x40 - DivRem(gGameClock, 0x40), 4), 0x10) * 2;
 

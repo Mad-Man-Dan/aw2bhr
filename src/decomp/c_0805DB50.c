@@ -14,12 +14,13 @@
  * of them reads r0-r3 before writing it) and all three end `pop {r0}`, i.e.
  * void, so there is no value to nest. src/decomp/c_08048558.c is the matched
  * exemplar of the same shape. */
-void sub_0805DB50(void)
+void AiDeliberateDirectAttackOrRoleMove(void)
 {
-    sub_0805E5AC();
-    sub_0805E718();
+    AiStayHomeIfEnemyInfantryNear();
+    AiTryAttack();
     AiRunRoleMove();
 }
+asm(".global sub_0805DB50\n.thumb_set sub_0805DB50, AiDeliberateDirectAttackOrRoleMove\n");
 
 /* Family F001 forwarder, 12 bytes:
  *     push {lr}
@@ -33,7 +34,8 @@ void sub_0805DB50(void)
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_0805DB64(void)
+void AiDeliberateClearEscortTally(void)
 {
     AiClearEscortTally();
 }
+asm(".global sub_0805DB64\n.thumb_set sub_0805DB64, AiDeliberateClearEscortTally\n");

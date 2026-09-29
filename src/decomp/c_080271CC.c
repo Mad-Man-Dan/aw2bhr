@@ -21,7 +21,7 @@ u8 DoesArmyHaveUnits(int a1)
   {
     return 0;
   }
-  if (sub_08025CF0(a1) == 0)
+  if (GetPlayerUnitsCreated(a1) == 0)
   {
     return 1;
   }

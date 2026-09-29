@@ -53,7 +53,7 @@ struct Unk08028EF0
     /* 0x2C */ u16 unk2c;
 };
 
-void sub_08028EF0(struct Unk08028EF0 *p)
+void CameraScroll_Init(struct Unk08028EF0 *p)
 {
     register int t asm("r0");
     u16 d;
@@ -84,3 +84,4 @@ void sub_08028EF0(struct Unk08028EF0 *p)
     gUnknown_020237B0[p->unk2a] = d;
     p->unk2c = 0;
 }
+asm(".global sub_08028EF0\n.thumb_set sub_08028EF0, CameraScroll_Init\n");

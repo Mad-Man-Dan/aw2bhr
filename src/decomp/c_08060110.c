@@ -9,7 +9,7 @@
  */
 
 /* MATCHED. */
-void sub_08060110(void)
+void AiExecuteBuildUnitWithRole(void)
 {
     struct Unit **tbl;
     struct Unit *u;
@@ -28,3 +28,4 @@ void sub_08060110(void)
 
     gUnknown_030045D4 = 0xb;
 }
+asm(".global sub_08060110\n.thumb_set sub_08060110, AiExecuteBuildUnitWithRole\n");

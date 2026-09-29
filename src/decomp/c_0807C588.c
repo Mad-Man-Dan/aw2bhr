@@ -25,7 +25,7 @@ void WarRoomMapSelected_0807C589(struct Unk807C588 *proc)
 
     ResetAllPlayers();
 
-    for (i = 0; i < sub_0802490C(gPlaySt.mapID); i++)
+    for (i = 0; i < GetMapArmyCount(gPlaySt.mapID); i++)
     {
         if (gUnknown_085C77A0[gPlaySt.mapID].unk3c[i] == 0xff)
             gPlayers[i + 1].aiControlled = 1;

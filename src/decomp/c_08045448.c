@@ -30,23 +30,26 @@ struct Unk45478
     /* 0x30 */ int unk30;
 };
 
-void sub_08045448(ProcPtr parent)
+void CoPowerSenseiCopterCommand(ProcPtr parent)
 {
     struct Unk45448Proc *proc = Proc_StartBlocking(gUnknown_084A09CC, parent);
 
     proc->unk54 = 1;
 }
+asm(".global sub_08045448\n.thumb_set sub_08045448, CoPowerSenseiCopterCommand\n");
 
-void sub_08045460(ProcPtr parent)
+void CoPowerSenseiAirborneAssault(ProcPtr parent)
 {
     struct Unk45460Proc *proc = Proc_StartBlocking(gUnknown_084A09CC, parent);
 
     proc->unk54 = 2;
 }
+asm(".global sub_08045460\n.thumb_set sub_08045460, CoPowerSenseiAirborneAssault\n");
 
-void sub_08045478(struct Unk45478 *p)
+void CoPowerCreateUnits_Init(struct Unk45478 *p)
 {
     p->unk2c = 0;
     p->unk30 = 0;
-    sub_08044AB8(gUnknown_030033EC);
+    StartCoPowerAnimation(gUnknown_030033EC);
 }
+asm(".global sub_08045478\n.thumb_set sub_08045478, CoPowerCreateUnits_Init\n");

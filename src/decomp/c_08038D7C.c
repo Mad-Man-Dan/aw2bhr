@@ -65,7 +65,7 @@
  *     `-(a - b)` into `b - a`.
  *   - the two `gUnknown_03004074 = ...` tails are ONE cross-jumped block in the
  *     ROM (_08038F9A); they must be written twice.
- *   - `(u8)sub_08038C08()` reproduces the ROM's `lsls r0,r0,#0x18; cmp r0,#0`.
+ *   - `(u8)IsMovePathSelfAvoiding()` reproduces the ROM's `lsls r0,r0,#0x18; cmp r0,#0`.
  *     The promoted definition returns `int`, so the cast belongs at the call.
  *   - gUnknown_0849D5F8->unk1e / unk1f are declared `u8` and the ROM reads them
  *     with `ldrsb`; the `(s8)` casts here are that, and the shared struct was
@@ -98,7 +98,7 @@ void UpdateMovePathToCursor(void)
         && (s8)gUnknown_0849D5F8->unk1f == gUnknown_030033E4.unk02)
         return;
 
-    sub_080386DC(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
+    SetMovePathLastCursor(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02);
 
     if (v == -1)
         return;
@@ -151,7 +151,7 @@ void UpdateMovePathToCursor(void)
         TruncateMovePath(1);
 
     SetWorkingMapPlane(gUnknown_08499590 + 0x2D5A);
-    sub_08038B84();
+    FillMovementMapFromMovePathEnd();
 
     if (((s8 *)gUnknown_03003340[gUnknown_030033E4.unk02])[gUnknown_030033E4.unk00]
         == -1)
@@ -163,7 +163,7 @@ void UpdateMovePathToCursor(void)
         GenerateBestMovementScript(gUnknown_030033E4.unk00, gUnknown_030033E4.unk02,
                      gUnknown_03003110);
         RebuildMovePathFromDirections();
-        if ((u8)sub_08038C08() == 0)
+        if ((u8)IsMovePathSelfAvoiding() == 0)
             RebuildBestMovePath();
     }
 

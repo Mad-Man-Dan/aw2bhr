@@ -28,7 +28,7 @@ struct Unk3E0D0
  * pushed out to r3 by an `adds r3, r0, #0` that a void function would not
  * need. Adding `return p;` costs a trailing `adds r0, r3, #0` the ROM does not
  * have, and keeping a second local for the cursor costs an extra copy at the
- * top. sub_08040200 discards the result.
+ * top. DestroyLaserOrMinicannon discards the result.
  */
 struct Unk3E0D0 *RemoveInventionRecord(struct Unk3E0D0 *p)
 {

@@ -100,7 +100,7 @@ void LoadEnemyCoMinimugs(int a)
     int i;
     int k;
 
-    n = sub_0802490C(gUnknown_02027F74.unk04[a]);
+    n = GetMapArmyCount(gUnknown_02027F74.unk04[a]);
     proc = Proc_Find(ProcScr_PutEnemyCoMinimug);
 
     if (proc != NULL)

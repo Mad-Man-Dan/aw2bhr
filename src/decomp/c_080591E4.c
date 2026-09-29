@@ -12,7 +12,7 @@
  *
  * The battle-cursor threat scan: walk every reachable cell, keep the one with
  * the lowest +0x2D5A threat value that passes the reachability and terrain
- * tests, and issue it as a sub_0805D648 move. The sibling AiAdvanceTowardUnseeded at
+ * tests, and issue it as a AiPublishAction move. The sibling AiAdvanceTowardUnseeded at
  * 0x08059464 runs the same loop without the gUnknown_030013EC cursor-draw
  * callback, the +0x2D5A prefetch or the `== 100` seed.
  *
@@ -26,7 +26,7 @@
  * pass `gMap->danger` / `gMap->move` (the plane's own array member,
  * decays to `u8 *`), not `gUnknown_08499590 + offset` or a cast -- agbcc's
  * CSE only reuses a pointer load across identical symbols, and mixing in the
- * raw name anywhere forces a second pool load (see sub_08057D90 for the
+ * raw name anywhere forces a second pool load (see AiPickSafestReachableCell for the
  * fuller writeup of this).
  *
  * `mask` MUST BE A BYTE, and this was the entire residual: with `int mask` the
@@ -79,7 +79,7 @@
 /* AiAdvanceTowardUnseeded @ 0x08059464, 528 bytes. MATCHED (first attempt).
  *
  * The sibling of AiAdvanceToward at 0x080591E4: the same "walk every cell, keep
- * the lowest-threat reachable one, issue it as a sub_0805D648 move" scan, minus
+ * the lowest-threat reachable one, issue it as a AiPublishAction move" scan, minus
  * the gUnknown_030013EC cursor-draw callback, minus the +0x2D5A prefetch, and
  * minus the `gUnknown_03004784[1] == 100` special case that seeds `best` with
  * 0x7FFF. Its `void *` parameter is declared (unknown-functions.h) but never
@@ -131,7 +131,7 @@ void AiAdvanceToward(void *a1)
 
     if (gUnknown_03004784[1] >= gUnknown_030040D8->unk07[3] % 100)
     {
-        sub_08062474();
+        AiBuildThreatPlane();
         mask = gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d;
     }
 
@@ -167,15 +167,15 @@ void AiAdvanceToward(void *a1)
     }
 
     if (bestX >= 0)
-        sub_0805D648(bestX, bestY, 2, 0, 0);
+        AiPublishAction(bestX, bestY, 2, 0, 0);
 
     if (gUnknown_030045CC.unk00_1)
     {
         if (gUnknown_03004784[1] > gUnknown_030040D8->unk07[3] % 100)
-            sub_0805F914();
-        sub_0805F7B8();
+            AiRetreat();
+        AiFallbackMove();
     }
-    sub_0805F7B8();
+    AiFallbackMove();
 }
 asm(".global sub_080591E4\n.thumb_set sub_080591E4, AiAdvanceToward\n");
 
@@ -193,7 +193,7 @@ void AiAdvanceTowardUnseeded(void *a1)
 
     if (gUnknown_03004784[1] >= gUnknown_030040D8->unk07[3] % 100)
     {
-        sub_08062474();
+        AiBuildThreatPlane();
         mask = gUnknown_085D5ABC[gUnknown_030040D8->unk00].unk1d;
     }
 
@@ -224,14 +224,14 @@ void AiAdvanceTowardUnseeded(void *a1)
     }
 
     if (bestX >= 0)
-        sub_0805D648(bestX, bestY, 2, 0, 0);
+        AiPublishAction(bestX, bestY, 2, 0, 0);
 
     if (gUnknown_030045CC.unk00_1)
     {
         if (gUnknown_03004784[1] > gUnknown_030040D8->unk07[3] % 100)
-            sub_0805F914();
-        sub_0805F7B8();
+            AiRetreat();
+        AiFallbackMove();
     }
-    sub_0805F7B8();
+    AiFallbackMove();
 }
 asm(".global sub_08059464\n.thumb_set sub_08059464, AiAdvanceTowardUnseeded\n");

@@ -7,8 +7,9 @@
  * sub_080386DC @ 0x080386DC
  */
 
-void sub_080386DC(int a, int b)
+void SetMovePathLastCursor(int a, int b)
 {
     gUnknown_0849D5F8->unk1e = a;
     gUnknown_0849D5F8->unk1f = b;
 }
+asm(".global sub_080386DC\n.thumb_set sub_080386DC, SetMovePathLastCursor\n");

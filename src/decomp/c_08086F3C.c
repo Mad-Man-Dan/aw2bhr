@@ -23,7 +23,7 @@ void BuildMapSelectPreviewNow(int a1)
         LoadMapData(p[a1]);
         sub_0801B6EC((void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x06004000));
         sub_0801B6FC((void *)(gUnknown_03001FE8.bits.chr_block * 0x4000 + 0x06004000));
-        sub_08037A20(gBG1TilemapBuffer, 0x6200);
+        FillMapPreviewTilemap(gBG1TilemapBuffer, 0x6200);
         gUnknown_03005918 = ((u8 *)gUnknown_03003F68)[0];
         gUnknown_030058F4 = ((u8 *)gUnknown_03003F68)[1];
         sub_0802481C();

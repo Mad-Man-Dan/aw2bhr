@@ -7,7 +7,7 @@
  * sub_08043834 @ 0x08043834, DrawCoPowerLabel @ 0x08043898, sub_080438FC @ 0x080438FC
  */
 
-void sub_08043834(int a)
+void LoadCoPanelGraphics(int a)
 {
     u16 (*tbl)[16];
     int i;
@@ -19,6 +19,7 @@ void sub_08043834(int a)
     ApplyPaletteExt(tbl[i], 0x2e0, 0x20);
     RegisterDataMove(gUnknown_081259CC, (void *)0x06010840, 0xc0);
 }
+asm(".global sub_08043834\n.thumb_set sub_08043834, LoadCoPanelGraphics\n");
 
 void DrawCoPowerLabel(int x, int y, int i)
 {

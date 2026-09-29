@@ -28,7 +28,7 @@
  * because do_jump rewrites a comparison against zero by exchanging its
  * labels. */
 
-int sub_0805CA24(void)
+int AiUnitHasUsableWeapon(void)
 {
     struct UnitType *type = &gUnknown_085D5ABC[gUnknown_030040D8->unk00];
 
@@ -39,3 +39,4 @@ int sub_0805CA24(void)
 
     return 1;
 }
+asm(".global sub_0805CA24\n.thumb_set sub_0805CA24, AiUnitHasUsableWeapon\n");

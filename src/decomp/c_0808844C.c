@@ -213,7 +213,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                 else
                     gUnknown_03005964 = gUnknown_03005964 - 1;
 
-                sub_08043AC0(FRAME(proc->unk52), 0x11, gUnknown_03005964);
+                LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
                 sub_0803B4DC(0x64);
             }
             else if (gpKeySt->repeated & DPAD_RIGHT)
@@ -223,7 +223,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                 else
                     gUnknown_03005964 = gUnknown_03005964 + 1;
 
-                sub_08043AC0(FRAME(proc->unk52), 0x11, gUnknown_03005964);
+                LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
                 sub_0803B4DC(0x64);
             }
             else if (gpKeySt->pressed & DPAD_UP)
@@ -231,7 +231,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                 if (gUnknown_03005964 > 3)
                 {
                     gUnknown_03005964 = gUnknown_03005964 - 4;
-                    sub_08043AC0(FRAME(proc->unk52), 0x11, gUnknown_03005964);
+                    LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
                     sub_0803B4DC(0x64);
                 }
             }
@@ -240,7 +240,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
                 if (gUnknown_03005964 <= 3)
                 {
                     gUnknown_03005964 = gUnknown_03005964 + 4;
-                    sub_08043AC0(FRAME(proc->unk52), 0x11, gUnknown_03005964);
+                    LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, gUnknown_03005964);
                     sub_0803B4DC(0x64);
                 }
             }
@@ -253,7 +253,7 @@ void CoDesignEditor_Loop(struct Unk0808844C *proc)
             else if (gpKeySt->pressed & 2)
             {
                 gUnknown_03005908 = 4;
-                sub_08043AC0(FRAME(proc->unk52), 0x11, GetLoadedCoPalette(FRAME(proc->unk52)));
+                LoadCoPaletteVariant(FRAME(proc->unk52), 0x11, GetLoadedCoPalette(FRAME(proc->unk52)));
                 proc->unk4c = 0;
                 sub_0803B4DC(0x66);
             }

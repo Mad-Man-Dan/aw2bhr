@@ -19,7 +19,8 @@
  * The callee reads no argument register before writing it, so there
  * is no parameter to pass through either.
  */
-void sub_080246A8(void)
+void SetMapLayersDefault2(void)
 {
     SetMapLayersDefault();
 }
+asm(".global sub_080246A8\n.thumb_set sub_080246A8, SetMapLayersDefault2\n");

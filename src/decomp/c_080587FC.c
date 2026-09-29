@@ -22,7 +22,7 @@
  * Splitting the packed word into `xp = (u32)x << 16`, then
  * `yp = (u32)y << 16`, then `(xp >> 16) | yp` makes the zero-extension two
  * RTL insns and schedules the y shift between them, matching the ROM. This is
- * the same measured lever used by promoted sub_0805EB58. Writing the OR the
+ * the same measured lever used by promoted AiMoveToNearestNonTeamCell. Writing the OR the
  * other way round
  * (`(y << 16) | (u16)x`) was TESTED and is worse -- it flips the `orrs` and
  * `str` operands as well, so the current order is right and the `lsrs`
@@ -47,7 +47,7 @@
  *  - `u` is `u8`, not `int`. With `int` the value is kept as `u << 16` across
  *    the calls and every narrow-parameter call site pays a `lsrs r0,r6,#0x10`;
  *    a `u8` local is PROMOTE_MODE zero-extended, so `AreUnitsOnSameTeam(g, u)` and
- *    `sub_080257C0(u)` need no conversion at all, which is the ROM's bare
+ *    `IsUnitVisibleToCurrentTeam(u)` need no conversion at all, which is the ROM's bare
  *    `adds r0,r4,#0`.
  *  - the results of AiPickFiringCellBeside and AiPickFiringCellBesideUnit are BOUND to `t` before the
  *    `== -1` test, and AiScoreAttack's is not. That is what decides which of the
@@ -93,13 +93,13 @@ int AiListAttackCandidates(int flag)
             if ((s8)gUnknown_03003340[y][x] < 0)
                 continue;
 
-            if ((sub_08035000(gPlaySt.mapID)->unk28 & 1) == 0
+            if ((GetMapListEntry(gPlaySt.mapID)->unk28 & 1) == 0
              && gUnknown_020288B4[gMap->rowOffset[y] + x] != 0)
             {
                 xp = (u32)x << 16;
                 yp = (u32)y << 16;
                 *(int *)&pos = (xp >> 16) | yp;
-                sub_080251BC(gUnknown_03003F38, 0, &pos);
+                CalcAttackOutcome(gUnknown_03003F38, 0, &pos);
                 lim = (u8 *)gBattleAttacker;
                 if (*(s16 *)(lim + 0x18) == 0)
                     continue;
@@ -129,7 +129,7 @@ int AiListAttackCandidates(int flag)
                 if (AreUnitsOnSameTeam(gUnknown_03003F38, u) == 1)
                     continue;
                 r = &gUnits[u];
-                if (r->type == 0x18 && !sub_080257C0(u))
+                if (r->type == 0x18 && !IsUnitVisibleToCurrentTeam(u))
                     continue;
                 if (!IsCellVisibleToArmy(gUnknown_030033EC, x, y))
                     continue;
@@ -144,7 +144,7 @@ int AiListAttackCandidates(int flag)
                     pos.unk00 = gUnknown_030040D8->unk02;
                     pos.unk02 = gUnknown_030040D8->unk03;
                 }
-                sub_080251BC(gUnknown_03003F38, u, &pos);
+                CalcAttackOutcome(gUnknown_03003F38, u, &pos);
                 lim = (u8 *)gBattleAttacker;
                 if (*(s16 *)(lim + 0x18) == 0)
                     continue;

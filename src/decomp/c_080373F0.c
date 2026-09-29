@@ -8,19 +8,19 @@
  */
 
 /* Returns 0 when `a1` fails the current mode's check: with byte 0x32 of
- * gUnknown_03003FC0 set, when sub_0802490C(a1) differs from a2; otherwise
+ * gUnknown_03003FC0 set, when GetMapArmyCount(a1) differs from a2; otherwise
  * when a1 is in 0xB7..0xBF, or when byte 1 is 3 and sub_0803CC64(a1) is 0.
  *
  * The three failure exits are one `return 0` reached by goto. Written as
  * three `return 0`s, cross-jumping keeps the last copy, but the ROM's
  * surviving block is the middle one (after the range test), so the label sits
  * there. `goto ok` on equality gives the ROM's `beq ok; b fail` pair. */
-u8 sub_080373F0(u16 a1, u16 a2)
+u8 IsMapSelectableForSlots(u16 a1, u16 a2)
 {
     extern u8 gUnknown_03003FC0[];
 
     if (gUnknown_03003FC0[0x32]) {
-        if (sub_0802490C(a1) == a2)
+        if (GetMapArmyCount(a1) == a2)
             goto ok;
         goto fail;
     } else {
@@ -34,3 +34,4 @@ u8 sub_080373F0(u16 a1, u16 a2)
 ok:
     return 1;
 }
+asm(".global sub_080373F0\n.thumb_set sub_080373F0, IsMapSelectableForSlots\n");

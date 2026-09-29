@@ -43,13 +43,13 @@
 
 
 /* Wave 43 (W43-F): return type changed from `int` to `bool8`. The note above
- * says nothing narrows the result; sub_08038240, the one caller, does -- it
+ * says nothing narrows the result; EndOfGame_PrepareSummary, the one caller, does -- it
  * truth-tests with `lsls r0,#0x18; cmp r0,#0`, and that shift only appears when
  * agbcc re-narrows a sub-word return. Byte-neutral here (both arms return a
  * literal), and re-verified as still MATCHED after the change.
  *
  * W43-E re-verified this independently and found the CONTROL PAIR that settles
- * it, inside that one caller: sub_08038240 calls IsHardCampaignMode at 0x08038302 and
+ * it, inside that one caller: EndOfGame_PrepareSummary calls IsHardCampaignMode at 0x08038302 and
  * sub_080381C0 at 0x0803830E, sixteen bytes apart, and truth-tests both results
  * directly with no intervening local. The first is `cmp r0,#0` with NO shift
  * and is declared `int`; the second is `lsls r0,#0x18; cmp r0,#0`. Same
@@ -108,7 +108,7 @@ bool8 sub_080381C0(void)
  * clear loop reads as descending (`subs; cmp #0; bge`) but is an ascending
  * `for (i = 0; i < 4; i++)` -- check_dbra_loop rewrote the counter, and the
  * pointer still walks forwards with `adds r0,#1`. */
-void sub_08038240(void)
+void EndOfGame_PrepareSummary(void)
 {
     int i;
 
@@ -166,3 +166,4 @@ void sub_08038240(void)
     else
         AddBattleMapPoints(gUnknown_0202FDEC.unk0a);
 }
+asm(".global sub_08038240\n.thumb_set sub_08038240, EndOfGame_PrepareSummary\n");

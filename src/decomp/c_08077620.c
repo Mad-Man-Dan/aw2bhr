@@ -9,7 +9,7 @@
 
 /* Draws the two halves of a banner plus its icon, each behind its own bounds
  * check: the pair at x 0x80 / 0x78 only while the first argument is on screen,
- * and the sub_0804402C sprite plus its list only while the second is.
+ * and the PutCoMinimugSprite sprite plus its list only while the second is.
  *
  * The second check is UNSIGNED (`cmp #0xae; bhi`) on `b + 0xf`, i.e. the single
  * comparison that covers both ends of the range -- the first check is a plain
@@ -28,7 +28,7 @@ void sub_08077620(int a, int b)
 
     if ((u32)(b + 0xf) <= 0xae)
     {
-        sub_0804402C(a + 0x18, b + 0x10, 0x2098, 0);
+        PutCoMinimugSprite(a + 0x18, b + 0x10, 0x2098, 0);
         PutSprite(0, 0x50, b - 0x10, gUnknown_081CC5B0, 0);
     }
 }

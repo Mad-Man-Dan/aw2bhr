@@ -127,7 +127,7 @@ void MainMenuCarousel_Init(ProcPtr proc)
 
     ApplyPaletteExt(gUnknown_0823DDB8, 0x340, 0x60);
 
-    sub_08043BA4(0, 0, 1);
+    LoadCoFullBodyAndPalette(0, 0, 1);
     InitTextTileCache(0);
 
     ApplyPaletteExt(gUnknown_081320AC, 0x100, 0x20);

@@ -11,26 +11,28 @@
  * re-narrowing at the call site, and -1 needs `movs #1; rsbs #0` because THUMB
  * `cmp rN, #imm8` cannot hold it. The `beq` skipping the three stores is the
  * negation of the source `if`, so the source condition is `!= -1`. */
-void sub_08034394(void)
+void RemoteTurn_WaitForCommand(void)
 {
-    sub_08034598();
+    RemoteTurn_UpdateCursorAndCamera();
 
-    if (LinkReceiveCommand(&gUnknown_030046C0, sub_08034380) != -1)
+    if (LinkReceiveCommand(&gUnknown_030046C0, IsLinkCommandIdValid) != -1)
     {
         gUnknown_03004780 = 3;
         gUnknown_030045D4 = 0;
         gUnknown_03003F60 = 4;
     }
 }
+asm(".global sub_08034394\n.thumb_set sub_08034394, RemoteTurn_WaitForCommand\n");
 
 /* `movs r1, #0; ldrsh r0, [r0, r1]` is the register-offset ldrsh agbcc must use
  * because THUMB has no immediate-offset form -- it is what settles
  * gUnknown_03004780 as s16 rather than u16. */
-void sub_080343D8(void)
+void RemoteTurn_ExecuteCommand(void)
 {
-    sub_08034598();
+    RemoteTurn_UpdateCursorAndCamera();
     AiExecuteActionStep();
 
     if (gUnknown_03004780 == 2)
         gUnknown_03003F60 = 0;
 }
+asm(".global sub_080343D8\n.thumb_set sub_080343D8, RemoteTurn_ExecuteCommand\n");
