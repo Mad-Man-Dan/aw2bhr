@@ -98,16 +98,19 @@ void sub_0801F234(int a)
 {
   struct Unk0200F920 *e;
   int i;
+  int new_var;
   u16 tile;
+  const struct Unk0848B780 *new_var2;
   u32 n;
+  u16 new_var3;
   i = sub_0801F3D4(a);
   e = &gUnknown_0200F920[i];
-  n = e->unk05;
-  tile = e->unk08[n].unk00;
-  n = gUnknown_0848B780[a].unk00 * gUnknown_0848B780[a].unk01;
-  CpuFastSet(sub_0801F444(a, i), ((u8 *) e->unk00) + ((tile & 0x3FF) * 32), ((n & 0x3FF) * 32) / 4);
+  tile = e->unk08[e->unk05].unk00;
+  new_var2 = gUnknown_0848B780 + a;
+  new_var3 = tile;
+  n = (*new_var2).unk00 * gUnknown_0848B780[a].unk01;
+  CpuFastSet(sub_0801F444(a, i), ((u8 *) e->unk00) + ((new_var3 & 0x3FF) * 32), (new_var = (n & 0x3FF) * 32) / 4);
   e->unk08[e->unk05].unk02 = a;
   e->unk05++;
-  e->unk08[e->unk05].unk00 = tile;
-  e->unk08[n].unk00 = e->unk08[n].unk00 + n;
+  e->unk08[e->unk05].unk00 = new_var3 + n;
 }

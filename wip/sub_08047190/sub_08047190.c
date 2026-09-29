@@ -53,14 +53,16 @@ void sub_08047190(void *arg, int a2)
   s16 c2;
   s16 d1;
   s16 d2;
+  int lv0;
   o = (rank = 0);
   n = 0;
   for (i = 0; i <= 0x18; i++)
   {
     if (gUnknown_081BA068[i] > 0)
     {
-      for (j = 1; j <= 0x3f; j++)
+      for (j = 1; j <= 0x3f; j = lv0)
       {
+        lv0 = j + 1;
         if (gUnknown_081BA068[i] > rank)
         {
           rank = gUnknown_081BA068[i];

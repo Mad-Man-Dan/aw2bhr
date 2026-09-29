@@ -98,3 +98,5 @@ Re-measured; the parked description holds (14 bytes: extra `adds r3,r6,#0` from 
 Base unchanged (92.22%). Four spellings of which name (a1 / new_var) each of the four later reads uses, via spellings.py: any
 read of `new_var` at a sub_08014B0C site (either arm) or `a1` in the loop test gives 192 bytes (+12, frame gains r6), because the
 split half then spans the calls; only the current form (split read in the digit loop alone) is 180. No new axis.
+
+Permuter (W97-AA, foreground, 500-560 s, 2 threads, from the current draft): NO-IMPROVEMENT.

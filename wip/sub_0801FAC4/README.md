@@ -2,7 +2,7 @@
 
 0x0801FAC4, 540 bytes, THUMB, parked.
 
-Best score so far: 49.1% (best.c).
+Best score so far: 58.3%.
 
 ## What it does
 
@@ -27,7 +27,6 @@ The original keeps two loop values in two separate stack slots (the fixed bound 
 ## Files
 
 - `sub_0801FAC4.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 

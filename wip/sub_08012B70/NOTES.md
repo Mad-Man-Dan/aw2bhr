@@ -61,3 +61,5 @@ handed a register before `i` is; in the ROM `i` has taken r1 first, forcing src 
 but call-free) sits in scratch r2. A construct must raise i's allocno priority (floor_log2(refs)*refs/live_length) above src's,
 or lower src's, without changing instruction count. Not found in 3 further spellings (respell base as `dst = dst + x; base = ...`
 gives 88 bytes 44%: base to ip).
+
+Permuter (W97-AA, foreground, 500-560 s, 2 threads, from the current draft): NO-IMPROVEMENT.

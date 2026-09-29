@@ -117,3 +117,5 @@ scaled index for the Decompress unk04 and palette unk08 reads (`adds r1,r6,#4; a
 Five spellings of (2) (`*(u8 **)((u8 *)tbl + 4 + idx*16)`, index-first sum, either or both reads) are byte-identical to the plain member read:
 combine folds the constant into the load address whatever the source order. Proposed left: pool-address register (r2 vs r0) and the
 un-folded +4/+8 in the else arm.
+
+Permuter (W97-AA, foreground, 500-560 s, 2 threads, from the current draft): NO-IMPROVEMENT.

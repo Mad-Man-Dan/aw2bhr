@@ -10,7 +10,7 @@ Six exclusive states keep the linker map distinct from decomp progress:
   promoted     decompiled into src/decomp and proven by `make compare`
   upstream     pre-existing C in src/proc.c or src/title-screen.c
   active       unmatched assembly still in the live queue
-  parked       compiler output with a settled near-miss draft
+  parked       C draft written and compiling, not byte-identical yet
   asm-resident hand-written assembly/padding that C should not reproduce
   identified   active assembly named from the Fire Emblem decomps
 
@@ -177,7 +177,7 @@ def collect():
             if fe_note:
                 note += "; FE shape: " + fe_note
         elif r["name"] in parked:
-            status, note = "parked", "settled compiler-output near-miss"
+            status, note = "parked", "C draft, not matching yet"
             if fe_note:
                 note += "; FE shape: " + fe_note
         elif r["name"] in fe:
@@ -415,6 +415,13 @@ def build(out_rel):
     promoted_n, promoted_b = by["promoted"]
     decomp_fn_pct = promoted_n / tracked_n * 100 if tracked_n else 0
     decomp_byte_pct = promoted_b / tracked_b * 100 if tracked_b else 0
+    # The byte split the headline's second line reports: matched C, C drafts
+    # that do not match yet, and hand-written assembly (the matching ceiling).
+    def byte_pct(kind):
+        return by[kind][1] / tracked_b * 100 if tracked_b else 0
+    parked_byte_pct = byte_pct("parked")
+    resident_byte_pct = byte_pct("asm-resident")
+    other_byte_pct = byte_pct("active") + byte_pct("identified")
 
     svg_body, order, bands = render_svg(items)
 
@@ -450,7 +457,10 @@ def build(out_rel):
 
 <h1>Advance Wars 2: Black Hole Rising &mdash; decompilation progress</h1>
 <p class="sub"><strong>Decomp progress: %s / %s functions (%.2f%%) &middot;
-%s / %s indexed bytes (%.2f%%).</strong><br>%s functions &middot; %s mapped bytes
+%s / %s indexed bytes (%.2f%%).</strong><br>
+Code bytes by state: <strong>%.2f%% matching C</strong> + %.2f%% C draft, not
+matching yet = %.2f%% written in C &middot; %.2f%% hand-written assembly (no C
+can reproduce it, so this is the matching ceiling)%s.<br>%s functions &middot; %s mapped bytes
 &middot; %d address bands. The larger map also includes pre-existing upstream C;
 band labels show all C-built bytes, while the headline never counts upstream C
 as decompilation progress.</p>
@@ -461,7 +471,7 @@ as decompilation progress.</p>
   <span><span class="sw" style="background:#0ca30c"></span>promoted decomp C</span>
   <span><span class="sw" style="background:#3182ce"></span>pre-existing upstream C</span>
   <span><span class="sw" style="background:var(--cell-active);border:1px solid var(--frame)"></span>active unmatched assembly</span>
-  <span><span class="sw" style="background:#ed8936"></span>parked near-miss</span>
+  <span><span class="sw" style="background:#ed8936"></span>parked: C draft, not matching yet</span>
   <span><span class="sw" style="background:#9f7aea"></span>asm-resident</span>
   <span><span class="sw" style="background:#fab219"></span>FE-identified active assembly</span>
 </div>
@@ -491,6 +501,10 @@ data is still <span class="mono">.incbin</span> and is a separate problem.</p>
 """ % (CSS,
        "{:,}".format(promoted_n), "{:,}".format(tracked_n), decomp_fn_pct,
        "{:,}".format(promoted_b), "{:,}".format(tracked_b), decomp_byte_pct,
+       decomp_byte_pct, parked_byte_pct, decomp_byte_pct + parked_byte_pct,
+       resident_byte_pct,
+       (" &middot; %.2f%% assembly not yet attempted" % other_byte_pct
+        if other_byte_pct else ""),
        "{:,}".format(tot_n), "{:,}".format(tot_b), len(bands),
        tile("promoted", by["promoted"][0], by["promoted"][1], tot_n, tot_b,
             "byte-for-byte decomp C; primary progress numerator"),
@@ -499,7 +513,7 @@ data is still <span class="mono">.incbin</span> and is a separate problem.</p>
        tile("active", by["active"][0], by["active"][1], tot_n, tot_b,
             "unmatched assembly in the live queue"),
        tile("parked", by["parked"][0], by["parked"][1], tot_n, tot_b,
-            "compiler output with a settled near-miss draft"),
+            "C draft written and compiling, not byte-identical yet"),
        tile("asm-resident", by["asm-resident"][0],
             by["asm-resident"][1], tot_n, tot_b,
             "hand-written assembly or upstream-labelled padding"),

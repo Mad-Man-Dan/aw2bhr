@@ -10,7 +10,7 @@ Draws the map information panel for the cell under the cursor: the terrain box, 
 
 ## How close it is
 
-Compiles to the right size (2356 bytes) with 98.2% of bytes identical. Declaring y as s16 fixed the order of the spill copies. What is left: in three blocks the original loads the unit-array pointer into its own register before adding the index; the draft loads it straight into the sum's register.
+Compiles to the right size (2356 bytes) with 98.5% of bytes identical. What is left: in three blocks the original loads the unit-array pointer into its own register before adding the index; the draft loads it straight into the sum's register.
 
 ## What is left
 
@@ -112,5 +112,8 @@ Permuter (900 s, 2 threads, from the s16-y source): NO-IMPROVEMENT. Final source
 
 wave 97 (W97-W)
 Aliases: gUnknown_08499594 (the unit array) is not aliased; gPlayers/gMap/gGameClock alias uses are not in the differing blocks (the diff sits in the e1/e2 blocks, draft lines 154-165). ROM detail: the second block reloads the pool word into a DIFFERENT register than the first (`ldr r2,=X` then `ldr r4,=X`), pointer in r1, sum in r3; the draft has r1/r1 with the pointer and sum tied to r3. Spellings tried (w97wB/C/D.c): index via a local `t` in all blocks (98.17%), `(u8 *)ptr + idx * 12` (98.22%, identical), volatile-pointer read (98.22%, wrong-C style, discarded). None changes the register choice. Draft unchanged (98.22%).
+
+wave 97 (W97-PG)
+Permuter chain: 3 links, 98.22% -> 98.51%. Kept: link1 reuses zero as (s16)x for the x index in the tail; link2 q = cx then q = (q + ...) in the hp branch. Link3 NO-IMPROVEMENT. Start files .w97pg-perm1/2/3-start.c. Note link1 dropped the yIndex/tblUnk04 comment.
 
 </details>

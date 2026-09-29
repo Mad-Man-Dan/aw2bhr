@@ -259,3 +259,6 @@ Read the RTL (-da, .greg): the wrong constant registers are RELOAD hand-outs, no
 Tried making the `i+1` and `i*0x800` come first in source (copy-back outer loop `for (i = 0; i < 4; ) { int ni = i + 1; ...; i = ni; }`, with and without `int d = i * 0x800`, with the base bound to `u8 *base`): the counter init sits in the ROM's place and the constants get r0/r1, BUT global allocation changes (proc moves to r8, `ni` takes r7, the base is no longer held in sl, +8 bytes, 54%). Swapping the two increments' order, `j = 0, new_var = 0` order: 97.21% unchanged.
 The sibling sub_0807F434 has the same loop; the copy-back outer loop worked there (see its NOTES), so the difference is register pressure in this bigger function (proc, base and ni compete for r7/r8/sl).
 Untried: copy-back outer loop plus something that lowers `ni`'s weight below proc's (e.g. compute `ni` after the inner loop from `i`, which is what the draft already does).
+
+## wave 97 (W97-PG)
+Permuter chain: 1 link (540s), 99.42% -> 99.42%, NO-IMPROVEMENT. Draft unchanged.

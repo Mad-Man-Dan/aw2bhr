@@ -31,3 +31,6 @@ No probe spent; base unchanged (96.50%, size-exact). Reading of the previous rou
 
 ## wave 97 (W97-W)
 Alias lever does not apply: gUnknown_08499598 (gPlayers) is used once in the function and has one pool word in the ROM; the residual is the copy of the .rodata word gUnknown_08090928 (pp), whose symbol is not aliased in aw2bhr.lds (the aliased ones are gMap, gBG*TilemapBuffer, gPlaySt, gPlayers, gGameClock, gTextTable etc.). Not probed further. Draft unchanged (96.50%).
+
+## wave 97 (W97-PG)
+Permuter chain: 1 link, 96.50% -> 96.50%, NO-IMPROVEMENT.

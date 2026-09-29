@@ -85,4 +85,11 @@ wave 97
 Base: sub_08049944.c (== best.c, 92.22%, size-exact, first diff +0x22), unchanged.
 Re-measured; the parked description holds (14 bytes: extra `adds r3,r6,#0` from the a1 split, and r3 vs r2 as the stack-constant scratch). Probes: (a) no split (plain `a1`) -> a1/a4 swap returns (a1 in r5, a4 in r6), i.e. the split is what fixes the swap; (b) same with `0` as the sixth arg of the zero arm -> identical swap. Two probes, nothing new; stopped per budget. Proposed left: "a1/a4 register pair only fixable with a split that costs one copy; ROM has none."
 
+wave 97 (W97-AA)
+Base unchanged (92.22%). Four spellings of which name (a1 / new_var) each of the four later reads uses, via spellings.py: any
+read of `new_var` at a sub_08014B0C site (either arm) or `a1` in the loop test gives 192 bytes (+12, frame gains r6), because the
+split half then spans the calls; only the current form (split read in the digit loop alone) is 180. No new axis.
+
+Permuter (W97-AA, foreground, 500-560 s, 2 threads, from the current draft): NO-IMPROVEMENT.
+
 </details>

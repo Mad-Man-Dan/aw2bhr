@@ -60,3 +60,5 @@ Base unchanged (93.39%; draft snapshot `sub_08054C5C.w97aa-start.c`). Tried this
 - Replacing `i = d[side^1]` in the tail with `nx = ...`, `(t = ...)` or the bare read: 572 / 572 / 568 bytes, 15%: only reuse of the loop
   counter keeps the size, as before.
 Proposed left: counter r7/base r6 swap in the setup preheader (allocno order), sp+10 derivation, tail copy.
+
+Permuter (W97-AA, foreground, 500-560 s, 2 threads, from the current draft): NO-IMPROVEMENT.

@@ -99,9 +99,11 @@ void sub_0807F434(struct Unk0807F434 *proc)
   for (j = 0; j <= 3; )
   {
     int nj = j + 1;
+    int lv;
+    lv = j * 0x800;
     for (k = 0, nv = 0; k <= 7; k++)
     {
-      CpuFastSet(&gUnknown_0200FC50[(j * 0x100) + (k * 0x400)], (void *) ((0x06015000 + (j * 0x800)) + nv), 0x40);
+      CpuFastSet(&gUnknown_0200FC50[(j * 0x100) + (k * 0x400)], (void *) ((0x06015000 + lv) + nv), 0x40);
       nv += 0x100;
     }
     j = nj;

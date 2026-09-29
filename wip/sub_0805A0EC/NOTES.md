@@ -164,3 +164,6 @@ Proposed summary addition (tried): folded compare, p bind removed, zero as block
 
 ## wave 97 (W97-W)
 Alias lever (gMap vs gUnknown_08499590) does not apply: the ROM has ONE force-addr word (gUnknown_0816D97C) for the address of gUnknown_08499590, held in sl and reused at every site, so the source used one name. Probes (`w97w0/1/2.c`, one of the three bare uses renamed gMap; gMap is `struct Map *` so it needs a cast): 22.75% +20, 61.20% +4, one compile fail (type). Draft unchanged (98.95%).
+
+## wave 97 (W97-PG)
+Permuter chain: 1 link (540s), 98.95% -> 98.95%, NO-IMPROVEMENT. Draft unchanged.

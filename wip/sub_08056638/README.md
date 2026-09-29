@@ -62,4 +62,7 @@ Proposed status: unchanged; left = keys-vs-payload row symbol takes the callee-s
 wave 97 (W97-S)
 Draft unchanged (95.83%). Tried by spellings.py: one shared `n = j + 1` temp for every j+1 subscript in the keys array: 19.4%, -4 (frame differs: drops a callee-saved register); `-~j` for the payload's j+1: 31.8%, +4. Both restructure the address arithmetic. No movement on the sb-vs-rematerialised pair.
 
+wave 97 (W97-PG)
+Permuter chain: 1 link, 95.83% -> 95.83%, NO-IMPROVEMENT.
+
 </details>

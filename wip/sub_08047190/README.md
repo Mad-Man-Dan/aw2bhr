@@ -2,7 +2,7 @@
 
 0x08047190, 1292 bytes, THUMB, parked.
 
-Best score so far: 88.8%.
+Best score so far: 89.5%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Builds the current army's sorted unit list in gUnknown_02028DD8, ended by 0xff. 
 
 ## How close it is
 
-Compiles to the right size (1292 bytes); 144 bytes differ (88.9% line up), starting near the top. The remaining difference is register choice and instruction order in the first loop; no statement is missing.
+Compiles to the right size (1292 bytes) with 89.5% of bytes identical; 136 bytes differ. What is left: the loop-counter setup grouping (rank in r3 with its own movs) and the unfolded start of k.
 
 ## What is left
 
@@ -54,5 +54,12 @@ Proposed summary: does = builds the sorted unit list for the current army (rank 
 wave 97 (W97-Q)
 Base unchanged (88.85%, size exact, first diff +0x11). Residual sites read off the diff: (1) inits: ROM is `movs r0,#0; mov r9,r0; mov sl,r0; movs r3,#0` = n and o share one zero temp, rank has its OWN `movs` and lives in r3; the draft chains all three from r5. `n = (o = 0); rank = 0;` (w97q-f) reproduces that shape (`movs r0,#0; mov sl,r0; mov r9,r0; movs r5,#0`, only the sl/r9 order and rank's register differ) but is +4 bytes and 18% because of the two sites below. (2) loop-entry test of the ascending scan: ROM `cmp r2,r0; bge` (k held in r2, NOT folded to 1) vs ours `cmp r0,#1; ble` (k=1 folded). Spelling k's start as `q3`, `-~0`, `q3 - 0`, `(q3 = 1)` in the for-init, `k <= rank`, `rank + 1`, `(int)q3`: all byte-identical to the base (or 78% for `<= rank`), so k's start is folded in every spelling; the ROM's k start is opaque to cse for a reason not found. (3) second scan: ROM compares `cmp r0(type), r2(t)` with t used in place; ours copies t (`adds r3,r2,#0`) before the compare. Spellings `type == t` inline (88.2%), `(s8)t ==` (same as base), bound `e` in either order (1288 B, 52.8%) do not remove the copy.
 Proposed summary addition: tried = k start spellings (six, no effect), split init `n = (o = 0); rank = 0;` (right shape, +4 from the k fold and the t copy), compare-side spellings.
+
+wave 97 (W97-AB)
+Base: 88.85% draft (`sub_08047190.w97ab-start.c`, size-exact, 144 bytes differ, first diff +0x11). Now 89.47%, size-exact, **136 bytes differ**, first diff still +0x11 (`sub_08047190.w97ab-perm1-start.c` is the adopted file).
+Lever (`levers.py`, 3a): step the first loop's inner counter through a copy, `for (j = 1; j <= 0x3f; j = lv0) { lv0 = j + 1; ...` with `int lv0`. 88.85 -> 89.47, wrongc-clean lever. Honest caveat: the ROM's inner counter is the plain `adds r0,r4,#1; lsls; lsrs r4` at the bottom, and this lever computes `j + 1` at the top of the body, so the gain is mostly positional (fewer bytes differ afterwards); it is not the ROM's construct.
+Permuter (480 s, 2 threads) from that file: NO-IMPROVEMENT.
+Residual, re-read against the ROM: the three zero inits (ROM `movs r0,#0; mov r9,r0; mov sl,r0; movs r3,#0`, i.e. n and o share a temp, rank has its own `movs` and lives in r3); the ascending scan's entry test is `cmp r2,r0; bge` in the ROM (k start not folded) vs `cmp r0,#1; ble`; the ROM hoists `arg + 0x21` into the first loop's outer body (`adds r0,r7,#0; adds r0,#0x21; str r0,[sp,#0x60]`), which the draft also does. No new lever on the k-start fold or the init grouping (the previous notes' six init spellings and six k-start spellings stand).
+Unexplored: the ROM's outer/inner counter roles per loop were not tabulated for this function the way they were for sub_0802F03C (the role swap that matched it); with i, k, t, g, j, s, q, q2, q3 all separate s8/u8 locals here the analogue would be which of them share a register across the sibling scans.
 
 </details>

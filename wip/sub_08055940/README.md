@@ -62,4 +62,7 @@ Proposed status: unchanged; left = which row address the pool word holds (bare r
 wave 97 (W97-S)
 Draft unchanged (96.37%). gUnknown_020296E4 exists as its own extern (u16 [][20]). Probed spelling row 1 through it: `gUnknown_020296E4[0][i]` for row 1 with row 0 kept `gUnknown_020296BC[0][i]`: size-exact but 24.2% (two independent pool words, no run-time `subs #0x28`); `gUnknown_020296E4[-1][i]` for row 0: 236 bytes (-12), 8.5% (fold to one base). So the ROM's bare-E4-plus-subtract is neither the separate symbol nor the negative index.
 
+wave 97 (W97-PG)
+Permuter chain: 1 link, 96.37% -> 96.37%, NO-IMPROVEMENT.
+
 </details>

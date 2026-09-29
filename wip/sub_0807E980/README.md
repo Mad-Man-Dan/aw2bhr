@@ -126,4 +126,7 @@ Tried making the `i+1` and `i*0x800` come first in source (copy-back outer loop 
 The sibling sub_0807F434 has the same loop; the copy-back outer loop worked there (see its NOTES), so the difference is register pressure in this bigger function (proc, base and ni compete for r7/r8/sl).
 Untried: copy-back outer loop plus something that lowers `ni`'s weight below proc's (e.g. compute `ni` after the inner loop from `i`, which is what the draft already does).
 
+wave 97 (W97-PG)
+Permuter chain: 1 link (540s), 99.42% -> 99.42%, NO-IMPROVEMENT. Draft unchanged.
+
 </details>

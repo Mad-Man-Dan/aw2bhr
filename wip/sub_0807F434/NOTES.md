@@ -38,3 +38,12 @@ Residual (12 bytes): `lsls r0,#8 / lsls r1,#0xb` in the opposite order; `ldr r0,
 Negatives: source pointer as a walker on top of the copy-back (89.2%; 88.3% without the copy-back); final zero via `k`/`nv`/`x`/literal gets `movs r4,#0` (ROM) but moves j's counter to r1 (93.3-94.2%), because the trailing `j = 0` is what keeps j in r5; using `i` for the copy loop (as the ROM appears to) needs the `&i` trick removed first: with it, i is stack-resident (9%).
 Untried: replace the `new_var = &i` unshare trick with another cse-splitter so the copy loop can use `i`.
 Followed up: dropping `new_var = &i` and using `i` itself for the copy loop (copy-back form, the first loop's `i * 12` spelled `(i*3)*4`, `(i<<2)*3`, `i*12`, `(i*6)*2`) gives 91.7-93.3% with the first difference back at +0xF (Decompress source/buffer words swapped r6/r7), so the `&i` unshare is still needed for those; the 95.00% draft keeps `j` and `&i`.
+
+
+## wave 97 (W97-AB)
+
+Base: 95.00% draft (`sub_0807F434.w97ab-start.c`). Now **95.83%, 240 B size-exact**, first diff +0x1c (relocation display only; code differs from +0x4d). Kept as `sub_0807F434.w97ab-v1.c`.
+Lever (from `levers.py --chain 3`, lever 5a; wrongc OK): bind `j * 0x800` in a plain int before the inner loop, `lv = j * 0x800;`, then `(0x06015000 + lv) + nv`. It fixes the `lsls #11` / `lsls #8` order (the ROM computes j*0x800 first).
+Residual (10 bytes): `ldr r0,=0x06015000; adds r4,r1,r0` is emitted BEFORE `movs r6,#7` where the ROM has it after; the final zero is `movs r5,#0` (strh through r5) where the ROM has r4.
+Negatives this pass: the destination as an explicit walker (`d = (u8 *)(0x06015000 + lv); d += 0x100;`, bound before the loop or in the for-init): 86.67% both; `x = ...` statement form, `0x06015000 + (lv + nv)`, `nv = 0` moved out of the for-init: byte-identical to 95.83%. A few of these were not re-tried against the earlier wave-97 negatives (permuter ran three times before).
+Proposed summary status: size-exact, 95.8% identical; left: the invariant `0x06015000 + j*0x800` add is emitted before the counter start instead of after, and the final zero sits in r5 rather than r4.

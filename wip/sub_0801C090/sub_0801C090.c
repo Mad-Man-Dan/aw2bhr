@@ -13,18 +13,18 @@ struct SpriteTemplateEntry
  * horizontal mirroring, the X position is adjusted by the sprite's width. */
 void sub_0801C090(s32 x, s32 y, void *template, s32 tileOffset)
 {
-  u16 *src;
   u16 *dst;
   u32 count;
   long long nextCount;
   u32 remaining;
   int attr0Hi;
   u16 attr0;
+  int new_var;
   u16 attr1;
   u16 sourceAttr0;
-  src = template;
-  count = *src;
-  src++;
+  count = *((u16 *) template);
+  new_var = ~0xff;
+  template = ((u16 *) template) + 1;
   dst = gUnknown_03002F2C;
   remaining = count;
   while (remaining != 0)
@@ -36,8 +36,8 @@ void sub_0801C090(s32 x, s32 y, void *template, s32 tileOffset)
       s32 sum;
       u16 hi;
       int sa1;
-      sa1 = ((struct SpriteTemplateEntry *) src)->attr1;
-      remaining = (((((u32) sa1) >> 14) * 4) + (((u32) ((sourceAttr0 = ((struct SpriteTemplateEntry *) src)->attr0) >> 14)) * 16)) + ((u32) gUnknown_0848B56C);
+      sa1 = ((struct SpriteTemplateEntry *) template)->attr1;
+      remaining = (((((u32) sa1) >> 14) * 4) + (((u32) ((sourceAttr0 = ((struct SpriteTemplateEntry *) template)->attr0) >> 14)) * 16)) + ((u32) gUnknown_0848B56C);
       negWidth = -(*((s16 *) remaining));
       remaining = 0x1ff & sa1;
       if (sa1 & 0x100)
@@ -56,16 +56,16 @@ void sub_0801C090(s32 x, s32 y, void *template, s32 tileOffset)
     }
     else
     {
-      remaining = ((y | ((struct SpriteTemplateEntry *) src)->attr0) & (~0xff)) | (((((struct SpriteTemplateEntry *) src)->attr0 + y) + gUnknown_03002B20) & 0xff);
+      remaining = ((y | ((struct SpriteTemplateEntry *) template)->attr0) & new_var) | (((((struct SpriteTemplateEntry *) template)->attr0 + y) + gUnknown_03002B20) & 0xff);
       attr0 = remaining;
-      attr1 = ((x | ((struct SpriteTemplateEntry *) src)->attr1) & (~0x1ff)) | (((((struct SpriteTemplateEntry *) src)->attr1 + x) + gUnknown_030030D0) & 0x1ff);
+      attr1 = ((x | ((struct SpriteTemplateEntry *) template)->attr1) & (~0x1ff)) | (((((struct SpriteTemplateEntry *) template)->attr1 + x) + gUnknown_030030D0) & 0x1ff);
     }
     *(dst++) = attr0;
-    *(dst++) = (attr1 & 0xcfff) | ((x ^ ((struct SpriteTemplateEntry *) src)->attr1) & 0x3000);
-    *dst = ((struct SpriteTemplateEntry *) src)->attr2 + tileOffset;
+    *(dst++) = (attr1 & 0xcfff) | ((x ^ ((struct SpriteTemplateEntry *) template)->attr1) & 0x3000);
+    *dst = ((struct SpriteTemplateEntry *) template)->attr2 + tileOffset;
     dst += 2;
     gUnknown_03002F2C = ((u8 *) gUnknown_03002F2C) + 8;
-    src += 3;
+    template = ((u16 *) template) + 3;
     nextCount = (count * 0x10000) + 0xffff0000;
     remaining = nextCount;
     count = remaining >> 16;

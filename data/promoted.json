@@ -10364,6 +10364,15 @@
   ]
  },
  {
+  "file": "src/decomp/c_0802F03C.c",
+  "obj": "src/decomp/c_0802F03C.o",
+  "addr_hex": "0x0802F03C",
+  "functions": [
+   "sub_0802F03C"
+  ],
+  "size": 512
+ },
+ {
   "file": "src/decomp/c_0802F23C.c",
   "obj": "src/decomp/c_0802F23C.o",
   "addr_hex": "0x0802F23C",
@@ -26203,6 +26212,15 @@
    "sub_080718E4"
   ],
   "size": 4
+ },
+ {
+  "file": "src/decomp/c_08071918.c",
+  "obj": "src/decomp/c_08071918.o",
+  "addr_hex": "0x08071918",
+  "functions": [
+   "sub_08071918"
+  ],
+  "size": 48
  },
  {
   "file": "src/decomp/c_08071948.c",

@@ -87,4 +87,7 @@ or the `c` bind are formed) did not hold. Measured with tools/spellings.py (size
 So the scratch pick is insensitive to every statement-order/spelling around it; the wave-92 finding (the pick is made in reload's scratch choice) stands.
 Proposed summary: unchanged (status 97.26% size-exact; left: three scratch-register picks r0/r1 vs r1/r3).
 
+wave 97 (W97-PG)
+Permuter chain: 1 link, 97.26% -> 97.26%, NO-IMPROVEMENT.
+
 </details>

@@ -1322,10 +1322,11 @@ def self_test():
     """Both halves of the unit oracle, on the case that motivated it.
 
     A verifier that cannot fail is worse than none, so this asserts the
-    NEGATIVE as well: sub_08071918's unit must still be rejected. Its C is
-    byte-exact for the whole body and it fails only on four leading `movs
-    r0, r0` of veneer-table padding that no C emits -- exactly the kind of
-    near-miss a too-eager unit check would wave through.
+    NEGATIVE as well: sub_08071918's unit, with the file-scope asm that emits
+    its four leading `movs r0, r0` taken back out, must be rejected. The C body
+    is byte-exact and it fails only on those 8 bytes of veneer-table padding --
+    exactly the kind of near-miss a too-eager unit check would wave through.
+    The real draft now carries that asm and matches (see its file comment).
     """
     ok = True
 
@@ -1336,10 +1337,17 @@ def self_test():
     ok &= good
 
     print()
-    rc = check_unit("sub_08071918")
+    rc = _unit_without_padding_asm("sub_08071918", "sub_08071920")
     good = (rc == 1)
-    print("\n[self-test] sub_08071918's unit is still REJECTED (leading "
-          "veneer padding): %s" % ("PASS" if good else "FAIL"))
+    print("\n[self-test] sub_08071918's unit without its padding asm is "
+          "REJECTED (leading veneer padding): %s" % ("PASS" if good else "FAIL"))
+    ok &= good
+
+    print()
+    rc = check_unit("sub_08071918")
+    good = (rc == 0)
+    print("\n[self-test] sub_08071918's unit WITH its padding asm verifies "
+          "(the padding is emitted, not hidden): %s" % ("PASS" if good else "FAIL"))
     ok &= good
 
     # Wave 28: a unit holding an asm-resident member must produce a VERDICT.
@@ -1402,6 +1410,29 @@ def self_test():
 
     print("\n[self-test] %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
+
+
+def _unit_without_padding_asm(name, body_name):
+    """check_unit(name) on the merged draft with its file-scope `asm(".text...`
+    padding and `.thumb_set` alias lines removed and the body renamed back to
+    `name` -- the draft as it stood before the padding could be spelled."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import promote as promote_mod
+    real = promote_mod.merge
+
+    def stripped(run, index):
+        text, err = real(run, index)
+        if text is not None:
+            text = "".join(ln for ln in text.splitlines(keepends=True)
+                           if not ln.startswith("asm(\""))
+            text = text.replace(body_name, name)
+        return text, err
+
+    promote_mod.merge = stripped
+    try:
+        return check_unit(name)
+    finally:
+        promote_mod.merge = real
 
 
 def _self_test_missing_draft():

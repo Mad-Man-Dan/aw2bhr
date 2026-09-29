@@ -10,7 +10,7 @@ Initialises two tables, gUnknown_0202F140 and gUnknown_0202F110, from ROM data (
 
 ## How close it is
 
-Compiles to the right size (232 bytes) with 97.0% of bytes identical; 7 bytes differ. What is left: the original adds 2 to the row base once, before the loop; every spelling that separates the 2 gets folded into the address instead.
+Compiles to the right size (232 bytes) with 99.1% of bytes identical. A constant local `new_var = 2` added to the row base moved it from 97.0%. What is left: a few bytes of register choice around the row address.
 
 ## What is left
 
@@ -118,5 +118,8 @@ Measured (spellings.py, 15 variants): `entries[i].unk02` / `gUnknown_0202F110[i]
 ONE spelling produces the ROM's separate `adds r5,r4,#2`: bind `entries = gUnknown_0202F110; base = (u8 *)entries + 2;` between the loops AND write the six trailing stores through `entries[..]`. That gives `add r5,r4,#2` and `q = base + i*8` but the bound `entries` stays live to the stores (r4 held, size -4, 67.7%), where the ROM reloads `ldr r0,=g` after the loop (the pool word is shared). Any spelling that leaves the trailing stores bare (`gUnknown_0202F110[k]`) after the bind switches to the `.LC` indirect word (size +8). Re-binding `entries = gUnknown_0202F110` again before the stores (or a second pointer `e2`, or `entries = 0;` first) also switches to `.LC` (+8).
 Conclusion: the ROM needs the bound copy dead after the loop AND bare-global stores that share the same pool word; every spelling gets one of those two, not both. Not matched.
 Proposed summary addition (tried): `+2` as a member/array-member address, `(u8 *)` walker with `+= 2`, bind before either loop, bind between loops with the stores through the bind (-4), re-bind before the stores (+8).
+
+wave 97 (W97-PG)
+Permuter chain: 2 links, 96.98% -> 99.14%. Kept link1: constant new_var = 2 used in q = (base + new_var) + i*8 (benign constant). Link2 NO-IMPROVEMENT. Start files .w97pg-perm1/2-start.c.
 
 </details>

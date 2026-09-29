@@ -66,4 +66,17 @@ and the other side if they differ. status = 93.4% size-exact, all differences in
 assignment. left = counter in r7 not r6, sp+10 derived off sp+8, wrong table base in r9. tried = see above plus
 waves 78-90.
 
+wave 97 (W97-AA)
+Base unchanged (93.39%; draft snapshot `sub_08054C5C.w97aa-start.c`). Tried this wave's copy-back step in place of the `t = i` costume:
+- `for (i = 0; i < 2; ) { ...use i...; nx = i + 1; i = nx; }` with the `i = d[side ^ 1]` tail reuse: 560 size-exact but 69.29%
+  (first +0x13). The counter is a plain u16 with no `t = i` copy, and the setup loop is now the ROM's shape, but the counter lands in r7
+  and the table base in r6 (ROM r6 / r7), `&b[1]` is still derived `adds r0,#2` from `&b[0]`, and the tail loads `ldrh r7; adds r3,r7,#0`.
+  So the copy-back step gives the size the costume gave, without the costume, and leaves exactly the counter/base allocno swap.
+- The same with `t = i` kept (copy-back + costume): 93.39%, byte-identical to the draft. Step at the top (`i = nx` in the for clause): 564 bytes.
+- Replacing `i = d[side^1]` in the tail with `nx = ...`, `(t = ...)` or the bare read: 572 / 572 / 568 bytes, 15%: only reuse of the loop
+  counter keeps the size, as before.
+Proposed left: counter r7/base r6 swap in the setup preheader (allocno order), sp+10 derivation, tail copy.
+
+Permuter (W97-AA, foreground, 500-560 s, 2 threads, from the current draft): NO-IMPROVEMENT.
+
 </details>

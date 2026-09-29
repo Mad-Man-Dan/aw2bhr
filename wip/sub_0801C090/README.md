@@ -2,7 +2,7 @@
 
 0x0801C090, 360 bytes, THUMB, parked.
 
-Best score so far: 92.2%.
+Best score so far: 93.6%.
 
 ## What it does
 
@@ -10,7 +10,7 @@ Copies a sprite's list of OAM entries into the OAM buffer at the write cursor gU
 
 ## How close it is
 
-Compiles to the right size (360 bytes) with 92.2% of bytes identical. What is left is register numbering in the mirrored arm.
+Compiles to the right size (360 bytes) with 93.6% of bytes identical. What is left is scratch register numbering in the mirrored arm (the width table's pool word and the 0x1ff mask copy). The draft still has a `long long nextCount` that should become plain C.
 
 ## What is left
 
@@ -77,5 +77,14 @@ Base: 90.56% draft (`sub_0801C090.w97-second-start.c`). Now **91.67%, 360 B size
 Lever: give the mirrored arm's loaded attr1 its own variable typed `int` (`int sa1 = src->attr1;` used for the shift, the 0x1ff mask, the 0x100 test and `hi = (x | sa1) & ~0x1ff`), so the merged `attr1` is a separate pseudo and ends in r2 like the ROM. `u16 sa1` costs +4 bytes (364, 20%), `u32 sa1` -4 (356); `int` is size-exact but shifts arithmetically (`asrs`), so the shift is spelled `(u32) sa1 >> 14` (91.39 -> 91.67).
 Residual: the pool word of gUnknown_0848B56C (ROM r3, ours r0), the 0x1ff mask (ROM `ldr r7; mov sl,r7; mov r3,sl; ands r3,r4`; ours `ldr r3; mov sl,r3; adds r1,r4,#0; ands r1,r3`), prologue `str r3,[sp]` order, and the loop-bottom count add/compare pair (r0/r1 swapped). All reload/scratch numbering.
 Permuter (900 s, 2 threads) from the 91.67% file: 91.67 -> 92.22. Two edits, both valid C (wrongc.py OK, 117 seeds): the `>> 14` cast spelled `(((u32) sa1) >> 14)`, and the count update goes through a `long long nextCount` temp (`nextCount = count * 0x10000 + 0xffff0000; remaining = nextCount;`). Adopted.
+
+wave 97 (W97-AB)
+Base: 92.22% draft (`sub_0801C090.w97ab-start.c`, size-exact, first diff +0x10). Now **93.61%, 360 B size-exact, first diff +0x41**.
+Lever 1 (by hand, 92.22 -> 93.33): walk the `template` PARAMETER itself instead of a fresh `u16 *src = template;` (`count = *(u16 *) template; template = (u16 *) template + 1; ... template = (u16 *) template + 3;`, `((struct SpriteTemplateEntry *) template)->` at every use). This is the wave-86 twin idea, which was allocation-neutral on the old base; on the current base it puts `adds r5,r2,#0` before `str r3,[sp]` like the ROM (the parameter pseudo itself becomes the walker, so its entry copy is emitted with the other parameter copies). The prologue difference is gone and the first difference moved +0x10 -> +0x41. Lesson: re-test a twin transplant after each big move; a negative on one base is not a negative on the next.
+Lever 2 (permuter, 560 s, 93.33 -> 93.61): `new_var = ~0xff;` bound at the top and used in the non-mirrored arm's attr0 mask. Valid C (wrongc OK, literal WARN only).
+Negatives: `sa1 & 0x1ff` instead of `0x1ff & sa1`, the commuted `0x1ff & remaining` at the second use: byte-identical; table pointer first in the width sum: +4 bytes, 28.9%. `levers.py --chain 3` found no improving lever on the 92.22 base.
+Residual (all scratch numbering in the mirrored arm): the width table's pool word loads into r0 (ROM r3, i.e. the ROM's load is live across the r0 chain, so RTL order of the load differs); the 0x1ff mask is copied through r3 / sl (`ldr r3; mov sl,r3; adds r1,r4,#0; ands r1,r3`) where the ROM has `ldr r7; mov sl,r7; mov r3,sl; ands r3,r4`; the hi-mask temp is in r4 not r1; the loop-bottom count is in r2 not r1.
+Note: the draft still carries a `long long nextCount` temp for the count update (adopted earlier this wave; wrongc OK, frame unchanged). A plain-C spelling that matches would be preferable.
+Proposed summary status: size-exact, 93.6% identical; left: the mirrored arm's scratch registers (width-table pool word r0 vs r3, the mask copy path, one temp).
 
 </details>

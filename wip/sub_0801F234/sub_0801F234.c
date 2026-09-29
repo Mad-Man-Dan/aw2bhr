@@ -96,21 +96,22 @@
  * unk05 re-reads in the tail are settled. */
 void sub_0801F234(int a)
 {
-    struct Unk0200F920 *e;
-    int i;
-    u16 tile;
-    u32 n;
-
-    i = sub_0801F3D4(a);
-    e = &gUnknown_0200F920[i];
-    tile = e->unk08[e->unk05].unk00;
-    n = gUnknown_0848B780[a].unk00 * gUnknown_0848B780[a].unk01;
-
-    CpuFastSet(sub_0801F444(a, i),
-               (u8 *)e->unk00 + (tile & 0x3FF) * 32,
-               (n & 0x3FF) * 32 / 4);
-
-    e->unk08[e->unk05].unk02 = a;
-    e->unk05++;
-    e->unk08[e->unk05].unk00 = tile + n;
+  struct Unk0200F920 *e;
+  int i;
+  short wordCount;
+  u16 tile;
+  const struct Unk0848B780 *dims;
+  u32 n;
+  u16 tileCopy;
+  u8 *dst;
+  i = sub_0801F3D4(a);
+  e = &gUnknown_0200F920[i];
+  tile = e->unk08[e->unk05].unk00;
+  dims = gUnknown_0848B780 + a;
+  tileCopy = tile;
+  n = (*dims).unk00 * gUnknown_0848B780[a].unk01;
+  CpuFastSet(sub_0801F444(a, i), dst = ((u8 *) e->unk00) + ((tileCopy & 0x3FF) * 32), (wordCount = (n & 0x3FF) * 32) / 4);
+  e->unk08[e->unk05].unk02 = a;
+  e->unk05++;
+  e->unk08[e->unk05].unk00 = tileCopy + n;
 }

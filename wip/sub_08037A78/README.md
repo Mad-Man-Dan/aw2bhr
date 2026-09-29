@@ -131,4 +131,7 @@ Chained permuter run 1 (`perm-w97-1.log`, 900 s, 2 threads, from the 98.13% draf
 (score 40 -> 36) is a header-expanded `output-36-1/source.c` (7,441 lines), not usable; draft restored unchanged. Slot-only residual is
 now searchable by the permuter but nothing reordered the pseudo numbers. Hand levers unchanged (see above).
 
+wave 97 (W97-PG)
+Permuter chain: 1 link, 98.13% -> 98.13%, NO-IMPROVEMENT.
+
 </details>
