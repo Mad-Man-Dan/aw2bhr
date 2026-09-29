@@ -10,7 +10,7 @@ Exchanges this frame's key input with the other players in link play and returns
 
 ## How close it is
 
-Compiles to the right size (428 bytes) with 48.6% of bytes identical. The draft reads gpKeySt once at the top and keeps it for the return, holds the wait loop's 2 in a variable, and groups the key word's OR the original's way. Not yet checked: that nothing changes gpKeySt during the function.
+Compiles to the right size (428 bytes) with 54.2% of bytes identical and, like the original, no stack frame (the earlier right-size draft had a frame the original lacks).
 
 ## What is left
 
@@ -111,5 +111,14 @@ where the ROM reads it at the end (see above).
 Proposed summary: does = link handshake and key-word exchange; status = 49.8%, size-exact by an unfaithful gpKeySt read;
 left = 8 bytes' real source (wait-loop copies, single-read unk210 RMW); tried = pointer-rooted volatile stores (fold the OR away),
 faithful late gpKeySt read (-8), address locals (folded), permuter x3 across waves 95-96.
+
+### Wave 97
+
+wave 97 (W97-Y)
+Base: the FAITHFUL end-read form (no early `new_var = gpKeySt;`, `return gpKeySt->previous;` at the shared tail), frameless like the ROM. Draft kept as `sub_080303C8.w97y-start.c`. The old 428-byte draft carries `sub sp, #4` (a spill slot for the early gpKeySt read) which the ROM does not have: its size-exactness was that slot, confirmed by `spellings.py` (draft: frame #4; ROM and faithful form: no frame).
+Lever that made the faithful form size-exact: the wait loop as `if (unk06 != 0 && gUnknown_02023894 == 0) { do { if (gUnknown_02023894 != 0) break; } while (unk04 != 2); }` (loop-inverted like the ROM's `adds r3,r2,#0 / adds r2,r4,#0` entry) -> 428 bytes, frameless, 31.78% (was 15.4% at 420). The `while (X == 0 && unk04 != 2)` spelling and the `while(1) { break; break; }` form are 420 / 436.
+Permuter (3 links, wrongc OK each, diffs read): reads `gUnknown_0849B01C->unk00` once per iteration into `new_var2` before the unk208 tests (a volatile RAM read moved earlier on the early-out path, no other effect) and hoists `unk02 << 13` into `i` before the v expression (i is re-initialised by the for). Now 54.21%, 428 exact, frameless, first diff +0x1c (draft +0xA). Value-neutral but the two hoists are spellings, not the ROM's source shape.
+Residual: v expression order (ROM reads the keypad, then unk00, then unk02; here unk02 and unk00 come first), the loop-top address regs, unk210 RMW sites unchanged from wave 96.
+Proposed status: 54.2%, size-exact WITHOUT the unfaithful early gpKeySt read; left = v-expression operand order and the wait-loop/loop-top register roles.
 
 </details>

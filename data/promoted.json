@@ -6412,6 +6412,15 @@
   "size": 72
  },
  {
+  "file": "src/decomp/c_0801F234.c",
+  "obj": "src/decomp/c_0801F234.o",
+  "addr_hex": "0x0801F234",
+  "functions": [
+   "sub_0801F234"
+  ],
+  "size": 120
+ },
+ {
   "file": "src/decomp/c_0801F2AC.c",
   "obj": "src/decomp/c_0801F2AC.o",
   "addr_hex": "0x0801F2AC",

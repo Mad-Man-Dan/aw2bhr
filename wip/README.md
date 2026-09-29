@@ -28,14 +28,13 @@ it yourself as described under Contributing in the main README.
 
 ## Functions
 
-65 functions, 31268 bytes, closest first. The score is the share of
+64 functions, 31148 bytes, closest first. The score is the share of
 bytes identical to the original. A byte count after it means the attempt
 compiles to a different size.
 
 | function | bytes | best so far | state |
 |---|---|---|---|
 | [sub_0807E980](sub_0807E980/) | 1040 | 99.4% | parked |
-| [sub_0801F234](sub_0801F234/) | 120 | 99.2% (best.c) | parked |
 | [sub_0806412C](sub_0806412C/) | 232 | 99.1% | parked |
 | [sub_0805A0EC](sub_0805A0EC/) | 380 | 99.0% (best.c) | parked |
 | [sub_0802AA78](sub_0802AA78/) | 2356 | 98.5% | parked |

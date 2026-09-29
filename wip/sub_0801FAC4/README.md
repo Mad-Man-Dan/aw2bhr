@@ -10,7 +10,7 @@ Paints a widening triangle of cells with value a5 into the current map plane (th
 
 ## How close it is
 
-Now compiles to the right size (540 bytes) where it used to be 4 too short, with 45.6% of bytes in place. Hoisting case 0's loop bound into its own variable gives the original's second stack slot. What is left starts 0x24 bytes in and is register choice: the two parameters widened in the prologue land in each other's registers.
+Compiles to the right size (540 bytes) with 58.3% of bytes identical, without volatile. What is left: the frame has one slot where the original has two.
 
 ## What is left
 
@@ -67,5 +67,13 @@ Measured with a structural (register-blind) instruction diff against the ROM, be
 
 Proposed summary: does = fills a diamond, square or line of tiles by looping outward from a centre; status = size-exact but register assignment differs in the hi registers; left = the ROM spills the case 0 bound to a second slot and keeps the global's address in a register; tried = volatile bound, inline bound, address bind, all measured.
 Permuter (600 s, --current, volatile draft): 'improved' 45.56% -> 49.07%, WRONG C: in case 0 it inserts `s = y;` between the clip and `for (x = s; ...)`, which overwrites the row's first column with the row index, and indexes the table with `[s]`. Kept as sub_0801FAC4.w96-perm1-WRONG.c; draft restored (45.56%, size-exact).
+
+### Wave 97
+
+wave 97 (W97-Y)
+levers.py's best (58.7%) is WRONG (a byte written 0x01 vs unwritten; `w = s < 0` changes the value); ignored.
+Base: `sub_0801FAC4.w96-g1-novolatile.c` (no volatile, 36.3%, 536 bytes / -4, one-slot frame); draft kept as `sub_0801FAC4.w97y-start.c`. Three chained permuter links (wrongc OK each, diffs read; every change is value-neutral): `x = k; s -= x;` in case 2 (536 -> 540, size-exact WITHOUT any volatile, 56.11%), `(e - 1) >= *(u16 *)(gUnknown_08499590 + 2)` for `e > ...` in case 4's clip (57.96%), and a `u16 *new_var` bound to that same address at that site (58.33%).
+Now 58.33%, size 540 exact, no volatile, first diff +0xa. Residual not yet re-read beyond wave 96's (ROM keeps the global's address in one register across case 0's loop; frame is one slot vs the ROM's two).
+Proposed status: size-exact and volatile-free at 58.3%; left = second spill slot and the case-0 address register.
 
 </details>
