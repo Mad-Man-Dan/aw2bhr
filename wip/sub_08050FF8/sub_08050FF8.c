@@ -63,7 +63,8 @@ void sub_08050FF8(void)
     u16 *c1;
     u16 *c1b;
     u16 *c2;
-    u16 t;
+    s16 t;
+    u16 lv0;
     int k;
     int off;
     int offb;
@@ -128,11 +129,11 @@ void sub_08050FF8(void)
     offb = **pDC * 16;
     c1b = (u16 *)e4b + 1;
 
+    lv0 = ((struct Unk85D6A48Row *)gUnknown_085D6A48)
+              [*(u16 *)((u8 *)c1b + offb)].unk08;
     x = gUnknown_02029A10[**pDC].entries[*p451C].x
         + gUnknown_08553B58[**pDC]
-        + gUnknown_08553B5C[((struct Unk85D6A48Row *)gUnknown_085D6A48)
-              [*(u16 *)((u8 *)c1b + offb)].unk08]
-              [**pDC];
+        + gUnknown_08553B5C[lv0][**pDC];
     y = gUnknown_02029A10[**pDC].entries[*p451C].y
         + gUnknown_08553BFC[gUnknown_020298E0[**pDC].unk18].unk04
         - 8;

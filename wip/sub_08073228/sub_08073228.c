@@ -170,11 +170,14 @@ struct Unk73228Proc
  * The wave-86 draft is preserved as _w87_gotoloop.c and w86g-start.c.
  */
 
+extern const u8 gUnknown_08614028[];
+
 void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
 {
+  struct Unk73228Proc *new_var3;
+  int k;
   int i;
   int j;
-  int k;
   const u8 *p;
   short acc;
   const struct Unk08614024 *new_var2;
@@ -182,15 +185,19 @@ void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
   int c;
   const u8 *glyph;
   j = 0;
-  i = 0;
-  acc = 4;
+  if (1)
+  {
+    i = 0;
+    acc = 4;
+  }
   while (((const u8 *) a1)[i] != 0)
   {
     j = j * 8;
     new_var = 8;
     k = j;
     p = ((const u8 *) gUnknown_08614024) + k;
-    new_var2 = gUnknown_08614024;
+    new_var3 = (struct Unk73228Proc *) a4;
+    new_var2 = (const struct Unk08614024 *) gUnknown_08614028;
     _search:
     if (((const u8 *) a1)[i] == (*p))
     {
@@ -205,9 +212,9 @@ void sub_08073228(const void *a1, void *a2, u16 a3, ProcPtr a4)
     glyph = ((const u8 *) a2) + (j * 0x100);
 
     CpuFastSet(glyph, (void *) ((j = 0x06010000 + (i * 0x100)) + (a3 * 0x20)), 0x40);
-    ((struct Unk73228Proc *) a4)->unk2a[i] = (i * 0x10) + 4;
+    new_var3->unk2a[i] = (i * 0x10) + 4;
     ((struct Unk73228Proc *) a4)->unk46[i] = acc;
-    acc = acc + (*((int *) ((((u8 *) new_var2) + k) + 4)));
+    acc = acc + (*((int *) (((u8 *) new_var2) + k)));
     i++;
     j = 0;
   }

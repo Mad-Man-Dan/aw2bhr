@@ -98,4 +98,32 @@ W93-F: WAVE 92's RECOMMENDED STARTING POINT IS WRONG C AND IS WITHDRAWN. work/su
 
 W94-B: fourth undirected permuter run from the 99.42% draft (--current, 900 s, 4 threads), the first under the length-penalised scorer (AW2_PENALTY_SIZE=1000). 30,055 iterations, 944 errors, ZERO improving candidates -- the search never beat the draft's objective score of 60, so nothing was verified and the draft was not touched (re-verified: 1040/1040, 99.42%, first difference +0x370). The scorer fix cannot help this draft: it is already size-exact, so the length term is zero for it and for every size-exact neighbour and the ranking is unchanged. The residual is not an allocation choice at all -- it is which LOOP PASS reduces the destination pointer to a giv (the ROM's is reduced in pass 2, after check_dbra_loop wrote the counter; every spelling measured here reduces it in pass 1), so an allocation search cannot reach it. w92-ptr-perm1.c.wrongc was not used.
 
+### Wave 97
+
+wave 97
+Base: the 99.42% draft (`sub_0807E980.w97-start.c`), restored as the final source. It is unchanged.
+
+New finding on the residual (the `movs r6,#7` position): making the SOURCE pointer a walking local
+(`u8 *src = &gUnknown_0200FC50[i * 0x100]; ... src += 0x400;` inside the `for (j...)` body, declared in a block around the loop,
+with the destination left as the `(0x06015000 + i*0x800) + new_var` giv) moves `movs r6,#7` to the ROM's place:
+after the source init and BEFORE the pool load of 0x06015000 and the destination sum. Reason: the source is then an
+ordinary biv whose init is an original insn in source order, the loop counter's `j = 0` (rewritten to 7 by check_dbra_loop)
+follows it, and only the destination giv init is emitted afterwards at loop start. This CONFIRMS the wave-90 reading that the
+order is the ROM's giv/biv split, and shows the lever is which of the two pointers is a biv. The variant
+(`sub_0807E980.q1.c`, increments in the order `new_var += 0x100; src += 0x400;`, which matches the ROM's step order) is
+size-exact but scores 97.21% (first diff +0x364): the two increment constants take r2/r3 instead of r0/r1, and the
+preheader is ordered `lsls r0,#8; add r4; add r0,r5,#1; mov r8; lsls r0,#0xb; movs r6,#7; ldr; adds` where the ROM has
+`adds r3,r5,#1; mov r8,r3; lsls r1,#0xb; lsls r0,#8; mov r2,sl; adds r4; movs r6,#7; ldr; adds`. So the trade is now
+between ONE misplaced constant and a shuffled preheader plus two register numbers. Making both pointers walkers (w1-w4 in
+build/probe/w97j.py) costs 12 bytes (an extra register). A 900 s permuter chain from q1 (2 threads): NO-IMPROVEMENT: the text score fell from 2160 to 1280, but every candidate that was verified scored below q1 (best 93.1%, others 80-92%), so nothing was adopted.
+Pre-registration (this batch): none for this function. Proposed summary: unchanged 99.42%; add to `tried`: source pointer as a
+walking local (moves the counter init to the ROM's place but shuffles the preheader and constant registers, 97.2%).
+
+wave 97 (second pass)
+Base: `sub_0807E980.q1.c` (source pointer as walker, 97.21%). Draft `sub_0807E980.c` unchanged (99.42%).
+Read the RTL (-da, .greg): the wrong constant registers are RELOAD hand-outs, not allocation. `r5 += 0x100` and `r4 += 0x400` need a register operand, so reload creates insns 1399/1402 and takes spill regs round-robin: the 99.42% draft gets r0, r1 (ROM), q1 gets r2, r3 because the hand-outs earlier in the preheader (`mov r3,sl` for the base) already advanced the rotation. So the constant registers follow the preheader ORDER, and the preheader order is the thing to fix. ROM order: [i+1 copy][i<<11][i<<8][base+ (mov r2,sl)][movs r6,#7][pool 0x06015000 + add]. q1 order: [i<<8][mov r3,sl; add][i+1][i<<11][movs r6,#7][pool][add] - the source init is an ordinary insn in source position and precedes the hoisted invariants.
+Tried making the `i+1` and `i*0x800` come first in source (copy-back outer loop `for (i = 0; i < 4; ) { int ni = i + 1; ...; i = ni; }`, with and without `int d = i * 0x800`, with the base bound to `u8 *base`): the counter init sits in the ROM's place and the constants get r0/r1, BUT global allocation changes (proc moves to r8, `ni` takes r7, the base is no longer held in sl, +8 bytes, 54%). Swapping the two increments' order, `j = 0, new_var = 0` order: 97.21% unchanged.
+The sibling sub_0807F434 has the same loop; the copy-back outer loop worked there (see its NOTES), so the difference is register pressure in this bigger function (proc, base and ni compete for r7/r8/sl).
+Untried: copy-back outer loop plus something that lowers `ni`'s weight below proc's (e.g. compute `ni` after the inner loop from `i`, which is what the draft already does).
+
 </details>

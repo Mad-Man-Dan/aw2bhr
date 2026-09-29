@@ -38,3 +38,12 @@ sub_08031824 --flags=-dg`, written to `work/sub_08031824/rtl-w92/`):
 Still open, and unchanged from wave 90: find the value the original kept in r0
 across the first copy loop and the `gUnknown_020280C0` bind, and in r0/r1/r2
 across the 5-byte copy set-up.
+
+## wave 97 (W97-M)
+Base: the 97.26% draft, unchanged. No improvement. Hypotheses (pre-registered: the r0/r1 scratch pick is moved by respelling how the 5-byte copy's two addresses
+or the `c` bind are formed) did not hold. Measured with tools/spellings.py (size 292 every time, first diff always +0x14):
+- 5-byte copy: `i = 4` before/after the src/dst binds 93.8/97.3%; dst before src 95.2%; `(int)gUnknown_020280D4 + j*0x1c` order 95.6%;
+  shared `off2` 92.8% (first diff moves to +0x67, worse); ascending `for (i = 0; i < 5; i++)` 97.26% (byte-identical); pointer arithmetic on u8* 95.6%.
+- `c = gUnknown_020280C0` bind: before `j = 0` 97.26%; `&gUnknown_020280C0[0]` 95.9%; cast, a dead `d5 = 0`, a trailing `i = 0`, a dead `v2 = 0` before it: all byte-identical 97.26%.
+So the scratch pick is insensitive to every statement-order/spelling around it; the wave-92 finding (the pick is made in reload's scratch choice) stands.
+Proposed summary: unchanged (status 97.26% size-exact; left: three scratch-register picks r0/r1 vs r1/r3).

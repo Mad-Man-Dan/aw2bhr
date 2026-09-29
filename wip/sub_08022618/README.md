@@ -49,4 +49,17 @@ WAVE 93 (W93-C). 29.00% size-exact -> 61.25% size+0, first difference +0xc. TWO 
 (2) PERMUTER, two chained 900 s runs, each output audited before keeping. 51.25 -> 55.00: deleted the first `tile = ...` binding and spelled that one address out at the store. All four tile stores still address the same words and `tile` is still assigned before the two reads that use it, so there is no read-before-set; this is the wave-77 `sub_08073304` lever (delete a redundant copy statement) found by search rather than by reading. 55.00 -> 60.25: added `id = x;` at the top and used `id` for the column in `off = rowOffset[y] + id` and `sub_080225CC(id, y)` before `id` is reassigned to the unit id, so one local now carries two roles and two live ranges merge -- the same lever the original entry found between `id` and `flags`. `id` is written before every read, and a map column cannot reach 0x8000, so the u16-to-s16 narrowing is value-preserving. Both kept forms were reformatted into house style and re-verified byte-identical.
 RESIDUAL is unchanged in kind and is pure allocation: the ROM keeps x and y in r5/r4 and ax/by in high registers, the candidate has the two swapped (x/y in r9/r8). The `.rodata` pool words are NOT a residual -- trymatch resolves the candidate's own two-word pool against the ROM's 0x080909A8 / 0x080909AC.
 
+### Wave 97
+
+wave 97 (W97-L)
+Base: existing draft (61.25%, size-exact), restored as the final file. The draft aliases `x` into the unit-id
+variable (`id = x`); the ROM has x in r5 and y in r4 as their own u16 pseudos (x is re-passed to sub_080225CC and
+added into the row index), the id is a separate u16 loaded via `lsls #16; lsrs #16` with the zero test on the shifted
+value, and (s16)id is a separate `lsls r6,r7,#16` copy used for both sub_0802571C's argument and the unit index.
+Tried: x/y separate with `u16 id` (10.75%, -4), with the draft's `flags = (id = ...)` s16 spelling (56.00%, size-exact,
+first diff +0xC), `int id` (53%, adds a frame). The ax/by doubled values sit in sl/sb from the start in the ROM
+(x, y, id and the id copy fill r4-r7 first); in every separate-x spelling ax/by take r4/r5 and x goes to r8.
+Permuter chained once from the 56.00% spelling: 59.75% (kept as sub_08022618.w97L-perm1.c, not adopted: below the draft).
+Proposed summary tried: + "x and y as own variables (the ROM's shape) and a u16/int id".
+
 </details>

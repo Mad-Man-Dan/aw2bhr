@@ -66,4 +66,23 @@ RESULT: SIZE-EXACT (156), 51.3%, first difference +0xa. Draft = `sub_0807B7BC.w9
 The park's "one register short" is gone: the wrapper plus zero-variable form saves the third high register; what is left is register choice (str in r5 not r4, etc.) inside a size-exact body.
 Lever 1: does not transfer as a source form (copies fold away); the permuter's zero-variable is the working equivalent. Comments in the draft are the permuter's, not to be promoted as is.
 
+### Wave 97
+
+wave 97
+best.c is WRONG C (wrongc: `new_var = tile` inside the glyph loop, the same clobber as the wave-95 WRONG files); not used.
+Base: the size-exact 51.28% draft (w97-start). Rewriting from scratch with the wave-96/97 levers:
+* `u16 total` as the ROM has it (per-iteration `lsls/lsrs` into a hi register) and a copy-back step
+  (`nx = str + 1` at the top of the outer body, `str = nx` at the bottom) put in front of the wrapper draft: 25%, frame 8.
+* Removing the permuter's zero variable only in the inner `for` test (`g->unk00 != 0`) while keeping it in the outer `while`
+  and for the outTotal test, plus u16 total and the nx copy-back: **size-exact 156, 57.05%** (was 51.28); kept as e3 below if the
+  draft file is that version. Removing the zero variable from all three tests: 152/144 and worse.
+* `total = count = 0;` / `count = total = 0;`: byte-identical.
+Residual on the 57% form: the ROM keeps `str+1` in r6 and spills only `count` ([sp] = count); we keep `count` in r7, `tile`
+in r6 and spill `nx` in r3 across the Decompress call (frame 8 vs 4), and the zero variable still occupies `sl`.
+
+Update (end of wave 97): permuter from the 57.05% form: 57.05 -> 66.03 -> 66.67, size-exact 156, first diff +0xc. Both runs are
+valid C (read): `tile & 0x3ff` / `<< 1` / `<< 4` split into temporaries, `0x06010000` and `4` and `8` held in ints, `*str` read
+into a u8 before the compare, `nx = str + 1` inside the do-block. Names are still `new_var*`; the residual is unchanged in kind
+(callee-saved assignment: the ROM keeps `str+1` in a low register and spills only `count`). Draft file is the 66.67% form.
+
 </details>

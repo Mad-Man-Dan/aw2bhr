@@ -143,3 +143,9 @@ plus `adds r5,r4,#4` (tblUnk04) placed after the sum in the ROM. Tried: statemen
 -12 bytes (the held pointer is not reloaded after the call); index spelled `p + idx`, byte-cast `* 12`, array-cast,
 `+ 0`: all byte-identical to the draft. So the split is local-alloc register choice for the load temp, not a
 source-visible pseudo.
+Permuter (900 s, 2 threads, from the s16-y source): NO-IMPROVEMENT. Final source: work/sub_0802AA78/sub_0802AA78.c
+(= sub_0802AA78.w97L-e.c, 98.22%). Not run through wrongc.py because it differs from the wave-93 draft only by the
+`u16 y` -> `s16 y` declaration.
+
+## wave 97 (W97-W)
+Aliases: gUnknown_08499594 (the unit array) is not aliased; gPlayers/gMap/gGameClock alias uses are not in the differing blocks (the diff sits in the e1/e2 blocks, draft lines 154-165). ROM detail: the second block reloads the pool word into a DIFFERENT register than the first (`ldr r2,=X` then `ldr r4,=X`), pointer in r1, sum in r3; the draft has r1/r1 with the pointer and sum tied to r3. Spellings tried (w97wB/C/D.c): index via a local `t` in all blocks (98.17%), `(u8 *)ptr + idx * 12` (98.22%, identical), volatile-pointer read (98.22%, wrong-C style, discarded). None changes the register choice. Draft unchanged (98.22%).

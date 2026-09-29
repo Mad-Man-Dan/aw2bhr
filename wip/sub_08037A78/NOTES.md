@@ -186,3 +186,8 @@ the row temp (51) below `cellRow` (29) or `outerMap` (24). Measured (build/probe
 So the ROM's `map+0x12` and outer-map values are NOT plain user locals; they look like compiler temps made after
 the row temp (cse/gcse copies). What lever creates a hoisted `map + 0x12` temp without a user variable is unfound.
 Proposed summary: status 98.13% size-exact, only the three spill-slot numbers differ; left: row pointer must own the lowest slot, `map+0x12` next, outer map third; tried: all declaration orders (slot order follows pseudo number, user locals always below temps), row pointer as a local (+8), cellRow inlined (-4), outerMap dropped (frame shrinks).
+
+### wave 97 (W97-M, second pass)
+Chained permuter run 1 (`perm-w97-1.log`, 900 s, 2 threads, from the 98.13% draft): PERMUTE NO-IMPROVEMENT. The one "new best" it logged
+(score 40 -> 36) is a header-expanded `output-36-1/source.c` (7,441 lines), not usable; draft restored unchanged. Slot-only residual is
+now searchable by the permuter but nothing reordered the pseudo numbers. Hand levers unchanged (see above).

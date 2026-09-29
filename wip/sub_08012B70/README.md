@@ -79,4 +79,18 @@ Register allocation, not source semantics. The instruction stream, the type mode
 
 WAVE 93 (W93-D): still 87.5%, size-exact, draft unchanged. NEW STRUCTURAL FAMILY, and a sharper statement of the park. Reusing the PARAMETER `dst` as the row pointer while giving the row base its own local (base = dst + x; base = base + y * 0x20; then dst = base + i * 0x20; inside the outer loop) reproduces the ROM's pseudo structure exactly for the first time: the `adds r4, r0, #0` prologue copy of dst, the row base as a separate SCRATCH pseudo, and the row pointer recycling dst's now-dead register. Every earlier attempt gave the base its own local while ALSO keeping p separate, which let dst die at once and lost the copy. It is still not a match: agbcc then honours src's copy-preference for its incoming r1, leaves src there, and DROPS the `adds r5, r1, #0` prologue copy -- 42 instructions against the ROM's 43, 2 bytes short. Measured at 42 instructions with src in r1: both orders of the two inner increments; the draft's do-while(0) + int yoff wrapper carried over; src++ before or after the base computation; and parameter 2 taken as `const void *` and walked through a local `u16 *` (the local folds away entirely, byte-identical to the direct form). The mirror-image spelling `p = dst;` at the top is copy-propagated away: dst then stays in r0, the stack parameter loads into r1 instead, and it is SRC that gets the copy and dst that loses it. CONCLUSION: the dst/base SPLIT and the TWO prologue copies are mutually exclusive in every spelling measured -- agbcc always leaves exactly one of the two pointer parameters in its incoming register. Full write-up in work/sub_08012B70/NOTES.md.
 
+### Wave 97
+
+wave 97 (W97-L)
+Base unchanged (87.50%, size-exact, only register numbers differ). Read sub_080726E8's copy-back step (lever 3):
+it does not apply -- this function has no strength-reduction residual, the instruction stream is already 1:1.
+Separate-row-base spellings compiled through spellings.py (all keep the row base in its own pseudo):
+`base = dst + x + y*0x20`, `dst = dst + x; base = dst + y*0x20`, `d2 = dst` copy, `dst = base` after -- size-exact but
+46.59% (the base goes to ip, dst stays in r0, so the ROM's prologue `adds r4, r0, #0` is missing: dst is never a
+pseudo that outlives the stack-parameter load); `dst += x; base = dst; base += y*0x20` and `do { base = dst + ...
+} while (0)` are 4 bytes short (14.77%). Nothing gives dst a prologue copy without making it the row base.
+Mechanism of the tension: gcc only copies a parameter out of r0 when the pseudo is handed a callee-saved register
+by global-alloc, which needs a live range beyond one block; the row-base spellings shorten dst's range to the
+entry block. Not run through the permuter again (converged in wave 93).
+
 </details>

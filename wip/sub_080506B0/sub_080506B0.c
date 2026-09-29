@@ -69,78 +69,59 @@ struct Unk85D6A48Row /* 0x18 */
 
 void sub_080506B0(void)
 {
-    struct OamData oam;
-    struct Unk85D6A48Row *tbl;
-    u16 v;
-    s16 dx;
-    s16 dy;
-    u16 *sidep;
-    u16 *slotp;
-
-    sidep = &gUnknown_0300453C;
-    slotp = &gUnknown_0300451C;
-
-    sub_0801566C(gUnknown_03001FBC, (struct UnkVec *)&oam);
-
-    gUnknown_03001470[gUnknown_03001FBC].unk2c = 0;
-    gUnknown_03001470[gUnknown_03001FBC].unk30 = (*sidep);
-    gUnknown_03001470[gUnknown_03001FBC].unk34 = (*slotp);
-
-    oam.hFlip = (*sidep) ^ 1;
-    oam.paletteNum = 8;
-    oam.tileNum = gUnknown_02029710[(*sidep)].unk00;
-    oam.objMode = 0;
-
-    /* The mission id is read as "table base + 2 + side * 16": the byte-offset
-     * spelling gives the same pool-load order as the original and 4% more
-     * matching bytes than the two-index form. */
-    if ((tbl = (struct Unk85D6A48Row *)gUnknown_085D6A48,
-         tbl[v = *(u16 *)((u8 *)gUnknown_03004580 + 2 + (*sidep) * 16)].unk02) == 2
-        && (v == 0x17 || v == 0x11))
+  struct OamData oam;
+  u16 v;
+  struct Unk85D6A48Row *tbl;
+  u16 (*new_var2)[8];
+  s16 dx;
+  u16 new_var;
+  s16 dy;
+  u16 *sidep;
+  u16 *new_var3;
+  u16 *slotp;
+  u16 lv0;
+  new_var3 = &gUnknown_0300451C;
+  sidep = &gUnknown_0300453C;
+  slotp = new_var3;
+  sub_0801566C(gUnknown_03001FBC, (struct UnkVec *) (&oam));
+  gUnknown_03001470[gUnknown_03001FBC].unk2c = 0;
+  gUnknown_03001470[gUnknown_03001FBC].unk30 = *sidep;
+  gUnknown_03001470[gUnknown_03001FBC].unk34 = *slotp;
+  oam.hFlip = (*sidep) ^ 1;
+  oam.paletteNum = 8;
+  lv0 = gUnknown_02029710[*sidep].unk00;
+  oam.tileNum = lv0;
+  oam.objMode = 0;
+  new_var2 = gUnknown_03004582;
+  if ((((tbl = (struct Unk85D6A48Row *) gUnknown_085D6A48, tbl[v = *((u16 *) ((((u8 *) gUnknown_03004580) + 2) + ((*sidep) * 16)))].unk02)) == 2) && ((v == 0x17) || (v == 0x11)))
+  {
+    do
     {
-        sub_08012358();
-        gUnknown_030030E0.bits.effect = 1;
-        gUnknown_030030E0.bits.target2_enable_obj = 1;
-        gUnknown_030030E0.bits.target2_enable_bg2 = 1;
-        gUnknown_030030E0.bits.target2_enable_bg3 = 1;
-        gUnknown_03002020 = 0xF;
-        gUnknown_03002B28 = 0xA;
-        oam.objMode = 1;
+      sub_08012358();
+      gUnknown_030030E0.bits.effect = 1;
+      gUnknown_030030E0.bits.target2_enable_obj = 1;
+      gUnknown_030030E0.bits.target2_enable_bg2 = 1;
+      gUnknown_030030E0.bits.target2_enable_bg3 = 1;
+      gUnknown_03002020 = 0xF;
+      gUnknown_03002B28 = 0xA;
+      oam.objMode = 1;
     }
-
-    oam.priority = 3;
-
-    sub_08015608(gUnknown_03001FBC, *(struct UnkVec *)&oam);
-
-    sidep = &gUnknown_0300453C;
-    slotp = &gUnknown_0300451C;
-
-    dx = gUnknown_085D81E8[gUnknown_03004582[(*sidep)][0]]
-                          [gUnknown_020296B0[(*sidep)].unk18]
-                          .unk00[(*sidep)];
-    if ((*sidep) != 0)
-        dx = -dx;
-    dy = gUnknown_085D81E8[gUnknown_03004582[(*sidep)][0]]
-                          [gUnknown_020296B0[(*sidep)].unk18].unk04;
-
-    gUnknown_0202972C[(*sidep)][(*slotp)] =
-        gUnknown_02029A10[(*sidep)].entries[(*slotp)].x
-        + gUnknown_08553C18[((struct Unk85D6A48Row *)gUnknown_085D6A48)
-              [((struct Unk85D6A48Row *)gUnknown_085D6A48)
-                  [gUnknown_03004582[(*sidep)][0]].unk00].unk14]
-             .unk08[(*sidep)]
-        + dx;
-
-    gUnknown_02029710[(*sidep)].unk3a[(*slotp)] =
-        gUnknown_02029A10[(*sidep)].entries[(*slotp)].y
-        + gUnknown_08553C18[((struct Unk85D6A48Row *)gUnknown_085D6A48)
-              [((struct Unk85D6A48Row *)gUnknown_085D6A48)
-                  [gUnknown_03004582[(*sidep)][0]].unk00].unk14].unk10
-        + dy;
-
-    sub_08050528((*sidep), gUnknown_03001FBC,
-                 gUnknown_0202972C[(*sidep)][(*slotp)],
-                 gUnknown_02029710[(*sidep)].unk3a[(*slotp)]);
+    while (0);
+  }
+  oam.priority = 3;
+  sub_08015608(gUnknown_03001FBC, *((struct UnkVec *) (&oam)));
+  sidep = &gUnknown_0300453C;
+  slotp = &gUnknown_0300451C;
+  dx = gUnknown_085D81E8[gUnknown_03004582[*sidep][0]][gUnknown_020296B0[*sidep].unk18].unk00[*sidep];
+  if ((*sidep) != 0)
+  {
+    dx = -dx;
+  }
+  new_var = *sidep;
+  dy = gUnknown_085D81E8[gUnknown_03004582[*sidep][0]][gUnknown_020296B0[new_var].unk18].unk04;
+  gUnknown_0202972C[*sidep][*slotp] = (gUnknown_02029A10[*sidep].entries[*slotp].x + gUnknown_08553C18[((struct Unk85D6A48Row *) gUnknown_085D6A48)[((struct Unk85D6A48Row *) gUnknown_085D6A48)[gUnknown_03004582[*sidep][0]].unk00].unk14].unk08[*sidep]) + dx;
+  gUnknown_02029710[*sidep].unk3a[*slotp] = (gUnknown_02029A10[*sidep].entries[*slotp].y + gUnknown_08553C18[((struct Unk85D6A48Row *) gUnknown_085D6A48)[((struct Unk85D6A48Row *) gUnknown_085D6A48)[new_var2[*sidep][0]].unk00].unk14].unk10) + dy;
+  sub_08050528(*sidep, gUnknown_03001FBC, gUnknown_0202972C[*sidep][*slotp], gUnknown_02029710[*sidep].unk3a[*slotp]);
 }
 
 /* WAVE 78 (W78-B).  Improved from 692/680 (+12), 36.2%, to 684/680

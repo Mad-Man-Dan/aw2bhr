@@ -87,6 +87,7 @@ void sub_0805D344(u32 a1)
     int j;
     u8 t;
     u8 x;
+    int big;
 
     n = 0;
 
@@ -97,7 +98,8 @@ void sub_0805D344(u32 a1)
         n++;
     }
 
-    if (n > 1)
+    big = n > 1;
+    if (big)
     {
         for (i = 0; i <= n - 2; i++)
         {

@@ -23,3 +23,9 @@ Probe: `w95-src` plus `*(void **)((u8 *)gUnknown_08555850 + 8 + a * 24)` for the
 Not run: permuter (no size-exact variant).
 
 Proposed summary: as the wave-95 entry; add "the ROM keeps 08555850 as an unfolded base in r8 and adds 8 at run time; every spelling tried lets the compiler fold the 8 into the literal".
+
+## wave 97 (W97-X)
+
+Base: draft with the mode test bound to a local (`wide = (u32)(u8)(gUnknown_08555850[a].unk02 - 1) <= 1; if (wide)`, from lever 5a-25; old draft `sub_0804BB74.w97x-start.c`). 29.46% +12 -> 41.98% size-exact (324), first difference +0x11 (was +0x10). wrongc OK (hand written, so no reads-before-set).
+REJECT: levers.py `5a-131+5b-85` (48.77%, wrongc "OK") and `5b-138+4a-24` (50.31%, wrongc WRONG) contain `k = (j * 32) + i;` INSIDE the copy loop, clobbering the destination counter k (5b assigns into an already-declared local). wrongc did not catch it in the first case (a miss to tell the tool's owner about); do not adopt anything with rule 5b at a loop index.
+Respell-one-site probes for the unfolded +8 (`*(void **)((u8 *)gUnknown_08555850 + X + 8)`), size/first diff: X = (s16)(a*24): 336 (+12) 11.0%; X = a*24 via a local `off`: 324, 41.4%, first +0xc (same code as the plain spelling, the +8 still folds into the literal); base copied into a local table pointer `t2`: 320 (-4) 15.1%; masked `((u32)a*24) & 0xffff`: 332 (+8) 9.9%. Mechanism: a sign/zero-extension of the index does not stop gcc reassociating the constant 8 onto the symbol, because the extension applies to the variable term only and the constant still reaches the symbol through plus(plus(sym, var), 8); only the s16 form changes code and it costs 12 bytes.

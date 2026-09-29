@@ -53,10 +53,15 @@ struct Unk46030Map
 
 #define MAP ((struct Unk46030Map *)gUnknown_08499590)
 
-/* Draws one icon row of the tally page with the shared text buffer. */
+/* Draws one icon row of the tally page with the shared text buffer.
+ *
+ * gBG0TilemapBuffer is the same variable as gUnknown_08499578 (the linker
+ * script defines it as an alias). Naming it by the second name here keeps the
+ * compiler from reusing the earlier address load for these calls, as the ROM
+ * does not. */
 static inline void DrawIcon(int x, int y, int id)
 {
-    sub_08014A5C(x, y, gUnknown_08499578, id, 0x8000, 0);
+    sub_08014A5C(x, y, gBG0TilemapBuffer, id, 0x8000, 0);
 }
 
 void sub_08046030(void)
@@ -171,7 +176,7 @@ void sub_08046030(void)
             }
             else
             {
-                if ((gPlaySt.turnLimit | gPlaySt.captureLimit) != 0)
+                if ((gPlaySt.captureLimit | gPlaySt.turnLimit) != 0)
                 {
                     sub_08014B0C(0xd, (s16)y, gUnknown_08499578,
                                  gPlayers[k].captures, 0x8000, v);
@@ -193,7 +198,7 @@ void sub_08046030(void)
     }
 
     if (gPlaySt.fog == 0
-     || (gPlaySt.turnLimit | gPlaySt.captureLimit) != 0)
+     || (gPlaySt.captureLimit | gPlaySt.turnLimit) != 0)
         sub_08014B0C(0xd, 0x10, gUnknown_08499578, gPlayers->captures,
                      0x8000, 0);
     else

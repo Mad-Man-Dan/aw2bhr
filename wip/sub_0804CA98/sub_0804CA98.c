@@ -11,57 +11,50 @@ extern u16 (*const gUnknown_08136064)[5];
 
 void sub_0804CA98(u16 a1, u16 a2, s16 a3)
 {
-    struct Unk56E28 s;
-    u16 cnt;
-    struct Unk02029A10Group *base = gUnknown_08136060;
-
-    if (base[a1].entries[a2].unk00 == 0)
+  u16 *new_var;
+  struct Unk56E28 s;
+  u16 cnt;
+  int done;
+  int idx;
+  struct Unk02029A10Group *base = gUnknown_08136060;
+  if (base[a1].entries[a2].unk00 == 0)
+  {
+    u16 (*b94)[5] = gUnknown_08136064;
+    base[a1].entries[a2].unk20 += b94[a1][a2];
+    if (((*((volatile u16 *) (&base[a1].entries[a2].unk20))) & 0xf) == 1)
     {
-        u16 (*b94)[5] = gUnknown_08136064;
-
-        base[a1].entries[a2].unk20 += b94[a1][a2];
-        if (((*(volatile u16 *)&base[a1].entries[a2].unk20) & 0xf)
-            == 1)
-        {
-            base[a1].entries[a2].unk22++;
-            if (base[a1].entries[a2].unk22 == 3)
-            {
-                b94[a1][a2] = 0;
-                base[a1].entries[a2].unk20 = 0xff;
-            }
-            cnt = base[a1].entries[a2].unk22;
-            base[a1].entries[cnt].x =
-                base[a1].entries[gUnknown_08552148[a1]].x
-                + ((u16 *)gUnknown_0855335C)[a1 * 10 + cnt * 2];
-            base[a1].entries[cnt].y =
-                base[a1].entries[gUnknown_08552148[a1]].y
-                + ((u16 *)gUnknown_0855335C)[a1 * 10 + cnt * 2 + 1];
-        }
-        if (gUnknown_02029B80[a1][a2] != 0)
-        {
-            gUnknown_02029B80[a1][a2] = 0;
-            b94[a1][a2] = 1;
-            ((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
-                + a1 * sizeof(struct Unk02029A10Group)
-                + (u8 *)base))->frame = 0;
-            s.unk00 = a1;
-            s.unk02 = a2;
-            s.unk04 = ((u16 *)gUnknown_08553354)[a1 * 2];
-            s.unk06 = ((u16 *)gUnknown_08553354)[a1 * 2 + 1];
-            s.unk08 = 0;
-            s.unk0a = 0;
-            s.unk0c = 0x78;
-            sub_08056E28(&s);
-        }
-        if (((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
-                 + a1 * sizeof(struct Unk02029A10Group)
-                 + (u8 *)gUnknown_02029A10))->frame
-                == ((struct Unk02029A10 *)(a2 * sizeof(struct Unk02029A10)
-                 + a1 * sizeof(struct Unk02029A10Group)
-                 + (u8 *)gUnknown_02029A10))->frameCount
-            && a3 != -1 && sub_080153F0(a3))
-            sub_08015328(a3);
+      base[a1].entries[a2].unk22++;
+      if (base[a1].entries[a2].unk22 == 3)
+      {
+        b94[a1][a2] = 0;
+        base[a1].entries[a2].unk20 = 0xff;
+      }
+      new_var = gUnknown_08552148;
+      s.unk06 = ((u16 *) gUnknown_08553354)[(a1 * 2) + 1];
+      cnt = base[a1].entries[a2].unk22;
+      idx = (a1 * 10) + (cnt * 2);
+      base[a1].entries[cnt].x = base[a1].entries[new_var[a1]].x + ((u16 *) gUnknown_0855335C)[idx];
+      base[a1].entries[cnt].y = base[a1].entries[new_var[a1]].y + ((u16 *) gUnknown_0855335C)[idx + 1];
     }
+    if (gUnknown_02029B80[a1][a2] != 0)
+    {
+      gUnknown_02029B80[a1][a2] = 0;
+      b94[a1][a2] = 1;
+      ((struct Unk02029A10 *) (((a1 * (sizeof(struct Unk02029A10Group))) + (a2 * (sizeof(struct Unk02029A10)))) + ((u8 *) base)))->frame = 0;
+      s.unk00 = a1;
+      s.unk02 = a2;
+      s.unk04 = ((u16 *) gUnknown_08553354)[a1 * 2];
+      s.unk08 = 0;
+      s.unk0a = 0;
+      s.unk0c = 0x78;
+      sub_08056E28(&s);
+    }
+    done = (((struct Unk02029A10 *) (((a2 * (sizeof(struct Unk02029A10))) + (a1 * (sizeof(struct Unk02029A10Group)))) + ((u8 *) gUnknown_02029A10)))->frame == ((struct Unk02029A10 *) (((a2 * (sizeof(struct Unk02029A10))) + (a1 * (sizeof(struct Unk02029A10Group)))) + ((u8 *) gUnknown_02029A10)))->frameCount) && (a3 != (-1));
+    if (done && sub_080153F0(a3))
+    {
+      sub_08015328(a3);
+    }
+  }
 }
 
 /* PARKED, wave 37 (W37-I), ONE attempt only -- the batch ran out of budget, so

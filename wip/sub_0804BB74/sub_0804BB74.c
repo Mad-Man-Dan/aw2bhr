@@ -90,12 +90,14 @@ void sub_0804BB74(int a, void *dst, u32 c, int d)
     int i;
     int j;
     int k;
+    int wide;
 
     LZ77UnCompWram(gUnknown_08555850[a].unk08, gUnknown_0200FC50);
 
     if (d != 0)
     {
-        if ((u32)(u8)(gUnknown_08555850[a].unk02 - 1) <= 1)
+        wide = (u32)(u8)(gUnknown_08555850[a].unk02 - 1) <= 1;
+        if (wide)
         {
             k = 0;
             for (j = 0; j <= 0x40 && k != 0x800; j++)

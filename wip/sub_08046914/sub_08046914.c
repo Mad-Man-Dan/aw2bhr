@@ -55,39 +55,48 @@
 
 void sub_08046914(u8 a, u8 b)
 {
-    u8 *gfx;
-    int x;
-    u32 t;
-    u16 i;
-
-    gfx = gTextTable[gUnknown_085D583C[b].nameIndex];
-    x = sub_08014CEC(gfx) / 2 - 0x50;
-    sub_080149C0((s16)((a - x + 4) / 8), 1, gUnknown_08499578, gfx, 0x8000, 0);
-
-    t = a + 0x38;
-    sub_08014A5C(t / 8, 3, gUnknown_08499578, 0x960, 0x8000, 0);
-
-    if (gUnknown_02028DD4 == 0)
-        sub_08014A5C((a + 0x50) / 8, 3, gUnknown_08499578, 0x969, 0x8000,
-                     0);
-
-    if (sub_08026C6C(b) == 0)
-        sub_08014A5C((a + 0x50) / 8, 5, gUnknown_08499578, 0x969, 0x8000,
-                     0);
-    else
-        sub_08014B0C((a + 0x60) / 8, 5, gUnknown_08499578, sub_08026C6C(b),
-                     0x8000, 0);
-
-    for (i = 0; i <= 2; i++)
+  u8 *gfx;
+  int hiInit;
+  int x;
+  unsigned int aCopy;
+  u16 *buf;
+  long t;
+  u16 i;
+  int hi;
+  int zero;
+  gfx = gTextTable[gUnknown_085D583C[b].nameIndex];
+  x = (sub_08014CEC(gfx) / 2) - 0x50;
+  hiInit = 0x8000;
+  hi = hiInit;
+  zero = 0;
+  buf = gUnknown_08499578;
+  sub_080149C0((s16) (((a - x) + 4) / 8), 1, buf, gfx, hi, zero);
+  t = a;
+  t = t + 0x38;
+  sub_08014A5C(t / 8, 3, gUnknown_08499578, 0x960, hi, zero);
+  if (gUnknown_02028DD4 == 0)
+  {
+    sub_08014A5C((a + 0x50) / 8, 3, gUnknown_08499578, 0x969, hi, zero);
+  }
+  aCopy = a;
+  if (sub_08026C6C(b) == 0)
+  {
+    sub_08014A5C((aCopy + 0x50) / 8, 5, gUnknown_08499578, 0x969, 0x8000, 0);
+  }
+  else
+  {
+    sub_08014B0C((unsigned short) ((a + 0x60) / 8), 5, gBG0TilemapBuffer, sub_08026C6C(b), 0x8000, 0);
+  }
+  for (i = 0; i <= 2; i++)
+  {
+    if (gUnknown_085D5ABC[gUnknown_084C20C0[i]].repairTable[b] != 0)
     {
-        if (gUnknown_085D5ABC[gUnknown_084C20C0[i]].repairTable[b] != 0)
-        {
-            sub_08014A5C(t / 8, 7, gUnknown_08499578, 0x961, 0x8000, 0);
-            break;
-        }
+      sub_08014A5C(t / 8, 7, gBG0TilemapBuffer, 0x961, 0x8000, 0);
+      break;
     }
+  }
 
-    sub_08013AEC();
+  sub_08013AEC();
 }
 
 

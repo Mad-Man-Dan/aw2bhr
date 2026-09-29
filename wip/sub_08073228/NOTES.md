@@ -41,3 +41,20 @@ Permuter (2 runs of 900 s, `--current`): run 1 76.36 -> **82.27%, size-exact 220
 What run 1 changed (read, semantically identical): the search stride is held in a local (`new_var = 8;` `k += new_var; p += new_var;`),
 the table base is bound to `new_var2 = gUnknown_08614024` after the loop entry and used for the `+4` advance read, and the VRAM base is
 written `0x06010000 + (i * 0x100)`. Names should become `stride` / `tbl` when someone promotes it. The draft file is the 82.27% form.
+
+## wave 97 (W97-U)
+
+Base: the 82.27% permuter form. Found one real lever: the glyph-advance read is `*(int *)(gUnknown_08614028 + k)` in the
+ROM -- a SECOND pool word for tbl+4 with offset 0 and the operand order `k + base` (`adds r0,r4,r3; ldr r1,[r0]`), not
+`(tbl + k) + 4` (`ldr r1,[r0,#4]`). Declared `extern const u8 gUnknown_08614028[];` above the function (same address as
+tbl+4, defined in data/data-08581E70.s) and bound `new_var2 = (const struct Unk08614024 *)gUnknown_08614028;` then
+`*(int *)(((u8 *)new_var2) + k)`. That alone flipped i/k registers (76.8%); declaring `int k; int i; int j;` in that
+order (k before i) restores them (80.0%). One 600 s permuter run from that: 80.00 -> 82.73% (size-exact, first diff
++0x36): it copies `a4` into a local (`new_var3 = (struct Unk73228Proc *)a4;`, used for the unk2a store) and wraps
+`i = 0; acc = 4;` in `if (1)`; read: valid, wrongc "same behaviour on 400 seeds". Stack-slot order of the three hoisted
+temps now matches the ROM.
+Residual: the ROM loads the character once at the top of the body (`ldr r2,[sp]; adds r0,r2,r5; ... ldrb r3,[r0]`)
+BEFORE `k`/`p` are set up, and compares that register; the draft sets `k`/`p` first and loads the char after. Also two
+commuted adds (`adds r1,r3,r1` glyph destination; `adds r0,r4,r3` advance read). Tried: `(a3*0x20) + (j = ...)` 70.5%,
+`k + (u8*)new_var2` byte-neutral, `c = a1[i]` bound at the loop top: 21.4% -4 (frame 0x1c).
+Proposed summary: left = "loop-top ordering of the character load vs the k/p setup, two operand orders".

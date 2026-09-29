@@ -125,3 +125,6 @@ Negatives: declaring `chk` before `sum` and moving `cur` in the declaration list
 82.14 -> 82.50% but the kept change is WRONG C (`cur = chk; ... return cur;` stores n into the write cursor); rejected and the draft restored.
 Proposed summary: does = writes one packet into the send ring; status = 82.1%, size-exact; left = chk (r9) vs ring base (ip) swapped;
 tried = decl order, return n, one permuter run (its only gain was wrong C).
+
+## wave 97 (W97-S)
+Draft unchanged (82.14%). best.c (86.62%) is +4 bytes, not progress. Tried by spellings.py: `chk = 0` moved to just before the first loop 22.9% +8; `chk = chk - prod - 1` 43.7% +4; s16 chk 41% +8; s16 sum 17.7% +8; swapping the sum/chk statements in the loop 77.5% size-exact; `chk = 0` placed after `cur = ...` 77.5%. None moves chk to r9.

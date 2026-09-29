@@ -2,7 +2,7 @@
 
 0x08020754, 208 bytes, THUMB, parked.
 
-Best score so far: not measured.
+Best score so far: 44.2% (best.c).
 
 ## What it does
 
@@ -26,6 +26,7 @@ Find how the original wrote the if/else so that the compiler's common-subexpress
 ## Files
 
 - `sub_08020754.c`: the current draft
+- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -81,5 +82,23 @@ WAVE 93 (W93-C). UNCHANGED at 220/208 (+12), 26.36%, first difference +0xc. The 
 BASE REJECTED: `best.c` (43.98%, size+8) is, statement for statement, the `k3` variant recorded in work/sub_08020754/NOTES.md -- `if (cond) goto zero; = 1; continue; zero: = 0;` -- which that file describes as '+8, 45.7%, but it puts the `= 1` arm first, recomputes there, and grows the frame to `sub sp,#8`. Wrong direction.' Re-measured this wave: 43.98%, size+8, FIRST DIFFERENCE +0xa against the draft's +0xc, so it diverges EARLIER. It is correct C going the wrong way, and its higher percentage is entirely the 4 bytes it gives back on a draft that is already OVER size. Renamed `best.c.wrongc`.
 METHOD NOTE: on a draft that is over size, a candidate closer to the target size scores higher whatever it does to the code. This entry and sub_080303C8's are the same trap in opposite directions (over size and under size); in both, the first-difference offset gave the right answer and the percentage gave the wrong one.
 RESIDUAL unchanged: which arm CSE recomputes `rowOffset[y] + x` on.
+
+### Wave 97
+
+wave 97 (W97-L)
+Base unchanged (26.36%, +12). Lever 1 (respell ONE identical expression) applied to the "= 0" arm's index, six
+spellings (spellings.py): `dst[x + row]`, `*(dst + x + row)`, `(u16)(row + x)`, `row - ~x + 1` all 26.36% +12 (the
+compiler canonicalises them back to the same expression, no new value number); `*(volatile u16 *)&row[y]` 24.54% +8;
+`*(volatile u32 *)&gUnknown_08499590` as the map pointer in that arm 28.77% +4 but it makes BOTH arms recompute
+(reload of the map pointer, row table and an extra literal word) -- wrong direction (ROM: "= 0" arm recomputes,
+"= 1" arm reuses the loop-top sum). Mechanism unchanged from the wave-41/87 reading: the ROM's "= 0" block begins
+at a label (the `unit == 0` branch target), so cse starts a fresh block there and re-derives the address; the
+"= 1" arm stays inside the condition's block. A value-numbering respelling cannot create that; only a block
+structure change can, and the jump-pass merge of duplicated `= 1` stores blocks the nested form.
+Proposed summary tried: + "respelling the 0-arm index (4 pure commutations, a volatile row read, a volatile map
+pointer read) does not split it".
+
+wave 97 (W97-V)
+Base: levers 4a-31 (branch polarity: the `dst = 0` arm is the else of the negated condition). wrongc OK. 26.36% +12 -> 43.98% +8. Permuter run 1 only 44.23% via a macro-expanded `new_var = rowOffset` (rejected: unreadable, +0.25%); draft left at the 43.98% levers form. Residual: +8 bytes. ROM keeps dst in r5 and the gMap pointer in sl (one `mov sl, r0`) with only one stack slot; ours keeps dst in sl and spills the map pointer to [sp,#0], so one more live value than the ROM.
 
 </details>

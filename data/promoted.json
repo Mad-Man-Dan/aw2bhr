@@ -20448,6 +20448,15 @@
   "size": 16
  },
  {
+  "file": "src/decomp/c_08057BDC.c",
+  "obj": "src/decomp/c_08057BDC.o",
+  "addr_hex": "0x08057BDC",
+  "functions": [
+   "sub_08057BDC"
+  ],
+  "size": 360
+ },
+ {
   "file": "src/decomp/c_08057D44.c",
   "obj": "src/decomp/c_08057D44.o",
   "addr_hex": "0x08057D44",

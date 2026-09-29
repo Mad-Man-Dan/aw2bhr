@@ -2,7 +2,7 @@
 
 0x08050FF8, 804 bytes, THUMB, parked.
 
-Best score so far: 18.4%, +12 bytes (best.c).
+Best score so far: 25.0%.
 
 ## What it does
 
@@ -26,7 +26,6 @@ Compiles 4 bytes short (800 against 804). The percentage is low because the diff
 ## Files
 
 - `sub_08050FF8.c`: the current draft
-- `best.c`: the closest attempt, when it is not the draft
 - `NOTES.md`: working notes
 - `target.s`: the original assembly
 
@@ -67,5 +66,16 @@ Pre-registered classification (ROM 31 hi-register moves vs draft 26 in the disas
 
 Probe: re-assigning `pE4 = &gUnknown_081360E4;` before each of the later cell reads (the lever that fixed the sub_0804A760 key loop by giving each arm its own pseudo): 816 bytes (+12), 18.4%, first diff +0xc. Wrong direction here: the ROM HOLDS the cell address in sl across the whole body (`mov r1,sl; ldr r2,[r1]` five times), it does not re-derive it. The loop-hoist mechanism of sub_0804A760 does not apply because this function has no loop.
 Open lever: whatever stops the compiler holding gUnknown_03001FBC (used 8 times, no pseudo in the ROM) while it holds the three others in hi registers. wave 89's static-inline reader deleted the hold but cost more elsewhere.
+
+### Wave 97
+
+wave 97 (W97-X)
+Base: levers.py candidate `2-58_5a-419` adopted (old draft kept as `sub_08050FF8.w97x-start.c`): `s16 t` plus the `unk08` index bound to a `u16 lv0` before the x sum. 17.79% -4 -> 25.00% size-exact (804), frame `sub sp #8` equal to the ROM's, first difference still +0xc. wrongc OK.
+Probes (`var2.c`, VARIANT 0-3, binds placed AFTER the sub_0801566C call as the ROM does): binding &gUnknown_0300453C to a volatile pointer 24.9%; plus &gUnknown_020298E0 18.4%; plus &gUnknown_03001470 792 (-12) 14.6%. Binding before the call is worse (23.9 / 17.4 / 16.3). Binding the three held addresses explicitly does not reproduce the ROM's holds: the extra binds change the allocation of the cell pointers pDC/pD8 (they land in r8/r9/sl and the ROM's arrangement differs from +0xc on).
+Not resolved: the ROM also holds constants 1 (r5, r7) and 0 (r3) live from the first store; not investigated.
+
+wave 97 (W97-Z)
+Base unchanged (25.00%, size-exact 804, first diff +0xC). This function is NOT the `.rodata` word split: the draft has no `.LC` word for gUnknown_03001FBC, and the ROM's `ldr rX,=gUnknown_03001FBC` at each use is a plain constant pseudo that lost the register contest (reload rematerialises it). The draft lets it win r6. The ROM's three held hi registers are gUnknown_020298E0 (sb), gUnknown_0300453C (r8) and gUnknown_03001470 (sl); the draft holds 020298E0, 0300453C and the slot-table via `ip` only briefly. The ROM also holds the constant 1 in TWO registers (r5 for `SIDE ^ 1`, r7 for the `= 1` stores); the draft shares one (r4). One more long-lived value in the ROM is the likely reason FBC loses.
+Measured (spellings.py): slot table bound to a local `sl` for the four `.unk28/2c/30/34` stores: 14.8% -8. Separate `u16 one1/one2` for the stores: identical. First/last FBC use through a local: identical / 24.5%. `SIDE ^ x1` with `int x1 = 1`: 23.13% (the `1` becomes a separate register but nothing else follows). All negative. The pseudo-count difference (two 1s) is not reachable by folding-proof source so far.
 
 </details>

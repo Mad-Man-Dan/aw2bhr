@@ -46,4 +46,17 @@ First permuter run ever (W93-E): 64.57% -> 76.26% size-exact. The kept form read
 
 W94-A: two chained runs, 76.26 -> 76.80 -> 77.34 size-exact. Kept change audited: -1 through an int local and the unk00 store moved before the unk10 store (independent arrays).
 
+### Wave 97
+
+wave 97
+Base: `sub_0801ADC8.c` with the volatile removed (`sub_0801ADC8.w97-start.c` is the wave-94 file, 77.34%). **The `volatile unsigned long keptFlags` local of the old draft was wrong, not a lever**: it makes the frame `sub sp, #8` where the ROM has `sub sp, #4`, which is why the first difference sat at +0xa. Without it the frame is right; the volatile only "won" score by turning the loop into a different shape. Final: **77.88%**, size-exact, no volatile anywhere, first difference +0x80 (was +0xa).
+
+Permuter from the honest base (65.83 -> 76.80 -> 77.88 -> none): the flag update `unk20[i] = ((unk20[i] | 8) | v) & 0xef` became `unk20[i] = unk20[i] | 8; unk20[i] = unk20[i]; unk20[i] = (unk20[i] | v) & 0xef;` (the self-assignment is load-bearing: it splits the memory value cse; plain `|= 8;` then the mask lands far worse), and later `new_var = (... | v) & 0xef; unk20[i] = new_var;`. Both are value-preserving.
+
+Zero-operand question (why the ROM's `orrs r0, r3` with r3 = 0 is not folded): `v = 0` set in the else arm before the loop is folded to nothing when the use is one expression. `v = 0` at function entry keeps a register zero but costs +4 bytes and a `mov r8` (the value stays live across the calls). The split statements above keep the operand without either.
+
+Residual: the flag loop counts up with an index where the ROM counts down with a walking pointer, and the PRE hoist takes `&unk10[i]` where the ROM takes `&unk00[i]`.
+
+Proposed summary: does = tidies the 16 save slots after a load, re-erasing bad sectors and rewriting the slot table; status = "556 bytes, size exact, 77.9%"; left = "the flag loop counts down with a walking pointer in the original; register allocation in the two retry loops"; tried = zero-operand placements, the volatile flag temp (wrong: frame +4), scratch splits.
+
 </details>

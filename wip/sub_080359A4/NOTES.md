@@ -126,3 +126,17 @@ Residual: register roles. ROM: proc r6, py r4, y in ip, px address r8, `*px` val
 `proc->unk35` computed as `px - 13` off the r8 copy of `&proc->unk42`; ours: proc r5, py r6, y r4, px address sl.
 Reading `unk35` through `((u8 *)px)[-13]` is byte-identical (cse already derives it). Not solved.
 Proposed summary: 77.2% size-exact; left: register roles for proc/py/y/px, first diff in the prologue.
+
+## wave 97 (W97-U)
+
+Base `sub_080359A4.c` (77.16%). New fact from reading the ROM: after the do-while every later read of y goes through the
+COPY (r5 = py2), including `((*py2)+8)/16` and the final call's y argument; py (r4) is used only to make the copies, and
+`y` (first read, kept in ip) is a separate pseudo held in a high register. Two live pointer copies + a high-register y is
+why the ROM pushes only {r6,r7} for hi regs: spelling BOTH later reads as `*py2` makes the push list match
+(`{r6,r7}`) but copy propagation deletes py2 entirely (316 B, -8, 15.1%). Reading only the final call's y through py2:
+316 B, 13.0%. `py2 = py;` before the `if` and again after the call: the second copy is deleted as redundant (320 B, -4);
+with both later reads `*py2` that is 59.6%, push list matches, size -4 (the ROM's second `adds r5,r4,#0` after the call
+is what is missing). `x = *px` as a real s16/int local used in the range checks: 53.4% +4, frame differs.
+Mechanism: the ROM keeps two copies (before and after the call); cse removes the second because the first already
+makes py2 == py. No spelling tried keeps both; whatever the source does, the copy after the call must not be provably
+redundant (the C for that is unfound).

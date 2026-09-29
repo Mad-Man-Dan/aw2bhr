@@ -30,3 +30,9 @@ Proposed summary:
 - status: 26% at -12 bytes; the two address cells are now read as the ROM reads them
 - left: the array base is spilled to the stack where the ROM holds it in sl; the ROM's three index temporaries (a1*10, a1*4, a2*2) live on the stack
 - tried: cell-object binds (the lever), plain-literal spellings for the block and tail stores (worse), permuter (only volatile/inline wrong-C gains)
+
+## wave 97 (W97-X)
+
+Base: draft, size-exact hand edits from levers.py: `done = (frame == frameCount) && a3 != -1; if (done && sub_080153F0(a3))` (5a-309) and `idx = a1 * 10 + cnt * 2` with `idx + 1` for y (5a-150). 25.72% -12 -> 29.33% size-exact (416), frame `sub sp #0x20` equal to ROM. Old draft `sub_0804CA98.w97x-start.c`. Permuter x2 (540 s each, wrongc OK): 29.33 -> 41.59 -> 42.79%, size-exact, first difference +0x1b. Changes it kept: `s.unk06`'s table read hoisted out of the second `if` into the first block (a pure load into a local struct, value used only later, same result; the permuter finds it by scheduling), and a `new_var = gUnknown_08552148` table bind. Read both before promoting.
+Rejected: levers.py `1cp-119+5a-139` family (34.9%, "copy of a2 as s16") is genuinely WRONG (a2 = 0xFFFF differs): the 1c' rule changes signedness of a u16 index.
+Residual: the array base spill vs sl hold not re-examined; size now matches so the -12 was the `done`/`idx` temporaries.

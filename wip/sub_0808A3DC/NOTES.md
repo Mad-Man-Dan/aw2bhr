@@ -66,3 +66,11 @@ materialisation here is already correct.
 Flag diagnosis: `-fno-rerun-loop-opt` changes nothing, so the hoist is the
 first loop pass and not the rerun; `-fno-rerun-cse-after-loop` is 18.02% at
 +12 and `-fno-gcse` 20.62% at -4.
+
+## wave 97 (W97-M)
+Base: current draft (60.00%, size-exact), unchanged. Probes with tools/spellings.py, 11 spellings:
+- fill zero store: `u16 fill = 0;` initialiser, `u16 fill[1]`, a `z = 0` temp, `u32 fill` (55.6%): the ROM's `mov r1,sp; movs r0,#0; strh r0,[r1]` (address first, value second,
+  address recomputed for CpuSet) never appears; all are byte-identical to the draft or worse. `struct{u16 v;}` +8 bytes, `u8 fillb[2]` +8, `*fp = 0` bind +4 (48.17%, as before).
+- loop addend: `= (u16)(x + 0x1020)` and `|= 0x1020` byte-identical; a `t` temp byte-identical; `+ 0x81 * 32` (spelt as multiply) folds back, byte-identical.
+No source construct found that keeps the 0x1020 rebuild (`movs r7,#0x81; lsls r7,#5`) inside the loop. The hoist is loop.c's; not source-reachable with these spellings.
+Proposed summary: unchanged.

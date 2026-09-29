@@ -54,22 +54,15 @@ void sub_080359A4(ProcPtr procArg)
   {
     return;
   }
+  py2 = py;
   if ((proc->unk35 == 2) && ((gPlaySt.savingEnabled == 0) || (gUnknown_030032D8 != 0x13)))
   {
-    do
-    {
-      sub_080358C4(pxVal = *px, y);
-      py2 = py;
-    }
-    while (0);
-  }
-  else
-  {
+    sub_080358C4(pxVal = *px, y);
     py2 = py;
   }
   if ((gPlayers[gUnknown_030033EC].turnState & 2) == 0)
   {
-    if (gMap->unk234A[gMap->rowOffset[((*py) + 8) / 16] + ((proc->unk42 + 8) / 16)] == 0)
+    if (gMap->unk234A[gMap->rowOffset[((*py2) + 8) / 16] + ((proc->unk42 + 8) / 16)] == 0)
     {
       return;
     }
@@ -78,5 +71,5 @@ void sub_080359A4(ProcPtr procArg)
   {
     return;
   }
-  sub_0801C254(proc->unk2c, ((*px) - gMap->scrollX) + 8, ((*py) - gMap->scrollY) + 5);
+  sub_0801C254(proc->unk2c, ((*px) - gMap->scrollX) + 8, ((*py2) - gMap->scrollY) + 5);
 }

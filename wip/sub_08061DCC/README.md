@@ -69,4 +69,24 @@ WAVE 89 (W89-D then W89-H): 15.4% -> 19.1% -> 27.2%, size delta -8 -> size-exact
 
 WAVE 92 (W92-B): no movement (27.21%, size-exact), and TWO briefed leads refuted by controlled probe. (1) THE POOL-WORD PREMISE IS FALSE HERE. This function's OWN literal pool, at +0x24 and +0x84, holds 0x0816DB08 and 0x0816DB0C; the words at those two addresses hold 0x03004784 and 0x085D5ABC. The ROM therefore executes three loads to reach the data, and the existing u8 **volatile / struct UnitType *volatile declarations have the right number of levels. The honest spelling was re-measured on the CURRENT draft, with the wave-89 levers in place, three ways: both globals named directly, 5.15% at -12 bytes; the same plus the wave-89 bind on the table, 5.15% at -12; unit table honest with the threshold row left as the pool word, 22.79% at -4. The wave-37 negative was never stale -- it was right, and its cause is this indirection level. The left field has been corrected. (2) -fno-force-mem, the flag sweep's top-ranked lead at 66.91%, IS A FALSE SCORE. Compiling with and without it and diffing both against the ROM: the entry block and the multiply block are byte-for-byte identical either way, so the residual is untouched. What the flag does is break the unk04 & 0x780 test, which the draft already matches exactly -- it stops forcing the memory operand out first and emits movs / lsls / adds r1,r0,#0 / ldrh / ands where the ROM has ldrh / movs / lsls / ands. That is one extra instruction, the draft is one instruction short overall, the two cancel, every later instruction lands on the ROM's address, and the whole tail after bl __divsi3 compares equal. The flag bought byte alignment by breaking a block that was already correct; do not carry it forward. Read the other way the probe confirms the DEFAULT: -fforce-mem is what produces the ROM's ldrh-first order there. (3) THE RESIDUAL'S PASS IS NOW NAMED: cse. Counting const_int 92 in the per-pass RTL dumps (tools/rtldump.py --flags=-da) gives rtl 4, jump 4, cse 2, and 2 in every pass after. cse substitutes a register already holding 92 for the second multiply's constant, which keeps the stride live in a callee-saved register, which forces the multiply's destination to be a copy of the index, which leaves no register for the second pool-address copy the ROM makes. It is NOT gcse (declines CONST_INT), not regmove and not the allocator; wave 89 had guessed the allocator. A lever must stop cse carrying that constant's register past the || join. The permuter remains the backstop.
 
+### Wave 97
+
+wave 97 (W97-G)
+Base: draft (27.21%). Moved to **32.4% size-exact, first difference +0x9** (was +0x4) by removing the early
+`pa = &gUnknown_0816DB08;` / `pb = &gUnknown_0816DB0C;` statements and binding them at the first use:
+`if (p->unk04_0 < (*(*(pa = &gUnknown_0816DB08)))[3])` and `pb = &gUnknown_0816DB0C;` right before the ammo test.
+The bitfield load and shift now come first as in the ROM.
+
+Residual: the ROM keeps the pool address in r2 for the first read and copies it to r6 AFTER that read
+(`adds r6, r2, #0`); the draft copies first and reads through r6. Three respellings (comma-bind after, bind
+in a `+ (pa = ..., 0)` term, bind at the start of the second block) all scored worse (25.7%, 27.2%, 19.9%).
+Second half: ROM loads the unit id once into r2 and holds a copy in r3, multiplies by a fresh `movs #0x5c` each
+time; draft shares the 92 constant in r5. Binding the id to a u8 local (`[id]` in both places) drops to 128/136
+(-8); the fold-proof mask form on the local is byte-identical to the current 32.4%. So the fold-proof mask stays.
+No wrong C: pa/pb are pointers to the volatile pointer objects (no local slot, frame unchanged).
+
+Proposed summary: does = raises byte 9's 3-bit field to 2 when the unit's HP is below the first threshold; to 1
+when ammo is used and HP is not full-fuel proportional. status = 32.4% size-exact. left = address copy order
+(r6 copy after first read) and the 92 multiplier shared instead of rematerialised. tried = see above + waves 37-92.
+
 </details>

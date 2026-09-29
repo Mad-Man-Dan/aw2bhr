@@ -10,7 +10,7 @@ The per-frame update for link-cable play. It checks for timeouts and lost connec
 
 ## How close it is
 
-Never parked (status `asm`). The draft compiles to the right size (1388 bytes) and saves the same registers on entry as the original, but only 20.7% of bytes are identical: the original reaches the link record gUnknown_0849B018 through an extra compiler-made address word and ours does not, which changes registers from the first instructions on.
+Compiles to the right size (1388 bytes) with 23.6% of bytes identical, from the draft that names every global directly (the original keeps one address in r9 and copies it down 18 times). What is left: the prologue saves r8, r9 and sl where the original saves only r8 and r9.
 
 ## What is left
 
@@ -70,5 +70,12 @@ Not resolved; the untried step is a permuter chain from the all-bare file (only 
 Proposed summary: does = link state machine, one call per frame; status = size-exact, wrong register set for the record address;
 left = the ROM keeps the force-addr cell address in r9 and re-derives the record from it at every reference, the helper spelling
 drops the cell; tried = all-bare (cell + copies, but a third saved register and 4 bytes short), all-helper (size and save set, no cell).
+
+### Wave 97
+
+wave 97 (W97-R)
+Base: `w89f-allbare.c` (every reference bare; 6.27%, 1384 B, -4; had a dead `lnk()` helper using `__typeof__`, which the permuter cannot parse -- deleted). Permuter chain from it (2 runs, 600 s each): 6.27 -> 23.27% (SIZE EXACT 1388) -> 23.56%. The step that closed the 4 bytes is a second copy of the loop index for the FIRST `sub_0802F460` call in the 0xAD copy arm (`iFirst = i; ... sub_0802F460(iFirst) == 0 && ... || sub_0802F460(i) == 1`): the two-variables lever. wrongc.py OK (400 seeds, 29% of code reached). The draft is now `sub_0802FACC.c`; old lnkp draft is `.w96-start.c`.
+Residual: first difference +0x2 (prologue saves r8, r9 AND sl; ROM saves r8, r9). `next` still lands in sl. Per the wave 56 diagnosis the extra value is the copy of `i << 24`; the new copy helps size, not the save set.
+Proposed summary: does = link state machine, one call per frame; status = size-exact all-bare draft, 23.6%; left = third saved hi register (sl); tried = all-bare + two permuter runs, index copy for the first sub_0802F460 call.
 
 </details>

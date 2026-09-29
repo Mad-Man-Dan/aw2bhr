@@ -98,6 +98,8 @@ void sub_0805A9AC(int a1, void *a2)
     struct Map5A9AC *new_var;
     int i;
     int j;
+    int nj;
+    u8 tile;
 
     cur = a2;
     bv = 0x7fff;
@@ -128,8 +130,9 @@ void sub_0805A9AC(int a1, void *a2)
 
         for (i = 0; i < ((struct Map5A9AC *)gUnknown_08499590)->unk02; i++)
         {
-            for (j = 0; j < ((struct Map5A9AC *)gUnknown_08499590)->unk00; j++)
+            for (j = 0; j < ((struct Map5A9AC *)gUnknown_08499590)->unk00; j = nj)
             {
+                nj = j + 1;
                 new_var = (struct Map5A9AC *)gUnknown_08499590;
                 if ((s8)gUnknown_03003340[i][j] < 0)
                     continue;
@@ -141,9 +144,9 @@ void sub_0805A9AC(int a1, void *a2)
                 if (((struct Unk5A9ACTbl *)gUnknown_085D5ABC[gUnknown_030040D8->unk00].transportTable)->unk1a[
                         ((struct Map5A9AC *)gUnknown_08499590)->unk1432[new_var->unk417A[i] + j] & 0x1f] == 0)
                     continue;
-                if (sub_08026FD0(gUnknown_03003F38,
-                        ((struct Map5A9AC *)gUnknown_08499590)->unk1432[
-                            ((struct Map5A9AC *)gUnknown_08499590)->unk417A[i] + j]) == 1
+                tile = ((struct Map5A9AC *)gUnknown_08499590)->unk1432[
+                    ((struct Map5A9AC *)gUnknown_08499590)->unk417A[i] + j];
+                if (sub_08026FD0(gUnknown_03003F38, tile) == 1
                  && gUnknown_085767B8[((struct Map5A9AC *)gUnknown_08499590)->unk1432[new_var->unk417A[i] + j] & 0x1f] != 0)
                     continue;
                 best.raw = (u16)j | (i << 16);

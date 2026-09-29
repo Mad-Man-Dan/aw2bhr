@@ -148,3 +148,19 @@ before/after the store, the store spelled through a `s16 *` cast, and the volati
 index: all `mov r3,ip` (unchanged). The long-lived zero local is what removes r3 from the round robin, hence r2 (the known trade).
 Untried: a construct that costs the compare byte an r3 reload (a second volatile read, or reading `*new_var` twice).
 Proposed summary: status 98.95% size-exact, 2 code bytes; left: row-pointer copy register (r3 vs r2) when the zero is a literal; tried: eight zero-local placements, literal, volatile-compare respellings; mechanism is reload's round-robin over spill regs 0,1,3,2.
+
+## wave 97 (second pass)
+
+Base: literal-zero form (`sub_0805A0EC.w97-lit.c`, 98.42%, size-exact, first +0x34). Draft `sub_0805A0EC.c` unchanged (98.95%).
+Hypothesis (from the lead): a construct that costs the volatile compare an r3 reload takes r3 first, so the row-pointer reload gets r2.
+Measured in one unit (`w97-var.c`, spellings.py), all with the literal zero:
+- both tests folded into one `if (props[off] == *new_var && tbl[props[off]].unk0b == 5) continue;`: 93.95%.
+- `p` bind removed (use `p->unk00` directly): 98.42% (unchanged). `u = tbl + props[off]` spelling: 98.42%. `{ s16 z = 0; out->v = z; }`: 98.42%.
+- `out->v = 0;` moved before the `p` bind: 96.32%.
+- `u = &tbl[*new_var]` (compare and index share ONE volatile read): 36.84% (-8 bytes; the ROM has the second props[off] load).
+- `int v = *new_var; if (props[off] == v)`: 94.74%.
+None changes which scratch register the row-pointer reload gets. Not matched; the two-way trade stands.
+Proposed summary addition (tried): folded compare, p bind removed, zero as block-local s16, store moved above the p bind, shared volatile read.
+
+## wave 97 (W97-W)
+Alias lever (gMap vs gUnknown_08499590) does not apply: the ROM has ONE force-addr word (gUnknown_0816D97C) for the address of gUnknown_08499590, held in sl and reused at every site, so the source used one name. Probes (`w97w0/1/2.c`, one of the three bare uses renamed gMap; gMap is `struct Map *` so it needs a cast): 22.75% +20, 61.20% +4, one compile fail (type). Draft unchanged (98.95%).

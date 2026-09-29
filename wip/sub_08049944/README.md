@@ -79,4 +79,10 @@ SPLITTING THE PARAMETER'S LIVE RANGE, found by decomp-permuter run 1 and semanti
 
 WAVE 89 (W89-D): SCREENED OUT before any probe, and the wave-89 routing premise for it was wrong. The entry's 'the ROM reloads a3' is `mov r2,r8`, a HI-TO-LO REGISTER MOVE, not a memory re-read -- the ROM rebuilds r2 only because it picked r2 as the scratch for the two stack-slot constants and clobbered the prologue's copy. No memory is involved, so no re-read lever (volatile, static-inline helper) can act here. Separately, W86's bound DISQUALIFIES the live-range split this entry's remaining_diff is built around: a1 does NOT die at `(new_var = a1)` -- it is used at both later call sites -- so W73-B's split adds a FOURTH allocno rather than re-cutting a live range, and the copy it costs is not coalescable. Re-measured 92.2% size-exact by exit code. Evidence: work/sub_08049944/W89-notes.md.
 
+### Wave 97
+
+wave 97
+Base: sub_08049944.c (== best.c, 92.22%, size-exact, first diff +0x22), unchanged.
+Re-measured; the parked description holds (14 bytes: extra `adds r3,r6,#0` from the a1 split, and r3 vs r2 as the stack-constant scratch). Probes: (a) no split (plain `a1`) -> a1/a4 swap returns (a1 in r5, a4 in r6), i.e. the split is what fixes the swap; (b) same with `0` as the sixth arg of the zero arm -> identical swap. Two probes, nothing new; stopped per budget. Proposed left: "a1/a4 register pair only fixable with a split that costs one copy; ROM has none."
+
 </details>

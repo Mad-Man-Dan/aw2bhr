@@ -61,4 +61,20 @@ Every body is right and every constant agrees; the residual is entirely the disp
 
 WAVE 87 (W87-A): pre-registered shared-label form (`case 0x4e: default: break;`, `default: case 0x4e:`, and all four dead values + `default:` on one break) REFUTED -- all three give the SAME six-pivot tree rooted at 0x60: `default:` is not a case node and cannot keep a dead node alive; the dead nodes are deleted before balance_case_nodes runs. Fifth spelling of 'keep the dead arms alive' across three waves, one identical tree; W59-E's closure stands. NEW INDEPENDENT STRUCTURAL RESULT: the ROM's LEFT subtree is rooted at 0x26 with 0 as its left child (cmp #0x26/beq default; cmp #0x26/bgt default; cmp #0/beq body0) -- balance_case_nodes only splits a sublist when i > 2, so a two-node sublist stays a chain tested head-first (0 first, blt default). Hence the sublist below 0x4e held THREE OR MORE case nodes of which only two survive as pivots: the original switch had MORE case values than the nine the tree tests. estimate_case_costs' cost-table path is unreachable (needs every value in [-1,127]; 0x80/0xb4/0xc7 are not). The top split cannot be an `if (x == 0x4e)` guard before an eight-case switch (eight nodes root at 0x60, and the ROM's second instruction is `cmp 0x4e / bgt`, a case node's own right branch). Live leads are about node COUNT: a construct leaving >= 3 nodes below 0x4e (a value in (0,0x26), a negative value, or a `case A ... B:` range). Configured, 176/196 (-20), 25.5%, unchanged, 0 try_match.
 
+### Wave 97
+
+wave 97
+Base: existing draft (25.51%, 176 B, -20), kept as `sub_08068A00.w97-start.c`. Draft now: the four dead arms
+(0x62, 0x58, 0x4e, 0x26) each hold `proc->unk2c += 0; break;` -> 196 B SIZE-EXACT, 44.9%, first diff still +0x6.
+- A no-op statement on the switched field keeps all nine case nodes through expansion and is deleted later; a
+  `goto done;`, `do { } while (0);` or bare `break;` arm does not (six pivots, 176 B). Unlike wave 36's dead store to
+  an unused local, the `+= 0` on the field itself survives.
+- Residual: tree is rooted at 0x60 (agbcc's nine-node root, index 4), the ROM roots at 0x4e (index 2). Case RANGES
+  count 2 in balance_case_nodes' cost and move the root left (`case 0 ... 1` + `case 0x26 ... 0x27` roots at 0x58,
+  +4 B, 9.5%), but the ROM tests plain values, so the ROM's root needs three range-cost nodes among its first three
+  without range emission. Not found.
+- `+= 0` is probably not the original source; it is a probe that gets the size right.
+Proposed summary: does=cutscene step by countdown; status=size-exact, tree root differs; left=ROM roots its compare tree
+at 0x4e, draft at 0x60; tried=empty arms, grouped labels, default placements, dead stores, goto arms, `+= 0` arms, ranges.
+
 </details>

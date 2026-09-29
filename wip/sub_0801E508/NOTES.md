@@ -90,3 +90,6 @@ Not resolved: e is in r6 here, r9 in the ROM (the ROM keeps w in r8, v in sl, u 
 A second permuter chain (900 s) from the 56.9% file found nothing.
 
 Proposed summary: does = rotates and scales a list of OAM pieces by an affine entry, using soft-float; status = size exact, 56.9% identical; left = e/w/v/u register assignment and the per-call reload of e[2]; tried = temps for the accumulators (wave 65), distinct loop counter, angle temp at several subsets, permuter.
+
+## wave 97 (W97-R)
+Tried "respell one of identical expressions" per call site (full-size arm): each of the four `(float)e[2]`/`angle` sites as `e[2]`, `angle` or `*(e + 2)`, all 81 combinations. Best remains the wave 96 file (56.86%); `*(e + 2)` is the same tree as `e[2]` (byte-identical to it), the other combinations are 26-54%. No new lever. The ROM's `movs r1,#4; ldrsh r0,[r3,r1]` is just how Thumb loads a signed halfword; the real difference is that e lives in a high register (r9) in the ROM, so each call site copies it down. Not pursued further.

@@ -40,3 +40,9 @@ store, which is a correct transformation on its own and close to what the park's
 So the whole 8-point gain the run reported came from the wrong-C parts, not from
 the address split. The frame is still 32 bytes where the original reserves 36,
 and the per-cell counter is still in a high register.
+
+## wave 97 (W97-M)
+Base: current draft (65.15%, size-exact, frame 0x20 vs ROM 0x24). Un-binding probes (spellings.py, frame meter): dropping the `w` binds -4 bytes (54.7%); dropping the
+`q` bind (inline `a2[0x4C4+i]`) byte-identical; deleting `*((u8 *)gPlayers) += 0` 64.55% (still needed, 0 bytes); replacing `rows` by the inline sum at the 3rd read +20;
+inlining `e->type` +16. None moves the frame to 0x24; the frame still only ever shrinks when a bind is removed. The brief's "-1 copy, un-bind first" does not match
+the measured state: this draft is size-exact and one spill slot SHORT, not one copy over.

@@ -78,3 +78,6 @@ at a label (the `unit == 0` branch target), so cse starts a fresh block there an
 structure change can, and the jump-pass merge of duplicated `= 1` stores blocks the nested form.
 Proposed summary tried: + "respelling the 0-arm index (4 pure commutations, a volatile row read, a volatile map
 pointer read) does not split it".
+
+## wave 97 (W97-V)
+Base: levers 4a-31 (branch polarity: the `dst = 0` arm is the else of the negated condition). wrongc OK. 26.36% +12 -> 43.98% +8. Permuter run 1 only 44.23% via a macro-expanded `new_var = rowOffset` (rejected: unreadable, +0.25%); draft left at the 43.98% levers form. Residual: +8 bytes. ROM keeps dst in r5 and the gMap pointer in sl (one `mov sl, r0`) with only one stack slot; ours keeps dst in sl and spills the map pointer to [sp,#0], so one more live value than the ROM.

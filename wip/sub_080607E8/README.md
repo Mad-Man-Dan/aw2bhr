@@ -74,4 +74,24 @@ WAVE 92 (W92-B): no movement (54.65%, -8), but the residual is now closed arithm
 
 W94-A: Vesly's 86.63% size-exact file was judged wrong C and quarantined (vesly-best.c.wrongc), as was a permuter run's 79.65% form (w94-perm1-7965.c.wrongc). Draft unchanged at 54.65%, 8 bytes short.
 
+### Wave 97
+
+wave 97 (W97-G)
+Base: draft (54.65%, 164/172). `best.c` (79.65%) is WRONG C and stays rejected: it writes `band = c; i = band;`
+inside the loop body, so `band` (loop-invariant, used for `band * 3 + i` next iteration) and the loop counter `i`
+are both clobbered with the known-zero `c`. Its size-exact score comes from that clobber, not a valid twin.
+
+Residual re-read: (1) the ROM keeps `lsls #16; asrs #16` on `b` at the sub_08025CC8 call; the draft drops it
+(b = u8 field + 4, so nonzero_bits proves it fits). (2) `movs r0,#0; strb r0,[r4,#9]` vs draft `strb r6,[r4,#9]`
+(cse substitutes the known-zero `c`).
+
+Probes (trymatch, all restore to the draft): `b = p->unk01; b += 4;` -> 168 (-4) but 30% (i moves to r8, ext still
+folded); `(s8)` on the field -> 168; `*(u8 *)((u8 *)p + 1) + 4`, `(u16)(...)`, `(u32)p->unk01 + 4`: byte-identical
+to the draft (164). Two-set b does not restore the extension either, so the fold is not reg_n_sets-gated here.
+Unresolved: what makes the ROM's `b` non-provable (value not from a ldrb+4 chain visible to nonzero_bits).
+
+Proposed summary: does = spawns up to three factory units in a row at the map slot's row from the factory schedule.
+status = 54.65% draft, 8 bytes short. left = missing sign extension on the y argument, `unk09 = 0` uses the zero
+register instead of a literal. tried = see above plus waves 92/94; best.c is wrong C (clobbers band and i).
+
 </details>

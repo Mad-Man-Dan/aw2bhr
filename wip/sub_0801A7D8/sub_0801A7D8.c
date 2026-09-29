@@ -129,7 +129,7 @@ int sub_0801A7D8(u8 saveId, void *unused, int byteCount)
     }
 
     retryCount = 0;
-    for (segment = segmentCount - 1; (segment ^ 0) >= 0;)
+    for (segment = segmentCount - 1; segment >= 0;)
     {
       switch (retryCount)
       {

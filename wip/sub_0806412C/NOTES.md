@@ -141,3 +141,11 @@ shift. `2 + base + i * 8` is byte-identical to `base + 2 + i * 8`.
 Proposed summary: does = fills the eight 3-word vectors from the ROM table scaled to 20.12, the six 4-byte rows,
 then stores the eight arguments. status = 97.0% size-exact. left = `+2` of the row base is added after the index
 shift instead of hoisted with the base. tried = loop-shape respelling (moved), base binds (above), permuter.
+
+## wave 97 (second pass)
+
+Base: unchanged 97.0% draft. Goal: make `entries + 2` a loop-invariant of its own (`ldr r0,=g; adds r4,r0,#2`).
+Measured (spellings.py, 15 variants): `entries[i].unk02` / `gUnknown_0202F110[i].unk02` (array member): 60.8% (folded into a `g+0x2` pool word); `base = (u8 *)&g[0] + 2` and `base = g[0].unk02`: 59.9%; `base = (u8 *)g; base += 2`, `+ (u16)two` block local, entries bound before the first loop: size +8, frame 0x14 (the address goes through a `.LC` rodata word and a7 spills).
+ONE spelling produces the ROM's separate `adds r5,r4,#2`: bind `entries = gUnknown_0202F110; base = (u8 *)entries + 2;` between the loops AND write the six trailing stores through `entries[..]`. That gives `add r5,r4,#2` and `q = base + i*8` but the bound `entries` stays live to the stores (r4 held, size -4, 67.7%), where the ROM reloads `ldr r0,=g` after the loop (the pool word is shared). Any spelling that leaves the trailing stores bare (`gUnknown_0202F110[k]`) after the bind switches to the `.LC` indirect word (size +8). Re-binding `entries = gUnknown_0202F110` again before the stores (or a second pointer `e2`, or `entries = 0;` first) also switches to `.LC` (+8).
+Conclusion: the ROM needs the bound copy dead after the loop AND bare-global stores that share the same pool word; every spelling gets one of those two, not both. Not matched.
+Proposed summary addition (tried): `+2` as a member/array-member address, `(u8 *)` walker with `+= 2`, bind before either loop, bind between loops with the stores through the bind (-4), re-bind before the stores (+8).

@@ -224,3 +224,6 @@ from `i` being one pseudo with extra sets, which changes what the allocator does
 in a separate register (`adds r1,r0,#0; muls r1,r2,r1; adds r0,r1,#0`) and the counter incremented AFTER the first ring load
 (`adds r2,#1` sits between the load and the `muls`), so `* ++i` in the first product is the right spelling (61.18 -> 61.35%).
 Adopted: the `* ++i` form (`vF96.c`), 608 bytes (+4), 61.35%.
+
+## wave 97 (W97-V)
+Base: levers 5b-258_1cp-259 (`sum += len + 0x4fff` through a block-scoped `u16 lv0 = len` copy stored into the loop counter `i`, which is then reset to 0). Value-preserving: `sum` is u16 so the s16-vs-u16 copy of `len` differs only by a multiple of 0x10000; wrongc OK. 61.35% +4 -> 81.29% size-exact. best.c (92%) is WRONG (wrongc: byte 0x3381 written 0xA2; it folds `i = table[..]` into the multiply). Round-2 levers: nothing above 81.29%. Permuter 540 s: no improvement. Residual at +0xa: frame is `sub sp, #16` vs ROM `#12` (one extra spill slot) and the zero constant sits in r9 where the ROM keeps it in r8.

@@ -93,4 +93,22 @@ Proposed summary:
 - left: the decrement arm compares the cursor column as a signed halfword after a shared load; the register pins on t and c hide two allocation choices
 - tried: per-arm re-bind of the address cell in the key loop (the lever), once-only bind (hoists), bind at function top (moves the prologue), second pointer for the else arm
 
+### Wave 97
+
+wave 97 (W97-Q)
+Base: `sub_0804A760.w97-start.c` (= w96-gp2, 92.07%, size exact, first diff +0xd8). `sub_0804A760.c` is restored to it (score-best); the better-shaped candidate is `w97-q.c` (67.97%, size +4, but only ~4 sites differ; the score is low only because +4 shifts every later byte).
+
+Moved: the decrement-arm test. Writing the else arm as its own block with an if/else STATEMENT read entirely through `(*gp)` (`gp = &gUnknown_030044E0; if (V(*gp)->unk1e == 0) V(*gp)->unk1e = 0xe; else V(*gp)->unk1e = V(*gp)->unk1e - 1;`, w97-a.c) reproduces the ROM arm byte for byte (`ldrh r2` / `ldrsh` / `bne` / `movs #14` / `subs r0,r2,#1`), no hoist. The w96 note "test through (*gp) brings the hoist back" is not what the +4 is: the +4 is the post-loop copy `adds r4,r5,#0` (below) plus 2 bytes of pool padding. The ternary spelling (w97-b) gets the arm order wrong (beq/subs first), as wave 80 said.
+
+Second: the unk66 arm used the pinned `c` (r3). Give it its own local (`k`: `k = unk66 + 1; k &= 0xff; k |= 0x80;`, w97-q.c) and the arm matches the ROM except the zero constant sits in r1 where the ROM has r4.
+
+Left in w97-q.c (all else identical): (1) `adds r6,r6,r0` vs ROM `adds r0,r6,r0` (t pin); (2) zero for unk67 in r1 vs ROM r4; (3) after the key loop the ROM keeps the reloaded cell value in r5 for the whole post-loop switch, ours makes a second pseudo `adds r4,r5,#0` for the three cases 0x40/0x24/0x25 (case 0x23 keeps r5): this is the +4. Removing the pin on u, c or t individually does not remove the copy (w97-m,o,r). Cases stored through `(*gp)` (w97-k, frame +4), gp re-assigned after the loop (w97-l, 62%), while-cond through gp (w97-w/x/y) all worse.
+Unpinning c alone gives size-exact 920 at 68.8% (w97-t): the tail then differs (`lsls #5` vs `lsls #21; lsrs #16`), so c's pin is needed for the tail.
+
+Proposed summary:
+- does: on-screen keyboard input handler (d-pad cursor, row/column wrap, jump keys, click sound)
+- status: 92% at exact size in the committed draft; a shape-correct variant (w97-q.c) has only three residual sites but is 4 bytes long
+- left: after the key loop the ROM reuses one register for the cell value in all four switch cases; ours copies it for three; also t pin and a zero constant register
+- tried: decrement arm as if/else through the pointer (fixes the arm), separate local for the unk66 arm (fixes that hunk), unpinning u/c/t, routing later reads through the pointer local
+
 </details>

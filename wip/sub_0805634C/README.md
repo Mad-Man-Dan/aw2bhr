@@ -54,4 +54,10 @@ Base: wave-70 draft unchanged (38.19%, -4, first diff +0xa). Pre-registered "try
 Not permuter-run this wave (one slot; 08057164 ran instead).
 Proposed status: unchanged; left = register roles of c/b*2 in loop 1 and the outer-loop hoist of the b^1 table address.
 
+### Wave 97
+
+wave 97 (W97-S)
+Base: draft unchanged (79.40%, size+0, first diff +0xA). Tried (spellings.py): struct-pointer bind of gUnknown_020298E0[b] before/inside the i loop, `u16 *k = ...unk1a` bind before/inside, byte-offset spellings of the unk1a read: 32-36% (+4/+8), or byte-identical for the offset forms (the +0x1a stays folded into the pool word). Separate copies of b (lever 1): `s2 = b` for the 0x90-record read alone +8, `s3 = b` for gUnknown_020298EC alone +8/53%, BOTH copies gives frame `sub sp,#8` like the ROM (two spill slots) but -4 bytes, 56.6%, first diff +0x1E (stores b*0x6c twice to [sp]); so the two-slot frame is reachable, the bare-symbol-in-sl / +0x1a-at-run-time is not. Draft restored.
+Proposed status: unchanged; tried adds "separate copies of b for the record read and the 0x98 row read reach the ROM's two-slot frame but lose 4 bytes".
+
 </details>

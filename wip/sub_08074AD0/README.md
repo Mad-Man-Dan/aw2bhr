@@ -46,4 +46,14 @@ BASE REJECTED: `best.c` (53.47%, size-exact) declares `extern s8 *gUnknown_081CC
 METHOD NOTE FOR THE NEXT WAVE: a base scan that ranks by percentage will keep recommending this file. Before adopting any base that names a 0x081CCxxx / 0x0808xxxx word as a global, grep include/unknown-globals.h for that address -- the force-addr words are documented there as NOT OBJECTS, with the measurement attached.
 RESIDUAL unchanged (wave 38's): the ROM loads the force-addr word's address into r7 BEFORE the loop's entry test, so the loop-skip path reaches the table through the same register and shares the final store, and the pool word dumps mid-function after the resulting unconditional branch.
 
+### Wave 97
+
+wave 97
+Base: sub_08074AD0.c (51.39%, -4). Not vesly-best.c (its 53.5% is the wave-38 stacked-pointer artefact).
+Probed: `for (i = 0; ...; i++)` form -> byte-identical (140 B). Guard-and-early-return form
+(`if (dist - (step>>1) < 0) { table[0] = dist; ...; return; }` before the loop) reaches 144 B size-exact but 12.5%: it
+moves the `ldr` of the force-addr word to a per-arm position and reallocates `proc` into r3 (ROM keeps it in ip), i.e. it
+gives the ROM's size for the wrong reason. A dummy `table[i] = 0` store before the loop: +12, extra frame register.
+No lever found in 4 probes; residual is unchanged (the force-addr word address must be live before the guard).
+
 </details>

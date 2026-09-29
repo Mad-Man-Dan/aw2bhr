@@ -81,4 +81,21 @@ WAVE 92 (W92-B): no movement (68.94%, SIZE-EXACT); seven spellings measured nega
 
 W94-A: run 1 reached 83.33% size-exact (kept); run 2's 88.64% form was wrong C and is quarantined as w94-perm2-8864.c.wrongc.
 
+### Wave 97
+
+wave 97
+Base: the wave-94 draft (`sub_0801A718.c`, 83.33%, size-exact, first difference +0x2); saved as `sub_0801A718.w97-start.c`. `best.c` (88.64%) was NOT adopted: it inserts `node = &base[freeIndex];` before `base = gUnknown_0200C624;`, an uninitialised read of `base` (the value is dead, but it is undefined C). It is the same wave-94 form already quarantined as `w94-perm2-8864.c.wrongc`; `best.c.wrongc` is that file.
+
+Residual (read from the disassembly, 53 of 66 halfwords already equal): the ROM copies `a1` to r3 at entry and reuses r3 for `cur` once `a1` has been stored (`adds r3,r0,#0; subs r3,#12` comes AFTER `str r3,[r2]`), while `prev` gets r5. The draft puts `a1` in r5, shares it with `prev`, and gives `cur` r3.
+
+Probed this wave (one-unit harness `build/probe/w97k.py`, 25 spellings, every one byte-identical or worse):
+- `node` before/after `cur`, `base` bound before or after each, `cur` written as `gUnknown_0200C624 - 1`, `&gUnknown_0200C624[-1]`, or a u8 cast subtraction (51-53 of 66 halfwords equal, none better than the draft).
+- Order of the three stores (`unk00`, `unk08`, `prev = 0`): all six permutations, 52-53 of 66.
+- `a1` copied to a local `payload` first; declaration order of `node`/`prev`/`cur` reversed or rotated: identical.
+- `cur = base - 1` moved to AFTER the `unk00` store, to give the ROM's instruction order (a1 dead before cur is set): 40 of 66, worse. The mechanism is that the pseudo CREATION order of `cur` (before `node`) is what wave 93 found worth 10 points; moving the assignment after the store gives up that order and loses more than the interference is worth.
+- `base` bound at declaration time before the size guard: worse (5-38 of 66; +4 bytes in two forms).
+- Permuter, 900 s x 2 threads from the draft: NO-IMPROVEMENT.
+
+So the two effects (creation order of the base pseudos vs the ROM's instruction order for `cur`) are coupled and no defined spelling separates them. Proposed summary: does = insert a record into the sorted linked list; status = "132 bytes, size exact, 83.3%; only which register holds the first argument differs"; left = "the original copies a1 into r3 and reuses that register for the list cursor; ours keeps a1 in r5"; tried = the above.
+
 </details>

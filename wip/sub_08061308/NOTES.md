@@ -46,3 +46,7 @@ i*4 slot disappears) but size 852 (-12), 21.5%, first diff +0x16 -- saved as `.w
 Residual: the two-load cell chase in every arm and the mid-loop `mov r8,r2` timing.
 Proposed summary: left: r8 holds the compiler's cell address (two loads per arm); draft holds &gMap (one).
 tried: mp bound at 6 positions; binding before the row loop fixes the frame but is 12 bytes short.
+
+## wave 97 (W97-X)
+
+Base unchanged (25.23%, size-exact; kept as `sub_08061308.w97x-start.c`). levers.py finds only +1%: `5a-65+4a-101` (26.27%, wrongc OK) = the table row read as a struct copy `lv = gUnknown_085766E4[k]` plus swapping the arms of `if (a2 == 4)`; not adopted (a one-point gain that does not move the first difference off +0xa, and it adds a struct copy that says nothing about the ROM). The ROM's r8 holds the address of the compiler's own .rodata cell for &gMap (three such cells, one per region), which has no C name, so no lever in the pool can name it. Residual unchanged: two loads per arm vs one.

@@ -10,7 +10,7 @@ AI: for each unit of type 1 or 2 in the current army that is not yet used and pa
 
 ## How close it is
 
-Compiles 4 bytes short (728 against 732), 42.4% of bytes identical, but the stack frame now matches and the first difference moved later. Reading the value directly at its one use after the loop, instead of through a local, stops `i` being spilled.
+Compiles to the right size (732 bytes) with 65.2% of bytes identical. What is left: the draft's frame is 40 bytes where the original's is 36.
 
 ## What is left
 
@@ -65,5 +65,15 @@ Rule-1 re-derive probe (one unit, on the kept form): rebinding `gp = &gUnknown_0
 (expression form `(*(gp = (struct Map5A9AC **)&g))`): all sites 736 and frame 40 (worse); only the first site 728, frame 36 (= kept form);
 volatile site only 728 frame 36; unk1432 sites only 732... no variant reaches 732 with frame 36. The re-derive form does not transfer here
 because the ROM's per-site `ldr r7,=gUnknown_08499590; ldr r3,[r7]` uses the plain pool word, not a rodata cell.
+
+### Wave 97
+
+wave 97 (W97-X)
+Base: levers.py `3a-206+5a-339` (loop step through a copy `nj = j + 1; ... j = nj`, plus the `unk1432` tile read bound to a local before the sub_08026FD0 call), hand-written into the draft (old draft `sub_0805A9AC.w97x-start.c`, the nj-only form `sub_0805A9AC.w97x-nj.c` is the draft). 42.35% -4 -> 65.16% size-exact (732), first difference still +0xa, frame `sub sp,#40` (ROM #36: nj takes a slot).
+The `tile` local alone changes nothing (65.03% without it). wrongc says WRONG on this family (extra sub_08042D1C call on seed 117, args (0x41DA63EB, 0x66)): a1 = 0x41DA63EB indexes `t[a1]` far out of range, so the emulated stack contents differ between two frames and the read differs; I believe this is a false positive but could not prove it. The old w96-start draft gets the same verdict against the current base, and the base against itself is OK. Treat 65% as unconfirmed until someone reads seed 117.
+Without nj (va: j++) the frame matches (`#36`) but size is 728 and first diff +0x3e. The 4 bytes are the ROM's `adds r4,#1` step vs the draft's stack-resident nj; the ROM has j in r4 with no copy, so the +4 is elsewhere (the map address held in r8 where the ROM reloads `ldr rN,=gUnknown_08499590` at each site, and the j-loop bound reload is a plain pool load in the ROM).
+
+wave 97 (orchestrator check)
+The W97-X draft (65.16%) is equivalent C by reading: nj copy-back step (int) and `u8 tile` for a u8 array element passed to a u8 parameter. wrongc WRONG on seed 117 comes from an out-of-range random index reading stack memory whose layout differs between the two frames (0x28 vs 0x24), not from the source change. Kept.
 
 </details>

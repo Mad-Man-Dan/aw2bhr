@@ -78,3 +78,14 @@ feeding the 0x40 read that keeps a hoistable invariant out. Other spellings meas
 index (`t[0x44 + ...]`, `(t+0x44)[...]`): 14.0% +4 (offset folds away entirely); a fresh `mode = i + mapID*0x5c;`
 statement before each read: 25% +4; before only read 1 or only read 2: 28-29% -8.
 Residual unchanged (71.6%): loop invariant set differs (ROM: only +0x3c hoisted).
+
+## wave 97 (W97-U)
+
+Base `sub_080364F4.c` (71.62%, size-exact). Pre-registration (lever 5 / lever 1 on the offsets) not confirmed as an
+independent lever: the offsets already come out as the ROM has them (only +0x3c hoisted into r8). Probed: a u8 `nx = i + 1`
+computed at the top of the body and used for every `[i + 1]` and the `<= 3` test, with `i = nx` as the loop step: 27.0%
+size-exact, first diff +0xE; with `i++` kept: 19.6% -4; without the `isEmpty` temp (plain `==0xff &&` test): 23.0% -8 /
+10.1% -12. The ROM's `i+1` sits in r3 computed before the first store address, so it is a real early value, but making
+it a variable moves the frame allocation. Permuter (600 s, 2 threads, from the wave-95 base): NO-IMPROVEMENT (best
+intermediate scores 4380 vs 4660 were not verified size-exact). Residual unchanged: register roles at +0x10 (gPlaySt
+pointer r2 in the ROM, r1 here; mode r1 vs r3).

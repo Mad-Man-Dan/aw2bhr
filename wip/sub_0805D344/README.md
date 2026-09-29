@@ -84,4 +84,9 @@ Saved as `sub_0805D344.w96-perm1-longlong.c`, NOT adopted. Draft `sub_0805D344.c
 Not reached: why r6/r7 are unavailable to n in the fill loop (ROM keeps ptr in r5, walker r4, n in r8). NEXT: `tools/rtldump.py` .greg conflicts for n.
 Proposed summary: left: n in r5 where ROM keeps it in r8 (8 bytes); tried += flag-temp size padding is not real, long long index temp.
 
+### Wave 97
+
+wave 97 (W97-V)
+Base: w87 draft (16.39% -8). levers 5a-55 = bind `n > 1` to a local (`big = n > 1; if (big)`); wrongc OK (400 seeds). try_match: 70.49% size-exact 244 B, first diff +0xf (unchanged: `n` in r5 not r8). The gain is SIZE only: the flag costs the 8 bytes that n-in-r5 saves (movs #1/cmp/beq), so it is padding, not the ROM's mechanism. Round-2 levers on the new base: nothing above 70.49%. `last = n - 2` bind changes frame (sub sp #8), `n >= 2` no change. Residual still n's register (r8). Kept the flag draft at sub_0805D344.c; pre-lever draft is sub_0805D344.w97v-start.c.
+
 </details>

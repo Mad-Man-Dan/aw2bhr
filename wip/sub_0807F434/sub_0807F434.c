@@ -96,14 +96,15 @@ void sub_0807F434(struct Unk0807F434 *proc)
   }
 
   Decompress(gUnknown_08234B10, gUnknown_0200FC50);
-  for (j = 0; j <= 3; j++)
+  for (j = 0; j <= 3; )
   {
+    int nj = j + 1;
     for (k = 0, nv = 0; k <= 7; k++)
     {
       CpuFastSet(&gUnknown_0200FC50[(j * 0x100) + (k * 0x400)], (void *) ((0x06015000 + (j * 0x800)) + nv), 0x40);
       nv += 0x100;
     }
-
+    j = nj;
   }
 
   j = 0;

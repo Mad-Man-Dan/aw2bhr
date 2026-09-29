@@ -31,3 +31,12 @@ Proposed summary:
 - status: 42% at +4 bytes
 - left: the ROM reaches the mission-id table through the address cell gUnknown_081360D4; naming the cell adds the double load but the frame grows by 12 bytes
 - tried: byte-offset read; four equivalent spellings; cell object read inline (38%) and with the +2 bound first (34%)
+
+## wave 97 (W97-X)
+
+Base: levers.py `5d-140+5a-84` (do { } while (0) around the 8-statement effect block, and the tileNum source `gUnknown_02029710[*sidep].unk00` bound to a u16 local before the store); old draft `sub_080506B0.w97x-start.c`. 41.96% +4 -> 52.06% size-exact (680), wrongc OK. Two permuter links (600 s + 500 s, wrongc OK on each; only changes: a `new_var` copy of `*sidep` for the `unk18` index and a `new_var2 = gUnknown_03004582` table bind) -> 57.79%, size-exact, frame `sub sp #0xC` now equal to the ROM's (it was #0x18 before the first link), first difference +0x47 (was +0xa). Third link: NO-IMPROVEMENT.
+The pre-registered hypothesis (a force-addr cell word for gUnknown_03004580 needs naming) was not tested this wave: the size now matches because the 03004580 pool word is one word either way; the remaining difference is the relocation kind of the three cells (`.rodata` word vs the ROM's 081360CC/D0/D4 symbols) plus register allocation.
+Proposed summary: status 58% size-exact; left: register allocation from +0x47 on; the three cell words are compiler-made in the draft (`.rodata` relocs) where the ROM names them; tried += do-while around the block, tileNum bound to a local, permuter x3.
+
+## wave 97 (W97-Z)
+No change (57.79%, size-exact, first diff +0x47). New reading from `-da`: gcse's PRE inserts six `.LC` copies at the end of bb 0 (`PRE/HOIST: end of bb 0 ... expression 0,2,4,37,48,50`), so the draft carries six pointer pseudos across the function. The mask constants 0xf and -13 are then pushed into hi registers (`mov r9,r3`, `mov sl,r0`) that the ROM rematerialises; that is the +0x47 difference. The ROM has three cell words (081360CC/D0/D4) each with one visible use, i.e. the same PRE copy with the other uses folded by cse2 and the copy spilled (see the last chapter of docs/agbcc-codegen.md). Making cse2 fold the later uses needs the reading loads inside cse2's block from the copy, or a loop hoist (loop.c 26-insn limit); this function has no loop, so no lever found. Not tried further.

@@ -60,4 +60,9 @@ What is still missing (12 bytes): the ROM's prologue moves a4 to r9 before loadi
 
 Proposed summary: does = builds OAM entries for a list of sprite pieces, moving each by (a2, a3) and, when its flag bit is set, scaling it by the affine entry of a6; status = branch layout and copies match, register assignment of a6/n/h/x and mask-constant placement differ, 12 bytes short; left = the prologue register order and index-expression order; tried = u16 temps, tail layout, x/y order, permuter.
 
+### Wave 97
+
+wave 97 (W97-V)
+Base: levers 5a-416+5b-100f (`q2 = a1 + n; if (q2 > 0x80)` using the already-declared q2, and `h0 = gUnknown_03000548.unk00` bound before the second table lookup); wrongc OK. 10.68% -12 -> 31.55% size-exact. Permuter run 1 -> 32.04% (`(h0 & 0xC000) >> 14` -> `h0 >> 14`, equal for u16), and it reformatted the file (comments/blank lines lost, formatting only). First difference still +0xc; the size-exactness is probably the temp adding the 12 missing bytes rather than reproducing the ROM's copies. Not matched.
+
 </details>

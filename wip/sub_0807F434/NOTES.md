@@ -29,3 +29,12 @@ loop, un-shares `i * 12` -- valid C, no frame change) -> 93.75 (`j = 0; proc->un
 in the CpuFastSet call -> 94.17; a third run found nothing. Remaining 14 bytes: the two shifts `j<<8` / `j<<11` are in the
 opposite order and `ldr r0,=0x06015000; adds r4,r1,r0` comes before `movs r6,#7` where the ROM has it after; final zero
 `movs r4,#0` is in r5 for us. Reordering the operands of the src/dest index sums does not move them.
+
+## wave 97 (second pass)
+
+Base: 94.17% draft (`sub_0807F434.w97-second-start.c`). Now **95.00%, 240 B size-exact**, first diff +0x1c (only the relocation display; code differs from +0x4d).
+Lever: the copy-back outer loop (next index computed first, assigned back at the bottom): `for (j = 0; j <= 3; ) { int nj = j + 1; for (k...) {...} j = nj; }`. It gives the ROM's `adds r7,r5,#1` first in the preheader and the counter/pointer sharing r5.
+Residual (12 bytes): `lsls r0,#8 / lsls r1,#0xb` in the opposite order; `ldr r0,=0x06015000; adds r4,r1,r0` before `movs r6,#7` (ROM after); final zero `movs r5,#0` vs ROM `movs r4,#0`.
+Negatives: source pointer as a walker on top of the copy-back (89.2%; 88.3% without the copy-back); final zero via `k`/`nv`/`x`/literal gets `movs r4,#0` (ROM) but moves j's counter to r1 (93.3-94.2%), because the trailing `j = 0` is what keeps j in r5; using `i` for the copy loop (as the ROM appears to) needs the `&i` trick removed first: with it, i is stack-resident (9%).
+Untried: replace the `new_var = &i` unshare trick with another cse-splitter so the copy loop can use `i`.
+Followed up: dropping `new_var = &i` and using `i` itself for the copy loop (copy-back form, the first loop's `i * 12` spelled `(i*3)*4`, `(i<<2)*3`, `i*12`, `(i*6)*2`) gives 91.7-93.3% with the first difference back at +0xF (Decompress source/buffer words swapped r6/r7), so the `&i` unshare is still needed for those; the 95.00% draft keeps `j` and `&i`.

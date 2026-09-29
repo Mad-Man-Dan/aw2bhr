@@ -10,7 +10,7 @@ Initialises two tables, gUnknown_0202F140 and gUnknown_0202F110, from ROM data (
 
 ## How close it is
 
-Right size (232 bytes), 91.0% of bytes in place. The first loop's counter now counts up as the original's does, so the long-standing counter reversal is gone. What is left starts 0x45 bytes in: the outer loop's counter and its row pointer are still in each other's registers.
+Compiles to the right size (232 bytes) with 97.0% of bytes identical; 7 bytes differ. What is left: the original adds 2 to the row base once, before the loop; every spelling that separates the 2 gets folded into the address instead.
 
 ## What is left
 
@@ -85,5 +85,38 @@ Two loop-optimiser facts, not source semantics. WAVE 77 (W77-J) moved this from 
 ### Wave 94
 
 W94-A: one run from the 90.95% draft returned no kept improvement.
+
+### Wave 97
+
+wave 97 (W97-G)
+Base: drafts.py named best.c (90.95%). Its second loop was written `(i + 1) <= (5 + 1)`. **Moved to 97.0% size-exact
+(7 of 232 bytes differ, first difference +0x71)** by respelling that loop as the ROM's own shape: the next index
+is computed FIRST and assigned back at the bottom, so the counter and the row pointer can share a register:
+
+    for (i = 0; i <= 5; ) { int k = i + 1; entries = gUnknown_0202F110; base = (u8 *)entries;
+                            q = base + 2 + i * 8; ...copy loop...; i = k; }
+
+That removed the `adds r3,r1,#1` reorder and the `cmp r0,#6` shape (90.95% -> 96.1%); binding the base as a `u8 *`
+and adding the 2 as its own term (`base + 2 + i * 8`) gave the last point (96.1 -> 97.0).
+Reading the file: the `v8 = a8 * 0x1000` sits inside the inner loop (same value each pass, kept from the permuter
+base; hoisting it was not re-tested); `i = 4; ...[i].unk00 = a5` is the same 96% file's costume. wrongc.py: OK (400 seeds).
+Permuter (900 s, 22,738 it, from the 96.1% file): no improvement.
+
+Residual (7 bytes): the ROM makes `entries + 2` a loop-invariant of its own (`ldr r0,=g; adds r4,r0,#2`, then
+`lsls r0,r1,#3; adds r1,r0,r4`); ours adds the 2 after the shift (`adds r0,#2`). Every spelling that makes the +2 a
+separate statement (`base += 2`, `base = base + 2`, `(u8 *)entries + 2` bound) is folded by cse into a
+`gUnknown_0202F110+0x2` pool word (60.8%, seven pool words) -- two states only: folded pool word, or +2 after the
+shift. `2 + base + i * 8` is byte-identical to `base + 2 + i * 8`.
+
+Proposed summary: does = fills the eight 3-word vectors from the ROM table scaled to 20.12, the six 4-byte rows,
+then stores the eight arguments. status = 97.0% size-exact. left = `+2` of the row base is added after the index
+shift instead of hoisted with the base. tried = loop-shape respelling (moved), base binds (above), permuter.
+
+wave 97 (second pass)
+Base: unchanged 97.0% draft. Goal: make `entries + 2` a loop-invariant of its own (`ldr r0,=g; adds r4,r0,#2`).
+Measured (spellings.py, 15 variants): `entries[i].unk02` / `gUnknown_0202F110[i].unk02` (array member): 60.8% (folded into a `g+0x2` pool word); `base = (u8 *)&g[0] + 2` and `base = g[0].unk02`: 59.9%; `base = (u8 *)g; base += 2`, `+ (u16)two` block local, entries bound before the first loop: size +8, frame 0x14 (the address goes through a `.LC` rodata word and a7 spills).
+ONE spelling produces the ROM's separate `adds r5,r4,#2`: bind `entries = gUnknown_0202F110; base = (u8 *)entries + 2;` between the loops AND write the six trailing stores through `entries[..]`. That gives `add r5,r4,#2` and `q = base + i*8` but the bound `entries` stays live to the stores (r4 held, size -4, 67.7%), where the ROM reloads `ldr r0,=g` after the loop (the pool word is shared). Any spelling that leaves the trailing stores bare (`gUnknown_0202F110[k]`) after the bind switches to the `.LC` indirect word (size +8). Re-binding `entries = gUnknown_0202F110` again before the stores (or a second pointer `e2`, or `entries = 0;` first) also switches to `.LC` (+8).
+Conclusion: the ROM needs the bound copy dead after the loop AND bare-global stores that share the same pool word; every spelling gets one of those two, not both. Not matched.
+Proposed summary addition (tried): `+2` as a member/array-member address, `(u8 *)` walker with `+= 2`, bind before either loop, bind between loops with the stores through the bind (-4), re-bind before the stores (+8).
 
 </details>

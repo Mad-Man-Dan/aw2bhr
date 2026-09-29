@@ -78,4 +78,38 @@ Proposed summary: does: lists candidate tiles for the active unit. status: 98.95
 left: zero store uses r3 instead of r0 (or the next row-pointer copy lands in r3). tried: zero local
 placed at eight points, literal zero, dead extras, permuter runs (~50k iterations total).
 
+### Wave 97
+
+wave 97
+Base: unchanged draft (98.95%, size-exact; `sub_0805A0EC.w97-start.c`). No improvement.
+
+RTL read (`-da` on the literal-zero form, `sub_0805A0EC.w97-lit.c`): with a literal `out->v = 0` the zero is a plain
+`(set (reg 0) (const_int 0))` (insn 285, global-alloc chose r0, same as the ROM). The copy that goes wrong is a RELOAD:
+insn 569 `(set (reg 3) (reg ip))` for `ldrh r0,[ip+4]` -- the row pointer got ip from global alloc and reload must
+bring it to a low register to use it as a base. The reload insns in order are 560 (r2 <- key slot), 563 (r6), 566 (r0,
+the volatile byte compare), 569 (r3). The spill-reg list is 0,1,3,2 (in order of "Spilling reg"), and reload's choice is
+round-robin from the last one handed out: after the r0 of 566 the next free one in that list is r3, the ROM's is r2. So
+the ROM's previous hand-out was r3 (or the list order differs); i.e. one more reload scratch (a r3) must be consumed
+between the compare byte and the store, or the compare byte's reload must use r3 rather than r0.
+Measured with the one-unit harness (build/probe/w97h.py): literal zero with the `p`/`new_var2` bind removed, moved
+before/after the store, the store spelled through a `s16 *` cast, and the volatile compare swapped or spelled with the long
+index: all `mov r3,ip` (unchanged). The long-lived zero local is what removes r3 from the round robin, hence r2 (the known trade).
+Untried: a construct that costs the compare byte an r3 reload (a second volatile read, or reading `*new_var` twice).
+Proposed summary: status 98.95% size-exact, 2 code bytes; left: row-pointer copy register (r3 vs r2) when the zero is a literal; tried: eight zero-local placements, literal, volatile-compare respellings; mechanism is reload's round-robin over spill regs 0,1,3,2.
+
+wave 97 (second pass)
+Base: literal-zero form (`sub_0805A0EC.w97-lit.c`, 98.42%, size-exact, first +0x34). Draft `sub_0805A0EC.c` unchanged (98.95%).
+Hypothesis (from the lead): a construct that costs the volatile compare an r3 reload takes r3 first, so the row-pointer reload gets r2.
+Measured in one unit (`w97-var.c`, spellings.py), all with the literal zero:
+- both tests folded into one `if (props[off] == *new_var && tbl[props[off]].unk0b == 5) continue;`: 93.95%.
+- `p` bind removed (use `p->unk00` directly): 98.42% (unchanged). `u = tbl + props[off]` spelling: 98.42%. `{ s16 z = 0; out->v = z; }`: 98.42%.
+- `out->v = 0;` moved before the `p` bind: 96.32%.
+- `u = &tbl[*new_var]` (compare and index share ONE volatile read): 36.84% (-8 bytes; the ROM has the second props[off] load).
+- `int v = *new_var; if (props[off] == v)`: 94.74%.
+None changes which scratch register the row-pointer reload gets. Not matched; the two-way trade stands.
+Proposed summary addition (tried): folded compare, p bind removed, zero as block-local s16, store moved above the p bind, shared volatile read.
+
+wave 97 (W97-W)
+Alias lever (gMap vs gUnknown_08499590) does not apply: the ROM has ONE force-addr word (gUnknown_0816D97C) for the address of gUnknown_08499590, held in sl and reused at every site, so the source used one name. Probes (`w97w0/1/2.c`, one of the three bare uses renamed gMap; gMap is `struct Map *` so it needs a cast): 22.75% +20, 61.20% +4, one compile fail (type). Draft unchanged (98.95%).
+
 </details>

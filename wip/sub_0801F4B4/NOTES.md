@@ -24,3 +24,10 @@ Proposed summary: does = walks outward from (a1, a2) with two swapped queues; st
 
 ### wave 96, final round
 Looked once more at the residual with the eye of "one association or one bind": it is the bind. The ROM's `pp` is a copy of the force-addr register (the address of the rodata word), used by the empty test and the switch, and the load of &G goes through it each time. Every C spelling tried binds `&gUnknown_0300409C` (the VALUE loaded from that word), which puts the copy one load later. Reproducing the ROM needs the word's own address as a source value; wave 91's `pp = &<force-addr word>` form needs that word declared as a symbol, which wave 61-71 showed costs a second pool word. No additional probe this round. Kept: 96.50%, size-exact.
+
+## wave 97 (second pass)
+
+No probe spent; base unchanged (96.50%, size-exact). Reading of the previous rounds against the lead's lever list: lever 2 (mixed bind, first reference bare) is what the one-site `pp` bind already is; lever 1 (respell one of two identical expressions) has no second expression to respell, because the copy the ROM wants is of the REGISTER holding the compiler-made address word (the address of the .rodata word), which no C expression names -- `&gUnknown_0300409C` is the value one load later, and naming the word costs a second pool word (wave 95). Left for a tool-level answer (a levers.py site for "copy of a force-addr register"), not a source spelling.
+
+## wave 97 (W97-W)
+Alias lever does not apply: gUnknown_08499598 (gPlayers) is used once in the function and has one pool word in the ROM; the residual is the copy of the .rodata word gUnknown_08090928 (pp), whose symbol is not aliased in aw2bhr.lds (the aliased ones are gMap, gBG*TilemapBuffer, gPlaySt, gPlayers, gGameClock, gTextTable etc.). Not probed further. Draft unchanged (96.50%).

@@ -50,3 +50,20 @@ hoist, and every form that puts it there merges the constants (-8). Probed: fold
 split cse's merge of `0x06010000 + dst` because j is re-derived (not a held narrow operand) here; def in the `for`
 condition as `k=0; a[k]!=0 && (dst=..,1)`: 6.4%; `(dst=..., a[k]!=0)`: 39.7% +12; def in the increment clause: 19.8%. No match.
 Residual unchanged: the def cannot be both out of the use's EBB (pool words) and an inner-loop invariant (hoist).
+
+## wave 97 (W97-U)
+
+Base: `sub_08039588.c` (87.21%, size-exact, first diff +0x17), unchanged. Pre-registered hypothesis (a constant merged
+across the loop is a lever-1/lever-5 case) NOT confirmed. Probed with spellings.py (all 43.02% -8 unless noted):
+`dst` removed and the address written inline in the call as `(u8 *)(j*0x100 + 0x6140) + 0x06010000`,
+`(u32)(...) + 0x06010000`, `0x06010000 + (u32)(...)`, `(j<<8)` form, `(u8*)0x06010000 + (...)`: all fold back to the one
+`=0x6016140` word (cse folds `(x + C1) + C2` however the cast is placed). `dst` typed u32 / `(j<<8)`: same. `c = tbl[k]`
+first then `dst = ..` in the inner loop: same. Copy-back step `nj = j + 1; ... j = nj;` (before dst / after dst / at the
+top of the outer body): 35.2% / 36.4% / 24.4% at +4 (adds the copy the ROM has but moves the guard). `nj` before the inner
+loop with the address inline: 51.7% -4 (best of the new probes, still short). A `vram = (u8*)0x06010000` local used as
+`vram + dst`: 75.0% size-exact, first diff +0xC (the base gets held, worse than the draft).
+Mechanism note: the ROM keeps `j+1` (r6) computed before the zero-trip guard and the `dst` sum after it, i.e. both are
+loop.c hoists, and the two constants stay separate words. That needs the sum's def inside the loop AND out of the use's
+cse path; no spelling tried does both.
+Proposed summary tried: "inline / casted / u32 spellings of the VRAM address all fold to one constant word; copy-back
+step for j moves the guard but not the hoist".

@@ -43,4 +43,27 @@ PARKED Wave 80 (W80-C), unchanged at exact size 560/560, 92.5% (configured), 42 
 
 WAVE90: WAVE 90 (W90-A): 92.5% -> 93.4% (37 of 560, size-exact, first difference +0x13): permuter undirected run found `t = sub_08055058(a[side], b[side], c[side], i = d[side ^ 1]);` (the dead loop counter reused as an argument temp -- semantics-preserving; draft = w90-perm1-934.c). Chained undirected run 16,819 it: best permuter score 2300 is 69.3% by bytes (rejected). Run 3 DIRECTED (w90-directed.perm.txt: PERM_LINESWAP over the declarations + PERM_RANDOMIZE over the setup loop) 13,564 it from the 93.4% base: nothing better than 2420. Residual unchanged from W80: counter born in r3 and copied to r7 (the wave-78 `t = i` size costume; ROM r6), the sp+10 spill derived `adds r0,#2` off sp+8 instead of from sp, table base r6/sb=gUnknown_085D6A52 vs ROM r7/sb=gUnknown_085D6A48. Notes: work/sub_08054C5C/NOTES.md.
 
+### Wave 97
+
+wave 97 (W97-G)
+Base: `sub_08054C5C.c` (== w90-perm1-934.c), 93.39% size-exact, first diff +0x13. Unchanged.
+
+Pre-registered hypothesis (a shared side/other-side index recomputed by the ROM) did NOT hold: the whole residual is
+in the setup loop preheader (nothing after +0x13 differs except register names from the r6/r7 swap), not in the
+call groups.
+
+Probes (trymatch):
+- Drop the `t = i` copy (index `i` directly) while KEEPING `i = d[side ^ 1]` as the 4th argument: 560/560
+  size-exact but 75.5%. Preheader gets `movs rN,#0` for the counter in r7 (ROM r6), keeps `adds r0,#2` for sp+10,
+  and the tail argument costs `ldrh r7; adds r3,r7,#0` (ROM loads straight into r3). So the `i =` reuse is what
+  makes the no-copy form size-exact, but it adds a copy the ROM does not have.
+- No-copy without `i =`: 568/560 (+8), 16%. With `u = d[side^1]` instead of `i =`: 568, 16.4%. Only reuse of the
+  dead loop counter keeps the size; a fresh pseudo does not.
+Conclusion: unchanged allocno-order residual (counter reg, sp+10 derivation, A48/A52 in r9). No new lever.
+
+Proposed summary: does = builds per-side setup tables for two sides, then runs the setup chain for the active side
+and the other side if they differ. status = 93.4% size-exact, all differences in the loop preheader register
+assignment. left = counter in r7 not r6, sp+10 derived off sp+8, wrong table base in r9. tried = see above plus
+waves 78-90.
+
 </details>

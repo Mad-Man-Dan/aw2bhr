@@ -251,3 +251,11 @@ between ONE misplaced constant and a shuffled preheader plus two register number
 build/probe/w97j.py) costs 12 bytes (an extra register). A 900 s permuter chain from q1 (2 threads): NO-IMPROVEMENT: the text score fell from 2160 to 1280, but every candidate that was verified scored below q1 (best 93.1%, others 80-92%), so nothing was adopted.
 Pre-registration (this batch): none for this function. Proposed summary: unchanged 99.42%; add to `tried`: source pointer as a
 walking local (moves the counter init to the ROM's place but shuffles the preheader and constant registers, 97.2%).
+
+## wave 97 (second pass)
+
+Base: `sub_0807E980.q1.c` (source pointer as walker, 97.21%). Draft `sub_0807E980.c` unchanged (99.42%).
+Read the RTL (-da, .greg): the wrong constant registers are RELOAD hand-outs, not allocation. `r5 += 0x100` and `r4 += 0x400` need a register operand, so reload creates insns 1399/1402 and takes spill regs round-robin: the 99.42% draft gets r0, r1 (ROM), q1 gets r2, r3 because the hand-outs earlier in the preheader (`mov r3,sl` for the base) already advanced the rotation. So the constant registers follow the preheader ORDER, and the preheader order is the thing to fix. ROM order: [i+1 copy][i<<11][i<<8][base+ (mov r2,sl)][movs r6,#7][pool 0x06015000 + add]. q1 order: [i<<8][mov r3,sl; add][i+1][i<<11][movs r6,#7][pool][add] - the source init is an ordinary insn in source position and precedes the hoisted invariants.
+Tried making the `i+1` and `i*0x800` come first in source (copy-back outer loop `for (i = 0; i < 4; ) { int ni = i + 1; ...; i = ni; }`, with and without `int d = i * 0x800`, with the base bound to `u8 *base`): the counter init sits in the ROM's place and the constants get r0/r1, BUT global allocation changes (proc moves to r8, `ni` takes r7, the base is no longer held in sl, +8 bytes, 54%). Swapping the two increments' order, `j = 0, new_var = 0` order: 97.21% unchanged.
+The sibling sub_0807F434 has the same loop; the copy-back outer loop worked there (see its NOTES), so the difference is register pressure in this bigger function (proc, base and ni compete for r7/r8/sl).
+Untried: copy-back outer loop plus something that lowers `ni`'s weight below proc's (e.g. compute `ni` after the inner loop from `i`, which is what the draft already does).

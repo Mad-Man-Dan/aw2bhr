@@ -288,3 +288,25 @@ hypothesis, and refusing to spend one probe on it cost this function six waves.
 
 48.89% at the exact size, first difference +0xe, which is the first
 instruction after the (now correct) frame. Pure register allocation from here.
+
+## wave 97
+
+Base: `sub_0801C090.c` (79.44%, size-exact; `recovered.c` is 43% and was not used). Final: **90.56%**, size-exact, first difference +0x10 (unchanged offset; the differing bytes below it shrank from 74 to 34).
+
+Hand steps (each measured with a one-unit harness, `build/probe/w97k.py`):
+1. The mirrored arm's `remaining |= 0xffffff00 & 0xffff;` compiled to `movs #255; lsls #8` (the constant folded to 0xff00). The ROM loads `0xFFFFFF00` from the pool, ORs, and truncates. Spelling it `remaining |= 0xffffff00; remaining = (u16) remaining;` reproduces the ROM's `ldr; orrs; lsls #16; lsrs #16` and the pool word.
+2. The ROM negates the width BEFORE the attr0 computation and shifts back down inside the attr1 expression (`lsls; negs` early, `asrs` late). Written as `neg = -(remaining << 16);` ahead of attr0 and `sum = (neg >> 16) + x; sum += (s16) negWidth;`. The split `sum +=` is load-bearing: written as one expression, combine sees that `& 0x1ff` discards the sign extension of `(s16) negWidth` and drops the `lsls/asrs` pair the ROM keeps (size 356 instead of 360). `hi = (x | attr1) & ~0x1ff` as its own statement puts the ROM's order (mask part before the sum).
+3. Permuter run 1 (80.8 -> 86.4): `hi` declared u16 instead of u32. Run 2 (86.4 -> 89.7): `(y | sourceAttr0) & ~0xff` split into its own int; the run also added an int zero compared in the loop test, which I removed (measured byte-identical without it). Run 3 (89.7 -> 90.56): `remaining = sum;` before the final mask, reusing `remaining` as the scratch.
+
+Negative: reading attr1 into a separate `srcAttr1` (the ROM does end with the merged attr1 in r2, not r4) made the size 364 and dropped equal halfwords from 140 to 29, so it is not the lever at this point.
+
+Residual: register numbering in the mirrored arm (merged attr1 in r4, ROM r2; the 0x1ff mask in sl vs r7) and the prologue order of `str r3,[sp]` / `adds r5,r2,#0`. The parked entry's "two copies too many" was not settled: the copy delta is unchanged by anything above.
+
+Proposed summary: does = copies a counted sprite template into the OAM shadow with optional horizontal mirroring; status = "360 bytes, size exact, 90.6%; register numbering in the mirrored arm differs"; left = "the merged attribute word sits in r4 where the original has r2, and the original stores tileOffset after copying the template pointer"; tried = the steps above, the srcAttr1 split.
+
+## wave 97 (second pass)
+
+Base: 90.56% draft (`sub_0801C090.w97-second-start.c`). Now **91.67%, 360 B size-exact** (`sub_0801C090.c`; 30 bytes differ, first +0x10).
+Lever: give the mirrored arm's loaded attr1 its own variable typed `int` (`int sa1 = src->attr1;` used for the shift, the 0x1ff mask, the 0x100 test and `hi = (x | sa1) & ~0x1ff`), so the merged `attr1` is a separate pseudo and ends in r2 like the ROM. `u16 sa1` costs +4 bytes (364, 20%), `u32 sa1` -4 (356); `int` is size-exact but shifts arithmetically (`asrs`), so the shift is spelled `(u32) sa1 >> 14` (91.39 -> 91.67).
+Residual: the pool word of gUnknown_0848B56C (ROM r3, ours r0), the 0x1ff mask (ROM `ldr r7; mov sl,r7; mov r3,sl; ands r3,r4`; ours `ldr r3; mov sl,r3; adds r1,r4,#0; ands r1,r3`), prologue `str r3,[sp]` order, and the loop-bottom count add/compare pair (r0/r1 swapped). All reload/scratch numbering.
+Permuter (900 s, 2 threads) from the 91.67% file: 91.67 -> 92.22. Two edits, both valid C (wrongc.py OK, 117 seeds): the `>> 14` cast spelled `(((u32) sa1) >> 14)`, and the count update goes through a `long long nextCount` temp (`nextCount = count * 0x10000 + 0xffff0000; remaining = nextCount;`). Adopted.

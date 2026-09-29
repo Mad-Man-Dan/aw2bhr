@@ -71,6 +71,7 @@ s16 sub_0802F6A0(s8 slot, void *dst)
   {
     fail4:
     return -4;
+
   }
   t = ((gUnknown_03003128[slot] + 1) > 0x3ff) ? (0) : (gUnknown_03003128[slot] + 1);
   len = gUnknown_02025C18[t][slot];
@@ -92,12 +93,16 @@ s16 sub_0802F6A0(s8 slot, void *dst)
   expComp = gUnknown_02025C18[gUnknown_03003128[slot]][slot];
   gUnknown_03003128[slot]++;
   gUnknown_03003128[slot] &= 0x3ff;
-  sum += len + 0x4fff;
+  {
+    u16 lv0 = len;
+    i = lv0 + 0x4fff;
+  }
+  sum += i;
   i = 0;
   q = (u16 *) dst;
   while (i < len)
   {
-    sum += gUnknown_02025C18[gUnknown_03003128[slot]][slot] * ++i;
+    sum += gUnknown_02025C18[gUnknown_03003128[slot]][slot] * (++i);
     comp += ~(gUnknown_02025C18[gUnknown_03003128[slot]][slot] * i);
     *q = gUnknown_02025C18[gUnknown_03003128[slot]][slot];
     gUnknown_03003128[slot]++;

@@ -101,19 +101,22 @@ struct Unk20754Map
 
 void sub_08020754(u8 *dst)
 {
-    int x, y;
-
-    for (y = 0; y < MAP->height; y++)
+  int x;
+  int y;
+  for (y = 0; y < MAP->height; y++)
+  {
+    for (x = 0; x < MAP->width; x++)
     {
-        for (x = 0; x < MAP->width; x++)
-        {
-            if (((MAP->cell[MAP->rowOffset[y] + x] & 0x1f) == 4
-              || (MAP->cell[MAP->rowOffset[y] + x] & 0x1f) == 0x13)
-             && (MAP->unit[MAP->rowOffset[y] + x] == 0
-              || (u8)(gUnknown_08499594[MAP->unit[MAP->rowOffset[y] + x]].type - 0x10) > 4))
-                dst[MAP->rowOffset[y] + x] = 0;
-            else
-                dst[MAP->rowOffset[y] + x] = 1;
-        }
+      if (!((((MAP->cell[MAP->rowOffset[y] + x] & 0x1f) == 4) || ((MAP->cell[MAP->rowOffset[y] + x] & 0x1f) == 0x13)) && ((MAP->unit[MAP->rowOffset[y] + x] == 0) || (((u8) (gUnknown_08499594[MAP->unit[MAP->rowOffset[y] + x]].type - 0x10)) > 4))))
+      {
+        dst[MAP->rowOffset[y] + x] = 1;
+      }
+      else
+      {
+        dst[MAP->rowOffset[y] + x] = 0;
+      }
     }
+
+  }
+
 }

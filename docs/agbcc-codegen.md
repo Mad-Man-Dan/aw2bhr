@@ -54905,3 +54905,108 @@ basic induction variable, so no giv is derived from `ix` and the frame is the RO
 `adds r4, r2, #1` is exactly this temp. Two follow-ups: write the source index as `*((p + (w - nx)) + (iy * 0x20))`
 so `iy*0x20` stays a separate term (the folded `p[iy*0x20 + w - nx]` loses the hoisted row scale), and assign a
 `ux = x + ix;` before `nx` to fix the order of the two adds in the block head.
+
+## A scratch that reuses an already-declared variable shares its pseudo; a fresh one does not (wave 97)
+
+Three permuter gains this wave (sub_0801C01C +4.3 points, sub_0801C090 +0.8, sub_0801ADC8 +11) were the same shape: split a long expression into a statement whose result goes into a variable the function ALREADY has and no longer needs (`new_var = (x << 6) << 10; y = a | new_var;`, `remaining = sum;`). The same split into a fresh local (`u32 new_var5`) compiled byte-identically to the unsplit form. A statement boundary alone does nothing; it is the shared pseudo, and the register it pins, that changes what the allocator is handed.
+
+`(u16) x` on a `|=` result is not the same as declaring `x` u16: `remaining |= 0xffffff00; remaining = (u16) remaining;` keeps the `0xFFFFFF00` pool word and the OR at full width (the ROM's shape), while `remaining |= 0xffffff00 & 0xffff;` and a `u16` variable both fold the constant to `0xff00` (`movs #255; lsls #8`).
+
+`(sum + (s16) narrow) & 0x1ff` in ONE expression lets combine drop the sign extension of `narrow` (only the low 9 bits survive). Splitting `sum += (s16) narrow;` into its own statement keeps the `lsls/asrs` pair, which is how sub_0801C090 reproduced the ROM's extra three instructions.
+
+A `volatile` local that "helps" is wrong until its frame is compared: sub_0801ADC8's `volatile keptFlags` made `sub sp, #8` against the ROM's `#4` and was what kept the first difference at +0xa for three waves; the honest flag update with a self-assignment (`x = x | 8; x = x; x = (x | v) & 0xef;`) moves it to +0x80.
+
+## A linker-script ALIAS is a cse splitter (wave 97, W97-R)
+
+`aw2bhr.lds` defines aliases such as `gBG0TilemapBuffer = gUnknown_08499578;`. Both names are one address in the ROM, but to the compiler they are two different `symbol_ref`s, so cse cannot treat a load of one as equal to a load of the other. Naming the variable by its second name at only some of the uses re-creates the address load there instead of copying the earlier register, and gives that use a plain literal-pool word while the first name keeps its `.rodata` force-addr word. This is the mechanism behind the long-parked "early uses through the `.rodata` word, later uses plain literal" construct: sub_08046030 (42% -> 91%, size exact) and sub_08046914 (15% -> 81%, size exact) both moved this way. It splits only the ADDRESS: constants such as `0x8000` and `0` are still carried by cse (`-fno-cse-skip-blocks` proved that cse's skip-blocks path owns the carry over `if (x <= 0x63) a++;`), and the alias costs a second pool word. Check `grep aw2bhr.lds` for aliases of any global in a parked function before trying anything else.
+
+
+## Lever search (`tools/levers.py`, wave 97)
+
+Wave 96/97 matches came from a handful of semantics-preserving respellings applied at the right site. `python tools/levers.py <fn> [--draft F] [--rules 1,2,4a] [--seconds S]` enumerates every site where those respellings apply in the draft's function (pycparser tree, body regenerated, rest of the file untouched), compiles one candidate per (rule, site) on the project's own path (`tools/drafts.py`), then composes pairs of active singles (an active single changes the bytes; phase 2 also pairs each with every site within 6 tree nodes, because a lever that is inert alone can be the second half of a match). Ranking: size-exact, then byte score, then a later first difference. Improving candidates go to `work/<fn>/levers/<rule>-<node>.c` (`index.txt` names each) and get a `wrongc` verdict; nothing else in work/ is touched. `--all-parked` writes `build/levers/summary.md`; `--self-test` reruns the four wave-97 finds.
+
+Rules: 1a factor/expand a scaled sum (`i*16+0x30` -> `(i*2+6)*8`); 1b `x+1` -> `-~x`; 1c/1c' block-scoped copy of one use (`{ s16 tn = t; ... }`, same or opposite signedness); 1d re-associate/re-order a `+ -` chain or `* | & ^`; 2 flip a local's or parameter's signedness; 3a-3e loop step through a copy (for/while, top/bottom, uses rewritten, plain `x++;` statement); 4a swap if/else arms or an early return; 4b/4c comparison spelling; 5a/5f split an expression into `lv = E;` (fresh `__typeof__` local); 5b the same into an already-declared int local; 5c inline a single-use local; 5d `do { } while (0)` around a block.
+
+What it rediscovers (pre-match drafts): sub_08045FC8 (single lever 1a), sub_0806AB9C (single lever 2), sub_0802216C (pair 1d + 1c': `(r + t) + 0x402` with `{ s16 lv = t; }`). sub_080726E8 is NOT found: from `w93-start` it reaches 96.3% (`1d` on the source index plus `5a` on `iy * 0x20`), but the match needed the `nx`/`ux` copies together (three levers).
+
+Read the verdicts, not just the score. `?` marks a lever that is exact only under a range or liveness condition (1c', 2, 5b, 5c). `wrongc` rejects many of them (5b clobbering a live local is the usual reason). It also reports `loop-const` on 5d candidates, which is a false alarm: the `do { } while (0)` looks like a loop to the detector. Functions with inline asm are skipped (the tree rewrite would drop it).
+
+Rule 7 of `tools/levers.py` is the linker-alias lever: it writes the other name of an `aw2bhr.lds` alias (`a = b;`) at one use of a global, and adds `extern __typeof__(<used name>) <alias>;` above the function when the draft does not see the alias. By default it only fires where the function's own ROM pool has at least two words for that address (`--force-alias` lifts that filter). Composition: rule-7 actives are paired with each other and with the best 25 other actives first. Result on the 25 alias-referencing parked drafts: no valid improvement (the improving ones fail `wrongc`, or change nothing); sub_08046030 already contains the aliases wave-97 found by hand.
+
+
+## THE SPLIT ("`.rodata` word at one site, plain pool word at another") IS THE PRE COPY PSEUDO SURVIVING cse2 AT SOME USES; loop.c's 26-INSN LIMIT DECIDES WHICH (wave 97, W97-Z)
+
+Reproduced with a synthetic function (`build/probe/z/w97z_split_mixed.c`).
+It emits `ldr r4,=.LC0; ldr r6,[r4]` at the entry read of `gPlaySt` and a plain
+`ldr r3,=gPlaySt` inside the loop. Nothing in it is spelled two ways. The
+same function with ONE `t += a0 * 3;` statement fewer in the inner loop
+(`w97z_split_allplain.c`) has no `.LC0` word at all and every read is plain.
+Body: `a0 = sub_0802490C(0); n = sub_0802490C(gPlaySt.mapID);` an outer loop
+over `i`, `if (gPlaySt.aiControlled[i] == 0)`, a `do { v = call(); for (j...)
+{ t += a0*3 (x6); if (i != j && gPlaySt.aiControlled[j] && gPlaySt.co[j] == v)
+break; } } while (j != n + 1);`, then `gPlaySt.co[i] = v;`. Generator:
+`build/probe/z/gen3.py 1 6` (and `1 5`).
+
+**The mechanism, read off `-da` dumps of the two functions (pass order is
+cse, gcse, loop, cse2, flow, regmove, lreg, greg, combine):**
+
+1. The entry occurrence is `set P (symbol_ref .LC0); set Q (mem/u P)`. gcse's
+   PRE inserts `set N P` right after it (dump line `PRE/HOIST: end of bb 0
+   ... copying expression K to reg N`) and rewrites every later
+   `set P_k (symbol_ref .LC0)` as `set P_k N`. So P now has TWO uses, and
+   combine cannot fold it into `(mem/u (symbol_ref .LC0))`. **That second use
+   is what keeps the entry's `.rodata` word.** Every later read is
+   `mem/u N`.
+2. loop.c runs after gcse. Its second pass (`flag_rerun_loop_opt`) hoists an
+   invariant only if the loop is small enough (wave 90: threshold 26 insns for
+   a one-use movable). The `-dL` dump for the two files differs in exactly one
+   place: with `t += a0*3` x5 the innermost loop is "26 real insns" and
+   `Insn 144 ... savings 1  moved to 276` (the `mem/u N` load is hoisted out
+   of it); with x6 it is 27 and the same insn is `not desirable` and stays in
+   the loop.
+3. cse2 then folds `mem/u N` to the constant wherever the copy `N = P`'s
+   REG_EQUAL (`symbol_ref .LC0`) is still visible along its extended basic
+   block. A load hoisted into the preheader is visible, so every use is folded,
+   N dies, the copy insn is deleted before combine, P has one use again and
+   combine folds the entry word too: **no `.LC0` at all, all reads plain**.
+   A load left inside the loop is behind a join and is NOT folded. N survives
+   with that one use, so the entry keeps its `.LC0` word.
+4. greg decides the surviving use. If N gets a hard register the use is
+   `ldr rX,[rN]` (the "held" spelling, e.g. the draft of sub_08026290 with N in
+   `sl`). If N loses the allocation contest it has no register, and reload
+   replaces it with its REG_EQUAL/EQUIV constant, turning the use into
+   `mem/u (symbol_ref .LC0)`, which is the plain `ldr rX,=gPlaySt` literal.
+   (The dumps show it: `.greg` prints `(mem/u:SI (symbol_ref/u:SI ("*.LC0")) 0)`
+   at that insn.) **So "early `.rodata`, later plain" = P kept two uses AND N
+   was spilled.**
+
+**What this predicts, and the toggles (all measured on the synthetic):**
+- Filler in the innermost loop flips the split (5 -> 6 statements: all plain
+  -> mixed). The same six filler statements before the loop, after it, or in
+  the outer body after the inner loop change nothing. The lever is the
+  innermost loop's insn count at loop time, and it is one more instance of the
+  wave-90 "add insns that exist at loop time and are gone by the final code"
+  lever, now with a visible consequence on the pool.
+- With no competing live value across the call (`a0` removed) N is simply held
+  and every read is `ldr [rN]`; with one competitor and a small loop, all plain.
+  The mixed state needs BOTH the un-hoisted use and a lost allocation.
+- A `-da` reading rule: in `.cse2` count `mem/u (reg N)` uses that survive; in
+  `.greg` look for `mem/u (symbol_ref .LC0)` (spilled N: plain) versus
+  `mem/u (reg)` (held N).
+- Two NAMES for one object (`gUnknown_03003FC0` vs `gPlaySt`, same address)
+  split the PRE expression, but do NOT reproduce the ROM's split for
+  sub_08026290 (five entry/head/inner assignments measured: 184-192 bytes,
+  12-37%). They only add a second `.LC`.
+
+**sub_08026290 (176 B) NOT closed.** Draft re-measured 57.95%, size-exact. The
+first difference at +0xC is the ROM's entry `ldr r4,=.LC; ldr r0,[r4]` with
+nothing kept from it, where the draft keeps the entry's base in r6 and reuses
+it for the hoisted `base + 0x38`. That is the same mechanism seen from the
+other side: in the ROM the outer-loop reads are `mem/u N` uses that were not
+folded and N lost, so `base + 0x38` / `+ 0x3d` are re-derived from a fresh
+literal every outer iteration (`ldr r2,=g; adds r3,r2,#0; adds r3,#0x38`)
+instead of being hoisted. Pointer binds (`ai = g + 0x38`) fold to literals and
+drop to 160 bytes. What is left to try is making the innermost loop 27+ insns
+at loop time WITHOUT changing the final code (so the `mem/u N` for the `co[j]`
+read stays in the loop) while giving N a lower allocation priority than the
+ROM's three derived pointers.
