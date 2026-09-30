@@ -675,7 +675,7 @@ u32 sub_0801A700(void);
 bool8 sub_0801A6C0(void);
 /* Draws one sprite request. Its seven arguments are fields of one struct
  * Unk0200ED20 entry; the last three are passed on the stack. */
-int sub_0801E9B0(s16, s16, s16, void *, long long, s16);
+int sub_0801E9B0(s16, s16, s16, u16 *, long long, s16);
 /* sub_0801E2A4 advances the interpolation of the 32 records at
  * gUnknown_0808F0B4 each frame. sub_0801E3E8 expands OAM attributes: its fourth
  * argument is a u16 command stream and its fifth an affine-parameter index. */
